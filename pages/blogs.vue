@@ -825,7 +825,12 @@
 
 <script>
 export default {
-  name: "BlogHome"
+  name: "BlogHome",
+  data() {
+    return {
+      allowAds: false,
+    }
+  },
 }
 </script>
 
