@@ -26,13 +26,16 @@
       </div>
       <section class="text-center lead my-4 advertisement">
         <!-- SRD1 -->
-        <ins v-if="allowAds" class="adsbygoogle"
-             data-ad-client="ca-pub-3869785327224690"
-             data-ad-format="auto"
-             data-ad-slot="7703585885"
-             data-full-width-responsive="true"
-             style="display:block"></ins>
+        <v-container>
+          <ins v-if="allowAds" class="adsbygoogle"
+               data-ad-client="ca-pub-3869785327224690"
+               data-ad-format="auto"
+               data-ad-slot="7703585885"
+               data-full-width-responsive="true"
+               style="display:block"></ins>
+        </v-container>
       </section>
+
 
       <section class="container-fluid">
         <h1 class="sectionTitle my-5">Purchase with Confidence</h1>
@@ -41,12 +44,14 @@
 
       <div class="text-center lead my-4 advertisement">
         <!-- SRD2 -->
-        <ins v-if="allowAds" class="adsbygoogle"
-             data-ad-client="ca-pub-3869785327224690"
-             data-ad-format="auto"
-             data-ad-slot="1581030669"
-             data-full-width-responsive="true"
-             style="display:block"></ins>
+        <v-container>
+          <ins v-if="allowAds" class="adsbygoogle"
+               data-ad-client="ca-pub-3869785327224690"
+               data-ad-format="auto"
+               data-ad-slot="1581030669"
+               data-full-width-responsive="true"
+               style="display:block"></ins>
+        </v-container>
 
       </div>
       <section class="container-fluid">
