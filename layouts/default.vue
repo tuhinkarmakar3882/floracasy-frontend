@@ -67,6 +67,7 @@ export default {
 
 body {
   background: white;
+  transition: all .5s;
 
 }
 
