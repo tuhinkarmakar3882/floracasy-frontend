@@ -90,7 +90,7 @@ export default {
 @import 'assets/themeData';
 
 .myFooter {
-
+  width: 100%;
   background: #EEE;
   border: 1px solid transparent;
 
