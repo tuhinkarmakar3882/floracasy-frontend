@@ -1,0 +1,225 @@
+@import 'assets/themeData';
+
+.accentButton {
+  background: darken($primary, 3%);
+  color: white;
+  border-radius: 50px;
+}
+
+.accentButton:hover {
+  background: $primary;
+  color: white;
+  border-radius: 50px;
+}
+
+.sectionTitle {
+  color: $primary;
+  font-size: 44px;
+  font-family: $primaryFont, cursive;
+  text-align: center;
+  text-shadow: 1px 1px $primary;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, .05));
+  position: relative;
+  @media screen and (max-width: $smallScreen) {
+    font-size: 36px;
+    line-height: 60px;
+  }
+}
+
+.aboutStart {
+  color: $primary;
+  font-size: 44px;
+  font-family: $primaryFont, cursive;
+  text-align: center;
+  text-shadow: 1px 1px $primary;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, .05));
+  position: relative;
+  @media screen and (max-width: $smallScreen) {
+    font-size: 36px;
+    line-height: 60px;
+  }
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 1px;
+  bottom: -14px;
+  left: 35%;
+  background: $primary;
+}
+
+/*  Scroll Bar  */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: $semiDark;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $secondary;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $primary;
+}
+
+.serif {
+  font-family: $serif;
+}
+
+body {
+  font-family: $secondaryFont, serif;
+  overflow-x: hidden !important;
+}
+
+.navbar-nav {
+  .nav-item {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    margin: 12px 20px;
+
+    .nav-link {
+      color: $semiDark;
+      position: relative;
+
+      &:hover {
+        color: $secondary;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        background: $primary;
+        bottom: 0;
+        width: 0;
+        height: 1px;
+        left: 0;
+        transition: width .25s ease-in;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
+    }
+
+    .activated {
+      color: $primary;
+
+      &::after {
+        content: '';
+        position: absolute;
+        background: $primary;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        left: 0;
+      }
+    }
+
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#nav-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: top 0.3s ease-in-out, box-shadow 1s ease-in-out, background-color 1s ease-in-out;
+  z-index: 2;
+  background-color: rgb(255, 255, 255);
+}
+
+.btn {
+  border-radius: 50px !important;
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeIn .3s ease-in-out forwards;
+}
+
+.fadeOut {
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.shareBlock {
+  position: relative;
+
+
+  #shareBtn, #manualShare {
+    z-index: 3;
+  }
+
+  #shareBtn {
+    all: unset;
+    cursor: pointer;
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    background-color: rgba(245, 0, 87, .5);
+    border-radius: 50%;
+    border: none;
+    padding: 16px;
+    transform: scale(.99);
+    transition: transform 350ms ease-in-out, bottom 350ms ease-in-out, background-color 350ms ease-in-out;
+
+    &:focus, &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 4px rgba(60, 60, 60, .3);
+    }
+
+    &:hover {
+      background-color: rgba(245, 0, 87, .7);
+    }
+
+    &:focus {
+      background-color: rgba(245, 0, 87, 1);
+      transform: scale(1.05) rotate(360deg);
+    }
+  }
+
+  .shareBtn {
+    transition: transform 250ms ease-in-out;
+
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+
+
+  #manualShare {
+    all: unset;
+    overflow: hidden;
+    transition: height .5s ease-in-out;
+    list-style: none;
+    position: fixed;
+    bottom: 100px;
+    right: 34px;
+
+    li {
+      margin: 20px 0;
+    }
+  }
+
+  #manualShare.show {
+    height: 300px !important;
+  }
+
+  #manualShare.hide {
+    height: 0 !important;
+  }
+}
