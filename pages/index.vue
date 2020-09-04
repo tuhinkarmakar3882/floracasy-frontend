@@ -31,7 +31,7 @@
           Or, be it your beauty tips. <br>
           We’ve got you covered.
         </p>
-        <a class="btn btn-lg accentButton scrollDownHolder px-5" href="{% url 'BlogHome' %}">Explore Now!</a>
+        <nuxt-link class="btn btn-lg accentButton scrollDownHolder px-5" to="/blogs">Explore Now!</nuxt-link>
       </div>
       <div class="col d-none d-sm-block">
         <svg class="blogSVG" fill="none" viewBox="0 0 778 721" xmlns="http://www.w3.org/2000/svg">

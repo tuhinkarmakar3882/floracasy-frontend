@@ -1,32 +1,32 @@
 <template>
-  <!--  <v-navigation-drawer-->
-  <!--      v-model="drawer"-->
-  <!--      :clipped="clipped"-->
-  <!--      :mini-variant="miniVariant"-->
-  <!--      app-->
-  <!--      fixed-->
-  <!--  >-->
-  <!--    <v-list>-->
-  <!--      <v-list-item-->
-  <!--          v-for="(item, i) in items"-->
-  <!--          :key="i"-->
-  <!--          :to="item.to"-->
-  <!--          exact-->
-  <!--          router-->
-  <!--      >-->
-  <!--        <v-list-item-action>-->
-  <!--          <v-icon>{{ item.icon }}</v-icon>-->
-  <!--        </v-list-item-action>-->
-  <!--        <v-list-item-content>-->
-  <!--          <v-list-item-title v-text="item.title"/>-->
-  <!--        </v-list-item-content>-->
-  <!--      </v-list-item>-->
-  <!--    </v-list>-->
-  <!--  </v-navigation-drawer>-->
+  <!--    <v-navigation-drawer-->
+  <!--        v-model="drawer"-->
+  <!--        :clipped="clipped"-->
+  <!--        :mini-variant="miniVariant"-->
+  <!--        app-->
+  <!--        fixed-->
+  <!--    >-->
+  <!--      <v-list>-->
+  <!--        <v-list-item-->
+  <!--            v-for="(item, i) in items"-->
+  <!--            :key="i"-->
+  <!--            :to="item.to"-->
+  <!--            exact-->
+  <!--            router-->
+  <!--        >-->
+  <!--          <v-list-item-action>-->
+  <!--            <v-icon>{{ item.icon }}</v-icon>-->
+  <!--          </v-list-item-action>-->
+  <!--          <v-list-item-content>-->
+  <!--            <v-list-item-title v-text="item.title"/>-->
+  <!--          </v-list-item-content>-->
+  <!--        </v-list-item>-->
+  <!--      </v-list>-->
+  <!--    </v-navigation-drawer>-->
 
   <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light px-lg-5 px-md-4 px-2">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'LandingPage' %}">
+      <nuxt-link class="navbar-brand" to="/">
         <svg fill="none" viewBox="0 0 248 168" width="80" xmlns="http://www.w3.org/2000/svg">
           <g id="Group 6">
             <path id="Reviewer"
@@ -37,7 +37,7 @@
                   fill="#F50057"></path>
           </g>
         </svg>
-      </a>
+      </nuxt-link>
       <button id="menuBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
               class="navbar-toggler"
               data-target="#navbarNav" data-toggle="collapse" type="button">
