@@ -468,7 +468,7 @@
       </div>
     </section>
 
-    <ins class="adsbygoogle"
+    <ins v-if="allowAds" class="adsbygoogle"
          data-ad-client="ca-pub-3869785327224690"
          data-ad-format="auto"
          data-ad-slot="1581030669"
@@ -608,7 +608,7 @@
     </div>
 
     <!-- SRD1 -->
-    <ins class="adsbygoogle"
+    <ins v-if="allowAds" class="adsbygoogle"
          data-ad-client="ca-pub-3869785327224690"
          data-ad-format="auto"
          data-ad-slot="7703585885"
@@ -1397,7 +1397,12 @@ export default {
   components: {
     Logo,
     VuetifyLogo
-  }
+  },
+  data() {
+    return {
+      allowAds: false,
+    }
+  },
 }
 </script>
 
