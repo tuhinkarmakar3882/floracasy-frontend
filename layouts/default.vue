@@ -1,43 +1,18 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-        v-model="drawer"
-        :clipped="clipped"
-        :mini-variant="miniVariant"
-        app
-        fixed
-    >
-      <v-list>
-        <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            :to="item.to"
-            exact
-            router
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title"/>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-app-bar
         :clipped-left="clipped"
         app
-        dark
+        color="white"
         elevate-on-scroll
         hide-on-scroll
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-      <v-spacer/>
+      <NavigationBar/>
     </v-app-bar>
     <v-main>
       <v-progress-linear v-if="loading" color="yellow darken-2" indeterminate/>
       <v-container>
-        <!--        <nuxt/>-->
+        <nuxt/>
       </v-container>
     </v-main>
     <v-footer absolute app padless>
@@ -45,15 +20,22 @@
     </v-footer>
   </v-app>
 </template>
-<!--Todo Fix This-->
 
 <script>
 import PageFooter from "@/components/PageFooter";
+import NavigationBar from "@/components/NavigationBar";
 
 export default {
   components: [
-    PageFooter
+    PageFooter,
+    NavigationBar
   ],
+  transition(to, from) {
+    if (!from) {
+      return 'slide-left'
+    }
+    return +to.query.page < +from.query.page ? 'slide-right' : 'slide-left'
+  },
   data() {
     return {
       clipped: false,
@@ -76,7 +58,7 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js'
     }
-  }
+  },
 }
 </script>
 
