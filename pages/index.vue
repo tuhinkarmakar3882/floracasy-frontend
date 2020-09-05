@@ -472,11 +472,7 @@
 
       <AdvertisementUnit v-if="allowAds" adSlotNumber="1581030669"/>
 
-
-      <h1 class="sectionTitle my-5">Latest Article</h1>
-      <div id="blogPreview" class="container" data-max-blog="2">
-        <h1 class="text-center ">Loading...</h1>
-      </div>
+      <LatestArticles/>
 
       <div class="container-fluid">
         <div class="my-5 mx-lg-5 jumbotronDiv">
@@ -1383,15 +1379,13 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import AdvertisementUnit from "@/components/AdvertisementUnit";
+import LatestArticles from "@/components/LatestArticles";
 
 export default {
   components: {
-    AdvertisementUnit,
-    Logo,
-    VuetifyLogo
+    LatestArticles,
+    AdvertisementUnit
   },
   transition: 'slide-right',
   data() {
@@ -1402,6 +1396,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "styles/landingPage";
-</style>
