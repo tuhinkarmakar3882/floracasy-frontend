@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="the-router-page-content">
+    <nuxt-link to="/">Back</nuxt-link>
     <div class="my-5 pt-4">
       <section class="container-fluid px-lg-5">
         <div id="carousel">
