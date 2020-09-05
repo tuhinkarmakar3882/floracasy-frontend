@@ -97,12 +97,6 @@ export default {
                     carousalBg: "#ffebeb",
                     indicator: "#85085b",
                     indicatorHighlight: "#fa2f6f",
-                    primaryFont: "'Bad Script', cursive",
-                    serif: "'Playfair Display', serif",
-                    secondaryFont: "'Montserrat', sans-serif",
-                    navigationFont: "'Roboto', sans-serif",
-                    standardPaddingX: "64px",
-                    smallScreen: "575px",
                     jumbotronBg: "#ededed",
                 }
             }
@@ -117,6 +111,6 @@ export default {
     loadingIndicator: {
         name: 'rectangle-bounce',
         color: '#C60156',
-        background: '#000'
+        background: '#FFF'
     }
 }

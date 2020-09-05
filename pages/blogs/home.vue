@@ -825,14 +825,12 @@
 </template>
 
 <script>
-import LoadingAnimation from "@/components/LoadingAnimation";
-
 export default {
   name: "BlogHome",
   transition: 'slide-left',
-  components: [
-    LoadingAnimation
-  ],
+  components: {
+    IntroBanner: () => import("@/components/IntroBanner"),
+  },
   data() {
     return {
       allowAds: false,

@@ -14,21 +14,16 @@
 
 <script>
 
-
-import LatestArticles from "@/components/LatestArticles";
-import PageFooter from "@/components/PageFooter";
-import NavigationBar from "@/components/NavigationBar";
-import BottomNavigationBar from "@/components/BottomNavigationBar";
-
 export default {
-  components: [
-    LatestArticles,
-    PageFooter,
-    NavigationBar,
-    BottomNavigationBar,
-  ],
+  components: {
+    LatestArticles: () => import ("@/components/LatestArticles"),
+    PageFooter: () => import ("@/components/PageFooter"),
+    NavigationBar: () => import ("@/components/NavigationBar"),
+    BottomNavigationBar: () => import ("@/components/BottomNavigationBar"),
+  },
   data: () => {
     return {
+      loading: false,
       bottomNav: 3,
     }
   },
