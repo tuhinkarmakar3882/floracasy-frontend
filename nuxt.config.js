@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
     /*
     ** Nuxt rendering mode
@@ -40,9 +38,9 @@ export default {
     ** Global CSS
     */
     css: [
-        '~/styles/bootstrap.min.css',
-        // '~/styles/bootstrap-grid.min.css',
-        // '~/styles/bootstrap-reboot.min.css',
+        // '~/styles/bootstrap.min.css',
+        '~/styles/bootstrap-grid.min.css',
+        '~/styles/bootstrap-reboot.min.css',
         '~/styles/main.scss',
     ],
     /*
@@ -90,14 +88,22 @@ export default {
         theme: {
             dark: false,
             themes: {
-                dark: {
-                    primary: colors.blue.darken2,
-                    accent: colors.grey.darken3,
-                    secondary: colors.amber.darken3,
-                    info: colors.teal.lighten1,
-                    warning: colors.amber.base,
-                    error: colors.deepOrange.accent4,
-                    success: colors.green.accent3
+                light: {
+                    primary: "#C60156",
+                    secondary: "#FF748E",
+                    muted: "#aaaaaa",
+                    semiDark: "#6e6e6e",
+                    fallBackNavigation: "#3e0029",
+                    carousalBg: "#ffebeb",
+                    indicator: "#85085b",
+                    indicatorHighlight: "#fa2f6f",
+                    primaryFont: "'Bad Script', cursive",
+                    serif: "'Playfair Display', serif",
+                    secondaryFont: "'Montserrat', sans-serif",
+                    navigationFont: "'Roboto', sans-serif",
+                    standardPaddingX: "64px",
+                    smallScreen: "575px",
+                    jumbotronBg: "#ededed",
                 }
             }
         }

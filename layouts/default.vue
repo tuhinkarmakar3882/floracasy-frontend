@@ -1,16 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar
-        :clipped-left="clipped"
-        app
-        color="white"
-        elevate-on-scroll
-        hide-on-scroll
-    >
+    <v-app-bar app color="white">
       <NavigationBar/>
     </v-app-bar>
     <v-main>
-      <v-progress-linear v-if="loading" color="yellow darken-2" indeterminate/>
+      <v-progress-linear v-if="loading" color="primary darken-6" indeterminate/>
       <nuxt/>
     </v-main>
     <v-footer absolute app color="red" padless>

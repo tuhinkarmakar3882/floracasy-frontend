@@ -31,7 +31,8 @@
           Or, be it your beauty tips. <br>
           We’ve got you covered.
         </p>
-        <nuxt-link v-ripple class="btn btn-lg accentButton scrollDownHolder px-5" to="/blogs/home">Explore Now!
+        <nuxt-link v-ripple class="btn btn-lg accentButton scrollDownHolder px-5" to="/blogs/home">
+          Explore Now!
         </nuxt-link>
       </div>
       <div class="col d-none d-sm-block">
@@ -463,7 +464,7 @@
     </div>
 
     <v-container>
-      <section class="container-fluid pt-4 px-lg-5">
+      <section class="pt-4 px-lg-5">
         <h1 id="start" class="sectionTitle my-5 pt-3">Browse Popular Reviews & Beauty Tips</h1>
         <div id="carousel">
           <h1 class="text-center ">Loading...</h1>
