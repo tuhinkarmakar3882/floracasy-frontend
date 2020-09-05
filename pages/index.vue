@@ -469,25 +469,19 @@
           <h1 class="text-center ">Loading...</h1>
         </div>
       </section>
-    </v-container>
 
-    <v-container>
       <ins v-if="allowAds" class="adsbygoogle"
            data-ad-client="ca-pub-3869785327224690"
            data-ad-format="auto"
            data-ad-slot="1581030669"
            data-full-width-responsive="true"
            style="display:block"></ins>
-    </v-container>
 
-    <v-container>
       <h1 class="sectionTitle my-5">Latest Article</h1>
       <div id="blogPreview" class="container" data-max-blog="2">
         <h1 class="text-center ">Loading...</h1>
       </div>
-    </v-container>
 
-    <v-container>
       <div class="container-fluid">
         <div class="my-5 mx-lg-5 jumbotronDiv">
           <div class="jumbotron py-4 py-md-4 px-5">
@@ -614,9 +608,7 @@
           </div>
         </div>
       </div>
-    </v-container>
 
-    <v-container>
       <!-- SRD1 -->
       <ins v-if="allowAds" class="adsbygoogle"
            data-ad-client="ca-pub-3869785327224690"
@@ -624,19 +616,14 @@
            data-ad-slot="7703585885"
            data-full-width-responsive="true"
            style="display:block"></ins>
-    </v-container>
 
-
-    <v-container>
       <div class="container-fluid px-lg-5">
         <h1 class="sectionTitle my-5">Quick Bucket for Shopping</h1>
         <div class="text-center lead my-4 advertisement">Advertisement</div>
 
         <div id="areaToLoadCards" class="row justify-content-center align-items-center" data-max-card="3"></div>
       </div>
-    </v-container>
 
-    <v-container>
       <section class="container-fluid">
         <div class="my-5 mx-lg-5 jumbotronDiv">
           <div class="jumbotron py-4 py-md-4 px-5">
