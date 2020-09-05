@@ -4,7 +4,7 @@
 
 .introBanner {
   @media screen and (max-width: $smallScreen) {
-    height: 100vh;
+    height: calc(100vh - 84px);
   }
 
   .subtitle {
