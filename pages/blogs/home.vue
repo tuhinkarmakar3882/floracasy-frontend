@@ -829,6 +829,7 @@ import LoadingAnimation from "@/components/LoadingAnimation";
 
 export default {
   name: "BlogHome",
+  transition: 'slide-left',
   components: [
     LoadingAnimation
   ],

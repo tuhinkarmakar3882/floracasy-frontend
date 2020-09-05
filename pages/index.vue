@@ -1414,6 +1414,7 @@ export default {
     Logo,
     VuetifyLogo
   },
+  transition: 'slide-right',
   data() {
     return {
       allowAds: false,
