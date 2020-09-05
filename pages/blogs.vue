@@ -3,7 +3,7 @@
     <div class="my-5 pt-4">
       <section class="container-fluid px-lg-5">
         <div id="carousel">
-          <h1 class="text-center display-4">Loading Carousel...</h1>
+          <LoadingAnimation/>
         </div>
       </section>
 
@@ -14,7 +14,7 @@
 
         <div class="row">
           <div id="blogPreview" class="col" data-max-blog="5">
-            <h1 class="text-center display-4">Loading...</h1>
+            <LoadingAnimation/>
           </div>
         </div>
 
@@ -824,8 +824,13 @@
 </template>
 
 <script>
+import LoadingAnimation from "@/components/LoadingAnimation";
+
 export default {
   name: "BlogHome",
+  components: [
+    LoadingAnimation
+  ],
   data() {
     return {
       allowAds: false,

@@ -464,7 +464,7 @@
     <section class="container-fluid pt-4 px-lg-5">
       <h1 id="start" class="sectionTitle my-5 pt-3">Browse Popular Reviews & Beauty Tips</h1>
       <div id="carousel">
-        <h1 class="text-center display-4">Loading...</h1>
+        <h1 class="text-center ">Loading...</h1>
       </div>
     </section>
 
@@ -479,7 +479,7 @@
 
     <h1 class="sectionTitle my-5">Latest Article</h1>
     <div id="blogPreview" class="container" data-max-blog="2">
-      <h1 class="text-center display-4">Loading...</h1>
+      <h1 class="text-center ">Loading...</h1>
     </div>
 
     <div class="container-fluid">
@@ -1593,5 +1593,60 @@ export default {
   font-size: 22px;
   color: darken($semiDark, 10%);
 }
+
+
+.introBanner {
+  @media screen and (max-width: $smallScreen) {
+    height: 100vh;
+  }
+
+  .subtitle {
+    line-height: 28px;
+    letter-spacing: 2px;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  position: relative;
+
+  .scrollDown {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    left: calc(50% - 22px);
+    bottom: 64px;
+    fill: transparent;
+    stroke: darken($primary, 5%);
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    filter: drop-shadow(5px 5px 10px rgba(60, 60, 60, .15));
+    animation: draw 1.2s ease-in-out forwards .3s,
+    appear .5s ease-in-out forwards 1.4s,
+    bounce 1s ease-in-out infinite alternate 1.9s;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes appear {
+    to {
+      fill: darken($primary, 7%);
+      stroke-width: 0;
+    }
+  }
+
+  @keyframes bounce {
+    from {
+      fill: darken($primary, 7%);
+    }
+    to {
+      bottom: 24px;
+      fill: lighten($primary, 7%);
+    }
+  }
+}
+
+
 
 </style>

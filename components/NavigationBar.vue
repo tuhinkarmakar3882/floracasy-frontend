@@ -1,28 +1,4 @@
 <template>
-  <!--    <v-navigation-drawer-->
-  <!--        v-model="drawer"-->
-  <!--        :clipped="clipped"-->
-  <!--        :mini-variant="miniVariant"-->
-  <!--        app-->
-  <!--        fixed-->
-  <!--    >-->
-  <!--      <v-list>-->
-  <!--        <v-list-item-->
-  <!--            v-for="(item, i) in items"-->
-  <!--            :key="i"-->
-  <!--            :to="item.to"-->
-  <!--            exact-->
-  <!--            router-->
-  <!--        >-->
-  <!--          <v-list-item-action>-->
-  <!--            <v-icon>{{ item.icon }}</v-icon>-->
-  <!--          </v-list-item-action>-->
-  <!--          <v-list-item-content>-->
-  <!--            <v-list-item-title v-text="item.title"/>-->
-  <!--          </v-list-item-content>-->
-  <!--        </v-list-item>-->
-  <!--      </v-list>-->
-  <!--    </v-navigation-drawer>-->
 
   <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light px-lg-5 px-md-4 px-2">
     <div class="container-fluid">

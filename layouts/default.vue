@@ -15,7 +15,7 @@
         <nuxt/>
       </v-container>
     </v-main>
-    <v-footer absolute app padless>
+    <v-footer absolute app color="red" padless>
       <PageFooter/>
     </v-footer>
   </v-app>

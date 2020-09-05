@@ -91,7 +91,7 @@ export default {
 
 .myFooter {
   width: 100%;
-  background: #EEE;
+  background: #EEE !important;
   border: 1px solid transparent;
 
   .contactIcons {
