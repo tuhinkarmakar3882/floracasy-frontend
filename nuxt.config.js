@@ -116,7 +116,7 @@ export default {
     // loadingIndicator: '~/cli.html',
     loadingIndicator: {
         name: 'rectangle-bounce',
-        color: '#3B8070',
-        background: 'white'
+        color: '#C60156',
+        background: '#000'
     }
 }

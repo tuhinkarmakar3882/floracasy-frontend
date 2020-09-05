@@ -920,7 +920,6 @@
 </template>
 
 <script>
-
 export default {
   components: {
     IntroBanner: () => import("@/components/IntroBanner"),
@@ -934,3 +933,8 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+@import "styles/themeData";
+@import "styles/base";
+@import "styles/blogHome";
+</style>

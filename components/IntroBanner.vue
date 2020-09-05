@@ -474,10 +474,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "styles/themeData";
-
 .introBanner {
   @media screen and (max-width: $smallScreen) {
-    //height: calc(100vh - 112px);
+    height: calc(100vh - 112px);
   }
 
   .subtitle {
