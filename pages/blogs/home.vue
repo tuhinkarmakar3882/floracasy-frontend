@@ -1,7 +1,8 @@
 <template>
   <div class="the-router-page-content">
     <nuxt-link to="/">Back</nuxt-link>
-    <div class="my-5 pt-4">
+    <v-container>
+
       <section class="container-fluid px-lg-5">
         <div id="carousel">
           <LoadingAnimation/>
@@ -20,21 +21,20 @@
         </div>
 
         <div class="text-center">
-          <button id="prevBlogPage" class="mx-sm-4 mx-2 btn accentButton px-5 my-4">Prev</button>
-          <button id="nextBlogPage" class="mx-sm-4 mx-2 btn accentButton px-5 my-4">Next</button>
+
+          <v-btn color="primary">Prev</v-btn>
+          <v-btn color="primary">Next</v-btn>
         </div>
 
       </div>
+
       <section class="text-center lead my-4 advertisement">
-        <!-- SRD1 -->
-        <v-container>
-          <ins v-if="allowAds" class="adsbygoogle"
-               data-ad-client="ca-pub-3869785327224690"
-               data-ad-format="auto"
-               data-ad-slot="7703585885"
-               data-full-width-responsive="true"
-               style="display:block"></ins>
-        </v-container>
+        <ins v-if="allowAds" class="adsbygoogle"
+             data-ad-client="ca-pub-3869785327224690"
+             data-ad-format="auto"
+             data-ad-slot="7703585885"
+             data-full-width-responsive="true"
+             style="display:block"></ins>
       </section>
 
 
@@ -43,18 +43,16 @@
         <div id="areaToLoadCards" class="row justify-content-center align-items-center" data-max-card="3"></div>
       </section>
 
-      <div class="text-center lead my-4 advertisement">
+      <section class="text-center lead my-4 advertisement">
         <!-- SRD2 -->
-        <v-container>
-          <ins v-if="allowAds" class="adsbygoogle"
-               data-ad-client="ca-pub-3869785327224690"
-               data-ad-format="auto"
-               data-ad-slot="1581030669"
-               data-full-width-responsive="true"
-               style="display:block"></ins>
-        </v-container>
+        <ins v-if="allowAds" class="adsbygoogle"
+             data-ad-client="ca-pub-3869785327224690"
+             data-ad-format="auto"
+             data-ad-slot="1581030669"
+             data-full-width-responsive="true"
+             style="display:block"></ins>
+      </section>
 
-      </div>
       <section class="container-fluid">
         <div class="my-5 mx-lg-5 jumbotronDiv">
           <div class="jumbotron py-4 py-md-4 px-5">
@@ -812,15 +810,17 @@
                   <p class="hero my-4">We&rsquo;ve got a plenty of <br> hand picked item to choose
                     from.
                   </p>
-                  <a class="btn accentButton px-5 mt-4 mb-0 mb-md-4" href="{% url 'ShoppingPage' %}">View
-                    More</a>
+                  <v-btn color="primary">
+                    View More
+                  </v-btn>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-    </div>
+
+    </v-container>
   </div>
 </template>
 

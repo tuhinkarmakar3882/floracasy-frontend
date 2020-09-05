@@ -1,5 +1,5 @@
 <template>
-  <p>Loading Animation</p>
+  <p class="text-center my-4 py-2">Loading Animation</p>
 </template>
 
 <script>
