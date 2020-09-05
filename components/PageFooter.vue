@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/themeData';
+@import 'styles/themeData';
 
 .myFooter {
   width: 100%;

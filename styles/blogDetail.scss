@@ -1,0 +1,16 @@
+@import 'blogHome';
+
+.blogTitle {
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+  color: $primary;
+  font-size: 40px;
+  font-family: $serif;
+  letter-spacing: 1px;
+  line-height: 48px;
+  font-weight: 500;
+}
+
+.blogDate {
+  letter-spacing: 1px;
+  font-family: $navigationFont, sans-serif;
+}

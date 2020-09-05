@@ -63,12 +63,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/themeData';
+@import 'styles/themeData';
 
 body {
   background: white;
   transition: all .5s;
-
 }
 
 </style>

@@ -1,4 +1,4 @@
-@import 'assets/themeData';
+@import 'themeData';
 
 .accentButton {
   background: darken($primary, 3%);
@@ -73,7 +73,7 @@
 
 body {
   font-family: $secondaryFont, serif;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 }
 
 .navbar-nav {
