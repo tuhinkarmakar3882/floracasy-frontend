@@ -134,7 +134,9 @@
                 <h1 class="heroHeadText mt-4 mb-5">Keep on Reading!</h1>
                 <p class="hero my-4">A quick reading of unbiased reviews <br> can make you a smart buyer!
                 </p>
-                <a class="btn accentButton px-5 mt-4 mb-0 mb-md-4" href="{% url 'BlogHome' %}">See More</a>
+                <v-btn color="primary">
+                  See More
+                </v-btn>
               </div>
             </div>
           </div>
@@ -906,8 +908,9 @@
                   <h1 class="heroHeadText mt-4 mb-5">Want to Shop More?</h1>
                   <p class="hero my-4">We&rsquo;ve got a plenty of <br> hand picked item to choose from.
                   </p>
-                  <a class="btn accentButton px-5 mt-4 mb-0 mb-md-4" href="{% url 'ShoppingPage' %}">View
-                    More</a>
+                  <v-btn color="primary">
+                    View More
+                  </v-btn>
                 </div>
               </div>
             </div>
