@@ -4,7 +4,7 @@
         app
         color="white"
         elevate-on-scroll
-        scroll-target="#scrolling-techniques-7"
+        hide-on-scroll
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
@@ -34,6 +34,8 @@
           v-model="bottomNav"
           dark
           shift
+          fixed
+          hide-on-scroll
       >
         <v-btn>
           <span>Video</span>
