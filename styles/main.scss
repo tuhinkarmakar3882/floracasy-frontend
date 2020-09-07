@@ -1,6 +1,7 @@
 html {
   scroll-behavior: smooth;
-  max-width: 100vw !important;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .the-router-page-content {

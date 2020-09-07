@@ -1,4 +1,8 @@
 export default {
+    server: {
+        port: 8080, // default: 3000
+        host: '0.0.0.0' // default: localhost
+    },
     /*
     ** Nuxt rendering mode
     ** See https://nuxtjs.org/api/configuration-mode
@@ -38,10 +42,11 @@ export default {
     ** Global CSS
     */
     css: [
-        // '~/styles/bootstrap.min.css',
-        '~/styles/bootstrap-grid.min.css',
-        '~/styles/bootstrap-reboot.min.css',
+        '~/styles/bootstrap.min.css',
+        // '~/styles/bootstrap-grid.min.css',
+        // '~/styles/bootstrap-reboot.min.css',
         '~/styles/main.scss',
+        '~/styles/base.scss',
     ],
     /*
     ** Plugins to load before mounting the App
