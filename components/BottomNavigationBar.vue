@@ -1,17 +1,19 @@
 <template>
   <v-bottom-navigation
+      app
       v-model="bottomNav"
       dark
       shift
+      hide-on-scroll
   >
     <v-btn>
-      <span>Video</span>
-      <v-icon>mdi-television-play</v-icon>
+      <span>Home</span>
+      <v-icon>mdi-home</v-icon>
     </v-btn>
 
     <v-btn>
-      <span>Music</span>
-      <v-icon>mdi-music-note</v-icon>
+      <span>Blogs</span>
+      <v-icon>mdi-book</v-icon>
     </v-btn>
 
     <v-btn>
