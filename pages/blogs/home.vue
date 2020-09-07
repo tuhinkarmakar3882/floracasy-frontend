@@ -827,7 +827,8 @@
 <script>
 export default {
   name: "BlogHome",
-  transition: 'slide-left',
+  // transition: 'slide-left',
+  transition: 'slide-x-transition',
   components: {
     IntroBanner: () => import("@/components/IntroBanner"),
   },

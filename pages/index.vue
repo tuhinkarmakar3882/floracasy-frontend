@@ -926,8 +926,11 @@
 export default {
   components: {
     IntroBanner: () => import("@/components/IntroBanner"),
+    AdvertisementUnit: () => import("@/components/AdvertisementUnit"),
+    LatestArticles: () => import("@/components/LatestArticles"),
   },
-  transition: 'slide-right',
+  // transition: 'slide-right',
+  transition: 'slide-x-transition',
   data() {
     return {
       allowAds: false,
