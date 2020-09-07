@@ -7,8 +7,9 @@
     </v-main>
 
 
-    <BottomNavigationBar/>
-    <!--    <v-footer app color="red" padless></v-footer>-->
+    <v-footer padless>
+      <PageFooter/>
+    </v-footer>
   </v-app>
 </template>
 
