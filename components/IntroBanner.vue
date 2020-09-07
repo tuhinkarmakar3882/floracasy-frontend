@@ -477,13 +477,17 @@ export default {
 
 .introBanner {
   @media screen and (max-width: $smallScreen) {
-    //height: calc(100vh - 112px);
+    height: calc(100vh - 112px);
   }
 
   .subtitle {
     line-height: 28px;
     letter-spacing: 2px;
     font-family: "Montserrat", sans-serif;
+
+    @media screen and (max-width: $smallScreen) {
+      margin: 30px 0 !important;
+    }
   }
 
   position: relative;
@@ -493,7 +497,7 @@ export default {
     width: 44px;
     height: 44px;
     left: calc(50% - 22px);
-    bottom: 64px;
+    bottom: 60px;
     fill: transparent;
     stroke: darken($primary, 5%);
     stroke-dasharray: 40;
@@ -501,7 +505,7 @@ export default {
     filter: drop-shadow(5px 5px 10px rgba(60, 60, 60, .15));
     animation: draw 1.2s ease-in-out forwards .3s,
     appear .5s ease-in-out forwards 1.4s,
-    bounce 1s ease-in-out infinite alternate 1.9s;
+    bounce 1.5s ease-in-out infinite alternate 1.9s;
   }
 
   @keyframes draw {
@@ -521,7 +525,7 @@ export default {
       fill: darken($primary, 7%);
     }
     to {
-      bottom: 24px;
+      bottom: 32px;
       fill: lighten($primary, 7%);
     }
   }
