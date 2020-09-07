@@ -1,5 +1,7 @@
 <template>
-  <p class="text-center my-4 py-2">Loading Animation</p>
+  <div class="text-center my-5 py-5">
+    <v-progress-circular color="primary" indeterminate/>
+  </div>
 </template>
 
 <script>
