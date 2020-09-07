@@ -91,7 +91,7 @@ export default {
 
 .myFooter {
   width: 100%;
-  background: #EEE !important;
+  background: #FAFAFA;
   border: 1px solid transparent;
 
   .contactIcons {
@@ -136,11 +136,11 @@ export default {
 
       a {
         font-family: $navigationFont;
-        font-weight: 300;
         letter-spacing: 1px;
         font-size: 20px;
+        font-weight: 300;
         text-decoration: none;
-        color: $semiDark;
+        color: black;
         text-shadow: 0 0 5px rgba(60, 60, 60, .1);
 
         &:hover {

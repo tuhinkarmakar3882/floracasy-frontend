@@ -32,9 +32,9 @@
       </p>
 
       <nuxt-link to="/blogs/home">
-        <v-btn color="primary">
+        <button v-ripple class="accentButton">
           Explore Now!
-        </v-btn>
+        </button>
       </nuxt-link>
 
     </div>
@@ -477,7 +477,7 @@ export default {
 
 .introBanner {
   @media screen and (max-width: $smallScreen) {
-    height: calc(100vh - 112px);
+    //height: calc(100vh - 112px);
   }
 
   .subtitle {
