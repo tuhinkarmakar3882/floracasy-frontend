@@ -6,7 +6,7 @@
       <section class="pt-4 px-lg-5">
         <h1 id="start" class="sectionTitle my-5 pt-3">Browse Popular Reviews & Beauty Tips</h1>
         <div id="carousel">
-          <h1 class="text-center ">Loading...</h1>
+          <LoadingAnimation/>
         </div>
       </section>
 
@@ -925,6 +925,7 @@
 <script>
 export default {
   components: {
+    LoadingAnimation: () => import("@/components/LoadingAnimation"),
     IntroBanner: () => import("@/components/IntroBanner"),
     AdvertisementUnit: () => import("@/components/AdvertisementUnit"),
     LatestArticles: () => import("@/components/LatestArticles"),

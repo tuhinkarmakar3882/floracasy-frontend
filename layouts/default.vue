@@ -8,7 +8,8 @@
 
 
     <v-footer padless>
-      <PageFooter/>
+      <BottomNavigationBar/>
+      <!--      <PageFooter/>-->
     </v-footer>
   </v-app>
 </template>
