@@ -15,6 +15,38 @@
         </template>
 
         <template v-else>
+          <section v-for="blog in blogsData" :key="blog.id">
+
+            <article class="trendingBlock px-0 my-4 px-md-5">
+              <div class="row">
+                <div class="col-12 d-none d-md-block col-md-4 col-lg-3 my-2">
+                  <img :src="utility.blogImageParser(blog)" alt="trendingBlogImage"
+                       class="lazyload my-sm-3 trendingBlogImage w-100 my-4" loading="lazy">
+                </div>
+
+                <div class="col-12 col-lg-9 col-md-8 my-2">
+                  <a :href="blog.blog_link_name">
+                    <h2 class="trendingTitle mb-4">
+                      {{ blog.blog_title }}
+                    </h2>
+                  </a>
+                  <p class="trendingPostTime text-muted">
+                    {{ utility.timeStringParser(blog.last_updated) }}
+                  </p>
+
+                  <div class="trendingBody">
+                    <p class="trendingText">
+                      {{ blog.blog_subtitle }}
+                      <span class="dotDotDot">...</span>
+                    </p>
+                    <a :href="blog.blog_link_name" class="btn accentButton px-4">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+
+          </section>
           <h1 class="text-center">Replace Me with real Implementation</h1>
         </template>
       </template>
@@ -23,7 +55,10 @@
     </section>
   </div>
 </template>
+
 <script>
+import endpoints from '@/api/endpoints.json'
+import utility from '@/utils/utility'
 
 export default {
   name: 'LatestArticles',
@@ -34,32 +69,50 @@ export default {
   data() {
     return {
       loadingStatus: true,
-      errorWhileLoading: true,
+      errorWhileLoading: false,
+      blogsData: [],
+      utility: utility,
     };
   },
   components: {
     LoadingAnimation: () => import("@/components/LoadingAnimation"),
   },
   mounted() {
-    setTimeout(() => {
-      this.loadingStatus = false;
-      this.errorWhileLoading = true;
-    }, 2000)
+    this.fetchBlogDataFromServer();
   },
   methods: {
     reloadBlogs() {
       console.log("yay")
       this.$data.loadingStatus = true;
       this.$data.errorWhileLoading = false;
-      this.fetchDataFromServer();
+      this.fetchBlogDataFromServer();
     },
 
-    fetchDataFromServer() {
-      console.log("more yay")
-      setTimeout(() => {
-        this.$data.loadingStatus = false;
-      }, 3000)
+    fetchBlogDataFromServer() {
+      this.loadingStatus = true;
+      this.errorWhileLoading = true;
+
+      this.$axios.get(endpoints.get_blog_overview)
+          .then((response) => {
+            this.blogsData = response.data.blog_data;
+            this.loadingStatus = false;
+            this.errorWhileLoading = false;
+          })
+          .catch((error) => {
+            this.errorWhileLoading = true;
+          });
     },
+
+  },
+  computed: {
+    getImageLinkFrom(blog) {
+      return '...';
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'styles/blogHome';
+
+</style>
