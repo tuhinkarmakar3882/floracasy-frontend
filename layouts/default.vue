@@ -18,7 +18,6 @@
 
 export default {
   components: {
-    LatestArticles: () => import ("@/components/LatestArticles"),
     PageFooter: () => import ("@/components/PageFooter"),
     NavigationBar: () => import ("@/components/NavigationBar"),
     BottomNavigationBar: () => import ("@/components/BottomNavigationBar"),
