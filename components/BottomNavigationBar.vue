@@ -5,7 +5,6 @@
       :color="color"
       shift
       background-color="white"
-      hide-on-scroll
   >
 
     <v-btn v-for="(menuOption,index) in menuOptions" :key="index"
