@@ -25,7 +25,6 @@ export default {
   data: () => {
     return {
       loading: false,
-      bottomNav: 3,
     }
   },
 }
