@@ -25,11 +25,11 @@
                 </div>
 
                 <div class="col-12 col-lg-9 col-md-8 my-2">
-                  <a :href="blog.blog_link_name">
+                  <nuxt-link :to="blog.blog_link_name">
                     <h2 class="trendingTitle mb-4">
                       {{ blog.blog_title }}
                     </h2>
-                  </a>
+                  </nuxt-link>
                   <p class="trendingPostTime text-muted">
                     {{ utility.timeStringParser(blog.last_updated) }}
                   </p>
@@ -39,7 +39,7 @@
                       {{ blog.blog_subtitle }}
                       <span class="dotDotDot">...</span>
                     </p>
-                    <a :href="blog.blog_link_name" class="btn accentButton px-4">Read More</a>
+                    <nuxt-link :to="blog.blog_link_name" class="btn accentButton px-4">Read More</nuxt-link>
                   </div>
                 </div>
               </div>
