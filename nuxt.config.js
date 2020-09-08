@@ -33,7 +33,7 @@ export default {
             ,
             {
                 rel: 'stylesheet',
-                href: "https://fonts.googleapis.com/css2?family=Bad+Script&family=Montserrat:ital,wght@0,300;0,400;0,500;1,400&family=Playfair+Display:wght@400;500&family=Roboto:wght@300;400&display=swap",
+                href: "https://fonts.googleapis.com/css2?family=Bad+Script&family=Montserrat:ital,wght@0,300;0,400;0,500;1,400&family=Comfortaa:wght@300;400;500;700&family=Playfair+Display:wght@400;500&family=Roboto:wght@300;400&display=swap",
             },
         ],
 
