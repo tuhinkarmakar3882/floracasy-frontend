@@ -1,4 +1,3 @@
 {
-  "post_a_comment": "http://localhost:8000",
-  "get_blog_overview": "http://localhost:8000/api/get_blog_overview?blogPerPage=3"
+  "get_blog_overview": "https://self.reviewer.nubes.live/api/get_blog_overview?blogPerPage=3"
 }
