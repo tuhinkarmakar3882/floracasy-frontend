@@ -1,56 +1,61 @@
 <template>
   <v-bottom-navigation
       app
-      v-model="bottomNav"
-      dark
+      v-model="bottomNavigationPosition"
+      :color="color"
       shift
+      background-color="white"
       hide-on-scroll
   >
-    <v-btn>
-      <span>Home</span>
-      <v-icon>mdi-home</v-icon>
+
+    <v-btn v-for="(menuOption,index) in menuOptions" :key="index"
+           @click="updateBottomNavigationAndMoveTo(index, menuOption.route)">
+      <span>{{ menuOption.name }}</span>
+      <v-icon>{{ menuOption.icon }}</v-icon>
     </v-btn>
 
-    <v-btn>
-      <span>Blogs</span>
-      <v-icon>mdi-book</v-icon>
-    </v-btn>
-
-    <v-btn>
-      <span>Book</span>
-      <v-icon>mdi-book</v-icon>
-    </v-btn>
-
-    <v-btn>
-      <span>Image</span>
-      <v-icon>mdi-image</v-icon>
-    </v-btn>
   </v-bottom-navigation>
 </template>
 
 <script>
+// todo REMEMBER TO MAKE THIS FILE GO IN SYNC
 export default {
   name: 'BottomNavigationBar',
   data() {
     return {
-      bottomNav: 3,
+      menuOptions: [
+        {
+          name: "Home",
+          icon: "mdi-home",
+          route: '/',
+        },
+        {
+          name: "Blogs",
+          icon: "mdi-book",
+          route: '/blogs/home',
+        },
+      ],
+      bottomNavigationPosition: 0,
     }
   },
 
   computed: {
     color() {
-      switch (this.bottomNav) {
+      switch (this.bottomNavigationPosition) {
         case 0:
-          return 'blue-grey'
+          return 'primary'
         case 1:
-          return 'teal'
-        case 2:
-          return 'brown'
-        case 3:
-          return 'indigo'
+          return 'green'
       }
     },
   },
+
+  methods: {
+
+    updateBottomNavigationAndMoveTo(bottomNavigationPosition, route) {
+      this.$router.push({path: route})
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
