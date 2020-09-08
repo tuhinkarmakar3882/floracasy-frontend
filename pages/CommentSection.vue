@@ -1,6 +1,5 @@
 <template>
-  <div>
-
+  <v-container>
     <v-text-field
         v-model="comment"
         label="Comment"
@@ -13,7 +12,7 @@
         {{ item }}
       </li>
     </ul>
-  </div>
+  </v-container>
 </template>
 
 <script>
