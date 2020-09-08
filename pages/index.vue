@@ -3,16 +3,11 @@
     <IntroBanner/>
 
     <v-container>
-      <section class="pt-4 px-lg-5">
-        <h1 id="start" class="sectionTitle my-5 pt-3">Browse Popular Reviews & Beauty Tips</h1>
-        <div id="carousel">
-          <LoadingAnimation/>
-        </div>
-      </section>
+      <Carousel/>
 
       <AdvertisementUnit v-if="allowAds" adSlotNumber="1581030669"/>
 
-      <LatestArticles/>
+      <BlogList heading="Latest Articles"/>
 
       <div class="container-fluid">
         <div class="my-5 mx-lg-5 jumbotronDiv">
@@ -923,12 +918,14 @@
 </template>
 
 <script>
+import Carousel from "@/pages/Carousel";
+
 export default {
   components: {
-    LoadingAnimation: () => import("@/components/LoadingAnimation"),
+    Carousel,
     IntroBanner: () => import("@/components/IntroBanner"),
     AdvertisementUnit: () => import("@/components/AdvertisementUnit"),
-    LatestArticles: () => import("@/components/LatestArticles"),
+    BlogList: () => import("@/components/BlogList"),
   },
   // transition: 'slide-right',
   transition: 'slide-x-transition',
@@ -940,8 +937,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "styles/themeData";
-@import "styles/base";
-@import "styles/blogHome";
-</style>
