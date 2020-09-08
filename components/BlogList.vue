@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import endpoints from '@/api/endpoints.json'
+import endpoints from '@/api/endpoints.js'
 import utility from '@/utils/utility'
 
 export default {
