@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Add goes here </h1>
     <ins :data-ad-slot=adSlotNumber
          class="adsbygoogle"
          data-ad-client="ca-pub-3869785327224690"

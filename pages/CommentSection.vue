@@ -7,40 +7,65 @@
 
     <v-divider/>
 
-
-    <!--   Todo ---------- The items in the below row are not in center I guess ------------- -->
     <v-row>
-      <v-col class="box" cols="9">
-        <v-text-field v-model="comment" label="Write your thoughts here" outlined required/>
+      <v-col class="box" cols="12" md="9">
+        <v-row>
+          <v-col class="box" cols="9">
+            <v-textarea
+              v-model="comment"
+              label="Write your thoughts here"
+              auto-grow
+              rows="1"
+              row-height="10"
+              hint="feedback"
+              outlined
+            />
+          </v-col>
+          <v-col class="icon" cols="3">
+            <v-btn text @click="addComment">
+              <v-icon class="inside" color='#ba384b' large>mdi-send</v-icon>
+            </v-btn>
+          </v-col>
+          
+          <v-col cols="12" class="comments-container">
+          <ul class="comments-list">
+            <li v-for="comment in comments" :key="comment" class="comment-list-item">
+              <v-avatar color='#ba384b'>
+                <span class="white--text headline">CJ</span> 
+              </v-avatar> &nbsp; Name Sits <br><br>
+              <p class="align">{{ comment }}</p>
+            </li>
+          </ul>
+        </v-col>
+        </v-row>
+        
       </v-col>
-      <v-col class="box" cols="3">
-        <v-btn text @click="addComment">
-          <v-icon color='#ba384b' large>mdi-send</v-icon>
-        </v-btn>
+      <v-col cols="12" md="3">
+        <AdvertisementUnit adSlotNumber='1'/>
       </v-col>
-    </v-row>
 
-    <ul class="comments-list">
-      <li v-for="comment in comments" :key="comment" class="comment-list-item">
-        <v-avatar color='#ba384b'>
-          <span class="white--text headline">CJ</span>
-        </v-avatar> &nbsp; Name Sits<br><br>{{ comment }}
-      </li>
-    </ul>
+    </v-row>
+    
 
 
   </v-container>
 </template>
 
 <script>
+import commentsData from '@/api/data/comments.json'
+
 
 export default {
   name: 'CommentSection',
+  components: {
+    AdvertisementUnit : () => import('@/components/AdvertisementUnit'),
+  },
   data() {
     return {
       comment: "",
       comments: [],
-      numberOfTotalComments: 0
+      numberOfTotalComments: 0,
+      response: []
     }
   },
   methods: {
@@ -79,11 +104,22 @@ export default {
 
   .comments-list {
     list-style: none;
+    padding-left: 0em;
 
-    .comment-list-item {
-      margin: 24px 0;
-    }
   }
 
+  .icon{
+    margin-top: .5em;
+    padding-left: 0em;
+  }
+
+  .box{
+    padding-right: 0em;
+  }
+  .align{
+    margin-left: 5%;
+    margin-right: 20%;
+  }
+  
 }
 </style>
