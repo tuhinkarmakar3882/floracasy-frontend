@@ -44,10 +44,7 @@
                 </div>
               </div>
             </article>
-
-
           </section>
-          <h1 class="text-center">Replace Me with real Implementation</h1>
         </template>
       </template>
 
