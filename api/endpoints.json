@@ -1,3 +1,4 @@
 {
-  "post_a_comment": "http://localhost:8000"
+  "post_a_comment": "http://localhost:8000",
+  "get_blog_overview": "http://localhost:8000/api/get_blog_overview?blogPerPage=3"
 }
