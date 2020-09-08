@@ -135,7 +135,7 @@ export default {
       margin: 1rem 0;
 
       a {
-        font-family: $navigationFont;
+        font-family: $roboto;
         letter-spacing: 1px;
         font-size: 20px;
         font-weight: 300;
@@ -152,7 +152,7 @@ export default {
   }
 
   .footer-nav-link {
-    font-family: $navigationFont;
+    font-family: $roboto;
     font-weight: 300;
     letter-spacing: 1px;
     text-decoration: none;

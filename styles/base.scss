@@ -18,7 +18,7 @@
 .sectionTitle {
   color: $primary;
   font-size: 44px;
-  font-family: $primaryFont, cursive;
+  font-family: $brandFont, cursive;
   text-align: center;
   text-shadow: 1px 1px $primary;
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, .05));
@@ -32,7 +32,7 @@
 .aboutStart {
   color: $primary;
   font-size: 44px;
-  font-family: $primaryFont, cursive;
+  font-family: $brandFont, cursive;
   text-align: center;
   text-shadow: 1px 1px $primary;
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, .05));
@@ -75,7 +75,7 @@
 }
 
 body {
-  font-family: $secondaryFont, serif;
+  font-family: $montserrat, serif;
   overflow-x: hidden !important;
 }
 
