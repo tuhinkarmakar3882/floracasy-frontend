@@ -4,25 +4,31 @@
       Comments
       <span v-show="numberOfTotalComments > 0" class="comments-count">{{ numberOfTotalComments }}</span>
     </h2>
-    <hr class="fine-line">
 
+    <v-divider/>
+
+
+    <!--   Todo ---------- The items in the below row are not in center I guess ------------- -->
     <v-row>
-      <v-col cols="12" sm="9">
+      <v-col class="box" cols="9">
         <v-text-field v-model="comment" label="Write your thoughts here" outlined required/>
       </v-col>
-      <v-col cols="12" sm="3">
+      <v-col class="box" cols="3">
         <v-btn text @click="addComment">
           <v-icon color='#ba384b' large>mdi-send</v-icon>
         </v-btn>
       </v-col>
     </v-row>
-    <ul style="list-style-type:none;">
-      <li v-for="item in comments" :key="item">
+
+    <ul class="comments-list">
+      <li v-for="comment in comments" :key="comment" class="comment-list-item">
         <v-avatar color='#ba384b'>
           <span class="white--text headline">CJ</span>
-        </v-avatar> &nbsp; Name Sits<br><br>{{ item }}<br><br>
+        </v-avatar> &nbsp; Name Sits<br><br>{{ comment }}
       </li>
     </ul>
+
+
   </v-container>
 </template>
 
@@ -69,6 +75,14 @@ export default {
       color: #ba384b;
     }
 
+  }
+
+  .comments-list {
+    list-style: none;
+
+    .comment-list-item {
+      margin: 24px 0;
+    }
   }
 
 }
