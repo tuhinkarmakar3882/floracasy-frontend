@@ -26,39 +26,33 @@
               <v-icon class="inside" color='#ba384b' large>mdi-send</v-icon>
             </v-btn>
           </v-col>
-          
+
           <v-col cols="12" class="comments-container">
           <ul class="comments-list">
             <li v-for="comment in comments" :key="comment" class="comment-list-item">
               <v-avatar color='#ba384b'>
-                <span class="white--text headline">CJ</span> 
+                <span class="white--text headline">CJ</span>
               </v-avatar> &nbsp; Name Sits <br><br>
               <p class="align">{{ comment }}</p>
             </li>
           </ul>
         </v-col>
         </v-row>
-        
-      </v-col>
-      <v-col cols="12" md="3">
-        <AdvertisementUnit adSlotNumber='1'/>
+
       </v-col>
 
     </v-row>
-    
 
 
   </v-container>
 </template>
 
 <script>
-import commentsData from '@/api/data/comments.json'
 
 
 export default {
   name: 'CommentSection',
   components: {
-    AdvertisementUnit : () => import('@/components/AdvertisementUnit'),
   },
   data() {
     return {
@@ -120,6 +114,6 @@ export default {
     margin-left: 5%;
     margin-right: 20%;
   }
-  
+
 }
 </style>

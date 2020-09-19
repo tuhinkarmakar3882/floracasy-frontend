@@ -28,10 +28,7 @@ export default {
     },
     css: [
         '~/styles/bootstrap.min.css',
-        // '~/styles/bootstrap-grid.min.css',
-        // '~/styles/bootstrap-reboot.min.css',
         '~/styles/main.scss',
-        '~/styles/base.scss',
     ],
     /*
     ** Plugins to load before mounting the App
