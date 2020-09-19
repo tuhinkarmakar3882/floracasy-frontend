@@ -3,20 +3,8 @@ export default {
         // port: 8080, // default: 3000
         // host: '0.0.0.0' // default: localhost
     },
-    /*
-    ** Nuxt rendering mode
-    ** See https://nuxtjs.org/api/configuration-mode
-    */
-    mode: 'spa',
-    /*
-    ** Nuxt target
-    ** See https://nuxtjs.org/api/configuration-target
-    */
+    mode: 'ssr',
     target: 'static',
-    /*
-    ** Headers of the page
-    ** See https://nuxtjs.org/api/configuration-head
-    */
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
         title: process.env.npm_package_name || '',
@@ -38,9 +26,6 @@ export default {
         ],
 
     },
-    /*
-    ** Global CSS
-    */
     css: [
         '~/styles/bootstrap.min.css',
         // '~/styles/bootstrap-grid.min.css',
@@ -58,15 +43,10 @@ export default {
     ** See https://nuxtjs.org/api/configuration-components
     */
     components: true,
-    /*
-    ** Nuxt.js dev-modules
-    */
+
     buildModules: [
         '@nuxtjs/vuetify',
     ],
-    /*
-    ** Nuxt.js modules
-    */
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
@@ -91,24 +71,12 @@ export default {
         theme: {
             dark: false,
             themes: {
-                light: {
-                    primary: "#C60156",
-                    secondary: "#FF748E",
-                    muted: "#aaaaaa",
-                    semiDark: "#6e6e6e",
-                    fallBackNavigation: "#3e0029",
-                    carousalBg: "#ffebeb",
-                    indicator: "#85085b",
-                    indicatorHighlight: "#fa2f6f",
-                    jumbotronBg: "#ededed",
-                }
+                light: {},
+                dark: {}
             }
         }
     },
-    /*
-    ** Build configuration
-    ** See https://nuxtjs.org/api/configuration-build/
-    */
+
     build: {},
     // loadingIndicator: '~/cli.html',
     loadingIndicator: {
