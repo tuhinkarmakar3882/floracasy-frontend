@@ -1,7 +1,7 @@
 
 # Created by https://www.toptal.com/developers/gitignore/api/vue,vuejs,pycharm+all,yarn,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=vue,vuejs,pycharm+all,yarn,node
-
+.DS_Store
 static/sw.js
 ### Node ###
 # Logs
