@@ -3,7 +3,7 @@ export default {
         port: 8080, // default: 3000
         // host: '0.0.0.0' // default: localhost
     },
-    mode: 'ssr',
+    mode: 'universal',
     target: 'static',
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
@@ -27,7 +27,6 @@ export default {
 
     },
     css: [
-        '~/styles/bootstrap.min.css',
         '~/styles/main.scss',
     ],
     /*
@@ -68,8 +67,60 @@ export default {
         theme: {
             dark: false,
             themes: {
-                light: {},
-                dark: {}
+                light: {
+                    "primary": "#514EFF",
+                    "primary-matte": "#3734E5",
+                    "secondary": "#6DD0BF",
+                    "secondary-matte": "#52B2A2",
+                    "secondary-highlight": "#8FF2E1",
+                    "muted": "#959595",
+
+                    "arrow-tone": "#1C1C2B",
+                    "quote-tone": "#3A3A49",
+
+                    "eco-tone": "#1B7B6B",
+                    "eco-tick": "#7EE1D0",
+
+                    "silver-tone": "#3734E5",
+                    "silver-tick": "#C5C2FF",
+
+                    "gold-tone": "#EFB33D",
+
+                    "card-background": "#191928",
+                    "body-background": "#050514",
+                    "segment-background": "#111120",
+                    "footer-background": "#1C1C2B",
+
+                    "black": "#000000",
+                    "white": "#FFFFFF",
+                },
+                dark: {
+                    "primary": "#514EFF",
+                    "primary-matte": "#3734E5",
+                    "secondary": "#6DD0BF",
+                    "secondary-matte": "#52B2A2",
+                    "secondary-highlight": "#8FF2E1",
+                    "muted": "#959595",
+
+                    "arrow-tone": "#1C1C2B",
+                    "quote-tone": "#3A3A49",
+
+                    "eco-tone": "#1B7B6B",
+                    "eco-tick": "#7EE1D0",
+
+                    "silver-tone": "#3734E5",
+                    "silver-tick": "#C5C2FF",
+
+                    "gold-tone": "#EFB33D",
+
+                    "card-background": "#191928",
+                    "body-background": "#050514",
+                    "segment-background": "#111120",
+                    "footer-background": "#1C1C2B",
+
+                    "black": "#000000",
+                    "white": "#FFFFFF",
+                }
             }
         }
     },
