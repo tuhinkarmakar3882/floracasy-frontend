@@ -2,23 +2,27 @@
 
 html {
   scroll-behavior: smooth;
+  background: $body-background;
+  color: $body-text-default;
+  transition: all .5s ease-in-out;
+  font-family: $Nunito;
+  letter-spacing: 1px;
+  overflow-x: hidden;
 
-  ::-webkit-scrollbar {
-    width: 4px;
+  &::-webkit-scrollbar {
+    width: 6px;
   }
 
-  ::-webkit-scrollbar-track {
-    background: $card-background;
-    border-radius: 50px;
+  &::-webkit-scrollbar-track {
+    background: lighten($card-background, 10%);
   }
 
-  ::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
+    background: darken($secondary-matte, 20%);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
     background: $secondary-matte;
-    border-radius: 50px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: $secondary;
   }
 }
 
@@ -34,14 +38,12 @@ html {
   opacity: 0
 }
 
-.slide-left-enter,
-.slide-right-leave-active {
+.slide-left-enter, .slide-right-leave-active {
   opacity: 0;
   transform: translate(30px, 0);
 }
 
-.slide-left-leave-active,
-.slide-right-enter {
+.slide-left-leave-active, .slide-right-enter {
   opacity: 0;
   transform: translate(-30px, 0);
 }
