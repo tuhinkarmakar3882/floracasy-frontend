@@ -1,23 +1,23 @@
 <template>
-  <nav class="navigation-bar">
+  <nav>
 
     <div class="brand">
       <Logo :width="45"/>
       <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
     </div>
 
-    <ul class="menu-list">
-      <li class="menu-list-item">
-        <nuxt-link class="menu-list-link" to="/">Go Premium</nuxt-link>
+    <ul>
+      <li>
+        <nuxt-link to="/">Go Premium</nuxt-link>
       </li>
-      <li class="menu-list-item">
-        <nuxt-link class="menu-list-link" to="/">Write &amp; Earn</nuxt-link>
+      <li>
+        <nuxt-link to="/">Write &amp; Earn</nuxt-link>
       </li>
-      <li class="menu-list-item">
-        <nuxt-link class="menu-list-link" to="/">Log in</nuxt-link>
+      <li>
+        <nuxt-link to="/">Log in</nuxt-link>
       </li>
-      <li class="menu-list-item">
-        <nuxt-link class="menu-list-link" to="/">Join us</nuxt-link>
+      <li>
+        <nuxt-link to="/">Join us</nuxt-link>
       </li>
     </ul>
   </nav>
@@ -35,19 +35,40 @@ export default {
 <style lang="scss" scoped>
 @import "assets/variables";
 
-.navigation-bar {
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 64px;
 
   .brand {
+    display: flex;
+    align-items: center;
+
     .brand-name {
+      margin-left: 12px;
+      font-size: 24px;
+      color: $white;
+      text-decoration: none;
+      font-family: $Prata;
     }
   }
 
-  .menu-list {
-    .menu-list-item {
-      .menu-list-link {
+  ul {
+    list-style: none;
+    display: flex;
+
+    li {
+      margin: 0 36px;
+      font-size: 20px;
+      font-family: $Montaga;
+
+      a {
+        display: block;
+        color: $white;
+        text-decoration: none;
       }
     }
   }
 }
-
 </style>

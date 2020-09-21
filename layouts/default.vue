@@ -1,11 +1,12 @@
 <template>
   <v-app class="v-app" dark>
     <NavigationBar/>
+
     <v-main class="v-main">
       <nuxt/>
     </v-main>
 
-    <v-footer class="v-footer">
+    <v-footer class="v-footer" padless>
       <Footer/>
     </v-footer>
   </v-app>
