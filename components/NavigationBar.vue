@@ -1,9 +1,8 @@
 <template>
   <v-app-bar
-      app
-      color="card-background"
+      color="body-background"
       elevate-on-scroll
-      height="84"
+      height="80"
       hide-on-scroll
   >
 
@@ -48,46 +47,50 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "assets/variables";
 
 $font-size: 18px;
+.v-toolbar__content {
+  padding-left: 64px;
+  padding-right: 32px;
+  flex-wrap: wrap;
 
-.brand {
-  display: flex;
-  align-items: center;
+  .brand {
+    display: flex;
+    align-items: center;
 
-  .brand-name {
-    margin-left: 12px;
-    font-size: 24px;
-    color: $white;
-    text-decoration: none;
-    font-family: $Prata;
-  }
-}
-
-ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
-
-  li {
-    margin: 0 32px;
-    font-size: $font-size;
-    font-family: $Montaga;
-
-    a {
-      display: block;
+    .brand-name {
+      margin-left: 12px;
+      font-size: 24px;
       color: $white;
       text-decoration: none;
-    }
-
-    button {
-      font-size: $font-size !important;
-      text-transform: unset;
+      font-family: $Prata;
     }
   }
-}
 
-//}
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+    li {
+      margin: 0 32px;
+      font-size: $font-size;
+      font-family: $Montaga;
+
+      a {
+        display: block;
+        color: $white;
+        text-decoration: none;
+      }
+
+      button {
+        font-size: $font-size !important;
+        text-transform: unset;
+      }
+    }
+  }
+
+}
 </style>
