@@ -2,7 +2,7 @@
   <nav class="navigation-bar">
 
     <div class="brand">
-      <Logo :width="100"/>
+      <Logo :width="45"/>
       <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
     </div>
 
@@ -27,12 +27,13 @@
 export default {
   name: "NavigationBar",
   components: {
-    Logo: () => import('~/components/Logo'),
+    Logo: () => import('@/components/Logo'),
   },
 }
 </script>
 
 <style lang="scss" scoped>
+@import "assets/variables";
 
 .navigation-bar {
 
