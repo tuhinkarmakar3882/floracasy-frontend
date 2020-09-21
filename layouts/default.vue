@@ -6,7 +6,7 @@
     </v-main>
 
     <v-footer class="v-footer">
-      The Footer
+      <Footer/>
     </v-footer>
   </v-app>
 </template>
@@ -16,6 +16,7 @@
 export default {
   components: {
     NavigationBar: () => import('~/components/NavigationBar'),
+    Footer: () => import('~/components/Footer'),
   },
   data: () => {
     return {}
