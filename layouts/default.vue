@@ -24,11 +24,5 @@ export default {
 <style lang="scss" scoped>
 @import "assets/variables";
 
-.v-app, .v-main, .v-footer {
-  background: $body-background;
-  color: $body-text-default;
-  transition: all .5s ease-in-out;
-  font-family: $Nunito;
-  letter-spacing: 1px;
-}
+
 </style>

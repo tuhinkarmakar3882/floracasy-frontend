@@ -3,7 +3,7 @@ export default {
         port: 3001, // default: 3000
         // host: '0.0.0.0' // default: localhost
     },
-    mode: 'universal',
+    mode: 'spa',
     target: 'static',
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
@@ -129,7 +129,7 @@ export default {
     // loadingIndicator: '~/cli.html',
     loadingIndicator: {
         name: 'rectangle-bounce',
-        color: '#C60156',
-        background: '#FFF'
+        color: '#C5C2FF',
+        background: '#050514'
     }
 }
