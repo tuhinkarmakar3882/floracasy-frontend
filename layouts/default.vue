@@ -1,6 +1,6 @@
 <template>
   <v-app class="v-app" dark>
-    <h1>The Navigation Bar</h1>
+    <NavigationBar/>
     <v-main class="v-main">
       <nuxt/>
     </v-main>
@@ -14,7 +14,9 @@
 <script>
 
 export default {
-  components: {},
+  components: {
+    NavigationBar: () => import('~/components/NavigationBar'),
+  },
   data: () => {
     return {}
   },
