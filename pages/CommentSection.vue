@@ -12,13 +12,13 @@
         <v-row>
           <v-col class="box" cols="9">
             <v-textarea
-              v-model="comment"
-              label="Write your thoughts here"
-              auto-grow
-              rows="1"
-              row-height="10"
-              hint="feedback"
-              outlined
+                v-model="comment"
+                label="Write your thoughts here"
+                auto-grow
+                rows="1"
+                row-height="10"
+                hint="feedback"
+                outlined
             />
           </v-col>
           <v-col class="icon" cols="3">
@@ -28,15 +28,15 @@
           </v-col>
 
           <v-col cols="12" class="comments-container">
-          <ul class="comments-list">
-            <li v-for="comment in comments" :key="comment" class="comment-list-item">
-              <v-avatar color='#ba384b'>
-                <span class="white--text headline">CJ</span>
-              </v-avatar> &nbsp; Name Sits <br><br>
-              <p class="align">{{ comment }}</p>
-            </li>
-          </ul>
-        </v-col>
+            <ul class="comments-list">
+              <li v-for="comment in comments" :key="comment" class="comment-list-item">
+                <v-avatar color='#ba384b'>
+                  <span class="white--text headline">CJ</span>
+                </v-avatar> &nbsp; Name Sits <br><br>
+                <p class="align">{{ comment }}</p>
+              </li>
+            </ul>
+          </v-col>
         </v-row>
 
       </v-col>
@@ -48,12 +48,11 @@
 </template>
 
 <script>
-
+import '@/api/data/comments.json'
 
 export default {
   name: 'CommentSection',
-  components: {
-  },
+  components: {},
   data() {
     return {
       comment: "",
@@ -80,15 +79,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'styles/themeData';
 
 .comment-section {
 
   .comments-title {
     font-size: 36px;
-    color: $semiDark;
+    color: $primary;
     letter-spacing: 1px;
-    font-family: $comfortaa;
+    font-family: $Nunito;
 
     .comments-count {
       color: #ba384b;
@@ -98,19 +96,20 @@ export default {
 
   .comments-list {
     list-style: none;
-    padding-left: 0em;
+    padding-left: 0;
 
   }
 
-  .icon{
+  .icon {
     margin-top: .5em;
-    padding-left: 0em;
+    padding-left: 0;
   }
 
-  .box{
-    padding-right: 0em;
+  .box {
+    padding-right: 0;
   }
-  .align{
+
+  .align {
     margin-left: 5%;
     margin-right: 20%;
   }
