@@ -1,7 +1,25 @@
+@import "assets/variables";
+
 html {
   scroll-behavior: smooth;
-  max-width: 100%;
-  overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $card-background;
+    border-radius: 50px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $secondary-matte;
+    border-radius: 50px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: $secondary;
+  }
 }
 
 .the-router-page-content {
@@ -28,6 +46,6 @@ html {
   transform: translate(-30px, 0);
 }
 
-.dbx{
+.dbx {
   border: 2px solid red !important;
 }
