@@ -2,9 +2,9 @@
   <v-app class="v-app" dark>
     <NavigationBar/>
 
-    <v-main class="v-main">
+    <v-content class="v-content">
       <nuxt/>
-    </v-main>
+    </v-content>
 
     <v-footer class="v-footer" padless>
       <Footer/>
