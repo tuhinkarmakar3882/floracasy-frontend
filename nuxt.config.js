@@ -122,6 +122,10 @@ export default {
                     "white": "#FFFFFF",
                 }
             }
+        },
+        treeShake: true,
+        options: {
+            customProperties: true
         }
     },
 

@@ -10,7 +10,7 @@
     >
       <v-app-bar-nav-icon v-if="this.$vuetify.breakpoint.mdAndDown" @click="drawer=!drawer"></v-app-bar-nav-icon>
 
-      <v-progress-linear :active="!drawer" :indeterminate="!drawer" absolute bottom/>
+      <v-progress-linear :active="drawer" :indeterminate="drawer" absolute bottom/>
 
       <v-spacer v-if="this.$vuetify.breakpoint.mdAndDown"/>
       <div class="brand">
