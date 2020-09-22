@@ -3,10 +3,11 @@
     <div class="col">
       <h3>In a Nutshell</h3>
 
-      <KeyPointsList
-          :points="points"
-          :tickSize="24"
-          tickColor="#10a3ce"
+      <KeyPoint v-for="point in points"
+                :key="point"
+                :point="point"
+                :tickSize="24"
+                tickColor="secondary"
       />
     </div>
   </footer>
@@ -16,15 +17,15 @@
 export default {
   name: "Footer",
   components: {
-    KeyPointsList: () => import('@/components/KeyPointsList')
+    KeyPoint: () => import('@/components/KeyPoint')
   },
   data: () => {
     return {
       points: [
-        "Enjoy Affordable Pro Perks",
-        "Enjoy Affordable Pro Perks",
-        "Enjoy Affordable Pro Perks",
-        "Enjoy Affordable Pro Perks",
+        "Enjoy Affordable Pro Perks1",
+        "Enjoy Affordable Pro Perks2",
+        "Enjoy Affordable Pro Perks3",
+        "Enjoy Affordable Pro Perks4",
       ],
     }
   }
