@@ -96,7 +96,7 @@ export default {
   },
   data() {
     return {
-      drawer: true,
+      drawer: false,
       menuOptions: [
         {title: 'Go Premium', icon: 'mdi-crown', color: 'gold-tone'},
         {title: 'Write & Earn', icon: 'mdi-cash-usd', color: 'eco-tick'},
