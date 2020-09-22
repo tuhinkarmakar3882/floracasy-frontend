@@ -1,26 +1,24 @@
 <template>
-  <v-container class="">
-    <div class="hero">
-      <h1>Reading Redefined.</h1>
-      <p>
-        One good line, Which is really good,
-        <br>
-        followed by some other line, and this
-        <br>
-        line has more lines.
-      </p>
-      <v-btn :disabled="maybe" :loading="maybe" color="primary" light rounded x-large @click="changeIt">
-        Explore Now
-      </v-btn>
-      <p class="optional-log-in-text">
-        Already have an account?
-        <span>
+  <v-container class="hero">
+    <h1>Reading Redefined.</h1>
+    <p>
+      One good line, Which is really good,
+      <br>
+      followed by some other line, and this
+      <br>
+      line has more lines.
+    </p>
+    <v-btn :disabled="maybe" :loading="maybe" color="primary" light rounded x-large @click="changeIt">
+      Explore Now
+    </v-btn>
+    <p class="optional-log-in-text">
+      Already have an account?
+      <span>
           <nuxt-link to="/">
             Log in here
           </nuxt-link>
         </span>
-      </p>
-    </div>
+    </p>
   </v-container>
 </template>
 
@@ -54,7 +52,7 @@ export default {
   .hero {
     h1 {
       font-family: $Prata;
-      font-size: 52px;
+      font-size: 48px;
       font-weight: 400;
       color: $white;
     }

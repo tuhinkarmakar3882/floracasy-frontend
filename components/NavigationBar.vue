@@ -1,57 +1,24 @@
 <template>
   <header>
-    <v-navigation-drawer
-        v-model="drawer"
-        absolute
-        app
-        dark
-        temporary
-    >
-      <v-list-item>
-        <v-list-item-avatar>
-          <Logo/>
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>John Leider</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list dense>
-
-        <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-        >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-app-bar
         app
         color="body-background"
         elevate-on-scroll
         hide-on-scroll
+        dark
+        height="72"
     >
-
+      <v-app-bar-nav-icon v-if="this.$vuetify.breakpoint.mdAndDown" @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-spacer v-if="this.$vuetify.breakpoint.mdAndDown"/>
       <div class="brand">
-        <Logo :width="45"/>
+        <Logo :width="36"/>
         <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
       </div>
 
-      <v-spacer/>
+      <v-spacer v-if="this.$vuetify.breakpoint.lgAndUp"/>
 
-      <ul>
+
+      <ul v-if="this.$vuetify.breakpoint.lgAndUp">
         <li>
           <nuxt-link to="/">Go Premium</nuxt-link>
         </li>
@@ -74,6 +41,50 @@
         </li>
       </ul>
     </v-app-bar>
+    <v-navigation-drawer
+        v-model="drawer"
+        app
+        color="card-background"
+        temporary
+    >
+      <v-list-item dark>
+        <v-list-item-avatar>
+          <Logo/>
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title>Floracasy</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider style="background-color: #6DD0BF"></v-divider>
+
+      <v-list dark>
+        <v-list-item
+            v-for="menuOption in menuOptions"
+            :key="menuOption.title"
+            link
+        >
+          <v-list-item-icon>
+            <v-icon :color="menuOption.color">{{ menuOption.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title style="color: #BABABA">{{ menuOption.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list two-line>
+        <v-list-item>
+          <v-btn color="secondary" height="44" nuxt outlined to="/" width="112">Log in</v-btn>
+        </v-list-item>
+
+        <v-list-item>
+          <v-btn color="primary" height="44" nuxt to="/CommentSection" width="112">Join Us</v-btn>
+        </v-list-item>
+      </v-list>
+
+    </v-navigation-drawer>
   </header>
 </template>
 
@@ -86,9 +97,9 @@ export default {
   data() {
     return {
       drawer: true,
-      items: [
-        {title: 'Home', icon: 'mdi-home'},
-        {title: 'About', icon: 'mdi-information'},
+      menuOptions: [
+        {title: 'Go Premium', icon: 'mdi-crown', color: 'gold-tone'},
+        {title: 'Write & Earn', icon: 'mdi-cash-usd', color: 'eco-tick'},
       ],
     }
   },
@@ -103,13 +114,10 @@ $font-size: 18px;
   padding-left: 64px;
   padding-right: 32px;
   flex-wrap: wrap;
-  border: 1px solid red;
   position: relative !important;
 
   @media only screen and (max-width: 1024px) {
-    padding: 8px 12px;
-    height: 200px !important;
-
+    padding: 0 12px;
   }
 
   .brand {
@@ -118,7 +126,7 @@ $font-size: 18px;
 
     .brand-name {
       margin-left: 12px;
-      font-size: 24px;
+      font-size: 20px;
       color: $white;
       text-decoration: none;
       font-family: $Prata;
