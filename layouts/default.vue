@@ -1,10 +1,12 @@
 <template>
-  <v-app class="v-app" dark>
+  <v-app>
     <NavigationBar/>
 
-    <v-content class="v-content">
-      <nuxt/>
-    </v-content>
+    <v-main class="v-main">
+      <v-container fluid>
+        <nuxt/>
+      </v-container>
+    </v-main>
 
     <v-footer class="v-footer" padless>
       <Footer/>
