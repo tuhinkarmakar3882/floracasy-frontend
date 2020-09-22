@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row align-content="center" class="hero-container" justify="center">
+      <v-row align="center" class="hero-container" justify="center">
         <v-col
             class="hero-content"
             cols="12"
@@ -573,17 +573,34 @@
           </svg>
         </v-col>
       </v-row>
+
+      <!--TODO REMEMBER TO ADD CENTER ALIGNMENT-->
+
+      <v-row>
+        <v-col cols="12" md="4" sm="6">
+          <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
+        </v-col>
+        <v-col cols="12" md="4" sm="6">
+          <KeyPoint :tick-size="24" point="Build Your Community Faster" tick-color="#6DD0BF"/>
+        </v-col>
+        <v-col cols="12" md="4">
+          <KeyPoint :tick-size="24" point="Great Tip of the Day" tick-color="#6DD0BF"/>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
+
 export default {
-  components: {},
+  components: {
+    KeyPoint: () => import("@/components/KeyPoint"),
+  },
   transition: 'slide-x-transition',
   data() {
     return {
-      heroButtonLoading: false
+      heroButtonLoading: false,
     }
   },
   methods: {
@@ -603,9 +620,7 @@ export default {
 .hero-container {
 
   .hero-image {
-    //order: 1;
     width: clamp(10rem, 40vw, 564px);
-    //display: none;
 
     @media only screen and (min-width: $small) {
       //display: block;
