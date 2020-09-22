@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container class="mb-4 pb-4">
       <v-row align="center" class="hero-container" justify="center">
         <v-col
             class="hero-content"
@@ -588,6 +588,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <CatergoriesShowcase/>
   </div>
 </template>
 
@@ -596,6 +597,7 @@
 export default {
   components: {
     KeyPoint: () => import("@/components/KeyPoint"),
+    CatergoriesShowcase: () => import("@/components/CategoriesShowcase"),
   },
   transition: 'slide-x-transition',
   data() {

@@ -3,9 +3,7 @@
     <NavigationBar/>
 
     <v-main class="v-main">
-      <v-container fluid>
-        <nuxt/>
-      </v-container>
+      <nuxt/>
     </v-main>
 
     <v-footer class="v-footer" padless>
