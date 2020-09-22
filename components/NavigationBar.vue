@@ -1,41 +1,80 @@
 <template>
-  <v-app-bar
-      color="body-background"
-      elevate-on-scroll
-      height="80"
-      hide-on-scroll
-  >
+  <header>
+    <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        app
+        dark
+        temporary
+    >
+      <v-list-item>
+        <v-list-item-avatar>
+          <Logo/>
+        </v-list-item-avatar>
 
-    <div class="brand">
-      <Logo :width="45"/>
-      <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
-    </div>
+        <v-list-item-content>
+          <v-list-item-title>John Leider</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-    <v-spacer/>
+      <v-divider></v-divider>
 
-    <ul>
-      <li>
-        <nuxt-link to="/">Go Premium</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/">Write &amp; Earn</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/">
-          <v-btn color="secondary" height="44" outlined width="112">
-            Log in
-          </v-btn>
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/CommentSection">
-          <v-btn color="primary" height="44" width="112">
-            Join Us
-          </v-btn>
-        </nuxt-link>
-      </li>
-    </ul>
-  </v-app-bar>
+      <v-list dense>
+
+        <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar
+        app
+        color="body-background"
+        elevate-on-scroll
+        hide-on-scroll
+    >
+
+      <div class="brand">
+        <Logo :width="45"/>
+        <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
+      </div>
+
+      <v-spacer/>
+
+      <ul>
+        <li>
+          <nuxt-link to="/">Go Premium</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">Write &amp; Earn</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <v-btn color="secondary" height="44" outlined width="112">
+              Log in
+            </v-btn>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/CommentSection">
+            <v-btn color="primary" height="44" width="112">
+              Join Us
+            </v-btn>
+          </nuxt-link>
+        </li>
+      </ul>
+    </v-app-bar>
+  </header>
 </template>
 
 <script>
@@ -43,6 +82,15 @@ export default {
   name: "NavigationBar",
   components: {
     Logo: () => import('@/components/Logo'),
+  },
+  data() {
+    return {
+      drawer: true,
+      items: [
+        {title: 'Home', icon: 'mdi-home'},
+        {title: 'About', icon: 'mdi-information'},
+      ],
+    }
   },
 }
 </script>
@@ -55,6 +103,14 @@ $font-size: 18px;
   padding-left: 64px;
   padding-right: 32px;
   flex-wrap: wrap;
+  border: 1px solid red;
+  position: relative !important;
+
+  @media only screen and (max-width: 1024px) {
+    padding: 8px 12px;
+    height: 200px !important;
+
+  }
 
   .brand {
     display: flex;
