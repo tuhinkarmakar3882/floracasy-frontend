@@ -3,7 +3,7 @@ export default {
         port: 3001, // default: 3000
         // host: '0.0.0.0' // default: localhost
     },
-    mode: 'spa',
+    mode: 'universal',
     target: 'static',
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
@@ -17,11 +17,16 @@ export default {
             {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
         ],
         link: [
-            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+            {
+                rel: 'icon',
+                type: 'image/x-icon',
+                href: '/favicon.ico',
+            }
             ,
             {
                 rel: 'stylesheet',
                 href: "https://fonts.googleapis.com/css2?family=Montaga&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&display=swap",
+                type: "text/css",
             },
         ],
 
