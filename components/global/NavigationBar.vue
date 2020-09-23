@@ -96,7 +96,7 @@
 export default {
   name: "NavigationBar",
   components: {
-    Logo: () => import('@/components/Logo'),
+    Logo: () => import('~/components/global/Logo'),
   },
   data() {
     return {

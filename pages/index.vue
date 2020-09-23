@@ -596,7 +596,7 @@
 
 export default {
   components: {
-    KeyPoint: () => import("@/components/KeyPoint"),
+    KeyPoint: () => import("~/components/global/KeyPoint"),
     CatergoriesShowcase: () => import("@/components/CategoriesShowcase"),
   },
   transition: 'slide-x-transition',

@@ -17,7 +17,7 @@
 export default {
   name: "Footer",
   components: {
-    KeyPoint: () => import('@/components/KeyPoint')
+    KeyPoint: () => import('~/components/global/KeyPoint')
   },
   data: () => {
     return {

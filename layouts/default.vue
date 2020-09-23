@@ -16,8 +16,8 @@
 
 export default {
   components: {
-    NavigationBar: () => import('~/components/NavigationBar'),
-    Footer: () => import('~/components/Footer'),
+    NavigationBar: () => import('~/components/global/NavigationBar'),
+    Footer: () => import('~/components/global/Footer'),
   },
   data: () => {
     return {}

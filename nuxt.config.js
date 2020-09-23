@@ -47,11 +47,13 @@ export default {
 
     buildModules: [
         '@nuxtjs/vuetify',
+        // 'nuxt-purgecss',
     ],
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxt/content',
+        // 'nuxt-purgecss',
     ],
     /*
     ** Axios module configuration

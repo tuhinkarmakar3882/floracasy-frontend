@@ -29,39 +29,39 @@ export default {
       items: [
         {
           name: "Cooking",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Technology",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Music",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Arts",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Pets",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "UI/UX",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Skincare",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Plants",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
         {
           name: "Fitness",
-          image: "https://picsum.photos/200",
+          image: "https://picsum.photos/20",
         },
       ],
     }
