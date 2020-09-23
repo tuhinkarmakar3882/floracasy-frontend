@@ -8,9 +8,9 @@
           custom integrations with our open source developer SDK</p>
       </div>
       <div class="show-reel row justify-center">
-        <div v-for="item in items" :key="item.name" class="col-4">
+        <div v-for="item in items" :key="item.name" class="col-4 col-md-3 col-lg-2">
           <v-avatar color="primary" size="84">
-            <img :alt="item.name" :src="item.image" loading="lazy">
+            <img :alt="item.name" :src="item.image" loading="lazy"/>
           </v-avatar>
           <p class="my-4">{{ item.name }}</p>
         </div>
@@ -29,39 +29,39 @@ export default {
       items: [
         {
           name: "Cooking",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Technology",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Music",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Arts",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Pets",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "UI/UX",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Skincare",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Plants",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
         {
           name: "Fitness",
-          image: "https://picsum.photos/20",
+          image: "https://picsum.photos/80",
         },
       ],
     }

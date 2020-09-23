@@ -34,15 +34,7 @@ export default {
     css: [
         '~/styles/main.scss',
     ],
-    /*
-    ** Plugins to load before mounting the App
-    ** https://nuxtjs.org/guide/plugins
-    */
     plugins: [],
-    /*
-    ** Auto import components
-    ** See https://nuxtjs.org/api/configuration-components
-    */
     components: true,
 
     buildModules: [
@@ -55,20 +47,12 @@ export default {
         '@nuxt/content',
         // 'nuxt-purgecss',
     ],
-    /*
-    ** Axios module configuration
-    ** See https://axios.nuxtjs.org/options
-    */
+    '@fullhuman/postcss-purgecss': {
+        content: ['./pages/**/*.vue', './layouts/**/*.vue', './components/**/*.vue'],
+        safelist: ['html', 'body']
+    },
     axios: {},
-    /*
-    ** Content module configuration
-    ** See https://content.nuxtjs.org/configuration
-    */
     content: {},
-    /*
-    ** vuetify module configuration
-    ** https://github.com/nuxt-community/vuetify-module
-    */
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
         theme: {
