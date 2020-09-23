@@ -22,7 +22,7 @@
           <p class="optional-log-in-text">
             Already have an account?
             <span>
-          <nuxt-link to="/">
+          <nuxt-link to="/CommentSection">
             Log in here
           </nuxt-link>
         </span>

@@ -134,7 +134,21 @@ export default {
         }
     },
 
-    build: {},
+    build: {
+        extractCSS: true,
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    styles: {
+                        name: 'styles',
+                        test: /\.(css|vue)$/,
+                        chunks: 'all',
+                        enforce: true
+                    }
+                }
+            }
+        }
+    },
     // loadingIndicator: '~/cli.html',
     loadingIndicator: {
         name: 'rectangle-bounce',
