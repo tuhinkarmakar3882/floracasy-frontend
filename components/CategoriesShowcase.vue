@@ -9,22 +9,18 @@
       </div>
       <div class="show-reel grid-container justify-center">
         <div v-for="item in items" :key="item.name" class="grid-col">
-          <!--          <v-avatar color="primary" size="150">-->
           <img :alt="item.name" :src="item.image" style="width: 100%; object-fit: cover; border-radius: 50%"/>
-          <!--          </v-avatar>-->
           <p class="my-4">{{ item.name }}</p>
         </div>
         <div class="grid-col">
-          <!--          <v-avatar color="primary" size="150">-->
           <img alt="item.name" src="https://picsum.photos/151?random"
                style="width: 100%; object-fit: cover; border-radius: 50%"/>
-          <!--          </v-avatar>-->
           <p class="my-4">More</p>
         </div>
       </div>
 
       <v-btn class="my-6 btn" color="primary">
-        Explore Now
+        Start Reading
       </v-btn>
 
 
