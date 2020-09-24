@@ -13,7 +13,7 @@
           </p>
 
           <div v-if="this.$vuetify.breakpoint.xsOnly" class="col-12 mb-7">
-            <div class="row justify-center text-center">
+            <div class="row text-left">
               <div class="col-12 col-sm-6 col-md-4">
                 <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
               </div>
