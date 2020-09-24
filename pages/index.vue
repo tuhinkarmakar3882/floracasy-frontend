@@ -1,13 +1,8 @@
 <template>
   <div>
-    <v-container class="mb-4 pb-4">
-      <v-row align="center" class="hero-container" justify="center">
-        <v-col
-            class="hero-content"
-            cols="12"
-            order="1"
-            order-sm="0"
-            sm="7">
+    <v-container class="mb-6 pb-6">
+      <div class="hero-container row justify-center align-center px-4">
+        <div class="hero-content col-12 col-sm-7 order-1 order-sm-0 text-center text-sm-left">
           <h1>Reading Redefined.</h1>
           <p>
             One good line, Which is really good,
@@ -27,13 +22,8 @@
           </nuxt-link>
         </span>
           </p>
-        </v-col>
-        <v-col
-            class="hero-image"
-            cols="12"
-            order="0"
-            order-sm="1"
-            sm="5">
+        </div>
+        <div class="col-7 col-sm-5 order-sm-1 order-0">
           <svg fill="none" style="width: 100%" viewBox="0 0 564 448" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0)">
               <path
@@ -571,22 +561,23 @@
               </clipPath>
             </defs>
           </svg>
-        </v-col>
-      </v-row>
+        </div>
+      </div>
 
       <!--TODO REMEMBER TO ADD CENTER ALIGNMENT-->
-
-      <v-row>
-        <v-col cols="12" md="4" sm="6">
-          <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
-        </v-col>
-        <v-col cols="12" md="4" sm="6">
-          <KeyPoint :tick-size="24" point="Build Your Community Faster" tick-color="#6DD0BF"/>
-        </v-col>
-        <v-col cols="12" md="4">
-          <KeyPoint :tick-size="24" point="Great Tip of the Day" tick-color="#6DD0BF"/>
-        </v-col>
-      </v-row>
+      <div class="col-12">
+        <div class="row my-6">
+          <div class="col-12 col-sm-6 col-md-4">
+            <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4">
+            <KeyPoint :tick-size="24" point="Build Your Community Faster" tick-color="#6DD0BF"/>
+          </div>
+          <div class="col-12 col-md-4">
+            <KeyPoint :tick-size="24" point="Great Tip of the Day" tick-color="#6DD0BF"/>
+          </div>
+        </div>
+      </div>
     </v-container>
     <CatergoriesShowcase/>
   </div>
