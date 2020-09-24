@@ -642,13 +642,6 @@ export default {
       line-height: 1.92;
     }
 
-    button {
-      font-size: 18px;
-      padding: 20px 28px;
-      font-weight: 600;
-      text-transform: capitalize;
-    }
-
     .optional-log-in-text {
       font-size: 16px;
 

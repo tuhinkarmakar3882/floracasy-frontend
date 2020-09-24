@@ -45,3 +45,10 @@ $small: 576px;
 $medium: 768px;
 $large: 992px;
 $extra-large: 1200px;
+
+button {
+  font-size: 18px !important;
+  padding: 20px 28px !important;
+  font-weight: 600;
+  text-transform: capitalize;
+}
