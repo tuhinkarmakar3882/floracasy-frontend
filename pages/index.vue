@@ -1,9 +1,12 @@
 <template>
   <div>
     <v-container class="mb-6 pb-6">
+
       <div class="hero-container row justify-center align-center px-1 px-sm-2">
+
         <div class="hero-content col-12 col-sm-7 order-1 order-sm-0 text-center text-sm-left">
           <h1>Reading Redefined.</h1>
+
           <p class="my-7">
             One good line, Which is really good,
             <br>
@@ -12,7 +15,7 @@
             line has more lines.
           </p>
 
-          <div v-if="this.$vuetify.breakpoint.xsOnly" class="col-12 mb-7">
+          <div v-if="this.$vuetify.breakpoint.xsOnly" class="col-12">
             <div class="row text-left">
               <div class="col-12 col-sm-6 col-md-4">
                 <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
@@ -25,10 +28,12 @@
               </div>
             </div>
           </div>
-          <v-btn :loading="heroButtonLoading" class="btn" color="primary" @click="changeIt">
+
+          <v-btn :loading="heroButtonLoading" class="btn my-4" color="primary" large rounded @click="changeIt">
             Explore Now
           </v-btn>
-          <p class="optional-log-in-text">
+
+          <p class="optional-log-in-text mt-2">
             Already have an account?
             <span>
           <nuxt-link to="/CommentSection">
@@ -37,6 +42,7 @@
         </span>
           </p>
         </div>
+
         <div class="col-7 col-sm-5 order-sm-1 order-0">
           <svg fill="none" style="width: 100%" viewBox="0 0 564 448" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0)">
@@ -627,10 +633,6 @@ export default {
 
   .hero-image {
     width: clamp(10rem, 40vw, 564px);
-
-    @media only screen and (min-width: $small) {
-      //display: block;
-    }
   }
 
   .hero-content {
@@ -642,8 +644,11 @@ export default {
     }
 
     p {
-      //margin: 36px 0;
       line-height: 1.92;
+    }
+
+    button {
+
     }
 
     .optional-log-in-text {
