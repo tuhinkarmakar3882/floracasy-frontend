@@ -1,16 +1,30 @@
 <template>
   <div>
     <v-container class="mb-6 pb-6">
-      <div class="hero-container row justify-center align-center px-4">
+      <div class="hero-container row justify-center align-center px-1 px-sm-2">
         <div class="hero-content col-12 col-sm-7 order-1 order-sm-0 text-center text-sm-left">
           <h1>Reading Redefined.</h1>
-          <p>
+          <p class="my-7">
             One good line, Which is really good,
             <br>
             followed by some other line, and this
             <br>
             line has more lines.
           </p>
+
+          <div v-if="this.$vuetify.breakpoint.xsOnly" class="col-12 mb-7">
+            <div class="row justify-center text-center">
+              <div class="col-12 col-sm-6 col-md-4">
+                <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
+              </div>
+              <div class="col-12 col-sm-6 col-md-4">
+                <KeyPoint :tick-size="24" point="Build Your Community Faster" tick-color="#6DD0BF"/>
+              </div>
+              <div class="col-12 col-md-4">
+                <KeyPoint :tick-size="24" point="Great Tip of the Day" tick-color="#6DD0BF"/>
+              </div>
+            </div>
+          </div>
           <v-btn :loading="heroButtonLoading" class="btn" color="primary" @click="changeIt">
             Explore Now
           </v-btn>
@@ -564,16 +578,15 @@
         </div>
       </div>
 
-      <!--TODO REMEMBER TO ADD CENTER ALIGNMENT-->
-      <div class="col-12">
-        <div class="row my-6">
-          <div class="col-12 col-sm-6 col-md-4">
+      <div v-if="this.$vuetify.breakpoint.smAndUp" class="col-12">
+        <div class="row my-6 justify-center text-center">
+          <div class="col-12 col-sm-6 col-md-4 justify-center d-flex dbx">
             <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
           </div>
-          <div class="col-12 col-sm-6 col-md-4">
+          <div class="col-12 col-sm-6 col-md-4 justify-center d-flex dbx">
             <KeyPoint :tick-size="24" point="Build Your Community Faster" tick-color="#6DD0BF"/>
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-4 justify-center d-flex dbx">
             <KeyPoint :tick-size="24" point="Great Tip of the Day" tick-color="#6DD0BF"/>
           </div>
         </div>
@@ -629,7 +642,7 @@ export default {
     }
 
     p {
-      margin: 36px 0;
+      //margin: 36px 0;
       line-height: 1.92;
     }
 
