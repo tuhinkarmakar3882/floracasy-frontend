@@ -155,7 +155,7 @@ $font-size: 18px;
 
       button {
         font-size: $font-size !important;
-        text-transform: unset;
+        font-weight: 400 !important;
       }
     }
   }
