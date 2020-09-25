@@ -134,7 +134,6 @@ export default {
     text-align: center;
 
     .grid-col {
-      border: 1px solid green;
       width: clamp(100px, 40vw, 150px);
 
       img {
