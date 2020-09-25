@@ -5,7 +5,7 @@ const utility = {
     },
 
     blogImageParser: function (blogToBeRendered) {
-        const defaultImagePath = '/images/defaultBlogImg.svg'
+        const defaultImagePath = '/images/default.svg'
         if (blogToBeRendered.blog_image.length !== 0) {
             return blogToBeRendered.blog_image[0].image;
         }

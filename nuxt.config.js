@@ -45,6 +45,28 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxt/content',
+        ['nuxt-lazy-load', {
+            // These are the default values
+            images: true,
+            videos: true,
+            audios: true,
+            iframes: true,
+            native: false,
+            polyfill: true,
+            directiveOnly: false,
+
+            // Default image must be in the static folder
+            defaultImage: '/images/default.svg',
+
+            // To remove class set value to false
+            loadingClass: 'isLoading',
+            loadedClass: 'isLoaded',
+            appendClass: 'lazyLoad',
+
+            observerConfig: {
+                // See IntersectionObserver documentation
+            }
+        }]
         // 'nuxt-purgecss',
     ],
     '@fullhuman/postcss-purgecss': {
