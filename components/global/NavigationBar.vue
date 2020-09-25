@@ -128,7 +128,7 @@ $font-size: 18px;
   }
 
   .mobile-only {
-    display: block;
+    display: flex;
 
     @media only screen and (min-width: $large) {
       display: none;
@@ -152,7 +152,7 @@ $font-size: 18px;
     display: none;
 
     @media only screen and (min-width: $large) {
-      display: block;
+      display: flex;
     }
 
     ul {

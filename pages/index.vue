@@ -586,13 +586,13 @@
 
       <div v-if="this.$vuetify.breakpoint.smAndUp" class="col-12">
         <div class="row my-6 justify-center text-center">
-          <div class="col-12 col-sm-6 col-md-4 justify-center d-flex dbx">
+          <div class="col-12 col-sm-6 col-md-4 justify-center d-flex">
             <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
           </div>
-          <div class="col-12 col-sm-6 col-md-4 justify-center d-flex dbx">
+          <div class="col-12 col-sm-6 col-md-4 justify-center d-flex">
             <KeyPoint :tick-size="24" point="Build Your Community Faster" tick-color="#6DD0BF"/>
           </div>
-          <div class="col-12 col-md-4 justify-center d-flex dbx">
+          <div class="col-12 col-md-4 justify-center d-flex">
             <KeyPoint :tick-size="24" point="Great Tip of the Day" tick-color="#6DD0BF"/>
           </div>
         </div>
