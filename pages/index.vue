@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="index-page">
     <v-container class="mb-6 pb-6 hero-container">
 
       <div class="row justify-center align-center px-1 px-sm-2">
@@ -15,7 +15,7 @@
             line has more lines.
           </p>
 
-          <div v-if="this.$vuetify.breakpoint.xsOnly" class="col-12">
+          <div class="col-12 visible-on-extra-small">
             <div class="row text-left">
               <div class="col-12 col-sm-6 col-md-4">
                 <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
@@ -584,7 +584,7 @@
         </div>
       </div>
 
-      <div v-if="this.$vuetify.breakpoint.smAndUp" class="col-12">
+      <div class="col-12 visible-on-small-and-up">
         <div class="row my-6 justify-center text-center">
           <div class="col-12 col-sm-6 col-md-4 justify-center d-flex">
             <KeyPoint :tick-size="24" point="Over 1000+ Articles" tick-color="#6DD0BF"/>
@@ -607,7 +607,7 @@
 export default {
   components: {
     KeyPoint: () => import("~/components/global/KeyPoint"),
-    CategoriesShowcase: () => import("@/components/CategoriesShowcase"),
+    CategoriesShowcase: () => import("@/components/LandingPage/CategoriesShowcase"),
   },
   transition: 'slide-x-transition',
   data() {

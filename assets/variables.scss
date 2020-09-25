@@ -32,19 +32,14 @@ $Prata: 'Prata', serif;
 $Roboto: 'Roboto', sans-serif;
 $Montaga: 'Montaga', serif;
 
-
-.v-app, .v-main, .v-footer {
-  background: $body-background;
-  color: $body-text-default;
-  transition: all .5s ease-in-out;
-  font-family: $Nunito;
-  letter-spacing: 1px;
-}
-
 $small: 576px;
 $medium: 768px;
 $large: 992px;
 $extra-large: 1200px;
+
+
+// --------------------------- Base Styling -----------------------------------
+
 
 button {
   font-size: 16px !important;
@@ -54,4 +49,100 @@ button {
 
 button, a {
   text-transform: capitalize !important;
+}
+
+.v-app, .v-main, .v-footer {
+  background: $body-background;
+  color: $body-text-default;
+  transition: all .5s ease-in-out;
+  font-family: $Nunito;
+  letter-spacing: 1px;
+}
+
+.visible-on-extra-small {
+  display: flex !important;
+
+  @media only screen and (min-width: $small) {
+    display: none !important;
+  }
+}
+
+.visible-on-small {
+  display: none !important;
+
+  @media only screen and (min-width: $small) {
+    display: flex !important;
+  }
+
+  @media only screen and (min-width: $medium) {
+    display: none !important;
+  }
+}
+
+.visible-on-medium {
+  display: none !important;
+
+  @media only screen and (min-width: $medium) {
+    display: flex !important;
+  }
+
+  @media only screen and (min-width: $large) {
+    display: none !important;
+  }
+}
+
+.visible-on-large {
+  display: none !important;
+
+  @media only screen and (min-width: $large) {
+    display: flex !important;
+  }
+
+  @media only screen and (min-width: $extra-large) {
+    display: none !important;
+  }
+}
+
+.visible-on-extra-large {
+  display: none !important;
+
+  @media only screen and (min-width: $extra-large) {
+    display: flex !important;
+  }
+}
+
+.visible-on-all {
+  display: flex !important;
+}
+
+.visible-on-small-and-up {
+  display: none !important;
+
+  @media only screen and (min-width: $small) {
+    display: flex !important;
+  }
+}
+
+.visible-on-medium-and-up {
+  display: none !important;
+
+  @media only screen and (min-width: $medium) {
+    display: flex !important;
+  }
+}
+
+.visible-on-large-and-up {
+  display: none !important;
+
+  @media only screen and (min-width: $large) {
+    display: flex !important;
+  }
+}
+
+.visible-on-extra-large-and-up {
+  display: none !important;
+
+  @media only screen and (min-width: $extra-large) {
+    display: flex !important;
+  }
 }

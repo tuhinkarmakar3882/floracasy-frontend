@@ -8,43 +8,41 @@
         dark
         height="72"
     >
-      <v-app-bar-nav-icon class="mobile-only" @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="visible-on-extra-small visible-on-medium" @click="drawer=!drawer"></v-app-bar-nav-icon>
 
       <v-progress-linear :active="drawer" :indeterminate="drawer" absolute bottom/>
 
-      <v-spacer class="mobile-only"/>
+      <v-spacer class="visible-on-extra-small visible-on-medium"/>
+
       <div class="brand">
         <Logo :width="36"/>
         <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
       </div>
 
-      <v-spacer class="desktop-only"/>
-      <!--TODO ISSUE IS WITH THE V_IF-->
+      <v-spacer class="visible-on-large-and-up"/>
 
-      <div class="desktop-only">
-        <ul>
-          <li>
-            <nuxt-link to="/">Go Premium</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/">Write &amp; Earn</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/">
-              <v-btn color="secondary" height="44" outlined width="112">
-                Log in
-              </v-btn>
-            </nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/CommentSection">
-              <v-btn color="primary" height="44" width="112">
-                Join Us
-              </v-btn>
-            </nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <ul class="visible-on-large-and-up">
+        <li>
+          <nuxt-link to="/">Go Premium</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">Write &amp; Earn</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <v-btn color="secondary" height="44" outlined width="112">
+              Log in
+            </v-btn>
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/CommentSection">
+            <v-btn color="primary" height="44" width="112">
+              Join Us
+            </v-btn>
+          </nuxt-link>
+        </li>
+      </ul>
     </v-app-bar>
 
     <v-navigation-drawer
@@ -118,21 +116,12 @@ export default {
 
 $font-size: 18px;
 .v-toolbar__content {
-  padding-left: 64px;
-  padding-right: 32px;
   flex-wrap: wrap;
-  position: relative !important;
+  padding: 4px 16px !important;
 
-  @media only screen and (max-width: 1024px) {
-    padding: 0 12px;
-  }
-
-  .mobile-only {
-    display: flex;
-
-    @media only screen and (min-width: $large) {
-      display: none;
-    }
+  @media only screen and (min-width: 1024px) {
+    padding-left: 64px !important;
+    padding-right: 32px !important;
   }
 
   .brand {
@@ -148,33 +137,25 @@ $font-size: 18px;
     }
   }
 
-  .desktop-only {
-    display: none;
+  ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
 
-    @media only screen and (min-width: $large) {
-      display: flex;
-    }
+    li {
+      margin: 0 32px;
+      font-size: $font-size;
+      font-family: $Montaga;
 
-    ul {
-      list-style: none;
-      display: flex;
-      align-items: center;
+      a {
+        display: block;
+        color: $white;
+        text-decoration: none;
+      }
 
-      li {
-        margin: 0 32px;
-        font-size: $font-size;
-        font-family: $Montaga;
-
-        a {
-          display: block;
-          color: $white;
-          text-decoration: none;
-        }
-
-        button {
-          font-size: $font-size !important;
-          text-transform: unset;
-        }
+      button {
+        font-size: $font-size !important;
+        text-transform: unset;
       }
     }
   }

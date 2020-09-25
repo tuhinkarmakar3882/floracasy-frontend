@@ -19,6 +19,20 @@
         </div>
       </div>
 
+      <div class="show-reel grid-container justify-center">
+        <div v-for="item in items" :key="item.name" class="grid-col">
+          <v-chip
+              class="ma-2"
+              color="primary"
+              outlined
+              pill
+          >
+            {{ item.name }}
+            <v-icon right>mdi-account-outline</v-icon>
+          </v-chip>
+        </div>
+      </div>
+
       <v-btn class="my-6 btn" color="primary">
         Start Reading
       </v-btn>
@@ -104,16 +118,25 @@ export default {
     display: grid;
     text-align: center;
     justify-content: center;
+    place-items: center;
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 36px;
     grid-row-gap: 28px;
 
+    //border: 1px solid green;
+
+    @media only screen and (min-width: $medium) {
+      grid-template-columns: repeat(5, 1fr);
+      .grid-col {
+        width: 150px;
+      }
+    }
+
 
     .grid-col {
-      //border: 1px solid red;
-      @media only screen and (min-width: $small) {
-
-      }
+      width: auto;
+      //border: 1px solid yellow;
+      font-size: clamp(22px, 4vw, 24px);
     }
   }
 
