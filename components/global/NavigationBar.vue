@@ -8,42 +8,45 @@
         dark
         height="72"
     >
-      <v-app-bar-nav-icon v-if="this.$vuetify.breakpoint.mdAndDown" @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="mobile-only" @click="drawer=!drawer"></v-app-bar-nav-icon>
 
       <v-progress-linear :active="drawer" :indeterminate="drawer" absolute bottom/>
 
-      <v-spacer v-if="this.$vuetify.breakpoint.mdAndDown"/>
+      <v-spacer class="mobile-only"/>
       <div class="brand">
         <Logo :width="36"/>
         <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
       </div>
 
-      <v-spacer v-if="this.$vuetify.breakpoint.lgAndUp"/>
+      <v-spacer class="desktop-only"/>
+      <!--TODO ISSUE IS WITH THE V_IF-->
 
-
-      <ul v-if="this.$vuetify.breakpoint.lgAndUp">
-        <li>
-          <nuxt-link to="/">Go Premium</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/">Write &amp; Earn</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/">
-            <v-btn color="secondary" height="44" outlined width="112">
-              Log in
-            </v-btn>
-          </nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/CommentSection">
-            <v-btn color="primary" height="44" width="112">
-              Join Us
-            </v-btn>
-          </nuxt-link>
-        </li>
-      </ul>
+      <div class="desktop-only">
+        <ul>
+          <li>
+            <nuxt-link to="/">Go Premium</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/">Write &amp; Earn</nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/">
+              <v-btn color="secondary" height="44" outlined width="112">
+                Log in
+              </v-btn>
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link to="/CommentSection">
+              <v-btn color="primary" height="44" width="112">
+                Join Us
+              </v-btn>
+            </nuxt-link>
+          </li>
+        </ul>
+      </div>
     </v-app-bar>
+
     <v-navigation-drawer
         v-model="drawer"
         app
@@ -51,7 +54,7 @@
         temporary
     >
 
-    <v-list-item dark>
+      <v-list-item dark>
         <v-list-item-avatar>
           <Logo/>
         </v-list-item-avatar>
@@ -124,6 +127,14 @@ $font-size: 18px;
     padding: 0 12px;
   }
 
+  .mobile-only {
+    display: block;
+
+    @media only screen and (min-width: $large) {
+      display: none;
+    }
+  }
+
   .brand {
     display: flex;
     align-items: center;
@@ -137,25 +148,33 @@ $font-size: 18px;
     }
   }
 
-  ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
+  .desktop-only {
+    display: none;
 
-    li {
-      margin: 0 32px;
-      font-size: $font-size;
-      font-family: $Montaga;
+    @media only screen and (min-width: $large) {
+      display: block;
+    }
 
-      a {
-        display: block;
-        color: $white;
-        text-decoration: none;
-      }
+    ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
 
-      button {
-        font-size: $font-size !important;
-        text-transform: unset;
+      li {
+        margin: 0 32px;
+        font-size: $font-size;
+        font-family: $Montaga;
+
+        a {
+          display: block;
+          color: $white;
+          text-decoration: none;
+        }
+
+        button {
+          font-size: $font-size !important;
+          text-transform: unset;
+        }
       }
     }
   }

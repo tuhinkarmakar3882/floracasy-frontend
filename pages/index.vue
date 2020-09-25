@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-container class="mb-6 pb-6">
+    <v-container class="mb-6 pb-6 hero-container">
 
-      <div class="hero-container row justify-center align-center px-1 px-sm-2">
+      <div class="row justify-center align-center px-1 px-sm-2">
 
         <div class="hero-content col-12 col-sm-7 order-1 order-sm-0 text-center text-sm-left">
           <h1>Reading Redefined.</h1>
@@ -36,10 +36,10 @@
           <p class="optional-log-in-text mt-2">
             Already have an account?
             <span>
-          <nuxt-link to="/CommentSection">
-            Log in here
-          </nuxt-link>
-        </span>
+              <nuxt-link to="/CommentSection">
+                Log in here
+              </nuxt-link>
+            </span>
           </p>
         </div>
 
@@ -598,7 +598,7 @@
         </div>
       </div>
     </v-container>
-    <CatergoriesShowcase/>
+    <CategoriesShowcase/>
   </div>
 </template>
 
@@ -607,7 +607,7 @@
 export default {
   components: {
     KeyPoint: () => import("~/components/global/KeyPoint"),
-    CatergoriesShowcase: () => import("@/components/CategoriesShowcase"),
+    CategoriesShowcase: () => import("@/components/CategoriesShowcase"),
   },
   transition: 'slide-x-transition',
   data() {
