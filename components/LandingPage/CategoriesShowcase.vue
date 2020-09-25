@@ -8,7 +8,7 @@
           custom integrations with our open source developer SDK</p>
       </div>
 
-      <div class="grid-container">
+      <div class="grid-container py-12">
 
         <div v-for="item in items" :key="item.name" class="grid-col">
           <img :alt="item.name" :src="item.image"/>
@@ -106,15 +106,36 @@ export default {
 
   .grid-container {
     display: grid;
-    text-align: center;
+
     justify-content: center;
     place-items: center;
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 36px;
+
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 28px;
     grid-row-gap: 28px;
 
+    @media only screen and (min-width: $small) {
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: 32px;
+      grid-row-gap: 32px;
+    }
+    @media only screen and (min-width: $medium) {
+      grid-template-columns: repeat(4, 1fr);
+      grid-column-gap: 36px;
+      grid-row-gap: 36px;
+    }
+    @media only screen and (min-width: $large) {
+      grid-template-columns: repeat(5, 1fr);
+      grid-column-gap: 36px;
+      grid-row-gap: 36px;
+    }
+
+    font-size: 20px;
+    text-align: center;
+
     .grid-col {
-      border: 1px solid yellow;
+      border: 1px solid green;
+      width: clamp(100px, 40vw, 150px);
 
       img {
         width: 100%;
