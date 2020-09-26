@@ -8,11 +8,11 @@
         dark
         height="72"
     >
-      <v-app-bar-nav-icon class="visible-on-extra-small visible-on-medium" @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="visible-upto-large" @click="drawer=!drawer"></v-app-bar-nav-icon>
 
       <v-progress-linear :active="drawer" :indeterminate="drawer" absolute bottom/>
 
-      <v-spacer class="visible-on-extra-small visible-on-medium"/>
+      <v-spacer class="visible-upto-large"/>
 
       <div class="brand">
         <Logo :width="36"/>

@@ -148,3 +148,35 @@ button, a {
     display: flex !important;
   }
 }
+
+.visible-upto-small {
+  display: flex !important;
+
+  @media only screen and (min-width: $small) {
+    display: none !important;
+  }
+}
+
+.visible-upto-medium {
+  display: flex !important;
+
+  @media only screen and (min-width: $medium) {
+    display: none !important;
+  }
+}
+
+.visible-upto-large {
+  display: flex !important;
+
+  @media only screen and (min-width: $large) {
+    display: none !important;
+  }
+}
+
+.visible-upto-extra-large {
+  display: flex !important;
+
+  @media only screen and (min-width: $extra-large) {
+    display: none !important;
+  }
+}
