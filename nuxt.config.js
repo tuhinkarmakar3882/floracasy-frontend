@@ -1,75 +1,88 @@
 export default {
     server: {
-        port: 3001, // default: 3000
-        // host: '0.0.0.0' // default: localhost
+        port: 3001,
     },
-    mode: 'universal',
+
     target: 'static',
+
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
         title: process.env.npm_package_name || '',
         meta: [
-            {charset: 'utf-8'},
+            {
+                charset: 'utf-8',
+            },
             {
                 name: 'viewport',
                 content: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'
             },
-            {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+            {
+                hid: 'description',
+                name: 'description',
+                content: process.env.npm_package_description || '',
+            }
         ],
         link: [
             {
                 rel: 'icon',
                 type: 'image/x-icon',
                 href: '/favicon.ico',
-            }
-
+            },
         ],
-
     },
+
     css: [
         '~/styles/main.scss',
     ],
+
     plugins: [],
+
     components: true,
 
     buildModules: [
         '@nuxtjs/vuetify',
         // 'nuxt-purgecss',
     ],
+
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxt/content',
-        ['nuxt-lazy-load', {
-            // These are the default values
-            images: true,
-            videos: true,
-            audios: true,
-            iframes: true,
-            native: false,
-            polyfill: true,
-            directiveOnly: false,
+        [
+            'nuxt-lazy-load',
+            {
+                images: true,
+                videos: true,
+                audios: true,
+                iframes: true,
+                native: false,
+                polyfill: true,
+                directiveOnly: false,
 
-            // Default image must be in the static folder
-            defaultImage: '/images/default.svg',
+                defaultImage: '/images/default.svg',
 
-            // To remove class set value to false
-            loadingClass: 'isLoading',
-            loadedClass: 'isLoaded',
-            appendClass: 'lazyLoad',
+                // To remove class set value to false
+                loadingClass: 'isLoading',
+                loadedClass: 'isLoaded',
+                appendClass: 'lazyLoad',
 
-            observerConfig: {
-                // See IntersectionObserver documentation
+                observerConfig: {
+                    // See IntersectionObserver documentation
+                }
             }
-        }]
+        ]
         // 'nuxt-purgecss',
     ],
-    '@fullhuman/postcss-purgecss': {
-        content: ['./pages/**/*.vue', './layouts/**/*.vue', './components/**/*.vue'],
-        safelist: ['html', 'body']
-    },
+
+    // '@fullhuman/postcss-purgecss': {
+    //     content: ['./pages/**/*.vue', './layouts/**/*.vue', './components/**/*.vue'],
+    //     safelist: ['html', 'body']
+    // },
+
     axios: {},
+
     content: {},
+
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
         theme: {
@@ -153,7 +166,7 @@ export default {
     //     }
     // },
     build: {},
-    // loadingIndicator: '~/cli.html',
+
     loadingIndicator: {
         name: 'rectangle-bounce',
         color: '#C5C2FF',
