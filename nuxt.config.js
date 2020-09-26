@@ -28,6 +28,11 @@ export default {
                 type: 'image/x-icon',
                 href: '/favicon.ico',
             },
+            {
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: 'https://fonts.googleapis.com/css2?family=Montaga&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&display=swap',
+            },
         ],
     },
 
@@ -48,6 +53,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxt/content',
+        // 'nuxt-purgecss',
         [
             'nuxt-lazy-load',
             {
@@ -70,14 +76,8 @@ export default {
                     // See IntersectionObserver documentation
                 }
             }
-        ]
-        // 'nuxt-purgecss',
+        ],
     ],
-
-    // '@fullhuman/postcss-purgecss': {
-    //     content: ['./pages/**/*.vue', './layouts/**/*.vue', './components/**/*.vue'],
-    //     safelist: ['html', 'body']
-    // },
 
     axios: {},
 
@@ -150,21 +150,6 @@ export default {
         }
     },
 
-    // build: {
-    //     extractCSS: true,
-    //     optimization: {
-    //         splitChunks: {
-    //             cacheGroups: {
-    //                 styles: {
-    //                     name: 'styles',
-    //                     test: /\.(css|vue)$/,
-    //                     chunks: 'all',
-    //                     enforce: true
-    //                 }
-    //             }
-    //         }
-    //     }
-    // },
     build: {},
 
     loadingIndicator: {
