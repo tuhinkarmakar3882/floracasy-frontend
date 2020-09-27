@@ -602,6 +602,8 @@
 
     <EarningSection/>
 
+    <HearTheExperiences/>
+
   </div>
 </template>
 

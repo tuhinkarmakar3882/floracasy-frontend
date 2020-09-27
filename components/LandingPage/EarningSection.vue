@@ -1,5 +1,5 @@
 <template>
-  <div class="showcase my-4 py-6 text-center">
+  <div class="my-4 py-6 text-center">
     <v-container>
       <SegmentTitle
           leadingParagraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own

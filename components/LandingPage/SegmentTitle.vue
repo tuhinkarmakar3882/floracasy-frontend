@@ -5,6 +5,7 @@
     <p>{{ leadingParagraph }}</p>
   </div>
 </template>
+
 <script>
 export default {
   name: 'SegmentTitle',
@@ -25,7 +26,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "assets/variables";
 
 .top-header {
@@ -44,6 +45,7 @@ export default {
 
   p {
     font-weight: 300;
+    line-height: 1.84;
   }
 
 }
