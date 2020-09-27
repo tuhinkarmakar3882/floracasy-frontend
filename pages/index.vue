@@ -599,6 +599,9 @@
       </div>
     </v-container>
     <CategoriesShowcase/>
+
+    <EarningSection/>
+
   </div>
 </template>
 
@@ -606,6 +609,7 @@
 
 export default {
   components: {
+    EarningSection: () => import("~/components/LandingPage/EarningSection"),
     KeyPoint: () => import("~/components/global/KeyPoint"),
     CategoriesShowcase: () => import("@/components/LandingPage/CategoriesShowcase"),
   },

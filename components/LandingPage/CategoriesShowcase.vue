@@ -1,13 +1,12 @@
 <template>
   <div class="showcase my-4 py-6 text-center">
     <v-container>
-      <div class="top-header">
-        <p class="topic">Categories</p>
-        <h2 class="mt-0 mb-6 pb-4">Experience Floracasy</h2>
-        <p>Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
-          custom integrations with our open source developer SDK</p>
-      </div>
-
+      <SegmentTitle
+          leadingParagraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
+          custom integrations with our open source developer SDK"
+          title="Explore a Wide Range of Categories"
+          topic="Categories"
+      />
       <div class="grid-container py-12">
 
         <div v-for="item in items" :key="item.name" class="grid-col">
@@ -33,8 +32,11 @@
 </template>
 
 <script>
+import SegmentTitle from "@/components/LandingPage/SegmentTitle";
+
 export default {
   name: "CategoriesShowcase",
+  components: {SegmentTitle},
   data() {
     return {
       cateogiesButtonLoading: false,
@@ -94,24 +96,6 @@ export default {
 
 .showcase {
   background-color: $segment-background;
-
-  .top-header {
-    .topic {
-      color: $secondary-highlight;
-      font-weight: 700;
-    }
-
-    h2 {
-      font-family: $Prata;
-      font-weight: 400;
-      font-size: clamp(24px, 4vw, 40px);
-      color: $white;
-    }
-
-    p {
-      font-weight: 300;
-    }
-  }
 
   .grid-container {
     display: grid;
