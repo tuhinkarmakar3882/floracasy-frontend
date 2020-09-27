@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <v-icon :color="tickColor" :size="tickSize">
       mdi-check-circle-outline
@@ -36,6 +35,7 @@ export default {
 
 div {
   color: $muted;
+  text-align: left;
   display: flex;
   align-items: flex-start;
   font-size: 18px;
