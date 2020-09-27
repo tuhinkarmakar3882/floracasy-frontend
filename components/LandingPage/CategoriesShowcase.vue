@@ -23,7 +23,7 @@
 
       </div>
 
-      <v-btn class="my-6 btn" color="primary">
+      <v-btn :loading="cateogiesButtonLoading" class="my-6 btn" color="primary" large rounded @click="changeIt">
         Start Reading
       </v-btn>
 
@@ -37,6 +37,7 @@ export default {
   name: "CategoriesShowcase",
   data() {
     return {
+      cateogiesButtonLoading: false,
       items: [
         {
           name: "Cooking",
@@ -76,7 +77,15 @@ export default {
         },
       ],
     }
-  }
+  },
+  methods: {
+    changeIt: function () {
+      this.cateogiesButtonLoading = true;
+      setTimeout(() => {
+        this.cateogiesButtonLoading = false
+      }, 2000)
+    },
+  },
 }
 </script>
 
