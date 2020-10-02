@@ -10,8 +10,11 @@
 </template>
 
 <script>
+import NavigationBar from "@/components/global/NavigationBar";
+
 export default {
-  name: "authenticationPageLayout"
+  name: "authenticationPageLayout",
+  components: {NavigationBar},
 }
 </script>
 

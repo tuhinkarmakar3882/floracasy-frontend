@@ -1,12 +1,11 @@
 <template>
   <div class="content dbx">
-    <h1 class="headline my-5">Let's Get Started</h1>
+    <h1 class="headline my-5">Let&rsquo;s Get Started</h1>
 
     <ul>
       <li v-for="option in signupOptions" :key="option.id">
         <v-avatar color="primary" style="color: white">{{ option.provider[0] }}</v-avatar>
         <v-btn class="my-6" color="secondary" outlined>
-
           Continue with {{ option.provider }}
         </v-btn>
       </li>
@@ -16,11 +15,14 @@
 </template>
 
 <script>
-import authenticationPageLayout from "@/layouts/authenticationPageLayout";
 
 export default {
   name: "OAuthPage",
   layout: "authenticationPageLayout",
+  transition: {
+    name: "slide-x-transition",
+    mode: "out-in"
+  },
   data() {
     return {
       signupOptions: [

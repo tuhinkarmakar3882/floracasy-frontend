@@ -16,7 +16,7 @@ export default {
     CategoriesShowcase: () => import("@/components/LandingPage/CategoriesShowcase"),
     HearTheExperiences: () => import("@/components/LandingPage/HearTheExperiences"),
   },
-  transition: 'slide-x-transition',
+  // transition: 'slide-x-transition',
   data() {
     return {}
   },

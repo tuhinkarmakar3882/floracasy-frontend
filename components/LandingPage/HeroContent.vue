@@ -27,9 +27,13 @@
           </div>
         </div>
 
-        <v-btn :loading="heroButtonLoading" class="btn my-4" color="primary" large nuxt rounded rounded to="/OAuthPage"
+        <v-btn :loading="heroButtonLoading" class="btn my-4" color="primary" large nuxt rounded to="/CommentSection"
                @click="changeIt">
           Explore Now
+        </v-btn>
+        <v-btn :loading="heroButtonLoading" class="btn my-4" color="gold-tone" large nuxt rounded to="/OAuthPage"
+               @click="changeIt">
+          Explore Now 2
         </v-btn>
 
         <p class="optional-log-in-text mt-2">

@@ -156,5 +156,16 @@ export default {
         name: 'rectangle-bounce',
         color: '#C5C2FF',
         background: '#050514'
+    },
+
+    /* Layout Transitions */
+    layoutTransition: {
+        name: "gray-shift",
+        mode: "out-in"
+    },
+    /* Page Transitions */
+    pageTransition: {
+        name: "slide-x-transition",
+        mode: "out-in"
     }
 }
