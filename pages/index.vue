@@ -600,8 +600,6 @@
     </v-container>
     <CategoriesShowcase/>
 
-    <EarningSection/>
-
     <HearTheExperiences/>
 
   </div>
@@ -611,7 +609,6 @@
 
 export default {
   components: {
-    EarningSection: () => import("~/components/LandingPage/EarningSection"),
     KeyPoint: () => import("~/components/global/KeyPoint"),
     CategoriesShowcase: () => import("@/components/LandingPage/CategoriesShowcase"),
   },
