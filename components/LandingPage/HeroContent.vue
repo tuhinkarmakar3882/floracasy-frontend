@@ -621,6 +621,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "assets/variables";
+
 .hero-container {
 
   .hero-image {
@@ -637,10 +639,6 @@ export default {
 
     p {
       line-height: 1.92;
-    }
-
-    button {
-
     }
 
     .optional-log-in-text {
