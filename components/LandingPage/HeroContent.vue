@@ -27,7 +27,8 @@
           </div>
         </div>
 
-        <v-btn :loading="heroButtonLoading" class="btn my-4" color="primary" large rounded @click="changeIt">
+        <v-btn :loading="heroButtonLoading" class="btn my-4" color="primary" large nuxt rounded rounded to="/OAuthPage"
+               @click="changeIt">
           Explore Now
         </v-btn>
 
