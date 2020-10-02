@@ -22,7 +22,7 @@
 
       </div>
 
-      <v-btn :loading="cateogiesButtonLoading" class="my-6 btn" color="primary" large rounded @click="changeIt">
+      <v-btn :loading="categoriesButtonLoading" class="my-6 btn" color="primary" large rounded @click="changeIt">
         Start Reading
       </v-btn>
 
@@ -32,14 +32,15 @@
 </template>
 
 <script>
-import SegmentTitle from "@/components/LandingPage/SegmentTitle";
 
 export default {
   name: "CategoriesShowcase",
-  components: {SegmentTitle},
+  components: {
+    SegmentTitle: () => import("@/components/LandingPage/SegmentTitle")
+  },
   data() {
     return {
-      cateogiesButtonLoading: false,
+      categoriesButtonLoading: false,
       items: [
         {
           name: "Cooking",
@@ -82,9 +83,9 @@ export default {
   },
   methods: {
     changeIt: function () {
-      this.cateogiesButtonLoading = true;
+      this.categoriesButtonLoading = true;
       setTimeout(() => {
-        this.cateogiesButtonLoading = false
+        this.categoriesButtonLoading = false
       }, 2000)
     },
   },
