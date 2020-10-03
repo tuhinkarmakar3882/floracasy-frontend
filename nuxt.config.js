@@ -53,6 +53,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxt/content',
+        '@nuxtjs/firebase',
         // 'nuxt-purgecss',
         [
             'nuxt-lazy-load',
