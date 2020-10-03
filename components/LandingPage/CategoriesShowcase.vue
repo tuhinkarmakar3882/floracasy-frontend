@@ -22,7 +22,8 @@
 
       </div>
 
-      <v-btn :loading="categoriesButtonLoading" class="my-6 btn" color="primary" large nuxt rounded to="/OAuthPage"
+      <v-btn :loading="categoriesButtonLoading" class="my-6 btn" color="primary" large nuxt rounded
+             to="/Authentication/GetStarted"
              @click="changeIt">
         Start Reading
       </v-btn>

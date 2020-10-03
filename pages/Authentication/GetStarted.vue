@@ -17,7 +17,7 @@
 <script>
 
 export default {
-  name: "OAuthPage",
+  name: "/Authentication/GetStarted",
   layout: "authenticationPageLayout",
   transition: {
     name: "slide-x-transition",

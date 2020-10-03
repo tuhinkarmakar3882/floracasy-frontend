@@ -8,7 +8,8 @@
           topic="Earning"
       />
 
-      <v-btn :loading="earningButtonLoading" class="my-6 btn" color="primary" large nuxt rounded rounded to="/OAuthPage"
+      <v-btn :loading="earningButtonLoading" class="my-6 btn" color="primary" large nuxt rounded
+             to="/Authentication/GetStarted"
              @click="changeIt">
         Start Earning
       </v-btn>

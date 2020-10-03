@@ -29,14 +29,14 @@
           <nuxt-link to="/">Write &amp; Earn</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/OAuthPage">
+          <nuxt-link to="/Authentication/GetStarted">
             <v-btn color="secondary" height="44" outlined width="112">
               Log in
             </v-btn>
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/OAuthPage">
+          <nuxt-link to="/Authentication/GetStarted">
             <v-btn color="primary" height="44" width="112">
               Join Us
             </v-btn>
@@ -81,11 +81,11 @@
       </v-list>
       <v-list two-line>
         <v-list-item>
-          <v-btn color="secondary" height="44" nuxt outlined to="/OAuthPage" width="112">Log in</v-btn>
+          <v-btn color="secondary" height="44" nuxt outlined to="/Authentication/GetStarted" width="112">Log in</v-btn>
         </v-list-item>
 
         <v-list-item>
-          <v-btn color="primary" height="44" nuxt to="/OAuthPage" width="112">Join Us</v-btn>
+          <v-btn color="primary" height="44" nuxt to="/Authentication/GetStarted" width="112">Join Us</v-btn>
         </v-list-item>
       </v-list>
 

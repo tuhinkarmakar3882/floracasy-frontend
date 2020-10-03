@@ -120,8 +120,8 @@
           dignissim lobortis ornare. Sed ut neque ac massa sagittis mollis. Quius lorem.</p>
 
         <div class="text-center text-sm-left">
-          <v-btn :loading="joinUsButtonLoading" class="btn my-4" color="primary" large nuxt rounded rounded
-                 to="/OAuthPage" @click="changeIt">
+          <v-btn :loading="joinUsButtonLoading" class="btn my-4" color="primary" large nuxt rounded
+                 to="/Authentication/GetStarted" @click="changeIt">
             Join Floracasy
           </v-btn>
         </div>
