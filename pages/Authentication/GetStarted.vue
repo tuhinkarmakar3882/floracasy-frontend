@@ -13,6 +13,10 @@
     <div class="muted-text text-center my-4">
       Get Started with the most advanced password less sign in
     </div>
+
+    <div class="text-center mt-4">
+      <v-btn color="white" text @click="()=>{this.$router.back()}">Go Back</v-btn>
+    </div>
   </div>
 </template>
 
@@ -59,10 +63,10 @@ export default {
 
 .content {
   display: block;
-  width: clamp(300px, 50vw, 650px);
+  width: clamp(300px, 90vw, 650px);
   background: darken($card-background, 5%);
   border-radius: 10px;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
   box-shadow: 0 0 4px lighten($card-background, 50%);
 
   .headline-text {

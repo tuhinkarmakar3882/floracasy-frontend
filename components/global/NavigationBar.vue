@@ -23,10 +23,10 @@
 
       <ul class="visible-on-large-and-up">
         <li>
-          <nuxt-link to="/">Go Premium</nuxt-link>
+          <nuxt-link to="/GoPremium">Go Premium</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/">Write &amp; Earn</nuxt-link>
+          <nuxt-link to="/WriteAndEarn">Write &amp; Earn</nuxt-link>
         </li>
         <li>
           <nuxt-link to="/Authentication/GetStarted">
@@ -70,11 +70,11 @@
             :key="menuOption.title"
             link
         >
-          <v-list-item-icon>
+          <v-list-item-icon @click="navigateTo(menuOption.route)">
             <v-icon :color="menuOption.color">{{ menuOption.icon }}</v-icon>
           </v-list-item-icon>
 
-          <v-list-item-content>
+          <v-list-item-content @click="navigateTo(menuOption.route)">
             <v-list-item-title style="color: #BABABA">{{ menuOption.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -103,11 +103,26 @@ export default {
     return {
       drawer: false,
       menuOptions: [
-        {title: 'Go Premium', icon: 'mdi-crown', color: 'gold-tone'},
-        {title: 'Write & Earn', icon: 'mdi-cash-usd', color: 'eco-tick'},
+        {
+          title: 'Go Premium',
+          icon: 'mdi-crown',
+          color: 'gold-tone',
+          route: '/GoPremium'
+        },
+        {
+          title: 'Write & Earn',
+          icon: 'mdi-cash-usd',
+          color: 'eco-tick',
+          route: '/WriteAndEarn'
+        },
       ],
     }
   },
+  methods: {
+    navigateTo: function (path) {
+      this.$router.push(path);
+    }
+  }
 }
 </script>
 
