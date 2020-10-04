@@ -51,6 +51,10 @@ button, a {
   text-transform: capitalize !important;
 }
 
+$headline-title-font-size: clamp(36px, 4vw, 52px);
+$segment-title-font-size: clamp(24px, 4vw, 40px);
+$footer-title-font-size: clamp(28px, 3vw, 32px);
+
 .v-app, .v-main, .v-footer {
   background: $body-background;
   color: $body-text-default;
