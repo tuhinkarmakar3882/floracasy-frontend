@@ -31,7 +31,7 @@
             <ul class="comments-list">
               <li v-for="comment in comments" :key="comment" class="comment-list-item">
                 <v-avatar color='#ba384b'>
-                  <span class="white--text headline">CJ</span>
+                  <span class="white--text headline-text">CJ</span>
                 </v-avatar> &nbsp; Name Sits <br><br>
                 <p class="align">{{ comment }}</p>
               </li>

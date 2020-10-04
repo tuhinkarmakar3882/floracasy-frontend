@@ -39,7 +39,7 @@ export default {
   h2 {
     font-family: $Prata;
     font-weight: 400;
-    font-size: clamp(24px, 4vw, 40px);
+    font-size: $segment-title-font-size;
     color: $white;
   }
 

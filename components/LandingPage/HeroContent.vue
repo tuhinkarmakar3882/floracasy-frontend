@@ -634,7 +634,7 @@ export default {
   .hero-content {
     h1 {
       font-family: $Prata;
-      font-size: clamp(36px, 4vw, 52px);
+      font-size: $headline-title-font-size;
       font-weight: 400;
       color: $white;
     }
