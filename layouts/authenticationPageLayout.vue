@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main class="v-main">
-      <div class="modal-style dbx">
+      <div class="modal-style">
         <nuxt/>
       </div>
     </v-main>
@@ -24,5 +24,6 @@ export default {
   display: grid;
   place-items: center;
   height: 100vh;
+  transition: all .5s ease-in-out;
 }
 </style>
