@@ -13,7 +13,7 @@
 import NavigationBar from "@/components/global/NavigationBar";
 
 export default {
-  name: "authenticationPageLayout",
+  name: "PreAuthLayout",
   components: {NavigationBar},
 }
 </script>
