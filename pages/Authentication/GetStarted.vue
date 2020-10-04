@@ -4,7 +4,7 @@
 
     <div class="signupOptionsGrid">
       <div v-for="option in signupOptions" :key="option.id" class="gridItems">
-        <v-btn class="button px-4" color="secondary-matte" outlined width="250">
+        <v-btn class="button px-4" color="secondary-matte" outlined width="250" @click="login">
           <span>Continue with {{ option.provider }}</span>
         </v-btn>
       </div>
@@ -23,11 +23,9 @@
 <script>
 export default {
   name: "GetStarted",
-  layout: "authenticationPageLayout",
-  transition: {
-    name: "slide-x-transition",
-    mode: "out-in"
-  },
+  layout: "PreAuthLayout",
+  middleware: "notAuthenticatedRequest",
+
   data() {
     return {
       signupOptions: [
@@ -55,6 +53,17 @@ export default {
     }
   },
 
+  methods: {
+    async login() {
+      try {
+        await this.$store.commit('setAuth', true);
+        console.log(this.$store.state.auth);
+        await this.$router.push('/');
+      } catch (e) {
+        console.log(`Error in logging in ${e}`)
+      }
+    },
+  }
 }
 </script>
 
