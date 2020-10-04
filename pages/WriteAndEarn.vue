@@ -8,7 +8,8 @@
 
 <script>
 export default {
-  name: "WriteAndEarn"
+  name: "WriteAndEarn",
+  middleware: "notAuthenticatedRequest",
 }
 </script>
 

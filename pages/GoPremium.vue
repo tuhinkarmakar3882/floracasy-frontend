@@ -8,7 +8,8 @@
 
 <script>
 export default {
-  name: "GoPremium"
+  name: "GoPremium",
+  middleware: "notAuthenticatedRequest",
 }
 </script>
 

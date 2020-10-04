@@ -10,6 +10,8 @@
 
 <script>
 export default {
+  name: "LandingPage",
+  middleware: "notAuthenticatedRequest",
   components: {
     HeroContent: () => import("@/components/LandingPage/HeroContent"),
     KeyPoint: () => import("~/components/global/KeyPoint"),
