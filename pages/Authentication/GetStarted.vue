@@ -1,15 +1,14 @@
 <template>
-  <div class="content dbx">
-    <h1 class="headline my-5">Let&rsquo;s Get Started</h1>
+  <div class="content">
+    <h1 class="headline-text mb-5 text-center">Let&rsquo;s Get Started</h1>
 
-    <ul>
-      <li v-for="option in signupOptions" :key="option.id">
-        <v-avatar color="primary" style="color: white">{{ option.provider[0] }}</v-avatar>
-        <v-btn class="my-6" color="secondary" outlined>
-          Continue with {{ option.provider }}
+    <div class="signupOptionsGrid">
+      <div v-for="option in signupOptions" :key="option.id" class="gridItems">
+        <v-btn class="button px-4" color="secondary" outlined width="250">
+          <span>Continue with {{ option.provider }}</span>
         </v-btn>
-      </li>
-    </ul>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -17,7 +16,7 @@
 <script>
 
 export default {
-  name: "/Authentication/GetStarted",
+  name: "GetStarted",
   layout: "authenticationPageLayout",
   transition: {
     name: "slide-x-transition",
@@ -28,19 +27,23 @@ export default {
       signupOptions: [
         {
           "id": 0,
-          "provider": "Google"
+          "provider": "Google",
+          "icon": "mdi-email"
         },
         {
           "id": 1,
-          "provider": "Facebook"
+          "provider": "Facebook",
+          "icon": "mdi-email"
         },
         {
           "id": 2,
-          "provider": "Twitter"
+          "provider": "Twitter",
+          "icon": "mdi-email"
         },
         {
           "id": 3,
-          "provider": "LinkedIn"
+          "provider": "LinkedIn",
+          "icon": "mdi-email"
         },
       ]
     }
@@ -50,7 +53,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "assets/variables";
+
 .content {
-  width: clamp(300px, 50vw, 600px);
+  display: block;
+  width: clamp(300px, 50vw, 650px);
+  background: $card-background;
+  padding: 2rem;
+  box-shadow: 0 0 4px lighten($segment-background, 50%);
+
+  .headline-text {
+    font-family: $Prata;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: white;
+    font-size: clamp(24px, 4vw, 32px);
+  }
+
+  .signupOptionsGrid {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    place-items: center;
+    grid-row-gap: 3vh;
+    margin: 1.5rem 0;
+    padding: 1.5rem 0;
+    background: transparent;
+
+    .gridItems {
+      background: transparent;
+    }
+  }
 }
 </style>
