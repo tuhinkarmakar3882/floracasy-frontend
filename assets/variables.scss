@@ -30,12 +30,15 @@ $Nunito: 'Nunito', sans-serif;
 $Nunito-Sans: 'Nunito Sans', sans-serif;
 $Prata: 'Prata', serif;
 $Roboto: 'Roboto', sans-serif;
-$Montaga: 'Montaga', serif;
 
 $small: 576px;
 $medium: 768px;
 $large: 992px;
 $extra-large: 1200px;
+
+$headline-title-font-size: clamp(36px, 4vw, 52px);
+$segment-title-font-size: clamp(24px, 4vw, 40px);
+$footer-title-font-size: clamp(28px, 3vw, 32px);
 
 
 // --------------------------- Base Styling -----------------------------------
@@ -51,15 +54,11 @@ button, a {
   text-transform: capitalize !important;
 }
 
-$headline-title-font-size: clamp(36px, 4vw, 52px);
-$segment-title-font-size: clamp(24px, 4vw, 40px);
-$footer-title-font-size: clamp(28px, 3vw, 32px);
-
 .v-app, .v-main, .v-footer {
   background: $body-background;
   color: $body-text-default;
   transition: all .5s ease-in-out;
-  font-family: $Nunito;
+  font-family: $Nunito-Sans;
   letter-spacing: 1px;
 }
 

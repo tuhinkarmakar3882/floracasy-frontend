@@ -1,20 +1,22 @@
 <template>
   <div class="content">
-    <h1 class="headline-text mb-5 text-center">Let&rsquo;s Get Started</h1>
+    <h1 class="headline-text my-4 text-center">Let&rsquo;s Get Started</h1>
 
     <div class="signupOptionsGrid">
       <div v-for="option in signupOptions" :key="option.id" class="gridItems">
-        <v-btn class="button px-4" color="secondary" outlined width="250">
+        <v-btn class="button px-4" color="secondary-matte" outlined width="250">
           <span>Continue with {{ option.provider }}</span>
         </v-btn>
       </div>
     </div>
 
+    <div class="muted-text text-center my-4">
+      Get Started with the most advanced password less sign in
+    </div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "GetStarted",
   layout: "authenticationPageLayout",
@@ -58,9 +60,10 @@ export default {
 .content {
   display: block;
   width: clamp(300px, 50vw, 650px);
-  background: $card-background;
+  background: darken($card-background, 5%);
+  border-radius: 10px;
   padding: 2rem;
-  box-shadow: 0 0 4px lighten($segment-background, 50%);
+  box-shadow: 0 0 4px lighten($card-background, 50%);
 
   .headline-text {
     font-family: $Prata;
@@ -83,6 +86,13 @@ export default {
     .gridItems {
       background: transparent;
     }
+  }
+
+  .muted-text {
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-align: center;
+    color: $muted;
   }
 }
 </style>

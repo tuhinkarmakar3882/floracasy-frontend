@@ -19,11 +19,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "assets/variables";
 
 .modal-style {
   display: grid;
   place-items: center;
   height: 100vh;
   transition: all .5s ease-in-out;
+  background-color: darken($body-background, 5%);
 }
 </style>

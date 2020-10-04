@@ -39,13 +39,13 @@ html {
 }
 
 .gray-shift-enter-active, .gray-shift-leave-active {
-  transition: all .5s cubic-bezier(.55, 0, .1, 1);
+  transition: all .3s cubic-bezier(.55, 0, .1, 1);
 }
 
 .gray-shift-enter, .gray-shift-leave-active {
   opacity: 0;
   transform: scale(.99);
-  filter: saturate(0%);
+  filter: grayscale(100%);
 }
 
 .dbx {

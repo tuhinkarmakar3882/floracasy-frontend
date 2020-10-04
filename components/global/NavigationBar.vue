@@ -145,7 +145,7 @@ $font-size: 18px;
     li {
       margin: 0 32px;
       font-size: $font-size;
-      font-family: $Montaga;
+      font-family: $Nunito-Sans;
 
       a {
         display: block;
