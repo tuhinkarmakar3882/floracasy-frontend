@@ -1,5 +1,5 @@
 import bodyParser from "body-parser";
-import session from 'express-session'
+import session from 'cookie-session'
 
 export default {
     server: {
