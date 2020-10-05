@@ -1,5 +1,9 @@
+"use strict";
+
 export default function ({store, redirect}) {
     if (!store.state.auth) {
-        return redirect('/Authentication/GetStarted')
+        next();
+        return redirect('/Authentication/GetStarted');
     }
+    next();
 }

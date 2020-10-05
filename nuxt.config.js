@@ -183,6 +183,8 @@ export default {
         background: '#050514'
     },
 
+    loading: { color: '#C5C2FF' },
+
     /* Layout Transitions */
     layoutTransition: {
         name: "gray-shift",
