@@ -56,7 +56,10 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$store.commit('setAuth', true);
+        await this.$store.dispatch('login', {
+          username: "demo",
+          password: "demo",
+        });
         console.log(this.$store.state.auth);
         await this.$router.push('/');
       } catch (e) {

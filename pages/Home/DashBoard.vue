@@ -5,8 +5,7 @@
     <p class="my-4">And I love it (Did you notice that the layout has changed?)</p>
     <hr>
     <h3 class="my-4">You Can Only see this after logging in.</h3>
-    <p class="my-4">But this is not persistent. This will go away, may be after a refresh. I need to persist it
-      somehow.</p>
+    <p class="my-4">Knock Knock, you're only logged in for 30secs.</p>
     <hr>
     <p class="my-4">Anyways, here's a logout button</p>
     <v-btn class="button px-4" color="secondary-matte" outlined width="250" @click="logout">
@@ -23,7 +22,7 @@ export default {
   methods: {
     async logout() {
       try {
-        await this.$store.commit('setAuth', false);
+        await this.$store.dispatch('logout')
         console.log(this.$store.state.auth);
         await this.$router.push('/');
       } catch (e) {

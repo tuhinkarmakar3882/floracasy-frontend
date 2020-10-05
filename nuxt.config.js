@@ -1,9 +1,32 @@
+import bodyParser from "body-parser";
+import session from 'express-session'
+
 export default {
     server: {
         port: 3001,
     },
 
-    target: 'static',
+    /*
+    ** Add server middleware
+    ** Nuxt.js uses `connect` module as server
+    ** So most of express middleware works with nuxt.js server middleware
+    */
+    serverMiddleware: [
+        // body-parser middleware
+        bodyParser.json(),
+        // session middleware
+        session({
+            secret: 'super-secret-key',
+            resave: false,
+            saveUninitialized: false,
+            cookie: {maxAge: 15000}
+        }),
+        // Api middleware
+        // We add /api/login & /api/logout routes
+        '~/api'
+    ],
+
+    // target: 'static',
 
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
@@ -183,7 +206,7 @@ export default {
         background: '#050514'
     },
 
-    loading: { color: '#C5C2FF' },
+    loading: {color: '#C5C2FF'},
 
     /* Layout Transitions */
     layoutTransition: {

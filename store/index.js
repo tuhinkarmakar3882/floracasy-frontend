@@ -1,27 +1,37 @@
-export const state = () => {
-    return {
-        auth: null
-    }
-}
+import axios from 'axios';
+
+export const state = () => ({
+    auth: null
+})
+
 export const mutations = {
-    setAuth(state, auth) {
-        state.auth = auth
+    SET_USER (state, user) {
+        state.auth = user
     }
 }
+
 export const actions = {
-    signIn(state, auth) {
-        commit('setAuth', auth)
+    // nuxtServerInit is called by Nuxt.js before server-rendering every page
+    nuxtServerInit ({ commit }, { req }) {
+        if (req.session && req.session.authUser) {
+            commit('SET_USER', req.session.authUser)
+        }
+    },
+    async login ({ commit }, { username, password }) {
+        try {
+            const { data } = await axios.post('/api/login', { username, password })
+            commit('SET_USER', data)
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                throw new Error('Bad credentials')
+            }
+            throw error
+        }
+    },
+
+    async logout ({ commit }) {
+        await axios.post('/api/logout')
+        commit('SET_USER', null)
     }
-    // nuxtServerInit ({ commit }, { req }) {
-    //     let auth = null
-    //     if (req.headers.cookie) {
-    //         const parsed = cookieparser.parse(req.headers.cookie)
-    //         try {
-    //             auth = JSON.parse(parsed.auth)
-    //         } catch (err) {
-    //             // No valid cookie found
-    //         }
-    //     }
-    //     commit('setAuth', auth)
-    // }
+
 }
