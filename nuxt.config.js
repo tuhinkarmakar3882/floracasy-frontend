@@ -6,11 +6,13 @@ export default {
         port: 3001,
     },
 
-    /*
-    ** Add server middleware
-    ** Nuxt.js uses `connect` module as server
-    ** So most of express middleware works with nuxt.js server middleware
-    */
+    ssr: false,
+
+    modern: {
+        client: true,
+        server: true,
+    },
+
     serverMiddleware: [
         // body-parser middleware
         bodyParser.json(),
