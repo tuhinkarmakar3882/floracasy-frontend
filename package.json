@@ -28,7 +28,8 @@
     "firebase-tools": "^8.11.2",
     "nuxt": "^2.14.0",
     "nuxt-lazy-load": "^1.2.4",
-    "nuxt-purgecss": "^1.0.0"
+    "nuxt-purgecss": "^1.0.0",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"

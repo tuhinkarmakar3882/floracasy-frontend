@@ -4,7 +4,7 @@ import session from 'cookie-session'
 const milliseconds = 1000;
 let hours = 1;
 let minutes = 1;
-let seconds = 10;
+let seconds = 60;
 export default {
     server: {
         port: 3001,

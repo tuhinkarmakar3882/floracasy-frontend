@@ -23,62 +23,51 @@
     </v-main>
 
     <v-bottom-navigation
-        v-model="value"
-        :background-color="color"
+        v-model="activeLink"
+        background-color="primary"
         app
         dark
         shift
     >
-      <v-btn>
-        <span>Video</span>
+      <v-btn v-for="menuOption in menuOptions" :key="menuOption.id">
+        <span>{{ menuOption.text }}</span>
 
-        <v-icon>mdi-television-play</v-icon>
-      </v-btn>
-
-      <v-btn>
-        <span>Music</span>
-
-        <v-icon>mdi-music-note</v-icon>
-      </v-btn>
-
-      <v-btn>
-        <span>Book</span>
-
-        <v-icon>mdi-book</v-icon>
-      </v-btn>
-
-      <v-btn>
-        <span>Image</span>
-
-        <v-icon>mdi-image</v-icon>
+        <v-icon>{{ menuOption.icon }}</v-icon>
       </v-btn>
     </v-bottom-navigation>
   </v-app>
 </template>
 
 <script>
-import Logo from "~/components/global/Logo";
 
+import {mapGetters, mapState} from "vuex";
+import hi from '~/store/BottomNavigation/state'
 export default {
   name: "HomeAppLayout",
-  components: {Logo},
-  data: () => ({value: 1}),
+  components: {
+    Logo: () => import("~/components/global/Logo"),
+  },
 
-  computed: {
+  data() {
+    return {
+      activeLink: 0,
+      // menuOptions: hi.menuOptions
+    }
+  },
+  methods: {
     color() {
-      switch (this.value) {
-        case 0:
-          return 'blue-grey'
-        case 1:
-          return 'teal'
-        case 2:
-          return 'brown'
-        case 3:
-          return 'indigo'
-        default:
-          return 'blue-grey'
-      }
+      return "red"
+      // return hi.menuOptions[hi.activeLink];
     },
+  },
+  computed: {
+
+    ...mapGetters(
+        {
+          menuOptions: 'BottomNavigation/getMenuOptions'
+        }
+    ),
+
   },
 }
 </script>

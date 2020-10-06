@@ -7,6 +7,10 @@
     <h3 class="my-4">You Can Only see this after logging in.</h3>
     <p class="my-4">Knock Knock, you're only logged in for 30secs.</p>
     <hr>
+    <p class="my-4">Profile Button?</p>
+    <v-btn class="button px-4" color="primary" width="250" to="/Home/Account/Details">
+      <span>View Profile</span>
+    </v-btn>
     <p class="my-4">Anyways, here's a logout button</p>
     <v-btn class="button px-4" color="secondary-matte" outlined width="250" @click="logout">
       <span>Log out</span>
