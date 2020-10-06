@@ -24,7 +24,7 @@
 
     <v-bottom-navigation
         v-model="activeLink"
-        background-color="primary"
+        :background-color="color"
         app
         dark
         shift
@@ -40,35 +40,30 @@
 
 <script>
 
-import {mapGetters, mapState} from "vuex";
-import hi from '~/store/BottomNavigation/state'
 export default {
   name: "HomeAppLayout",
   components: {
     Logo: () => import("~/components/global/Logo"),
   },
-
   data() {
     return {
-      activeLink: 0,
-      // menuOptions: hi.menuOptions
+      menuOptions: this.$store.state.BottomNavigation.menuOptions,
+      activeLink: this.$store.state.BottomNavigation.activeLink,
     }
   },
-  methods: {
-    color() {
-      return "red"
-      // return hi.menuOptions[hi.activeLink];
-    },
-  },
+  // Todo add a mounted method to sync the navigation
   computed: {
-
-    ...mapGetters(
-        {
-          menuOptions: 'BottomNavigation/getMenuOptions'
-        }
-    ),
-
+    color() {
+      return this.menuOptions[this.activeLink].color;
+    },
+    // ...mapGetters(
+    //     {
+    //       menuOptions: 'BottomNavigation/getMenuOptions',
+    //       activeLink: 'BottomNavigation/getActiveLink',
+    //     },
+    // ),
   },
+
 }
 </script>
 

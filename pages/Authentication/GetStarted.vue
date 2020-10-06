@@ -60,7 +60,7 @@ export default {
           username: "demo",
           password: "demo",
         });
-        console.log(this.$store.state.auth);
+        console.log(this.$store.state.authUser);
         await this.$router.push('/');
       } catch (e) {
         console.log(`Error in logging in ${e}`)
