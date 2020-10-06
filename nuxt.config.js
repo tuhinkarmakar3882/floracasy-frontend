@@ -1,12 +1,16 @@
 import bodyParser from "body-parser";
 import session from 'cookie-session'
 
+const milliseconds = 1000;
+let hours = 1;
+let minutes = 1;
+let seconds = 10;
 export default {
     server: {
         port: 3001,
     },
 
-    ssr: false,
+    ssr: true,
 
     modern: {
         client: true,
@@ -21,7 +25,7 @@ export default {
             secret: 'super-secret-key',
             resave: false,
             saveUninitialized: false,
-            cookie: {maxAge: 15000}
+            maxAge: hours * minutes * seconds * milliseconds,
         }),
         // Api middleware
         // We add /api/login & /api/logout routes
@@ -200,7 +204,9 @@ export default {
         }
     },
 
-    build: {},
+    build: {
+        extractCSS: true,
+    },
 
     loadingIndicator: {
         name: 'rectangle-bounce',
