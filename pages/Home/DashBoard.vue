@@ -27,12 +27,15 @@ export default {
     async logout() {
       try {
         await this.$store.dispatch('logout')
-        console.log(this.$store.state.auth);
+        console.log(this.$store.state.authUser);
         await this.$router.push('/');
       } catch (e) {
       }
     }
-  }
+  },
+  // mounted() {
+  //   this.$store.commit('BottomNavigation/update', {linkPosition: 0 })
+  // }
 }
 </script>
 

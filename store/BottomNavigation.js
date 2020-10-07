@@ -5,23 +5,23 @@ export const state = () => ({
             text: "Home",
             icon: "mdi-home",
             color: "red",
-            route: "/"
+            route: "/Home/Dashboard"
         },
         {
             id: 1,
-            text: "Book",
-            icon: "mdi-book",
+            text: "Account",
+            icon: "mdi-account",
             color: "green",
-            route: "/"
+            route: "/Home/Account/Details"
         },
     ],
     activeLink: 0,
 })
 
 export const mutations = {
-    // SET_USER(state, user) {
-    //     state.authUser = user
-    // }
+    update(state, {linkPosition}) {
+        state.activeLink = linkPosition;
+    },
 }
 
 export const actions = {

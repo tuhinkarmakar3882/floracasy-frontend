@@ -27,9 +27,9 @@
         :background-color="color"
         app
         dark
-        shift
     >
-      <v-btn v-for="menuOption in menuOptions" :key="menuOption.id">
+      <v-btn v-for="menuOption in menuOptions" :key="menuOption.id"
+             @click="set">
         <span>{{ menuOption.text }}</span>
 
         <v-icon>{{ menuOption.icon }}</v-icon>
@@ -40,6 +40,8 @@
 
 <script>
 
+import {mapGetters} from "vuex";
+
 export default {
   name: "HomeAppLayout",
   components: {
@@ -47,23 +49,28 @@ export default {
   },
   data() {
     return {
-      menuOptions: this.$store.state.BottomNavigation.menuOptions,
-      activeLink: this.$store.state.BottomNavigation.activeLink,
+      // menuOptions: this.$store.state.BottomNavigation.menuOptions,
+      // activeLink: this.$store.state.BottomNavigation.activeLink,
     }
   },
   // Todo add a mounted method to sync the navigation
   computed: {
-    color() {
-      return this.menuOptions[this.activeLink].color;
-    },
-    // ...mapGetters(
-    //     {
-    //       menuOptions: 'BottomNavigation/getMenuOptions',
-    //       activeLink: 'BottomNavigation/getActiveLink',
-    //     },
-    // ),
-  },
 
+    color() {
+      // return this.menuOptions[this.activeLink].color;
+    },
+    ...mapGetters(
+        {
+          menuOptions: 'BottomNavigation/getMenuOptions',
+          activeLink: 'BottomNavigation/getActiveLink',
+        },
+    ),
+    set() {
+      console.log(this.activeLink);
+      this.$store.commit('BottomNavigation/update', {linkPosition: 1})
+      console.log(this.activeLink);
+    }
+  },
 }
 </script>
 
