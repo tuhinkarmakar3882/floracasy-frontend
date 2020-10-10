@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
+    "start": "nuxt build --modern && nuxt start --modern",
     "generate": "nuxt generate",
     "static": "nuxt build --modern && nuxt generate --modern && nuxt start --modern",
-    "ssr": "nuxt build --modern && nuxt start --modern",
+    "ssr": "nuxt build && nuxt start",
     "build:modern": "nuxt build --modern=server",
     "start:modern": "nuxt start --modern=server",
     "generate:modern": "nuxt generate --modern"
