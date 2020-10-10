@@ -8,20 +8,31 @@
     <p class="my-4">Knock Knock, you're only logged in for 30secs.</p>
     <hr>
     <p class="my-4">Profile Button?</p>
-    <v-btn class="button px-4" color="primary" width="250" to="/Home/Account/Details">
+
+    <v-btn class="button px-4 my-4" color="primary" to="/Home/Account/Details" width="250">
       <span>View Profile</span>
     </v-btn>
+
+    <v-btn class="button px-4 my-4" color="primary" to="/Home/Messages" width="250">
+      <span>View Messages</span>
+    </v-btn>
+
+    <a href="/Home/Dashboard">
+      <span>REFRESH</span>
+    </a>
+
     <p class="my-4">Anyways, here's a logout button</p>
-    <v-btn class="button px-4" color="secondary-matte" outlined width="250" @click="logout">
+    <v-btn class="button px-4 my-4" color="secondary-matte" outlined width="250" @click="logout">
       <span>Log out</span>
     </v-btn>
+
   </div>
 </template>
 
 <script>
 export default {
   name: "DashBoard",
-  middleware: "authenticatedRequest",
+  // middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
   methods: {
     async logout() {
@@ -33,9 +44,9 @@ export default {
       }
     }
   },
-  // mounted() {
-  //   this.$store.commit('BottomNavigation/update', {linkPosition: 0 })
-  // }
+  mounted() {
+    this.$store.commit('BottomNavigation/update', {linkPosition: 0})
+  }
 }
 </script>
 

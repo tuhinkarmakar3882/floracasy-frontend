@@ -14,6 +14,13 @@ export const state = () => ({
             color: "green",
             route: "/Home/Account/Details"
         },
+        {
+            id: 2,
+            text: "Settings",
+            icon: "mdi-email",
+            color: "blue",
+            route: "/Home/Messages"
+        },
     ],
     activeLink: 0,
 })
@@ -24,31 +31,7 @@ export const mutations = {
     },
 }
 
-export const actions = {
-    // nuxtServerInit({commit}, {req}) {
-    //     if (req.session && req.session.authUser) {
-    //         console.log("user set as", req.session.authUser)
-    //         commit('SET_USER', req.session.authUser)
-    //     }
-    // },
-    //
-    // async login({commit}, {username, password}) {
-    //     try {
-    //         const {data} = await axios.post('/api/login', {username, password})
-    //         commit('SET_USER', data)
-    //     } catch (error) {
-    //         if (error.response && error.response.status === 401) {
-    //             throw new Error('Bad credentials')
-    //         }
-    //         throw error
-    //     }
-    // },
-    //
-    // async logout({commit}) {
-    //     await axios.post('/api/logout')
-    //     commit('SET_USER', null)
-    // }
-}
+export const actions = {}
 
 export const getters = {
     getMenuOptions(state) {

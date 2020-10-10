@@ -3,6 +3,19 @@
     <v-icon color="gold-tone" size="100">mdi-account-circle</v-icon>
     <h1 class="my-4">This is my super duper Account Details Page</h1>
     <p class="my-4">And I love it</p>
+
+    <v-btn class="button px-4 my-4" color="primary" to="/Home/Dashboard" width="250">
+      <span>View Dashboard</span>
+    </v-btn>
+    <br/>
+    <v-btn class="button px-4 my-4" color="primary" to="/Home/Messages" width="250">
+      <span>View Messages</span>
+    </v-btn>
+
+    <a href="/Home/Account/Details">
+      <span>REFRESH</span>
+    </a>
+
     <main class="container">
       <div class="user-profile">
 
@@ -51,17 +64,18 @@
 
 
     </main>
+
   </div>
 </template>
 
 <script>
 export default {
   name: "Details",
-  middleware: "notAuthenticatedRequest",
+  // middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
-  // mounted() {
-  //   this.$store.commit('BottomNavigation/update', {linkPosition: 1 })
-  // }
+  mounted() {
+    this.$store.commit('BottomNavigation/update', {linkPosition: 1})
+  }
 }
 </script>
 

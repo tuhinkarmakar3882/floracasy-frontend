@@ -23,13 +23,14 @@
     </v-main>
 
     <v-bottom-navigation
-        v-model="activeLink"
+
         :background-color="color"
         app
+        shift
         dark
     >
       <v-btn v-for="menuOption in menuOptions" :key="menuOption.id"
-             @click="set">
+             :to="menuOption.route">
         <span>{{ menuOption.text }}</span>
 
         <v-icon>{{ menuOption.icon }}</v-icon>
@@ -49,27 +50,18 @@ export default {
   },
   data() {
     return {
-      // menuOptions: this.$store.state.BottomNavigation.menuOptions,
-      // activeLink: this.$store.state.BottomNavigation.activeLink,
     }
   },
-  // Todo add a mounted method to sync the navigation
   computed: {
-
-    color() {
-      // return this.menuOptions[this.activeLink].color;
-    },
     ...mapGetters(
         {
           menuOptions: 'BottomNavigation/getMenuOptions',
           activeLink: 'BottomNavigation/getActiveLink',
         },
     ),
-    set() {
-      console.log(this.activeLink);
-      this.$store.commit('BottomNavigation/update', {linkPosition: 1})
-      console.log(this.activeLink);
-    }
+    color() {
+      return this.menuOptions[this.activeLink].color;
+    },
   },
 }
 </script>
