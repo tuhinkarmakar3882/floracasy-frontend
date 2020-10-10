@@ -16,4 +16,3 @@ ln -s ./.nuxt/ ./production/current
 echo "[+] Reloading pm2 Server"
 pm2 reload Floracasy
 echo "---------- Deployed ----------"
-

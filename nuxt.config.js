@@ -12,10 +12,10 @@ export default {
 
     ssr: true,
 
-    // modern: {
-    //     client: false,
-    //     server: false,
-    // },
+    modern: {
+        client: false,
+        server: false,
+    },
 
     serverMiddleware: [
         // body-parser middleware
