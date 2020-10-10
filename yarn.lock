@@ -8430,6 +8430,22 @@ nuxt-purgecss@^1.0.0:
     purgecss "^2.0.5"
     purgecss-webpack-plugin "^2.0.5"
 
+nuxt-start@^2.14.6:
+  version "2.14.6"
+  resolved "https://registry.yarnpkg.com/nuxt-start/-/nuxt-start-2.14.6.tgz#b587f94e64e6d3fac8f4d3a34d9878e11ab40bc8"
+  integrity sha512-3Lk4J8KzojkZgVkQeeNeov3cu9CXbNVcs620nH9qnEE0RBfLRylcTX3HKgQ0NkGl7mQPu6NXWkWKpSjRggptQg==
+  dependencies:
+    "@nuxt/cli" "2.14.6"
+    "@nuxt/core" "2.14.6"
+    "@nuxt/telemetry" "^1.2.3"
+    node-fetch "^2.6.1"
+    vue "^2.6.12"
+    vue-client-only "^2.0.0"
+    vue-meta "^2.4.0"
+    vue-no-ssr "^1.1.1"
+    vue-router "^3.4.3"
+    vuex "^3.5.1"
+
 nuxt@^2.14.0:
   version "2.14.6"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.14.6.tgz#56ba99cbd055ebdb33250a4d1ed09f084ad7fa14"

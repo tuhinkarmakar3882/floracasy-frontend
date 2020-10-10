@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
+    "pm2": "nuxt build && pm2 start ecosystem.config.js",
     "build": "nuxt build",
     "start": "nuxt build --modern && nuxt start --modern",
     "generate": "nuxt generate",
-    "static": "nuxt build --modern && nuxt generate --modern && nuxt start --modern",
     "ssr": "nuxt build && nuxt start",
     "build:modern": "nuxt build --modern=server",
     "start:modern": "nuxt start --modern=server",
@@ -29,6 +29,7 @@
     "nuxt": "^2.14.0",
     "nuxt-lazy-load": "^1.2.4",
     "nuxt-purgecss": "^1.0.0",
+    "nuxt-start": "^2.14.6",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
