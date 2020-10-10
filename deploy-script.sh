@@ -11,8 +11,8 @@ echo "[+] Running Yarn Install"
 yarn install
 echo "[+] Running Yarn Build"
 yarn build
-echo "[+] Running Symlink"
-ln -s ./.nuxt/ ./production/current
+#echo "[+] Running Symlink"
+#ln -s ./.nuxt/ ./production/current
 echo "[+] Reloading pm2 Server"
 pm2 reload Floracasy
 echo "---------- Deployed ----------"
