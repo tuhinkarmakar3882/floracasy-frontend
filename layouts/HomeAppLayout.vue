@@ -23,7 +23,6 @@
     </v-main>
 
     <v-bottom-navigation
-
         :background-color="color"
         app
         shift

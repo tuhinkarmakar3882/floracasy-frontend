@@ -32,7 +32,7 @@
 <script>
 export default {
   name: "DashBoard",
-  // middleware: "authenticatedRequest",
+  middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
   methods: {
     async logout() {

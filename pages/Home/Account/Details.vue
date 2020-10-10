@@ -71,7 +71,7 @@
 <script>
 export default {
   name: "Details",
-  // middleware: "authenticatedRequest",
+  middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
   mounted() {
     this.$store.commit('BottomNavigation/update', {linkPosition: 1})
