@@ -1,6 +1,8 @@
 <template>
   <div class="text-center my-6 py-6 px-4">
     <v-icon color="gold-tone" size="100">mdi-home</v-icon>
+    <hr>
+    <hr>
     <h1 class="my-4">This is my super duper DASHBOARD Page</h1>
     <p class="my-4">And I love it (Did you notice that the layout has changed?)</p>
     <hr>
