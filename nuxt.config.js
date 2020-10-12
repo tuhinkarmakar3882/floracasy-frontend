@@ -10,10 +10,10 @@ export default {
         port: 3001,
     },
     ssr: true,
-    // modern: {
-    //     client: false,
-    //     server: false,
-    // },
+    modern: {
+        client: true,
+        server: true,
+    },
     serverMiddleware: [
         // body-parser middleware
         bodyParser.json(),
