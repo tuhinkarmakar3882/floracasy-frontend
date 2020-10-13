@@ -15,6 +15,16 @@
           <p class="type"> {{ item.type }} </p>
         </div>
       </section>
+      <section class="actions">
+        <v-btn class="px-6" color="#3734E5" dark rounded>
+          Follow
+          <v-icon class="ml-2" dark>mdi-account-multiple-plus</v-icon>
+        </v-btn>
+        <v-btn class="px-6" color="#3734E5" dark rounded>
+          Message
+          <v-icon class="ml-2" dark>mdi-lock</v-icon>
+        </v-btn>
+      </section>
 
       <section class="other-info">
         <h3>About</h3>
@@ -28,16 +38,7 @@
 
         <a href="#"> @swagataB </a>
 
-        <div class="actions">
-          <v-btn class="px-6" color="#3734E5" dark rounded>
-            Follow
-            <v-icon class="ml-2" dark>mdi-account-multiple-plus</v-icon>
-          </v-btn>
-          <v-btn class="px-6" color="#3734E5" dark rounded>
-            Message
-            <v-icon class="ml-2" dark>mdi-lock</v-icon>
-          </v-btn>
-        </div>
+
       </section>
     </section>
     <section class="blogs">
@@ -139,6 +140,15 @@ export default {
       }
     }
 
+    .actions {
+      display: grid;
+      margin: 1rem 0;
+      place-items: center;
+      padding: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 1rem;
+    }
+
     .other-info {
       h3 {
         line-height: 1.8;
@@ -159,14 +169,7 @@ export default {
         letter-spacing: 0;
       }
 
-      .actions {
-        display: grid;
-        margin: 1rem 0;
-        place-items: center;
-        padding: 1rem;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 1rem;
-      }
+
     }
   }
 }
