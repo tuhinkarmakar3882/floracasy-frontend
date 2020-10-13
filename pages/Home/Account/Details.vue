@@ -17,6 +17,7 @@
       </section>
 
       <section class="other-info">
+        <h3>About</h3>
         <p class="about">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores assumenda blanditiis
           eaque error eveniet explicabo illum iure minus odit officia quia repellendus reprehenderit saepe
@@ -28,8 +29,14 @@
         <a href="#"> @swagataB </a>
 
         <div class="actions">
-          <button>Follow</button>
-          <button>Message</button>
+          <v-btn class="px-6" color="#3734E5" dark rounded>
+            Follow
+            <v-icon class="ml-2" dark>mdi-account-multiple-plus</v-icon>
+          </v-btn>
+          <v-btn class="px-6" color="secondary" dark outlined rounded>
+            Message
+            <v-icon class="ml-2" dark>mdi-lock</v-icon>
+          </v-btn>
         </div>
       </section>
     </section>
@@ -107,6 +114,13 @@ export default {
           font-size: 24px;
           font-family: $Prata;
           color: white;
+          margin-bottom: 12px;
+          margin-top: 0;
+        }
+
+        .designation {
+          margin: 0 0 9px;
+          color: #00BCD4;
         }
       }
     }
@@ -122,6 +136,36 @@ export default {
         p {
           margin: 0;
         }
+      }
+    }
+
+    .other-info {
+      h3 {
+        line-height: 1.8;
+        font-weight: 400;
+        color: #FFF;
+        font-size: 24px;
+        margin-top: 2rem;
+        font-family: $Prata;
+        margin-bottom: 1rem;
+      }
+
+      .about {
+        padding: 0 1rem;
+        text-align: center;
+        line-height: 1.5;
+        font-weight: 300;
+        color: #9a9a9a;
+        letter-spacing: 0;
+      }
+
+      .actions {
+        display: grid;
+        margin: 1rem 0;
+        place-items: center;
+        padding: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 1rem;
       }
     }
   }
