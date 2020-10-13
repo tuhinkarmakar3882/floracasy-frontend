@@ -33,7 +33,7 @@
             Follow
             <v-icon class="ml-2" dark>mdi-account-multiple-plus</v-icon>
           </v-btn>
-          <v-btn class="px-6" color="secondary" dark outlined rounded>
+          <v-btn class="px-6" color="#3734E5" dark rounded>
             Message
             <v-icon class="ml-2" dark>mdi-lock</v-icon>
           </v-btn>
