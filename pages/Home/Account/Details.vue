@@ -63,7 +63,7 @@
 <script>
 export default {
   name: "Details",
-  // middleware: "authenticatedRequest",
+  middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
   data() {
     return {

@@ -4,21 +4,21 @@ export const state = () => ({
             id: 0,
             text: "Home",
             icon: "mdi-home",
-            color: "#3734E5",
+            color: "#6360f8",
             route: "/Home/Dashboard"
         },
         {
             id: 1,
             text: "Account",
             icon: "mdi-account",
-            color: "#3734E5",
+            color: "#6360f8",
             route: "/Home/Account/Details"
         },
         {
             id: 2,
             text: "Settings",
             icon: "mdi-email",
-            color: "#3734E5",
+            color: "#6360f8",
             route: "/Home/Messages"
         },
     ],
