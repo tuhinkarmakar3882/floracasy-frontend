@@ -2,7 +2,7 @@
   <footer class="full-width">
     <div class="row justify-space-around">
 
-      <div class="segment col-12 col-sm-5 col-md-3">
+      <div class="basic-data col-12 col-sm-5 col-md-3">
         <h3 class="heading text-center text-sm-left my-6">Contact Us</h3>
         <div class="row">
           <div class="col">
@@ -113,7 +113,7 @@
         </div>
       </div>
 
-      <div class="segment col-12 col-sm-5 col-md-3">
+      <div class="basic-data col-12 col-sm-5 col-md-3">
         <h3 class="heading text-center text-sm-left my-6">Become A Floracasian</h3>
 
         <p class="sub-text text-center text-sm-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
@@ -127,7 +127,7 @@
         </div>
       </div>
 
-      <div class="segment col-12 text-center mb-5">
+      <div class="basic-data col-12 text-center mb-5">
         <a href="#" style="color:#959595">Back to Top</a>
       </div>
     </div>
@@ -170,7 +170,7 @@ footer {
   width: 100%;
   padding: 12px 32px;
 
-  .segment {
+  .basic-data {
     .heading {
       font-size: clamp(28px, 3vw, 32px);
       color: white;

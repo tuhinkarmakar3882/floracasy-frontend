@@ -1,20 +1,31 @@
 <template>
-  <div class="text-center my-4 details-page">
+  <div class="text-center py-6 details-page">
+
     <section class="user-profile">
-      <div class="segment">
-        <img alt="profile picture" class="picture" src="https://picsum.photos/200"/>
-        <div class="basic-details">
-          <p class="name"> Swagata Biswas </p>
+
+      <div class="basic-data dbx">
+        <img alt="profile-picture dbx" class="picture" src="https://picsum.photos/200"/>
+        <div class="basic-details dbx">
+          <p class="name"> Travis Alice </p>
           <p class="designation"> Beauty Blogger </p>
         </div>
       </div>
 
-      <section class="stats">
-        <div v-for="item in statisticsItem" :key="item.id" class="item">
+      <section class="stats dbx">
+        <div v-for="item in statisticsItem" :key="item.id" class="item dbx">
           <span class="number">{{ item.value }}</span>
           <p class="type"> {{ item.type }} </p>
         </div>
       </section>
+
+
+      <section class="other-info">
+        <h3>About</h3>
+        <p class="about">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores assumenda blanditiis
+        </p>
+      </section>
+
       <section class="actions">
         <v-btn class="px-6" color="#3734E5" dark rounded>
           Follow
@@ -25,45 +36,31 @@
           <v-icon class="ml-2" dark>mdi-lock</v-icon>
         </v-btn>
       </section>
-
-      <section class="other-info">
-        <h3>About</h3>
-        <p class="about">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores assumenda blanditiis
-          eaque error eveniet explicabo illum iure minus odit officia quia repellendus reprehenderit saepe
-          similique sint ut, voluptas. Qui.
-        </p>
-
-        <a href="#"> Swagata_Biswas </a>
-
-        <a href="#"> @swagataB </a>
-
-
-      </section>
     </section>
-    <section class="blogs">
-      <p>New </p>
-      <img alt="image" src="https://picsum.photos/250">
-      <h3> It is blogs headline & readers love it </h3>
-      <p> Sat Aug 19, 2020 11:34 A.M. </p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, aperiam, praesentium. Adipisci commodi dolores
-        ducimus in ipsum laboriosam molestias officia possimus quaerat quibusdam reiciendis sequi, temporibus velit.
-        Laborum mollitia, quidem!</p>
-      <button>Read more</button>
 
-      <hr/>
+    <!--    <section class="blogs">-->
+    <!--      <p>New </p>-->
+    <!--      <img alt="image" src="https://picsum.photos/250">-->
+    <!--      <h3> It is blogs headline & readers love it </h3>-->
+    <!--      <p> Sat Aug 19, 2020 11:34 A.M. </p>-->
+    <!--      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, aperiam, praesentium. Adipisci commodi dolores-->
+    <!--        ducimus in ipsum laboriosam molestias officia possimus quaerat quibusdam reiciendis sequi, temporibus velit.-->
+    <!--        Laborum mollitia, quidem!</p>-->
+    <!--      <button>Read more</button>-->
 
-      <h5>
-        <u>1 week ago</u>
-      </h5>
-    </section>
+    <!--      <hr/>-->
+
+    <!--      <h5>-->
+    <!--        <u>1 week ago</u>-->
+    <!--      </h5>-->
+    <!--    </section>-->
   </div>
 </template>
 
 <script>
 export default {
   name: "Details",
-  middleware: "authenticatedRequest",
+  // middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
   data() {
     return {
@@ -74,14 +71,14 @@ export default {
           type: "Blogs",
         },
         {
+          id: 1,
+          value: 560,
+          type: "Engagements",
+        },
+        {
           id: 2,
           value: 100,
           type: "Followers",
-        },
-        {
-          id: 1,
-          value: 560,
-          type: "Following",
         },
       ],
     }
@@ -97,11 +94,12 @@ export default {
 
 .details-page {
   .user-profile {
-    .segment {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: space-around;
-      align-items: center;
+    padding: 0 1rem;
+
+    .basic-data {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      place-items: center;
       position: relative;
       z-index: 2;
 
@@ -150,26 +148,23 @@ export default {
     }
 
     .other-info {
+      text-align: left;
+
       h3 {
-        line-height: 1.8;
         font-weight: 400;
         color: #FFF;
-        font-size: 24px;
+        font-size: 20px;
         margin-top: 2rem;
         font-family: $Prata;
         margin-bottom: 1rem;
       }
 
       .about {
-        padding: 0 1rem;
-        text-align: center;
-        line-height: 1.5;
+        //line-height: 1.5;
         font-weight: 300;
         color: #9a9a9a;
         letter-spacing: 0;
       }
-
-
     }
   }
 }
