@@ -13,11 +13,10 @@
 </template>
 
 <script>
-
 export default {
   components: {
-    NavigationBar: () => import('~/components/global/NavigationBar'),
-    Footer: () => import('~/components/global/Footer'),
+    NavigationBar: () => import("~/components/global/NavigationBar"),
+    Footer: () => import("~/components/global/Footer"),
   },
   data: () => {
     return {}
@@ -27,5 +26,4 @@ export default {
 
 <style lang="scss" scoped>
 @import "assets/variables";
-
 </style>

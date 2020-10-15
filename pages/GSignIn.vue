@@ -2,9 +2,15 @@
   <div class="container text-center">
     <h3>Logged in As => {{ whoAmI }}</h3>
     <br>
-    <v-btn class="mx-4 my-4" color="secondary" outlined @click="signInRedirect">Sign With Redirect</v-btn>
-    <v-btn class="mx-4 my-4" color="secondary" outlined @click="signInPopup">Sign With Pop Up</v-btn>
-    <v-btn class="mx-4 my-4" color="secondary" outlined @click="test">Test</v-btn>
+    <v-btn class="mx-4 my-4" color="secondary" outlined @click="signInRedirect">
+      Sign With Redirect
+    </v-btn>
+    <v-btn class="mx-4 my-4" color="secondary" outlined @click="signInPopup">
+      Sign With Pop Up
+    </v-btn>
+    <v-btn class="mx-4 my-4" color="secondary" outlined @click="test">
+      Test
+    </v-btn>
   </div>
 </template>
 
@@ -14,7 +20,9 @@ export default {
   layout: "PreAuthLayout",
   data() {
     return {
-      whoAmI: !this.$firebase.auth().currentUser.isAnonymous ? this.$firebase.auth().currentUser : "Not Logged in",
+      whoAmI: !this.$firebase.auth().currentUser.isAnonymous
+          ? this.$firebase.auth().currentUser
+          : "Not Logged in",
     }
   },
   methods: {
@@ -34,11 +42,9 @@ export default {
       const url = `https://floracasy.firebaseio.com//test.json?auth=${idToken}`
       const test = await this.$axios.$get(url)
       console.log(test)
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

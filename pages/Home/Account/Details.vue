@@ -1,39 +1,43 @@
 <template>
   <div class="text-center py-6 details-page">
-
     <section class="user-profile">
-
       <div class="basic-data">
-        <img alt="profile-picture" class="picture" src="https://picsum.photos/200"/>
+        <img
+            alt="profile-picture"
+            class="picture"
+            src="https://picsum.photos/200"
+        >
         <div class="basic-details">
-          <p class="name"> Travis Alice </p>
-          <p class="designation"> Beauty Blogger </p>
+          <p class="name">Travis Alice</p>
+          <p class="designation">Beauty Blogger</p>
         </div>
       </div>
 
       <section class="stats">
         <div v-for="item in statisticsItem" :key="item.id" class="item">
           <span class="number">{{ item.value }}</span>
-          <p class="type"> {{ item.type }} </p>
+          <p class="type">
+            {{ item.type }}
+          </p>
         </div>
       </section>
-
 
       <section class="other-info">
         <h3>About</h3>
         <p class="about">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus asperiores assumenda blanditiis
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
+          asperiores assumenda blanditiis
         </p>
       </section>
 
       <section class="actions">
         <v-btn class="px-6" color="#3734E5" dark rounded>
           Follow
-          <v-icon class="ml-2" dark>mdi-account-multiple-plus</v-icon>
+          <v-icon class="ml-2" dark> mdi-account-multiple-plus</v-icon>
         </v-btn>
         <v-btn class="px-6" color="#3734E5" dark rounded>
           Message
-          <v-icon class="ml-2" dark>mdi-lock</v-icon>
+          <v-icon class="ml-2" dark> mdi-lock</v-icon>
         </v-btn>
       </section>
     </section>
@@ -45,7 +49,7 @@
         <div class="content">
           <img :alt="blog.title" :src="blog.image">
           <div class="data">
-            <h3> {{ blog.title }} </h3>
+            <h3>{{ blog.title }}</h3>
             <small> {{ blog.time }}</small>
           </div>
         </div>
@@ -59,8 +63,8 @@
 <script>
 export default {
   name: "Details",
-  // middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
+  middleware: "authenticatedRequest",
   data() {
     return {
       statisticsItem: [
@@ -85,44 +89,44 @@ export default {
           id: 0,
           title: "Now its easy to take care your underarms at home.",
           image: "https://picsum.photos/200",
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
+          time: "Sat Aug 19, 2020 11:34 A.M.",
         },
         {
           id: 1,
           title: "Love your hair but suffering from Hair fall or hair damage?",
           image: "https://picsum.photos/200",
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
+          time: "Sat Aug 19, 2020 11:34 A.M.",
         },
         {
           id: 2,
           title: "Bath - Hot water or Cold water? Let's see!",
           image: "https://picsum.photos/200",
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
+          time: "Sat Aug 19, 2020 11:34 A.M.",
         },
         {
           id: 3,
           title: "What should be your diet schedule?",
           image: "https://picsum.photos/200",
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
+          time: "Sat Aug 19, 2020 11:34 A.M.",
         },
         {
           id: 4,
           title: "Now you can get salon like pedicure for free at home",
           image: "https://picsum.photos/200",
-          time: 'Fri Aug 18, 2020 01:34 A.M.',
+          time: "Fri Aug 18, 2020 01:34 A.M.",
         },
         {
           id: 5,
           title: "Miracle Face Mask According To Your Skin Type",
           image: "https://picsum.photos/200",
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
+          time: "Sat Aug 19, 2020 11:34 A.M.",
         },
-      ]
+      ],
     }
   },
   mounted() {
-    this.$store.commit('BottomNavigation/update', {linkPosition: 4})
-  }
+    this.$store.commit("BottomNavigation/update", {linkPosition: 4})
+  },
 }
 </script>
 
@@ -133,7 +137,6 @@ export default {
   padding: 0 1rem;
 
   .user-profile {
-
     .basic-data {
       display: grid;
       grid-template-columns: 1fr 2fr;
@@ -157,7 +160,7 @@ export default {
 
         .designation {
           margin: 0 0 9px;
-          color: #00BCD4;
+          color: #00bcd4;
         }
       }
     }
@@ -190,7 +193,7 @@ export default {
 
       h3 {
         font-weight: 400;
-        color: #FFF;
+        color: #fff;
         font-size: 20px;
         margin-top: 2rem;
         font-family: $Prata;
@@ -210,7 +213,7 @@ export default {
     .heading {
       text-align: left;
       font-weight: 400;
-      color: #FFF;
+      color: #fff;
       font-size: 20px;
       margin-top: 2rem;
       font-family: $Prata;
@@ -244,5 +247,4 @@ export default {
     }
   }
 }
-
 </style>

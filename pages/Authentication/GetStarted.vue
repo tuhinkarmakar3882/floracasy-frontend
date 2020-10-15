@@ -4,7 +4,13 @@
 
     <div class="signupOptionsGrid">
       <div v-for="option in signupOptions" :key="option.id" class="gridItems">
-        <v-btn class="button px-4" color="secondary-matte" outlined width="250" @click="login">
+        <v-btn
+            class="button px-4"
+            color="secondary-matte"
+            outlined
+            width="250"
+            @click="login"
+        >
           <span>Continue with {{ option.provider }}</span>
         </v-btn>
       </div>
@@ -15,7 +21,17 @@
     </div>
 
     <div class="text-center mt-4">
-      <v-btn color="white" text @click="()=>{this.$router.back()}">Go Back</v-btn>
+      <v-btn
+          color="white"
+          text
+          @click="
+          () => {
+            this.$router.back()
+          }
+        "
+      >
+        Go Back
+      </v-btn>
     </div>
   </div>
 </template>
@@ -30,43 +46,43 @@ export default {
     return {
       signupOptions: [
         {
-          "id": 0,
-          "provider": "Google",
-          "icon": "mdi-email"
+          id: 0,
+          provider: "Google",
+          icon: "mdi-email",
         },
         {
-          "id": 1,
-          "provider": "Facebook",
-          "icon": "mdi-email"
+          id: 1,
+          provider: "Facebook",
+          icon: "mdi-email",
         },
         {
-          "id": 2,
-          "provider": "Twitter",
-          "icon": "mdi-email"
+          id: 2,
+          provider: "Twitter",
+          icon: "mdi-email",
         },
         {
-          "id": 3,
-          "provider": "LinkedIn",
-          "icon": "mdi-email"
+          id: 3,
+          provider: "LinkedIn",
+          icon: "mdi-email",
         },
-      ]
+      ],
     }
   },
 
   methods: {
     async login() {
       try {
-        await this.$store.dispatch('login', {
+        await this.$store.dispatch("login", {
           username: "demo",
           password: "demo",
-        });
-        console.log(this.$store.state.authUser);
-        await this.$router.push('/');
+        })
+        console.log(this.$store.state.authUser)
+        await this.$router.push("/")
       } catch (e) {
         console.log(`Error in logging in ${e}`)
       }
     },
-  }
+  },
 }
 </script>
 

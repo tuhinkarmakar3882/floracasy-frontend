@@ -2,43 +2,50 @@
   <div class="showcase my-4 py-6 text-center">
     <v-container>
       <SegmentTitle
-          leadingParagraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
+          leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
           title="Explore a Wide Range of Categories"
           topic="Categories"
       />
       <div class="grid-container py-12">
-
         <div v-for="item in items" :key="item.name" class="grid-col">
-          <img :alt="item.name" :src="item.image"/>
-          <p class="my-4">{{ item.name }}</p>
+          <img :alt="item.name" :src="item.image">
+          <p class="my-4">
+            {{ item.name }}
+          </p>
         </div>
 
         <div class="grid-col">
-          <img alt="item.name" src="https://picsum.photos/151?random"
-               style="width: 100%; object-fit: cover; border-radius: 50%"/>
+          <img
+              alt="item.name"
+              src="https://picsum.photos/151?random"
+              style="width: 100%; object-fit: cover; border-radius: 50%"
+          >
           <p class="my-4">More</p>
         </div>
-
       </div>
 
-      <v-btn :loading="categoriesButtonLoading" class="my-6 btn" color="primary" large nuxt rounded
-             to="/Authentication/GetStarted"
-             @click="changeIt">
+      <v-btn
+          :loading="categoriesButtonLoading"
+          class="my-6 btn"
+          color="primary"
+          large
+          nuxt
+          rounded
+          to="/Authentication/GetStarted"
+          @click="changeIt"
+      >
         Start Reading
       </v-btn>
-
-
     </v-container>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "CategoriesShowcase",
   components: {
-    SegmentTitle: () => import("@/components/LandingPage/SegmentTitle")
+    SegmentTitle: () => import("@/components/LandingPage/SegmentTitle"),
   },
   data() {
     return {
@@ -85,7 +92,7 @@ export default {
   },
   methods: {
     changeIt: function () {
-      this.categoriesButtonLoading = true;
+      this.categoriesButtonLoading = true
       setTimeout(() => {
         this.categoriesButtonLoading = false
       }, 2000)

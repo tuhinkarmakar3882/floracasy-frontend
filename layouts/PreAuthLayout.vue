@@ -6,11 +6,10 @@
       </div>
     </v-main>
   </v-app>
-
 </template>
 
 <script>
-import NavigationBar from "@/components/global/NavigationBar";
+import NavigationBar from "@/components/global/NavigationBar"
 
 export default {
   name: "PreAuthLayout",
@@ -25,7 +24,7 @@ export default {
   display: grid;
   place-items: center;
   height: 100vh;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   background-color: darken($body-background, 5%);
 }
 </style>

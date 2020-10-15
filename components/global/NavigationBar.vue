@@ -3,30 +3,38 @@
     <v-app-bar
         app
         color="body-background"
-        elevate-on-scroll
-        hide-on-scroll
         dark
+        elevate-on-scroll
         height="72"
+        hide-on-scroll
     >
-      <v-app-bar-nav-icon class="visible-upto-large" @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+          class="visible-upto-large"
+          @click="drawer = !drawer"
+      />
 
-      <v-progress-linear :active="drawer" :indeterminate="drawer" absolute bottom/>
+      <v-progress-linear
+          :active="drawer"
+          :indeterminate="drawer"
+          absolute
+          bottom
+      />
 
       <v-spacer class="visible-upto-large"/>
 
       <div class="brand">
         <Logo :width="36"/>
-        <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
+        <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
       </div>
 
       <v-spacer class="visible-on-large-and-up"/>
 
       <ul class="visible-on-large-and-up">
         <li>
-          <nuxt-link to="/GoPremium">Go Premium</nuxt-link>
+          <nuxt-link to="/GoPremium"> Go Premium</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/WriteAndEarn">Write &amp; Earn</nuxt-link>
+          <nuxt-link to="/WriteAndEarn"> Write &amp; Earn</nuxt-link>
         </li>
         <li>
           <nuxt-link to="/Authentication/GetStarted">
@@ -45,13 +53,7 @@
       </ul>
     </v-app-bar>
 
-    <v-navigation-drawer
-        v-model="drawer"
-        app
-        color="card-background"
-        temporary
-    >
-
+    <v-navigation-drawer v-model="drawer" app color="card-background" temporary>
       <v-list-item dark>
         <v-list-item-avatar>
           <Logo/>
@@ -62,7 +64,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider style="background-color: #6DD0BF"></v-divider>
+      <v-divider style="background-color: #6dd0bf"/>
 
       <v-list dark>
         <v-list-item
@@ -71,24 +73,44 @@
             link
         >
           <v-list-item-icon @click="navigateTo(menuOption.route)">
-            <v-icon :color="menuOption.color">{{ menuOption.icon }}</v-icon>
+            <v-icon :color="menuOption.color">
+              {{ menuOption.icon }}
+            </v-icon>
           </v-list-item-icon>
 
           <v-list-item-content @click="navigateTo(menuOption.route)">
-            <v-list-item-title style="color: #BABABA">{{ menuOption.title }}</v-list-item-title>
+            <v-list-item-title style="color: #bababa">
+              {{ menuOption.title }}
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
       <v-list two-line>
         <v-list-item>
-          <v-btn color="secondary" height="44" nuxt outlined to="/Authentication/GetStarted" width="112">Log in</v-btn>
+          <v-btn
+              color="secondary"
+              height="44"
+              nuxt
+              outlined
+              to="/Authentication/GetStarted"
+              width="112"
+          >
+            Log in
+          </v-btn>
         </v-list-item>
 
         <v-list-item>
-          <v-btn color="primary" height="44" nuxt to="/Authentication/GetStarted" width="112">Join Us</v-btn>
+          <v-btn
+              color="primary"
+              height="44"
+              nuxt
+              to="/Authentication/GetStarted"
+              width="112"
+          >
+            Join Us
+          </v-btn>
         </v-list-item>
       </v-list>
-
     </v-navigation-drawer>
   </header>
 </template>
@@ -97,32 +119,32 @@
 export default {
   name: "NavigationBar",
   components: {
-    Logo: () => import('~/components/global/Logo'),
+    Logo: () => import("~/components/global/Logo"),
   },
   data() {
     return {
       drawer: false,
       menuOptions: [
         {
-          title: 'Go Premium',
-          icon: 'mdi-crown',
-          color: 'gold-tone',
-          route: '/GoPremium'
+          title: "Go Premium",
+          icon: "mdi-crown",
+          color: "gold-tone",
+          route: "/GoPremium",
         },
         {
-          title: 'Write & Earn',
-          icon: 'mdi-cash-usd',
-          color: 'eco-tick',
-          route: '/WriteAndEarn'
+          title: "Write & Earn",
+          icon: "mdi-cash-usd",
+          color: "eco-tick",
+          route: "/WriteAndEarn",
         },
       ],
     }
   },
   methods: {
     navigateTo: function (path) {
-      this.$router.push(path);
-    }
-  }
+      this.$router.push(path)
+    },
+  },
 }
 </script>
 
@@ -174,6 +196,5 @@ $font-size: 18px;
       }
     }
   }
-
 }
 </style>

@@ -12,21 +12,21 @@
 <script>
 export default {
   name: "KeyPoint",
+  components: {},
   props: {
     tickColor: {
       type: String,
-      required: true
+      required: true,
     },
     tickSize: {
       type: Number,
-      required: true
+      required: true,
     },
     point: {
       type: String,
-      required: true
+      required: true,
     },
   },
-  components: {}
 }
 </script>
 
@@ -45,5 +45,4 @@ div {
     margin-left: 24px;
   }
 }
-
 </style>

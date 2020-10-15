@@ -1,26 +1,30 @@
 <template>
   <div class="top-header">
-    <p class="topic">{{ topic }}</p>
-    <h2 class="mt-0 mb-6 pb-4">{{ title }}</h2>
+    <p class="topic">
+      {{ topic }}
+    </p>
+    <h2 class="mt-0 mb-6 pb-4">
+      {{ title }}
+    </h2>
     <p>{{ leadingParagraph }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SegmentTitle',
+  name: "SegmentTitle",
   props: {
     topic: {
       type: String,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     leadingParagraph: {
       type: String,
-      required: true
+      required: true,
     },
   },
 }
@@ -30,7 +34,6 @@ export default {
 @import "assets/variables";
 
 .top-header {
-
   .topic {
     color: $secondary-highlight;
     font-weight: 700;
@@ -47,6 +50,5 @@ export default {
     font-weight: 300;
     line-height: 1.84;
   }
-
 }
 </style>

@@ -2,15 +2,22 @@
   <div class="my-4 py-6 text-center">
     <v-container>
       <SegmentTitle
-          leadingParagraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
+          leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
           title="Earn with Us"
           topic="Earning"
       />
 
-      <v-btn :loading="earningButtonLoading" class="my-6 btn" color="primary" large nuxt rounded
-             to="/Authentication/GetStarted"
-             @click="changeIt">
+      <v-btn
+          :loading="earningButtonLoading"
+          class="my-6 btn"
+          color="primary"
+          large
+          nuxt
+          rounded
+          to="/Authentication/GetStarted"
+          @click="changeIt"
+      >
         Start Earning
       </v-btn>
     </v-container>
@@ -18,7 +25,6 @@
 </template>
 
 <script>
-
 export default {
   name: "EarningSection",
   components: {
@@ -31,13 +37,11 @@ export default {
   },
   methods: {
     changeIt: function () {
-      this.earningButtonLoading = true;
+      this.earningButtonLoading = true
       setTimeout(() => {
         this.earningButtonLoading = false
       }, 2000)
     },
   },
-
 }
 </script>
-
