@@ -1,26 +1,16 @@
 <template>
-  <div class="text-center my-6 py-6 px-4">
-    <v-icon color="gold-tone" size="100"> mdi-home</v-icon>
-    <hr>
-    <hr>
-    <h1 class="my-4">This is my super duper DASHBOARD Page</h1>
-    <p class="my-4">
-      And I love it (Did you notice that the layout has changed?)
-    </p>
-    <hr>
-    <h3 class="my-4">You Can Only see this after logging in.</h3>
-    <p class="my-4">Knock Knock, you're only logged in for 30secs.</p>
-    <hr>
-    <p class="my-4">Anyways, here's a logout button</p>
-    <v-btn
-        class="button px-4 my-4"
-        color="secondary-matte"
-        outlined
-        width="250"
-        @click="logout"
-    >
-      <span>Log out</span>
-    </v-btn>
+  <div class="dashboard my-6 px-4">
+    <section class="categories">
+      <h2> Browse by Categories </h2>
+      <ul class="options">
+        <li v-for="category in categories" :key="category.id" class="mx-4">
+          <v-btn color="secondary" outlined to="/Home/Blogs/CategoryWise/">
+            {{ category.name }}
+          </v-btn>
+        </li>
+
+      </ul>
+    </section>
   </div>
 </template>
 
@@ -29,6 +19,32 @@ export default {
   name: "DashBoard",
   // middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
+  data() {
+    return {
+      categories: [
+        {
+          id: '0',
+          name: 'Beauty',
+        },
+        {
+          id: '1',
+          name: 'Games',
+        },
+        {
+          id: '2',
+          name: 'Technology',
+        },
+        {
+          id: '3',
+          name: 'Art',
+        },
+        {
+          id: '4',
+          name: 'Music',
+        },
+      ],
+    };
+  },
   mounted() {
     this.$store.commit("BottomNavigation/update", {linkPosition: 0})
   },
@@ -45,4 +61,25 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+@import "assets/variables";
+
+.dashboard {
+  .categories {
+    h2 {
+      text-align: center;
+      font-family: $Prata;
+      font-weight: 400;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding: 1rem 0;
+      list-style: none;
+      display: flex;
+      overflow-x: scroll;
+    }
+  }
+}
+</style>

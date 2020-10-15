@@ -125,7 +125,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit("BottomNavigation/update", {linkPosition: 4})
+    this.$store.commit("BottomNavigation/update", {linkPosition: 3})
   },
 }
 </script>
