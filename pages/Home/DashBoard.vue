@@ -8,9 +8,16 @@
             {{ category.name }}
           </v-btn>
         </li>
-
       </ul>
     </section>
+
+    <section class="carousel my-5">
+      <v-divider dark/>
+      <h1 class="text-center my-4">The Carousel will Come Here</h1>
+      <v-divider dark/>
+    </section>
+
+
   </div>
 </template>
 
