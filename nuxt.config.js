@@ -63,9 +63,7 @@ export default {
     css: [
         '~/styles/main.scss',
     ],
-    plugins: [
-        '~/plugins/firebase.js'
-    ],
+    plugins: [],
     components: true,
     buildModules: [
         '@nuxtjs/vuetify',
@@ -76,7 +74,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxt/content',
-        // '@nuxtjs/firebase',
+        '@nuxtjs/firebase',
         // 'nuxt-purgecss',
         [
             'nuxt-lazy-load',
@@ -103,37 +101,37 @@ export default {
         ],
     ],
 
-    // firebase: {
-    //     config: {
-    //         apiKey: "AIzaSyAWuJIU3_V6pf0QvF9wev36pNvXYGmNJNo",
-    //         authDomain: "floracasy.firebaseapp.com",
-    //         databaseURL: "https://floracasy.firebaseio.com",
-    //         projectId: "floracasy",
-    //         storageBucket: "floracasy.appspot.com",
-    //         messagingSenderId: "295292997514",
-    //         appId: "1:295292997514:web:7ac338f7f4fee2ede48273",
-    //         measurementId: "G-XJLFQ1C8VD"
-    //     },
-    //     services: {
-    //         auth: true,
-    //         // firestore: true,
-    //         // functions: true,
-    //         // storage: true,
-    //         // realtimeDb: true,
-    //         messaging: true,
-    //         performance: true,
-    //         analytics: true,
-    //         remoteConfig: true
-    //     },
-    //     auth: {
-    //         persistence: 'local', // default
-    //         initialize: {
-    //             onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
-    //             onAuthStateChangedAction: 'onAuthStateChangedAction'
-    //         },
-    //         ssr: true // default
-    //     }
-    // },
+    firebase: {
+        config: {
+            apiKey: "AIzaSyAWuJIU3_V6pf0QvF9wev36pNvXYGmNJNo",
+            authDomain: "floracasy.firebaseapp.com",
+            databaseURL: "https://floracasy.firebaseio.com",
+            projectId: "floracasy",
+            storageBucket: "floracasy.appspot.com",
+            messagingSenderId: "295292997514",
+            appId: "1:295292997514:web:7ac338f7f4fee2ede48273",
+            measurementId: "G-XJLFQ1C8VD"
+        },
+        services: {
+            auth: true,
+            // firestore: true,
+            // functions: true,
+            // storage: true,
+            // realtimeDb: true,
+            messaging: true,
+            performance: true,
+            analytics: true,
+            remoteConfig: true
+        },
+        auth: {
+            persistence: 'local', // default
+            initialize: {
+                onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+                onAuthStateChangedAction: 'onAuthStateChangedAction'
+            },
+            ssr: true // default
+        }
+    },
     axios: {},
     content: {},
     vuetify: {
