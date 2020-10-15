@@ -6,7 +6,6 @@
         dark
         elevate-on-scroll
         height="72"
-        hide-on-scroll
     >
       <v-app-bar-nav-icon class="visible-upto-large" @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-spacer/>
@@ -22,6 +21,7 @@
         color="card-background"
         dark
         temporary
+        overlay-color="body-background"
     >
 
       <v-list-item dark>
@@ -68,10 +68,11 @@
     </v-main>
 
     <v-bottom-navigation
-        background-color="#3734E5"
+        background-color="#2a2a2a"
         app
         shift
         dark
+        max-width="100%"
     >
       <v-btn v-for="menuOption in menuOptions" :key="menuOption.id"
              :to="menuOption.route">
