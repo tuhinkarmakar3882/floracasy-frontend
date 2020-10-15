@@ -9,17 +9,31 @@ export const state = () => ({
         },
         {
             id: 1,
-            text: "Account",
-            icon: "mdi-account",
+            text: "Category",
+            icon: "mdi-apps",
             color: "#6360f8",
-            route: "/Home/Account/Details"
+            route: "/Home/Blogs/CategoryWise"
         },
         {
             id: 2,
-            text: "Settings",
-            icon: "mdi-email",
+            text: "Create",
+            icon: "mdi-plus-circle-outline",
             color: "#6360f8",
-            route: "/Home/Messages"
+            route: "/Home/Blogs/Create"
+        },
+        {
+            id: 3,
+            text: "Notification",
+            icon: "mdi-bell",
+            color: "#6360f8",
+            route: "/Home/Notifications"
+        },
+        {
+            id: 4,
+            text: "Profile",
+            icon: "mdi-account",
+            color: "#6360f8",
+            route: "/Home/Account/Details"
         },
     ],
     activeLink: 0,
