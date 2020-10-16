@@ -78,7 +78,7 @@
     <v-bottom-navigation
         v-model="activeLink"
         app
-        background-color="segment-background"
+        background-color="segment-background darken-1"
         color="secondary"
         dark
         max-width="100%"

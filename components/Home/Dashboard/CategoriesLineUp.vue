@@ -1,6 +1,5 @@
 <template>
-  <section class="categories">
-    <h2> Browse by Categories </h2>
+  <v-sheet class="categories py-4" color="segment-background">
     <ul class="options">
       <li v-for="category in categories" :key="category.id" class="mx-4">
         <v-btn color="secondary" outlined to="/Home/Blogs/CategoryWise/">
@@ -8,7 +7,7 @@
         </v-btn>
       </li>
     </ul>
-  </section>
+  </v-sheet>
 </template>
 <script>
 export default {
@@ -23,13 +22,6 @@ export default {
 @import "assets/variables";
 
 .categories {
-  h2 {
-    text-align: center;
-    font-family: $Prata;
-    font-weight: 400;
-    color: white;
-    margin-bottom: 1rem;
-  }
 
   ul {
     padding: 1rem 0;

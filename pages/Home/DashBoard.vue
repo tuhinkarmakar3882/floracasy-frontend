@@ -1,44 +1,32 @@
 <template>
-  <div class="dashboard my-6">
-
-    <CategoriesLineUp :categories="categories"/>
+  <div class="dashboard">
 
     <Carousel :carouselItems="carouselItems"/>
 
+    <h2 class="heading-text my-8"> Browse by Categories </h2>
 
-    <v-sheet
-        v-for="i in [0,1,2,3,4,5,6,7,8,9]"
-        :key="i"
-        class="pa-3"
-        color="grey darken-4"
-    >
-      <v-skeleton-loader
-          class="pb-5"
-          type="card-avatar"
-      />
-      <v-skeleton-loader
-          class="pb-4"
-          type="article"
-      />
-      <v-skeleton-loader
-          class="pb-4"
-          type="actions"
-      />
-      <v-divider class="my-7" dark/>
+    <CategoriesLineUp :categories="categories"/>
+
+    <h2 class="heading-text my-9">
+      Explore Blogs
+    </h2>
+
+    <v-sheet class="pa-3" color="segment-background">
+      <v-skeleton-loader class="mx-auto" dark max-width="340"
+                         type="card-heading,image, list-item-avatar-three-line, actions "/>
     </v-sheet>
-
-
   </div>
 </template>
 
 <script>
 import CategoriesLineUp from "@/components/Home/Dashboard/CategoriesLineUp";
+import Carousel from "@/components/Home/Dashboard/Carousel";
 
 export default {
   name: "DashBoard",
   components: {
+    Carousel,
     CategoriesLineUp,
-    Carousel: () => import("@/components/Home/Dashboard/Carousel"),
   },
   // middleware: "authenticatedRequest",
   layout: "HomeAppLayout",
@@ -112,5 +100,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "assets/variables";
 
+.dashboard {
+  .heading-text {
+    text-align: center;
+    font-family: $Prata;
+    font-weight: 400;
+    color: white;
+    //margin-bottom: 1rem;
+  }
+}
 </style>

@@ -1,10 +1,11 @@
 <template>
-  <div class="carousel my-5">
+  <div class="carousel">
     <v-carousel
         cycle
-        height="400"
+        :show-arrows="false"
+        continuous
         hide-delimiter-background
-        show-arrows-on-hover
+        height="250"
     >
       <v-carousel-item
           v-for="(item, index) in carouselItems"
