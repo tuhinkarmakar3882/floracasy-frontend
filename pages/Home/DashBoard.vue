@@ -1,23 +1,79 @@
 <template>
-  <div class="dashboard my-6 px-4">
-    <section class="categories">
-      <h2> Browse by Categories </h2>
-      <ul class="options">
-        <li v-for="category in categories" :key="category.id" class="mx-4">
-          <v-btn color="secondary" outlined to="/Home/Blogs/CategoryWise/">
-            {{ category.name }}
-          </v-btn>
-        </li>
-      </ul>
-    </section>
+  <div class="dashboard my-6">
+
+    <CategoriesLineUp :categories="categories"/>
+
     <Carousel :carouselItems="carouselItems"/>
+
+    <v-parallax
+        dark
+        src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+    >
+      <v-row
+          align="center"
+          justify="center"
+      >
+        <v-col
+            class="text-center"
+            cols="12"
+        >
+          <h1 class="display-1 font-weight-thin mb-4">
+            Parallax
+          </h1>
+          <h4 class="subheading">
+            Build your application today!
+          </h4>
+        </v-col>
+      </v-row>
+    </v-parallax>
+
+    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab asperiores aut beatae consequatur cupiditate dicta
+      eaque, eligendi et expedita explicabo facere hic itaque laboriosam molestiae nisi perspiciatis provident, qui rem?
+    </div>
+    <div>Ab atque dolores eaque iste maiores molestiae necessitatibus officia officiis porro quasi qui, quod repellat,
+      sint, vel vitae. Aliquam aperiam atque cum ducimus, eligendi maxime officiis quam quia similique totam!
+    </div>
+    <div>A asperiores autem beatae commodi culpa dicta doloribus ducimus eaque esse in incidunt nam nemo officiis omnis
+      optio perferendis perspiciatis, placeat provident quam quibusdam quis repudiandae sunt ullam vero voluptatem?
+    </div>
+    <div>Modi quam quibusdam sequi ullam? Aliquam, fugiat, possimus! Accusamus consectetur cupiditate dignissimos, illum
+      iste itaque magnam magni necessitatibus nihil quos? Corporis earum ipsa laborum, nostrum quas tempora tenetur
+      totam! Dicta?
+    </div>
+    <div>Ad dolore nam quibusdam sapiente suscipit. Ad aspernatur beatae cum eius enim eos iste maiores minima,
+      molestias mollitia natus, nihil omnis qui quis saepe sapiente soluta sunt totam velit veniam.
+    </div>
+    <div>Aut autem cum illum ipsa, laborum obcaecati quam sequi sit. Accusamus ad amet asperiores delectus distinctio
+      esse ex exercitationem illo modi nemo, nihil, nulla, porro quae quaerat rem voluptates voluptatibus!
+    </div>
+    <div>Alias animi consequuntur dicta iste minus numquam odit optio placeat quo veniam. Dolores eum harum id natus? At
+      blanditiis doloribus facilis magni minima minus mollitia porro sint sit tenetur. Molestias?
+    </div>
+    <div>Accusantium aliquam architecto, at autem commodi dolorem ea error, exercitationem illum in minima nemo nihil
+      nisi nulla omnis quae quam quas quasi quia quidem, quo saepe temporibus ut voluptates voluptatum.
+    </div>
+    <div>Amet assumenda consequatur cum possimus quidem temporibus? Ab eveniet iure molestias placeat porro quaerat quod
+      reprehenderit voluptatem! Debitis, distinctio ducimus fugit id neque non nostrum provident reiciendis, suscipit
+      voluptate voluptatum.
+    </div>
+    <div>Eaque, non numquam quam quas quod quos ullam. Aut culpa eveniet illum minus natus nobis obcaecati pariatur,
+      porro, praesentium quaerat ratione sed tempora vero! Adipisci maiores porro recusandae repellat vero.
+    </div>
+
+    <CategoriesLineUp :categories="categories"/>
+
+    <Carousel :carouselItems="carouselItems"/>
+
   </div>
 </template>
 
 <script>
+import CategoriesLineUp from "@/components/Home/Dashboard/CategoriesLineUp";
+
 export default {
   name: "DashBoard",
   components: {
+    CategoriesLineUp,
     Carousel: () => import("@/components/Home/Dashboard/Carousel"),
   },
   // middleware: "authenticatedRequest",
@@ -87,24 +143,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
 
-.dashboard {
-  .categories {
-    h2 {
-      text-align: center;
-      font-family: $Prata;
-      font-weight: 400;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    ul {
-      padding: 1rem 0;
-      list-style: none;
-      display: flex;
-      overflow-x: scroll;
-    }
-  }
-}
 </style>

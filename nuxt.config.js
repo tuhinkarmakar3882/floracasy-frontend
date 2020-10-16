@@ -81,29 +81,29 @@ export default {
         "@nuxt/content",
         "@nuxtjs/firebase",
         // 'nuxt-purgecss',
-        [
-            "nuxt-lazy-load",
-            {
-                images: true,
-                videos: true,
-                audios: true,
-                iframes: true,
-                native: false,
-                polyfill: true,
-                directiveOnly: false,
-
-                defaultImage: "/images/default.svg",
-
-                // To remove class set value to false
-                loadingClass: "isLoading",
-                loadedClass: "isLoaded",
-                appendClass: "lazyLoad",
-
-                observerConfig: {
-                    // See IntersectionObserver documentation
-                },
-            },
-        ],
+        // [
+        //     "nuxt-lazy-load",
+        //     {
+        //         images: true,
+        //         videos: true,
+        //         audios: true,
+        //         iframes: true,
+        //         native: false,
+        //         polyfill: true,
+        //         directiveOnly: false,
+        //
+        //         defaultImage: "/images/default.svg",
+        //
+        //         // To remove class set value to false
+        //         loadingClass: "isLoading",
+        //         loadedClass: "isLoaded",
+        //         appendClass: "lazyLoad",
+        //
+        //         observerConfig: {
+        //             // See IntersectionObserver documentation
+        //         },
+        //     },
+        // ],
     ],
 
     firebase: {
