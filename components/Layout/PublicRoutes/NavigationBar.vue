@@ -33,42 +33,6 @@
         </li>
       </ul>
     </div>
-
-    <div>
-      <ul>
-        <li>
-          <Logo />
-          <span>Floracasy</span>
-        </li>
-      </ul>
-
-      <hr style="background-color: #6dd0bf" />
-
-      <ul v-for="menuOption in menuOptions" :key="menuOption.title">
-        <li @click="navigateTo(menuOption.route)">
-          <span :color="menuOption.color">
-            {{ menuOption.icon }}
-          </span>
-        </li>
-
-        <li>
-          <span @click="navigateTo(menuOption.route)">
-            <span style="color: #bababa">
-              {{ menuOption.title }}
-            </span>
-          </span>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <nuxt-link to="/Authentication/GetStarted"> Log in</nuxt-link>
-        </li>
-
-        <li>
-          <nuxt-link to="/Authentication/GetStarted"> Join Us</nuxt-link>
-        </li>
-      </ul>
-    </div>
   </header>
 </template>
 
