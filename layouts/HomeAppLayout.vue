@@ -6,7 +6,7 @@
     </div>
 
     <div class="modal-style">
-      <nuxt/>
+      <nuxt />
     </div>
 
     <footer id="blah">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'HomeAppLayout',

@@ -1,7 +1,7 @@
 <template>
   <div class="container text-center">
     <h3>Logged in As => {{ whoAmI }}</h3>
-    <br/>
+    <br />
     <button class="mx-4 my-4" @click="signInRedirect">
       Sign With Redirect
     </button>

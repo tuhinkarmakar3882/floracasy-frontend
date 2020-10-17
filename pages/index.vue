@@ -1,10 +1,10 @@
 <template>
   <div class="index-page">
-    <HeroContent/>
+    <HeroContent />
 
-    <CategoriesShowcase/>
+    <CategoriesShowcase />
 
-    <HearTheExperiences/>
+    <HearTheExperiences />
   </div>
 </template>
 

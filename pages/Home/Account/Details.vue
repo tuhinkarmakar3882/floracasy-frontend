@@ -47,14 +47,14 @@
 
       <div v-for="blog in blogs" :key="blog.id" class="blog my-8">
         <div class="content">
-          <img :alt="blog.title" :src="blog.image"/>
+          <img :alt="blog.title" :src="blog.image" />
           <div class="data">
             <h3>{{ blog.title }}</h3>
             <small> {{ blog.time }}</small>
           </div>
         </div>
 
-        <hr class="mt-8"/>
+        <hr class="mt-8" />
       </div>
     </section>
   </div>
@@ -125,7 +125,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('BottomNavigation/update', {linkPosition: 4})
+    this.$store.commit('BottomNavigation/update', { linkPosition: 4 })
   },
 }
 </script>

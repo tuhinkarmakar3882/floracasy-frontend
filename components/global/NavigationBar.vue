@@ -1,18 +1,18 @@
 <template>
   <header>
     <div>
-      <div class="visible-upto-large" @click="drawer = !drawer"/>
+      <div class="visible-upto-large" @click="drawer = !drawer" />
 
-      <div class="progress-bar"/>
+      <div class="progress-bar" />
 
-      <div class="spacer visible-upto-large"/>
+      <div class="spacer visible-upto-large" />
 
       <div class="brand">
-        <Logo :width="36"/>
+        <Logo :width="36" />
         <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
       </div>
 
-      <div class="spacer visible-on-large-and-up"/>
+      <div class="spacer visible-on-large-and-up" />
 
       <ul class="visible-on-large-and-up">
         <li>
@@ -37,12 +37,12 @@
     <div>
       <ul>
         <li>
-          <Logo/>
+          <Logo />
           <span>Floracasy</span>
         </li>
       </ul>
 
-      <hr style="background-color: #6dd0bf"/>
+      <hr style="background-color: #6dd0bf" />
 
       <ul v-for="menuOption in menuOptions" :key="menuOption.title">
         <li @click="navigateTo(menuOption.route)">

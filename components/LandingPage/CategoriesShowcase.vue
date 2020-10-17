@@ -9,7 +9,7 @@
       />
       <div class="grid-container py-12">
         <div v-for="item in items" :key="item.name" class="grid-col">
-          <img :alt="item.name" :src="item.image"/>
+          <img :alt="item.name" :src="item.image" />
           <p class="my-4">
             {{ item.name }}
           </p>

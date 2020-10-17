@@ -40,7 +40,7 @@ export const state = () => ({
 })
 
 export const mutations = {
-  update(state, {linkPosition}) {
+  update(state, { linkPosition }) {
     state.activeLink = linkPosition
   },
 }

@@ -160,7 +160,7 @@ export default {
     background: '#050514',
   },
 
-  loading: {color: '#C5C2FF'},
+  loading: { color: '#C5C2FF' },
 
   layoutTransition: {
     name: 'gray-shift',

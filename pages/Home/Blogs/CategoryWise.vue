@@ -12,7 +12,7 @@ export default {
   layout: 'HomeAppLayout',
   middleware: 'authenticatedRequest',
   mounted() {
-    this.$store.commit('BottomNavigation/update', {linkPosition: 1})
+    this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
   },
 }
 </script>

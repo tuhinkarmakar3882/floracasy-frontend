@@ -2,7 +2,7 @@
   <div>
     <div class="div">
       <div class="modal-style">
-        <nuxt/>
+        <nuxt />
       </div>
     </div>
   </div>
