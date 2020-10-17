@@ -3,10 +3,10 @@
     <section class="user-profile">
       <div class="basic-data">
         <img
-            alt="profile-picture"
-            class="picture"
-            src="https://picsum.photos/200"
-        >
+          alt="profile-picture"
+          class="picture"
+          src="https://picsum.photos/200"
+        />
         <div class="basic-details">
           <p class="name">Travis Alice</p>
           <p class="designation">Beauty Blogger</p>
@@ -31,14 +31,14 @@
       </section>
 
       <section class="actions">
-        <v-btn class="px-6" color="#3734E5" dark rounded>
+        <button class="px-6">
           Follow
-          <v-icon class="ml-2" dark> mdi-account-multiple-plus</v-icon>
-        </v-btn>
-        <v-btn class="px-6" color="#3734E5" dark rounded>
+          <span class="ml-2"> mdi-account-multiple-plus </span>
+        </button>
+        <button class="px-6">
           Message
-          <v-icon class="ml-2" dark> mdi-lock</v-icon>
-        </v-btn>
+          <span class="ml-2"> mdi-lock </span>
+        </button>
       </section>
     </section>
 
@@ -47,14 +47,14 @@
 
       <div v-for="blog in blogs" :key="blog.id" class="blog my-8">
         <div class="content">
-          <img :alt="blog.title" :src="blog.image">
+          <img :alt="blog.title" :src="blog.image"/>
           <div class="data">
             <h3>{{ blog.title }}</h3>
             <small> {{ blog.time }}</small>
           </div>
         </div>
 
-        <v-divider class="mt-8" dark/>
+        <hr class="mt-8"/>
       </div>
     </section>
   </div>
@@ -62,76 +62,76 @@
 
 <script>
 export default {
-  name: "Details",
-  layout: "HomeAppLayout",
-  middleware: "authenticatedRequest",
+  name: 'Details',
+  layout: 'HomeAppLayout',
+  middleware: 'authenticatedRequest',
   data() {
     return {
       statisticsItem: [
         {
           id: 0,
           value: 22,
-          type: "Blogs",
+          type: 'Blogs',
         },
         {
           id: 1,
           value: 560,
-          type: "Engagements",
+          type: 'Engagements',
         },
         {
           id: 2,
           value: 100,
-          type: "Followers",
+          type: 'Followers',
         },
       ],
       blogs: [
         {
           id: 0,
-          title: "Now its easy to take care your underarms at home.",
-          image: "https://picsum.photos/200",
-          time: "Sat Aug 19, 2020 11:34 A.M.",
+          title: 'Now its easy to take care your underarms at home.',
+          image: 'https://picsum.photos/200',
+          time: 'Sat Aug 19, 2020 11:34 A.M.',
         },
         {
           id: 1,
-          title: "Love your hair but suffering from Hair fall or hair damage?",
-          image: "https://picsum.photos/200",
-          time: "Sat Aug 19, 2020 11:34 A.M.",
+          title: 'Love your hair but suffering from Hair fall or hair damage?',
+          image: 'https://picsum.photos/200',
+          time: 'Sat Aug 19, 2020 11:34 A.M.',
         },
         {
           id: 2,
           title: "Bath - Hot water or Cold water? Let's see!",
-          image: "https://picsum.photos/200",
-          time: "Sat Aug 19, 2020 11:34 A.M.",
+          image: 'https://picsum.photos/200',
+          time: 'Sat Aug 19, 2020 11:34 A.M.',
         },
         {
           id: 3,
-          title: "What should be your diet schedule?",
-          image: "https://picsum.photos/200",
-          time: "Sat Aug 19, 2020 11:34 A.M.",
+          title: 'What should be your diet schedule?',
+          image: 'https://picsum.photos/200',
+          time: 'Sat Aug 19, 2020 11:34 A.M.',
         },
         {
           id: 4,
-          title: "Now you can get salon like pedicure for free at home",
-          image: "https://picsum.photos/200",
-          time: "Fri Aug 18, 2020 01:34 A.M.",
+          title: 'Now you can get salon like pedicure for free at home',
+          image: 'https://picsum.photos/200',
+          time: 'Fri Aug 18, 2020 01:34 A.M.',
         },
         {
           id: 5,
-          title: "Miracle Face Mask According To Your Skin Type",
-          image: "https://picsum.photos/200",
-          time: "Sat Aug 19, 2020 11:34 A.M.",
+          title: 'Miracle Face Mask According To Your Skin Type',
+          image: 'https://picsum.photos/200',
+          time: 'Sat Aug 19, 2020 11:34 A.M.',
         },
       ],
     }
   },
   mounted() {
-    this.$store.commit("BottomNavigation/update", {linkPosition: 3})
+    this.$store.commit('BottomNavigation/update', {linkPosition: 4})
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 .details-page {
   padding: 0 1rem;

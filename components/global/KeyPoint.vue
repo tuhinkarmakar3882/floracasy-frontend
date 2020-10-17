@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-icon :color="tickColor" :size="tickSize">
-      mdi-check-circle-outline
-    </v-icon>
+    <span :color="tickColor" :size="tickSize"> mdi-check-circle-outline </span>
     <span>
       {{ point }}
     </span>
@@ -11,7 +9,7 @@
 
 <script>
 export default {
-  name: "KeyPoint",
+  name: 'KeyPoint',
   components: {},
   props: {
     tickColor: {
@@ -31,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 div {
   color: $muted;

@@ -1,24 +1,21 @@
 <template>
-  <v-app>
-    <v-main class="v-main">
+  <div>
+    <div class="div">
       <div class="modal-style">
         <nuxt/>
       </div>
-    </v-main>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
-import NavigationBar from "@/components/global/NavigationBar"
-
 export default {
-  name: "PreAuthLayout",
-  components: {NavigationBar},
+  name: 'PreAuthLayout',
 }
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 .modal-style {
   display: grid;

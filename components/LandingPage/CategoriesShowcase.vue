@@ -1,15 +1,15 @@
 <template>
   <div class="showcase my-4 py-6 text-center">
-    <v-container>
+    <div>
       <SegmentTitle
-          leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
+        leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
-          title="Explore a Wide Range of Categories"
-          topic="Categories"
+        title="Explore a Wide Range of Categories"
+        topic="Categories"
       />
       <div class="grid-container py-12">
         <div v-for="item in items" :key="item.name" class="grid-col">
-          <img :alt="item.name" :src="item.image">
+          <img :alt="item.name" :src="item.image"/>
           <p class="my-4">
             {{ item.name }}
           </p>
@@ -17,81 +17,77 @@
 
         <div class="grid-col">
           <img
-              alt="item.name"
-              src="https://picsum.photos/151?random"
-              style="width: 100%; object-fit: cover; border-radius: 50%"
-          >
+            alt="item.name"
+            src="https://picsum.photos/151?random"
+            style="width: 100%; object-fit: cover; border-radius: 50%"
+          />
           <p class="my-4">More</p>
         </div>
       </div>
 
-      <v-btn
-          :loading="categoriesButtonLoading"
-          class="my-6 btn"
-          color="primary"
-          large
-          nuxt
-          rounded
-          to="/Authentication/GetStarted"
-          @click="changeIt"
+      <nuxt-link
+        :loading="categoriesButtonLoading"
+        class="my-6 btn"
+        to="/Authentication/GetStarted"
+        @click="changeIt"
       >
         Start Reading
-      </v-btn>
-    </v-container>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "CategoriesShowcase",
+  name: 'CategoriesShowcase',
   components: {
-    SegmentTitle: () => import("@/components/LandingPage/SegmentTitle"),
+    SegmentTitle: () => import('@/components/LandingPage/SegmentTitle'),
   },
   data() {
     return {
       categoriesButtonLoading: false,
       items: [
         {
-          name: "Cooking",
-          image: "https://picsum.photos/150?random",
+          name: 'Cooking',
+          image: 'https://picsum.photos/150?random',
         },
         {
-          name: "Technology",
-          image: "https://picsum.photos/151?random",
+          name: 'Technology',
+          image: 'https://picsum.photos/151?random',
         },
         {
-          name: "Music",
-          image: "https://picsum.photos/152?random",
+          name: 'Music',
+          image: 'https://picsum.photos/152?random',
         },
         {
-          name: "Arts",
-          image: "https://picsum.photos/153?random",
+          name: 'Arts',
+          image: 'https://picsum.photos/153?random',
         },
         {
-          name: "Pets",
-          image: "https://picsum.photos/154?random",
+          name: 'Pets',
+          image: 'https://picsum.photos/154?random',
         },
         {
-          name: "UI/UX",
-          image: "https://picsum.photos/155?random",
+          name: 'UI/UX',
+          image: 'https://picsum.photos/155?random',
         },
         {
-          name: "Skincare",
-          image: "https://picsum.photos/156?random",
+          name: 'Skincare',
+          image: 'https://picsum.photos/156?random',
         },
         {
-          name: "Plants",
-          image: "https://picsum.photos/157?random",
+          name: 'Plants',
+          image: 'https://picsum.photos/157?random',
         },
         {
-          name: "Fitness",
-          image: "https://picsum.photos/158?random",
+          name: 'Fitness',
+          image: 'https://picsum.photos/158?random',
         },
       ],
     }
   },
   methods: {
-    changeIt: function () {
+    changeIt() {
       this.categoriesButtonLoading = true
       setTimeout(() => {
         this.categoriesButtonLoading = false
@@ -102,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 .showcase {
   background-color: $segment-background;

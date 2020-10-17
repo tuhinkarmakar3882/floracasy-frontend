@@ -1,109 +1,80 @@
 <template>
-  <v-app>
-    <v-app-bar app color="segment-background" dark elevate-on-scroll>
-      <v-app-bar-nav-icon
-          class="visible-upto-large"
-          @click="drawer = !drawer"
-      />
+  <div>
+    <div>
+      <div class="visible-upto-large" @click="drawer = !drawer"/>
 
       <div class="brand">
         <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
       </div>
-      <v-spacer/>
-      <v-btn style="font-weight: 300 !important" text>
-        Get Rewards
-      </v-btn>
-    </v-app-bar>
+      <div class="spacer"/>
+      <button style="font-weight: 300 !important">Get Rewards</button>
+    </div>
 
-    <v-navigation-drawer
-        v-model="drawer"
-        app
-        color="card-background"
-        dark
-        overlay-color="body-background"
-        temporary
-    >
-      <v-list-item dark>
-        <v-list-item-avatar>
-          <Logo/>
-        </v-list-item-avatar>
+    <div class="nav-drawer">
+      <ul>
+        <li>
+          <span>
+            <Logo/>
+          </span>
 
-        <v-list-item-content>
-          <v-list-item-title>Floracasy</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+          <span>
+            <span>Floracasy</span>
+          </span>
+        </li>
+      </ul>
 
-      <v-divider style="background-color: #6dd0bf"/>
+      <hr style="background-color: #6dd0bf"/>
 
-      <v-list dark>
-        <v-list-item
-            v-for="menuOption in menuOptions"
-            :key="menuOption.id"
-            link
-        >
-          <v-list-item-icon @click="navigateTo(menuOption.route)">
-            <v-icon :color="menuOption.color">
+      <ul>
+        <li v-for="menuOption in menuOptions" :key="menuOption.id">
+          <div @click="navigateTo(menuOption.route)">
+            <span :color="menuOption.color">
               {{ menuOption.icon }}
-            </v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content @click="navigateTo(menuOption.route)">
-            <v-list-item-title style="color: #bababa">
+            </span>
+          </div>
+          <div @click="navigateTo(menuOption.route)">
+            <span style="color: #bababa">
               {{ menuOption.text }}
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-list two-line>
-        <v-list-item>
-          <v-btn
-              class="button px-4 my-4"
-              color="secondary-matte"
-              outlined
-              width="112"
-              @click="logout"
-          >
-            Log out
-          </v-btn>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+            </span>
+          </div>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <button class="button px-4 my-4" @click="logout">Log out</button>
+        </li>
+      </ul>
+    </div>
 
-    <v-main class="v-main">
+    <div class="div">
       <div class="modal-style">
         <nuxt/>
       </div>
-    </v-main>
+    </div>
 
-    <v-bottom-navigation
-        v-model="activeLink"
-        app
-        background-color="segment-background darken-1"
-        color="secondary"
-        dark
-        max-width="100%"
-        shift
-    >
-      <v-btn
-          v-for="menuOption in menuOptions"
-          :key="menuOption.id"
-          :to="menuOption.route"
+    <footer id="blah">
+      <button
+        v-for="(menuOption, index) in menuOptions"
+        :id="index === activeLink ? 'activeNow' : ''"
+        :key="menuOption.id"
+        :to="menuOption.route"
+        :value="menuOptions.id"
+        class="dbsx dude mx-0 px-0"
       >
-        <span>{{ menuOption.text }}</span>
-
-        <v-icon>{{ menuOption.icon }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
-  </v-app>
+        <span>{{ menuOption.icon }}</span>
+        <!--        <small>{{ menuOption.text }}</small>-->
+      </button>
+    </footer>
+  </div>
 </template>
 
 <script>
-import {mapGetters} from "vuex"
+import {mapGetters} from 'vuex'
 
 export default {
-  name: "HomeAppLayout",
+  name: 'HomeAppLayout',
   components: {
-    Logo: () => import("~/components/global/Logo"),
+    Logo: () => import('~/components/global/Logo'),
   },
   data() {
     return {
@@ -116,12 +87,12 @@ export default {
         return this.$store.state.BottomNavigation.activeLink
       },
       set(newValue) {
-        console.log(newValue)
-        // this.$store.commit('BottomNavigation/update', newValue)
+        // console.log(newValue)
+        this.$store.commit('BottomNavigation/update', newValue)
       },
     },
     ...mapGetters({
-      menuOptions: "BottomNavigation/getMenuOptions",
+      menuOptions: 'BottomNavigation/getMenuOptions',
     }),
     color() {
       return this.menuOptions[this.activeLink].color
@@ -133,9 +104,9 @@ export default {
     },
     async logout() {
       try {
-        await this.$store.dispatch("logout")
-        console.log(this.$store.state.authUser)
-        await this.$router.push("/")
+        await this.$store.dispatch('logout')
+        // console.log(this.$store.state.authUser)
+        await this.$router.push('/')
       } catch (e) {
       }
     },
@@ -143,8 +114,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import "assets/variables";
+<style lang="scss">
+@import 'assets/variables';
 
 $font-size: 18px;
 .v-toolbar__content {
@@ -191,5 +162,22 @@ $font-size: 18px;
       }
     }
   }
+}
+
+#blah {
+  display: grid !important;
+  place-items: center;
+  grid-template-columns: repeat(5, 1fr) !important;
+  height: 100px !important;
+}
+
+.dude {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+  color: gray;
 }
 </style>

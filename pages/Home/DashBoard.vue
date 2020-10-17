@@ -1,35 +1,27 @@
 <template>
   <div class="dashboard">
+    <Carousel :carousel-items="carouselItems"/>
 
-    <Carousel :carouselItems="carouselItems"/>
-
-    <h2 class="heading-text my-8"> Browse by Categories </h2>
+    <h2 class="heading-text my-8">Browse by Categories</h2>
 
     <CategoriesLineUp :categories="categories"/>
 
-    <h2 class="heading-text my-9">
-      Explore Blogs
-    </h2>
-
-    <v-sheet class="pa-3" color="segment-background">
-      <v-skeleton-loader class="mx-auto" dark max-width="340"
-                         type="card-heading,image, list-item-avatar-three-line, actions "/>
-    </v-sheet>
+    <h2 class="heading-text my-9">Explore Blogs</h2>
   </div>
 </template>
 
 <script>
-import CategoriesLineUp from "@/components/Home/Dashboard/CategoriesLineUp";
-import Carousel from "@/components/Home/Dashboard/Carousel";
+import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
+import Carousel from '@/components/Home/Dashboard/Carousel'
 
 export default {
-  name: "DashBoard",
+  name: 'DashBoard',
   components: {
     Carousel,
     CategoriesLineUp,
   },
   // middleware: "authenticatedRequest",
-  layout: "HomeAppLayout",
+  layout: 'HomeAppLayout',
   data() {
     return {
       categories: [
@@ -81,17 +73,17 @@ export default {
         // boilerplate: true,
         elevation: 2,
       },
-    };
+    }
   },
   mounted() {
-    this.$store.commit("BottomNavigation/update", {linkPosition: 0})
+    this.$store.commit('BottomNavigation/update', {linkPosition: 0})
   },
   methods: {
     async logout() {
       try {
-        await this.$store.dispatch("logout")
-        console.log(this.$store.state.authUser)
-        await this.$router.push("/")
+        await this.$store.dispatch('logout')
+        // console.log(this.$store.state.authUser)
+        await this.$router.push('/')
       } catch (e) {
       }
     },
@@ -100,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 .dashboard {
   .heading-text {

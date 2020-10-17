@@ -4,15 +4,9 @@
 
     <div class="signupOptionsGrid">
       <div v-for="option in signupOptions" :key="option.id" class="gridItems">
-        <v-btn
-            class="button px-4"
-            color="secondary-matte"
-            outlined
-            width="250"
-            @click="login"
-        >
+        <button class="button px-4" @click="login">
           <span>Continue with {{ option.provider }}</span>
-        </v-btn>
+        </button>
       </div>
     </div>
 
@@ -21,49 +15,47 @@
     </div>
 
     <div class="text-center mt-4">
-      <v-btn
-          color="white"
-          text
-          @click="
+      <button
+        @click="
           () => {
             this.$router.back()
           }
         "
       >
         Go Back
-      </v-btn>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "GetStarted",
-  layout: "PreAuthLayout",
-  middleware: "notAuthenticatedRequest",
+  name: 'GetStarted',
+  layout: 'PreAuthLayout',
+  middleware: 'notAuthenticatedRequest',
 
   data() {
     return {
       signupOptions: [
         {
           id: 0,
-          provider: "Google",
-          icon: "mdi-email",
+          provider: 'Google',
+          icon: 'mdi-email',
         },
         {
           id: 1,
-          provider: "Facebook",
-          icon: "mdi-email",
+          provider: 'Facebook',
+          icon: 'mdi-email',
         },
         {
           id: 2,
-          provider: "Twitter",
-          icon: "mdi-email",
+          provider: 'Twitter',
+          icon: 'mdi-email',
         },
         {
           id: 3,
-          provider: "LinkedIn",
-          icon: "mdi-email",
+          provider: 'LinkedIn',
+          icon: 'mdi-email',
         },
       ],
     }
@@ -72,14 +64,14 @@ export default {
   methods: {
     async login() {
       try {
-        await this.$store.dispatch("login", {
-          username: "demo",
-          password: "demo",
+        await this.$store.dispatch('login', {
+          username: 'demo',
+          password: 'demo',
         })
-        console.log(this.$store.state.authUser)
-        await this.$router.push("/")
+        // console.log(this.$store.state.authUser)
+        await this.$router.push('/')
       } catch (e) {
-        console.log(`Error in logging in ${e}`)
+        // console.log(`Error in logging in ${e}`)
       }
     },
   },
@@ -87,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 .content {
   display: block;

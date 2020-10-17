@@ -1,34 +1,30 @@
 <template>
   <div class="my-4 py-6 text-center">
-    <v-container>
+    <div>
       <SegmentTitle
-          leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
+        leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
-          title="Earn with Us"
-          topic="Earning"
+        title="Earn with Us"
+        topic="Earning"
       />
 
-      <v-btn
-          :loading="earningButtonLoading"
-          class="my-6 btn"
-          color="primary"
-          large
-          nuxt
-          rounded
-          to="/Authentication/GetStarted"
-          @click="changeIt"
+      <nuxt-link
+        :loading="earningButtonLoading"
+        class="my-6 btn"
+        to="/Authentication/GetStarted"
+        @click="changeIt"
       >
         Start Earning
-      </v-btn>
-    </v-container>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "EarningSection",
+  name: 'EarningSection',
   components: {
-    SegmentTitle: () => import("@/components/LandingPage/SegmentTitle"),
+    SegmentTitle: () => import('@/components/LandingPage/SegmentTitle'),
   },
   data() {
     return {
@@ -36,7 +32,7 @@ export default {
     }
   },
   methods: {
-    changeIt: function () {
+    changeIt() {
       this.earningButtonLoading = true
       setTimeout(() => {
         this.earningButtonLoading = false

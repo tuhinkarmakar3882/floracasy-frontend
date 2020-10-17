@@ -1,5 +1,5 @@
 <template>
-  <v-container class="comment-section">
+  <div class="comment-section">
     <h2 class="comments-title">
       Comments
       <span v-show="numberOfTotalComments > 0" class="comments-count">{{
@@ -7,60 +7,38 @@
         }}</span>
     </h2>
 
-    <v-divider/>
+    <hr/>
 
-    <v-row>
-      <v-col class="box" cols="12" md="9">
-        <v-row>
-          <v-col class="box" cols="9">
-            <v-textarea
-                v-model="comment"
-                auto-grow
-                hint="feedback"
-                label="Write your thoughts here"
-                outlined
-                row-height="10"
-                rows="1"
-            />
-          </v-col>
-          <v-col class="icon" cols="3">
-            <v-btn text @click="addComment">
-              <v-icon class="inside" color="#ba384b" large> mdi-send</v-icon>
-            </v-btn>
-          </v-col>
-
-          <v-col cols="12" class="comments-container">
-            <ul class="comments-list">
-              <li
-                  v-for="comment in comments"
-                  :key="comment"
-                  class="comment-list-item"
-              >
-                <v-avatar color="#ba384b">
-                  <span class="white--text headline-text">CJ</span>
-                </v-avatar>
-                &nbsp; Name Sits <br><br>
-                <p class="align">
-                  {{ comment }}
-                </p>
-              </li>
-            </ul>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+    <div class="row">
+      <div class="dbx">
+        <div class="dbx">
+          <label>
+            Hello
+            <textarea v-model="comment" rows="1"/>
+          </label>
+        </div>
+        <div class="icon">
+          <button @click="addComment">
+            <span class="inside"> mdi-send </span>
+          </button>
+        </div>
+        <div class="comments-container">
+          <ul class="comments-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import "@/api/data/comments.json"
+import '@/api/data/comments.json'
 
 export default {
-  name: "CommentSection",
+  name: 'CommentSection',
   components: {},
   data() {
     return {
-      comment: "",
+      comment: '',
       comments: [],
       numberOfTotalComments: 0,
       response: [],
@@ -72,7 +50,7 @@ export default {
         this.comments.push(this.comment)
         this.numberOfTotalComments++
       }
-      this.comment = ""
+      this.comment = ''
     },
 
     isValid(comment) {
@@ -83,6 +61,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/variables';
+
 .comment-section {
   .comments-title {
     font-size: 36px;

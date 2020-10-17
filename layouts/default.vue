@@ -1,22 +1,22 @@
 <template>
-  <v-app>
+  <div>
     <NavigationBar/>
 
-    <v-main class="v-main">
+    <div>
       <nuxt/>
-    </v-main>
+    </div>
 
-    <v-footer class="v-footer" padless>
+    <div>
       <Footer/>
-    </v-footer>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   components: {
-    NavigationBar: () => import("~/components/global/NavigationBar"),
-    Footer: () => import("~/components/global/Footer"),
+    NavigationBar: () => import('~/components/global/NavigationBar.vue'),
+    Footer: () => import('~/components/global/Footer'),
   },
   data: () => {
     return {}
@@ -25,5 +25,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 </style>

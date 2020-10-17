@@ -5,22 +5,16 @@ module.exports = {
     node: true,
   },
   parserOptions: {
-    parser: "babel-eslint",
+    // parser: 'babel-eslint',
   },
   extends: [
-    "eslint:recommended",
-    // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    "plugin:vue/strongly-recommended",
-    // "plugin:vue/recommended",
-    "plugin:prettier/recommended",
+    '@nuxtjs/eslint-config-typescript',
+    'prettier',
+    'prettier/vue',
+    'plugin:prettier/recommended',
+    'plugin:nuxt/recommended',
   ],
-  // required to lint *.vue files
-  plugins: ["vue"],
+  plugins: ['prettier'],
   // add your custom rules here
-  rules: {
-    semi: [2, "never"],
-    "no-console": "off",
-    "vue/max-attributes-per-line": "off",
-    "prettier/prettier": ["error", {semi: false}],
-  },
+  rules: {},
 }

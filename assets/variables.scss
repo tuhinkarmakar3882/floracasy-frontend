@@ -21,8 +21,8 @@ $body-background: #050514;
 $segment-background: #111120;
 $footer-background: #1C1C2B;
 
-$black: #000000;
-$white: #FFFFFF;
+$black: #000;
+$white: #FFF;
 
 $body-text-default: #BABABA;
 
@@ -54,7 +54,7 @@ button, a {
   text-transform: capitalize !important;
 }
 
-.v-app, .v-main, .v-footer {
+div {
   background: $body-background;
   color: $body-text-default;
   transition: all .5s ease-in-out;

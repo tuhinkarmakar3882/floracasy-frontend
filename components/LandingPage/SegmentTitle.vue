@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "SegmentTitle",
+  name: 'SegmentTitle',
   props: {
     topic: {
       type: String,
@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 
 .top-header {
   .topic {

@@ -10,15 +10,15 @@
 
 <script>
 export default {
-  name: "LandingPage",
+  name: 'LandingPage',
   components: {
-    HeroContent: () => import("@/components/LandingPage/HeroContent"),
+    HeroContent: () => import('@/components/LandingPage/HeroContent'),
     CategoriesShowcase: () =>
-        import("@/components/LandingPage/CategoriesShowcase"),
+      import('@/components/LandingPage/CategoriesShowcase'),
     HearTheExperiences: () =>
-        import("@/components/LandingPage/HearTheExperiences"),
+      import('@/components/LandingPage/HearTheExperiences'),
   },
-  middleware: "notAuthenticatedRequest",
+  middleware: 'notAuthenticatedRequest',
   data() {
     return {}
   },
@@ -27,5 +27,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/variables";
+@import 'assets/variables';
 </style>
