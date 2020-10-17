@@ -10,42 +10,6 @@
       <button style="font-weight: 300 !important">Get Rewards</button>
     </div>
 
-    <div class="nav-drawer">
-      <ul>
-        <li>
-          <span>
-            <Logo />
-          </span>
-
-          <span>
-            <span>Floracasy</span>
-          </span>
-        </li>
-      </ul>
-
-      <hr style="background-color: #6dd0bf" />
-
-      <ul>
-        <li v-for="menuOption in menuOptions" :key="menuOption.id">
-          <div @click="navigateTo(menuOption.route)">
-            <span :color="menuOption.color">
-              {{ menuOption.icon }}
-            </span>
-          </div>
-          <div @click="navigateTo(menuOption.route)">
-            <span style="color: #bababa">
-              {{ menuOption.text }}
-            </span>
-          </div>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <button class="button px-4 my-4" @click="logout">Log out</button>
-        </li>
-      </ul>
-    </div>
-
     <div class="div">
       <div class="modal-style">
         <nuxt />
@@ -53,7 +17,7 @@
     </div>
 
     <footer id="blah">
-      <button
+      <nuxt-link
         v-for="(menuOption, index) in menuOptions"
         :id="index === activeLink ? 'activeNow' : ''"
         :key="menuOption.id"
@@ -61,21 +25,19 @@
         :value="menuOptions.id"
         class="dbsx dude mx-0 px-0"
       >
-        <span>{{ menuOption.icon }}</span>
-        <!--        <small>{{ menuOption.text }}</small>-->
-      </button>
+        <!--        <span>{{ menuOption.icon }}</span>-->
+        <p>{{ menuOption.text }}</p>
+      </nuxt-link>
     </footer>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'HomeAppLayout',
-  components: {
-    Logo: () => import('~/components/global/Logo'),
-  },
+  components: {},
   data() {
     return {
       drawer: false,
