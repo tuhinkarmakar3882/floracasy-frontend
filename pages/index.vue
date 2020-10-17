@@ -28,7 +28,3 @@ export default {
   methods: {},
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/variables';
-</style>

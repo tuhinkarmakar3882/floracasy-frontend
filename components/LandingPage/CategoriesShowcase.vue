@@ -99,16 +99,13 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/variables';
-
 .showcase {
   background-color: $segment-background;
 
   .grid-container {
     display: grid;
-
     justify-content: center;
     place-items: center;
-
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 28px;
     grid-row-gap: 28px;
