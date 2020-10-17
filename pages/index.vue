@@ -9,16 +9,19 @@
 </template>
 
 <script>
+import HeroContent from '~/components/LandingPage/HeroContent'
+import CategoriesShowcase from '~/components/LandingPage/CategoriesShowcase'
+import HearTheExperiences from '~/components/LandingPage/HearTheExperiences'
+
 export default {
   name: 'LandingPage',
+  layout: 'PublicRoutes',
+  middleware: 'publicRoute',
   components: {
-    HeroContent: () => import('@/components/LandingPage/HeroContent'),
-    CategoriesShowcase: () =>
-      import('@/components/LandingPage/CategoriesShowcase'),
-    HearTheExperiences: () =>
-      import('@/components/LandingPage/HearTheExperiences'),
+    HeroContent,
+    CategoriesShowcase,
+    HearTheExperiences,
   },
-  middleware: 'notAuthenticatedRequest',
   data() {
     return {}
   },

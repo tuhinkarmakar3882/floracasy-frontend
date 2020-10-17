@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center my-6 py-6 px-4">
+  <div class="write-and-earn-page">
     <span> mdi-heart </span>
 
     <h1 class="my-4">This is my super duper Write and Earn Page</h1>
@@ -11,8 +11,15 @@
 <script>
 export default {
   name: 'WriteAndEarn',
-  middleware: 'notAuthenticatedRequest',
+  layout: 'PublicRoutes',
+  middleware: 'publicRoute',
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.write-and-earn-page {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+</style>

@@ -31,8 +31,8 @@
 <script>
 export default {
   name: 'GetStarted',
-  layout: 'PreAuthLayout',
-  middleware: 'notAuthenticatedRequest',
+  layout: 'Authentication',
+  middleware: 'publicRoute',
 
   data() {
     return {

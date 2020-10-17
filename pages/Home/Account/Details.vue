@@ -63,8 +63,8 @@
 <script>
 export default {
   name: 'Details',
-  layout: 'HomeAppLayout',
-  middleware: 'authenticatedRequest',
+  layout: 'MobileApp',
+  middleware: 'protectedRoute',
   data() {
     return {
       statisticsItem: [

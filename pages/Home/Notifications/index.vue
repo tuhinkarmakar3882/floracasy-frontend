@@ -9,8 +9,8 @@
 <script>
 export default {
   name: 'Notifications',
-  layout: 'HomeAppLayout',
-  middleware: 'authenticatedRequest',
+  layout: 'MobileApp',
+  middleware: 'protectedRoute',
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 3 })
   },

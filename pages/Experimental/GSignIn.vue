@@ -13,7 +13,8 @@
 <script>
 export default {
   name: 'GSignIn',
-  layout: 'PreAuthLayout',
+  layout: 'Authentication',
+  middleware: 'publicRoute',
   data() {
     return {
       whoAmI: 'Not Logged in',

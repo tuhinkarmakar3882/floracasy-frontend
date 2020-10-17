@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard-page">
     <Carousel :carousel-items="carouselItems" />
 
     <h2 class="heading-text my-8">Browse by Categories</h2>
@@ -20,8 +20,8 @@ export default {
     Carousel,
     CategoriesLineUp,
   },
-  // middleware: "authenticatedRequest",
-  layout: 'HomeAppLayout',
+  middleware: 'protectedRoute',
+  layout: 'MobileApp',
   data() {
     return {
       categories: [
@@ -93,7 +93,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/variables';
 
-.dashboard {
+.dashboard-page {
   .heading-text {
     text-align: center;
     font-family: $Prata;
