@@ -5,6 +5,7 @@ const milliseconds = 1000
 const hours = 1
 const minutes = 1
 const seconds = 60
+
 export default {
   server: {
     // host: '0.0.0.0',
@@ -19,17 +20,13 @@ export default {
   },
 
   serverMiddleware: [
-    // body-parser middleware
     bodyParser.json(),
-    // session middleware
     session({
       secret: 'super-secret-key',
       resave: false,
       saveUninitialized: false,
       maxAge: hours * minutes * seconds * milliseconds,
     }),
-    // Api middleware
-    // We add /api/login & /api/logout routes
     '~/api',
   ],
 
@@ -78,6 +75,47 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/eslint-module',
   ],
+
+  tailwindcss: {
+    config: {
+      theme: {
+        fontSize: {
+          xs: ['0.75rem', { lineHeight: '1rem' }],
+          sm: ['0.875rem', { lineHeight: '1.25rem' }],
+          base: ['1rem', { lineHeight: '1.5rem' }],
+          lg: ['1.125rem', { lineHeight: '1.75rem' }],
+          xl: ['1.25rem', { lineHeight: '1.75rem' }],
+          '2xl': ['1.5rem', { lineHeight: '2rem' }],
+          '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+          '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+          '5xl': ['3rem', { lineHeight: '1' }],
+          '6xl': ['4rem', { lineHeight: '1' }],
+        },
+      },
+      variants: {},
+      plugins: [],
+      future: {
+        standardFontWeights: true,
+        defaultLineHeights: true,
+        purgeLayersByDefault: true,
+        removeDeprecatedGapUtilities: true,
+      },
+      purge: {
+        layers: ['utilities'],
+        enabled: process.env.NODE_ENV === 'production',
+        content: [
+          'components/**/*.vue',
+          'layouts/**/*.vue',
+          'pages/**/*.vue',
+          'plugins/**/*.js',
+          'nuxt.config.js',
+          // TypeScript
+          'plugins/**/*.ts',
+          'nuxt.config.ts',
+        ],
+      },
+    },
+  },
 
   eslint: {
     fix: true,
