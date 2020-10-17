@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
+      <a class="brand-name" href="/"> Floracasy</a>
       <button>Get Rewards</button>
     </div>
 
