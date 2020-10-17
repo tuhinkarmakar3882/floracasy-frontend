@@ -1,5 +1,10 @@
 <template>
   <div class="index-page">
+    <h1>Here is the Style Guide</h1>
+    <nuxt-link to="/StyleGuide">
+      <button class="primary-btn">View the Style Guide</button>
+    </nuxt-link>
+
     <HeroContent />
 
     <CategoriesShowcase />

@@ -1,5 +1,14 @@
 <template>
   <div class="dashboard-page">
+    <section class="text-center">
+      <h1>Here is the Style Guide</h1>
+      <nuxt-link to="/StyleGuide">
+        <button class="primary-btn">View the Style Guide</button>
+      </nuxt-link>
+    </section>
+
+    <hr class="my-4" />
+
     <Carousel :carousel-items="carouselItems" />
 
     <h2 class="heading-text my-8">Browse by Categories</h2>
@@ -7,6 +16,8 @@
     <CategoriesLineUp :categories="categories" />
 
     <h2 class="heading-text my-9">Explore Blogs</h2>
+
+    <button class="danger-outlined-btn" @click="logout">Logout</button>
   </div>
 </template>
 

@@ -4,7 +4,7 @@
 
     <div class="signupOptionsGrid">
       <div v-for="option in signupOptions" :key="option.id" class="gridItems">
-        <button class="button px-4" @click="login">
+        <button class="secondary-outlined-btn" @click="login">
           <span>Continue with {{ option.provider }}</span>
         </button>
       </div>
