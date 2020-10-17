@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser'
-import session from 'express-session'
+import session from 'cookie-session'
 //
 const milliseconds = 1000
 const hours = 1
