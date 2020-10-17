@@ -1,19 +1,12 @@
 <template>
   <div>
     <div>
-      <div class="visible-upto-large" @click="drawer = !drawer" />
-
-      <div class="brand">
-        <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
-      </div>
-      <div class="spacer" />
-      <button style="font-weight: 300 !important">Get Rewards</button>
+      <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
+      <button>Get Rewards</button>
     </div>
 
-    <div class="div">
-      <div class="modal-style">
-        <nuxt />
-      </div>
+    <div class="modal-style">
+      <nuxt/>
     </div>
 
     <footer id="blah">
@@ -25,7 +18,6 @@
         :value="menuOptions.id"
         class="dbsx dude mx-0 px-0"
       >
-        <!--        <span>{{ menuOption.icon }}</span>-->
         <p>{{ menuOption.text }}</p>
       </nuxt-link>
     </footer>
@@ -140,5 +132,9 @@ $font-size: 18px;
   align-items: center;
   padding: 0 !important;
   color: gray;
+}
+
+#activeNow {
+  color: yellow;
 }
 </style>

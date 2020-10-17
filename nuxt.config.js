@@ -10,11 +10,14 @@ export default {
     // host: '0.0.0.0',
     port: 3001,
   },
+
   ssr: true,
+
   modern: {
     client: true,
     server: true,
   },
+
   serverMiddleware: [
     // body-parser middleware
     bodyParser.json(),
@@ -29,6 +32,7 @@ export default {
     // We add /api/login & /api/logout routes
     '~/api',
   ],
+
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -61,9 +65,13 @@ export default {
       },
     ],
   },
-  // css: ['~/styles/main.scss'],
+
+  css: ['~/styles/main.scss'],
+
   plugins: [],
+
   components: true,
+
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
@@ -71,6 +79,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/eslint-module',
   ],
+
   eslint: {
     fix: true,
   },
@@ -136,7 +145,9 @@ export default {
       ssr: true, // default
     },
   },
+
   axios: {},
+
   content: {},
 
   build: {
@@ -148,13 +159,16 @@ export default {
     color: '#C5C2FF',
     background: '#050514',
   },
+
   loading: {color: '#C5C2FF'},
+
   layoutTransition: {
     name: 'gray-shift',
     mode: 'out-in',
   },
+
   pageTransition: {
-    name: 'slide-x-transition',
+    name: 'page',
     mode: 'out-in',
   },
 }
