@@ -1,0 +1,121 @@
+@import 'assets/variables';
+
+.visible-on-extra-small {
+  display: flex;
+
+  @media only screen and (min-width: $small) {
+    display: none;
+  }
+}
+
+.visible-on-small {
+  display: none;
+
+  @media only screen and (min-width: $small) {
+    display: flex;
+  }
+
+  @media only screen and (min-width: $medium) {
+    display: none;
+  }
+}
+
+.visible-on-medium {
+  display: none;
+
+  @media only screen and (min-width: $medium) {
+    display: flex;
+  }
+
+  @media only screen and (min-width: $large) {
+    display: none;
+  }
+}
+
+.visible-on-large {
+  display: none;
+
+  @media only screen and (min-width: $large) {
+    display: flex;
+  }
+
+  @media only screen and (min-width: $extra-large) {
+    display: none;
+  }
+}
+
+.visible-on-extra-large {
+  display: none;
+
+  @media only screen and (min-width: $extra-large) {
+    display: flex;
+  }
+}
+
+.visible-on-all {
+  display: flex;
+}
+
+.visible-on-small-and-up {
+  display: none;
+
+  @media only screen and (min-width: $small) {
+    display: flex;
+  }
+}
+
+.visible-on-medium-and-up {
+  display: none;
+
+  @media only screen and (min-width: $medium) {
+    display: flex;
+  }
+}
+
+.visible-on-large-and-up {
+  display: none;
+
+  @media only screen and (min-width: $large) {
+    display: flex;
+  }
+}
+
+.visible-on-extra-large-and-up {
+  display: none;
+
+  @media only screen and (min-width: $extra-large) {
+    display: flex;
+  }
+}
+
+.visible-upto-small {
+  display: flex;
+
+  @media only screen and (min-width: $small) {
+    display: none;
+  }
+}
+
+.visible-upto-medium {
+  display: flex;
+
+  @media only screen and (min-width: $medium) {
+    display: none;
+  }
+}
+
+.visible-upto-large {
+  display: flex;
+
+  @media only screen and (min-width: $large) {
+    display: none;
+  }
+}
+
+.visible-upto-extra-large {
+  display: flex;
+
+  @media only screen and (min-width: $extra-large) {
+    display: none;
+  }
+}
