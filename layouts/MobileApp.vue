@@ -15,10 +15,8 @@
         :id="index === activeLink ? 'activeNow' : ''"
         :key="menuOption.id"
         :to="menuOption.route"
-        :value="menuOptions.id"
-        class="dbx"
       >
-        <p>{{ menuOption.text }}</p>
+        {{ menuOption.text }}
       </nuxt-link>
     </footer>
   </div>
@@ -28,7 +26,7 @@
 import {mapGetters} from 'vuex'
 
 export default {
-  name: 'HomeAppLayout',
+  name: 'MobileApp',
   components: {},
   data() {
     return {

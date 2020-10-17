@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <div class="div">
-      <div class="modal-style">
-        <nuxt />
-      </div>
-    </div>
-  </div>
+  <main class="modal-style">
+    <nuxt />
+  </main>
 </template>
 
 <script>
 export default {
-  name: 'PreAuthLayout',
+  name: 'Authentication',
 }
 </script>
 
