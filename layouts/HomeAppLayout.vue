@@ -1,22 +1,22 @@
 <template>
-  <div>
-    <div>
+  <div class="app-layout">
+    <header class="dbx">
       <a class="brand-name" href="/"> Floracasy</a>
       <button>Get Rewards</button>
-    </div>
+    </header>
 
-    <div class="modal-style">
+    <main class="dbx">
       <nuxt />
-    </div>
+    </main>
 
-    <footer id="blah">
+    <footer class="dbx">
       <nuxt-link
         v-for="(menuOption, index) in menuOptions"
         :id="index === activeLink ? 'activeNow' : ''"
         :key="menuOption.id"
         :to="menuOption.route"
         :value="menuOptions.id"
-        class="dbsx dude mx-0 px-0"
+        class="dbx"
       >
         <p>{{ menuOption.text }}</p>
       </nuxt-link>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'HomeAppLayout',
@@ -71,70 +71,47 @@ export default {
 @import 'assets/variables';
 
 $font-size: 18px;
-.v-toolbar__content {
-  flex-wrap: wrap;
-  padding: 4px 16px !important;
 
-  @media only screen and (min-width: 1024px) {
-    padding-left: 64px !important;
-    padding-right: 32px !important;
+.app-layout {
+  header,
+  footer {
+    z-index: 100;
+    position: fixed;
+    left: 0;
+    background: #2c2c3b;
+    width: 100%;
+    height: 64px;
   }
 
-  .brand {
+  header {
+    top: 0;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+  }
 
-    .brand-name {
-      margin-left: 12px;
-      font-size: 20px;
-      color: $white;
-      text-decoration: none;
-      font-family: $Prata;
+  footer {
+    bottom: 0;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(5, 1fr);
+
+    a {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      color: #cacaca;
+    }
+
+    #activeNow {
+      color: yellow;
     }
   }
 
-  ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-
-    li {
-      margin: 0 32px;
-      font-size: $font-size;
-      font-family: $Nunito-Sans;
-
-      a {
-        display: block;
-        color: $white;
-        text-decoration: none;
-      }
-
-      button {
-        font-size: $font-size !important;
-        font-weight: 400 !important;
-      }
-    }
+  main {
+    padding: 64px 0;
   }
-}
-
-#blah {
-  display: grid !important;
-  place-items: center;
-  grid-template-columns: repeat(5, 1fr) !important;
-  height: 100px !important;
-}
-
-.dude {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 !important;
-  color: gray;
-}
-
-#activeNow {
-  color: yellow;
 }
 </style>
