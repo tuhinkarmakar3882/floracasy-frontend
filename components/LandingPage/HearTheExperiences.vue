@@ -13,7 +13,7 @@ import SegmentTitle from '@/components/LandingPage/SegmentTitle'
 
 export default {
   name: 'HearTheExperiences',
-  components: {SegmentTitle},
+  components: { SegmentTitle },
   data() {
     return {
       points: [],

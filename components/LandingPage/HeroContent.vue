@@ -8,9 +8,9 @@
 
         <p class="my-7">
           One good line, Which is really good,
-          <br/>
+          <br />
           followed by some other line, and this
-          <br/>
+          <br />
           line has more lines.
         </p>
 
@@ -887,12 +887,12 @@
               y1="276.526"
               y2="-3.13745e-06"
             >
-              <stop stop-color="#808080" stop-opacity="0.25"/>
-              <stop offset="0.54" stop-color="#808080" stop-opacity="0.12"/>
-              <stop offset="1" stop-color="#808080" stop-opacity="0.1"/>
+              <stop stop-color="#808080" stop-opacity="0.25" />
+              <stop offset="0.54" stop-color="#808080" stop-opacity="0.12" />
+              <stop offset="1" stop-color="#808080" stop-opacity="0.1" />
             </linearGradient>
             <clipPath id="clip0">
-              <rect fill="white" height="448" width="564"/>
+              <rect fill="white" height="448" width="564" />
             </clipPath>
           </defs>
         </svg>
@@ -931,7 +931,7 @@ import KeyPoint from '@/components/global/KeyPoint'
 
 export default {
   name: 'HeroContent',
-  components: {KeyPoint},
+  components: { KeyPoint },
   data() {
     return {
       heroButtonLoading: false,

@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard">
-    <Carousel :carousel-items="carouselItems"/>
+    <Carousel :carousel-items="carouselItems" />
 
     <h2 class="heading-text my-8">Browse by Categories</h2>
 
-    <CategoriesLineUp :categories="categories"/>
+    <CategoriesLineUp :categories="categories" />
 
     <h2 class="heading-text my-9">Explore Blogs</h2>
   </div>
@@ -76,7 +76,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('BottomNavigation/update', {linkPosition: 0})
+    this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
   },
   methods: {
     async logout() {
@@ -84,8 +84,7 @@ export default {
         await this.$store.dispatch('logout')
         // console.log(this.$store.state.authUser)
         await this.$router.push('/')
-      } catch (e) {
-      }
+      } catch (e) {}
     },
   },
 }

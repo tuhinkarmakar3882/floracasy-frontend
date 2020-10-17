@@ -3,18 +3,18 @@
     <h2 class="comments-title">
       Comments
       <span v-show="numberOfTotalComments > 0" class="comments-count">{{
-          numberOfTotalComments
-        }}</span>
+        numberOfTotalComments
+      }}</span>
     </h2>
 
-    <hr/>
+    <hr />
 
     <div class="row">
       <div class="dbx">
         <div class="dbx">
           <label>
             Hello
-            <textarea v-model="comment" rows="1"/>
+            <textarea v-model="comment" rows="1" />
           </label>
         </div>
         <div class="icon">

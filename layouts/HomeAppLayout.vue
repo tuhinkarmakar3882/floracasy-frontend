@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <div class="visible-upto-large" @click="drawer = !drawer"/>
+      <div class="visible-upto-large" @click="drawer = !drawer" />
 
       <div class="brand">
         <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
       </div>
-      <div class="spacer"/>
+      <div class="spacer" />
       <button style="font-weight: 300 !important">Get Rewards</button>
     </div>
 
@@ -14,7 +14,7 @@
       <ul>
         <li>
           <span>
-            <Logo/>
+            <Logo />
           </span>
 
           <span>
@@ -23,7 +23,7 @@
         </li>
       </ul>
 
-      <hr style="background-color: #6dd0bf"/>
+      <hr style="background-color: #6dd0bf" />
 
       <ul>
         <li v-for="menuOption in menuOptions" :key="menuOption.id">
@@ -48,7 +48,7 @@
 
     <div class="div">
       <div class="modal-style">
-        <nuxt/>
+        <nuxt />
       </div>
     </div>
 
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'HomeAppLayout',
@@ -107,8 +107,7 @@ export default {
         await this.$store.dispatch('logout')
         // console.log(this.$store.state.authUser)
         await this.$router.push('/')
-      } catch (e) {
-      }
+      } catch (e) {}
     },
   },
 }
