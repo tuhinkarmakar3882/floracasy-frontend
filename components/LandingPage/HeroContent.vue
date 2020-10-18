@@ -40,17 +40,14 @@
           </div>
         </div>
 
-        <nuxt-link
-          :loading="heroButtonLoading"
-          class="btn my-4"
-          color="primary"
-          large
-          nuxt
-          rounded
-          to="/Authentication/GetStarted"
-          @click="changeIt"
-        >
-          Explore Now
+        <nuxt-link to="/Authentication/GetStarted">
+          <RippleButton
+            class-list="primary-btn"
+            :on-click="changeIt"
+            :loading="heroButtonLoading"
+          >
+            Explore Now
+          </RippleButton>
         </nuxt-link>
 
         <p class="optional-log-in-text mt-2">
@@ -928,10 +925,11 @@
 
 <script>
 import KeyPoint from '@/components/global/KeyPoint'
+import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'HeroContent',
-  components: { KeyPoint },
+  components: { RippleButton, KeyPoint },
   data() {
     return {
       heroButtonLoading: false,

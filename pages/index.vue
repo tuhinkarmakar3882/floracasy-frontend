@@ -1,11 +1,13 @@
 <template>
   <div class="index-page">
-    <h1>Here is the Style Guide</h1>
-    <nuxt-link to="/StyleGuide">
-      <RippleButton class-list="primary-btn">
-        View the Style Guide
-      </RippleButton>
-    </nuxt-link>
+    <div class="text-center">
+      <h1>Here is the Style Guide</h1>
+      <nuxt-link to="/StyleGuide">
+        <RippleButton class-list="primary-btn">
+          View the Style Guide
+        </RippleButton>
+      </nuxt-link>
+    </div>
 
     <HeroContent />
 
