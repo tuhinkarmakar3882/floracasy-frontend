@@ -11,29 +11,35 @@
     <br />
     <div class="buttons">
       <div class="normal text-center">
-        <RippleButton class-list="primary-btn">Primary</RippleButton>
-        <RippleButton class-list="secondary-btn" color="primary">
+        <RippleButton class-list="my-4 primary-btn">Primary</RippleButton>
+        <RippleButton class-list="my-4 secondary-btn" color="primary">
           Secondary
         </RippleButton>
-        <RippleButton class-list="success-btn"> Success</RippleButton>
-        <RippleButton class-list="danger-btn"> Danger</RippleButton>
-        <RippleButton class-list="info-btn"> Info</RippleButton>
-        <RippleButton class-list="muted-btn"> Muted</RippleButton>
-        <RippleButton class-list="disabled-btn" :disabled="true">
+        <RippleButton class-list="my-4 success-btn"> Success</RippleButton>
+        <RippleButton class-list="my-4 danger-btn"> Danger</RippleButton>
+        <RippleButton class-list="my-4 info-btn"> Info</RippleButton>
+        <RippleButton class-list="my-4 muted-btn"> Muted</RippleButton>
+        <RippleButton class-list="my-4 disabled-btn" :disabled="true">
           Disabled
         </RippleButton>
       </div>
       <div class="outlined text-center">
-        <RippleButton class-list="primary-outlined-btn">Primary</RippleButton>
-        <RippleButton class-list="secondary-outlined-btn">
+        <RippleButton class-list="my-4 primary-outlined-btn"
+          >Primary</RippleButton
+        >
+        <RippleButton class-list="my-4 secondary-outlined-btn">
           Secondary
         </RippleButton>
-        <RippleButton class-list="success-outlined-btn">Success</RippleButton>
-        <RippleButton class-list="danger-outlined-btn">Danger</RippleButton>
-        <RippleButton class-list="info-outlined-btn">Info</RippleButton>
-        <RippleButton class-list="muted-outlined-btn">Muted</RippleButton>
+        <RippleButton class-list="my-4 success-outlined-btn"
+          >Success</RippleButton
+        >
+        <RippleButton class-list="my-4 danger-outlined-btn"
+          >Danger</RippleButton
+        >
+        <RippleButton class-list="my-4 info-outlined-btn">Info</RippleButton>
+        <RippleButton class-list="my-4 muted-outlined-btn">Muted</RippleButton>
         <RippleButton
-          class-list="primary-btn"
+          class-list="my-4 primary-btn"
           :loading="loadingBtn"
           :on-click="sampleLoading"
         >

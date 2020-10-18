@@ -19,8 +19,11 @@
     <CategoriesLineUp :categories="categories" />
 
     <h2 class="heading-text my-9">Explore Blogs</h2>
-
-    <button class="danger-outlined-btn" @click="logout">Logout</button>
+    <div class="text-center">
+      <RippleButton class-list="danger-outlined-btn" :on-click="logout">
+        Logout
+      </RippleButton>
+    </div>
   </div>
 </template>
 
