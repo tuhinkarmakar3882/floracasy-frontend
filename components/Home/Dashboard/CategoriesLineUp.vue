@@ -1,21 +1,29 @@
 <template>
-  <section class="categories py-4">
+  <section class="categories" :class="classList">
     <ul class="options">
       <li v-for="category in categories" :key="category.id" class="mx-4">
         <nuxt-link to="/Home/Blogs/CategoryWise/">
-          {{ category.name }}
+          <RippleButton class-list="secondary-outlined-btn">
+            {{ category.name }}
+          </RippleButton>
         </nuxt-link>
       </li>
     </ul>
   </section>
 </template>
 <script>
+import RippleButton from '~/components/global/RippleButton'
 export default {
   name: 'CategoriesLineUp',
+  components: { RippleButton },
   props: {
     categories: {
       type: Array,
       required: true,
+    },
+    classList: {
+      type: String,
+      default: '',
     },
   },
 }

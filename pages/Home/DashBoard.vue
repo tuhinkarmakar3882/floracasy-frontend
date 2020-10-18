@@ -1,24 +1,12 @@
 <template>
   <div class="dashboard-page">
-    <section class="text-center">
-      <h1>Here is the Style Guide</h1>
-      <nuxt-link to="/StyleGuide">
-        <RippleButton
-          class-list="primary-btn"
-          button-text="View the Style Guide"
-        />
-      </nuxt-link>
-    </section>
-
-    <hr class="my-4" />
-
     <Carousel :carousel-items="carouselItems" />
 
-    <h2 class="heading-text my-8">Browse by Categories</h2>
+    <h3 class="text-center">Browse by Categories</h3>
 
-    <CategoriesLineUp :categories="categories" />
+    <CategoriesLineUp :categories="categories" class-list="my-4" />
 
-    <h2 class="heading-text my-9">Explore Blogs</h2>
+    <h2 class="my-9">Explore Blogs</h2>
     <div class="text-center">
       <RippleButton class-list="danger-outlined-btn" :on-click="logout">
         Logout
@@ -39,7 +27,7 @@ export default {
     Carousel,
     CategoriesLineUp,
   },
-  middleware: 'protectedRoute',
+  // middleware: 'protectedRoute',
   layout: 'MobileApp',
   data() {
     return {
@@ -113,11 +101,6 @@ export default {
 @import 'assets/all-variables';
 
 .dashboard-page {
-  .heading-text {
-    text-align: center;
-    font-family: $Prata;
-    font-weight: 400;
-    color: white;
-  }
+  transition: all 0.5s ease-in-out;
 }
 </style>
