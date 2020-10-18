@@ -1,13 +1,17 @@
 <template>
   <button
-    v-ripple="'rgba(255, 255, 255, 0.35)'"
+    v-ripple="'rgba(255, 255, 255, 0.2)'"
     :type="buttonType"
-    :class="disabled || loading ? 'disabled-btn' : this.$props.classList"
+    :class="
+      disabled || loading
+        ? this.$props.classList + ' disabled-btn'
+        : this.$props.classList
+    "
     :disabled="disabled || loading"
     :loading="loading"
     @click="onClick"
   >
-    <span v-if="loading" class="loading-animation"></span>
+    <span v-if="loading" class="loading-animation" />
     <slot v-else>Button</slot>
   </button>
 </template>
@@ -18,7 +22,7 @@ export default {
   props: {
     classList: {
       type: String,
-      required: true,
+      default: 'primary-btn',
     },
     disabled: {
       type: Boolean,
@@ -44,10 +48,10 @@ export default {
 @import 'assets/all-variables';
 
 .loading-animation {
-  display: block;
   margin: auto;
-  height: $x-large-space;
-  width: $x-large-space;
+  display: block;
+  height: $x-large-space !important;
+  width: $x-large-space !important;
   border: $nano-space solid darken($muted, 10%);
   border-top: $nano-space solid $secondary-matte;
   border-radius: 100%;

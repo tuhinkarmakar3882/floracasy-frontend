@@ -1,10 +1,11 @@
 @import "assets/all-variables";
 
-$lighten-percentage: 10%;
-$darken-percentage: 4%;
+$lighten-percentage: 8%;
+$darken-percentage: 5%;
 
 button {
-  all:unset;
+  all: unset;
+  position: relative;
   text-align: center;
   min-width: 10.7rem;
   padding: 0 1rem;

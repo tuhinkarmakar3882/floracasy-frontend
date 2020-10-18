@@ -10,47 +10,43 @@
     </p>
     <br />
     <div class="buttons">
-      <div class="normal text-center">
-        <RippleButton class-list="my-4 primary-btn">Primary</RippleButton>
-        <RippleButton class-list="my-4 secondary-btn" color="primary">
-          Secondary
-        </RippleButton>
-        <RippleButton class-list="my-4 success-btn"> Success</RippleButton>
-        <RippleButton class-list="my-4 danger-btn"> Danger</RippleButton>
-        <RippleButton class-list="my-4 info-btn"> Info</RippleButton>
-        <RippleButton class-list="my-4 muted-btn"> Muted</RippleButton>
-        <RippleButton class-list="my-4 disabled-btn" :disabled="true">
-          Disabled
-        </RippleButton>
-      </div>
-      <div class="outlined text-center">
-        <RippleButton class-list="my-4 primary-outlined-btn"
-          >Primary</RippleButton
-        >
-        <RippleButton class-list="my-4 secondary-outlined-btn">
-          Secondary
-        </RippleButton>
-        <RippleButton class-list="my-4 success-outlined-btn"
-          >Success</RippleButton
-        >
-        <RippleButton class-list="my-4 danger-outlined-btn"
-          >Danger</RippleButton
-        >
-        <RippleButton class-list="my-4 info-outlined-btn">Info</RippleButton>
-        <RippleButton class-list="my-4 muted-outlined-btn">Muted</RippleButton>
-        <RippleButton
-          class-list="my-4 primary-btn"
-          :loading="loadingBtn"
-          :on-click="sampleLoading"
-        >
-          Loading
-        </RippleButton>
-      </div>
+      <RippleButton class-list="my-4 mx-4 primary-btn">Primary</RippleButton>
+      <RippleButton class-list="my-4 mx-4 secondary-btn" color="primary">
+        Secondary
+      </RippleButton>
+      <RippleButton class-list="my-4 mx-4 success-btn"> Success</RippleButton>
+      <RippleButton class-list="my-4 mx-4 danger-btn"> Danger</RippleButton>
+      <RippleButton class-list="my-4 mx-4 info-btn"> Info</RippleButton>
+      <RippleButton class-list="my-4 mx-4 muted-btn"> Muted</RippleButton>
+      <RippleButton class-list="my-4 mx-4 disabled-btn" :disabled="true">
+        Disabled
+      </RippleButton>
+      <RippleButton class-list="my-4 mx-4 primary-outlined-btn"
+        >Primary</RippleButton
+      >
+      <RippleButton class-list="my-4 mx-4 secondary-outlined-btn">
+        Secondary
+      </RippleButton>
+      <RippleButton class-list="my-4 mx-4 success-outlined-btn"
+        >Success</RippleButton
+      >
+      <RippleButton class-list="my-4 mx-4 danger-outlined-btn"
+        >Danger</RippleButton
+      >
+      <RippleButton class-list="my-4 mx-4 info-outlined-btn">Info</RippleButton>
+      <RippleButton class-list="my-4 mx-4 muted-outlined-btn"
+        >Muted</RippleButton
+      >
+      <RippleButton
+        class-list="my-4 mx-4 primary-btn"
+        :loading="loadingBtn"
+        :on-click="sampleLoading"
+      >
+        Loading
+      </RippleButton>
     </div>
 
-    <hr />
-
-    <br /><br /><br /><br />
+    <hr class="my-8" />
 
     <section>
       <h1>This is a sample heading H1</h1>

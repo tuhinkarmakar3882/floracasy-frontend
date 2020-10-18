@@ -1,14 +1,14 @@
 import bodyParser from 'body-parser'
 import session from 'cookie-session'
-//
+
 const milliseconds = 1000
 const hours = 1
 const minutes = 1
-const seconds = 60
+const seconds = 30
 
 export default {
   server: {
-    host: '0.0.0.0',
+    // host: '0.0.0.0',
     port: 3001,
   },
 
