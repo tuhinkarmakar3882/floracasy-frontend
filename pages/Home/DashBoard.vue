@@ -117,15 +117,16 @@
     border-radius: 10px;
 
     .content {
-      display: grid;
-      justify-content: space-between;
-      align-items: flex-start;
-      grid-template-columns: 1fr 2fr;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       grid-column-gap: $standard-space;
 
       img {
-        height: 100%;
+        width: 100%;
         object-fit: cover;
+        margin-bottom: 1rem;
       }
 
       .author {
