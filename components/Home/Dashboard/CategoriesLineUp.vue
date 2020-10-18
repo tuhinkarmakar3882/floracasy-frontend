@@ -39,5 +39,8 @@ export default {
     display: flex;
     overflow-x: scroll;
   }
+  button {
+    width: auto;
+  }
 }
 </style>
