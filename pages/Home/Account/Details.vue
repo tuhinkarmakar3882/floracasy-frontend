@@ -31,14 +31,8 @@
       </section>
 
       <section class="actions">
-        <button class="px-6">
-          Follow
-          <span class="ml-2"> mdi-account-multiple-plus </span>
-        </button>
-        <button class="px-6">
-          Message
-          <span class="ml-2"> mdi-lock </span>
-        </button>
+        <RippleButton class="px-6"> Follow </RippleButton>
+        <RippleButton class="px-6"> Message </RippleButton>
       </section>
     </section>
 
@@ -48,12 +42,11 @@
       <div v-for="blog in blogs" :key="blog.id" class="blog my-8">
         <div class="content">
           <img :alt="blog.title" :src="blog.image" />
-          <div class="data">
-            <h3>{{ blog.title }}</h3>
+          <div class="data text-left">
+            <h6>{{ blog.title }}</h6>
             <small> {{ blog.time }}</small>
           </div>
         </div>
-
         <hr class="mt-8" />
       </div>
     </section>
@@ -61,10 +54,12 @@
 </template>
 
 <script>
+import RippleButton from '~/components/global/RippleButton'
 export default {
   name: 'Details',
+  components: { RippleButton },
   layout: 'MobileApp',
-  middleware: 'protectedRoute',
+  // middleware: 'protectedRoute',
   data() {
     return {
       statisticsItem: [
@@ -134,7 +129,7 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  padding: 0 1rem;
+  padding: 1rem 1rem;
 
   .user-profile {
     .basic-data {
@@ -171,6 +166,7 @@ export default {
       grid-template-columns: repeat(3, 1fr);
       justify-content: space-around;
       align-items: center;
+      font-family: $Nunito;
 
       .item {
         p {
@@ -190,22 +186,6 @@ export default {
 
     .other-info {
       text-align: left;
-
-      h3 {
-        font-weight: 400;
-        color: #fff;
-        font-size: 20px;
-        margin-top: 2rem;
-        font-family: $Prata;
-        margin-bottom: 1rem;
-      }
-
-      .about {
-        //line-height: 1.5;
-        font-weight: 300;
-        color: #9a9a9a;
-        letter-spacing: 0;
-      }
     }
   }
 
@@ -230,19 +210,6 @@ export default {
         width: 100%;
         object-fit: cover;
         border-radius: 50%;
-      }
-
-      .data {
-        text-align: left;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-
-        * {
-          margin: 0;
-          padding: 0;
-        }
       }
     }
   }

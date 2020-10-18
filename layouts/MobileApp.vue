@@ -1,15 +1,15 @@
 <template>
   <div class="app-layout">
-    <header class="dbx">
-      <a class="brand-name" href="/"> Floracasy</a>
+    <header class="px-3">
+      <h5><a class="brand-name" href="/"> Floracasy</a></h5>
       <RippleButton class-list="primary-btn">Get Rewards</RippleButton>
     </header>
 
-    <main class="dbx">
+    <main>
       <nuxt />
     </main>
 
-    <footer class="dbx">
+    <footer>
       <nuxt-link
         v-for="(menuOption, index) in menuOptions"
         :id="index === activeLink ? 'activeNow' : ''"
