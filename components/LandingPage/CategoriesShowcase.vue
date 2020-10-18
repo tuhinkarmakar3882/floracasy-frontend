@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/variables';
+@import 'assets/all-variables';
 .showcase {
   background-color: $segment-background;
 

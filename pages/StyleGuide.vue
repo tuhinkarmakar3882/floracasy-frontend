@@ -11,22 +11,51 @@
     <br />
     <div class="buttons">
       <div class="normal text-center">
-        <button class="primary-btn">Primary Button</button>
-        <button class="secondary-btn">Secondary Button</button>
-        <button class="success-btn">Success Button</button>
-        <button class="danger-btn">Danger Button</button>
-        <button class="info-btn">Info Button</button>
-        <button class="muted-btn">Muted Button</button>
-        <button class="disabled-btn">Disabled Button</button>
+        <RippleButton button-text="Primary Button" class-list="primary-btn" />
+        <RippleButton
+          button-text="Secondary Button"
+          class-list="secondary-btn"
+        />
+        <RippleButton button-text="Success Button" class-list="success-btn" />
+        <RippleButton button-text="Danger Button" class-list="danger-btn" />
+        <RippleButton button-text="Info Button" class-list="info-btn" />
+        <RippleButton button-text="Muted Button" class-list="muted-btn" />
+        <RippleButton
+          button-text="Disabled Button"
+          class-list="disabled-btn"
+          :disabled="true"
+        />
       </div>
       <div class="outlined text-center">
-        <button class="primary-outlined-btn">Primary Button</button>
-        <button class="secondary-outlined-btn">Secondary Button</button>
-        <button class="success-outlined-btn">Success Button</button>
-        <button class="danger-outlined-btn">Danger Button</button>
-        <button class="info-outlined-btn">Info Button</button>
-        <button class="muted-outlined-btn">Muted Button</button>
-        <button class="disabled-btn">Disabled Button</button>
+        <RippleButton
+          button-text="Primary Button"
+          class-list="primary-outlined-btn"
+        />
+        <RippleButton
+          button-text="Secondary Button"
+          class-list="secondary-outlined-btn"
+        />
+        <RippleButton
+          button-text="Success Button"
+          class-list="success-outlined-btn"
+        />
+        <RippleButton
+          button-text="Danger Button"
+          class-list="danger-outlined-btn"
+        />
+        <RippleButton
+          button-text="Info Button"
+          class-list="info-outlined-btn"
+        />
+        <RippleButton
+          button-text="Muted Button"
+          class-list="muted-outlined-btn"
+        />
+        <RippleButton
+          button-text="Disabled Button"
+          class-list="disabled-btn"
+          :disabled="true"
+        />
       </div>
     </div>
 
@@ -78,11 +107,10 @@
 </template>
 
 <script>
+import RippleButton from '~/components/global/RippleButton'
+
 export default {
   name: 'StyleGuide',
+  components: { RippleButton },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/style-guide';
-</style>

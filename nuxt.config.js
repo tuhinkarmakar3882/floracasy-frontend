@@ -64,7 +64,7 @@ export default {
 
   css: ['~/styles/main.scss'],
 
-  plugins: [],
+  plugins: ['~/plugins/directives.js'],
 
   components: true,
 
