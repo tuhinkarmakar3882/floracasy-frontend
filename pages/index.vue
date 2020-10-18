@@ -2,7 +2,9 @@
   <div class="index-page">
     <h1>Here is the Style Guide</h1>
     <nuxt-link to="/StyleGuide">
-      <button class="primary-btn">View the Style Guide</button>
+      <RippleButton class-list="primary-btn">
+        View the Style Guide
+      </RippleButton>
     </nuxt-link>
 
     <HeroContent />
@@ -17,12 +19,14 @@
 import HeroContent from '~/components/LandingPage/HeroContent'
 import CategoriesShowcase from '~/components/LandingPage/CategoriesShowcase'
 import HearTheExperiences from '~/components/LandingPage/HearTheExperiences'
+import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
   middleware: 'publicRoute',
   components: {
+    RippleButton,
     HeroContent,
     CategoriesShowcase,
     HearTheExperiences,

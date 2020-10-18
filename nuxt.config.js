@@ -8,16 +8,16 @@ const seconds = 60
 
 export default {
   server: {
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     port: 3001,
   },
 
   ssr: true,
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   serverMiddleware: [
     bodyParser.json(),

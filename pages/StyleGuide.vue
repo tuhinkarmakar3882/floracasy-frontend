@@ -11,51 +11,34 @@
     <br />
     <div class="buttons">
       <div class="normal text-center">
-        <RippleButton button-text="Primary Button" class-list="primary-btn" />
-        <RippleButton
-          button-text="Secondary Button"
-          class-list="secondary-btn"
-        />
-        <RippleButton button-text="Success Button" class-list="success-btn" />
-        <RippleButton button-text="Danger Button" class-list="danger-btn" />
-        <RippleButton button-text="Info Button" class-list="info-btn" />
-        <RippleButton button-text="Muted Button" class-list="muted-btn" />
-        <RippleButton
-          button-text="Disabled Button"
-          class-list="disabled-btn"
-          :disabled="true"
-        />
+        <RippleButton class-list="primary-btn">Primary</RippleButton>
+        <RippleButton class-list="secondary-btn" color="primary">
+          Secondary
+        </RippleButton>
+        <RippleButton class-list="success-btn"> Success</RippleButton>
+        <RippleButton class-list="danger-btn"> Danger</RippleButton>
+        <RippleButton class-list="info-btn"> Info</RippleButton>
+        <RippleButton class-list="muted-btn"> Muted</RippleButton>
+        <RippleButton class-list="disabled-btn" :disabled="true">
+          Disabled
+        </RippleButton>
       </div>
       <div class="outlined text-center">
+        <RippleButton class-list="primary-outlined-btn">Primary</RippleButton>
+        <RippleButton class-list="secondary-outlined-btn">
+          Secondary
+        </RippleButton>
+        <RippleButton class-list="success-outlined-btn">Success</RippleButton>
+        <RippleButton class-list="danger-outlined-btn">Danger</RippleButton>
+        <RippleButton class-list="info-outlined-btn">Info</RippleButton>
+        <RippleButton class-list="muted-outlined-btn">Muted</RippleButton>
         <RippleButton
-          button-text="Primary Button"
-          class-list="primary-outlined-btn"
-        />
-        <RippleButton
-          button-text="Secondary Button"
-          class-list="secondary-outlined-btn"
-        />
-        <RippleButton
-          button-text="Success Button"
-          class-list="success-outlined-btn"
-        />
-        <RippleButton
-          button-text="Danger Button"
-          class-list="danger-outlined-btn"
-        />
-        <RippleButton
-          button-text="Info Button"
-          class-list="info-outlined-btn"
-        />
-        <RippleButton
-          button-text="Muted Button"
-          class-list="muted-outlined-btn"
-        />
-        <RippleButton
-          button-text="Disabled Button"
-          class-list="disabled-btn"
-          :disabled="true"
-        />
+          class-list="primary-btn"
+          :loading="loadingBtn"
+          :on-click="sampleLoading"
+        >
+          Loading
+        </RippleButton>
       </div>
     </div>
 
@@ -63,46 +46,49 @@
 
     <br /><br /><br /><br />
 
-    <h1>This is a sample heading H1</h1>
-    <h2>This is a sample heading H2</h2>
-    <h3>This is a sample heading H3</h3>
-    <h4>This is a sample heading H4</h4>
-    <h5>This is a sample heading H5</h5>
-    <h6>This is a sample heading H6</h6>
-    <p>
-      There are many variations of passages of Lorem Ipsum available, but the
-      majority have suffered alteration in some form, by injected humour, or
-      randomised words which don't look even slightly believable. If you are
-      going to use a passage of Lorem Ipsum, you need to be sure there isn't
-      anything embarrassing hidden in the middle of text. All the Lorem Ipsum
-      generators on the Internet tend to repeat predefined chunks as necessary,
-      making this the first true generator on the Internet. It uses a dictionary
-      of over 200 Latin words, combined with a handful of model sentence
-      structures, to generate Lorem Ipsum which looks reasonable. The generated
-      Lorem Ipsum is therefore always free from repetition, injected humour, or
-      non-characteristic words etc. There are many variations of passages of
-      Lorem Ipsum available, but the majority have suffered alteration in some
-      form, by injected humour, or randomised words which don't look even
-      slightly believable. If you are going to use a passage of Lorem Ipsum, you
-      need to be sure there isn't anything embarrassing hidden in the middle of
-      text. All the Lorem Ipsum generators on the Internet tend to repeat
-      predefined chunks as necessary, making this the first true generator on
-      the Internet. It uses a dictionary of over 200 Latin words, combined with
-      a handful of model sentence structures, to generate Lorem Ipsum which
-      looks reasonable. The generated Lorem Ipsum is therefore always free from
-      repetition, injected humour, or non-characteristic words etc. There are
-      many variations of passages of Lorem Ipsum available, but the majority
-      have suffered alteration in some form, by injected humour, or randomised
-      words which don't look even slightly believable. If you are going to use a
-      passage of Lorem Ipsum, you need to be sure there isn't anything
-      embarrassing hidden in the middle of text. All the Lorem Ipsum generators
-      on the Internet tend to repeat predefined chunks as necessary, making this
-      the first true generator on the Internet. It uses a dictionary of over 200
-      Latin words, combined with a handful of model sentence structures, to
-      generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is
-      therefore always free from repetition, injected humour, or
-      non-characteristic words etc.
-    </p>
+    <section>
+      <h1>This is a sample heading H1</h1>
+      <h2>This is a sample heading H2</h2>
+      <h3>This is a sample heading H3</h3>
+      <h4>This is a sample heading H4</h4>
+      <h5>This is a sample heading H5</h5>
+      <h6>This is a sample heading H6</h6>
+      <p>
+        There are many variations of passages of Lorem Ipsum available, but the
+        majority have suffered alteration in some form, by injected humour, or
+        randomised words which don't look even slightly believable. If you are
+        going to use a passage of Lorem Ipsum, you need to be sure there isn't
+        anything embarrassing hidden in the middle of text. All the Lorem Ipsum
+        generators on the Internet tend to repeat predefined chunks as
+        necessary, making this the first true generator on the Internet. It uses
+        a dictionary of over 200 Latin words, combined with a handful of model
+        sentence structures, to generate Lorem Ipsum which looks reasonable. The
+        generated Lorem Ipsum is therefore always free from repetition, injected
+        humour, or non-characteristic words etc. There are many variations of
+        passages of Lorem Ipsum available, but the majority have suffered
+        alteration in some form, by injected humour, or randomised words which
+        don't look even slightly believable. If you are going to use a passage
+        of Lorem Ipsum, you need to be sure there isn't anything embarrassing
+        hidden in the middle of text. All the Lorem Ipsum generators on the
+        Internet tend to repeat predefined chunks as necessary, making this the
+        first true generator on the Internet. It uses a dictionary of over 200
+        Latin words, combined with a handful of model sentence structures, to
+        generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum
+        is therefore always free from repetition, injected humour, or
+        non-characteristic words etc. There are many variations of passages of
+        Lorem Ipsum available, but the majority have suffered alteration in some
+        form, by injected humour, or randomised words which don't look even
+        slightly believable. If you are going to use a passage of Lorem Ipsum,
+        you need to be sure there isn't anything embarrassing hidden in the
+        middle of text. All the Lorem Ipsum generators on the Internet tend to
+        repeat predefined chunks as necessary, making this the first true
+        generator on the Internet. It uses a dictionary of over 200 Latin words,
+        combined with a handful of model sentence structures, to generate Lorem
+        Ipsum which looks reasonable. The generated Lorem Ipsum is therefore
+        always free from repetition, injected humour, or non-characteristic
+        words etc.
+      </p>
+    </section>
   </div>
 </template>
 
@@ -112,5 +98,20 @@ import RippleButton from '~/components/global/RippleButton'
 export default {
   name: 'StyleGuide',
   components: { RippleButton },
+  data() {
+    return {
+      loadingBtn: false,
+    }
+  },
+  methods: {
+    sampleLoading() {
+      // eslint-disable-next-line no-console
+      console.log('toggling')
+      this.loadingBtn = true
+      setTimeout(() => {
+        this.loadingBtn = false
+      }, 5000)
+    },
+  },
 }
 </script>

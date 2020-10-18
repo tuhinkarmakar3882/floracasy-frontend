@@ -4,9 +4,9 @@
 
     <div class="signupOptionsGrid">
       <div v-for="option in signupOptions" :key="option.id" class="gridItems">
-        <button class="secondary-outlined-btn" @click="login">
+        <RippleButton class-list="secondary-outlined-btn" @click="login">
           <span>Continue with {{ option.provider }}</span>
-        </button>
+        </RippleButton>
       </div>
     </div>
 
@@ -29,8 +29,10 @@
 </template>
 
 <script>
+import RippleButton from '~/components/global/RippleButton'
 export default {
   name: 'GetStarted',
+  components: { RippleButton },
   layout: 'Authentication',
   middleware: 'publicRoute',
 

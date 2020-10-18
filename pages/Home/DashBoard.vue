@@ -3,7 +3,10 @@
     <section class="text-center">
       <h1>Here is the Style Guide</h1>
       <nuxt-link to="/StyleGuide">
-        <button class="primary-btn">View the Style Guide</button>
+        <RippleButton
+          class-list="primary-btn"
+          button-text="View the Style Guide"
+        />
       </nuxt-link>
     </section>
 
@@ -24,10 +27,12 @@
 <script>
 import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
 import Carousel from '@/components/Home/Dashboard/Carousel'
+import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'DashBoard',
   components: {
+    RippleButton,
     Carousel,
     CategoriesLineUp,
   },
@@ -110,7 +115,6 @@ export default {
     font-family: $Prata;
     font-weight: 400;
     color: white;
-    //margin-bottom: 1rem;
   }
 }
 </style>
