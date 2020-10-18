@@ -4,6 +4,7 @@ $lighten-percentage: 10%;
 $darken-percentage: 4%;
 
 button {
+  all:unset;
   margin: 1rem 0;
   min-width: 10.7rem;
   padding: 0 1rem;
@@ -13,8 +14,9 @@ button {
   border-radius: 50px;
   transition: all .1s ease-in-out;
 
-  &:focus-visible, &:active, &:focus-within{
-    outline: none;
+  &:hover, &:focus, &:focus-visible, &:active, &:focus-within {
+    border-radius: 50px;
+    outline: none 0;
     box-shadow: 0 0 $double $single darken($white, $darken-percentage);
   }
 }

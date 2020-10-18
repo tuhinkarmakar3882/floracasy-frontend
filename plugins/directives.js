@@ -59,7 +59,7 @@ const Ripple = {
     // Default values.
     const props = {
       event: 'mousedown',
-      transition: 350,
+      transition: 450,
     }
 
     setProps(Object.keys(binding.modifiers), props)
@@ -138,7 +138,7 @@ const Ripple = {
         // Timeout set to get a smooth removal of the ripple
         setTimeout(function () {
           rippleContainer.parentNode.removeChild(rippleContainer)
-        }, 850)
+        }, 750)
 
         el.removeEventListener('mouseup', clearRipple, false)
 
