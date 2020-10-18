@@ -23,7 +23,7 @@
         <div class="content">
           <img src="http://picsum.photos/255" alt="" />
           <div class="body">
-            <h6>That Apple Eye-Pads Review, Once again</h6>
+            <h5>That Apple Eye-Pads Review, Once again</h5>
             <p class="my-4">
               <span class="author">Maria Bentley</span>
               IN
@@ -42,7 +42,7 @@
         <div class="content">
           <img src="http://picsum.photos/251" alt="" />
           <div class="body">
-            <h6>Now its easy to take care your underarms at home.</h6>
+            <h5>Now its easy to take care your underarms at home.</h5>
             <p class="my-4">
               <span class="author">Maria Bentley</span>
               IN
@@ -61,7 +61,7 @@
         <div class="content">
           <img src="http://picsum.photos/252" alt="" />
           <div class="body">
-            <h6>Love your hair but suffering from Hair fall or hair damage?</h6>
+            <h5>Love your hair but suffering from Hair fall or hair damage?</h5>
             <p class="my-4">
               <span class="author">Maria Bentley</span>
               IN
@@ -80,7 +80,7 @@
         <div class="content">
           <img src="http://picsum.photos/255" alt="" />
           <div class="body">
-            <h6>That Apple Eye-Pads Review, Once again</h6>
+            <h5>That Apple Eye-Pads Review, Once again</h5>
             <p class="my-4">
               <span class="author">Maria Bentley</span>
               IN
@@ -124,6 +124,7 @@
       grid-column-gap: $standard-space;
 
       img {
+        height: 200px;
         width: 100%;
         object-fit: cover;
         margin-bottom: 1rem;
