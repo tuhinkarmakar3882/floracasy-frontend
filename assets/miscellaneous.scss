@@ -1,0 +1,39 @@
+@import "all-variables";
+
+html {
+  scroll-behavior: smooth;
+  transition: all .5s ease-in-out;
+  font-family: $Nunito;
+  letter-spacing: 1px;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: lighten($card-background, 10%);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: darken($secondary-matte, 20%);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $secondary-matte;
+  }
+
+  body {
+    background: $body-background;
+    color: $body-text-default;
+    transition: all .5s ease-in-out;
+    letter-spacing: 1px;
+    padding: 1rem;
+
+    hr {
+      border: none;
+      height: 1px;
+      background: $card-background;
+    }
+  }
+}

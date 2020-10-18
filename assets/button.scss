@@ -1,0 +1,153 @@
+@import "assets/all-variables";
+
+$lighten-percentage: 10%;
+$darken-percentage: 4%;
+
+button {
+  margin: 1rem 0;
+  min-width: 10.7rem;
+  padding: 0 1rem;
+  height: 2.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 50px;
+  transition: all .1s ease-in-out;
+
+  &:focus-visible, &:active, &:focus-within{
+    outline: none;
+    box-shadow: 0 0 $double $single darken($white, $darken-percentage);
+  }
+}
+
+.primary-outlined-btn {
+  background-color: transparent;
+  color: lighten($primary, $darken-percentage);
+  border: $single solid lighten($primary, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($primary, .1);
+    border-color: lighten($primary, $lighten-percentage);
+    color: lighten($primary, $lighten-percentage);
+  }
+}
+
+.secondary-outlined-btn {
+  background-color: transparent;
+  color: darken($secondary, $darken-percentage);
+  border: $single solid darken($secondary, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($secondary, .1);
+    border-color: lighten($secondary, $lighten-percentage);
+    color: lighten($secondary, $lighten-percentage);
+  }
+}
+
+.success-outlined-btn {
+  background-color: transparent;
+  color: #34b334;
+  border: $single solid darken($success, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($success, .1);
+    border-color: lighten($success, $lighten-percentage);
+    color: lighten($success, $lighten-percentage);
+  }
+}
+
+.danger-outlined-btn {
+  background-color: transparent;
+  color: darken($danger-light, $darken-percentage);
+  border: $single solid darken($danger-light, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($danger-light, .1);
+    border-color: lighten($danger-light, $lighten-percentage);
+    color: lighten($danger-light, $lighten-percentage);
+  }
+}
+
+.info-outlined-btn {
+  background-color: transparent;
+  color: darken($info, $darken-percentage);
+  border: $single solid darken($info, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($info, .1);
+    border-color: lighten($info, $lighten-percentage);
+    color: lighten($info, $lighten-percentage);
+  }
+}
+
+.muted-outlined-btn {
+  background-color: transparent;
+  color: darken($muted, $darken-percentage);
+  border: $single solid darken($muted, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($muted, .1);
+    border-color: lighten($muted, $lighten-percentage);
+    color: lighten($muted, $lighten-percentage);
+  }
+}
+
+.primary-btn {
+  color: $white;
+  background-color: darken($primary, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($primary, $lighten-percentage);
+  }
+
+}
+
+.secondary-btn {
+  color: $black;
+  background-color: darken($secondary, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($secondary, $lighten-percentage);
+  }
+
+}
+
+.success-btn {
+  color: $white;
+  background-color: darken($success, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($success, $lighten-percentage);
+  }
+}
+
+.danger-btn {
+  color: $white;
+  background-color: darken($danger, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($danger, $lighten-percentage);
+  }
+}
+
+.info-btn {
+  color: $white;
+  background-color: darken($info, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($info, $lighten-percentage);
+  }
+}
+
+.muted-btn {
+  color: $white;
+  background-color: darken($muted, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($muted, $lighten-percentage);
+  }
+}
+
+.disabled-btn {
+  color: #585858 !important;
+  background-color: #2f2f2f !important;
+}
