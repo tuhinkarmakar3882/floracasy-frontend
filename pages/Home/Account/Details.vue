@@ -131,6 +131,11 @@ export default {
 .details-page {
   padding: 1rem 1rem;
 
+  button {
+    min-width: auto;
+    width: auto;
+  }
+
   .user-profile {
     .basic-data {
       display: grid;
