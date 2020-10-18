@@ -4,7 +4,7 @@ module.exports = {
       name: 'Floracasy',
       exec_mode: 'cluster',
       instances: 'max',
-      script: './node_modules/nuxt/bin/nuxt-ts.js',
+      script: './node_modules/nuxt/bin/nuxt.js',
       args: 'start',
       env: {
         HOST: '127.0.0.1',
