@@ -1,52 +1,5 @@
 @import "assets/style-guide";
-
-html {
-  scroll-behavior: smooth;
-  //background: $body-background;
-  //color: $body-text-default;
-  transition: all .5s ease-in-out;
-  font-family: $Nunito;
-  letter-spacing: 1px;
-  overflow-x: hidden;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: lighten($card-background, 10%);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: darken($secondary-matte, 20%);
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: $secondary-matte;
-  }
-}
-
-.the-router-page-content {
-  transition: all .5s cubic-bezier(.55, 0, .1, 1);
-}
-
-.page-enter-active, .page-leave-active {
-  transition: opacity .5s cubic-bezier(.55, 0, .1, 1);
-}
-
-.page-enter, .page-leave-active {
-  opacity: 0
-}
-
-.gray-shift-enter-active, .gray-shift-leave-active {
-  transition: all .3s cubic-bezier(.55, 0, .1, 1);
-}
-
-.gray-shift-enter, .gray-shift-leave-active {
-  opacity: 0;
-  transform: scale(.99);
-  filter: grayscale(100%);
-}
+@import "assets/transitions-and-animations";
 
 .dbx {
   border: 2px solid red !important;
