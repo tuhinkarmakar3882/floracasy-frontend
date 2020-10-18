@@ -2,7 +2,7 @@
   <div class="app-layout">
     <header class="dbx">
       <a class="brand-name" href="/"> Floracasy</a>
-      <button>Get Rewards</button>
+      <RippleButton class-list="primary-btn">Get Rewards</RippleButton>
     </header>
 
     <main class="dbx">
@@ -24,10 +24,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'MobileApp',
-  components: {},
+  components: { RippleButton },
   data() {
     return {
       drawer: false,
