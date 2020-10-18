@@ -11,18 +11,144 @@
     <!--        <h3>{{ item.name }}</h3>-->
     <!--      </Slide>-->
     <!--        </Carousel>-->
-    <h3 class="text-center">Browse by Categories</h3>
+    <h3 class="text-center my-6">Browse by Categories</h3>
 
     <CategoriesLineUp :categories="categories" class-list="my-4" />
+    <hr class="my-6" />
 
-    <h2 class="my-9">Explore Blogs</h2>
-    <div class="text-center">
+    <h2 class="my-9 text-center">Explore Blogs</h2>
+
+    <section class="my-6 px-2">
+      <div class="blog my-5">
+        <div class="content">
+          <img src="http://picsum.photos/255" alt="" />
+          <div class="body">
+            <h6>That Apple Eye-Pads Review, Once again</h6>
+            <p class="my-4">
+              <span class="author">Maria Bentley</span>
+              IN
+              <span class="category">Technology</span>
+            </p>
+            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
+          </div>
+        </div>
+        <div class="blog-actions">
+          <p v-ripple>Like</p>
+          <p v-ripple>Comment</p>
+          <p v-ripple>Share</p>
+        </div>
+      </div>
+      <div class="blog my-5">
+        <div class="content">
+          <img src="http://picsum.photos/251" alt="" />
+          <div class="body">
+            <h6>Now its easy to take care your underarms at home.</h6>
+            <p class="my-4">
+              <span class="author">Maria Bentley</span>
+              IN
+              <span class="category">Technology</span>
+            </p>
+            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
+          </div>
+        </div>
+        <div class="blog-actions">
+          <p v-ripple>Like</p>
+          <p v-ripple>Comment</p>
+          <p v-ripple>Share</p>
+        </div>
+      </div>
+      <div class="blog my-5">
+        <div class="content">
+          <img src="http://picsum.photos/252" alt="" />
+          <div class="body">
+            <h6>Love your hair but suffering from Hair fall or hair damage?</h6>
+            <p class="my-4">
+              <span class="author">Maria Bentley</span>
+              IN
+              <span class="category">Technology</span>
+            </p>
+            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
+          </div>
+        </div>
+        <div class="blog-actions">
+          <p v-ripple>Like</p>
+          <p v-ripple>Comment</p>
+          <p v-ripple>Share</p>
+        </div>
+      </div>
+      <div class="blog my-5">
+        <div class="content">
+          <img src="http://picsum.photos/255" alt="" />
+          <div class="body">
+            <h6>That Apple Eye-Pads Review, Once again</h6>
+            <p class="my-4">
+              <span class="author">Maria Bentley</span>
+              IN
+              <span class="category">Technology</span>
+            </p>
+            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
+          </div>
+        </div>
+        <div class="blog-actions">
+          <p v-ripple>Like</p>
+          <p v-ripple>Comment</p>
+          <p v-ripple>Share</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="text-center mt-12">
       <RippleButton class-list="danger-outlined-btn" :on-click="logout">
         Logout
       </RippleButton>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.dashboard-page {
+  transition: all 0.5s ease-in-out;
+
+  .blog {
+    background-color: $card-background;
+    padding: 0.8rem;
+    border-radius: 10px;
+
+    .content {
+      display: grid;
+      justify-content: space-between;
+      align-items: flex-start;
+      grid-template-columns: 1fr 2fr;
+      grid-column-gap: $standard-space;
+
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .author {
+        color: $secondary-highlight;
+      }
+
+      .category {
+        color: $secondary-highlight;
+      }
+    }
+
+    .blog-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+      margin-top: 1rem;
+      p {
+        height: 100%;
+      }
+    }
+  }
+}
+</style>
 
 <script>
 import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
@@ -105,14 +231,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-.dashboard-page {
-  transition: all 0.5s ease-in-out;
-  .item {
-    height: 100px;
-  }
-}
-</style>

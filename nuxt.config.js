@@ -14,10 +14,10 @@ export default {
 
   ssr: true,
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   serverMiddleware: [
     bodyParser.json(),

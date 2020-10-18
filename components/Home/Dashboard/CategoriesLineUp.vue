@@ -3,7 +3,7 @@
     <ul class="options">
       <li v-for="category in categories" :key="category.id" class="mx-4">
         <nuxt-link to="/Home/Blogs/CategoryWise/">
-          <RippleButton class-list="secondary-outlined-btn">
+          <RippleButton class-list="info-btn">
             {{ category.name }}
           </RippleButton>
         </nuxt-link>
@@ -40,7 +40,8 @@ export default {
     overflow-x: scroll;
   }
   button {
-    width: auto;
+    min-width: auto;
+    border-radius: 0;
   }
 }
 </style>
