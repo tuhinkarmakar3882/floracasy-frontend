@@ -36,21 +36,21 @@
           <RippleButton
             v-ripple
             class-list="success-outlined-btn"
-            :on-click="like.bind(null, blog.id)"
+            :on-click="like.bind(null, blog)"
           >
             Like
           </RippleButton>
           <RippleButton
             v-ripple
             class-list="success-outlined-btn"
-            :on-click="comment.bind(null, blog.id)"
+            :on-click="comment.bind(null, blog)"
           >
             Comment
           </RippleButton>
           <RippleButton
             v-ripple
             class-list="success-outlined-btn"
-            :on-click="share.bind(null, blog.id)"
+            :on-click="share.bind(null, blog)"
           >
             Share
           </RippleButton>
@@ -264,14 +264,20 @@ export default {
         await this.$router.push('/')
       } catch (e) {}
     },
-    like(blogId) {
-      console.log(`You've Liked Blog Number => ${blogId}`)
+    like(blog) {
+      alert(
+        `Wow, I'm amazed to see that you are trying to like ${blog.title}. But, the developer is too lazy to implement that feature. Should we fire this developer?`
+      )
     },
-    comment(blogId) {
-      console.log(`You've commented on Blog Number => ${blogId}`)
+    comment(blog) {
+      alert(
+        `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
+      )
     },
-    share(blogId) {
-      console.log(`You've shared Blog Number => ${blogId}`)
+    share(blog) {
+      alert(
+        `Duh? And Now Share??? Like Seriously? Google is not going to pay us. Anyways, here is a consolidation line : You're sharing ${blog.title}`
+      )
     },
   },
 }
