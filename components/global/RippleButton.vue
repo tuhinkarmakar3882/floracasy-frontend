@@ -55,7 +55,7 @@ export default {
   border: $nano-space solid darken($muted, 10%);
   border-top: $nano-space solid $secondary-matte;
   border-radius: 100%;
-  animation: spin 800ms ease-in-out infinite;
+  animation: spin 1.5s linear infinite;
 
   @keyframes spin {
     0% {

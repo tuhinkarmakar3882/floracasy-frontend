@@ -4,7 +4,11 @@
       v-for="(item, index) in carouselItems"
       :key="index"
       class="item"
-      :style="{ backgroundColor: item.color, color: 'white' }"
+      :style="{
+        backgroundImage: 'url(' + item.image + ')',
+        boxShadow: '0 0 0 100vw rgba(0, 0, 0, 0.6) inset',
+        color: 'white',
+      }"
     >
       <h3>{{ item.name }}</h3>
       <RippleButton>Go Now</RippleButton>

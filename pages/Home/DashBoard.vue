@@ -74,11 +74,6 @@ $blog-border-radius: 20px;
 .dashboard-page {
   transition: all 0.5s ease-in-out;
 
-  button {
-    min-width: auto;
-    border-radius: 0;
-  }
-
   .blog {
     background-color: lighten($card-background, 5%);
     border-radius: $blog-border-radius;
@@ -122,6 +117,9 @@ $blog-border-radius: 20px;
       padding: 0 0.3rem;
 
       button {
+        min-width: auto;
+        border-radius: 0;
+
         &:nth-child(1) {
           border: none;
         }
@@ -185,23 +183,23 @@ export default {
       carouselItems: [
         {
           name: 'First Item in the carousel',
-          color: 'red',
+          image: 'http://picsum.photos/500',
         },
         {
           name: 'Second Item in the carousel',
-          color: 'teal',
+          image: 'http://picsum.photos/500',
         },
         {
           name: 'Third Item in the carousel',
-          color: 'green',
+          image: 'http://picsum.photos/500',
         },
         {
           name: 'Fourth Item in the carousel',
-          color: 'blue',
+          image: 'http://picsum.photos/500',
         },
         {
           name: 'Fifth Item in the carousel',
-          color: 'grey',
+          image: 'http://picsum.photos/500',
         },
       ],
       attrs: {
