@@ -59,7 +59,7 @@ export default {
   name: 'Details',
   components: { RippleButton },
   layout: 'MobileApp',
-  // middleware: 'protectedRoute',
+  middleware: 'protectedRoute',
   data() {
     return {
       statisticsItem: [

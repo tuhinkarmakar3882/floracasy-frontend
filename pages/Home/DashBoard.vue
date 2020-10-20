@@ -18,7 +18,7 @@
 
     <h2 class="my-9 text-center">Explore Blogs</h2>
 
-    <section class="my-6 px-2">
+    <section class="my-6 px-4">
       <article v-for="blog in blogs" :key="blog.id" class="blog my-5">
         <div class="content">
           <img :src="blog.image" :alt="blog.title" />
@@ -33,9 +33,27 @@
           </div>
         </div>
         <section class="blog-actions">
-          <p v-ripple @click="like(blog.id)">Like</p>
-          <p v-ripple @click="comment(blog.id)">Comment</p>
-          <p v-ripple @click="share(blog.id)">Share</p>
+          <RippleButton
+            v-ripple
+            class-list="success-outlined-btn"
+            :on-click="like.bind(null, blog.id)"
+          >
+            Like
+          </RippleButton>
+          <RippleButton
+            v-ripple
+            class-list="success-outlined-btn"
+            :on-click="comment.bind(null, blog.id)"
+          >
+            Comment
+          </RippleButton>
+          <RippleButton
+            v-ripple
+            class-list="success-outlined-btn"
+            :on-click="share.bind(null, blog.id)"
+          >
+            Share
+          </RippleButton>
         </section>
       </article>
     </section>
@@ -51,19 +69,27 @@
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
+$blog-border-radius: 20px;
+
 .dashboard-page {
   transition: all 0.5s ease-in-out;
 
+  button {
+    min-width: auto;
+    border-radius: 0;
+  }
+
   .blog {
-    background-color: $card-background;
-    padding: 0.8rem;
-    border-radius: 10px;
+    background-color: lighten($card-background, 5%);
+    border-radius: $blog-border-radius;
+    padding-bottom: 1rem;
 
     .content {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 100%;
       grid-column-gap: $standard-space;
 
       img {
@@ -71,14 +97,20 @@
         width: 100%;
         object-fit: cover;
         margin-bottom: 1rem;
+        border-top-left-radius: $blog-border-radius;
+        border-top-right-radius: $blog-border-radius;
       }
 
-      .author {
-        color: $secondary-highlight;
-      }
+      div {
+        padding: 0.5rem 0.8rem;
 
-      .category {
-        color: $secondary-highlight;
+        span {
+          color: $secondary-highlight;
+        }
+
+        small {
+          font-family: $Nunito;
+        }
       }
     }
 
@@ -87,9 +119,26 @@
       grid-template-columns: repeat(3, 1fr);
       text-align: center;
       margin-top: 1rem;
-      p {
-        height: 100%;
+      padding: 0 0.3rem;
+
+      button {
+        &:nth-child(1) {
+          border: none;
+        }
+
+        &:nth-child(2) {
+          border-top: none;
+          border-bottom: none;
+        }
+
+        &:nth-child(3) {
+          border: none;
+        }
       }
+
+      //p {
+      //  height: 100%;
+      //}
     }
   }
 }
@@ -107,7 +156,7 @@ export default {
     RippleButton,
     CategoriesLineUp,
   },
-  // middleware: 'protectedRoute',
+  middleware: 'protectedRoute',
   layout: 'MobileApp',
   data() {
     return {
@@ -215,14 +264,14 @@ export default {
         await this.$router.push('/')
       } catch (e) {}
     },
-    async like(blogId) {
-      await alert(`You've Liked Blog Number => ${blogId}`)
+    like(blogId) {
+      console.log(`You've Liked Blog Number => ${blogId}`)
     },
-    async comment(blogId) {
-      await alert(`You've commented on Blog Number => ${blogId}`)
+    comment(blogId) {
+      console.log(`You've commented on Blog Number => ${blogId}`)
     },
-    async share(blogId) {
-      await alert(`You've shared Blog Number => ${blogId}`)
+    share(blogId) {
+      console.log(`You've shared Blog Number => ${blogId}`)
     },
   },
 }
