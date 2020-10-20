@@ -19,82 +19,25 @@
     <h2 class="my-9 text-center">Explore Blogs</h2>
 
     <section class="my-6 px-2">
-      <div class="blog my-5">
+      <article v-for="blog in blogs" :key="blog.id" class="blog my-5">
         <div class="content">
-          <img src="http://picsum.photos/255" alt="" />
-          <div class="body">
-            <h5>That Apple Eye-Pads Review, Once again</h5>
+          <img :src="blog.image" :alt="blog.title" />
+          <div class="text-left">
+            <h5>{{ blog.title }}</h5>
             <p class="my-4">
-              <span class="author">Maria Bentley</span>
+              <span class="author">{{ blog.author }}</span>
               IN
-              <span class="category">Technology</span>
+              <span class="category">{{ blog.category }}</span>
             </p>
-            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
+            <small class="timestamp">{{ blog.timestamp }}</small>
           </div>
         </div>
-        <div class="blog-actions">
-          <p v-ripple>Like</p>
-          <p v-ripple>Comment</p>
-          <p v-ripple>Share</p>
-        </div>
-      </div>
-      <div class="blog my-5">
-        <div class="content">
-          <img src="http://picsum.photos/251" alt="" />
-          <div class="body">
-            <h5>Now its easy to take care your underarms at home.</h5>
-            <p class="my-4">
-              <span class="author">Maria Bentley</span>
-              IN
-              <span class="category">Technology</span>
-            </p>
-            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
-          </div>
-        </div>
-        <div class="blog-actions">
-          <p v-ripple>Like</p>
-          <p v-ripple>Comment</p>
-          <p v-ripple>Share</p>
-        </div>
-      </div>
-      <div class="blog my-5">
-        <div class="content">
-          <img src="http://picsum.photos/252" alt="" />
-          <div class="body">
-            <h5>Love your hair but suffering from Hair fall or hair damage?</h5>
-            <p class="my-4">
-              <span class="author">Maria Bentley</span>
-              IN
-              <span class="category">Technology</span>
-            </p>
-            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
-          </div>
-        </div>
-        <div class="blog-actions">
-          <p v-ripple>Like</p>
-          <p v-ripple>Comment</p>
-          <p v-ripple>Share</p>
-        </div>
-      </div>
-      <div class="blog my-5">
-        <div class="content">
-          <img src="http://picsum.photos/255" alt="" />
-          <div class="body">
-            <h5>That Apple Eye-Pads Review, Once again</h5>
-            <p class="my-4">
-              <span class="author">Maria Bentley</span>
-              IN
-              <span class="category">Technology</span>
-            </p>
-            <small class="timestamp">Mon 28th Nov, 2018, 11:42 P.M.</small>
-          </div>
-        </div>
-        <div class="blog-actions">
-          <p v-ripple>Like</p>
-          <p v-ripple>Comment</p>
-          <p v-ripple>Share</p>
-        </div>
-      </div>
+        <section class="blog-actions">
+          <p v-ripple @click="like(blog.id)">Like</p>
+          <p v-ripple @click="comment(blog.id)">Comment</p>
+          <p v-ripple @click="share(blog.id)">Share</p>
+        </section>
+      </article>
     </section>
 
     <div class="text-center mt-12">
@@ -217,6 +160,48 @@ export default {
         // boilerplate: true,
         elevation: 2,
       },
+      blogs: [
+        {
+          id: 0,
+          title: 'Love your hair but suffering from Hair fall or hair damage?',
+          timestamp: 'Mon 13th Nov, 2018, 12:30 P.M.',
+          author: 'Jammie Johnson',
+          category: 'Beauty & Makeup',
+          image: 'https://picsum.photos/249',
+        },
+        {
+          id: 1,
+          title: 'That Great Apple iPhone Review',
+          timestamp: 'Mon 12th Nov, 2018, 01:30 P.M.',
+          author: 'Annie Parker',
+          category: 'Technology',
+          image: 'https://picsum.photos/251',
+        },
+        {
+          id: 2,
+          title: 'Now its easy to take care your underarms at home.',
+          timestamp: 'Mon 11th Nov, 2018, 6:41 P.M.',
+          author: 'Swiss Robinson',
+          category: 'Technology',
+          image: 'https://picsum.photos/252',
+        },
+        {
+          id: 3,
+          title: "Bath - Hot water or Cold water? Let's see!",
+          timestamp: 'Mon 13th Nov, 2018, 5:59 P.M.',
+          author: 'Irina Caperina',
+          category: 'Health',
+          image: 'https://picsum.photos/253',
+        },
+        {
+          id: 4,
+          title: 'That Great Apple Review',
+          timestamp: 'Mon 13th Nov, 2018, 6:30 P.M.',
+          author: 'Jammie Johnson',
+          category: 'Technology',
+          image: 'https://picsum.photos/254',
+        },
+      ],
     }
   },
   mounted() {
@@ -229,6 +214,15 @@ export default {
         // console.log(this.$store.state.authUser)
         await this.$router.push('/')
       } catch (e) {}
+    },
+    async like(blogId) {
+      await alert(`You've Liked Blog Number => ${blogId}`)
+    },
+    async comment(blogId) {
+      await alert(`You've commented on Blog Number => ${blogId}`)
+    },
+    async share(blogId) {
+      await alert(`You've shared Blog Number => ${blogId}`)
     },
   },
 }
