@@ -1,37 +1,23 @@
 <template>
   <div class="dashboard-page">
     <Carousel :carousel-items="carouselItems" />
-    <!--    <Carousel :loop="true">-->
-    <!--      <Slide-->
-    <!--        v-for="(item, index) in carouselItems"-->
-    <!--        :key="index"-->
-    <!--        class="item"-->
-    <!--        :style="{ backgroundColor: item.color, color: 'white' }"-->
-    <!--      >-->
-    <!--        <h3>{{ item.name }}</h3>-->
-    <!--      </Slide>-->
-    <!--        </Carousel>-->
-    <h3 class="text-center my-6">Browse by Categories</h3>
 
-    <CategoriesLineUp :categories="categories" class-list="my-4" />
-    <hr class="my-6" />
-
-    <h2 class="my-9 text-center">Explore Blogs</h2>
+    <h2 class="heading-title">Recent Blogs</h2>
 
     <section class="my-6 px-4">
       <article v-for="blog in blogs" :key="blog.id" class="blog my-5">
-        <div class="content">
-          <img :src="blog.image" :alt="blog.title" />
-          <div class="text-left">
-            <h5>{{ blog.title }}</h5>
-            <p class="my-4">
-              <span class="author">{{ blog.author }}</span>
-              IN
-              <span class="category">{{ blog.category }}</span>
-            </p>
-            <small class="timestamp">{{ blog.timestamp }}</small>
-          </div>
-        </div>
+        <p class="my-4">
+          <span class="author">{{ blog.author }}</span>
+          IN
+          <span class="category">{{ blog.category }}</span>
+        </p>
+        <h5>{{ blog.title }}</h5>
+        <small class="timestamp">{{ blog.timestamp }}</small>
+        <img :src="blog.image" :alt="blog.title" />
+        <p>
+          {{ blog.summary }}
+          <a href="#"> ...Read More </a>
+        </p>
         <section class="blog-actions">
           <RippleButton
             v-ripple
@@ -74,76 +60,27 @@ $blog-border-radius: 20px;
 .dashboard-page {
   transition: all 0.5s ease-in-out;
 
-  .blog {
-    background-color: lighten($card-background, 5%);
-    border-radius: $blog-border-radius;
-    padding-bottom: 1rem;
+  .heading-title {
+    text-align: center;
+    font-size: 28px;
+    position: relative;
+    margin: 2rem 0 3rem;
+    font-weight: 300;
 
-    .content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      grid-column-gap: $standard-space;
-
-      img {
-        height: 200px;
-        width: 100%;
-        object-fit: cover;
-        margin-bottom: 1rem;
-        border-top-left-radius: $blog-border-radius;
-        border-top-right-radius: $blog-border-radius;
-      }
-
-      div {
-        padding: 0.5rem 0.8rem;
-
-        span {
-          color: $secondary-highlight;
-        }
-
-        small {
-          font-family: $Nunito;
-        }
-      }
-    }
-
-    .blog-actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      text-align: center;
-      margin-top: 1rem;
-      padding: 0 0.3rem;
-
-      button {
-        min-width: auto;
-        border-radius: 0;
-
-        &:nth-child(1) {
-          border: none;
-        }
-
-        &:nth-child(2) {
-          border-top: none;
-          border-bottom: none;
-        }
-
-        &:nth-child(3) {
-          border: none;
-        }
-      }
-
-      //p {
-      //  height: 100%;
-      //}
+    &::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      width: 84px;
+      bottom: -$standard-space;
+      left: calc(50% - 42px);
+      background: lighten($primary, $lighten-percentage);
     }
   }
 }
 </style>
 
 <script>
-import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
 import RippleButton from '~/components/global/RippleButton'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
@@ -152,9 +89,8 @@ export default {
   components: {
     Carousel,
     RippleButton,
-    CategoriesLineUp,
   },
-  middleware: 'protectedRoute',
+  // middleware: 'protectedRoute',
   layout: 'MobileApp',
   data() {
     return {
@@ -215,6 +151,8 @@ export default {
           author: 'Jammie Johnson',
           category: 'Beauty & Makeup',
           image: 'https://picsum.photos/249',
+          summary:
+            'Explore hundreds of integrations for Ghost to speed up your workflow',
         },
         {
           id: 1,
@@ -223,6 +161,8 @@ export default {
           author: 'Annie Parker',
           category: 'Technology',
           image: 'https://picsum.photos/251',
+          summary:
+            'Explore hundreds of integrations for Ghost to speed up your workflow',
         },
         {
           id: 2,
@@ -231,6 +171,8 @@ export default {
           author: 'Swiss Robinson',
           category: 'Technology',
           image: 'https://picsum.photos/252',
+          summary:
+            'Explore hundreds of integrations for Ghost to speed up your workflow',
         },
         {
           id: 3,
@@ -239,6 +181,8 @@ export default {
           author: 'Irina Caperina',
           category: 'Health',
           image: 'https://picsum.photos/253',
+          summary:
+            'Explore hundreds of integrations for Ghost to speed up your workflow',
         },
         {
           id: 4,
@@ -247,6 +191,8 @@ export default {
           author: 'Jammie Johnson',
           category: 'Technology',
           image: 'https://picsum.photos/254',
+          summary:
+            'Explore hundreds of integrations for Ghost to speed up your workflow',
         },
       ],
     }
@@ -258,7 +204,6 @@ export default {
     async logout() {
       try {
         await this.$store.dispatch('logout')
-        // console.log(this.$store.state.authUser)
         await this.$router.push('/')
       } catch (e) {}
     },
