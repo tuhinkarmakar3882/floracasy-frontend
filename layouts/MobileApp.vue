@@ -1,8 +1,8 @@
 <template>
   <div class="app-layout">
-    <header class="px-3">
-      <h5><a class="brand-name" href="/"> Floracasy</a></h5>
-      <RippleButton class-list="primary-btn">Get Rewards</RippleButton>
+    <header>
+      <h6><a class="brand-name" href="/"> Floracasy</a></h6>
+      <img src="http://picsum.photos/100" alt="userIcon" />
     </header>
 
     <main>
@@ -24,11 +24,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'MobileApp',
-  components: { RippleButton },
   data() {
     return {
       drawer: false,
@@ -70,23 +68,46 @@ export default {
 @import 'assets/all-variables';
 
 $font-size: 18px;
-
+$nav-bar-bg: #0d0d17;
 .app-layout {
   header,
   footer {
     z-index: 100;
     position: fixed;
     left: 0;
-    background: #2c2c3b;
+    background: $nav-bar-bg;
     width: 100%;
     height: 64px;
   }
 
+  a {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    color: #cacaca;
+  }
+
   header {
     top: 0;
+    padding: 0 $medium-space;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    h6 {
+      font-size: 20px;
+
+      a {
+        text-decoration: none;
+        color: white;
+      }
+    }
+    img {
+      border-radius: 50%;
+      width: 40px;
+      object-fit: cover;
+    }
   }
 
   footer {
@@ -94,15 +115,6 @@ $font-size: 18px;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(5, 1fr);
-
-    a {
-      display: grid;
-      place-items: center;
-      text-align: center;
-      width: 100%;
-      height: 100%;
-      color: #cacaca;
-    }
 
     #activeNow {
       color: yellow;
