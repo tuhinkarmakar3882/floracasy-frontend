@@ -12,7 +12,7 @@
     <footer>
       <nuxt-link
         v-for="(menuOption, index) in menuOptions"
-        :id="index === activeLink ? 'activeNow' : ''"
+        :id="index === activeLink ? 'active-bottom-nav-link' : ''"
         :key="menuOption.id"
         :to="menuOption.route"
       >
@@ -80,13 +80,28 @@ $nav-bar-bg: #0d0d17;
     height: 64px;
   }
 
-  a {
+  footer {
+    bottom: 0;
     display: grid;
     place-items: center;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    color: #cacaca;
+    grid-template-columns: repeat(5, 1fr);
+
+    a {
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      color: $muted;
+      font-size: 14px;
+    }
+
+    #active-bottom-nav-link {
+      color: $secondary-highlight;
+    }
   }
 
   header {
@@ -107,17 +122,6 @@ $nav-bar-bg: #0d0d17;
       border-radius: 50%;
       width: 40px;
       object-fit: cover;
-    }
-  }
-
-  footer {
-    bottom: 0;
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(5, 1fr);
-
-    #activeNow {
-      color: yellow;
     }
   }
 
