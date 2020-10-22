@@ -1,39 +1,35 @@
 <template>
   <section class="my-6 scrollable-blog-list">
-    <article
-      v-for="blog in blogs"
-      :key="blog.id"
-      v-ripple="'rgba(255, 255, 255, .25)'"
-      class="blog px-4"
-    >
-      <p class="mb-2">
-        <span class="author">{{ blog.author }}</span>
-        IN
-        <span class="category">{{ blog.category }}</span>
-      </p>
+    <article v-for="blog in blogs" :key="blog.id" class="blog px-4">
+      <section v-ripple="'rgba(255, 255, 255, .25)'" class="content">
+        <p class="mb-2">
+          <span class="author">{{ blog.author }}</span>
+          IN
+          <span class="category">{{ blog.category }}</span>
+        </p>
 
-      <h5>{{ blog.title }}</h5>
+        <h5>{{ blog.title }}</h5>
 
-      <small class="timestamp mt-3">{{ blog.timestamp }}</small>
+        <small class="timestamp mt-3">{{ blog.timestamp }}</small>
 
-      <img class="my-5" :src="blog.image" :alt="blog.title" />
+        <img class="my-5" :src="blog.image" :alt="blog.title" />
 
-      <p>
-        {{ blog.summary }}...
-        <a href="#"> Read More </a>
-      </p>
-
+        <p>
+          {{ blog.summary }}...
+          <a href="#"> Read More </a>
+        </p>
+      </section>
       <section class="blog-actions mt-6">
-        <div class="like">
-          <span class="mdi mdi-heart-outline" />
+        <div v-ripple="'rgba(255, 255, 255, .25)'" class="like">
+          <i class="mdi mdi-heart-outline mr-2" />
           <span class="value">365</span>
         </div>
-        <div class="like">
-          <span class="mdi mdi-heart-outline" />
+        <div v-ripple="'rgba(255, 255, 255, .25)'" class="comment">
+          <i class="mdi mdi-message-text mr-2" />
           <span class="value">527</span>
         </div>
-        <div class="like">
-          <span class="mdi mdi-heart-outline" />
+        <div v-ripple="'rgba(255, 255, 255, .25)'" class="share">
+          <i class="mdi mdi-share-variant mr-2" />
           <span class="value">209</span>
         </div>
       </section>
@@ -147,12 +143,14 @@ export default {
 
 <style lang="scss">
 @import 'assets/all-variables';
+
 .scrollable-blog-list {
   article {
     .author,
     .category {
       color: $secondary-highlight;
     }
+
     img {
       width: 100%;
       object-fit: cover;
@@ -160,15 +158,29 @@ export default {
       box-shadow: $default-box-shadow;
       border-radius: $double-space;
     }
+
     .blog-actions {
       font-family: $Nunito-Sans;
-      color: $secondary-highlight;
-      font-size: 1rem;
+      color: $secondary;
+      font-size: 1.3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .value {
-        color: $body-text-default;
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        * {
+          display: block;
+        }
+
+        .value {
+          height: 100%;
+          color: $muted;
+          font-size: 1rem;
+        }
       }
     }
   }
