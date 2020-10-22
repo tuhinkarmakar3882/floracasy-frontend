@@ -18,12 +18,12 @@
         :to="menuOption.route"
       >
         <span
-          :class="`mdi ${menuOption.icon} icon`"
-          :style="index === activeLink ? 'font-size: 24px' : 'font-size: 16px'"
-          style="transition: all 0.2s linear"
+          :class="`mdi ${menuOption.icon}`"
+          :style="index === activeLink ? 'font-size: 24px;' : 'font-size: 24px'"
+          style="transition: all 0.2s linear; margin-bottom: -3px"
         />
         <small
-          :style="index === activeLink ? 'font-size: 14px' : 'font-size: 0'"
+          :style="index === activeLink ? 'font-size: 16px;' : 'font-size: 16px'"
           style="transition: all 0.2s linear"
         >
           {{ menuOption.text }}
@@ -78,8 +78,6 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$font-size: 18px;
-
 .app-layout {
   header,
   footer {
@@ -88,10 +86,10 @@ $font-size: 18px;
     left: 0;
     background: $nav-bar-bg;
     width: 100%;
-    height: 64px;
   }
 
   footer {
+    height: 64px;
     bottom: 0;
     display: grid;
     place-items: center;
@@ -109,15 +107,13 @@ $font-size: 18px;
       color: $muted;
     }
 
-    .icon {
-      font-size: 1.6rem !important;
-    }
     #active-bottom-nav-link {
       color: $secondary-highlight;
     }
   }
 
   header {
+    height: 52px;
     top: 0;
     padding: 0 $medium-space;
     display: flex;
