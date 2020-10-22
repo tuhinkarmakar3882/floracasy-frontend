@@ -3,11 +3,12 @@
 }
 
 .page-enter-active, .page-leave-active {
-  transition: opacity .5s cubic-bezier(.55, 0, .1, 1);
+  transition: all .5s cubic-bezier(.55, 0, .1, 1);
 }
 
 .page-enter, .page-leave-active {
-  opacity: 0
+  opacity: 0;
+  transform: translateX(15px);
 }
 
 .gray-shift-enter-active, .gray-shift-leave-active {
