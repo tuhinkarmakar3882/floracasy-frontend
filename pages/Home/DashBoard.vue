@@ -102,11 +102,6 @@ export default {
           image: 'http://picsum.photos/500',
         },
       ],
-      attrs: {
-        class: 'mb-6',
-        // boilerplate: true,
-        elevation: 2,
-      },
     }
   },
   mounted() {

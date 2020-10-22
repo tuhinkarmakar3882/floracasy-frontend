@@ -14,9 +14,20 @@
         v-for="(menuOption, index) in menuOptions"
         :id="index === activeLink ? 'active-bottom-nav-link' : ''"
         :key="menuOption.id"
+        v-ripple="'rgba(255, 255, 255, .2)'"
         :to="menuOption.route"
       >
-        {{ menuOption.text }}
+        <span
+          :class="`mdi ${menuOption.icon}`"
+          :style="index === activeLink ? 'font-size: 24px' : 'font-size: 16px'"
+          style="transition: all 0.2s linear"
+        />
+        <small
+          :style="index === activeLink ? 'font-size: 14px' : 'font-size: 0'"
+          style="transition: all 0.2s linear"
+        >
+          {{ menuOption.text }}
+        </small>
       </nuxt-link>
     </footer>
   </div>

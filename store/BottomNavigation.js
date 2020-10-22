@@ -24,7 +24,7 @@ export const state = () => ({
     {
       id: 2,
       text: 'Notification',
-      icon: 'mdi-bell',
+      icon: 'mdi-bell-outline',
       color: '#6360f8',
       route: '/Home/Notifications',
     },
