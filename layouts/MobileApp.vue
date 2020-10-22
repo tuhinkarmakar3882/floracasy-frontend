@@ -79,7 +79,7 @@ export default {
 @import 'assets/all-variables';
 
 $font-size: 18px;
-$nav-bar-bg: #0d0d17;
+
 .app-layout {
   header,
   footer {

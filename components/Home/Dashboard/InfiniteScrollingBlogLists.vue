@@ -1,6 +1,6 @@
 <template>
-  <section class="my-6 scrollable-blog-list">
-    <article v-for="blog in blogs" :key="blog.id" class="blog px-4">
+  <div class="my-6 scrollable-blog-list">
+    <article v-for="blog in blogs" :key="blog.id" class="blog px-4 py-8">
       <section v-ripple="'rgba(255, 255, 255, .25)'" class="content">
         <p class="mb-2">
           <span class="author">{{ blog.author }}</span>
@@ -33,7 +33,7 @@
           <span class="value">209</span>
         </div>
       </section>
-      <hr class="my-8" />
+      <!--      <hr class="my-8" />-->
       <!--        <RippleButton-->
       <!--          v-ripple-->
       <!--          class-list="success-outlined-btn"-->
@@ -57,7 +57,7 @@
       <!--        </RippleButton>-->
       <!--      </section>-->
     </article>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -168,6 +168,7 @@ export default {
       align-items: center;
 
       div {
+        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -182,6 +183,10 @@ export default {
           font-size: 1rem;
         }
       }
+    }
+
+    &:nth-child(even) {
+      background: $nav-bar-bg;
     }
   }
 }
