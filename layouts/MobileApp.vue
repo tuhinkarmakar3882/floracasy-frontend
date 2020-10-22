@@ -18,7 +18,9 @@
         :to="menuOption.route"
       >
         <span
-          :class="`mdi ${menuOption.icon}`"
+          :class="`mdi ${menuOption.icon}${
+            index !== activeLink ? '-outline' : ''
+          }`"
           :style="index === activeLink ? 'font-size: 24px;' : 'font-size: 24px'"
           style="transition: all 0.2s linear; margin-bottom: -3px"
         />
@@ -89,7 +91,7 @@ export default {
   }
 
   footer {
-    height: 64px;
+    height: 2 * $xx-large-space;
     bottom: 0;
     display: grid;
     place-items: center;
@@ -113,7 +115,7 @@ export default {
   }
 
   header {
-    height: 52px;
+    height: 2 * $x-large-space;
     top: 0;
     padding: 0 $medium-space;
     display: flex;
