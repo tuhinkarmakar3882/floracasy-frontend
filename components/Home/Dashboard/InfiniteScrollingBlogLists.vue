@@ -1,7 +1,7 @@
 <template>
   <div class="my-6 scrollable-blog-list">
     <article v-for="blog in blogs" :key="blog.id">
-      <section v-ripple class="content px-4 pt-8">
+      <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
           <nuxt-link to="/Home/Account/Details" class="no-underline">
             {{ blog.author }}
@@ -24,7 +24,7 @@
         </p>
       </section>
 
-      <section class="blog-actions pt-6 px-4 pb-8">
+      <section class="blog-actions px-4 pb-8">
         <div v-ripple class="like" @click="like(blog)">
           <i class="mdi mdi-heart-outline mr-2 inline-block align-middle" />
           <span class="value inline-block align-middle">365</span>
@@ -103,17 +103,17 @@ export default {
   },
   methods: {
     like(blog) {
-      alert(
+      console.log(
         `Wow, I'm amazed to see that you are trying to like ${blog.title}. But, the developer is too lazy to implement that feature. Should we fire this developer?`
       )
     },
     comment(blog) {
-      alert(
+      console.log(
         `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
       )
     },
     share(blog) {
-      alert(
+      console.log(
         `Duh? And Now Share??? Like Seriously? Google is not going to pay us. Anyways, here is a consolidation line : You're sharing ${blog.title}`
       )
     },
@@ -151,7 +151,7 @@ export default {
       div {
         display: flex;
         justify-content: center;
-        height: 2 * $xx-large-space;
+        height: 2 * $large-space;
         width: 100%;
         align-items: center;
 

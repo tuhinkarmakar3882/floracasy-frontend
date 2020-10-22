@@ -18,7 +18,7 @@
         :to="menuOption.route"
       >
         <span
-          :class="`mdi ${menuOption.icon}`"
+          :class="`mdi ${menuOption.icon} icon`"
           :style="index === activeLink ? 'font-size: 24px' : 'font-size: 16px'"
           style="transition: all 0.2s linear"
         />
@@ -107,9 +107,11 @@ $font-size: 18px;
       width: 100%;
       height: 100%;
       color: $muted;
-      font-size: 14px;
     }
 
+    .icon {
+      font-size: 1.6rem !important;
+    }
     #active-bottom-nav-link {
       color: $secondary-highlight;
     }
@@ -121,6 +123,7 @@ $font-size: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     h6 {
       font-size: 20px;
 
@@ -129,6 +132,7 @@ $font-size: 18px;
         color: white;
       }
     }
+
     img {
       border-radius: 50%;
       width: 40px;
