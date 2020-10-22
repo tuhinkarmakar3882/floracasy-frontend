@@ -136,6 +136,10 @@ export default {
         box-shadow: $default-box-shadow;
         border-radius: $double-space;
       }
+
+      small {
+        color: $muted;
+      }
     }
 
     .blog-actions {
