@@ -1,30 +1,28 @@
 <template>
   <div class="my-6 scrollable-blog-list">
     <article v-for="blog in blogs" :key="blog.id">
-      <nuxt-link to="" class="no-underline">
-        <section v-ripple class="content px-4 pt-8">
-          <p class="mb-2">
-            <nuxt-link to="/Home/Account/Details" class="no-underline">
-              {{ blog.author }}
-            </nuxt-link>
-            IN
-            <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
-              {{ blog.category }}
-            </nuxt-link>
-          </p>
+      <section v-ripple class="content px-4 pt-8">
+        <p class="mb-2">
+          <nuxt-link to="/Home/Account/Details" class="no-underline">
+            {{ blog.author }}
+          </nuxt-link>
+          IN
+          <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
+            {{ blog.category }}
+          </nuxt-link>
+        </p>
 
-          <h5>{{ blog.title }}</h5>
+        <h5>{{ blog.title }}</h5>
 
-          <small class="timestamp mt-3">{{ blog.timestamp }}</small>
+        <small class="timestamp mt-3">{{ blog.timestamp }}</small>
 
-          <img class="my-5" :src="blog.image" :alt="blog.title" />
+        <img class="my-5" :src="blog.image" :alt="blog.title" />
 
-          <p>
-            {{ blog.summary }}...
-            <a href="#"> Read More </a>
-          </p>
-        </section>
-      </nuxt-link>
+        <p>
+          {{ blog.summary }}...
+          <a href="#"> Read More </a>
+        </p>
+      </section>
 
       <section class="blog-actions pt-6 px-4 pb-8">
         <div v-ripple class="like" @click="like(blog)">
