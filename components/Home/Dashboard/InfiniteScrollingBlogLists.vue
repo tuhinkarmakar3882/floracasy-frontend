@@ -23,8 +23,21 @@
         <a href="#"> Read More </a>
       </p>
 
+      <section class="blog-actions mt-6">
+        <div class="like">
+          <span class="mdi mdi-heart-outline" />
+          <span class="value">365</span>
+        </div>
+        <div class="like">
+          <span class="mdi mdi-heart-outline" />
+          <span class="value">527</span>
+        </div>
+        <div class="like">
+          <span class="mdi mdi-heart-outline" />
+          <span class="value">209</span>
+        </div>
+      </section>
       <hr class="my-8" />
-      <!--      <section class="blog-actions">-->
       <!--        <RippleButton-->
       <!--          v-ripple-->
       <!--          class-list="success-outlined-btn"-->
@@ -146,6 +159,17 @@ export default {
       height: 155px;
       box-shadow: $default-box-shadow;
       border-radius: $double-space;
+    }
+    .blog-actions {
+      font-family: $Nunito-Sans;
+      color: $secondary-highlight;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .value {
+        color: $body-text-default;
+      }
     }
   }
 }
