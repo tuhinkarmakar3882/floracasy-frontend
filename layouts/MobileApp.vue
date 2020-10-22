@@ -83,7 +83,7 @@ $nav-bar-bg: #0d0d17;
 .app-layout {
   header,
   footer {
-    z-index: 100;
+    z-index: $bring-to-front;
     position: fixed;
     left: 0;
     background: $nav-bar-bg;
