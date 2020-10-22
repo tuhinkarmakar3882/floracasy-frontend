@@ -1,70 +1,52 @@
 <template>
   <div class="my-6 scrollable-blog-list">
-    <article v-for="blog in blogs" :key="blog.id" class="blog px-4 py-8">
-      <section v-ripple="'rgba(255, 255, 255, .25)'" class="content">
-        <p class="mb-2">
-          <span class="author">{{ blog.author }}</span>
-          IN
-          <span class="category">{{ blog.category }}</span>
-        </p>
+    <article v-for="blog in blogs" :key="blog.id">
+      <nuxt-link to="" class="no-underline">
+        <section v-ripple class="content px-4 pt-8">
+          <p class="mb-2">
+            <nuxt-link to="/Home/Account/Details" class="no-underline">
+              {{ blog.author }}
+            </nuxt-link>
+            IN
+            <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
+              {{ blog.category }}
+            </nuxt-link>
+          </p>
 
-        <h5>{{ blog.title }}</h5>
+          <h5>{{ blog.title }}</h5>
 
-        <small class="timestamp mt-3">{{ blog.timestamp }}</small>
+          <small class="timestamp mt-3">{{ blog.timestamp }}</small>
 
-        <img class="my-5" :src="blog.image" :alt="blog.title" />
+          <img class="my-5" :src="blog.image" :alt="blog.title" />
 
-        <p>
-          {{ blog.summary }}...
-          <a href="#"> Read More </a>
-        </p>
+          <p>
+            {{ blog.summary }}...
+            <a href="#"> Read More </a>
+          </p>
+        </section>
+      </nuxt-link>
+
+      <section class="blog-actions pt-6 px-4 pb-8">
+        <div v-ripple class="like" @click="like(blog)">
+          <i class="mdi mdi-heart-outline mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">365</span>
+        </div>
+        <div v-ripple class="comment" @click="comment(blog)">
+          <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">527</span>
+        </div>
+        <div v-ripple class="share" @click="share(blog)">
+          <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">209</span>
+        </div>
       </section>
-      <section class="blog-actions mt-6">
-        <div v-ripple="'rgba(255, 255, 255, .25)'" class="like">
-          <i class="mdi mdi-heart-outline mr-2" />
-          <span class="value">365</span>
-        </div>
-        <div v-ripple="'rgba(255, 255, 255, .25)'" class="comment">
-          <i class="mdi mdi-message-text mr-2" />
-          <span class="value">527</span>
-        </div>
-        <div v-ripple="'rgba(255, 255, 255, .25)'" class="share">
-          <i class="mdi mdi-share-variant mr-2" />
-          <span class="value">209</span>
-        </div>
-      </section>
-      <!--      <hr class="my-8" />-->
-      <!--        <RippleButton-->
-      <!--          v-ripple-->
-      <!--          class-list="success-outlined-btn"-->
-      <!--          :on-click="like.bind(null, blog)"-->
-      <!--        >-->
-      <!--          Like-->
-      <!--        </RippleButton>-->
-      <!--        <RippleButton-->
-      <!--          v-ripple-->
-      <!--          class-list="success-outlined-btn"-->
-      <!--          :on-click="comment.bind(null, blog)"-->
-      <!--        >-->
-      <!--          Comment-->
-      <!--        </RippleButton>-->
-      <!--        <RippleButton-->
-      <!--          v-ripple-->
-      <!--          class-list="success-outlined-btn"-->
-      <!--          :on-click="share.bind(null, blog)"-->
-      <!--        >-->
-      <!--          Share-->
-      <!--        </RippleButton>-->
-      <!--      </section>-->
     </article>
   </div>
 </template>
 
 <script>
-// import RippleButton from '@/components/global/RippleButton'
 export default {
   name: 'InfiniteScrollingBlogLists',
-  // components: { RippleButton },
   data() {
     return {
       blogs: [
@@ -141,22 +123,19 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'assets/all-variables';
 
 .scrollable-blog-list {
   article {
-    .author,
-    .category {
-      color: $secondary-highlight;
-    }
-
-    img {
-      width: 100%;
-      object-fit: cover;
-      height: 155px;
-      box-shadow: $default-box-shadow;
-      border-radius: $double-space;
+    .content {
+      img {
+        width: 100%;
+        object-fit: cover;
+        height: 155px;
+        box-shadow: $default-box-shadow;
+        border-radius: $double-space;
+      }
     }
 
     .blog-actions {
@@ -168,17 +147,13 @@ export default {
       align-items: center;
 
       div {
-        width: 100%;
         display: flex;
         justify-content: center;
+        height: 2 * $xx-large-space;
+        width: 100%;
         align-items: center;
 
-        * {
-          display: block;
-        }
-
         .value {
-          height: 100%;
           color: $muted;
           font-size: 1rem;
         }
@@ -187,6 +162,7 @@ export default {
 
     &:nth-child(even) {
       background: $nav-bar-bg;
+      box-shadow: $default-box-shadow;
     }
   }
 }

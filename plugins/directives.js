@@ -68,7 +68,7 @@ const Ripple = {
       rippler(event, el, binding.value)
     })
 
-    const bg = binding.value || Ripple.color || 'rgba(0, 0, 0, 0.35)'
+    const bg = binding.value || Ripple.color || 'rgba(255, 255, 255, 0.25)'
     const zIndex = Ripple.zIndex || '9999'
 
     function rippler(event, el) {
