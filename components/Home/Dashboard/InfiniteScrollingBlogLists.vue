@@ -65,7 +65,7 @@ export default {
   },
   data() {
     return {
-      dataLoading: true,
+      dataLoading: false,
       blogs: [
         {
           id: 0,
