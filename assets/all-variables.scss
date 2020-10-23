@@ -28,6 +28,10 @@ $darken-percentage: 5%;
 
 $bring-to-front: 100000;
 $bring-to-background: -1;
-$bring-to-zero-level: 0;
+$bring-to-zero-level: $zero-unit;
 
-$default-box-shadow: 0 0 $nano-space rgba($card-background, 1);
+$default-box-shadow: $zero-unit $zero-unit $nano-unit rgba($nav-bar-bg, 1);
+$down-only-box-shadow: $zero-unit $double-unit $nano-unit rgba($nav-bar-bg, 1);
+$up-only-box-shadow: $zero-unit (-$double-unit) $nano-unit rgba($nav-bar-bg, 1);
+$left-only-box-shadow: (-$double-unit) $zero-unit $nano-unit rgba($nav-bar-bg, 1);
+$right-only-box-shadow: $double-unit $zero-unit $nano-unit rgba($nav-bar-bg, 1);
