@@ -1,11 +1,7 @@
 <template>
   <div class="my-6 scrollable-blog-list">
     <article v-for="blog in blogs" :key="blog.id">
-      <section
-        v-ripple
-        class="content px-4 pt-8 pb-6"
-        @click="navigateTo(`/Home/Blogs/${blog.id}`)"
-      >
+      <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
           <nuxt-link to="/Home/Account/Details" class="no-underline">
             {{ blog.author }}
@@ -16,15 +12,20 @@
           </nuxt-link>
         </p>
 
-        <h5>{{ blog.title }}</h5>
+        <h5 @click="navigateTo(`/Home/Blogs/${blog.id}`)">{{ blog.title }}</h5>
 
         <small class="timestamp mt-3">{{ blog.timestamp }}</small>
 
-        <img class="my-5" :src="blog.image" :alt="blog.title" />
+        <img
+          class="my-5"
+          :src="blog.image"
+          :alt="blog.title"
+          @click="navigateTo(`/Home/Blogs/${blog.id}`)"
+        />
 
         <p>
           {{ blog.summary }}...
-          <a href="#"> Read More </a>
+          <nuxt-link :to="`/Home/Blogs/${blog.id}`"> Read More </nuxt-link>
         </p>
       </section>
 
