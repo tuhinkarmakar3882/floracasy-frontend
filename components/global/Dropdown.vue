@@ -3,14 +3,7 @@
     <div @click="toggle">
       <slot name="custom-head"></slot>
     </div>
-    <ul
-      v-if="isDropDownOpen"
-      :style="
-        isDropDownOpen
-          ? `height: auto; overflow: scroll`
-          : `height:0; overflow: hidden`
-      "
-    >
+    <ul v-if="isDropDownOpen">
       <slot name="options"></slot>
     </ul>
   </div>
@@ -19,6 +12,24 @@
 <script>
 export default {
   name: 'Dropdown',
+  props: {
+    top: {
+      type: Boolean,
+      default: false,
+    },
+    left: {
+      type: Boolean,
+      default: false,
+    },
+    bottom: {
+      type: Boolean,
+      default: true,
+    },
+    right: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       isDropDownOpen: false,
@@ -47,7 +58,7 @@ export default {
 
   ul {
     min-width: 200px;
-    background: lighten($nav-bar-bg, $darken-percentage);
+    background: lighten($nav-bar-bg, $lighten-percentage);
     position: absolute;
     list-style: none;
     overflow: hidden;
@@ -66,7 +77,7 @@ export default {
       min-height: $xx-large-space;
       width: 100%;
       padding: $standard-space 0;
-      border-bottom: 1px solid red;
+      border-bottom: 1px solid $card-background;
 
       &:last-child {
         border-bottom: none;
