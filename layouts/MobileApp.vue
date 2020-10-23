@@ -21,9 +21,13 @@
           :class="`mdi ${menuOption.icon}${
             index !== activeLink ? '-outline' : ''
           }`"
-          style="transition: all 0.2s linear; margin-bottom: 0; font-size: 21px"
+          style="
+            transition: all 0.2s linear;
+            margin-bottom: -2px;
+            font-size: 22px;
+          "
         />
-        <small style="transition: all 0.2s linear; font-size: 13px">
+        <small style="transition: all 0.2s linear; font-size: 12.3px">
           {{ menuOption.text }}
         </small>
       </nuxt-link>
@@ -82,12 +86,12 @@ export default {
     z-index: $bring-to-front;
     position: fixed;
     left: 0;
-    background: $nav-bar-bg;
+    background: lighten($nav-bar-bg, 10%);
     width: 100%;
   }
 
   footer {
-    height: 2 * $xx-large-space;
+    height: 2 * $x-large-space;
     bottom: 0;
     display: grid;
     place-items: center;
