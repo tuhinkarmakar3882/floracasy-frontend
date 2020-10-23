@@ -2,16 +2,9 @@
   <div class="app-layout">
     <header>
       <h6><a class="brand-name" href="/"> Floracasy</a></h6>
-      <Dropdown>
-        <template v-slot:custom-head>
-          <img src="http://picsum.photos/100" alt="userIcon" />
-        </template>
-        <template v-slot:options>
-          <li v-ripple>View Profile</li>
-          <li v-ripple>Help & Support</li>
-          <li v-ripple class="danger-light" @click="logout">Logout</li>
-        </template>
-      </Dropdown>
+      <nuxt-link to="/Home/Messages">
+        <h5 class="mdi mdi-message-text" />
+      </nuxt-link>
     </header>
 
     <main>
@@ -46,11 +39,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Dropdown from '@/components/global/Dropdown'
 
 export default {
   name: 'MobileApp',
-  components: { Dropdown },
+  components: {},
   data() {
     return {
       drawer: false,
@@ -140,12 +132,6 @@ export default {
         text-decoration: none;
         color: white;
       }
-    }
-
-    img {
-      border-radius: 50%;
-      width: 40px;
-      object-fit: cover;
     }
   }
 
