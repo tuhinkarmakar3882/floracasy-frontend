@@ -21,13 +21,9 @@
           :class="`mdi ${menuOption.icon}${
             index !== activeLink ? '-outline' : ''
           }`"
-          :style="index === activeLink ? 'font-size: 24px;' : 'font-size: 24px'"
-          style="transition: all 0.2s linear; margin-bottom: -3px"
+          style="transition: all 0.2s linear; margin-bottom: 0; font-size: 21px"
         />
-        <small
-          :style="index === activeLink ? 'font-size: 16px;' : 'font-size: 16px'"
-          style="transition: all 0.2s linear"
-        >
+        <small style="transition: all 0.2s linear; font-size: 13px">
           {{ menuOption.text }}
         </small>
       </nuxt-link>
