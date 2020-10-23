@@ -58,7 +58,6 @@ body {
 
 .heading-title {
   text-align: center;
-  font-size: 28px;
   position: relative;
   margin: 2rem 0 3rem;
   font-weight: 300;
@@ -68,7 +67,7 @@ body {
     position: absolute;
     height: 1px;
     width: 84px;
-    bottom: -$standard-unit;
+    bottom: (-$micro-unit);
     left: calc(50% - 42px);
     background: lighten($primary, $lighten-percentage);
   }

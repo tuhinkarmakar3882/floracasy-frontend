@@ -23,8 +23,7 @@
       </section>
 
       <section class="other-info">
-        <h3>About</h3>
-        <p class="about">
+        <p class="about text-center">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
           asperiores assumenda blanditiis
         </p>
@@ -37,7 +36,7 @@
     </section>
 
     <section class="recent-activity">
-      <h3 class="heading">Recent Activities</h3>
+      <h4 class="heading-title">Recent Activities</h4>
 
       <div v-for="blog in blogs" :key="blog.id" class="blog my-8">
         <div class="content">

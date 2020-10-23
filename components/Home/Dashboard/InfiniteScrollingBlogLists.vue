@@ -18,7 +18,10 @@
 
         <h5 @click="navigateTo(`/Home/Blogs/${blog.id}`)">{{ blog.title }}</h5>
 
-        <small class="timestamp mt-3">{{ blog.timestamp }}</small>
+        <small class="timestamp mt-3">
+          <span class="mdi mdi-clock-time-nine-outline" />
+          {{ blog.timestamp }}
+        </small>
 
         <img
           class="my-5"
