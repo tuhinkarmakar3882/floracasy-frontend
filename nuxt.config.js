@@ -3,7 +3,7 @@ import session from 'cookie-session'
 
 const milliseconds = 1000
 const hours = 1
-const minutes = 1
+const minutes = 5
 const seconds = 30
 
 export default {

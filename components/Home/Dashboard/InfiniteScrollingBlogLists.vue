@@ -1,7 +1,11 @@
 <template>
   <div class="my-6 scrollable-blog-list">
     <article v-for="blog in blogs" :key="blog.id">
-      <section v-ripple class="content px-4 pt-8 pb-6">
+      <section
+        v-ripple
+        class="content px-4 pt-8 pb-6"
+        @click="navigateTo(`/Home/Blogs/${blog.id}`)"
+      >
         <p class="mb-2">
           <nuxt-link to="/Home/Account/Details" class="no-underline">
             {{ blog.author }}
@@ -102,6 +106,9 @@ export default {
     }
   },
   methods: {
+    navigateTo(path) {
+      this.$router.push(path)
+    },
     like(blog) {
       console.log(
         `Wow, I'm amazed to see that you are trying to like ${blog.title}. But, the developer is too lazy to implement that feature. Should we fire this developer?`
