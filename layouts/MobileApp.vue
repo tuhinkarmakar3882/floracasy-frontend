@@ -2,7 +2,16 @@
   <div class="app-layout">
     <header>
       <h6><a class="brand-name" href="/"> Floracasy</a></h6>
-      <img src="http://picsum.photos/100" alt="userIcon" />
+      <Dropdown>
+        <template v-slot:custom-head>
+          <img src="http://picsum.photos/100" alt="userIcon" />
+        </template>
+        <template v-slot:options>
+          <li v-ripple>View Profile</li>
+          <li v-ripple>Help & Support</li>
+          <li v-ripple class="danger-light" @click="logout">Logout</li>
+        </template>
+      </Dropdown>
     </header>
 
     <main>
@@ -37,9 +46,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Dropdown from '@/components/global/Dropdown'
 
 export default {
   name: 'MobileApp',
+  components: { Dropdown },
   data() {
     return {
       drawer: false,
@@ -69,7 +80,6 @@ export default {
     async logout() {
       try {
         await this.$store.dispatch('logout')
-        // console.log(this.$store.state.authUser)
         await this.$router.push('/')
       } catch (e) {}
     },
@@ -140,7 +150,7 @@ export default {
   }
 
   main {
-    padding: 64px 0;
+    padding: 2 * $x-large-space 0;
   }
 }
 </style>

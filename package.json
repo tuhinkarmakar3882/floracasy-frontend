@@ -8,9 +8,10 @@
     "start": "nuxt-ts build --modern && nuxt-ts start --modern",
     "generate": "nuxt-ts generate",
     "pm2": "nuxt-ts build && pm2 start ecosystem.config.js",
-    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint:style": "stylelint '**/*.scss' --config ./stylelint.config.js",
-    "lint": "yarn lint:js --fix && yarn lint:style --fix",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
+    "lint:style-scss": "stylelint '**/*.scss' --config ./stylelint.config.js --fix",
+    "lint:style-vue": "stylelint '**/*.vue' --config ./stylelint.config.js --fix",
+    "lint": "yarn lint:js && yarn lint:style-vue && yarn lint:style-scss",
     "test": "jest"
   },
   "dependencies": {

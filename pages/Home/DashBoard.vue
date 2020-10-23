@@ -5,12 +5,6 @@
     <h2 class="heading-title">Recent Blogs</h2>
 
     <InfiniteScrollingBlogLists />
-
-    <div class="text-center mt-12">
-      <RippleButton class-list="danger-outlined-btn" :on-click="logout">
-        Logout
-      </RippleButton>
-    </div>
   </div>
 </template>
 
@@ -44,7 +38,6 @@ $blog-border-radius: 20px;
 
 <script>
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
-import RippleButton from '~/components/global/RippleButton'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {
@@ -52,7 +45,6 @@ export default {
   components: {
     InfiniteScrollingBlogLists,
     Carousel,
-    RippleButton,
   },
   // middleware: 'protectedRoute',
   layout: 'MobileApp',
@@ -106,14 +98,6 @@ export default {
   },
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
-  },
-  methods: {
-    async logout() {
-      try {
-        await this.$store.dispatch('logout')
-        await this.$router.push('/')
-      } catch (e) {}
-    },
   },
 }
 </script>
