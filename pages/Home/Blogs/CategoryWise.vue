@@ -12,7 +12,7 @@ export default {
   layout: 'MobileApp',
   middleware: 'protectedRoute',
   mounted() {
-    this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
+    this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
   },
 }
 </script>
