@@ -86,8 +86,9 @@ export default {
     z-index: $bring-to-front;
     position: fixed;
     left: 0;
-    background: lighten($nav-bar-bg, 10%);
+    background: $nav-bar-bg;
     width: 100%;
+    box-shadow: $default-box-shadow;
   }
 
   footer {
