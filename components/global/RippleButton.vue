@@ -50,10 +50,10 @@ export default {
 .loading-animation {
   margin: auto;
   display: block;
-  height: $x-large-space !important;
-  width: $x-large-space !important;
-  border: $nano-space solid darken($muted, 10%);
-  border-top: $nano-space solid $secondary-matte;
+  height: $x-large-unit !important;
+  width: $x-large-unit !important;
+  border: $nano-unit solid darken($muted, 10%);
+  border-top: $nano-unit solid $secondary-matte;
   border-radius: 100%;
   animation: spin 1.5s linear infinite;
 

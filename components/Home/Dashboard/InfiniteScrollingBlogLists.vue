@@ -1,6 +1,10 @@
 <template>
   <div class="my-6 scrollable-blog-list">
-    <article v-for="blog in blogs" :key="blog.id">
+    <h2 class="heading-title">{{ mode }} Blogs</h2>
+
+    <LoadingIcon v-if="dataLoading" />
+
+    <article v-for="blog in blogs" v-else :key="blog.id">
       <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
           <nuxt-link to="/Home/Account/Details" class="no-underline">
@@ -25,7 +29,7 @@
 
         <p>
           {{ blog.summary }}...
-          <nuxt-link :to="`/Home/Blogs/${blog.id}`"> Read More </nuxt-link>
+          <nuxt-link :to="`/Home/Blogs/${blog.id}`"> Read More</nuxt-link>
         </p>
       </section>
 
@@ -48,10 +52,20 @@
 </template>
 
 <script>
+import LoadingIcon from '@/components/LoadingIcon'
+
 export default {
   name: 'InfiniteScrollingBlogLists',
+  components: { LoadingIcon },
+  props: {
+    mode: {
+      type: String,
+      default: 'All',
+    },
+  },
   data() {
     return {
+      dataLoading: true,
       blogs: [
         {
           id: 0,
@@ -106,6 +120,17 @@ export default {
       ],
     }
   },
+  watch: {
+    mode: {
+      handler() {
+        this.dataLoading = true
+        setTimeout(() => {
+          this.dataLoading = false
+        }, 5000)
+      },
+      deep: true,
+    },
+  },
   methods: {
     navigateTo(path) {
       this.$router.push(path)
@@ -133,6 +158,8 @@ export default {
 @import 'assets/all-variables';
 
 .scrollable-blog-list {
+  min-height: calc(100vh - 220px);
+
   article {
     .content {
       img {
@@ -140,7 +167,7 @@ export default {
         object-fit: cover;
         height: 155px;
         box-shadow: $default-box-shadow;
-        border-radius: $double-space;
+        border-radius: $double-unit;
       }
 
       small {
@@ -159,7 +186,7 @@ export default {
       div {
         display: flex;
         justify-content: center;
-        height: 2 * $large-space;
+        height: 2 * $large-unit;
         width: 100%;
         align-items: center;
 

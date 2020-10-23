@@ -65,18 +65,18 @@ export default {
     transform: translateY(100%);
     transition: all 0.3s ease-in-out;
     width: 100%;
-    bottom: -$micro-space;
+    bottom: -$micro-unit;
     right: 0;
     z-index: 1;
-    border-radius: $nano-space;
+    border-radius: $nano-unit;
     box-shadow: $default-box-shadow;
 
     li {
       display: inline-grid;
       margin: 0;
-      min-height: $xx-large-space;
+      min-height: $xx-large-unit;
       width: 100%;
-      padding: $standard-space 0;
+      padding: $standard-unit 0;
       border-bottom: 1px solid $card-background;
 
       &:last-child {

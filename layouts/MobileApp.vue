@@ -90,11 +90,11 @@ export default {
     left: 0;
     background: $nav-bar-bg;
     width: 100%;
-    box-shadow: $default-box-shadow;
+    height: 2 * $x-large-unit;
   }
 
   footer {
-    height: 2 * $x-large-space;
+    box-shadow: $up-only-box-shadow;
     bottom: 0;
     display: grid;
     place-items: center;
@@ -118,9 +118,9 @@ export default {
   }
 
   header {
-    height: 2 * $x-large-space;
+    box-shadow: $down-only-box-shadow;
     top: 0;
-    padding: 0 $medium-space;
+    padding: 0 $medium-unit;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -136,7 +136,7 @@ export default {
   }
 
   main {
-    padding: 2 * $x-large-space 0;
+    padding: 2 * $x-large-unit 0;
   }
 }
 </style>

@@ -115,12 +115,12 @@ export default {
       grid-column-gap: 32px;
       grid-row-gap: 32px;
     }
-    @media only screen and (min-width: $medium-space) {
+    @media only screen and (min-width: $medium-unit) {
       grid-template-columns: repeat(4, 1fr);
       grid-column-gap: 36px;
       grid-row-gap: 36px;
     }
-    @media only screen and (min-width: $large-space) {
+    @media only screen and (min-width: $large-unit) {
       grid-template-columns: repeat(5, 1fr);
       grid-column-gap: 36px;
       grid-row-gap: 36px;
