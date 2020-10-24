@@ -137,7 +137,6 @@ export default {
   },
   methods: {
     changeTab(newTabNumber) {
-      console.log(`changing to => ${newTabNumber}`)
       this.tabNumber = newTabNumber
       this.$nextTick(() => {
         this.$refs.tabNavigation.scrollTop = 0

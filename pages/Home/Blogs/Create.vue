@@ -1,7 +1,38 @@
 <template>
-  <div class="create-blog-page">
+  <div class="create-blog-page py-3">
+    <h6 class="heading-title">Add the Details</h6>
+    <section class="mx-4">
+      <TextInput
+        id="blog-title"
+        input-type="text"
+        label="Enter the Blog Title"
+        placeholder="Enter the Blog Title"
+        class="my-4"
+        :required="true"
+        :autofocus="true"
+      />
+      <TextInput
+        id="blog-subtitle"
+        input-type="text"
+        label="Enter the Blog Subtitle"
+        placeholder="Enter the Blog Subtitle"
+        class="my-4"
+        :required="true"
+        :autofocus="true"
+      />
+      <TextInput
+        id="blog-category"
+        input-type="text"
+        label="Enter the Blog Category"
+        placeholder="Enter the Blog Category"
+        class="my-4"
+        :required="true"
+        :autofocus="true"
+      />
+      <h6 class="heading-title mb-8">Write the Blog below</h6>
+    </section>
     <client-only placeholder="loading...">
-      <vue-editor v-model="content" />
+      <vue-editor v-model="content" class="mb-8" />
     </client-only>
   </div>
 </template>
@@ -24,7 +55,7 @@
     position: sticky;
     top: 0;
     //top: 2 * $x-large-unit;
-    background-color: #f5deb3;
+    background-color: #0a0a0a;
     z-index: 1;
     border: none;
     box-shadow: $down-only-box-shadow;
@@ -34,7 +65,7 @@
     border: none;
 
     .ql-editor {
-      padding: 2vh 2vw;
+      padding: $standard-unit;
       border: none;
     }
   }
@@ -63,12 +94,14 @@
 
 <script>
 import { VueEditor } from 'vue2-editor'
+import TextInput from '@/components/global/TextInput'
 
 export default {
   name: 'Create',
   layout: 'EditorLayout',
   // middleware: 'protectedRoute',
   components: {
+    TextInput,
     VueEditor,
   },
   data() {
@@ -79,9 +112,7 @@ export default {
     }
   },
   watch: {
-    content: (newContent, oldContent) => {
-      console.log('old => ', oldContent)
-      console.log('new => ', newContent)
+    content: (newContent) => {
       localStorage.setItem('draft', newContent)
     },
   },
