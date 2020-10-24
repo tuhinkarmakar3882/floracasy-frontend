@@ -1,15 +1,15 @@
 <template>
   <div class="editor-layout">
-    <!--    <header>-->
-    <!--      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />-->
-    <!--      <button v-ripple class="primary-btn">Publish</button>-->
-    <!--    </header>-->
+    <header>
+      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />
+      <button v-ripple class="primary-btn">Publish</button>
+    </header>
 
-    <!--    <main>-->
-    <nuxt />
-    <!--    </main>-->
+    <main>
+      <nuxt />
+    </main>
 
-    <!--    <footer></footer>-->
+    <footer></footer>
   </div>
 </template>
 
@@ -24,6 +24,10 @@ export default {
 
 .editor-layout {
   header {
+    //position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $bring-to-front;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,7 +38,8 @@ export default {
   }
 
   main {
-    padding-top: $standard-unit;
+    //padding-top: $standard-unit;
+    background-color: $body-background;
   }
 
   button {
