@@ -1,8 +1,11 @@
 <template>
   <div class="create-blog-page px-4">
-    <h3 class="my-3">Blog Title Goes Here</h3>
-    <p class="blog-subtitle my-4">The Subtitle Goes Here</p>
-    <p class="blog-body mt-8">Your great Blog content goes here...</p>
+    <textarea class="blog-title my-3" placeholder="Blog Title Goes Here" />
+    <textarea class="blog-subtitle" placeholder="The Subtitle Goes Here" />
+    <textarea
+      class="blog-body"
+      placeholder="Your great Blog content goes here..."
+    />
   </div>
 </template>
 
@@ -10,9 +13,30 @@
 @import 'assets/all-variables';
 
 .create-blog-page {
+  textarea {
+    all: unset;
+    width: 100%;
+    display: block;
+  }
+
+  .blog-title {
+    font-size: 1.8rem;
+    color: $white;
+    font-family: $Prata;
+    margin-top: $xx-large-unit;
+    margin-bottom: $large-unit;
+  }
+
   .blog-subtitle {
     font-size: 1.2rem;
-    color: lighten($muted, $lighten-percentage);
+    //color: $muted;
+    color: #7a7a7a;
+    margin-bottom: $xxx-large-unit;
+  }
+
+  .blog-body {
+    font-size: 1rem;
+    color: $body-text-default;
   }
 }
 </style>
