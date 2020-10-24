@@ -32,6 +32,7 @@
     position: sticky;
     top: 0;
     background-color: wheat;
+    z-index: 1;
   }
   header {
     display: flex;
