@@ -1,21 +1,21 @@
 <template>
   <div class="editor-layout">
-    <header>
-      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />
-      <button v-ripple class="primary-btn">Publish</button>
-    </header>
+    <!--    <header>-->
+    <!--      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />-->
+    <!--      <button v-ripple class="primary-btn">Publish</button>-->
+    <!--    </header>-->
 
-    <main>
-      <nuxt />
-    </main>
+    <!--    <main>-->
+    <nuxt />
+    <!--    </main>-->
 
-    <footer></footer>
+    <!--    <footer></footer>-->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'EditorLayout',
+  name: 'BlankLayout',
 }
 </script>
 

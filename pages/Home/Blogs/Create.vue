@@ -1,51 +1,68 @@
 <template>
-  <div class="create-blog-page px-4">
-    <textarea class="blog-title my-3" placeholder="Blog Title Goes Here" />
-    <textarea class="blog-subtitle" placeholder="The Subtitle Goes Here" />
-    <textarea
-      class="blog-body"
-      placeholder="Your great Blog content goes here..."
-    />
+  <div class="editor-layout">
+    <header>
+      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />
+      <button v-ripple class="primary-btn">Publish</button>
+    </header>
+
+    <main>
+      <client-only placeholder="loading...">
+        <vue-editor v-model="content" />
+      </client-only>
+    </main>
+
+    <footer></footer>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
 
-.create-blog-page {
-  textarea {
-    all: unset;
-    width: 100%;
-    display: block;
+.editor-layout {
+  button {
+    min-width: auto;
+    height: auto;
+    width: auto;
   }
 
-  .blog-title {
-    font-size: 1.8rem;
-    color: $white;
-    font-family: $Prata;
-    margin-top: $xx-large-unit;
-    margin-bottom: $large-unit;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $medium-unit;
+    height: 2 * $x-large-unit;
+    background-color: $nav-bar-bg;
+    box-shadow: $down-only-box-shadow;
+
+    button {
+      min-width: auto;
+      height: $xxx-large-unit;
+      width: 4 * $xx-large-unit;
+    }
   }
 
-  .blog-subtitle {
-    font-size: 1.2rem;
-    //color: $muted;
-    color: #7a7a7a;
-    margin-bottom: $xxx-large-unit;
-  }
-
-  .blog-body {
-    font-size: 1rem;
-    color: $body-text-default;
+  main {
+    padding-top: $standard-unit;
   }
 }
 </style>
 
 <script>
+import { VueEditor } from 'vue2-editor'
+
 export default {
   name: 'Create',
-  layout: 'EditorLayout',
+  layout: 'BlankLayout',
   // middleware: 'protectedRoute',
+  components: {
+    VueEditor,
+  },
+
+  data() {
+    return {
+      content: `<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...</p>`,
+    }
+  },
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 2 })
   },
