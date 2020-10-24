@@ -1,17 +1,8 @@
 <template>
   <div class="create-blog-page">
-    <!--    <header>-->
-    <!--      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />-->
-    <!--      <button v-ripple class="primary-btn">Publish</button>-->
-    <!--    </header>-->
-
-    <!--    <main>-->
     <client-only placeholder="loading...">
       <vue-editor v-model="content" />
     </client-only>
-    <!--    </main>-->
-
-    <!--    <footer></footer>-->
   </div>
 </template>
 
@@ -75,7 +66,7 @@ import { VueEditor } from 'vue2-editor'
 
 export default {
   name: 'Create',
-  layout: 'BlankLayout',
+  layout: 'EditorLayout',
   // middleware: 'protectedRoute',
   components: {
     VueEditor,

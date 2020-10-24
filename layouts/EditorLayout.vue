@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: 'BlankLayout',
+  name: 'EditorLayout',
 }
 </script>
 
