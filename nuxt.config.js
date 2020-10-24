@@ -28,6 +28,7 @@ export default {
       maxAge: hours * minutes * seconds * milliseconds,
     }),
     '~/api',
+    '~/server/middleware/selective-ssr.js',
   ],
 
   head: {
@@ -68,7 +69,10 @@ export default {
     ],
   },
 
-  css: ['~/styles/main.scss'],
+  css: [
+    '~/styles/main.scss',
+    //
+  ],
 
   plugins: ['~/plugins/directives.js'],
 
