@@ -29,14 +29,18 @@ export default {
     align-items: center;
     padding: 0 $medium-unit;
     height: 2 * $x-large-unit;
+    background-color: $nav-bar-bg;
+    box-shadow: $down-only-box-shadow;
   }
 
   main {
-    padding-top: 2 * $x-large-unit;
+    padding-top: $standard-unit;
   }
 
   button {
     min-width: auto;
+    height: $xxx-large-unit;
+    width: 4 * $xx-large-unit;
   }
 }
 </style>

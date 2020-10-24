@@ -1,10 +1,21 @@
 <template>
-  <div class="text-center my-6 py-6 px-4">
-    <h1 class="mdi mdi-plus-circle" />
-    <h5 class="my-4">This is my super duper Create a new Blog Page</h5>
-    <p class="my-4">And I love it</p>
+  <div class="create-blog-page px-4">
+    <h3 class="my-3">Blog Title Goes Here</h3>
+    <p class="blog-subtitle my-4">The Subtitle Goes Here</p>
+    <p class="blog-body mt-8">Your great Blog content goes here...</p>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.create-blog-page {
+  .blog-subtitle {
+    font-size: 1.2rem;
+    color: lighten($muted, $lighten-percentage);
+  }
+}
+</style>
 
 <script>
 export default {
