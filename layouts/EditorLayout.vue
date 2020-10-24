@@ -1,7 +1,10 @@
 <template>
   <div class="editor-layout">
     <header>
-      <h5 class="mdi mdi-arrow-left" @click="$router.back()" />
+      <div class="left-block">
+        <h5 class="mdi mdi-arrow-left" @click="$router.back()" />
+        <p class="ml-4">Create Blog</p>
+      </div>
       <button v-ripple class="primary-btn">Publish</button>
     </header>
 
@@ -35,6 +38,16 @@ export default {
     height: 2 * $x-large-unit;
     background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;
+
+    .left-block {
+      display: flex;
+      align-items: center;
+
+      p {
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+    }
   }
 
   main {
@@ -45,7 +58,7 @@ export default {
   button {
     min-width: auto;
     height: $xxx-large-unit;
-    width: 4 * $xx-large-unit;
+    width: 3.5 * $xx-large-unit;
   }
 }
 </style>
