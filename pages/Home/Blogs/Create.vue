@@ -25,6 +25,14 @@
     width: auto;
   }
 
+  .ql-picker-label.ql-active {
+    width: 110px;
+  }
+  .ql-toolbar.ql-snow {
+    position: sticky;
+    top: 0;
+    background-color: wheat;
+  }
   header {
     display: flex;
     justify-content: space-between;
