@@ -54,6 +54,15 @@ body {
     font-weight: 300;
     font-size: 0.8rem;
   }
+
+  input {
+    font-family: $Nunito-Sans;
+    transition: all 150ms ease-in-out;
+  }
+  label {
+    font-family: $Raleway;
+    transition: all 150ms ease-in-out;
+  }
 }
 
 .heading-title {
