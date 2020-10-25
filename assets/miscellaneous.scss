@@ -39,5 +39,21 @@ html {
       color: $secondary-highlight;
       text-decoration: underline;
     }
+
+    blockquote {
+      font-weight: 300;
+      font-family: $Raleway;
+      border-left: 4px solid $info;
+      background: $segment-background;
+      padding: 1.5rem 1rem;
+      line-height: 1.9;
+      box-shadow: $default-box-shadow;
+      border-radius: $nano-unit;
+      color: $body-text-default;
+
+      a {
+        color: $secondary-highlight !important;
+      }
+    }
   }
 }
