@@ -47,40 +47,34 @@
       </blockquote>
       <p><br /></p>
       <p>Update packages list:</p>
-      <pre class="ql-syntax" spellcheck="false">
-        sudo apt-get update
-      </pre>
+      <pre class="ql-syntax" spellcheck="false">sudo apt-get update</pre>
       <p><br /></p>
       <p>Install node.js &amp; npm:</p>
       <pre class="ql-syntax" spellcheck="false">
-        sudo apt-get install nodejs npm
-      </pre>
+sudo apt-get install nodejs npm</pre
+      >
       <p><br /></p>
       <p>If you want to install yarn, run this commands:</p>
       <pre class="ql-syntax" spellcheck="false">
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-sudo apt-get update &amp;&amp; sudo apt-get install yarn
-      </pre>
+sudo apt-get update &amp;&amp; sudo apt-get install yarn</pre
+      >
       <p><br /></p>
       <p>Now go to your home directory:</p>
-      <pre class="ql-syntax" spellcheck="false">
-cd ~
-      </pre>
+      <pre class="ql-syntax" spellcheck="false">cd ~</pre>
       <p><br /></p>
       <p>And create directory for the project:</p>
-      <pre class="ql-syntax" spellcheck="false">
-mkdir ./your-project-name
-      </pre>
+      <pre class="ql-syntax" spellcheck="false">mkdir ./your-project-name</pre>
       <p><br /></p>
       <p>
         Undoubtedly, you have Nuxt.js project on your local computer, so copy it
         now to this directory. Open a new terminal window and run:
       </p>
       <pre class="ql-syntax" spellcheck="false">
-scp -r /path/to/your/local/project/* your-user-name@&lt;droplet-ip-here&gt;:~/your-project-name/
-      </pre>
+scp -r /path/to/your/local/project/* your-user-name@&lt;droplet-ip-here&gt;:~/your-project-name/</pre
+      >
       <p><br /></p>
       <p>
         OK, go back to the terminal where you are connected to the droplet and

@@ -43,9 +43,9 @@ html {
     blockquote {
       font-weight: 300;
       font-family: $Raleway;
-      border-left: 4px solid $info;
+      border-left: 4px solid $info !important;
       background: $segment-background;
-      padding: 1.5rem 1rem;
+      padding: 1.5rem 1rem !important;
       line-height: 1.9;
       box-shadow: $default-box-shadow;
       border-radius: $nano-unit;
@@ -54,6 +54,18 @@ html {
       a {
         color: $secondary-highlight !important;
       }
+    }
+
+    pre, code, kbd, samp {
+      font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: #131111;
+      color: darken(greenyellow, $lighten-percentage);
+      padding: 1rem;
+      margin: 0;
+      border-radius: $nano-unit;
+      word-break: break-all;
+      white-space: pre-wrap;
+      line-height: 1.8;
     }
   }
 }
