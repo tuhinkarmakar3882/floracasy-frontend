@@ -57,9 +57,10 @@ html {
     }
 
     pre, code, kbd, samp {
-      font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+      font-weight: 300;
+      font-family: $monospace !important;
       background: #131111 !important;
-      color: #b8db33 !important;
+      color: #8cb53d !important;
       padding: 1rem !important;
       margin: 1rem 0 !important;
       border-radius: $nano-unit !important;

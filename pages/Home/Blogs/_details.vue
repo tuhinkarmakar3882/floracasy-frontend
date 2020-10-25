@@ -1,26 +1,30 @@
 <template>
-  <div class="blog-details-page py-4 px-4">
-    <p class="mb-2">
-      <nuxt-link to="/Home/Account/Details" class="no-underline">
-        blog.author
-      </nuxt-link>
-      IN
-      <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
-        blog.category
-      </nuxt-link>
-    </p>
-    <h3 class="blog-title">This is my super duper blog detail page</h3>
-    <small class="timestamp mt-3">
-      <span class="mdi mdi-clock-time-nine-outline" />
-      blog.timestamp
-    </small>
+  <div class="blog-details-page py-4">
+    <section class="px-4">
+      <p class="mb-2">
+        <nuxt-link to="/Home/Account/Details" class="no-underline">
+          Alice Bob
+        </nuxt-link>
+        IN
+        <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
+          Technology
+        </nuxt-link>
+      </p>
+      <h3 class="blog-title mb-4">
+        This is my super duper apple Eye-pads blog detail page
+      </h3>
+      <small class="timestamp">
+        <span class="mdi mdi-clock-time-nine-outline" />
+        Mon 13th Nov, 2018, 12:30 P.M.
+      </small>
+    </section>
     <img
-      class="my-5"
-      src="https://picsum.photos/200"
+      class="my-5 blog-intro-image"
+      src="https://picsum.photos/1000"
       alt="blog.title"
       style="width: 100%; object-fit: cover; max-height: 250px"
     />
-    <section class="blog-body my-6">
+    <section class="blog-body my-6 px-4">
       <p>
         Fill in the remaining fields and wait for the droplet to be created.
       </p>
@@ -126,6 +130,16 @@ pm2 start npm -- start
     </section>
   </div>
 </template>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.blog-details-page {
+  .blog-intro-image {
+    box-shadow: $down-only-box-shadow;
+  }
+}
+</style>
 
 <script>
 export default {
