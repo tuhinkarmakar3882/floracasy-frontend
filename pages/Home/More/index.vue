@@ -1,11 +1,12 @@
 <template>
   <div class="more-options-page">
+    <h3 class="heading-title">More Options</h3>
     <ul>
       <li
         v-for="(option, index) in options"
         :key="index"
         v-ripple
-        class="px-4 py-4"
+        class="px-4 py-2"
       >
         <p>
           <span
@@ -16,7 +17,7 @@
           <span class="option-name">{{ option.name }}</span>
         </p>
       </li>
-      <li v-ripple class="px-4 py-4" @click="logout">
+      <li v-ripple class="px-4 py-3" @click="logout">
         <p>
           <span class="icon mdi mdi-power" style="color: #f77479" />
           <span class="option-name">Log out</span>
