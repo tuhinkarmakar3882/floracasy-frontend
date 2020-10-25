@@ -14,6 +14,10 @@ body {
     font-style: normal;
     font-family: $Prata;
     line-height: 1.8;
+
+    a {
+      color: $secondary-highlight !important;
+    }
   }
 
   h1 {
@@ -55,10 +59,17 @@ body {
     font-size: 0.8rem;
   }
 
+  span, p, small {
+    a {
+      color: $secondary-highlight !important;
+    }
+  }
+
   input {
     font-family: $Nunito-Sans;
     transition: all 150ms ease-in-out;
   }
+
   label {
     font-family: $Raleway;
     transition: all 150ms ease-in-out;
