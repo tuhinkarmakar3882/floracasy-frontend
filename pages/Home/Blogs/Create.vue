@@ -55,7 +55,7 @@
     position: sticky;
     top: 0;
     //top: 2 * $x-large-unit;
-    background-color: #0a0a0a;
+    background-color: $editor-toolbar-background;
     z-index: 1;
     border: none;
     box-shadow: $down-only-box-shadow;

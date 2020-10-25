@@ -1,7 +1,11 @@
 <template>
   <div class="app-layout">
     <header>
-      <h6><a class="brand-name" href="/"> Floracasy</a></h6>
+      <h6>
+        <a class="brand-name" href="/" style="color: white !important">
+          Floracasy
+        </a>
+      </h6>
       <nuxt-link to="/Home/Messages">
         <h5 class="mdi mdi-message-text" />
       </nuxt-link>
