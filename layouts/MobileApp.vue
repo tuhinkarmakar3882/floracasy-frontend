@@ -73,12 +73,6 @@ export default {
     navigateTo(path) {
       this.$router.push(path)
     },
-    async logout() {
-      try {
-        await this.$store.dispatch('logout')
-        await this.$router.push('/')
-      } catch (e) {}
-    },
   },
 }
 </script>
