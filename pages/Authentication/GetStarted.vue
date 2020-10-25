@@ -66,7 +66,6 @@ export default {
       ],
     }
   },
-
   methods: {
     async login() {
       try {
@@ -80,6 +79,18 @@ export default {
         // console.log(`Error in logging in ${e}`)
       }
     },
+  },
+  head() {
+    return {
+      title: 'Sign in to continue',
+      meta: [
+        {
+          // hid: 'description',
+          // name: 'description',
+          // content: 'My custom description',
+        },
+      ],
+    }
   },
 }
 </script>
