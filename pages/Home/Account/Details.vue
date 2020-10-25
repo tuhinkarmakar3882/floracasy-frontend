@@ -121,6 +121,18 @@ export default {
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
   },
+  head() {
+    return {
+      title: 'Profile Details',
+      meta: [
+        {
+          // hid: 'description',
+          // name: 'description',
+          // content: 'My custom description',
+        },
+      ],
+    }
+  },
 }
 </script>
 

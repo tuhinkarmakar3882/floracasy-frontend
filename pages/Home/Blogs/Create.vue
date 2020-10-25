@@ -119,5 +119,17 @@ export default {
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 2 })
   },
+  head() {
+    return {
+      title: 'Create a new blog',
+      meta: [
+        {
+          // hid: 'description',
+          // name: 'description',
+          // content: 'My custom description',
+        },
+      ],
+    }
+  },
 }
 </script>

@@ -143,5 +143,17 @@ export default {
       })
     },
   },
+  head() {
+    return {
+      title: 'Dashboard',
+      meta: [
+        {
+          // hid: 'description',
+          // name: 'description',
+          // content: 'My custom description',
+        },
+      ],
+    }
+  },
 }
 </script>
