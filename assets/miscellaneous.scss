@@ -57,15 +57,15 @@ html {
     }
 
     pre, code, kbd, samp {
-      font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      background: #131111;
-      color: darken(greenyellow, $lighten-percentage);
-      padding: 1rem;
-      margin: 0;
-      border-radius: $nano-unit;
-      word-break: break-all;
-      white-space: pre-wrap;
-      line-height: 1.8;
+      font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+      background: #131111 !important;
+      color: #b8db33;
+      padding: 1rem !important;
+      margin: 1rem 0 !important;
+      border-radius: $nano-unit !important;
+      word-break: break-all !important;
+      white-space: pre-wrap !important;
+      line-height: 1.8 !important;
     }
   }
 }
