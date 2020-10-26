@@ -163,14 +163,14 @@ export default {
 
   firebase: {
     config: {
-      apiKey: 'AIzaSyAWuJIU3_V6pf0QvF9wev36pNvXYGmNJNo',
-      authDomain: 'floracasy.firebaseapp.com',
-      databaseURL: 'https://floracasy.firebaseio.com',
-      projectId: 'floracasy',
-      storageBucket: 'floracasy.appspot.com',
-      messagingSenderId: '295292997514',
-      appId: '1:295292997514:web:7ac338f7f4fee2ede48273',
-      measurementId: 'G-XJLFQ1C8VD',
+      apiKey: 'AIzaSyBC8dH53PFPOWqN72FHSZtjM6ekF3gbEOM',
+      authDomain: 'floracasy-673ff.firebaseapp.com',
+      databaseURL: 'https://floracasy-673ff.firebaseio.com',
+      projectId: 'floracasy-673ff',
+      storageBucket: 'floracasy-673ff.appspot.com',
+      messagingSenderId: '804365562035',
+      appId: '1:804365562035:web:c45a8c8ff793dfe2ec00c6',
+      measurementId: 'G-RJ7XT8K378',
     },
     services: {
       auth: true,
@@ -178,19 +178,19 @@ export default {
       // functions: true,
       // storage: true,
       // realtimeDb: true,
-      messaging: true,
-      performance: true,
-      analytics: true,
-      remoteConfig: true,
+      // messaging: true,
+      // performance: true,
+      // analytics: true,
+      // remoteConfig: false,
     },
-    auth: {
-      persistence: 'local', // default
-      initialize: {
-        onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
-        onAuthStateChangedAction: 'onAuthStateChangedAction',
-      },
-      ssr: true, // default
-    },
+    // auth: {
+    //   persistence: 'local', // default
+    //   initialize: {
+    //     onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+    //     onAuthStateChangedAction: 'onAuthStateChangedAction',
+    //   },
+    //   ssr: true, // default
+    // },
   },
 
   axios: {},
