@@ -1,8 +1,7 @@
 <template>
-  <div class="container text-center">
-    <h3>Logged in As => {{ whoAmI }}</h3>
-    <h3>{{ firebase.auth.user }}</h3>
-    <h3>{{ user }}</h3>
+  <div class="px-4">
+    <h3>After Logging in, Your Data will come below...</h3>
+    <pre>{{ user }}</pre>
     <br />
     <!--    <button-->
     <!--      v-ripple-->
