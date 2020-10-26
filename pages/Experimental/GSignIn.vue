@@ -2,13 +2,17 @@
   <div class="container text-center">
     <h3>Logged in As => {{ whoAmI }}</h3>
     <br />
-    <button class="secondary-outlined-btn mx-4 my-4" @click="signInRedirect">
+    <button
+      v-ripple
+      class="secondary-outlined-btn mx-4 my-4"
+      @click="signInRedirect"
+    >
       Sign With Redirect
     </button>
-    <button class="secondary-outlined-btn mx-4 my-4" @click="signInPopup">
-      Sign With Pop Up
-    </button>
-    <button class="secondary-outlined-btn mx-4 my-4" @click="test">Test</button>
+    <!--    <button class="secondary-outlined-btn mx-4 my-4" @click="signInPopup">-->
+    <!--      Sign With Pop Up-->
+    <!--    </button>-->
+    <!--    <button class="secondary-outlined-btn mx-4 my-4" @click="test">Test</button>-->
   </div>
 </template>
 
