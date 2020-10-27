@@ -6,7 +6,6 @@
 
     <div v-else>
       <a
-        v-ripple
         class="close-btn"
         aria-label="close button"
         @click="
@@ -24,7 +23,11 @@
         password less sign in
       </small>
       <section class="signupOptionsGrid my-8">
-        <button v-ripple class="secondary-outlined-btn" @click="signInRedirect">
+        <button
+          v-ripple
+          class="secondary-outlined-btn"
+          @click="signInWithPopup"
+        >
           Continue with
           <GoogleIcon class="ml-1 icon" />
         </button>
@@ -43,11 +46,11 @@ export default {
   name: 'GetStarted',
   components: { LoadingIcon, GoogleIcon },
   layout: 'Authentication',
-  middleware: 'publicRoute',
+  // middleware: 'publicRoute',
 
   data() {
     return {
-      showLoaderAnimation: true,
+      showLoaderAnimation: false,
       signupOptions: [
         {
           id: 0,
@@ -58,29 +61,7 @@ export default {
     }
   },
 
-  async mounted() {
-    const userExistenceResult = await this.checkForUserExistence()
-    if (userExistenceResult.user === null) {
-      this.hideLoader()
-    } else {
-      await this.$router.replace('/Home/Dashboard')
-    }
-  },
-
   methods: {
-    async login() {
-      try {
-        await this.$store.dispatch('login', {
-          username: 'demo',
-          password: 'demo',
-        })
-        // console.log(this.$store.state.authUser)
-        await this.$router.push('/')
-      } catch (e) {
-        // console.log(`Error in logging in ${e}`)
-      }
-    },
-
     showLoader() {
       this.showLoaderAnimation = true
     },
@@ -108,6 +89,25 @@ export default {
           alert(result)
           return result
         })
+    },
+    async signInWithPopup() {
+      this.showLoader()
+      const provider = new firebase.auth.GoogleAuthProvider()
+      const user = await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function (result) {
+          return result.user
+        })
+      if (user !== null) {
+        const payload = { user: user.toJSON() }
+        // this.$store.commit('SET_USER', payload)
+        await this.$store.dispatch('login', payload)
+        await this.$router.replace('/Home/Dashboard')
+      } else {
+        await this.$store.dispatch('logout')
+        this.hideLoader()
+      }
     },
   },
 
