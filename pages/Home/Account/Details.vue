@@ -2,13 +2,9 @@
   <div class="text-center py-6 details-page">
     <section class="user-profile">
       <div class="basic-data">
-        <img
-          alt="profile-picture"
-          class="picture"
-          src="https://picsum.photos/200"
-        />
+        <img alt="profile-picture" class="picture" :src="user.photoURL" />
         <div class="basic-details">
-          <p class="name">Travis Alice</p>
+          <p class="name">{{ user.displayName }}</p>
           <p class="designation">Beauty Blogger</p>
         </div>
       </div>
@@ -24,8 +20,7 @@
 
       <section class="other-info">
         <p class="about text-center">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
-          asperiores assumenda blanditiis
+          Hey I'm using this email: {{ user.email }}
         </p>
       </section>
 
@@ -53,6 +48,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import RippleButton from '~/components/global/RippleButton'
 export default {
   name: 'Details',
@@ -117,6 +113,11 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'getAuthUser',
+    }),
   },
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
