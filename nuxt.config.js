@@ -61,6 +61,11 @@ export default {
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&display=swap',
       },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+      },
     ],
   },
 
@@ -131,7 +136,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxt/content',
     '@nuxtjs/firebase',
-    'nuxtjs-mdi-font',
+    // 'nuxtjs-mdi-font',
     [
       'nuxt-lazy-load',
       {

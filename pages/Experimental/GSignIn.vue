@@ -48,11 +48,11 @@ export default {
 
   async mounted() {
     const userExistenceResult = await checkForUserExistence()
-    if (userExistenceResult.user !== null) {
-      await this.$router.replace('/Home/Dashboard')
-    } else {
+    if (userExistenceResult.user === null) {
       this.hideLoader()
       console.log('User not logged in')
+    } else {
+      await this.$router.replace('/Home/Dashboard')
     }
   },
 
