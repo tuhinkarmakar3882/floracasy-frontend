@@ -41,7 +41,7 @@ export default {
     // this.methods.showLoader()
     const userExistenceResult = await checkForUserExistence()
     if (userExistenceResult.user !== null) {
-      await this.$router.replace('/')
+      await this.$router.replace('/Home/Dashboard')
     } else {
       console.log('User not logged in')
     }
