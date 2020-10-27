@@ -14,6 +14,7 @@ body {
     font-style: normal;
     font-family: $Prata;
     line-height: 1.8;
+    letter-spacing: $double-unit;
 
     a {
       color: $secondary-highlight !important;
@@ -56,7 +57,7 @@ body {
   small {
     font-family: $Nunito-Sans;
     font-weight: 300;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   span, p, small {
