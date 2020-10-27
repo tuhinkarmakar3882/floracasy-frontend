@@ -1,11 +1,13 @@
 <template>
-  <div class="sk-chase">
-    <div class="sk-chase-dot"></div>
-    <div class="sk-chase-dot"></div>
-    <div class="sk-chase-dot"></div>
-    <div class="sk-chase-dot"></div>
-    <div class="sk-chase-dot"></div>
-    <div class="sk-chase-dot"></div>
+  <div style="display: grid; place-items: center; width: 100%">
+    <section class="sk-chase">
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+      <div class="sk-chase-dot"></div>
+    </section>
   </div>
 </template>
 
