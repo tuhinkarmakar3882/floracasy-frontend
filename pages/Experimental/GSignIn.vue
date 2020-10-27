@@ -1,28 +1,30 @@
 <template>
   <div class="px-4">
-    <h3>After Logging in, Your Data will come below...</h3>
+    <h3>Login to continue:</h3>
     <pre>{{ user }}</pre>
     <br />
-    <!--    <button-->
-    <!--      v-ripple-->
-    <!--      class="secondary-outlined-btn mx-4 my-4"-->
-    <!--      @click="signInRedirect"-->
-    <!--    >-->
-    <!--      Sign With Redirect-->
-    <!--    </button>-->
     <button
       v-ripple
       class="secondary-outlined-btn mx-4 my-4"
-      @click="signInPopup"
+      @click="signInRedirect"
     >
-      Sign With Pop Up
+      Sign With Redirect
     </button>
-    <!--    <button class="secondary-outlined-btn mx-4 my-4" @click="test">Test</button>-->
   </div>
 </template>
 
 <script>
-import * as firebase from 'firebase'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+
+async function checkForUserExistence() {
+  return await firebase
+    .auth()
+    .getRedirectResult()
+    .then(function (result) {
+      return result
+    })
+}
 
 export default {
   name: 'GSignIn',
@@ -35,81 +37,28 @@ export default {
       user: {},
     }
   },
-  mounted() {
-    console.log('firebase', firebase)
+  async mounted() {
+    // this.methods.showLoader()
+    const userExistenceResult = await checkForUserExistence()
+    if (userExistenceResult.user !== null) {
+      await this.$router.replace('/')
+    } else {
+      console.log('User not logged in')
+    }
   },
   methods: {
+    showLoader() {
+      alert('Loading')
+    },
     async signInRedirect() {
       const provider = new firebase.auth.GoogleAuthProvider()
-      const redr = await firebase.auth().signInWithRedirect(provider)
-      this.user = redr.user
-      // await firebase
-      //   .auth()
-      //   .getRedirectResult()
-      //   .then(function (result) {
-      //     if (result.credential) {
-      /// /       This gives you a Google Access Token. You can use it to access the Google API.
-      // const token = result.credential.accessToken
-      // alert(token)
-      // }
-      /// /The signed-in user info.
-      // const user = result.user
-      // alert(user)
-      // })
-      // .catch(function (error) {
-      /// /Handle Errors here.
-      // const errorCode = error.code
-      // const errorMessage = error.message
-      /// /The email of the user's account used.
-      // const email = error.email
-      /// /The firebase.auth.AuthCredential type that was used.
-      // const credential = error.credential
-      //
-      // console.log(
-      //   '!!!!!!!error',
-      //   errorCode,
-      //   errorMessage,
-      //   email,
-      //   credential
-      // )
-      // })
-      // console.log(redr)
-    },
-    async signInPopup() {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      const result = await firebase
+      await firebase
         .auth()
-        .signInWithPopup(provider)
+        .signInWithRedirect(provider)
         .then(function (result) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          const token = result.credential.accessToken
-          console.log(result.additionalUserInfo)
-          console.log('token', token)
-          // The signed-in user info.
+          alert(result)
           return result
-          // ...
         })
-        .catch(function (error) {
-          console.error(error)
-          // Handle Errors here.
-          // const errorCode = error.code
-          // const errorMessage = error.message
-          // The email of the user's account used.
-          // const email = error.email
-          // The firebase.auth.AuthCredential type that was used.
-          // const credential = error.credential
-          // ...
-        })
-      const user = result.additionalUserInfo
-      console.log(user)
-      this.user = user
-    },
-    async test() {
-      // const user = this.$firebase.auth().currentUser
-      // const idToken = await user.getIdToken(true)
-      // const url = `https://floracasy.firebaseio.com//test.json?auth=${idToken}`
-      // const test = await this.$axios.$get(url)
-      // console.log(test)
     },
   },
 }

@@ -61,11 +61,6 @@ export default {
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&display=swap',
       },
-      {
-        rel: 'stylesheet',
-        href:
-          'https://cdn.materialdesignicons.com/5.7.55/css/materialdesignicons.min.css',
-      },
     ],
   },
 
@@ -136,6 +131,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxt/content',
     '@nuxtjs/firebase',
+    'nuxtjs-mdi-font',
     [
       'nuxt-lazy-load',
       {
@@ -183,15 +179,27 @@ export default {
       // analytics: true,
       // remoteConfig: false,
     },
-    // auth: {
-    //   persistence: 'local', // default
-    //   initialize: {
-    //     onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
-    //     onAuthStateChangedAction: 'onAuthStateChangedAction',
-    //   },
-    //   ssr: true, // default
-    // },
+    auth: {
+      persistence: 'local', // default
+      initialize: {
+        onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+        onAuthStateChangedAction: 'onAuthStateChangedAction',
+      },
+      ssr: true,
+    },
   },
+
+  // pwa: {
+  // meta: false,
+  // icon: false,
+  // manifest: false,
+  // workbox: {
+  //   importScripts: [
+  //     '/firebase-auth-sw.js',
+  //   ],
+  //   dev: false,
+  // },
+  // },
 
   axios: {},
 
