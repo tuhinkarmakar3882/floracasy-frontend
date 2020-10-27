@@ -2,9 +2,9 @@
   <div class="app-layout">
     <header>
       <h6>
-        <a class="brand-name" href="/" style="color: white !important">
+        <nuxt-link class="brand-name" to="/" style="color: white !important">
           Floracasy
-        </a>
+        </nuxt-link>
       </h6>
       <nuxt-link to="/Home/Messages">
         <h5 class="mdi mdi-message-text" />
