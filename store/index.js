@@ -1,13 +1,20 @@
-import axios from 'axios'
+// import axios from 'axios'
 
 export const state = () => ({
   authUser: null,
 })
 
+export const getters = {
+  getAuthUser(state) {
+    return state.authUser
+  },
+}
+
 export const mutations = {
   SET_USER(state, user) {
     state.authUser = user
   },
+
   ON_AUTH_STATE_CHANGED_MUTATION(state, { authUser, claims }) {
     const { uid, email, emailVerified, displayName, photoURL } = authUser
     state.authUser = {
@@ -34,21 +41,25 @@ export const actions = {
     }
   },
 
-  async login({ commit }, { username, password }) {
-    try {
-      const { data } = await axios.post('/api/login', { username, password })
-      commit('SET_USER', data)
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials')
-      }
-      throw error
-    }
+  // eslint-disable-next-line require-await
+  async login({ commit }, { user }) {
+    commit('SET_USER', user)
+    localStorage.setItem('authUser', JSON.stringify(user))
+    // try {
+    // await axios.post('/api/login', { user })
+    // } catch (error) {
+    //   if (error.response && error.response.status === 401) {
+    //     throw new Error('Bad credentials')
+    //   }
+    //   throw error
+    // }
   },
 
+  // eslint-disable-next-line require-await
   async logout({ commit }) {
-    await axios.post('/api/logout')
     commit('SET_USER', null)
+    localStorage.removeItem('authUser')
+    // await axios.post('/api/logout')
   },
 
   async onAuthStateChangedAction({ commit, dispatch }, { authUser, claims }) {
