@@ -1,16 +1,12 @@
-import bodyParser from 'body-parser'
-import session from 'cookie-session'
-
-const milliseconds = 1000
-const hours = 1
-const minutes = 5
-const seconds = 30
-
 export default {
+  ssr: true,
+  components: true,
+
   server: {
     // host: '0.0.0.0',
     port: 3001,
   },
+  serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
   ssr: true,
 
@@ -19,18 +15,59 @@ export default {
     server: true,
   },
 
-  serverMiddleware: [
-    bodyParser.json(),
-    session({
-      secret: 'super-secret-key',
-      resave: false,
-      saveUninitialized: false,
-      maxAge: hours * minutes * seconds * milliseconds,
-    }),
-    '~/api',
-    '~/server/middleware/selective-ssr.js',
+  plugins: [
+    '~/plugins/directives.js',
+    '~/plugins/firebase.js',
+    '~/plugins/firebase-authentication.js',
   ],
 
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa',
+    '@nuxt/content',
+    [
+      'nuxt-lazy-load',
+      {
+        images: true,
+        videos: true,
+        audios: true,
+        iframes: true,
+        native: false,
+        polyfill: true,
+        directiveOnly: false,
+
+        defaultImage: '/images/default.svg',
+
+        // To remove class set value to false
+        loadingClass: 'isLoading',
+        loadedClass: 'isLoaded',
+        appendClass: 'lazyLoad',
+
+        observerConfig: {
+          // See IntersectionObserver documentation
+        },
+      },
+    ],
+  ],
+
+  buildModules: [
+    '@nuxt/typescript-build',
+    '@nuxtjs/stylelint-module',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/eslint-module',
+  ],
+
+  build: {
+    extractCSS: true,
+  },
+
+  axios: {},
+
+  css: [
+    '~/styles/main.scss',
+    //
+  ],
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -69,22 +106,26 @@ export default {
     ],
   },
 
-  css: [
-    '~/styles/main.scss',
-    //
-  ],
+  loadingIndicator: {
+    name: 'rectangle-bounce',
+    color: '#C5C2FF',
+    background: '#050514',
+  },
 
-  plugins: ['~/plugins/directives.js'],
+  loading: { color: '#C5C2FF' },
+  layoutTransition: {
+    name: 'gray-shift',
+    mode: 'out-in',
+  },
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+  },
+  eslint: {
+    fix: true,
+  },
 
-  components: true,
-
-  buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/stylelint-module',
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/eslint-module',
-  ],
+  content: {},
 
   tailwindcss: {
     config: {
@@ -125,110 +166,5 @@ export default {
         ],
       },
     },
-  },
-
-  eslint: {
-    fix: true,
-  },
-
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    '@nuxt/content',
-    '@nuxtjs/firebase',
-    // 'nuxtjs-mdi-font',
-    [
-      'nuxt-lazy-load',
-      {
-        images: true,
-        videos: true,
-        audios: true,
-        iframes: true,
-        native: false,
-        polyfill: true,
-        directiveOnly: false,
-
-        defaultImage: '/images/default.svg',
-
-        // To remove class set value to false
-        loadingClass: 'isLoading',
-        loadedClass: 'isLoaded',
-        appendClass: 'lazyLoad',
-
-        observerConfig: {
-          // See IntersectionObserver documentation
-        },
-      },
-    ],
-  ],
-
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyBC8dH53PFPOWqN72FHSZtjM6ekF3gbEOM',
-      authDomain: 'floracasy-673ff.firebaseapp.com',
-      databaseURL: 'https://floracasy-673ff.firebaseio.com',
-      projectId: 'floracasy-673ff',
-      storageBucket: 'floracasy-673ff.appspot.com',
-      messagingSenderId: '804365562035',
-      appId: '1:804365562035:web:c45a8c8ff793dfe2ec00c6',
-      measurementId: 'G-RJ7XT8K378',
-    },
-    services: {
-      auth: true,
-      // firestore: true,
-      // functions: true,
-      // storage: true,
-      // realtimeDb: true,
-      // messaging: true,
-      // performance: true,
-      // analytics: true,
-      // remoteConfig: false,
-    },
-    auth: {
-      persistence: 'local', // default
-      initialize: {
-        onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
-        onAuthStateChangedAction: 'onAuthStateChangedAction',
-      },
-      ssr: true,
-    },
-  },
-
-  // pwa: {
-  // meta: false,
-  // icon: false,
-  // manifest: false,
-  // workbox: {
-  //   importScripts: [
-  //     '/firebase-auth-sw.js',
-  //   ],
-  //   dev: false,
-  // },
-  // },
-
-  axios: {},
-
-  content: {},
-
-  build: {
-    extractCSS: true,
-  },
-
-  loadingIndicator: {
-    name: 'rectangle-bounce',
-    color: '#C5C2FF',
-    background: '#050514',
-  },
-
-  loading: { color: '#C5C2FF' },
-
-  layoutTransition: {
-    name: 'gray-shift',
-    mode: 'out-in',
-  },
-
-  pageTransition: {
-    name: 'page',
-    mode: 'out-in',
   },
 }
