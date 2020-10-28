@@ -175,7 +175,7 @@
           <nuxt-link
             :loading="joinUsButtonLoading"
             class="btn my-4"
-            to="/Authentication/GetStarted"
+            to="/Authentication/SignInToContinue"
             @click="changeIt"
           >
             Join Floracasy

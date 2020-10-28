@@ -28,7 +28,7 @@
       <nuxt-link
         :loading="categoriesButtonLoading"
         class="my-6 btn"
-        to="/Authentication/GetStarted"
+        to="/Authentication/SignInToContinue"
         @click="changeIt"
       >
         Start Reading

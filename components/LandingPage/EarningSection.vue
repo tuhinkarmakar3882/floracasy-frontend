@@ -11,7 +11,7 @@
       <nuxt-link
         :loading="earningButtonLoading"
         class="my-6 btn"
-        to="/Authentication/GetStarted"
+        to="/Authentication/SignInToContinue"
         @click="changeIt"
       >
         Start Earning

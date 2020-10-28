@@ -22,12 +22,12 @@
           <nuxt-link to="/WriteAndEarn"> Write &amp; Earn</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/Authentication/GetStarted">
+          <nuxt-link to="/Authentication/SignInToContinue">
             <button>Log in</button>
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/Authentication/GetStarted">
+          <nuxt-link to="/Authentication/SignInToContinue">
             <button>Join Us</button>
           </nuxt-link>
         </li>

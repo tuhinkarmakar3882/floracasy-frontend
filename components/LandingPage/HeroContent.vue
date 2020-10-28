@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <nuxt-link to="/Authentication/GetStarted">
+        <nuxt-link to="/Authentication/SignInToContinue">
           <RippleButton
             class-list="primary-btn"
             :on-click="changeIt"
