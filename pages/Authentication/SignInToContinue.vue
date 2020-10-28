@@ -38,15 +38,17 @@
 
 <script>
 import GoogleIcon from '@/components/Icons/GoogleIcon'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 import LoadingIcon from '@/components/LoadingIcon'
 
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
-  name: 'GetStarted',
+  name: 'SignInToContinue',
   components: { LoadingIcon, GoogleIcon },
   layout: 'Authentication',
-  // middleware: 'publicRoute',
+  middleware: 'publicRoute',
 
   data() {
     return {
@@ -70,26 +72,6 @@ export default {
       this.showLoaderAnimation = false
     },
 
-    async checkForUserExistence() {
-      return await firebase
-        .auth()
-        .getRedirectResult()
-        .then(function (result) {
-          return result
-        })
-    },
-
-    async signInRedirect() {
-      this.showLoader()
-      const provider = new firebase.auth.GoogleAuthProvider()
-      await firebase
-        .auth()
-        .signInWithRedirect(provider)
-        .then(function (result) {
-          alert(result)
-          return result
-        })
-    },
     async signInWithPopup() {
       this.showLoader()
       const provider = new firebase.auth.GoogleAuthProvider()
@@ -100,9 +82,21 @@ export default {
           return result.user
         })
       if (user !== null) {
-        const payload = { user: user.toJSON() }
-        // this.$store.commit('SET_USER', payload)
+        // Todo Wrap within Try Catch
+        const payload = {
+          user: {
+            uid: user.uid,
+            displayName: user.displayName,
+            phoneNumber: user.phoneNumber,
+            email: user.email,
+            photoURL: user.photoURL,
+            createdAt: user.createdAt,
+            lastLoginAt: user.lastLoginAt,
+            expirationTime: 1603910958000,
+          },
+        }
         await this.$store.dispatch('login', payload)
+        Cookie.set('authUser', payload)
         await this.$router.replace('/Home/Dashboard')
       } else {
         await this.$store.dispatch('logout')
