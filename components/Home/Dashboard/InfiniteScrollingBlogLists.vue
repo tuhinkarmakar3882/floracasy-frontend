@@ -129,7 +129,7 @@ export default {
         this.dataLoading = true
         setTimeout(() => {
           this.dataLoading = false
-        }, 5000)
+        }, 2000)
       },
       deep: true,
     },
@@ -139,17 +139,17 @@ export default {
       this.$router.push(path)
     },
     like(blog) {
-      console.log(
+      alert(
         `Wow, I'm amazed to see that you are trying to like ${blog.title}. But, the developer is too lazy to implement that feature. Should we fire this developer?`
       )
     },
     comment(blog) {
-      console.log(
+      alert(
         `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
       )
     },
     share(blog) {
-      console.log(
+      alert(
         `Duh? And Now Share??? Like Seriously? Google is not going to pay us. Anyways, here is a consolidation line : You're sharing ${blog.title}`
       )
     },
