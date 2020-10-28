@@ -53,6 +53,8 @@
 </style>
 
 <script>
+const Cookie = process.client ? require('js-cookie') : undefined
+
 export default {
   name: 'MoreOptions',
   middleware: 'protectedRoute',
@@ -104,7 +106,8 @@ export default {
   methods: {
     async logout() {
       try {
-        await this.$store.dispatch('logout')
+        Cookie.remove('authUser')
+        await this.$store.dispatch('signOut')
         await this.$router.push('/')
       } catch (e) {}
     },
