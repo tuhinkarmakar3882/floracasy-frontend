@@ -1,12 +1,20 @@
-// import axios from 'axios'
+import { auth } from '~/plugins/firebase.js'
 
-export const state = () => ({
-  authUser: null,
-})
+const cookieParser = process.server ? require('cookieparser') : undefined
+
+export const state = () => {
+  return {
+    authUser: null,
+  }
+}
 
 export const getters = {
   getAuthUser(state) {
     return state.authUser
+  },
+
+  isAuthenticated(state) {
+    return !!state.authUser
   },
 }
 
@@ -14,71 +22,37 @@ export const mutations = {
   SET_USER(state, user) {
     state.authUser = user
   },
-
-  ON_AUTH_STATE_CHANGED_MUTATION(state, { authUser, claims }) {
-    const { uid, email, emailVerified, displayName, photoURL } = authUser
-    state.authUser = {
-      uid,
-      displayName,
-      email,
-      emailVerified,
-      photoURL: photoURL || null, // results in photoURL being null for server auth
-      isAdmin: claims.custom_claim,
-    }
-  },
 }
 
 export const actions = {
-  async nuxtServerInit({ dispatch }, { res }) {
-    if (res && res.locals && res.locals.user) {
-      const { allClaims: claims, idToken: token, ...authUser } = res.locals.user
-
-      await dispatch('onAuthStateChangedAction', {
-        authUser,
-        claims,
-        token,
-      })
+  nuxtServerInit({ commit }, { req }) {
+    let authUser = null
+    if (req.headers.cookie) {
+      const parsed = cookieParser.parse(req.headers.cookie)
+      try {
+        authUser = JSON.parse(parsed.authUser)
+      } catch (err) {
+        // No valid cookie found
+      }
     }
+    commit('SET_USER', authUser)
   },
 
-  // eslint-disable-next-line require-await
-  async login({ commit }, { user }) {
+  login({ commit }, { user }) {
+    console.log('committing..')
     commit('SET_USER', user)
-    localStorage.setItem('authUser', JSON.stringify(user))
-    // try {
-    // await axios.post('/api/login', { user })
-    // } catch (error) {
-    //   if (error.response && error.response.status === 401) {
-    //     throw new Error('Bad credentials')
-    //   }
-    //   throw error
-    // }
+    console.log('committed..')
   },
 
-  // eslint-disable-next-line require-await
-  async logout({ commit }) {
+  signOut({ commit }) {
     commit('SET_USER', null)
-    localStorage.removeItem('authUser')
-    // await axios.post('/api/logout')
+    return auth.signOut()
   },
 
-  async onAuthStateChangedAction({ commit, dispatch }, { authUser, claims }) {
-    if (!authUser) {
-      await dispatch('cleanupAction')
-      return
-    }
-
-    // you can request additional fields if they are optional (e.g. photoURL)
-    const { uid, email, emailVerified, displayName, photoURL } = authUser
-
-    commit('SET_USER', {
-      uid,
-      email,
-      emailVerified,
-      displayName,
-      photoURL, // results in photoURL being undefined for server auth
-      // use custom claims to control access (see https://firebase.google.com/docs/auth/admin/custom-claims)
-      isAdmin: claims.custom_claim,
-    })
-  },
+  // signUp({ commit }, { email, password }) {
+  //   return auth.createUserWithEmailAndPassword(email, password)
+  // },
+  // signInWithEmail({ commit }, { email, password }) {
+  //   return auth.signInWithEmailAndPassword(email, password)
+  // },
 }
