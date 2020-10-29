@@ -25,7 +25,7 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit({ commit }, { req }) {
+  async nuxtServerInit({ commit }, { req }) {
     let authUser = null
     if (req.headers.cookie) {
       const parsed = cookieParser.parse(req.headers.cookie)
@@ -35,7 +35,7 @@ export const actions = {
         // No valid cookie found
       }
     }
-    commit('SET_USER', authUser)
+    await commit('SET_USER', authUser)
   },
 
   login({ commit }, { user }) {
