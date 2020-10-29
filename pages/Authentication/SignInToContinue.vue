@@ -83,16 +83,17 @@ export default {
         })
       if (user !== null) {
         // Todo Wrap within Try Catch
+        const jsonUser = user.toJSON()
         const payload = {
           user: {
-            uid: user.uid,
-            displayName: user.displayName,
-            phoneNumber: user.phoneNumber,
-            email: user.email,
-            photoURL: user.photoURL,
-            createdAt: user.createdAt,
-            lastLoginAt: user.lastLoginAt,
-            expirationTime: 1603910958000,
+            uid: jsonUser.uid,
+            displayName: jsonUser.displayName,
+            phoneNumber: jsonUser.phoneNumber,
+            email: jsonUser.email,
+            photoURL: jsonUser.photoURL,
+            createdAt: jsonUser.createdAt,
+            lastLoginAt: jsonUser.lastLoginAt,
+            expirationTime: jsonUser.expirationTime,
           },
         }
         await this.$store.dispatch('login', payload)
