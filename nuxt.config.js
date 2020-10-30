@@ -1,3 +1,5 @@
+import * as secrets from './environmentalVariables'
+
 export default {
   ssr: true,
   components: true,
@@ -18,7 +20,11 @@ export default {
   plugins: [
     '~/plugins/directives.js',
     '~/plugins/firebase.js',
-    '~/plugins/firebase-authentication.js',
+
+    {
+      src: '~/plugins/firebase-authentication.js',
+      mode: 'client',
+    },
   ],
 
   modules: [
@@ -62,7 +68,9 @@ export default {
     extractCSS: true,
   },
 
-  axios: {},
+  axios: {
+    baseURL: secrets.baseUrl,
+  },
 
   css: [
     '~/styles/main.scss',
