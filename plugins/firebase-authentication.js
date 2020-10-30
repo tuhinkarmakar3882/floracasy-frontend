@@ -5,24 +5,35 @@ import { auth } from './firebase'
 export default (context, inject) => {
   const { store } = context
   inject('auth', auth)
+
   auth.onAuthStateChanged((user) => {
-    if (user && user !== {}) {
-      const payload = {
-        user: {
-          uid: user.uid,
-          displayName: user.displayName,
-          phoneNumber: user.phoneNumber,
-          email: user.email,
-          photoURL: user.photoURL,
-          createdAt: user.createdAt,
-          lastLoginAt: user.lastLoginAt,
-          expirationTime: 1603910958000,
-        },
-      }
-      store.commit('SET_USER', payload)
-      console.log('User Logged on')
+    if (user) {
+      console.info('have user', user.toJSON().displayName)
     } else {
-      console.log('NO User!')
+      console.info('no user')
     }
   })
+  // auth.onAuthStateChanged((user) => {
+  //   console.log('Auth State Changed')
+  //
+  //   if (user && user !== {}) {
+  //     const jsonUser = user.toJSON()
+  //     const payload = {
+  //       uid: jsonUser.uid,
+  //       displayName: jsonUser.displayName,
+  //       phoneNumber: jsonUser.phoneNumber,
+  //       email: jsonUser.email,
+  //       photoURL: jsonUser.photoURL,
+  //       createdAt: jsonUser.createdAt,
+  //       lastLoginAt: jsonUser.lastLoginAt,
+  //       expirationTime: jsonUser.expirationTime,
+  //     }
+  //     store.dispatch('login', payload)
+  //     console.log('Successfully Logged in as', jsonUser.displayName)
+  //     // window.location = '/'
+  //   } else {
+  //     // store.dispatch('logout')
+  //     console.log('No User Found...Logging out')
+  //   }
+  // })
 }
