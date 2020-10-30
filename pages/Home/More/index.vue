@@ -90,7 +90,7 @@ export default {
         {
           name: 'Help & Support',
           icon: 'mdi mdi-lifebuoy',
-          color: '#ABEDAB',
+          color: '#5dd75d',
         },
         {
           name: 'FAQ',
@@ -107,7 +107,7 @@ export default {
     async logout() {
       try {
         Cookie.remove('authUser')
-        await this.$store.dispatch('signOut')
+        await this.$store.dispatch('logout')
         await this.$router.push('/')
       } catch (e) {}
     },
