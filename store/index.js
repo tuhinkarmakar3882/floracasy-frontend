@@ -25,34 +25,23 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit({ commit }, { req }) {
+  nuxtServerInit({ commit }, { req }) {
     let authUser = null
     if (req.headers.cookie) {
       const parsed = cookieParser.parse(req.headers.cookie)
       try {
         authUser = JSON.parse(parsed.authUser)
-      } catch (err) {
-        // No valid cookie found
-      }
+      } catch (ignoredError) {}
     }
-    await commit('SET_USER', authUser)
+    commit('SET_USER', authUser)
   },
 
   login({ commit }, { user }) {
-    console.log('committing..')
     commit('SET_USER', user)
-    console.log('committed..')
   },
 
-  signOut({ commit }) {
+  logout({ commit }) {
     commit('SET_USER', null)
     return auth.signOut()
   },
-
-  // signUp({ commit }, { email, password }) {
-  //   return auth.createUserWithEmailAndPassword(email, password)
-  // },
-  // signInWithEmail({ commit }, { email, password }) {
-  //   return auth.signInWithEmailAndPassword(email, password)
-  // },
 }
