@@ -2,13 +2,12 @@
   <div class="text-center py-6 details-page">
     <section class="user-profile">
       <div class="basic-data">
-        <img alt="profile-picture" class="picture" :src="user.user.photoURL" />
+        <img alt="profile-picture" class="picture" :src="user.photoURL" />
         <div class="basic-details">
-          <p class="name">{{ user.user.displayName }}</p>
+          <p class="name">{{ user.displayName }}</p>
           <p class="designation">Beauty Blogger</p>
         </div>
       </div>
-
       <section class="stats">
         <div v-for="item in statisticsItem" :key="item.id" class="item">
           <span class="number">{{ item.value }}</span>
@@ -20,13 +19,13 @@
 
       <section class="other-info">
         <p class="about text-center">
-          Hey I'm using this email: {{ user.user.email }}
+          Hey I'm using this email: {{ user.email }}
         </p>
       </section>
 
       <section class="actions">
-        <RippleButton class="px-6"> Follow </RippleButton>
-        <RippleButton class="px-6"> Message </RippleButton>
+        <RippleButton class="px-6"> Follow</RippleButton>
+        <RippleButton class="px-6"> Message</RippleButton>
       </section>
     </section>
 
@@ -48,8 +47,9 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import RippleButton from '~/components/global/RippleButton'
+
 export default {
   name: 'Details',
   components: { RippleButton },
