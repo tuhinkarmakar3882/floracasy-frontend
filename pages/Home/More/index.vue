@@ -5,7 +5,7 @@
       <li
         v-for="(option, index) in options"
         :key="index"
-        v-ripple
+        v-ripple="`${option.color}5F`"
         class="px-4 py-2"
       >
         <p>
@@ -17,7 +17,7 @@
           <span class="option-name">{{ option.name }}</span>
         </p>
       </li>
-      <li v-ripple class="px-4 py-3" @click="logout">
+      <li v-ripple="'#f774795F'" class="px-4 py-3" @click="logout">
         <p>
           <span class="icon mdi mdi-power" style="color: #f77479" />
           <span class="option-name">Log out</span>
@@ -70,12 +70,12 @@ export default {
         {
           name: 'Go Premium',
           icon: 'mdi mdi-crown',
-          color: '#EFB33D',
+          color: '#f8e102',
         },
         {
           name: 'Write & Earn',
           icon: 'mdi mdi-currency-usd',
-          color: '#EFB33D',
+          color: '#ef8f2b',
         },
         {
           name: 'Refer & Earn',
@@ -85,7 +85,7 @@ export default {
         {
           name: 'About Us',
           icon: 'mdi mdi-information',
-          color: '#00B4B4',
+          color: '#8c70fd',
         },
         {
           name: 'Help & Support',
