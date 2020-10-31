@@ -110,8 +110,6 @@ export default {
           accessToken: jsonUser.stsTokenManager.accessToken,
         }
 
-        console.log('token =>', backendPayload.accessToken)
-
         await this.$axios
           .$post(endpoints.auth.authenticate, backendPayload)
           .then(() => {
