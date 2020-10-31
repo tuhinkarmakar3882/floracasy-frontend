@@ -34,5 +34,8 @@ const endpoints = {
   reward_system: {
     test: 'reward_system/',
   },
+  health_check: {
+    test: 'health_check/',
+  },
 }
 export default endpoints
