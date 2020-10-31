@@ -41,6 +41,7 @@ import GoogleIcon from '@/components/Icons/GoogleIcon'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import LoadingIcon from '@/components/LoadingIcon'
+import endpoints from '@/api/endpoints'
 
 const Cookie = process.client ? require('js-cookie') : undefined
 
@@ -109,8 +110,10 @@ export default {
           accessToken: jsonUser.stsTokenManager.accessToken,
         }
 
+        console.log('token =>', backendPayload.accessToken)
+
         await this.$axios
-          .$post('/auth/authenticate/', backendPayload)
+          .$post(endpoints.auth.authenticate, backendPayload)
           .then(() => {
             this.$store.commit('SET_USER', frontendPayload)
             Cookie.set('authUser', frontendPayload)
