@@ -10,11 +10,13 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  ssr: true,
-
   modern: {
     client: true,
     server: true,
+  },
+
+  router: {
+    middleware: [],
   },
 
   plugins: [
