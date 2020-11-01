@@ -12,9 +12,10 @@ export default function performTokenHandshake(store, $axios) {
     .then(() => {
       console.log('This Access Token Works. Cool Human!')
     })
-    .catch(() => {
+    .catch((e) => {
       console.warn(
-        '[!] Access Token is Invalid. So, Trying to obtain a new token'
+        '[!] Access Token is Invalid. So, Trying to obtain a new token',
+        e
       )
       console.info('Making Request to backend for grabbing a new Access Token')
       $axios
@@ -29,6 +30,7 @@ export default function performTokenHandshake(store, $axios) {
           })
           // store.state.authUser.token = response
           $axios.setToken(response.access, 'Bearer')
+          console.info('All Good to go!')
         })
         .catch((e) => {
           console.warn(
