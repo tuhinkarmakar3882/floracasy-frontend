@@ -1,6 +1,7 @@
 <template>
   <div class="get-started-authentication-page">
     <div v-if="showLoaderAnimation">
+      <p class="text-center mb-8">{{ stateInformation }}</p>
       <LoadingIcon />
     </div>
 
@@ -54,6 +55,7 @@ export default {
   data() {
     return {
       showLoaderAnimation: false,
+      stateInformation: 'Checking...',
       signupOptions: [
         {
           id: 0,
@@ -65,6 +67,80 @@ export default {
   },
 
   methods: {
+    async signInWithPopup() {
+      this.showLoader()
+      this.updateInfo('Loading OAuth Provider')
+      const provider = new firebase.auth.GoogleAuthProvider()
+
+      this.updateInfo('Waiting for you to complete the login')
+      const user = await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => result.user)
+
+      if (user !== null) {
+        this.updateInfo('Fetching Certificates...')
+        const jsonUser = user.toJSON()
+
+        const commonPayload = {
+          uid: jsonUser.uid,
+          displayName: jsonUser.displayName,
+          phoneNumber: jsonUser.phoneNumber,
+          email: jsonUser.email,
+          photoURL: jsonUser.photoURL,
+          createdAt: jsonUser.createdAt,
+          lastLoginAt: jsonUser.lastLoginAt,
+        }
+
+        const backendPayload = {
+          ...commonPayload,
+          emailVerified: jsonUser.emailVerified,
+          authDomain: jsonUser.authDomain,
+          providerId: jsonUser.providerData[0].uid,
+          updatedAt: jsonUser.lastLoginAt,
+          accessToken: jsonUser.stsTokenManager.accessToken,
+        }
+
+        this.updateInfo('Validating Credentials...')
+        await this.$axios
+          .$post(endpoints.auth.authenticate, backendPayload)
+          .then((response) => {
+            const frontendPayload = {
+              ...commonPayload,
+              ...response,
+            }
+
+            this.updateInfo('Logging you in...')
+            this.login(frontendPayload)
+          })
+          .catch(() => {
+            this.abort()
+          })
+      } else {
+        this.abort()
+      }
+    },
+
+    login(payload) {
+      this.updateInfo('Setting up things for you...')
+      this.$store.commit('SET_USER', payload)
+
+      this.updateInfo('Securing the Connection...')
+      Cookie.set('authUser', payload)
+
+      this.updateInfo('Welcome')
+      this.$router.replace('/Home/Dashboard')
+    },
+
+    abort() {
+      this.updateInfo('Error, While Logging you in.')
+
+      Cookie.remove('authUser')
+      this.$store.dispatch('logout')
+      this.hideLoader()
+      this.updateInfo('Checking...')
+    },
+
     showLoader() {
       this.showLoaderAnimation = true
     },
@@ -73,61 +149,8 @@ export default {
       this.showLoaderAnimation = false
     },
 
-    async signInWithPopup() {
-      this.showLoader()
-      const provider = new firebase.auth.GoogleAuthProvider()
-      const user = await firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function (result) {
-          return result.user
-        })
-
-      if (user !== null) {
-        const jsonUser = user.toJSON()
-
-        const frontendPayload = {
-          uid: jsonUser.uid,
-          displayName: jsonUser.displayName,
-          phoneNumber: jsonUser.phoneNumber,
-          email: jsonUser.email,
-          photoURL: jsonUser.photoURL,
-          createdAt: jsonUser.createdAt,
-          lastLoginAt: jsonUser.lastLoginAt,
-          expirationTime: jsonUser.expirationTime,
-        }
-
-        const backendPayload = {
-          uid: jsonUser.uid,
-          email: jsonUser.email,
-          emailVerified: jsonUser.emailVerified,
-          photoURL: jsonUser.photoURL,
-          authDomain: jsonUser.authDomain,
-          providerId: jsonUser.providerData[0].uid,
-          displayName: jsonUser.displayName,
-          createdAt: jsonUser.createdAt,
-          updatedAt: jsonUser.lastLoginAt,
-          accessToken: jsonUser.stsTokenManager.accessToken,
-        }
-
-        await this.$axios
-          .$post(endpoints.auth.authenticate, backendPayload)
-          .then(() => {
-            this.$store.commit('SET_USER', frontendPayload)
-            Cookie.set('authUser', frontendPayload)
-            this.$router.replace('/Home/Dashboard')
-          })
-          .catch(() => {
-            Cookie.remove('authUser')
-            this.$store.dispatch('logout', frontendPayload)
-            this.hideLoader()
-          })
-      } else {
-        // Todo Add UI Hint
-        Cookie.remove('authUser')
-        await this.$store.dispatch('logout')
-        this.hideLoader()
-      }
+    updateInfo(message) {
+      this.stateInformation = message || 'Opening Popup for Login'
     },
   },
 
