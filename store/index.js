@@ -22,6 +22,10 @@ export const mutations = {
   SET_USER(state, user) {
     state.authUser = user
   },
+  SET_TOKENS(state, tokens) {
+    state.authUser.token.access = tokens.access
+    state.authUser.token.refresh = tokens.refresh
+  },
 }
 
 export const actions = {
@@ -38,6 +42,10 @@ export const actions = {
 
   login({ commit }, { user }) {
     commit('SET_USER', user)
+  },
+
+  updateTokens({ commit }, { tokens }) {
+    commit('SET_TOKENS', tokens)
   },
 
   logout({ commit }) {
