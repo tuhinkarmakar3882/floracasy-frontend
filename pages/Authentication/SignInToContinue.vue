@@ -70,6 +70,7 @@ export default {
     async signInWithPopup() {
       this.showLoader()
       this.updateInfo('Loading OAuth Provider')
+
       const provider = new firebase.auth.GoogleAuthProvider()
 
       this.updateInfo('Waiting for you to complete the login')

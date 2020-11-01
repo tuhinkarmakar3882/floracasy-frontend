@@ -15,6 +15,7 @@
             :style="{ color: option.color }"
           />
           <span class="option-name">{{ option.name }}</span>
+          <span class="mdi mdi-chevron-right arrow-go" />
         </p>
       </li>
       <li v-ripple="'#f774795F'" class="px-4 py-3" @click="logout">
@@ -50,9 +51,14 @@ export default {
           color: '#f8e102',
         },
         {
-          name: 'Write & Earn',
+          name: 'Payments',
+          icon: 'mdi mdi-wallet',
+          color: '#329b32',
+        },
+        {
+          name: 'How to Earn?',
           icon: 'mdi mdi-currency-usd',
-          color: '#ef8f2b',
+          color: '#f5a049',
         },
         {
           name: 'Refer & Earn',
@@ -117,23 +123,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/all-variables';
+
 .more-options-page {
   ul {
     li {
       p {
         display: grid;
-        grid-template-columns: 1fr 4fr;
+        grid-template-columns: 1fr 4fr 0.5fr;
         grid-column-gap: 1rem;
         place-items: center;
         text-align: left;
 
         .icon {
-          font-size: 2rem;
+          font-size: clamp(1.6rem, 8vw, 2rem);
         }
 
         .option-name {
-          font-size: 1.2rem;
+          color: lighten($body-text-default, $lighten-percentage);
+          font-size: clamp(1.1rem, 8vw, 1.2rem);
           width: 100%;
+        }
+
+        .arrow-go {
+          font-size: clamp(20px, 8vw, 28px);
+          color: #3a3a3a;
         }
       }
     }

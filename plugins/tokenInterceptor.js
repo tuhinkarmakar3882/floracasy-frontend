@@ -28,7 +28,7 @@ export default function performTokenHandshake(store, $axios) {
           store.dispatch('updateTokens', {
             tokens: response,
           })
-          // store.state.authUser.token = response
+
           $axios.setToken(response.access, 'Bearer')
           console.info('All Good to go!')
         })
