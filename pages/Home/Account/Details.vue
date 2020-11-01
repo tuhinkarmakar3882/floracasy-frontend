@@ -1,5 +1,6 @@
 <template>
   <div class="text-center py-6 details-page">
+    <pre> {{ backendData }} </pre>
     <section class="user-profile">
       <div class="basic-data">
         <img alt="profile-picture" class="picture" :src="user.photoURL" />
@@ -24,8 +25,8 @@
       </section>
 
       <section class="actions">
-        <RippleButton class="px-6"> Follow</RippleButton>
-        <RippleButton class="px-6"> Message</RippleButton>
+        <button class="primary-btn px-6">Follow</button>
+        <button class="primary-btn px-6">Message</button>
       </section>
     </section>
 
@@ -48,15 +49,17 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import RippleButton from '~/components/global/RippleButton'
+import endpoints from '@/api/endpoints'
+import performTokenHandshake from '@/plugins/tokenInterceptor'
 
 export default {
   name: 'Details',
-  components: { RippleButton },
   layout: 'MobileApp',
   middleware: 'protectedRoute',
+
   data() {
     return {
+      backendData: null,
       statisticsItem: [
         {
           id: 0,
@@ -114,14 +117,26 @@ export default {
       ],
     }
   },
+
   computed: {
     ...mapGetters({
       user: 'getAuthUser',
     }),
   },
-  mounted() {
+
+  async mounted() {
+    performTokenHandshake(this.$store, this.$axios)
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
+    this.backendData = await this.$axios
+      .$get(endpoints.health_check.test)
+      .then((response) => {
+        return response
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   },
+
   head() {
     return {
       title: 'Profile Details',
