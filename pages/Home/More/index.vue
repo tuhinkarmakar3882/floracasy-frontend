@@ -91,7 +91,7 @@ export default {
     async logout() {
       await this.$axios
         .post(endpoints.auth.logout, {
-          refresh: this.$store.getters.getTokens.refresh,
+          refresh: this.$store.getters.getAuthenticationTokens.refresh,
         })
         .then(() => {
           this.performLogout()
