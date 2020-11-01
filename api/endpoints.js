@@ -37,5 +37,6 @@ const endpoints = {
   health_check: {
     test: 'health_check/',
   },
+  test_access_token: 'test_access_token/',
 }
 export default endpoints
