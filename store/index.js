@@ -17,7 +17,7 @@ export const getters = {
     return !!state.authUser
   },
 
-  getTokens(state) {
+  getAuthenticationTokens(state) {
     return state.authUser ? state.authUser.token : null
   },
 }
