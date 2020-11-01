@@ -22,7 +22,10 @@ export default {
   plugins: [
     '~/plugins/directives.js',
     '~/plugins/firebase.js',
-
+    {
+      src: '~/plugins/axios.js',
+      mode: 'client',
+    },
     {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
