@@ -16,6 +16,10 @@ export const getters = {
   isAuthenticated(state) {
     return !!state.authUser
   },
+
+  getTokens(state) {
+    return state.authUser ? state.authUser.token : null
+  },
 }
 
 export const mutations = {
