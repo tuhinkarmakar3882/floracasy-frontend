@@ -27,32 +27,9 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.more-options-page {
-  ul {
-    li {
-      p {
-        display: grid;
-        grid-template-columns: 1fr 4fr;
-        grid-column-gap: 1rem;
-        place-items: center;
-        text-align: left;
-
-        .icon {
-          font-size: 2rem;
-        }
-
-        .option-name {
-          font-size: 1.2rem;
-          width: 100%;
-        }
-      }
-    }
-  }
-}
-</style>
-
 <script>
+import endpoints from '@/api/endpoints'
+
 const Cookie = process.client ? require('js-cookie') : undefined
 
 export default {
@@ -104,12 +81,24 @@ export default {
     this.$store.commit('BottomNavigation/update', { linkPosition: 4 })
   },
   methods: {
+    performLogout() {
+      this.$axios.setToken(false)
+      Cookie.remove('authUser')
+      this.$store.dispatch('logout')
+      this.$router.push('/')
+    },
+
     async logout() {
-      try {
-        Cookie.remove('authUser')
-        await this.$store.dispatch('logout')
-        await this.$router.push('/')
-      } catch (e) {}
+      await this.$axios
+        .post(endpoints.auth.logout, {
+          refresh: this.$store.getters.getTokens.refresh,
+        })
+        .then(() => {
+          this.performLogout()
+        })
+        .catch(() => {
+          //  Todo Add UI hint
+        })
     },
   },
   head() {
@@ -126,3 +115,28 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.more-options-page {
+  ul {
+    li {
+      p {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-column-gap: 1rem;
+        place-items: center;
+        text-align: left;
+
+        .icon {
+          font-size: 2rem;
+        }
+
+        .option-name {
+          font-size: 1.2rem;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+</style>
