@@ -77,11 +77,11 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then((result) => result.user)
+        .catch(() => {})
 
-      if (user !== null) {
+      if (user && user !== {}) {
         this.updateInfo('Fetching Certificates...')
         const jsonUser = user.toJSON()
-
         const commonPayload = {
           uid: jsonUser.uid,
           displayName: jsonUser.displayName,
@@ -91,7 +91,6 @@ export default {
           createdAt: jsonUser.createdAt,
           lastLoginAt: jsonUser.lastLoginAt,
         }
-
         const backendPayload = {
           ...commonPayload,
           emailVerified: jsonUser.emailVerified,
@@ -100,7 +99,6 @@ export default {
           updatedAt: jsonUser.lastLoginAt,
           accessToken: jsonUser.stsTokenManager.accessToken,
         }
-
         this.updateInfo('Validating Credentials...')
         await this.$axios
           .$post(endpoints.auth.authenticate, backendPayload)
