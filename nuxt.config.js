@@ -20,8 +20,14 @@ export default {
   },
 
   plugins: [
-    '~/plugins/directives.js',
-    '~/plugins/firebase.js',
+    {
+      src: '~/plugins/directives.js',
+      mode: 'both',
+    },
+    {
+      src: '~/plugins/firebase.js',
+      mode: 'both',
+    },
     {
       src: '~/plugins/axios.js',
       mode: 'client',
