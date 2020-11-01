@@ -20,25 +20,20 @@ export default {
   },
 
   plugins: [
+    '~/plugins/directives.js',
+    '~/plugins/firebase.js',
     {
-      src: '~/plugins/directives.js',
-      mode: 'both',
-    },
-    {
-      src: '~/plugins/firebase.js',
-      mode: 'both',
+      src: '~/plugins/firebase-authentication.js',
+      mode: 'client',
     },
     {
       src: '~/plugins/axios.js',
       mode: 'client',
     },
-    {
-      src: '~/plugins/firebase-authentication.js',
-      mode: 'client',
-    },
   ],
 
   modules: [
+    'cookie-universal-nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxt/content',
