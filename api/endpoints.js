@@ -1,7 +1,7 @@
 const endpoints = {
   auth: {
     authenticate: '/auth/authenticate/',
-    logout: '/auth/logout',
+    logout: '/auth/logout/',
     generateToken: '/auth/token/generate/',
     refreshToken: '/auth/token/refresh/',
   },
