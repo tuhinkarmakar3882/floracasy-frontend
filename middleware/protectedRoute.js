@@ -51,7 +51,7 @@ export default function ({ store, redirect, $axios }) {
             const Cookie = process.client ? require('js-cookie') : undefined
             Cookie.remove('authUser')
             store.dispatch('logout')
-            redirect('/Authentication/SignInToContinue')
+            window.location = '/Authentication/SignInToContinue'
           })
       })
   }
