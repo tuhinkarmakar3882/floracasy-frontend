@@ -43,18 +43,17 @@
       <h4 class="heading-title">Recent Activities</h4>
 
       <div v-if="recentActivities">
-        <pre>{{ recentActivities }}</pre>
-
         <section
           v-for="activity in recentActivities"
           :key="activity.id"
           class="activity my-8"
         >
           <div class="content">
-            <img :alt="activity.title" :src="activity.image" />
+            <img :alt="activity.title" :src="activity.coverImage" />
             <div class="data text-left">
               <h6>{{ activity.title }}</h6>
-              <small> {{ activity.time }}</small>
+              <p>{{ activity.subtitle }}</p>
+              <small> {{ activity.createdAt }}</small>
             </div>
           </div>
         </section>
@@ -116,6 +115,15 @@ export default {
 
     this.statisticsItem = await this.$axios
       .$get(endpoints.profile_statistics.detail, {
+        params: { uid: this.$store.getters.getAuthUser.uid },
+      })
+      .then(({ details }) => details)
+      .catch((error) => {
+        console.error(error)
+      })
+
+    this.recentActivities = await this.$axios
+      .$get(endpoints.blog.getBlogsByUid, {
         params: { uid: this.$store.getters.getAuthUser.uid },
       })
       .then(({ details }) => details)
