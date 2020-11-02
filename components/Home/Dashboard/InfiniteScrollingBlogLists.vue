@@ -121,6 +121,31 @@ export default {
             'Explore hundreds of integrations for Ghost to speed up your workflow',
         },
       ],
+      backendData: [
+        {
+          id: 1,
+          category: {
+            id: 4,
+            name: 'Test',
+            photo_url: 'https://picsum.photos/200',
+            is_visible: true,
+            has_photo: true,
+          },
+          title: 'This is a Test Blog',
+          coverImage: 'https://picsum.photos/500',
+          updatedAt: '2020-11-02T21:30:38.280116+05:30',
+          createdAt: '2020-11-02T21:20:09.264288+05:30',
+          subtitle: 'This is a test blog subtitle',
+          content:
+            '<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...a</p><p><br></p>',
+          status: 'READY_FOR_REVIEW',
+          totalLikes: 0,
+          totalComments: 0,
+          totalViews: 0,
+          totalEngagements: 0,
+          show: true,
+        },
+      ],
     }
   },
   watch: {
