@@ -34,8 +34,8 @@
       </section>
 
       <section class="actions">
-        <button class="primary-btn px-6">Follow</button>
-        <button class="primary-btn px-6">Message</button>
+        <button v-ripple class="primary-btn px-6">Payments</button>
+        <button v-ripple class="primary-outlined-btn px-6">Saved Blogs</button>
       </section>
     </section>
 
@@ -59,8 +59,13 @@
           </div>
         </section>
       </div>
-      <div v-else>
-        <pre>No Recent Activities Found</pre>
+
+      <div v-else class="no-activity">
+        <GoogleIcon style="width: 56px" />
+        <p class="my-5">It's Lonely Here...</p>
+        <button v-ripple class="secondary-outlined-btn">
+          Publish Your First Blog Now!
+        </button>
       </div>
     </section>
   </div>
@@ -70,9 +75,11 @@
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
 import performTokenHandshake from '@/plugins/tokenInterceptor'
+import GoogleIcon from '@/components/Icons/GoogleIcon'
 
 export default {
   name: 'Details',
+  components: { GoogleIcon },
   layout: 'MobileApp',
   middleware: 'protectedRoute',
 
@@ -93,6 +100,7 @@ export default {
   async mounted() {
     performTokenHandshake(this.$store, this.$axios)
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
+
     this.backendData = await this.$axios
       .$get(endpoints.health_check.test)
       .then((response) => {
@@ -102,19 +110,14 @@ export default {
         console.error(error)
       })
 
-    const { details } = await this.$axios
-      .$get(
-        endpoints.profile_statistics.detail +
-          this.$store.getters.getAuthUser.uid +
-          '/'
-      )
-      .then((response) => {
-        return response
+    this.statisticsItem = await this.$axios
+      .$get(endpoints.profile_statistics.detail, {
+        params: { uid: this.$store.getters.getAuthUser.uid },
       })
+      .then(({ details }) => details)
       .catch((error) => {
         console.error(error)
       })
-    this.statisticsItem = details
   },
 
   head() {
@@ -136,7 +139,7 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  padding: 1rem 1rem;
+  padding: 2rem 0.5rem;
 
   button {
     min-width: auto;
@@ -224,6 +227,11 @@ export default {
         border-radius: 50%;
       }
     }
+  }
+
+  .no-activity {
+    display: grid;
+    place-items: center;
   }
 }
 </style>
