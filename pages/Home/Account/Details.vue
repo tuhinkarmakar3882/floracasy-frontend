@@ -1,6 +1,7 @@
 <template>
   <div class="text-center py-6 details-page">
     <pre> {{ backendData }} </pre>
+
     <section class="user-profile">
       <div class="basic-data">
         <img alt="profile-picture" class="picture" :src="user.photoURL" />
@@ -9,13 +10,19 @@
           <p class="designation">Beauty Blogger</p>
         </div>
       </div>
-      <section class="stats">
+
+      <section v-if="statisticsItem" class="stats">
+        <pre>{{ statisticsItem }}</pre>
         <div v-for="item in statisticsItem" :key="item.id" class="item">
           <span class="number">{{ item.value }}</span>
           <p class="type">
             {{ item.type }}
           </p>
         </div>
+      </section>
+
+      <section v-else class="text-center">
+        <pre>No Stats Data</pre>
       </section>
 
       <section class="other-info">
@@ -33,15 +40,25 @@
     <section class="recent-activity">
       <h4 class="heading-title">Recent Activities</h4>
 
-      <div v-for="blog in blogs" :key="blog.id" class="blog my-8">
-        <div class="content">
-          <img :alt="blog.title" :src="blog.image" />
-          <div class="data text-left">
-            <h6>{{ blog.title }}</h6>
-            <small> {{ blog.time }}</small>
+      <div v-if="recentActivities">
+        <pre>{{ recentActivities }}</pre>
+
+        <section
+          v-for="activity in recentActivities"
+          :key="activity.id"
+          class="activity my-8"
+        >
+          <div class="content">
+            <img :alt="activity.title" :src="activity.image" />
+            <div class="data text-left">
+              <h6>{{ activity.title }}</h6>
+              <small> {{ activity.time }}</small>
+            </div>
           </div>
-        </div>
-        <hr class="mt-8" />
+        </section>
+      </div>
+      <div v-else>
+        <pre>No Recent Activities Found</pre>
       </div>
     </section>
   </div>
@@ -60,61 +77,8 @@ export default {
   data() {
     return {
       backendData: null,
-      statisticsItem: [
-        {
-          id: 0,
-          value: 22,
-          type: 'Blogs',
-        },
-        {
-          id: 1,
-          value: 560,
-          type: 'Engagements',
-        },
-        {
-          id: 2,
-          value: 100,
-          type: 'Followers',
-        },
-      ],
-      blogs: [
-        {
-          id: 0,
-          title: 'Now its easy to take care your underarms at home.',
-          image: 'https://picsum.photos/200',
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
-        },
-        {
-          id: 1,
-          title: 'Love your hair but suffering from Hair fall or hair damage?',
-          image: 'https://picsum.photos/200',
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
-        },
-        {
-          id: 2,
-          title: "Bath - Hot water or Cold water? Let's see!",
-          image: 'https://picsum.photos/200',
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
-        },
-        {
-          id: 3,
-          title: 'What should be your diet schedule?',
-          image: 'https://picsum.photos/200',
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
-        },
-        {
-          id: 4,
-          title: 'Now you can get salon like pedicure for free at home',
-          image: 'https://picsum.photos/200',
-          time: 'Fri Aug 18, 2020 01:34 A.M.',
-        },
-        {
-          id: 5,
-          title: 'Miracle Face Mask According To Your Skin Type',
-          image: 'https://picsum.photos/200',
-          time: 'Sat Aug 19, 2020 11:34 A.M.',
-        },
-      ],
+      statisticsItem: null,
+      recentActivities: null,
     }
   },
 
