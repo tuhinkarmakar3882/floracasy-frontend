@@ -192,7 +192,7 @@ export default {
 
     .actions {
       display: grid;
-      margin: 1rem 0;
+      margin: 1.2rem 0;
       place-items: center;
       padding: 1rem;
       grid-template-columns: repeat(2, 1fr);
