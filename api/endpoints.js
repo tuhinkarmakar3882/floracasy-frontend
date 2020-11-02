@@ -11,6 +11,7 @@ const endpoints = {
     detail: 'blog/detail/',
     update: 'blog/update/',
     delete: 'blog/delete/',
+    getBlogsByUid: 'blog/get_blogs_by_uid/',
   },
   categories: {
     test: 'categories/',
