@@ -1,7 +1,5 @@
 <template>
   <div class="text-center py-6 details-page">
-    <pre> {{ backendData }} </pre>
-
     <section class="user-profile">
       <div class="basic-data">
         <img alt="profile-picture" class="picture" :src="user.photoURL" />
@@ -12,17 +10,21 @@
       </div>
 
       <section v-if="statisticsItem" class="stats">
-        <pre>{{ statisticsItem }}</pre>
-        <div v-for="item in statisticsItem" :key="item.id" class="item">
-          <span class="number">{{ item.value }}</span>
-          <p class="type">
-            {{ item.type }}
-          </p>
+        <div class="item">
+          <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
+          <p class="type">Blogs</p>
+        </div>
+        <div class="item">
+          <span class="number">{{ statisticsItem['totalEngagements'] }}</span>
+          <p class="type">Engagements</p>
+        </div>
+        <div class="item">
+          <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
+          <p class="type">Followers</p>
         </div>
       </section>
-
       <section v-else class="text-center">
-        <pre>No Stats Data</pre>
+        <p>Loading Profile Data...</p>
       </section>
 
       <section class="other-info">
@@ -99,6 +101,20 @@ export default {
       .catch((error) => {
         console.error(error)
       })
+
+    const { details } = await this.$axios
+      .$get(
+        endpoints.profile_statistics.detail +
+          this.$store.getters.getAuthUser.uid +
+          '/'
+      )
+      .then((response) => {
+        return response
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    this.statisticsItem = details
   },
 
   head() {
