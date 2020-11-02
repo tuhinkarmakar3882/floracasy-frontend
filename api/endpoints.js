@@ -29,7 +29,7 @@ const endpoints = {
     test: 'leaderboard/',
   },
   profile_statistics: {
-    detail: 'profile_statistics/detail/', // Add Dynamic Params
+    detail: 'profile_statistics/detail/',
   },
   reward_system: {
     test: 'reward_system/',
