@@ -21,13 +21,13 @@ button {
 
 .primary-outlined-btn {
   background-color: transparent;
-  color: lighten($primary, $darken-percentage);
-  border: $single-unit solid lighten($primary, $darken-percentage);
+  color: lighten($primary-light, $darken-percentage);
+  border: $single-unit solid lighten($primary-light, $darken-percentage);
 
   &:focus, &:hover, &:active {
-    background-color: rgba($primary, .1);
-    border-color: lighten($primary, $lighten-percentage);
-    color: lighten($primary, $lighten-percentage);
+    background-color: rgba($primary-light, .1);
+    border-color: lighten($primary-light,  $lighten-percentage);
+    color: lighten($primary-light, $lighten-percentage);
   }
 }
 
