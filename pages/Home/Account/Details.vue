@@ -63,7 +63,11 @@
       <div v-else class="no-activity">
         <GoogleIcon style="width: 56px" />
         <p class="my-5">It's Lonely Here...</p>
-        <button v-ripple class="secondary-outlined-btn">
+        <button
+          v-ripple
+          class="secondary-outlined-btn"
+          @click="$router.push('/Home/Blogs/Create')"
+        >
           Publish Your First Blog Now!
         </button>
       </div>
