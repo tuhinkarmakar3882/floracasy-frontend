@@ -25,22 +25,27 @@
         </div>
       </div>
 
-      <nuxt-link
-        :loading="categoriesButtonLoading"
-        class="my-6 btn"
-        to="/Authentication/SignInToContinue"
-        @click="changeIt"
-      >
-        Start Reading
+      <nuxt-link to="/Authentication/SignInToContinue">
+        <RippleButton
+          :loading="categoriesButtonLoading"
+          class="my-6 btn"
+          to="/Authentication/SignInToContinue"
+          :on-click="changeIt"
+        >
+          Start Reading
+        </RippleButton>
       </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
+import RippleButton from '@/components/global/RippleButton'
+
 export default {
   name: 'CategoriesShowcase',
   components: {
+    RippleButton,
     SegmentTitle: () => import('@/components/LandingPage/SegmentTitle'),
   },
   data() {
@@ -99,6 +104,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
 .showcase {
   background-color: $segment-background;
 
@@ -107,20 +113,20 @@ export default {
     justify-content: center;
     place-items: center;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 28px;
-    grid-row-gap: 28px;
+    grid-column-gap: $standard-unit;
+    grid-row-gap: $standard-unit;
 
     @media only screen and (min-width: $small) {
       grid-template-columns: repeat(3, 1fr);
       grid-column-gap: 32px;
       grid-row-gap: 32px;
     }
-    @media only screen and (min-width: $medium-unit) {
+    @media only screen and (min-width: $medium) {
       grid-template-columns: repeat(4, 1fr);
       grid-column-gap: 36px;
       grid-row-gap: 36px;
     }
-    @media only screen and (min-width: $large-unit) {
+    @media only screen and (min-width: $large) {
       grid-template-columns: repeat(5, 1fr);
       grid-column-gap: 36px;
       grid-row-gap: 36px;
