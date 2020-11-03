@@ -1,6 +1,10 @@
 <template>
   <div>
-    <span :color="tickColor" :size="tickSize"> mdi-check-circle-outline </span>
+    <span
+      :color="tickColor"
+      :size="tickSize"
+      class="mdi mdi-check-circle-outline"
+    />
     <span>
       {{ point }}
     </span>
