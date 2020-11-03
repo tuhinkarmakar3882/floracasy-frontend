@@ -1,39 +1,39 @@
 <template>
-  <header>
-    <div>
-      <div class="visible-upto-large" @click="drawer = !drawer" />
+  <header class="navigation-bar-page dbx">
+    <section class="brand dbx" @click="navigateTo('/')">
+      <Logo :width="36" />
+      <p class="brand-name">Floracasy</p>
+    </section>
 
-      <div class="progress-bar" />
-
-      <div class="spacer visible-upto-large" />
-
-      <div class="brand">
-        <Logo :width="36" />
-        <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
-      </div>
-
-      <div class="spacer visible-on-large-and-up" />
-
-      <ul class="visible-on-large-and-up">
-        <li>
-          <nuxt-link to="/PublicRoutes/GoPremium"> Go Premium</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/PublicRoutes/WriteAndEarn">
-            Write &amp; Earn
-          </nuxt-link>
-        </li>
-        <li>
-          <button
-            v-ripple
-            class="secondary-btn"
-            @click="$router.push('/Authentication/SignInToContinue')"
-          >
-            Log in or Sign up
-          </button>
-        </li>
-      </ul>
-    </div>
+    <ul>
+      <li>
+        <button
+          v-ripple
+          class="secondary-btn"
+          @click="$router.push('/PublicRoutes/GoPremium')"
+        >
+          Go Premium
+        </button>
+      </li>
+      <li>
+        <button
+          v-ripple
+          class="secondary-btn"
+          @click="$router.push('/PublicRoutes/WriteAndEarn')"
+        >
+          Write &amp; Earn
+        </button>
+      </li>
+      <li>
+        <button
+          v-ripple
+          class="secondary-btn"
+          @click="$router.push('/Authentication/SignInToContinue')"
+        >
+          Log in or Sign up
+        </button>
+      </li>
+    </ul>
   </header>
 </template>
 
@@ -73,19 +73,20 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$font-size: 18px;
-.v-toolbar__content {
+.navigation-bar-page {
+  display: flex;
   flex-wrap: wrap;
-  padding: 4px 16px !important;
+  padding: $standard-unit $micro-unit;
 
   @media only screen and (min-width: 1024px) {
-    padding-left: 64px !important;
-    padding-right: 32px !important;
+    padding-left: 64px;
+    padding-right: 32px;
   }
 
   .brand {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
 
     .brand-name {
       margin-left: 12px;
@@ -97,25 +98,13 @@ $font-size: 18px;
   }
 
   ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
 
     li {
-      margin: 0 32px;
-      font-size: $font-size;
       font-family: $Nunito-Sans;
-
-      a {
-        display: block;
-        color: $white;
-        text-decoration: none;
-      }
-
-      button {
-        font-size: $font-size !important;
-        font-weight: 400 !important;
-      }
     }
   }
 }
