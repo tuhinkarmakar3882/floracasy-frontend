@@ -16,20 +16,21 @@
 
       <ul class="visible-on-large-and-up">
         <li>
-          <nuxt-link to="/GoPremium"> Go Premium</nuxt-link>
+          <nuxt-link to="/PublicRoutes/GoPremium"> Go Premium</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/WriteAndEarn"> Write &amp; Earn</nuxt-link>
-        </li>
-        <li>
-          <nuxt-link to="/Authentication/SignInToContinue">
-            <button>Log in</button>
+          <nuxt-link to="/PublicRoutes/WriteAndEarn">
+            Write &amp; Earn
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/Authentication/SignInToContinue">
-            <button>Join Us</button>
-          </nuxt-link>
+          <button
+            v-ripple
+            class="secondary-btn"
+            @click="$router.push('/Authentication/SignInToContinue')"
+          >
+            Log in or Sign up
+          </button>
         </li>
       </ul>
     </div>
