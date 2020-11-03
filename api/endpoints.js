@@ -6,8 +6,8 @@ const endpoints = {
     refreshToken: '/auth/token/refresh/',
   },
   blog: {
-    fetch: 'blog/fetch',
-    create: 'blog/create',
+    fetch: 'blog/fetch/',
+    create: 'blog/create/',
     detail: 'blog/detail/',
     update: 'blog/update/',
     delete: 'blog/delete/',
@@ -20,8 +20,8 @@ const endpoints = {
     test: 'comment_system/',
   },
   help_and_support: {
-    fetch: 'help_and_support/fetch',
-    create: 'help_and_support/create',
+    fetch: 'help_and_support/fetch/',
+    create: 'help_and_support/create/',
     detail: 'help_and_support/detail/',
     update: 'help_and_support/update/',
     delete: 'help_and_support/delete/',
