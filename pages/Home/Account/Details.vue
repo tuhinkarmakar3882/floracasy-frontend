@@ -46,7 +46,8 @@
         <section
           v-for="activity in recentActivities"
           :key="activity.id"
-          class="activity my-8"
+          v-ripple
+          class="activity py-8 my-4"
         >
           <div class="content">
             <img :alt="activity.title" :src="activity.coverImage" />
