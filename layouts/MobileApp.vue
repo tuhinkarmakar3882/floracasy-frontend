@@ -1,7 +1,7 @@
 <template>
   <div class="app-layout">
     <header>
-      <h6>
+      <h6 v-ripple>
         <nuxt-link class="brand-name" to="/" style="color: white !important">
           Floracasy
         </nuxt-link>
