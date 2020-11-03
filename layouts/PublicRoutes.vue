@@ -2,7 +2,7 @@
   <div>
     <NavigationBar />
 
-    <main>
+    <main class="py-4">
       <nuxt />
     </main>
 

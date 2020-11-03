@@ -1,48 +1,48 @@
 <template>
-  <header class="navigation-bar-page dbx">
-    <section class="brand dbx" @click="navigateTo('/')">
-      <Logo :width="36" />
-      <p class="brand-name">Floracasy</p>
+  <header class="navigation-bar-page">
+    <h4 v-ripple class="mdi px-3 mdi-menu"></h4>
+    <section class="brand" @click="navigateTo('/')">
+      <!--      <Logo :width="36" />-->
+      <h5 v-ripple class="brand-name">Floracasy</h5>
     </section>
+    <button
+      v-ripple
+      class="success-outlined-btn ml-auto"
+      style="min-width: auto"
+      @click="$router.push('/Authentication/SignInToContinue')"
+    >
+      Get Started
+    </button>
 
-    <ul>
-      <li>
-        <button
-          v-ripple
-          class="secondary-btn"
-          @click="$router.push('/PublicRoutes/GoPremium')"
-        >
-          Go Premium
-        </button>
-      </li>
-      <li>
-        <button
-          v-ripple
-          class="secondary-btn"
-          @click="$router.push('/PublicRoutes/WriteAndEarn')"
-        >
-          Write &amp; Earn
-        </button>
-      </li>
-      <li>
-        <button
-          v-ripple
-          class="secondary-btn"
-          @click="$router.push('/Authentication/SignInToContinue')"
-        >
-          Log in or Sign up
-        </button>
-      </li>
-    </ul>
+    <!--    <div class="nav-drawer">-->
+    <!--      <ul>-->
+    <!--        <li>-->
+    <!--          <button-->
+    <!--            v-ripple-->
+    <!--            class="secondary-btn"-->
+    <!--            @click="$router.push('/PublicRoutes/GoPremium')"-->
+    <!--          >-->
+    <!--            Go Premium-->
+    <!--          </button>-->
+    <!--        </li>-->
+    <!--        <li>-->
+    <!--          <button-->
+    <!--            v-ripple-->
+    <!--            class="secondary-btn"-->
+    <!--            @click="$router.push('/PublicRoutes/WriteAndEarn')"-->
+    <!--          >-->
+    <!--            Write &amp; Earn-->
+    <!--          </button>-->
+    <!--        </li>-->
+    <!--      </ul>-->
+    <!--    </div>-->
   </header>
 </template>
 
 <script>
 export default {
   name: 'NavigationBar',
-  components: {
-    Logo: () => import('~/components/global/Logo'),
-  },
+  components: {},
   data() {
     return {
       drawer: false,
@@ -74,9 +74,14 @@ export default {
 @import 'assets/all-variables';
 
 .navigation-bar-page {
+  position: sticky;
+  top: -$single-unit;
+  z-index: $bring-to-front;
+  background-color: $nav-bar-bg;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  padding: $standard-unit $micro-unit;
+  padding: $micro-unit;
 
   @media only screen and (min-width: 1024px) {
     padding-left: 64px;
@@ -87,14 +92,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
-    .brand-name {
-      margin-left: 12px;
-      font-size: 20px;
-      color: $white;
-      text-decoration: none;
-      font-family: $Prata;
-    }
   }
 
   ul {
