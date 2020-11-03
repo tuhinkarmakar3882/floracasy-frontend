@@ -1,9 +1,9 @@
 <template>
   <header class="navigation-bar-page">
-    <h4 v-ripple class="mdi px-3 mdi-menu"></h4>
+    <h5 v-ripple class="mdi px-3 mdi-menu"></h5>
     <section class="brand" @click="navigateTo('/')">
       <!--      <Logo :width="36" />-->
-      <h5 v-ripple class="brand-name">Floracasy</h5>
+      <h6 v-ripple class="brand-name">Floracasy</h6>
     </section>
     <button
       v-ripple
@@ -81,7 +81,8 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: $micro-unit;
+  padding: $milli-unit $micro-unit;
+  box-shadow: $down-only-box-shadow;
 
   @media only screen and (min-width: 1024px) {
     padding-left: 64px;
