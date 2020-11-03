@@ -7,7 +7,7 @@
     </section>
     <button
       v-ripple
-      class="success-outlined-btn ml-auto"
+      class="secondary-outlined-btn ml-auto"
       style="min-width: auto"
       @click="$router.push('/Authentication/SignInToContinue')"
     >
