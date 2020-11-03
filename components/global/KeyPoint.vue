@@ -1,8 +1,10 @@
 <template>
   <div>
     <span
-      :color="tickColor"
-      :size="tickSize"
+      :style="{
+        color: tickColor,
+        fontSize: tickSize,
+      }"
       class="mdi mdi-check-circle-outline"
     />
     <span>
