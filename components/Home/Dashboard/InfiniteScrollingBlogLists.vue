@@ -8,11 +8,11 @@
       <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
           <nuxt-link to="/Home/Account/Details" class="no-underline">
-            {{ blog.author }}
+            {{ blog.author.displayName }}
           </nuxt-link>
           IN
           <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
-            {{ blog.category }}
+            {{ blog.category.name }}
           </nuxt-link>
         </p>
 
@@ -20,18 +20,18 @@
 
         <small class="timestamp mt-3">
           <span class="mdi mdi-clock-time-nine-outline" />
-          {{ blog.timestamp }}
+          {{ parse(blog.createdAt) }}
         </small>
 
         <img
           class="my-5"
-          :src="blog.image"
+          :src="blog.coverImage"
           :alt="blog.title"
           @click="navigateTo(`/Home/Blogs/${blog.id}`)"
         />
 
         <p>
-          {{ blog.summary }}...
+          {{ blog.subtitle }}...
           <nuxt-link :to="`/Home/Blogs/${blog.id}`"> Read More</nuxt-link>
         </p>
       </section>
@@ -39,15 +39,21 @@
       <section class="blog-actions px-4 pb-8">
         <div v-ripple class="like" @click="like(blog)">
           <i class="mdi mdi-heart-outline mr-2 inline-block align-middle" />
-          <span class="value inline-block align-middle">365</span>
+          <span class="value inline-block align-middle">
+            {{ blog.totalLikes }}
+          </span>
         </div>
         <div v-ripple class="comment" @click="comment(blog)">
           <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
-          <span class="value inline-block align-middle">527</span>
+          <span class="value inline-block align-middle">
+            {{ blog.totalComments }}
+          </span>
         </div>
         <div v-ripple class="share" @click="share(blog)">
           <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
-          <span class="value inline-block align-middle">209</span>
+          <span class="value inline-block align-middle">
+            {{ blog.totalShares }}
+          </span>
         </div>
       </section>
     </article>
@@ -56,6 +62,9 @@
 
 <script>
 import LoadingIcon from '@/components/LoadingIcon'
+import performTokenHandshake from '@/plugins/tokenInterceptor'
+import endpoints from '@/api/endpoints'
+import utility from '@/utils/utility'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
@@ -68,97 +77,40 @@ export default {
   },
   data() {
     return {
-      dataLoading: false,
-      blogs: [
-        {
-          id: 0,
-          title: 'Love your hair but suffering from Hair fall or hair damage?',
-          timestamp: 'Mon 13th Nov, 2018, 12:30 P.M.',
-          author: 'Jammie Johnson',
-          category: 'Beauty & Makeup',
-          image: 'https://picsum.photos/249',
-          summary:
-            'Explore hundreds of integrations for Ghost to speed up your workflow',
-        },
-        {
-          id: 1,
-          title: 'That Great Apple iPhone Review',
-          timestamp: 'Mon 12th Nov, 2018, 01:30 P.M.',
-          author: 'Annie Parker',
-          category: 'Technology',
-          image: 'https://picsum.photos/251',
-          summary:
-            'Explore hundreds of integrations for Ghost to speed up your workflow',
-        },
-        {
-          id: 2,
-          title: 'Now its easy to take care your underarms at home.',
-          timestamp: 'Mon 11th Nov, 2018, 6:41 P.M.',
-          author: 'Swiss Robinson',
-          category: 'Technology',
-          image: 'https://picsum.photos/252',
-          summary:
-            'Explore hundreds of integrations for Ghost to speed up your workflow',
-        },
-        {
-          id: 3,
-          title: "Bath - Hot water or Cold water? Let's see!",
-          timestamp: 'Mon 13th Nov, 2018, 5:59 P.M.',
-          author: 'Irina Caperina',
-          category: 'Health',
-          image: 'https://picsum.photos/253',
-          summary:
-            'Explore hundreds of integrations for Ghost to speed up your workflow',
-        },
-        {
-          id: 4,
-          title: 'That Great Apple Review',
-          timestamp: 'Mon 13th Nov, 2018, 6:30 P.M.',
-          author: 'Jammie Johnson',
-          category: 'Technology',
-          image: 'https://picsum.photos/254',
-          summary:
-            'Explore hundreds of integrations for Ghost to speed up your workflow',
-        },
-      ],
-      backendData: [
-        {
-          id: 1,
-          category: {
-            id: 4,
-            name: 'Test',
-            photo_url: 'https://picsum.photos/200',
-            is_visible: true,
-            has_photo: true,
-          },
-          title: 'This is a Test Blog',
-          coverImage: 'https://picsum.photos/500',
-          updatedAt: '2020-11-02T21:30:38.280116+05:30',
-          createdAt: '2020-11-02T21:20:09.264288+05:30',
-          subtitle: 'This is a test blog subtitle',
-          content:
-            '<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...a</p><p><br></p>',
-          status: 'READY_FOR_REVIEW',
-          totalLikes: 0,
-          totalComments: 0,
-          totalViews: 0,
-          totalEngagements: 0,
-          show: true,
-        },
-      ],
+      dataLoading: true,
+      backendData: null,
+      parse: utility.timeStringParser,
     }
   },
+
+  computed: {},
+
   watch: {
     mode: {
       handler() {
         this.dataLoading = true
         setTimeout(() => {
           this.dataLoading = false
-        }, 2000)
+        }, 1500)
       },
       deep: true,
     },
   },
+
+  async mounted() {
+    performTokenHandshake(this.$store, this.$axios)
+    this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
+
+    this.blogs = await this.$axios
+      .$get(endpoints.blog.fetch)
+      .then(({ data }) => data)
+      .catch((error) => {
+        console.error(error)
+      })
+
+    this.dataLoading = false
+  },
+
   methods: {
     navigateTo(path) {
       this.$router.push(path)
