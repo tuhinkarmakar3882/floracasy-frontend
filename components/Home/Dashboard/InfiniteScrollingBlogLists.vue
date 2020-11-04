@@ -16,7 +16,9 @@
           </nuxt-link>
         </p>
 
-        <h5 @click="navigateTo(`/Home/Blogs/${blog.id}`)">{{ blog.title }}</h5>
+        <h5 @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)">
+          {{ blog.title }}
+        </h5>
 
         <small class="timestamp mt-3">
           <span class="mdi mdi-clock-time-nine-outline" />
@@ -27,12 +29,14 @@
           class="my-5"
           :src="blog.coverImage"
           :alt="blog.title"
-          @click="navigateTo(`/Home/Blogs/${blog.id}`)"
+          @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
         />
 
         <p>
           {{ blog.subtitle }}...
-          <nuxt-link :to="`/Home/Blogs/${blog.id}`"> Read More</nuxt-link>
+          <nuxt-link :to="`/Home/Blogs/Details/${blog.id}`">
+            Read More</nuxt-link
+          >
         </p>
       </section>
 
