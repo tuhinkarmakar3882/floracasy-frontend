@@ -120,6 +120,7 @@ export default {
   }
 
   ul {
+    list-style: none;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 1rem;
@@ -132,13 +133,13 @@ export default {
 
   .nav-drawer {
     position: absolute;
-    top: 2 * $xxx-large-unit;
+    top: 2 * $xx-large-unit;
     left: 0;
     min-height: 100vh;
     background-color: $nav-bar-bg;
     box-shadow: $right-only-box-shadow;
     z-index: $bring-to-zero-level;
-    transition: all.2s ease-in-out;
+    transition: all 300ms cubic-bezier(0.23, 0.96, 1, 0.9);
 
     .nav-drawer-options {
       display: flex;
