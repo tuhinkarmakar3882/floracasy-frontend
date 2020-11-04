@@ -32,65 +32,24 @@
       <h6 class="heading-title mb-8">Write the Blog below</h6>
     </section>
     <client-only placeholder="loading...">
-      <vue-editor v-model="content" class="mb-8" />
+      <div class="test">
+        <vue-editor
+          id="editor"
+          v-model="content"
+          class="mb-8"
+          :editor-toolbar="customToolbar"
+        />
+        <vue-editor
+          id="content"
+          v-model="content"
+          class="mb-8 no-border"
+          disabled=""
+          :editor-toolbar="undefined"
+        />
+      </div>
     </client-only>
   </div>
 </template>
-
-<style lang="scss">
-@import 'assets/all-variables';
-
-.create-blog-page {
-  button {
-    min-width: auto;
-    height: auto;
-    width: auto;
-  }
-
-  .ql-picker-label.ql-active {
-    width: 110px;
-  }
-
-  .ql-toolbar.ql-snow {
-    position: sticky;
-    top: 0;
-    //top: 2 * $x-large-unit;
-    background-color: $editor-toolbar-background;
-    z-index: 1;
-    border: none;
-    box-shadow: $down-only-box-shadow;
-  }
-
-  .ql-container.ql-snow {
-    border: none;
-
-    .ql-editor {
-      padding: $standard-unit;
-      border: none;
-    }
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 $medium-unit;
-    height: 2 * $x-large-unit;
-    background-color: $nav-bar-bg;
-    box-shadow: $down-only-box-shadow;
-
-    button {
-      min-width: auto;
-      height: $xxx-large-unit;
-      width: 4 * $xx-large-unit;
-    }
-  }
-
-  main {
-    padding-top: $standard-unit;
-  }
-}
-</style>
 
 <script>
 import { VueEditor } from 'vue2-editor'
@@ -99,13 +58,23 @@ import TextInput from '@/components/global/TextInput'
 export default {
   name: 'Create',
   layout: 'EditorLayout',
-  middleware: 'protectedRoute',
+  // middleware: 'protectedRoute',
   components: {
     TextInput,
     VueEditor,
   },
   data() {
     return {
+      customToolbar: [
+        [
+          {
+            header: [false, 1, 2, 3, 4, 5, 6],
+          },
+        ],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['image', 'code-block'],
+      ],
       content: localStorage.getItem('draft')
         ? localStorage.getItem('draft')
         : `<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...</p>`,
@@ -133,3 +102,84 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+@import 'assets/all-variables';
+
+.create-blog-page {
+  button {
+    min-width: auto;
+    height: auto;
+    width: auto;
+  }
+
+  .ql-picker-label.ql-active {
+    width: 110px;
+  }
+
+  .ql-toolbar.ql-snow {
+    position: sticky;
+    top: 0;
+    //top: 2 * $x-large-unit;
+    background-color: $editor-toolbar-background;
+    z-index: 1;
+    border: none;
+    box-shadow: $down-only-box-shadow;
+  }
+
+  .test {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 1rem;
+
+    @media only screen and (min-width: $medium) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    blockquote,
+    ul,
+    ol {
+      margin: $medium-unit 0 !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      position: relative;
+      margin: $large-unit 0;
+
+      &::after {
+        content: '';
+        border-radius: $standard-unit;
+        position: absolute;
+        bottom: -$micro-unit;
+        left: 0;
+        height: $nano-unit;
+        width: clamp(100px, 20%, 250px);
+        background-color: darken($secondary-matte, $lighten-percentage);
+      }
+    }
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 $medium-unit;
+    height: 2 * $x-large-unit;
+    background-color: $nav-bar-bg;
+    box-shadow: $down-only-box-shadow;
+
+    button {
+      min-width: auto;
+      height: $xxx-large-unit;
+      width: 4 * $xx-large-unit;
+    }
+  }
+
+  main {
+    padding-top: $standard-unit;
+  }
+}
+</style>
