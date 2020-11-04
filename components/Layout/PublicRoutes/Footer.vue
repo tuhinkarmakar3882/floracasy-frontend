@@ -223,6 +223,7 @@ footer {
 
   .contact-us {
     ul {
+      list-style: none;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-column-gap: $standard-unit;
