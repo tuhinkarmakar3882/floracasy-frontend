@@ -29,6 +29,7 @@
     "nuxt": "^2.14.5",
     "nuxt-lazy-load": "^1.2.4",
     "nuxtjs-mdi-font": "^1.0.2",
+    "sanitize-html": "^2.1.1",
     "sass-loader": "^10.0.3",
     "vue2-editor": "^2.10.2",
     "vuex": "^3.5.1"

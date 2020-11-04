@@ -127,6 +127,7 @@ export default {
 
 .more-options-page {
   ul {
+    list-style: none;
     li {
       p {
         display: grid;
