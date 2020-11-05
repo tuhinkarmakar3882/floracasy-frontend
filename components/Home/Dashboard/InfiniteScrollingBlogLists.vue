@@ -66,7 +66,6 @@
 
 <script>
 import LoadingIcon from '@/components/LoadingIcon'
-import performTokenHandshake from '@/plugins/tokenInterceptor'
 import endpoints from '@/api/endpoints'
 import utility from '@/utils/utility'
 
@@ -102,14 +101,13 @@ export default {
   },
 
   async mounted() {
-    performTokenHandshake(this.$store, this.$axios)
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
 
     this.blogs = await this.$axios
       .$get(endpoints.blog.fetch)
       .then(({ data }) => data)
       .catch((error) => {
-        console.error(error)
+        console.error('From IBL', error)
       })
 
     this.dataLoading = false
