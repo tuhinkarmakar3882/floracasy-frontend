@@ -106,11 +106,10 @@ export default {
           .then((response) => {
             const frontendPayload = {
               ...commonPayload,
-              ...response,
             }
 
             this.updateInfo('Logging you in...')
-            this.login(frontendPayload)
+            this.login(frontendPayload, response)
           })
           .catch(() => {
             this.abort()
@@ -120,12 +119,14 @@ export default {
       }
     },
 
-    login(payload) {
+    login(payload, { token: tokens }) {
       this.updateInfo('Setting up things for you...')
       this.$store.commit('SET_USER', payload)
+      this.$store.commit('SET_TOKENS', tokens)
 
       this.updateInfo('Securing the Connection...')
       Cookie.set('authUser', payload)
+      Cookie.set('tokens', tokens)
 
       this.updateInfo('Welcome')
       this.$router.replace('/Home/Dashboard')
