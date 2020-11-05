@@ -5,23 +5,24 @@ export default {
   components: true,
 
   server: {
-    // host: '0.0.0.0',
+    host: '0.0.0.0',
     port: 3001,
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   router: {
     middleware: [],
   },
 
   plugins: [
-    '~/plugins/directives.js',
+    '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
+    '~/plugins/token-renewal-service.js',
     {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
@@ -76,6 +77,7 @@ export default {
 
   axios: {
     baseURL: secrets.baseUrl,
+    retry: { retries: 2 },
   },
 
   css: [
