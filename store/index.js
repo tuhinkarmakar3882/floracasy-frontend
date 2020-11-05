@@ -5,6 +5,7 @@ const cookieParser = process.server ? require('cookieparser') : undefined
 export const state = () => {
   return {
     authUser: null,
+    tokens: null,
   }
 }
 
@@ -18,7 +19,7 @@ export const getters = {
   },
 
   getAuthenticationTokens(state) {
-    return state.authUser ? state.authUser.token : null
+    return state.tokens
   },
 }
 
@@ -27,21 +28,23 @@ export const mutations = {
     state.authUser = user
   },
   SET_TOKENS(state, tokens) {
-    state.authUser.token.access = tokens.access
-    state.authUser.token.refresh = tokens.refresh
+    state.tokens = tokens
   },
 }
 
 export const actions = {
   nuxtServerInit({ commit }, { req }) {
     let authUser = null
+    let tokens = null
     if (req.headers.cookie) {
       const parsed = cookieParser.parse(req.headers.cookie)
       try {
         authUser = JSON.parse(parsed.authUser)
+        tokens = JSON.parse(parsed.tokens)
       } catch (ignoredError) {}
     }
     commit('SET_USER', authUser)
+    commit('SET_TOKENS', tokens)
   },
 
   login({ commit }, { user }) {
