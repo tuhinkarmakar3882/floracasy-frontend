@@ -22,7 +22,7 @@
 
         <small class="timestamp mt-3">
           <span class="mdi mdi-clock-time-nine-outline" />
-          {{ parse(blog.createdAt) }}
+          {{ new Date(blog.createdAt) }}
         </small>
 
         <img
