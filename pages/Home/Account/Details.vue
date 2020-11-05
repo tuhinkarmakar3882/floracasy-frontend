@@ -65,7 +65,7 @@
       </div>
 
       <div v-else class="no-activity">
-        <GoogleIcon style="width: 56px" />
+        <Logo style="width: 56px" />
         <p class="my-5">It's Lonely Here...</p>
         <button
           v-ripple
@@ -91,13 +91,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
-import performTokenHandshake from '@/plugins/tokenInterceptor'
-import GoogleIcon from '@/components/Icons/GoogleIcon'
 import LoadingIcon from '@/components/LoadingIcon'
+import Logo from '@/components/global/Logo'
 
 export default {
   name: 'Details',
-  components: { LoadingIcon, GoogleIcon },
+  components: { Logo, LoadingIcon },
   layout: 'MobileApp',
   middleware: 'protectedRoute',
 
@@ -117,7 +116,6 @@ export default {
   },
 
   async mounted() {
-    performTokenHandshake(this.$store, this.$axios)
     this.loadingRecentActivities = true
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
 
