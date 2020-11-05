@@ -15,7 +15,7 @@
       </h3>
       <small class="timestamp">
         <span class="mdi mdi-clock-time-nine-outline" />
-        {{ new Date(blog.createdAt) }}
+        {{ parse(blog.createdAt) }}
       </small>
 
       <img

@@ -1,17 +1,6 @@
 const utility = {
-  timeStringParser(isoString) {
-    const segments = isoString.split(/\D+/)
-    return new Date(
-      Date.UTC(
-        segments[0],
-        --segments[1],
-        segments[2],
-        segments[3],
-        segments[4],
-        segments[5],
-        segments[6]
-      )
-    )
+  timeStringParser(timeString) {
+    return new Date(timeString)
   },
 
   blogImageParser(blogToBeRendered) {
