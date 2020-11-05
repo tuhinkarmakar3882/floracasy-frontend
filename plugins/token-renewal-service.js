@@ -26,8 +26,7 @@ function renewToken($axios, store, redirect) {
         $axios.setToken(response.access, 'Bearer')
         // console.info('All Good to go!')
       })
-      .catch((e) => {
-        console.warn(e)
+      .catch(() => {
         console.warn('Refresh Token Has Expired', storeTokens.refresh)
 
         console.error('Should be logged out')
@@ -39,11 +38,7 @@ function renewToken($axios, store, redirect) {
         redirect('/Authentication/SignInToContinue')
       })
   } else {
-    console.log(
-      `Not Doing any renewal because \n The Process is ${
-        process.server ? 'server' : 'client'
-      } \n Auth USer State is: ${store.state.authUser}`
-    )
+    console.log(`Renewal Service Stopped`)
     clearInterval(interval)
   }
 }
