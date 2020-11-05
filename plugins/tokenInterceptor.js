@@ -1,6 +1,7 @@
 import endpoints from '@/api/endpoints'
 
-export default function performTokenHandshake(store, $axios) {
+// Todo Deprecated.
+export default (store, $axios) => {
   const storeTokens = store.getters.getAuthenticationTokens
 
   $axios.setToken(storeTokens.access, 'Bearer')

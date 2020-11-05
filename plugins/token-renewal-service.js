@@ -48,7 +48,7 @@ function renewToken($axios, store, redirect) {
   }
 }
 
-export default ({$axios, store, redirect}) => {
+export default ({ $axios, store, redirect }) => {
   renewToken($axios, store, redirect)
   interval = setInterval(
     () => {
