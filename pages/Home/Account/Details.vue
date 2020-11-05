@@ -9,23 +9,27 @@
         </div>
       </div>
 
-      <section v-if="statisticsItem" class="stats">
-        <div class="item">
-          <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
-          <p class="type">Blogs</p>
-        </div>
-        <div class="item">
-          <span class="number">{{ statisticsItem['totalEngagements'] }}</span>
-          <p class="type">Engagements</p>
-        </div>
-        <div class="item">
-          <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
-          <p class="type">Followers</p>
-        </div>
-      </section>
-      <section v-else class="text-center">
-        <p>Loading Profile Data...</p>
-      </section>
+      <div>
+        <section v-if="statisticsItem" class="stats">
+          <div class="item">
+            <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
+            <p class="type">Blogs</p>
+          </div>
+          <div class="item">
+            <span class="number">{{ statisticsItem['totalEngagements'] }}</span>
+            <p class="type">Engagements</p>
+          </div>
+          <div class="item">
+            <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
+            <p class="type">Followers</p>
+          </div>
+        </section>
+
+        <section v-else class="text-center my-8">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p>Loading Profile Data...</p>
+        </section>
+      </div>
 
       <section class="other-info">
         <p class="about text-center">
@@ -39,7 +43,7 @@
       </section>
     </section>
 
-    <section class="recent-activity">
+    <section v-if="!loadingRecentActivities" class="recent-activity">
       <h4 class="heading-title">Recent Activities</h4>
 
       <div v-if="recentActivities">
@@ -72,6 +76,15 @@
         </button>
       </div>
     </section>
+
+    <section v-else class="recent-activity">
+      <h4 class="heading-title">Recent Activities</h4>
+
+      <section class="text-center my-8">
+        <LoadingIcon class="mt-4 mb-6" />
+        <p>Loading Recent Activities Data...</p>
+      </section>
+    </section>
   </div>
 </template>
 
@@ -80,10 +93,11 @@ import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
 import performTokenHandshake from '@/plugins/tokenInterceptor'
 import GoogleIcon from '@/components/Icons/GoogleIcon'
+import LoadingIcon from '@/components/LoadingIcon'
 
 export default {
   name: 'Details',
-  components: { GoogleIcon },
+  components: { LoadingIcon, GoogleIcon },
   layout: 'MobileApp',
   middleware: 'protectedRoute',
 
@@ -92,6 +106,7 @@ export default {
       backendData: null,
       statisticsItem: null,
       recentActivities: null,
+      loadingRecentActivities: null,
     }
   },
 
@@ -103,6 +118,7 @@ export default {
 
   async mounted() {
     performTokenHandshake(this.$store, this.$axios)
+    this.loadingRecentActivities = true
     this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
 
     this.backendData = await this.$axios
@@ -131,6 +147,7 @@ export default {
       .catch((error) => {
         console.error(error)
       })
+    this.loadingRecentActivities = false
   },
 
   head() {
