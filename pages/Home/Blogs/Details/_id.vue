@@ -19,13 +19,14 @@
       </small>
 
       <img
+        v-if="blog.coverImage"
         class="my-5 blog-intro-image"
         :src="blog.coverImage"
         :alt="blog.title"
         style="width: 100%; object-fit: cover; max-height: 250px"
       />
       <article
-        class="blog-body my-6 px-4 ql-container ql-snow ql-disabled"
+        class="blog-body my-6"
         v-html="noXSS(blog.content, sanitizationConfig)"
       />
     </section>
@@ -56,6 +57,7 @@ export default {
     })
     return { blog: response.details }
   },
+
   data() {
     return {
       parse: utility.timeStringParser,
@@ -193,30 +195,33 @@ export default {
     box-shadow: $down-only-box-shadow;
   }
 
-  .blog {
+  .blog-body {
     blockquote,
     ul,
-    ol {
-      margin: $medium-unit 0 !important;
+    ol,
+    hr {
+      margin: $large-unit 0;
     }
 
     h1,
     h2,
     h3,
-    h4 {
+    h4,
+    h5,
+    h6 {
       position: relative;
       margin: $large-unit 0;
 
-      &::after {
-        content: '';
-        border-radius: $standard-unit;
-        position: absolute;
-        bottom: -$micro-unit;
-        left: 0;
-        height: $nano-unit;
-        width: clamp(100px, 20%, 250px);
-        background-color: darken($secondary-matte, $lighten-percentage);
-      }
+      //&::after {
+      //  content: '';
+      //  border-radius: $standard-unit;
+      //  position: absolute;
+      //  bottom: -$micro-unit;
+      //  left: 0;
+      //  height: $nano-unit;
+      //  width: clamp(100px, 20%, 250px);
+      //  background-color: darken($secondary-matte, $lighten-percentage);
+      //}
     }
   }
 }
