@@ -7,6 +7,7 @@
         :key="index"
         v-ripple="`${option.color}5F`"
         class="px-4 py-2"
+        @click="$router.push(option.route)"
       >
         <p>
           <span
@@ -44,41 +45,49 @@ export default {
           name: 'Preference',
           icon: 'mdi mdi-cog',
           color: '#8FF2E1',
+          route: '/Home/More/Preferences',
         },
         {
           name: 'Go Premium',
           icon: 'mdi mdi-crown',
           color: '#f8e102',
+          route: '/Home/More/GoPremium',
         },
         {
           name: 'Payments',
           icon: 'mdi mdi-wallet',
           color: '#329b32',
+          route: '/Home/More/Payments',
         },
         {
           name: 'How to Earn?',
           icon: 'mdi mdi-currency-usd',
           color: '#f5a049',
+          route: '/Home/More',
         },
         {
           name: 'Refer & Earn',
           icon: 'mdi mdi-account-multiple-plus',
           color: '#00B4B4',
+          route: '/Home/More',
         },
         {
           name: 'About Us',
           icon: 'mdi mdi-information',
           color: '#8c70fd',
+          route: '/Home/More/About',
         },
         {
           name: 'Help & Support',
           icon: 'mdi mdi-lifebuoy',
           color: '#5dd75d',
+          route: '/Home/More/HelpAndSupport',
         },
         {
           name: 'FAQ',
           icon: 'mdi mdi-help-circle',
           color: '#ABEDAB',
+          route: '/Home/More/FAQ',
         },
       ],
     }
