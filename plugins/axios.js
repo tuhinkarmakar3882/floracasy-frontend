@@ -16,11 +16,10 @@ export default function ({ $axios }) {
         console.warn('No Credentials were Provided')
         location.reload()
       }
-      if (error.data.details == errorMessages.invalidTokens) {
+      if (error.data.details === errorMessages.invalidTokens) {
         console.warn('Credentials Expired.')
         location.reload()
       }
     }
-    return Promise.reject(error)
   })
 }
