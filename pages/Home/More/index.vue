@@ -63,7 +63,7 @@ export default {
           name: 'Write & Earn',
           icon: 'mdi mdi-currency-usd',
           color: '#f5a049',
-          route: '/Home/More',
+          route: '/Home/More/WriteAndEarn',
         },
         {
           name: 'Refer & Earn',
