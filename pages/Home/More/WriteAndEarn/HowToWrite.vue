@@ -4,7 +4,7 @@
       {{ pageTitle }}
     </template>
     <template slot="main" class="my-4">
-      <main>
+      <main class="px-4 my-4">
         <h4>How to write</h4>
 
         <p class="#">
@@ -197,17 +197,6 @@
         </div>
 
         <hr />
-
-        <div class="why write">
-          <h3>Why write with us & how to earn by writing</h3>
-
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consequuntur dolore, explicabo incidunt libero mollitia neque
-            possimus sapiente sit tenetur! Accusamus aut error facilis fugiat
-            harum incidunt inventore neque quae veniam.
-          </p>
-        </div>
       </main>
     </template>
   </AppFeel>
@@ -237,3 +226,39 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+@import 'assets/all-variables';
+
+.how-to-write-page {
+  main {
+    blockquote,
+    ul,
+    ol,
+    hr {
+      margin: $large-unit 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      position: relative;
+      margin: $large-unit 0;
+
+      //&::after {
+      //  content: '';
+      //  border-radius: $standard-unit;
+      //  position: absolute;
+      //  bottom: -$micro-unit;
+      //  left: 0;
+      //  height: $nano-unit;
+      //  width: clamp(100px, 20%, 250px);
+      //  background-color: darken($secondary-matte, $lighten-percentage);
+      //}
+    }
+  }
+}
+</style>

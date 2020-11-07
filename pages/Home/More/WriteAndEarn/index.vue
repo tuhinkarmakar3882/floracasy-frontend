@@ -4,7 +4,7 @@
       {{ pageTitle }}
     </template>
     <template slot="main">
-      <main class="my-4">
+      <main class="my-2">
         <ul>
           <li
             v-for="(option, index) in options"
@@ -49,7 +49,7 @@ export default {
           name: 'Earn By Writing',
           icon: 'mdi mdi-currency-usd',
           color: '#4fca4f',
-          route: '/Home/More/WriteAndEarn',
+          route: '/Home/More/WriteAndEarn/Earning',
         },
       ],
     }

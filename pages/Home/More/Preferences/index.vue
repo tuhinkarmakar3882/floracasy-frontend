@@ -2,8 +2,8 @@
   <AppFeel class="preferences-page">
     <template slot="app-bar-title"> Preferences </template>
 
-    <template slot="main" class="my-4">
-      <main class="my-4">
+    <template slot="main">
+      <main class="my-2">
         <ul>
           <li
             v-for="(option, index) in options"
