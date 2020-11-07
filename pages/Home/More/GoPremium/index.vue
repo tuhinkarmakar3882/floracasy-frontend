@@ -110,6 +110,18 @@ export default {
       ],
     }
   },
+  head() {
+    return {
+      title: this.pageTitle,
+      meta: [
+        {
+          // hid: 'description',
+          // name: 'description',
+          // content: 'My custom description',
+        },
+      ],
+    }
+  },
 }
 </script>
 

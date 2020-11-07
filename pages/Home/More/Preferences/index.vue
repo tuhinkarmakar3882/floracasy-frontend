@@ -42,6 +42,7 @@ export default {
   components: { AppFeel },
   data() {
     return {
+      pageTitle: 'Preferences',
       options: [
         {
           name: 'Edit Profile',
@@ -66,6 +67,18 @@ export default {
           icon: 'mdi mdi-bookmark',
           color: '#18e5e5',
           route: '/Home/More/Preferences',
+        },
+      ],
+    }
+  },
+  head() {
+    return {
+      title: this.pageTitle,
+      meta: [
+        {
+          // hid: 'description',
+          // name: 'description',
+          // content: 'My custom description',
         },
       ],
     }
