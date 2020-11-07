@@ -4,7 +4,7 @@
       <h5 v-ripple class="mdi mdi-arrow-left" @click="$router.back()" />
       <p class="ml-6"><slot name="app-bar-title" /></p>
     </header>
-    <main class="px-4">
+    <main>
       <slot name="main"></slot>
     </main>
   </div>
