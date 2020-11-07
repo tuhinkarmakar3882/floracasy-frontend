@@ -30,7 +30,7 @@ export default {
     align-items: center;
     padding: 0 $medium-unit;
     height: 2 * $x-large-unit;
-    background-color: $nav-bar-bg;
+    background-color: lighten($nav-bar-bg, $darken-percentage);
     box-shadow: $down-only-box-shadow;
 
     p {
