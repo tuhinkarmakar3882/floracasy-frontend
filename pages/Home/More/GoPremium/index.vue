@@ -4,7 +4,7 @@
       {{ pageTitle }}
     </template>
     <template slot="main" class="my-4">
-      <section v-for="pack in premiumPacks" :key="pack.id">
+      <section v-for="pack in premiumPacks" :key="pack.id" class="px-4">
         <div :class="pack.class">
           <h3 class="heading-title">{{ pack.title }}</h3>
           <p>{{ pack.details }}</p>
