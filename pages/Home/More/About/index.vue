@@ -3,23 +3,22 @@
     <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
-      <main class="my-2 px-4">
-        <!--        <Logo :width="84" />-->
+      <main class="my-4 px-4">
         <div
           style="
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
           "
         >
-          <h4>Floracasy</h4>
-          <button v-ripple class="primary-outlined-btn">Let's Go</button>
+          <Logo :width="84" />
+          <h4 class="my-4">Floracasy</h4>
         </div>
 
         <hr />
         About us Read. write
         <hr />
-
         <div class="intro">
           <hr />
 
