@@ -50,7 +50,6 @@ export default {
   name: 'BlogDetails',
   components: { LoadingIcon },
   layout: 'MobileApp',
-  middleware: 'publicRoute',
 
   async asyncData({ $axios, params }) {
     const response = await $axios.$get(endpoints.blog.detail, {

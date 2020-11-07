@@ -4,7 +4,7 @@ import endpoints from '@/api/endpoints'
 let interval
 
 //  Todo Remove Logs.
-function renewToken($axios, store) {
+function renewToken($axios, store, redirect) {
   if (process.client && store.state.authUser) {
     // console.log('Starting Renewal')
     const storeTokens = store.getters.getAuthenticationTokens
@@ -35,8 +35,7 @@ function renewToken($axios, store) {
         Cookie && Cookie.remove('tokens')
 
         store.dispatch('logout')
-        window.location = '/Authentication/SignInToContinue'
-        // redirect('/Authentication/SignInToContinue')
+        redirect('/Authentication/SignInToContinue')
       })
   } else {
     console.log(`Renewal Service Stopped`)
@@ -44,11 +43,11 @@ function renewToken($axios, store) {
   }
 }
 
-export default ({ $axios, store }) => {
-  renewToken($axios, store)
+export default ({ $axios, store, redirect }) => {
+  renewToken($axios, store, redirect)
   interval = setInterval(
     () => {
-      renewToken($axios, store)
+      renewToken($axios, store, redirect)
     },
     utility.convertIntoMilliseconds({
       minutes: 9,

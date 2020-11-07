@@ -1,8 +1,7 @@
 'use strict'
 
-export default function ({ store }) {
+export default function ({ store, redirect }) {
   if (!store.state.authUser) {
-    window.location = '/Authentication/SignInToContinue'
-    // return redirect('/Authentication/SignInToContinue')
+    return redirect('/Authentication/SignInToContinue')
   }
 }
