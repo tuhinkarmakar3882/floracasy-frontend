@@ -1,6 +1,6 @@
 <template>
   <AppFeel class="preferences-page">
-    <template slot="app-bar-title"> Preferences </template>
+    <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
       <main class="my-2">
