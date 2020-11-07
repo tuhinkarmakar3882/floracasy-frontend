@@ -41,8 +41,8 @@ export default {
       options: [
         {
           name: 'How to Write',
-          icon: 'mdi mdi-pencil',
-          color: '#f5a049',
+          icon: 'mdi mdi-pencil-circle-outline',
+          color: '#6DD0BF',
           route: '/Home/More/WriteAndEarn/HowToWrite',
         },
         {
