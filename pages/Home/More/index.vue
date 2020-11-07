@@ -60,7 +60,7 @@ export default {
           route: '/Home/More/Payments',
         },
         {
-          name: 'How to Earn?',
+          name: 'Write & Earn',
           icon: 'mdi mdi-currency-usd',
           color: '#f5a049',
           route: '/Home/More',
