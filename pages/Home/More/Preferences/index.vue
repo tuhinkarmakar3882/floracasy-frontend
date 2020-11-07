@@ -1,8 +1,6 @@
 <template>
   <AppFeel class="preferences-page">
-    <template slot="app-bar-title">
-      <p class="ml-6">Preferences</p>
-    </template>
+    <template slot="app-bar-title"> Preferences </template>
 
     <template slot="main" class="my-4">
       <main class="my-4">
