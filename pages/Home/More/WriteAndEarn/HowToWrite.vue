@@ -5,7 +5,7 @@
     </template>
     <template slot="main" class="my-4">
       <main class="px-4 my-4">
-        <h4>How to write</h4>
+        <h4 class="heading-title">How to write</h4>
 
         <p class="#">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
@@ -15,7 +15,7 @@
         </p>
 
         <div class="adding title">
-          <h4>How to add title</h4>
+          <h4 class="heading-title">How to add title</h4>
 
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -27,18 +27,19 @@
         </div>
 
         <div class="adding subtitles">
-          <h4>How to add sub title</h4>
+          <h4 class="heading-title">How to add sub title</h4>
 
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-          dolore, explicabo incidunt libero mollitia neque possimus sapiente sit
-          tenetur! Accusamus aut error facilis fugiat harum incidunt inventore
-          neque quae veniam.
-
-          <img scr="img_screenshort" alt="gify to demostrate add sub title" />
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Consequuntur dolore, explicabo incidunt libero mollitia neque
+            possimus sapiente sit tenetur! Accusamus aut error facilis fugiat
+            harum incidunt inventore neque quae veniam.
+          </p>
+          <img src="img_screenshort" alt="gify to demostrate add sub title" />
         </div>
 
         <div class="catagory adding">
-          <h4>How to choose a catagory</h4>
+          <h4 class="heading-title">How to choose a catagory</h4>
           <p>
             why catagory is important by these line we will going to demonstrate
             why a caatagory is important &how to add category in your blog ,
@@ -57,14 +58,14 @@
         </div>
 
         <div class="Toolbox">
-          <h4>Function of Toolbox</h4>
+          <h4 class="heading-title">Function of Toolbox</h4>
 
           <p>
             why toolbox is important & its uses.these line we will going to
             demonstrate why a caatagory is important
           </p>
 
-          <h4>"Normal :"</h4>
+          <h4 class="heading-title">"Normal :"</h4>
 
           <p>
             This is mainly use for headline .you can use this tool to chng your
@@ -110,12 +111,9 @@
             <li>Alignment (icon)</li>
           </ul>
 
-          <h3>[icon of double cotaion ]</h3>
+          <h1 class="mdi mdi-format-quote-open" />
 
-          <p>
-            Sorry i don't know about this sign . Developer can write this
-            portion for you
-          </p>
+          <p>This is a Blockquote</p>
 
           <br />
 
@@ -174,7 +172,7 @@
 
           <h3>How to add colour</h3>
 
-          <h4>Use of A (icon)</h4>
+          <h4 class="heading-title">Use of A (icon)</h4>
 
           <p>
             This tool is mainly use to add colour your text. this is a good idea

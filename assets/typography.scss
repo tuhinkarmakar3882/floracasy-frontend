@@ -79,6 +79,11 @@ body {
     font-family: $Raleway;
     transition: all 150ms ease-in-out;
   }
+
+  ul, li {
+    font-family: $Nunito;
+    font-weight: 300;
+  }
 }
 
 .heading-title {
