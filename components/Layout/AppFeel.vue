@@ -2,9 +2,9 @@
   <div class="app">
     <header>
       <h5 v-ripple class="mdi mdi-arrow-left" @click="$router.back()" />
-      <slot name="app-bar-title" />
+      <p class="ml-6"><slot name="app-bar-title" /></p>
     </header>
-    <main>
+    <main class="px-4">
       <slot name="main"></slot>
     </main>
   </div>
@@ -45,10 +45,10 @@ export default {
     background-color: $body-background;
   }
 
-  button {
-    min-width: auto;
-    height: $xxx-large-unit;
-    width: 3.5 * $xx-large-unit;
-  }
+  //button {
+  //  min-width: auto;
+  //  height: $xxx-large-unit;
+  //  width: 3.5 * $xx-large-unit;
+  //}
 }
 </style>
