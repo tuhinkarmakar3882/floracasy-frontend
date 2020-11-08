@@ -1,10 +1,7 @@
 'use strict'
 
-import clientSideAuthenticationStateInitializer from '@/plugins/authenticationStateInitializer'
-
 export default function ({ store, redirect }) {
-  clientSideAuthenticationStateInitializer({ store })
-  if (!store.state.authUser) {
+  if (!store.state.authState) {
     return redirect('/Authentication/SignInToContinue')
   }
 }
