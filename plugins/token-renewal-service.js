@@ -47,12 +47,7 @@ function renewToken($axios, store, redirect) {
 
 export default ({ $axios, store, redirect }) => {
   renewToken($axios, store, redirect)
-  interval = setInterval(
-    () => {
-      renewToken($axios, store, redirect)
-    },
-    utility.convertIntoMilliseconds({
-      minutes: 9,
-    })
-  )
+  interval = setInterval(() => {
+    renewToken($axios, store, redirect)
+  }, utility.convertIntoMilliseconds(secrets.refreshTime))
 }
