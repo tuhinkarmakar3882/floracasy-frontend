@@ -2,6 +2,7 @@
   <div class="dashboard-page">
     <Carousel :carousel-items="carouselItems" />
 
+    <a href="/">BACK TO HOME</a>
     <div class="tab-bar">
       <p
         v-ripple

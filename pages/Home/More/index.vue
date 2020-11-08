@@ -99,6 +99,7 @@ export default {
     performLogout() {
       this.$axios.setToken(false)
       Cookie.remove('authUser')
+      Cookie.remove('token')
       this.$store.dispatch('logout')
       this.$router.push('/')
     },
