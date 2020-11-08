@@ -5,49 +5,43 @@
     </template>
     <template slot="main" class="my-4">
       <main class="px-4 my-4">
-        <h4 class="heading-title">How to write</h4>
+        <section v-for="(guideline, index) in guidelines" :key="index">
+          <h4 class="heading-title">{{ guideline.title }}</h4>
+          <p>{{ guideline.description }}</p>
+          <img
+            v-if="guideline.image"
+            :src="guideline.image"
+            :alt="guideline.title"
+          />
+        </section>
 
-        <p class="#">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur
-          dolore, explicabo incidunt libero mollitia neque possimus sapiente sit
-          tenetur! Accusamus aut error facilis fugiat harum incidunt inventore
-          neque quae veniam.
-        </p>
-
-        <div class="adding title">
-          <h4 class="heading-title">How to add title</h4>
-
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into
-
-          <img src="img_screenshort" alt="gify demonstrate adding title" />
-        </div>
-
-        <div class="adding subtitles">
+        <div>
           <h4 class="heading-title">How to add sub title</h4>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consequuntur dolore, explicabo incidunt libero mollitia neque
-            possimus sapiente sit tenetur! Accusamus aut error facilis fugiat
-            harum incidunt inventore neque quae veniam.
+            Subtitles are as important as title. It's a must to add a subtitle
+            otherwise your blog is not going to publish. To add a subtitle, To
+            add a title, you just need to fill up the input box as shown in the
+            below illustration.
           </p>
-          <img src="img_screenshort" alt="gify to demostrate add sub title" />
+          <img
+            src="http://img_screenshort"
+            alt="gify to demostrate add sub title"
+          />
         </div>
 
-        <div class="catagory adding">
-          <h4 class="heading-title">How to choose a catagory</h4>
+        <div>
+          <h4 class="heading-title">How to choose a category</h4>
           <p>
-            why catagory is important by these line we will going to demonstrate
-            why a caatagory is important &how to add category in your blog ,
-            otherwise your blog will not published .
+            Category is a important part of your blog &amp; also its mandatory
+            to choose a category according to your blog. You can also add a
+            category if you want but for this you need show a specific reason
+            that why you are going to add a new category , our team will you out
+            in that case.
 
-            <label for="category">Choose a category:</label>
+            <label>Choose a category:</label>
 
-            <select id="category" name="category">
+            <select name="category">
               <option value="category">Options</option>
               <option value="music">Music</option>
               <option value="Technology ">Technology</option>
@@ -57,15 +51,17 @@
           </p>
         </div>
 
-        <div class="Toolbox">
+        <div>
           <h4 class="heading-title">Function of Toolbox</h4>
 
           <p>
-            why toolbox is important & its uses.these line we will going to
-            demonstrate why a caatagory is important
+            Toolbox mainly give a styling to your content . By using toolbox you
+            can style your containt . you can add list ; colour ; alignment
+            &amp; many more whatever you want . each &amp; every element of
+            toolbox will describe below.
           </p>
 
-          <h4 class="heading-title">"Normal :"</h4>
+          <h4 class="heading-title">Types of Headings</h4>
 
           <p>
             This is mainly use for headline .you can use this tool to chng your
@@ -83,21 +79,30 @@
           </ul>
 
           <h3>B :</h3>
-          <p>"B" stands for "Bold" so its use to make bold your words</p>
+          <p>
+            &quot;B&quot; stands for &quot;Bold&quot; so its use to make bold
+            your words
+          </p>
 
           <h3>I :</h3>
-          <p>"I" stands for "Italic" so its use to make Italic your words</p>
+          <p>
+            &quot;I&quot; stands for &quot;Italic&quot; so its use to make
+            Italic your words
+          </p>
 
           <h3>U :</h3>
-          <p>"U" stands for "Underline" so its use to get Underline</p>
+          <p>
+            &quot;U&quot; stands for &quot;Underline&quot; so its use to get
+            Underline
+          </p>
 
-          <h3>$(sorry i couldn't find the exact icon):</h3>
+          <h3>$(sorry i couldn&#39;t find the exact icon):</h3>
 
-          <p>"$" stands for scratch through ..so its use for it.</p>
+          <p>&quot;$&quot; stands for scratch through ..so its use for it.</p>
 
           <h3>Alignments</h3>
 
-          <img src="#" alt=" screenshort or gify" />
+          <img src="#0.1_" alt=" screenshort or gify" />
 
           <p>
             You can easily change your alignment by using these tools. These are
@@ -124,50 +129,44 @@
           <h3>How to create list in your content</h3>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consequuntur dolore, explicabo incidunt libero mollitia neque
-            possimus sapiente sit tenetur! Accusamus aut error facilis fugiat
-            harum incidunt inventore neque quae veniam.
+            This element is use to add list in your content . you can add
+            verious type of list in your blog . we will describe types of list
+            which you can add below
           </p>
 
-          <img src="#" alt="screen recording" />
+          <img src="#0.1_" alt="screen recording" />
 
           <ul>
             <li>
-              Unorder list (icon) : Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Consequuntur dolore, explicabo incidunt libero
-              mollitia neque possimus sapiente sit tenetur! Accusamus aut error
-              facilis fugiat harum incidunt inventore neque quae veniam.
+              Unorder list (icon) : you can add a ordered list simple by using
+              this element. we will add picture so that you can use it without
+              any hassle.
             </li>
             <br />
 
             <li>
-              Order list (icon): Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Consequuntur dolore, explicabo incidunt libero
-              mollitia neque possimus sapiente sit tenetur! Accusamus aut error
-              facilis fugiat harum incidunt inventore neque quae veniam.
+              Order list (icon) : you can add a Unordered list simple by using
+              this element. we will add picture so that you can use it without
+              any hassle.
             </li>
 
             <br />
 
             <li>
-              Normal list (icon ) : Lorem ipsum dolor sit amet, consectetur
-              adipisicing elit. Consequuntur dolore, explicabo incidunt libero
-              mollitia neque possimus sapiente sit tenetur! Accusamus aut error
-              facilis fugiat harum incidunt inventore neque quae veniam.
+              Normal list (icon ) : you can add a ordered list simple by using
+              this element. we will add picture so that you can use it without
+              any hassle.
             </li>
             <br />
           </ul>
 
           <h3>How to set position</h3>
 
-          <img src="#" alt="screenshorts" />
+          <img src="#0.1_" alt="screenshorts" />
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Consequuntur dolore, explicabo incidunt libero mollitia neque
-            possimus sapiente sit tenetur! Accusamus aut error facilis fugiat
-            harum incidunt inventore neque quae veniam.
+            You can simply set your position by using this particular element
+            from toolbox.
           </p>
 
           <h3>How to add colour</h3>
@@ -180,7 +179,7 @@
             .
           </p>
 
-          <img src="#" alt=" screenshort" />
+          <img src="#0.1_" alt=" screenshort" />
 
           <h3>link (icon)</h3>
 
@@ -191,10 +190,8 @@
 
           <h3>last (icon)</h3>
 
-          <p>i don't know it's use only developer can explain this</p>
+          <p>i don&#39;t know it&#39;s use only developer can explain this</p>
         </div>
-
-        <hr />
       </main>
     </template>
   </AppFeel>
@@ -210,6 +207,20 @@ export default {
   data() {
     return {
       pageTitle: 'How to Write',
+      guidelines: [
+        {
+          title: 'How to write',
+          description: `We mainly give you a guidance so that you can easily create your blog
+          with a hassle free experience. If you follow our recommended few steps
+          then it will be great to create . The step are write down below please
+          go and check it out. Hopefully it will be helpful for you.`,
+        },
+        {
+          title: 'How to add title',
+          description: `"Title" is one of the most important & a required part of your blog,
+          To add a title, you just need to fill up the input box as shown in the below illustration`,
+        },
+      ],
     }
   },
   head() {
