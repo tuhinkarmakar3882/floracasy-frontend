@@ -31,10 +31,13 @@ export default {
       src: '~/plugins/axios.js',
       mode: 'client',
     },
+    {
+      src: '~/plugins/clientAuthStateInit.js',
+      mode: 'client',
+    },
   ],
 
   modules: [
-    'cookie-universal-nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxt/content',
