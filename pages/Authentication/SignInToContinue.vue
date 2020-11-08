@@ -45,8 +45,6 @@ import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import * as secrets from '@/environmentalVariables'
 
-const Cookie = process.client ? require('js-cookie') : undefined
-
 export default {
   name: 'SignInToContinue',
   components: { LoadingIcon, GoogleIcon },
@@ -108,37 +106,35 @@ export default {
             const frontendPayload = {
               ...commonPayload,
             }
-
             this.updateInfo('Logging you in...')
             this.login(frontendPayload, response)
           })
-          .catch(() => {
-            this.abort()
+          .catch(async (e) => {
+            console.log(e)
+            await this.abort()
           })
       } else {
-        this.abort()
+        await this.abort()
       }
     },
 
     login(payload, { token: tokens }) {
       this.updateInfo('Setting up things for you...')
-      this.$store.commit('SET_USER', payload)
-      this.$store.commit('SET_TOKENS', tokens)
+      this.$cookies.set('access', tokens.access, secrets.cookieSavingConfig)
+      this.$cookies.set('refresh', tokens.refresh, secrets.cookieSavingConfig)
 
       this.updateInfo('Securing the Connection...')
 
-      Cookie.set('authUser', payload, { expires: secrets.cookieMaxAgeDays })
-      Cookie.set('tokens', tokens, { expires: secrets.cookieMaxAgeDays })
+      this.$store.commit('SET_AUTH_STATE', true)
 
       this.updateInfo('Welcome')
       this.$router.replace('/Home/Dashboard')
     },
 
-    abort() {
+    async abort() {
       this.updateInfo('Error, While Logging you in.')
 
-      Cookie.remove('authUser')
-      this.$store.dispatch('logout')
+      await this.$store.dispatch('logout')
       this.hideLoader()
       this.updateInfo('Checking...')
     },
