@@ -1,7 +1,4 @@
-const errorMessages = {
-  credentialsWereNotProvided: 'Authentication credentials were not provided.',
-  invalidTokens: 'Given token not valid for any token type',
-}
+import handleAxiosRequestError from '@/utils/ErrorHandling'
 
 export default function ({ $axios }) {
   $axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN'
@@ -11,16 +8,7 @@ export default function ({ $axios }) {
     if (!error) {
       console.log('Having Trouble to connect')
     }
-    if (error.status === 401) {
-      if (error.data.detail === errorMessages.credentialsWereNotProvided) {
-        console.warn('No Credentials were Provided')
-        location.reload()
-      }
-      if (error.data.details === errorMessages.invalidTokens) {
-        console.warn('Credentials Expired.')
-        location.reload()
-      }
-    }
+    handleAxiosRequestError(error)
   })
 
   $axios.onRequest((req) => {
