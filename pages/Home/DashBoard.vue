@@ -81,7 +81,7 @@ export default {
     InfiniteScrollingBlogLists,
     Carousel,
   },
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   layout: 'MobileApp',
   data() {
     return {

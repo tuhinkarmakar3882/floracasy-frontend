@@ -79,6 +79,7 @@ import Logo from '@/components/global/Logo'
 export default {
   name: 'About',
   components: { Logo, AppFeel },
+  middleware: 'isAuthenticated',
   data() {
     return {
       tabNumber: 0,

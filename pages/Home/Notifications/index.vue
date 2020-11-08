@@ -12,7 +12,7 @@
 export default {
   name: 'Notifications',
   layout: 'MobileApp',
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   data() {
     return {
       notifications: [

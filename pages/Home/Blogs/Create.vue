@@ -58,7 +58,7 @@ import TextInput from '@/components/global/TextInput'
 export default {
   name: 'Create',
   layout: 'EditorLayout',
-  // middleware: 'protectedRoute',
+  // middleware: 'isAuthenticated',
   components: {
     TextInput,
     VueEditor,

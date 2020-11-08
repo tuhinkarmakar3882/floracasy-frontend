@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'Messages',
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   layout: 'MobileApp',
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: -1 })

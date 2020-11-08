@@ -10,7 +10,7 @@
 export default {
   name: 'CategoryWise',
   layout: 'MobileApp',
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
   },

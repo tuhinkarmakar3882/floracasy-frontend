@@ -98,7 +98,7 @@ export default {
   name: 'Details',
   components: { Logo, LoadingIcon },
   layout: 'MobileApp',
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
 
   data() {
     return {

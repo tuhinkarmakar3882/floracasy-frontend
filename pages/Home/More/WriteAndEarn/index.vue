@@ -35,7 +35,7 @@ import AppFeel from '@/components/Layout/AppFeel'
 export default {
   name: 'WriteAndEarn',
   components: { AppFeel },
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   data() {
     return {
       pageTitle: 'Write And Earn',

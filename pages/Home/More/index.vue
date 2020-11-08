@@ -36,7 +36,7 @@ const Cookie = process.client ? require('js-cookie') : undefined
 
 export default {
   name: 'MoreOptions',
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   layout: 'MobileApp',
   data() {
     return {

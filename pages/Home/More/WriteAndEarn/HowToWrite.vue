@@ -202,10 +202,11 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
+
 export default {
   name: 'HowToWrite',
   components: { AppFeel },
-  middleware: 'protectedRoute',
+  middleware: 'isAuthenticated',
   data() {
     return {
       pageTitle: 'How to Write',
