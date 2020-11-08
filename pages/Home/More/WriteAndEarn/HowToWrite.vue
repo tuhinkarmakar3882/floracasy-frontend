@@ -205,6 +205,7 @@ import AppFeel from '@/components/Layout/AppFeel'
 export default {
   name: 'HowToWrite',
   components: { AppFeel },
+  middleware: 'protectedRoute',
   data() {
     return {
       pageTitle: 'How to Write',

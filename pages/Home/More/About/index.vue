@@ -4,42 +4,12 @@
 
     <template slot="main">
       <main class="my-4">
-        <div
-          style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-          "
-        >
-          <Logo :width="84" />
-          <h4 class="my-4">Floracasy</h4>
-        </div>
-
-        <div class="tab-bar">
-          <p
-            v-ripple
-            :class="tabNumber === 0 ? 'active-tab' : ''"
-            @click="changeTab(0)"
-          >
-            About us
-          </p>
-          <p
-            v-ripple
-            :class="tabNumber === 1 ? 'active-tab' : ''"
-            @click="changeTab(1)"
-          >
-            Read
-          </p>
-          <p
-            v-ripple
-            :class="tabNumber === 2 ? 'active-tab' : ''"
-            @click="changeTab(2)"
-          >
-            Write
-          </p>
-        </div>
-        <div ref="tabNavigation"></div>
+        <section class="banner">
+          <div class="logo">
+            <Logo class="mr-4" />
+            <h4>Floracasy</h4>
+          </div>
+        </section>
 
         <section class="px-4">
           <div class="intro">
@@ -115,14 +85,6 @@ export default {
       pageTitle: 'About us',
     }
   },
-  methods: {
-    changeTab(newTabNumber) {
-      this.tabNumber = newTabNumber
-      this.$nextTick(() => {
-        this.$refs.tabNavigation.scrollTop = 0
-      })
-    },
-  },
   head() {
     return {
       title: this.pageTitle,
@@ -147,29 +109,19 @@ $blog-border-radius: 20px;
   transition: all 0.5s ease-in-out;
 
   main {
-    .tab-bar {
-      display: grid;
-      text-align: center;
-      grid-template-columns: repeat(3, 1fr);
-      position: sticky;
-      top: (2 * $x-large-unit) - $double-unit;
-      background-color: $nav-bar-bg;
-      box-shadow: $down-only-box-shadow;
-      z-index: 1;
-      border: 1px solid #161727;
-      border-left: none;
-      border-right: none;
-      transition: all 0.3s ease-in-out;
+    .banner {
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      * {
-        padding: 0.7rem 0;
-        font-size: 1rem;
-        font-weight: 300;
+        h4 {
+          margin: $standard-unit 0;
+        }
       }
 
-      .active-tab {
-        color: $secondary;
-        font-weight: 400;
+      small {
+        color: $muted;
       }
     }
   }

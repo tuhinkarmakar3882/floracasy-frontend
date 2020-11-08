@@ -40,6 +40,7 @@ import AppFeel from '@/components/Layout/AppFeel'
 export default {
   name: 'Preferences',
   components: { AppFeel },
+  middleware: 'protectedRoute',
   data() {
     return {
       pageTitle: 'Preferences',

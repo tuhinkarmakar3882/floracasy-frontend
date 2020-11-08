@@ -26,7 +26,6 @@ export default {
     left: 0;
     z-index: $bring-to-front;
     display: flex;
-    //justify-content: space-between;
     align-items: center;
     padding: 0 $medium-unit;
     height: 2 * $x-large-unit;

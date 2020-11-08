@@ -25,6 +25,7 @@ import AppFeel from '@/components/Layout/AppFeel'
 export default {
   name: 'Earning',
   components: { AppFeel },
+  middleware: 'protectedRoute',
   data() {
     return {
       pageTitle: 'Earn By Writing',
