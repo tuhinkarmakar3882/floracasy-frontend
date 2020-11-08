@@ -1,52 +1,45 @@
-import { auth } from '~/plugins/firebase.js'
-
-const cookieParser = process.server ? require('cookieparser') : undefined
+import endpoints from '@/api/endpoints'
+import * as secrets from '@/environmentalVariables'
+import { auth } from '@/plugins/firebase.js'
 
 export const state = () => {
   return {
-    authUser: null,
-    tokens: null,
+    authState: null,
   }
 }
 
 export const getters = {
-  getAuthUser(state) {
-    return state.authUser
-  },
-
-  isAuthenticated(state) {
-    return !!state.authUser
-  },
-
-  getAuthenticationTokens(state) {
-    return state.tokens
+  getAuthState(state) {
+    return state.authState
   },
 }
 
 export const mutations = {
-  SET_USER(state, user) {
-    state.authUser = user
-  },
-  SET_TOKENS(state, tokens) {
-    state.tokens = tokens
+  SET_AUTH_STATE(state, authState) {
+    state.authState = authState
   },
 }
 
 export const actions = {
-  nuxtServerInit({ commit }, { req }) {
-    let authUser = null
-    let tokens = null
-    if (req.headers.cookie) {
-      const parsed = cookieParser.parse(req.headers.cookie)
-      try {
-        authUser = JSON.parse(parsed.authUser)
-        tokens = JSON.parse(parsed.tokens)
-      } catch (ignoredError) {}
+  async nuxtServerInit({ dispatch }) {
+    await dispatch('checkTokenValidity')
+  },
+
+  async checkTokenValidity({ commit }) {
+    const { data } = await this.$axios.post(endpoints.auth.checkToken)
+    console.log(data)
+    if (data.authState) {
+      const cookieSavingConfig = {
+        path: '/',
+        maxAge: secrets.cookieMaxAge,
+      }
+      this.$cookies.set('access', data.access, cookieSavingConfig)
+      this.$cookies.set('refresh', data.refresh, cookieSavingConfig)
     } else {
-      console.error('NO COOKIE!', req.headers.cookie)
+      this.$cookies.remove('access')
+      this.$cookies.remove('refresh')
     }
-    commit('SET_USER', authUser)
-    commit('SET_TOKENS', tokens)
+    commit('SET_AUTH_STATE', data.authState)
   },
 
   login({ commit }, { user }) {
@@ -56,8 +49,9 @@ export const actions = {
     commit('SET_TOKENS', tokens)
   },
   logout({ commit }) {
-    commit('SET_USER', null)
-    commit('SET_TOKENS', null)
+    this.$cookies.remove('access')
+    this.$cookies.remove('refresh')
+    commit('SET_AUTH_STATE', false)
     return auth.signOut()
   },
 }
