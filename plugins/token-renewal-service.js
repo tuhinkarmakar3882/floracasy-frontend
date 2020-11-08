@@ -6,7 +6,7 @@ let interval
 //  Todo Remove Logs.
 function renewToken($axios, store, redirect) {
   if (process.client && store.state.authUser) {
-    // console.log('Starting Renewal')
+    console.log('Starting Renewal')
     const storeTokens = store.getters.getAuthenticationTokens
 
     $axios.setToken(storeTokens.access, 'Bearer')
@@ -16,15 +16,15 @@ function renewToken($axios, store, redirect) {
         refresh: storeTokens.refresh,
       })
       .then((response) => {
-        // console.info('New Set of Credentials Received. Setting Them')
+        console.info('New Set of Credentials Received. Setting Them')
 
         store.commit('SET_TOKENS', response)
         const Cookie = process.client ? require('js-cookie') : undefined
-        // console.log(response)
+        console.log(response)
         Cookie && Cookie.set('tokens', response)
 
         $axios.setToken(response.access, 'Bearer')
-        // console.info('All Good to go!')
+        console.info('All Good to go!')
       })
       .catch(() => {
         console.warn('Refresh Token Has Expired', storeTokens.refresh)
