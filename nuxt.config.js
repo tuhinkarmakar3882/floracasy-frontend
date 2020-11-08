@@ -32,7 +32,7 @@ export default {
       mode: 'client',
     },
     {
-      src: '~/plugins/clientAuthStateInit.js',
+      src: '~/plugins/authenticationStateInitializer.js',
       mode: 'client',
     },
   ],

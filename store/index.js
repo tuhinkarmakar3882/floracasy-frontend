@@ -57,6 +57,7 @@ export const actions = {
   },
   logout({ commit }) {
     commit('SET_USER', null)
+    commit('SET_TOKENS', null)
     return auth.signOut()
   },
 }
