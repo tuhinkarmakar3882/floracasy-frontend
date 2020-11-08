@@ -22,7 +22,6 @@ export default {
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
-    '~/plugins/token-renewal-service.js',
     {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
@@ -31,16 +30,18 @@ export default {
       src: '~/plugins/axios.js',
       mode: 'client',
     },
-    {
-      src: '~/plugins/authenticationStateInitializer.js',
-      mode: 'client',
-    },
+    // '~/plugins/token-renewal-service.js',
+    // {
+    //   src: '~/plugins/authenticationStateInitializer.js',
+    //   mode: 'client',
+    // },
   ],
 
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxt/content',
+    'cookie-universal-nuxt',
     [
       'nuxt-lazy-load',
       {
@@ -81,6 +82,7 @@ export default {
   axios: {
     baseURL: secrets.baseUrl,
     retry: { retries: 2 },
+    credentials: true,
   },
 
   css: [
