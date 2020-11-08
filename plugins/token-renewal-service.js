@@ -1,5 +1,6 @@
 import utility from '@/utils/utility'
 import endpoints from '@/api/endpoints'
+import * as secrets from '@/environmentalVariables'
 
 let interval
 
@@ -21,7 +22,8 @@ function renewToken($axios, store, redirect) {
         store.commit('SET_TOKENS', response)
         const Cookie = process.client ? require('js-cookie') : undefined
         console.log(response)
-        Cookie && Cookie.set('tokens', response)
+        Cookie &&
+          Cookie.set('tokens', response, { expires: secrets.cookieMaxAgeDays })
 
         $axios.setToken(response.access, 'Bearer')
         console.info('All Good to go!')
