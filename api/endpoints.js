@@ -4,6 +4,7 @@ const endpoints = {
     logout: '/auth/logout/',
     generateToken: '/auth/token/generate/',
     refreshToken: '/auth/token/refresh/',
+    checkToken: '/auth/checkToken/',
   },
   blog: {
     fetch: 'blog/fetch/',
