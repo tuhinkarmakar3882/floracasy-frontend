@@ -21,8 +21,8 @@ export default {
 
 .app {
   header {
-    //position: fixed;
-    top: 0;
+    position: sticky;
+    top: -$single-unit;
     left: 0;
     z-index: $bring-to-front;
     display: flex;
@@ -30,7 +30,7 @@ export default {
     align-items: center;
     padding: 0 $medium-unit;
     height: 2 * $x-large-unit;
-    background-color: lighten($nav-bar-bg, $darken-percentage);
+    background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;
 
     p {
