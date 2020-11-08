@@ -22,4 +22,8 @@ export default function ({ $axios }) {
       }
     }
   })
+
+  $axios.onRequest((req) => {
+    console.log(req.headers.common)
+  })
 }
