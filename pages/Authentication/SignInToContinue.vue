@@ -43,6 +43,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
+import * as secrets from '@/environmentalVariables'
 
 const Cookie = process.client ? require('js-cookie') : undefined
 
@@ -125,8 +126,9 @@ export default {
       this.$store.commit('SET_TOKENS', tokens)
 
       this.updateInfo('Securing the Connection...')
-      Cookie.set('authUser', payload)
-      Cookie.set('tokens', tokens)
+
+      Cookie.set('authUser', payload, { expires: secrets.cookieMaxAgeDays })
+      Cookie.set('tokens', tokens, { expires: secrets.cookieMaxAgeDays })
 
       this.updateInfo('Welcome')
       this.$router.replace('/Home/Dashboard')
