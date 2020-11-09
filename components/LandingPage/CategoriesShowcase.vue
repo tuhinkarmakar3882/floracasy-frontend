@@ -9,7 +9,7 @@
       />
       <div class="grid-container py-12">
         <div v-for="item in items" :key="item.name" class="grid-col">
-          <img :alt="item.name" :src="item.image" />
+          <img :alt="item.name" :src="item.photo_url" />
           <p class="my-4">
             {{ item.name }}
           </p>
@@ -41,6 +41,7 @@
 
 <script>
 import RippleButton from '@/components/global/RippleButton'
+import endpoints from '@/api/endpoints'
 
 export default {
   name: 'CategoriesShowcase',
@@ -48,48 +49,17 @@ export default {
     RippleButton,
     SegmentTitle: () => import('@/components/LandingPage/SegmentTitle'),
   },
+
   data() {
     return {
       categoriesButtonLoading: false,
-      items: [
-        {
-          name: 'Cooking',
-          image: 'https://picsum.photos/150?random',
-        },
-        {
-          name: 'Technology',
-          image: 'https://picsum.photos/151?random',
-        },
-        {
-          name: 'Music',
-          image: 'https://picsum.photos/152?random',
-        },
-        {
-          name: 'Arts',
-          image: 'https://picsum.photos/153?random',
-        },
-        {
-          name: 'Pets',
-          image: 'https://picsum.photos/154?random',
-        },
-        {
-          name: 'UI/UX',
-          image: 'https://picsum.photos/155?random',
-        },
-        {
-          name: 'Skincare',
-          image: 'https://picsum.photos/156?random',
-        },
-        {
-          name: 'Plants',
-          image: 'https://picsum.photos/157?random',
-        },
-        {
-          name: 'Fitness',
-          image: 'https://picsum.photos/158?random',
-        },
-      ],
+      items: [],
     }
+  },
+
+  async mounted() {
+    const response = await this.$axios.$get(endpoints.categories.fetch)
+    this.items = response.data
   },
   methods: {
     changeIt() {
