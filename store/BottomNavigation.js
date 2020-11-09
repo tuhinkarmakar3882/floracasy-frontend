@@ -33,7 +33,7 @@ export const state = () => ({
       text: 'More',
       icon: 'mdi-dots-horizontal-circle',
       color: '#6360f8',
-      route: '/Home/More',
+      route: '/Home/MoreOptions',
     },
   ],
   activeLink: 0,

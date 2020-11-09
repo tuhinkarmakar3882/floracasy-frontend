@@ -34,13 +34,13 @@ export default {
           name: 'How to Write',
           icon: 'mdi mdi-pencil',
           color: '#f5a049',
-          route: '/Home/More/WriteAndEarn/HowToWrite',
+          route: '/Home/MoreOptions/WriteAndEarn/HowToWrite',
         },
         {
           name: 'Earn By Writing',
           icon: 'mdi mdi-currency-usd',
           color: '#4fca4f',
-          route: '/Home/More/WriteAndEarn',
+          route: '/Home/MoreOptions/WriteAndEarn',
         },
       ],
     }
