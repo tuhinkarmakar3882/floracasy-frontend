@@ -112,23 +112,23 @@ export default {
       carouselItems: [
         {
           name: 'First Item in the carousel',
-          image: 'http://picsum.photos/500',
+          image: 'https://picsum.photos/500',
         },
         {
           name: 'Second Item in the carousel',
-          image: 'http://picsum.photos/500',
+          image: 'https://picsum.photos/500',
         },
         {
           name: 'Third Item in the carousel',
-          image: 'http://picsum.photos/500',
+          image: 'https://picsum.photos/500',
         },
         {
           name: 'Fourth Item in the carousel',
-          image: 'http://picsum.photos/500',
+          image: 'https://picsum.photos/500',
         },
         {
           name: 'Fifth Item in the carousel',
-          image: 'http://picsum.photos/500',
+          image: 'https://picsum.photos/500',
         },
       ],
     }
