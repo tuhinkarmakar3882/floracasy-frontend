@@ -10,10 +10,10 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: true,
+    server: true,
+  },
 
   router: {
     middleware: [],
@@ -81,7 +81,7 @@ export default {
 
   axios: {
     baseURL: secrets.baseUrl,
-    retry: { retries: 2 },
+    retry: { retries: 1 },
     credentials: true,
   },
 
