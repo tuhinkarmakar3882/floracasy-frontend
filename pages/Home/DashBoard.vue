@@ -33,7 +33,7 @@
     <LazyInfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
 
     <div v-if="tabNumber === 2">
-      <h4>This will be Categories View</h4>
+      <LazyCategoriesShowcase />
     </div>
   </div>
 </template>
@@ -73,11 +73,13 @@ $blog-border-radius: 20px;
 
 <script>
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
+import CategoriesShowcase from '@/components/LandingPage/CategoriesShowcase'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {
   name: 'DashBoard',
   components: {
+    CategoriesShowcase,
     InfiniteScrollingBlogLists,
     Carousel,
   },
