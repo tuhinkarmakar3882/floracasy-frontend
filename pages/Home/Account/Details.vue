@@ -1,90 +1,104 @@
 <template>
   <div class="text-center py-6 details-page">
-    <section class="user-profile">
-      <div class="basic-data">
-        <img alt="profile-picture" class="picture" :src="user.photoURL" />
-        <div class="basic-details">
-          <p class="name">{{ user.displayName }}</p>
-          <p class="designation">Beauty Blogger</p>
+    <main v-if="loadingProfile">
+      <div class="pageLoading">
+        <LoadingIcon />
+        Fetching data from server
+      </div>
+    </main>
+    <main v-else>
+      <section class="user-profile">
+        <div class="basic-data">
+          <img alt="profile-picture" class="picture" :src="user.photoURL" />
+          <div class="basic-details">
+            <p class="name">{{ user.displayName }}</p>
+            <p class="designation">
+              {{ user.designation || 'Designation Not Set' }}
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <section v-if="statisticsItem" class="stats">
-          <div class="item">
-            <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
-            <p class="type">Blogs</p>
-          </div>
-          <div class="item">
-            <span class="number">{{ statisticsItem['totalEngagements'] }}</span>
-            <p class="type">Engagements</p>
-          </div>
-          <div class="item">
-            <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
-            <p class="type">Followers</p>
-          </div>
-        </section>
-
-        <section v-else class="text-center my-8">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Profile Data...</p>
-        </section>
-      </div>
-
-      <section class="other-info">
-        <p class="about text-center">
-          Hey I'm using this email: {{ user.email }}
-        </p>
-      </section>
-
-      <section class="actions">
-        <button v-ripple class="primary-btn px-6">Payments</button>
-        <button v-ripple class="primary-outlined-btn px-6">Saved Blogs</button>
-      </section>
-    </section>
-
-    <section v-if="!loadingRecentActivities" class="recent-activity">
-      <h4 class="heading-title">Recent Activities</h4>
-
-      <div v-if="recentActivities">
-        <section
-          v-for="activity in recentActivities"
-          :key="activity.id"
-          v-ripple
-          class="activity py-8 my-4"
-        >
-          <div class="content">
-            <img :alt="activity.title" :src="activity.coverImage" />
-            <div class="data text-left">
-              <h6>{{ activity.title }}</h6>
-              <p>{{ activity.subtitle }}</p>
-              <small> {{ activity.createdAt }}</small>
+        <div>
+          <section v-if="statisticsItem" class="stats">
+            <div class="item">
+              <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
+              <p class="type">Blogs</p>
             </div>
-          </div>
+            <div class="item">
+              <span class="number">{{
+                statisticsItem['totalEngagements']
+              }}</span>
+              <p class="type">Engagements</p>
+            </div>
+            <div class="item">
+              <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
+              <p class="type">Followers</p>
+            </div>
+          </section>
+
+          <section v-else class="text-center my-8">
+            <LoadingIcon class="mt-4 mb-6" />
+            <p>Loading Profile Data...</p>
+          </section>
+        </div>
+
+        <section class="other-info">
+          <p class="about text-center">
+            {{ user.about || 'About Not Set' }}
+          </p>
         </section>
-      </div>
 
-      <div v-else class="no-activity">
-        <Logo style="width: 56px" />
-        <p class="my-5">It's Lonely Here...</p>
-        <button
-          v-ripple
-          class="secondary-outlined-btn"
-          @click="$router.push('/Home/Blogs/Create')"
-        >
-          Publish Your First Blog Now!
-        </button>
-      </div>
-    </section>
-
-    <section v-else class="recent-activity">
-      <h4 class="heading-title">Recent Activities</h4>
-
-      <section class="text-center my-8">
-        <LoadingIcon class="mt-4 mb-6" />
-        <p>Loading Recent Activities Data...</p>
+        <section class="actions">
+          <button v-ripple class="primary-btn px-6">Payments</button>
+          <button v-ripple class="primary-outlined-btn px-6">
+            Saved Blogs
+          </button>
+        </section>
       </section>
-    </section>
+
+      <section v-if="!loadingRecentActivities" class="recent-activity">
+        <h4 class="heading-title">Recent Activities</h4>
+
+        <div v-if="recentActivities">
+          <section
+            v-for="activity in recentActivities"
+            :key="activity.id"
+            v-ripple
+            class="activity py-8 my-4"
+          >
+            <div class="content">
+              <img :alt="activity.title" :src="activity.coverImage" />
+              <div class="data text-left">
+                <h6>{{ activity.title }}</h6>
+                <p>{{ activity.subtitle }}</p>
+                <small> {{ activity.createdAt }}</small>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div v-else class="no-activity">
+          <Logo style="width: 56px" />
+          <p class="my-5">It's Lonely Here...</p>
+          <button
+            v-ripple
+            class="secondary-outlined-btn"
+            @click="$router.push('/Home/Blogs/Create')"
+          >
+            Publish Your First Blog Now!
+          </button>
+        </div>
+      </section>
+
+      <section v-else class="recent-activity">
+        <h4 class="heading-title">Recent Activities</h4>
+
+        <section class="text-center my-8">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p>Loading Recent Activities Data...</p>
+        </section>
+      </section>
+    </main>
   </div>
 </template>
 
@@ -102,7 +116,7 @@ export default {
 
   data() {
     return {
-      backendData: null,
+      loadingProfile: true,
       statisticsItem: null,
       recentActivities: null,
       loadingRecentActivities: null,
@@ -111,26 +125,22 @@ export default {
 
   computed: {
     ...mapGetters({
-      user: 'getAuthUser',
+      user: 'UserManagement/getUser',
     }),
   },
 
   async mounted() {
-    this.loadingRecentActivities = true
-    this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
+    await this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
 
-    this.backendData = await this.$axios
-      .$get(endpoints.health_check.test)
-      .then((response) => {
-        return response
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+    this.loadingProfile = true
+    await this.$store.dispatch('UserManagement/fetchData')
+    this.loadingProfile = false
+
+    this.loadingRecentActivities = true
 
     this.statisticsItem = await this.$axios
       .$get(endpoints.profile_statistics.detail, {
-        params: { uid: this.$store.getters.getAuthUser.uid },
+        params: { uid: this.user.uid },
       })
       .then(({ details }) => details)
       .catch((error) => {
@@ -139,12 +149,13 @@ export default {
 
     this.recentActivities = await this.$axios
       .$get(endpoints.blog.getBlogsByUid, {
-        params: { uid: this.$store.getters.getAuthUser.uid },
+        params: { uid: this.user.uid },
       })
       .then(({ details }) => details)
       .catch((error) => {
         console.error(error)
       })
+
     this.loadingRecentActivities = false
   },
 
@@ -172,6 +183,12 @@ export default {
   button {
     min-width: auto;
     width: auto;
+  }
+
+  .page-loading {
+    height: calc(100vh - 120px);
+    display: grid;
+    place-items: center;
   }
 
   .user-profile {

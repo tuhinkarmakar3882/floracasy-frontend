@@ -1,6 +1,5 @@
 <template>
   <div class="index-page">
-    <a href="/Home/Dashboard">BACK TO Dashboard</a>
     <HeroContent />
 
     <CategoriesShowcase />
