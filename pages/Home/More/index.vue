@@ -32,8 +32,6 @@
 <script>
 import endpoints from '@/api/endpoints'
 
-const Cookie = process.client ? require('js-cookie') : undefined
-
 export default {
   name: 'MoreOptions',
   middleware: 'isAuthenticated',
@@ -96,24 +94,21 @@ export default {
     this.$store.commit('BottomNavigation/update', { linkPosition: 4 })
   },
   methods: {
-    performLogout() {
-      this.$axios.setToken(false)
-      Cookie.remove('authUser')
-      Cookie.remove('token')
-      this.$store.dispatch('logout')
-      this.$router.push('/')
+    async performLogout() {
+      await this.$axios.setToken(false)
+      await this.$store.dispatch('logout')
+      await this.$router.push('/')
     },
 
     async logout() {
       await this.$axios
-        .post(endpoints.auth.logout, {
-          refresh: this.$store.getters.getAuthenticationTokens.refresh,
-        })
+        .post(endpoints.auth.logout)
         .then(() => {
           this.performLogout()
         })
-        .catch(() => {
+        .catch((e) => {
           //  Todo Add UI hint
+          console.log(e)
         })
     },
   },
