@@ -1,9 +1,8 @@
 <template>
   <div class="dashboard-page">
-    <Carousel :carousel-items="carouselItems" />
+    <LazyCarousel :carousel-items="carouselItems" />
 
-    <a href="/">BACK TO HOME</a>
-    <div class="tab-bar">
+    <section class="tab-bar">
       <p
         v-ripple
         :class="tabNumber === 0 ? 'active-tab' : ''"
@@ -25,13 +24,13 @@
       >
         Categories
       </p>
-    </div>
+    </section>
 
     <div ref="tabNavigation"></div>
 
-    <InfiniteScrollingBlogLists v-if="tabNumber === 0" />
+    <LazyInfiniteScrollingBlogLists v-if="tabNumber === 0" />
 
-    <InfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
+    <LazyInfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
 
     <div v-if="tabNumber === 2">
       <h4>This will be Categories View</h4>
