@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-page">
-    <LazyCarousel :carousel-items="carouselItems" />
+    <Carousel :carousel-items="carouselItems" />
 
     <section class="tab-bar">
       <p
@@ -28,12 +28,12 @@
 
     <div ref="tabNavigation"></div>
 
-    <LazyInfiniteScrollingBlogLists v-if="tabNumber === 0" />
+    <InfiniteScrollingBlogLists v-if="tabNumber === 0" />
 
-    <LazyInfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
+    <InfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
 
     <div v-if="tabNumber === 2">
-      <LazyCategoriesShowcase />
+      <CategoriesShowcase />
     </div>
   </div>
 </template>
@@ -134,8 +134,8 @@ export default {
       ],
     }
   },
-  mounted() {
-    this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
+  async mounted() {
+    await this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
   },
   methods: {
     changeTab(newTabNumber) {
