@@ -102,7 +102,7 @@ export default {
 
     async logout() {
       await this.$axios
-        .post(endpoints.auth.logout)
+        .post(endpoints.auth.logout, {}, { withCredentials: true })
         .then(() => {
           this.performLogout()
         })
@@ -133,6 +133,7 @@ export default {
 .more-options-page {
   ul {
     list-style: none;
+
     li {
       p {
         display: grid;

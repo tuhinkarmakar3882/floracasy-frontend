@@ -26,7 +26,11 @@ export const actions = {
   },
 
   async checkTokenValidity({ commit }) {
-    const { data } = await this.$axios.post(endpoints.auth.checkToken)
+    const { data } = await this.$axios.post(
+      endpoints.auth.checkToken,
+      {},
+      { withCredentials: true }
+    )
     console.log(data)
     if (data.authState) {
       const cookieSavingConfig = {
