@@ -15,7 +15,7 @@ const endpoints = {
     getBlogsByUid: 'blog/get_blogs_by_uid/',
   },
   categories: {
-    test: 'categories/',
+    fetch: 'categories/fetch/',
   },
   comment_system: {
     test: 'comment_system/',
