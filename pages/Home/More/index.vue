@@ -102,7 +102,9 @@ export default {
 
     async logout() {
       await this.$axios
-        .post(endpoints.auth.logout, {}, { withCredentials: true })
+        .post(endpoints.auth.logout, {
+          refresh: this.$cookies.get('refresh'),
+        })
         .then(() => {
           this.performLogout()
         })
