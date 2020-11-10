@@ -101,8 +101,6 @@ export default {
   },
 
   async mounted() {
-    this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
-
     this.blogs = await this.$axios
       .$get(endpoints.blog.fetch)
       .then(({ data }) => data)
