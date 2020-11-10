@@ -1,4 +1,5 @@
 import * as secrets from './environmentalVariables'
+import * as packageJson from './package.json'
 
 export default {
   ssr: true,
@@ -89,7 +90,7 @@ export default {
     //
   ],
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: '%s - Floracasy',
     title: process.env.npm_package_name || '',
     meta: [
       {
@@ -103,7 +104,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content: 'The One Stop Hub for Passionate & Creative minds',
       },
     ],
     link: [
@@ -207,11 +208,17 @@ export default {
     },
     workbox: {
       cacheOptions: {
-        revision: Date.now(),
+        revision: packageJson.version,
       },
       runtimeCaching: [
         {
           urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://cdn.materialdesignicons.com/.*',
           handler: 'cacheFirst',
           method: 'GET',
           strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
