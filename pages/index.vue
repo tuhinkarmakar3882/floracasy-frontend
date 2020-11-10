@@ -25,6 +25,11 @@ export default {
   data() {
     return {}
   },
+
+  mounted() {
+    this.$router.replace('/')
+  },
+
   methods: {},
 }
 </script>

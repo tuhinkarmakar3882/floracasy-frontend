@@ -12,7 +12,7 @@ function handleUnauthorizedError(error) {
     console.warn('Credentials Expired.')
     location.reload()
   }
-  location.reload()
+  console.error('Unhandled Error', error)
 }
 
 export default function handleAxiosRequestError(error) {
