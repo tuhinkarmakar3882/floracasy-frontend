@@ -40,13 +40,16 @@ export const state = () => ({
 })
 
 export const mutations = {
-  update(state, { linkPosition }) {
+  SET_ACTIVE_LINK(state, linkPosition) {
     state.activeLink = linkPosition
   },
 }
 
-export const actions = {}
-
+export const actions = {
+  async update({ commit }, { linkPosition }) {
+    await commit('SET_ACTIVE_LINK', linkPosition)
+  },
+}
 export const getters = {
   getMenuOptions(state) {
     return state.menuOptions
