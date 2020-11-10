@@ -73,8 +73,89 @@ html {
     ul {
       list-style: inside;
     }
+
     ol {
       list-style: decimal;
     }
+
+    .form-label-group {
+      position: relative;
+      margin-bottom: 1rem;
+      transition: all 250ms ease-in-out;
+
+      input,
+      label {
+        height: 3.125rem;
+        padding: 0.75rem;
+        width: 100%;
+        letter-spacing: 1px;
+        font-size: 1rem;
+      }
+
+      input {
+        border-radius: $nano-unit;
+        color: $white;
+        background-color: darken($card-background, $darken-percentage) !important;
+        font-weight: 400;
+
+        &:hover,
+        &:focus,
+        &:focus-visible,
+        &:active,
+        &:focus-within {
+          border-radius: $nano-unit;
+          outline: none 0;
+          box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
+        }
+      }
+
+      label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        margin-bottom: 0;
+        line-height: 1.8;
+        pointer-events: none;
+        font-weight: 300;
+        color: $body-text-default;
+        cursor: text;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        transition: all 0.1s ease-in-out;
+      }
+
+      input::placeholder {
+        color: transparent;
+        background-color: darken($card-background, $darken-percentage) !important;
+      }
+
+      input:not(:placeholder-shown) {
+        padding-top: 3.75rem;
+        padding-bottom: 1.75rem;
+        font-size: 1.4rem;
+        background-color: darken($card-background, $darken-percentage) !important;
+      }
+
+      input:not(:placeholder-shown) ~ label {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+        font-size: 1rem;
+        background-color: darken($card-background, $darken-percentage) !important;
+      }
+    }
+
+    select {
+      color: white;
+      background: #101019;
+      width: 100%;
+      height: 3.125rem;
+      border-radius: 4px;
+      padding: 0.75rem;
+      letter-spacing: 1px;
+      font-size: 1rem;
+    }
+
   }
 }
