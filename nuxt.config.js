@@ -187,4 +187,43 @@ export default {
       },
     },
   },
+
+  pwa: {
+    meta: {
+      name: 'Floracasy',
+      theme_color: '#0d0d17',
+      author: 'Floracasy Team',
+      appleStatusBarStyle: 'black',
+    },
+    manifest: {
+      name: 'Floracasy',
+      description: 'The One Stop Hub for Passionate & Creative minds',
+      short_name: 'Floracasy',
+      lang: 'en-US',
+      background_color: '#0d0d17',
+      theme_color: '#0d0d17',
+      status_bar: '#0d0d17',
+      display: 'fullscreen',
+    },
+    workbox: {
+      cacheOptions: {
+        revision: Date.now(),
+      },
+      runtimeCaching: [
+        {
+          urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://fonts.gstatic.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+      ],
+      cleanupOutdatedCaches: true,
+    },
+  },
 }
