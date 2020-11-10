@@ -132,8 +132,11 @@ export default {
   async mounted() {
     await this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
 
-    this.loadingProfile = true
-    await this.$store.dispatch('UserManagement/fetchData')
+    const currentUser = await this.$store.getters['UserManagement/getUser']
+    if (!currentUser) {
+      this.loadingProfile = true
+      await this.$store.dispatch('UserManagement/fetchData')
+    }
     this.loadingProfile = false
 
     this.loadingRecentActivities = true
