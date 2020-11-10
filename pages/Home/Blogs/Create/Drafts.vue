@@ -17,6 +17,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 export default {
   name: 'Drafts',
   components: { AppFeel },
+  middleware: 'isAuthenticated',
   data() {
     return {
       pageTitle: 'Drafts',
