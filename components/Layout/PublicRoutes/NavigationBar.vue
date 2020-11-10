@@ -88,8 +88,15 @@ export default {
   },
   methods: {
     async navigateTo(path) {
-      await this.$router.push(path)
-      this.drawerIsOpened = false
+      await this.$router.push(
+        path,
+        () => {
+          this.drawerIsOpened = false
+        },
+        () => {
+          this.drawerIsOpened = false
+        }
+      )
     },
     exitApp() {
       alert('eventually this will close the app')
