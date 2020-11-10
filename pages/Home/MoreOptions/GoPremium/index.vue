@@ -1,5 +1,8 @@
 <template>
-  <AppFeel class="go-premium-page">
+  <AppFeel
+    class="go-premium-page"
+    :on-back="navigationRoutes.Home.MoreOptions.index"
+  >
     <template slot="app-bar-title">
       {{ pageTitle }}
     </template>
@@ -30,6 +33,7 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import KeyPoint from '@/components/global/KeyPoint'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'GoPremium',
@@ -108,6 +112,7 @@ export default {
           buttonText: 'Join Premium Pack',
         },
       ],
+      navigationRoutes,
     }
   },
   head() {

@@ -1,5 +1,8 @@
 <template>
-  <AppFeel class="write-and-earn-page">
+  <AppFeel
+    class="write-and-earn-page"
+    :on-back="navigationRoutes.Home.MoreOptions.index"
+  >
     <template slot="app-bar-title">
       {{ pageTitle }}
     </template>
@@ -31,6 +34,7 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'WriteAndEarn',
@@ -38,6 +42,7 @@ export default {
   middleware: 'isAuthenticated',
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'Write And Earn',
       options: [
         {

@@ -1,5 +1,8 @@
 <template>
-  <AppFeel class="preferences-page">
+  <AppFeel
+    class="preferences-page"
+    :on-back="navigationRoutes.Home.MoreOptions.index"
+  >
     <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
@@ -36,6 +39,7 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'Preferences',
@@ -43,6 +47,7 @@ export default {
   middleware: 'isAuthenticated',
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'Preferences',
       options: [
         {

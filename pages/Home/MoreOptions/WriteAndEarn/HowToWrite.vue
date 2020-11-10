@@ -1,5 +1,8 @@
 <template>
-  <AppFeel class="how-to-write-page">
+  <AppFeel
+    class="how-to-write-page"
+    :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn"
+  >
     <template slot="app-bar-title">
       {{ pageTitle }}
     </template>
@@ -199,6 +202,7 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'HowToWrite',
@@ -206,6 +210,7 @@ export default {
   middleware: 'isAuthenticated',
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'How to Write',
       guidelines: [
         {

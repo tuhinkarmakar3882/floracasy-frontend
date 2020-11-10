@@ -1,5 +1,8 @@
 <template>
-  <AppFeel class="about-page">
+  <AppFeel
+    class="about-page"
+    :on-back="navigationRoutes.Home.MoreOptions.index"
+  >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
@@ -75,6 +78,7 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import Logo from '@/components/global/Logo'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'About',
@@ -84,6 +88,7 @@ export default {
     return {
       tabNumber: 0,
       pageTitle: 'About us',
+      navigationRoutes,
     }
   },
   head() {
