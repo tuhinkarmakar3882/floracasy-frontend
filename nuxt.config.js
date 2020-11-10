@@ -148,6 +148,54 @@ export default {
 
   content: {},
 
+  pwa: {
+    meta: {
+      name: packageJson.appName,
+      author: 'Floracasy Team',
+      appleStatusBarStyle: 'black',
+      nativeUI: true,
+      background_color: packageJson.themeColor,
+      theme_color: packageJson.themeColor,
+      status_bar: packageJson.themeColor,
+    },
+    manifest: {
+      name: packageJson.appName,
+      description: packageJson.description,
+      short_name: 'Floracasy',
+      lang: 'en-US',
+      background_color: packageJson.themeColor,
+      theme_color: packageJson.themeColor,
+      status_bar: packageJson.themeColor,
+      display: 'standalone',
+    },
+    workbox: {
+      cacheOptions: {
+        revision: packageJson.version,
+      },
+      runtimeCaching: [
+        {
+          urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://cdn.materialdesignicons.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://fonts.gstatic.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+      ],
+      cleanupOutdatedCaches: true,
+    },
+  },
+
   tailwindcss: {
     config: {
       theme: {
@@ -186,54 +234,6 @@ export default {
           'nuxt.config.ts',
         ],
       },
-    },
-  },
-
-  pwa: {
-    meta: {
-      name: 'Floracasy',
-      theme_color: '#0d0d17',
-      author: 'Floracasy Team',
-      appleStatusBarStyle: 'black',
-      mobileApp: true,
-      mobileAppIOS: true,
-      nativeUI: true,
-    },
-    manifest: {
-      name: 'Floracasy',
-      description: 'The One Stop Hub for Passionate & Creative minds',
-      short_name: 'Floracasy',
-      lang: 'en-US',
-      background_color: '#0d0d17',
-      theme_color: '#0d0d17',
-      status_bar: '#0d0d17',
-      display: 'standalone',
-    },
-    workbox: {
-      cacheOptions: {
-        revision: packageJson.version,
-      },
-      runtimeCaching: [
-        {
-          urlPattern: 'https://fonts.googleapis.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          urlPattern: 'https://cdn.materialdesignicons.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          urlPattern: 'https://fonts.gstatic.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-      ],
-      cleanupOutdatedCaches: true,
     },
   },
 }
