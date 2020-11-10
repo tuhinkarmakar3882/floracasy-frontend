@@ -71,9 +71,14 @@
 
       <div v-if="step === 2">
         <h6 class="heading-title mb-8">Write the Blog below</h6>
+
+        <p class="text-center my-6">Editor will come here</p>
         <!--        <client-only>-->
         <!--          <vue-editor />-->
         <!--        </client-only>-->
+        <div class="text-center my-6">
+          <button v-ripple class="primary-btn" @click="publish">Publish</button>
+        </div>
       </div>
     </template>
   </AppFeel>
@@ -147,6 +152,9 @@ export default {
   methods: {
     goToNextStep() {
       this.step = 2
+    },
+    publish() {
+      alert('NOT Implemented Yet')
     },
   },
 
