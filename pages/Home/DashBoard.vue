@@ -85,31 +85,10 @@ export default {
   },
   middleware: 'isAuthenticated',
   layout: 'MobileApp',
+
   data() {
     return {
       tabNumber: 0,
-      categories: [
-        {
-          id: '0',
-          name: 'Beauty',
-        },
-        {
-          id: '1',
-          name: 'Games',
-        },
-        {
-          id: '2',
-          name: 'Technology',
-        },
-        {
-          id: '3',
-          name: 'Art',
-        },
-        {
-          id: '4',
-          name: 'Music',
-        },
-      ],
       carouselItems: [
         {
           name: 'First Item in the carousel',
@@ -134,11 +113,13 @@ export default {
       ],
     }
   },
+
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 0,
     })
   },
+
   methods: {
     changeTab(newTabNumber) {
       this.tabNumber = newTabNumber
@@ -147,6 +128,7 @@ export default {
       })
     },
   },
+
   head() {
     return {
       title: 'Dashboard',
