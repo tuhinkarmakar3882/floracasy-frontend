@@ -13,6 +13,7 @@ function handleUnauthorizedError(error) {
     location.reload()
   }
   console.error('Unhandled Error', error)
+  location.reload()
 }
 
 export default function handleAxiosRequestError(error) {
