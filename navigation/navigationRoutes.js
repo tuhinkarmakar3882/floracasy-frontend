@@ -13,8 +13,8 @@ export const navigationRoutes = {
     Blogs: {
       Create: {
         index: '/Home/Blogs/Create',
-        NewBlog: '/Home/Blogs/NewBlog',
-        Drafts: '/Home/Blogs/Drafts',
+        NewBlog: '/Home/Blogs/Create/NewBlog',
+        Drafts: '/Home/Blogs/Create/Drafts',
       },
 
       CategoryWise: '/Home/Blogs/CategoryWise',
