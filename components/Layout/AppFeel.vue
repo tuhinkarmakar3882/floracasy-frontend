@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header>
-      <h5 v-ripple class="mdi mdi-arrow-left" @click="$router.back()" />
+      <h5 v-ripple class="mdi mdi-arrow-left" @click="navigateTo(onBack)" />
       <p class="ml-6"><slot name="app-bar-title" /></p>
     </header>
     <main>
@@ -13,6 +13,17 @@
 <script>
 export default {
   name: 'AppFeel',
+  props: {
+    onBack: {
+      type: String,
+      required: true,
+    },
+  },
+  methods: {
+    async navigateTo(path) {
+      await this.$router.replace(path)
+    },
+  },
 }
 </script>
 
