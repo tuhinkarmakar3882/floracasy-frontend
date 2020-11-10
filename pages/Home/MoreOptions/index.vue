@@ -1,39 +1,45 @@
 <template>
   <div class="more-options-page">
     <h3 class="heading-title">More Options</h3>
-    <ul>
-      <li
-        v-for="(option, index) in options"
-        :key="index"
-        v-ripple="`${option.color}5F`"
-        class="px-4 py-2"
-        @click="$router.push(option.route)"
-      >
-        <p>
-          <span
-            class="icon"
-            :class="option.icon"
-            :style="{ color: option.color }"
-          />
-          <span class="option-name">{{ option.name }}</span>
-          <span class="mdi mdi-chevron-right arrow-go" />
-        </p>
-      </li>
-      <li v-ripple="'#f774795F'" class="px-4 py-3" @click="logout">
-        <p>
-          <span class="icon mdi mdi-power" style="color: #f77479" />
-          <span class="option-name">Log out</span>
-        </p>
-      </li>
-    </ul>
+    <CustomListView>
+      <template slot="list-items">
+        <li
+          v-for="(option, index) in options"
+          :key="index"
+          v-ripple="`${option.color}5F`"
+          class="px-4 py-2"
+          @click="$router.push(option.route)"
+        >
+          <p>
+            <span
+              class="icon"
+              :class="option.icon"
+              :style="{ color: option.color }"
+            />
+            <span class="option-name">{{ option.name }}</span>
+            <span class="mdi mdi-chevron-right arrow-go" />
+          </p>
+        </li>
+      </template>
+      <template slot="last-item">
+        <li v-ripple="'#f774795F'" class="px-4 py-3" @click="logout">
+          <p>
+            <span class="icon mdi mdi-power" style="color: #f77479" />
+            <span class="option-name">Log out</span>
+          </p>
+        </li>
+      </template>
+    </CustomListView>
   </div>
 </template>
 
 <script>
 import endpoints from '@/api/endpoints'
+import CustomListView from '@/components/Layout/CustomListView'
 
 export default {
   name: 'MoreOptions',
+  components: { CustomListView },
   middleware: 'isAuthenticated',
   layout: 'MobileApp',
   data() {
@@ -130,38 +136,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-.more-options-page {
-  ul {
-    list-style: none;
-
-    li {
-      p {
-        display: grid;
-        grid-template-columns: 1fr 4fr 0.5fr;
-        grid-column-gap: 1rem;
-        place-items: center;
-        text-align: left;
-
-        .icon {
-          font-size: clamp(1.6rem, 8vw, 2rem);
-        }
-
-        .option-name {
-          color: lighten($body-text-default, $lighten-percentage);
-          font-size: clamp(1.1rem, 8vw, 1.2rem);
-          width: 100%;
-        }
-
-        .arrow-go {
-          font-size: clamp(20px, 8vw, 28px);
-          color: #3a3a3a;
-        }
-      }
-    }
-  }
-}
-</style>

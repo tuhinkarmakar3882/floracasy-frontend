@@ -6,7 +6,7 @@
     <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
-      <LazyCustomListView>
+      <CustomListView>
         <template slot="list-items">
           <li
             v-for="(option, index) in options"
@@ -35,7 +35,7 @@
             </p>
           </li>
         </template>
-      </LazyCustomListView>
+      </CustomListView>
     </template>
   </AppFeel>
 </template>
