@@ -1,6 +1,10 @@
 <template>
   <header class="navigation-bar-page">
-    <h5 v-ripple class="mdi px-3 mdi-menu" @click="drawer = !drawer" />
+    <h5
+      v-ripple
+      class="mdi px-3 mdi-menu"
+      @click="drawerIsOpened = !drawerIsOpened"
+    />
     <section class="brand" @click="navigateTo('/')">
       <!--      <Logo :width="36" />-->
       <h6 v-ripple class="brand-name">Floracasy</h6>
@@ -17,45 +21,41 @@
     <div
       class="nav-drawer"
       :style="
-        drawer
+        drawerIsOpened
           ? {
-              width: 0,
-              transform: 'translateX(-100%)',
-              overflow: 'hidden',
-            }
-          : {
               width: '70vw',
               transform: 'translateX(0)',
               overflow: 'scroll',
             }
+          : {
+              width: 0,
+              transform: 'translateX(-100%)',
+              overflow: 'hidden',
+            }
       "
     >
-      <ul class="nav-drawer-options">
-        <li>
-          <button
-            v-ripple
-            class="secondary-outlined-btn"
-            @click="drawer = false"
-          >
-            &times;
-          </button>
-        </li>
-        <li>
+      <ul class="nav-drawer-options py-4">
+        <li class="my-2">
           <button
             v-ripple
             class="secondary-btn"
-            @click="$router.push('/PublicRoutes/GoPremium')"
+            @click="navigateTo('/PublicRoutes/GoPremium')"
           >
             Go Premium
           </button>
         </li>
-        <li>
+        <li class="my-2">
           <button
             v-ripple
             class="secondary-btn"
-            @click="$router.push('/PublicRoutes/WriteAndEarn')"
+            @click="navigateTo('/PublicRoutes/WriteAndEarn')"
           >
             Write &amp; Earn
+          </button>
+        </li>
+        <li class="my-2">
+          <button v-ripple class="danger-outlined-btn" @click="exitApp">
+            Exit app
           </button>
         </li>
       </ul>
@@ -69,7 +69,7 @@ export default {
   components: {},
   data() {
     return {
-      drawer: true,
+      drawerIsOpened: false,
       menuOptions: [
         {
           title: 'Go Premium',
@@ -87,8 +87,12 @@ export default {
     }
   },
   methods: {
-    navigateTo(path) {
-      this.$router.push(path)
+    async navigateTo(path) {
+      this.drawerIsOpened = false
+      await this.$router.push(path)
+    },
+    exitApp() {
+      alert('eventually this will close the app')
     },
   },
 }
@@ -139,7 +143,7 @@ export default {
     background-color: $nav-bar-bg;
     box-shadow: $right-only-box-shadow;
     z-index: $bring-to-zero-level;
-    transition: all 300ms cubic-bezier(0.23, 0.96, 1, 0.9);
+    transition: all 100ms ease-in-out;
 
     .nav-drawer-options {
       display: flex;
