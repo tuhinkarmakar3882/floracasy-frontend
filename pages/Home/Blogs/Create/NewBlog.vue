@@ -1,7 +1,7 @@
 <template>
   <AppFeel
     class="create-new-blog-page"
-    :on-back="navigationRoutes.Home.Blogs.Create"
+    :on-back="navigationRoutes.Home.Blogs.Create.index"
   >
     <template slot="app-bar-title">
       {{ pageTitle }}

@@ -1,14 +1,12 @@
 <template>
   <AppFeel
     class="draft-blog-page"
-    :on-back="navigationRoutes.Home.Blogs.Create"
+    :on-back="navigationRoutes.Home.Blogs.Create.index"
   >
     <template slot="app-bar-title">
       {{ pageTitle }}
     </template>
-    <template slot="main" class="my-4"
-      >This is a Draft View {{ a || 'nah' }}</template
-    >
+    <template slot="main" class="my-4">This is a Draft View</template>
   </AppFeel>
 </template>
 

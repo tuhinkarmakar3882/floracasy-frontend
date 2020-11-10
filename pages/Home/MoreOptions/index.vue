@@ -60,7 +60,7 @@ export default {
         {
           name: 'Payments',
           icon: 'mdi mdi-wallet',
-          color: '#329b32',
+          color: '#4fca4f',
           route: '/Home/MoreOptions/Payments',
         },
         {
