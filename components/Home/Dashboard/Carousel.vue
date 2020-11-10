@@ -14,9 +14,9 @@
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit at blanditiis.
       </p>
-      <RippleButton class-list="primary-btn" style="min-width: auto">
+      <button v-ripple class="primary-btn" style="min-width: auto">
         Go Now
-      </RippleButton>
+      </button>
     </div>
   </section>
 </template>
@@ -49,11 +49,8 @@
 </style>
 
 <script>
-import RippleButton from '~/components/global/RippleButton'
-
 export default {
   name: 'Carousel',
-  components: { RippleButton },
   props: {
     carouselItems: {
       type: Array,
