@@ -3,7 +3,7 @@
   "appName": "Floracasy",
   "description": "The One Stop Hub for Passionate & Creative minds",
   "version": "1.0.1",
-  "themeColor":"#0d0d17",
+  "themeColor": "#0d0d17",
   "private": true,
   "scripts": {
     "dev": "nuxt-ts",
