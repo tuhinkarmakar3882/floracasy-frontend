@@ -42,7 +42,7 @@ export default {
           name: 'Create New Blog',
           icon: 'mdi mdi-plus',
           color: '#4fca4f',
-          route: navigationRoutes.Home.Blogs.Create.NewBlog,
+          route: navigationRoutes.Home.Blogs.Create.New,
         },
         {
           name: 'Start from Drafts',
