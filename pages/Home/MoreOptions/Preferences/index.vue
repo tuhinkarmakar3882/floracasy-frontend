@@ -6,8 +6,8 @@
     <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
-      <main class="my-2">
-        <ul>
+      <LazyCustomListView>
+        <template slot="list-items">
           <li
             v-for="(option, index) in options"
             :key="index"
@@ -25,14 +25,17 @@
               <span class="mdi mdi-chevron-right arrow-go" />
             </p>
           </li>
+        </template>
+
+        <template slot="last-item">
           <li v-ripple="'#f774795F'" class="px-4 py-3">
             <p>
               <span class="icon mdi mdi-delete" style="color: #f77479" />
               <span class="option-name">Delete Account</span>
             </p>
           </li>
-        </ul>
-      </main>
+        </template>
+      </LazyCustomListView>
     </template>
   </AppFeel>
 </template>
@@ -40,10 +43,11 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import CustomListView from '@/components/Layout/CustomListView'
 
 export default {
   name: 'Preferences',
-  components: { AppFeel },
+  components: { CustomListView, AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {
@@ -91,38 +95,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-main {
-  ul {
-    list-style: none;
-
-    li {
-      p {
-        display: grid;
-        grid-template-columns: 1fr 4fr 0.5fr;
-        grid-column-gap: 1rem;
-        place-items: center;
-        text-align: left;
-
-        .icon {
-          font-size: clamp(1.6rem, 8vw, 2rem);
-        }
-
-        .option-name {
-          color: lighten($body-text-default, $lighten-percentage);
-          font-size: clamp(1.1rem, 8vw, 1.2rem);
-          width: 100%;
-        }
-
-        .arrow-go {
-          font-size: clamp(20px, 8vw, 28px);
-          color: #3a3a3a;
-        }
-      }
-    }
-  }
-}
-</style>
