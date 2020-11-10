@@ -135,7 +135,9 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
+    await this.$store.dispatch('BottomNavigation/update', {
+      linkPosition: 0,
+    })
   },
   methods: {
     changeTab(newTabNumber) {

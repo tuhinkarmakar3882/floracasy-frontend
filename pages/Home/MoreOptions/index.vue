@@ -90,8 +90,10 @@ export default {
       ],
     }
   },
-  mounted() {
-    this.$store.commit('BottomNavigation/update', { linkPosition: 4 })
+  async mounted() {
+    await this.$store.dispatch('BottomNavigation/update', {
+      linkPosition: 4,
+    })
   },
   methods: {
     async performLogout() {

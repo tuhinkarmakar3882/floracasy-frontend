@@ -130,7 +130,9 @@ export default {
   },
 
   async mounted() {
-    await this.$store.commit('BottomNavigation/update', { linkPosition: 1 })
+    await this.$store.dispatch('BottomNavigation/update', {
+      linkPosition: 1,
+    })
 
     const currentUser = await this.$store.getters['UserManagement/getUser']
     if (!currentUser) {
