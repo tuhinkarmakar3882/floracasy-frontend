@@ -88,8 +88,8 @@ export default {
   },
   methods: {
     async navigateTo(path) {
-      this.drawerIsOpened = false
       await this.$router.push(path)
+      this.drawerIsOpened = false
     },
     exitApp() {
       alert('eventually this will close the app')
@@ -143,7 +143,7 @@ export default {
     background-color: $nav-bar-bg;
     box-shadow: $right-only-box-shadow;
     z-index: $bring-to-zero-level;
-    transition: all 100ms ease-in-out;
+    transition: all 300ms ease-in-out;
 
     .nav-drawer-options {
       display: flex;

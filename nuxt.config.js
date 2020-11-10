@@ -195,6 +195,9 @@ export default {
       theme_color: '#0d0d17',
       author: 'Floracasy Team',
       appleStatusBarStyle: 'black',
+      mobileApp: true,
+      mobileAppIOS: true,
+      nativeUI: true,
     },
     manifest: {
       name: 'Floracasy',
@@ -204,7 +207,7 @@ export default {
       background_color: '#0d0d17',
       theme_color: '#0d0d17',
       status_bar: '#0d0d17',
-      display: 'fullscreen',
+      display: 'standalone',
     },
     workbox: {
       cacheOptions: {
