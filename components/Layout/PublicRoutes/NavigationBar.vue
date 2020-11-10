@@ -6,7 +6,6 @@
       @click="drawerIsOpened = !drawerIsOpened"
     />
     <section class="brand" @click="navigateTo('/')">
-      <!--      <Logo :width="36" />-->
       <h6 v-ripple class="brand-name">Floracasy</h6>
     </section>
     <button
