@@ -195,7 +195,6 @@ export default {
       theme_color: '#0d0d17',
       author: 'Floracasy Team',
       appleStatusBarStyle: 'black',
-      nativeUI: true,
     },
     manifest: {
       name: 'Floracasy',
