@@ -9,7 +9,7 @@
     <template slot="main">
       <!--      <transition-group mode="out-in" name="slide-fade">-->
       <div v-if="step === 1" :key="0" class="steps">
-        <section class="mx-4 my-4">
+        <section class="px-4 my-4">
           <h6 class="heading-title">What is it about?</h6>
           <div class="my-4 form-label-group">
             <label for="blog-title">Enter the Blog Title</label>
@@ -38,7 +38,7 @@
         </section>
       </div>
       <div v-else-if="step === 2" :key="1" class="steps">
-        <section class="mx-4 my-4">
+        <section class="px-4 my-4">
           <h6 class="heading-title">Add That</h6>
 
           <div class="my-6 form-label-group">
@@ -75,15 +75,50 @@
         </section>
       </div>
       <div v-else-if="step === 3" :key="2" class="steps">
-        <section class="mx-4 my-4">
+        <section class="px-4 my-4">
           <h6 class="heading-title mb-8">Write the Blog below</h6>
           <textarea id="blogContent" v-model="content" name="blogContent" />
         </section>
       </div>
+
       <div v-else-if="step === 4" :key="4" class="steps">
-        <section class="mx-4 my-4">
+        <section class="my-4">
           <h6 class="heading-title mb-8">Preview</h6>
-          <div class="my-4" v-html="noXSS($md.render(content))" />
+          <section class="px-4 blog-body">
+            <p class="mb-2">
+              <nuxt-link
+                :to="navigationRoutes.Home.Blogs.Create.New"
+                class="no-underline"
+              >
+                {{ user.displayName }}
+              </nuxt-link>
+              IN
+              <nuxt-link
+                :to="navigationRoutes.Home.Blogs.Create.New"
+                class="no-underline"
+              >
+                {{ categories[blogCategory - 1].name }}
+              </nuxt-link>
+            </p>
+            <h3 class="blog-title mb-4">
+              {{ blogTitle }}
+            </h3>
+            <small class="timestamp">
+              <span class="mdi mdi-clock-time-nine-outline" />
+              {{ parse(new Date()) }}
+            </small>
+
+            <img
+              class="my-5 blog-intro-image"
+              :src="coverImageUrl"
+              :alt="blogTitle"
+              style="width: 100%; object-fit: cover; max-height: 250px"
+            />
+            <article
+              class="blog-body my-6"
+              v-html="noXSS($md.render(content))"
+            />
+          </section>
         </section>
       </div>
       <!--      </transition-group>-->
@@ -144,6 +179,8 @@ import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
+import utility from '@/utils/utility'
+import { mapGetters } from 'vuex'
 
 function getFromLocalStorageOrReturnDefault(keyName, value) {
   return process.client && localStorage.getItem(keyName)
@@ -167,6 +204,8 @@ export default {
 
   data() {
     return {
+      navigationRoutes,
+      parse: utility.timeStringParser,
       noXSS: sanitizeHtml,
       totalSteps: [1, 2, 3, 4],
       blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
@@ -209,6 +248,20 @@ export default {
     coverImageUrl: (newContent) => {
       localStorage.setItem('coverImageUrl', newContent)
     },
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
+  async mounted() {
+    const currentUser = await this.$store.getters['UserManagement/getUser']
+    if (!currentUser) {
+      this.loadingProfile = true
+      await this.$store.dispatch('UserManagement/fetchData')
+    }
   },
 
   methods: {
@@ -286,6 +339,36 @@ export default {
         width: $micro-unit + $double-unit;
         background-color: $secondary-highlight;
       }
+    }
+  }
+
+  .blog-body {
+    blockquote,
+    ul,
+    ol,
+    hr {
+      margin: $large-unit 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      position: relative;
+      margin: $large-unit 0;
+
+      //&::after {
+      //  content: '';
+      //  border-radius: $standard-unit;
+      //  position: absolute;
+      //  bottom: -$micro-unit;
+      //  left: 0;
+      //  height: $nano-unit;
+      //  width: clamp(100px, 20%, 250px);
+      //  background-color: darken($secondary-matte, $lighten-percentage);
+      //}
     }
   }
 
