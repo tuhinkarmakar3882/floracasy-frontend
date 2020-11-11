@@ -23,11 +23,19 @@ export default {
     HearTheExperiences,
   },
   data() {
-    return {}
+    return {
+      pageTitle: 'Welcome to Floracasy',
+    }
   },
 
   mounted() {},
 
   methods: {},
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
 }
 </script>

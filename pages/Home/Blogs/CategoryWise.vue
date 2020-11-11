@@ -11,8 +11,19 @@ export default {
   name: 'CategoryWise',
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
+  data() {
+    return {
+      pageTitle: 'Search Blogs in Category Wise',
+    }
+  },
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
   },
 }
 </script>

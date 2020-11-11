@@ -7,5 +7,16 @@
 <script>
 export default {
   name: 'HelpAndSupport',
+  data() {
+    return {
+      pageTitle: 'Help And Support',
+    }
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
 }
 </script>

@@ -116,10 +116,17 @@ export default {
 
   data() {
     return {
+      pageTitle: 'Profile Details',
       loadingProfile: true,
       statisticsItem: null,
       recentActivities: null,
       loadingRecentActivities: null,
+    }
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
     }
   },
 
@@ -162,19 +169,6 @@ export default {
       })
 
     this.loadingRecentActivities = false
-  },
-
-  head() {
-    return {
-      title: 'Profile Details',
-      meta: [
-        {
-          // hid: 'description',
-          // name: 'description',
-          // content: 'My custom description',
-        },
-      ],
-    }
   },
 }
 </script>

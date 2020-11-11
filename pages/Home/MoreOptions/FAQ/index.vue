@@ -7,5 +7,17 @@
 <script>
 export default {
   name: 'FAQ',
+
+  data() {
+    return {
+      pageTitle: 'FAQ',
+    }
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
 }
 </script>

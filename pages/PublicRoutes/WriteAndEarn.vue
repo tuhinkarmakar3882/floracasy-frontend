@@ -13,6 +13,18 @@ export default {
   name: 'WriteAndEarn',
   layout: 'PublicRoutes',
   middleware: 'publicRoute',
+
+  data() {
+    return {
+      pageTitle: 'Write and Earn with Us',
+    }
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
 }
 </script>
 

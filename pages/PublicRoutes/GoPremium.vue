@@ -11,6 +11,18 @@ export default {
   name: 'GoPremium',
   layout: 'PublicRoutes',
   middleware: 'publicRoute',
+
+  data() {
+    return {
+      pageTitle: 'Explore Premium',
+    }
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
 }
 </script>
 

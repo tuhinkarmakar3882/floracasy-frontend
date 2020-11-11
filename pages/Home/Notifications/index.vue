@@ -13,8 +13,11 @@ export default {
   name: 'Notifications',
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
+
   data() {
     return {
+      pageTitle: 'Notifications',
+
       notifications: [
         {
           id: 0,
@@ -174,10 +177,17 @@ export default {
       ],
     }
   },
+
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
     })
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
   },
 }
 </script>

@@ -7,5 +7,17 @@
 <script>
 export default {
   name: 'Payments',
+
+  data() {
+    return {
+      pageTitle: 'Payments',
+    }
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
 }
 </script>

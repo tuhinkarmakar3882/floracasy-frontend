@@ -11,8 +11,19 @@ export default {
   name: 'Messages',
   middleware: 'isAuthenticated',
   layout: 'MobileApp',
+  data() {
+    return {
+      pageTitle: 'Messages',
+    }
+  },
   mounted() {
     this.$store.commit('BottomNavigation/update', { linkPosition: -1 })
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
   },
 }
 </script>

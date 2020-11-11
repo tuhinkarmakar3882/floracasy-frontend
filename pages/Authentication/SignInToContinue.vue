@@ -53,6 +53,7 @@ export default {
 
   data() {
     return {
+      pageTitle: 'Sign In To Continue',
       showLoaderAnimation: false,
       stateInformation: 'Checking...',
       signupOptions: [
@@ -154,14 +155,7 @@ export default {
 
   head() {
     return {
-      title: 'Sign in to continue',
-      meta: [
-        {
-          // hid: 'description',
-          // name: 'description',
-          // content: 'My custom description',
-        },
-      ],
+      title: this.pageTitle,
     }
   },
 }

@@ -44,6 +44,7 @@ export default {
   layout: 'MobileApp',
   data() {
     return {
+      pageTitle: 'More Options',
       options: [
         {
           name: 'Preference',
@@ -96,11 +97,13 @@ export default {
       ],
     }
   },
+
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 4,
     })
   },
+
   methods: {
     async performLogout() {
       await this.$axios.setToken(false)
@@ -122,16 +125,10 @@ export default {
         })
     },
   },
+
   head() {
     return {
-      title: 'More Options',
-      meta: [
-        {
-          // hid: 'description',
-          // name: 'description',
-          // content: 'My custom description',
-        },
-      ],
+      title: this.pageTitle,
     }
   },
 }

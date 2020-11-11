@@ -178,8 +178,8 @@ export default {
       meta: [
         {
           hid: 'description',
-          name: 'description',
-          content: 'My custom description',
+          name: this.blog.title,
+          content: this.blog.subtitle,
         },
       ],
     }
