@@ -26,9 +26,7 @@ export default {
     return {}
   },
 
-  mounted() {
-    this.$router.replace('/')
-  },
+  mounted() {},
 
   methods: {},
 }

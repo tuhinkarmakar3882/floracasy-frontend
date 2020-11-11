@@ -168,8 +168,8 @@ export default {
     }
   },
 
-  mounted() {
-    this.$store.commit('BottomNavigation/update', { linkPosition: -1 })
+  async mounted() {
+    await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
   },
 
   head() {
