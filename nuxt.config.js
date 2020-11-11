@@ -17,9 +17,8 @@ export default {
   },
 
   router: {
-    middleware: [],
+    middleware: 'auto-redirect',
   },
-
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
