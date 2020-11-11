@@ -195,46 +195,49 @@ export default {
         },
       ],
       cleanupOutdatedCaches: true,
+      cacheOptions: {
+        revision: packageJson.version,
+      },
     },
-  },
 
-  tailwindcss: {
-    config: {
-      theme: {
-        fontSize: {
-          xs: ['0.75rem', { lineHeight: '1rem' }],
-          sm: ['0.875rem', { lineHeight: '1.25rem' }],
-          base: ['1rem', { lineHeight: '1.5rem' }],
-          lg: ['1.125rem', { lineHeight: '1.75rem' }],
-          xl: ['1.25rem', { lineHeight: '1.75rem' }],
-          '2xl': ['1.5rem', { lineHeight: '2rem' }],
-          '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-          '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-          '5xl': ['3rem', { lineHeight: '1' }],
-          '6xl': ['4rem', { lineHeight: '1' }],
+    tailwindcss: {
+      config: {
+        theme: {
+          fontSize: {
+            xs: ['0.75rem', { lineHeight: '1rem' }],
+            sm: ['0.875rem', { lineHeight: '1.25rem' }],
+            base: ['1rem', { lineHeight: '1.5rem' }],
+            lg: ['1.125rem', { lineHeight: '1.75rem' }],
+            xl: ['1.25rem', { lineHeight: '1.75rem' }],
+            '2xl': ['1.5rem', { lineHeight: '2rem' }],
+            '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+            '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+            '5xl': ['3rem', { lineHeight: '1' }],
+            '6xl': ['4rem', { lineHeight: '1' }],
+          },
         },
-      },
-      variants: {},
-      plugins: [],
-      future: {
-        standardFontWeights: true,
-        defaultLineHeights: true,
-        purgeLayersByDefault: true,
-        removeDeprecatedGapUtilities: true,
-      },
-      purge: {
-        layers: ['utilities'],
-        enabled: process.env.NODE_ENV === 'production',
-        content: [
-          'components/**/*.vue',
-          'layouts/**/*.vue',
-          'pages/**/*.vue',
-          'plugins/**/*.js',
-          'nuxt.config.js',
-          // TypeScript
-          'plugins/**/*.ts',
-          'nuxt.config.ts',
-        ],
+        variants: {},
+        plugins: [],
+        future: {
+          standardFontWeights: true,
+          defaultLineHeights: true,
+          purgeLayersByDefault: true,
+          removeDeprecatedGapUtilities: true,
+        },
+        purge: {
+          layers: ['utilities'],
+          enabled: process.env.NODE_ENV === 'production',
+          content: [
+            'components/**/*.vue',
+            'layouts/**/*.vue',
+            'pages/**/*.vue',
+            'plugins/**/*.js',
+            'nuxt.config.js',
+            // TypeScript
+            'plugins/**/*.ts',
+            'nuxt.config.ts',
+          ],
+        },
       },
     },
   },
