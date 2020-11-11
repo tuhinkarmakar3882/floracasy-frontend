@@ -1,4 +1,6 @@
-export default function ({ route }) {
+export default function ({ route, redirect }) {
   const modifiedFullPath = route.fullPath.replace('standalone=true', '')
-  console.log(modifiedFullPath)
+  process.client
+    ? (window.location = modifiedFullPath)
+    : redirect(modifiedFullPath)
 }
