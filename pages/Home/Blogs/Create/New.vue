@@ -83,7 +83,7 @@
       <div v-else-if="step === 4" :key="4" class="steps">
         <section class="mx-4 my-4">
           <h6 class="heading-title mb-8">Preview</h6>
-          <div class="my-4" v-html="$md.render(content)" />
+          <div class="my-4" v-html="noXSS($md.render(content))" />
         </section>
       </div>
       <!--      </transition-group>-->
@@ -143,6 +143,7 @@
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
+import sanitizeHtml from 'sanitize-html'
 
 function getFromLocalStorageOrReturnDefault(keyName, value) {
   return process.client && localStorage.getItem(keyName)
@@ -166,6 +167,7 @@ export default {
 
   data() {
     return {
+      noXSS: sanitizeHtml,
       totalSteps: [1, 2, 3, 4],
       blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
       blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),

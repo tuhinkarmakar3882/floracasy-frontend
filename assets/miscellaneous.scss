@@ -75,8 +75,8 @@ html {
     }
 
     ol {
-      list-style: inside;
-      padding-left: $standard-unit;
+      list-style: decimal;
+      padding-left: $medium-unit;
     }
 
     .form-label-group {
