@@ -173,6 +173,7 @@ export default {
       display: 'standalone',
     },
     workbox: {
+      offline: false,
       offlinePage: '/Offline',
       runtimeCaching: [
         {
