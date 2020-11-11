@@ -3,9 +3,8 @@ export default async () => {
     const workbox = await window.$workbox
     if (workbox) {
       workbox.addEventListener('installed', (event) => {
-        alert('Workbox ready')
         if (event.isUpdate) {
-          alert('New Content Available Refreshing')
+          console.log('New Content Available Refreshing')
           window.location.reload()
         }
       })
