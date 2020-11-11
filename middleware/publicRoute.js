@@ -1,7 +1,6 @@
 'use strict'
 
-export default async function ({ store, redirect }) {
-  await store.dispatch('checkTokenValidity')
+export default function ({ store, redirect }) {
   if (store.state.authState) {
     return redirect('/Home/Dashboard')
   }
