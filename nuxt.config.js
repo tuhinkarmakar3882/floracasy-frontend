@@ -177,7 +177,7 @@ export default {
         removeDeprecatedGapUtilities: true,
       },
       purge: {
-        layers: ['utilities'],
+        layers: ['base', 'components', 'utilities'],
         enabled: process.env.NODE_ENV === 'production',
         content: [
           'components/**/*.vue',
@@ -212,10 +212,10 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
+      start_url: '/Home/Dashboard',
     },
     workbox: {
       offline: false,
-      offlinePage: '/Offline',
       runtimeCaching: [
         {
           urlPattern: 'https://fonts.googleapis.com/.*',

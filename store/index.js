@@ -31,7 +31,7 @@ export const actions = {
       {},
       { withCredentials: true }
     )
-    console.log(data.authState)
+    console.log(data.authState, new Date())
     if (data.authState) {
       const cookieSavingConfig = {
         path: '/',
