@@ -120,7 +120,7 @@
             v-if="step === 4"
             v-ripple
             class="secondary-btn px-7"
-            @click="goToNextStep"
+            @click="publish"
           >
             Publish
           </button>
