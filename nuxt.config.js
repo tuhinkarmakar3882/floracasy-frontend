@@ -23,7 +23,10 @@ export default {
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
-    '~/plugins/workbox-refresh-to-update.js',
+    {
+      src: '~/plugins/workbox-refresh-to-update.js',
+      mode: 'client',
+    },
     {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
