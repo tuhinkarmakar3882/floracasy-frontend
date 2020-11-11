@@ -7,11 +7,12 @@
       {{ pageTitle }}
     </template>
     <template slot="main">
-      <div v-if="step === 1" class="step-1">
-        <h6 class="heading-title">Basic Details</h6>
-
+      <!--      <transition-group mode="out-in" name="slide-fade">-->
+      <div v-if="step === 1" :key="0" class="steps">
         <section class="mx-4 my-4">
+          <h6 class="heading-title">What is it about?</h6>
           <div class="my-4 form-label-group">
+            <label for="blog-title">Enter the Blog Title</label>
             <input
               id="blog-title"
               v-model="blogTitle"
@@ -21,7 +22,6 @@
               autofocus
               autocomplete="off"
             />
-            <label for="blog-title">Enter the Blog Title</label>
           </div>
 
           <div class="my-6 form-label-group">
@@ -34,6 +34,23 @@
               autocomplete="off"
             />
             <label for="blog-subtitle">Enter the Blog Subtitle</label>
+          </div>
+        </section>
+      </div>
+      <div v-else-if="step === 2" :key="1" class="steps">
+        <section class="mx-4 my-4">
+          <h6 class="heading-title">Add That</h6>
+
+          <div class="my-6 form-label-group">
+            <input
+              id="cover-image-url"
+              v-model="coverImageUrl"
+              type="text"
+              placeholder="Enter the Blog Title"
+              required
+              autocomplete="off"
+            />
+            <label for="cover-image-url">Enter the Cover Image URL</label>
           </div>
 
           <div class="my-4">
@@ -55,31 +72,68 @@
               </select>
             </div>
           </div>
-
-          <div class="text-center my-6">
-            <button v-ripple class="primary-btn" @click="goToNextStep">
-              Next
-            </button>
-          </div>
-        </section>
-
-        <section class="progress-circle mt-auto">
-          <span class="active" />
-          <span />
         </section>
       </div>
+      <div v-else-if="step === 3" :key="2" class="steps">
+        <section class="mx-4 my-4">
+          <h6 class="heading-title mb-8">Write the Blog below</h6>
+          <p class="text-center my-6">Editor will come here</p>
+        </section>
+      </div>
+      <div v-else-if="step === 4" :key="4" class="steps">
+        <section class="mx-4 my-4">
+          <h6 class="heading-title mb-8">Preview</h6>
+        </section>
+      </div>
+      <!--      </transition-group>-->
 
-      <div v-if="step === 2">
-        <h6 class="heading-title mb-8">Write the Blog below</h6>
+      <section :key="'fixed'" class="bottom-section">
+        <div class="text-center">
+          <button
+            v-if="step >= 2"
+            v-ripple
+            class="secondary-outlined-btn mr-4 px-8"
+            @click="goToPrevStep"
+          >
+            Back
+          </button>
 
-        <p class="text-center my-6">Editor will come here</p>
-        <!--        <client-only>-->
-        <!--          <vue-editor />-->
-        <!--        </client-only>-->
-        <div class="text-center my-6">
-          <button v-ripple class="primary-btn" @click="publish">Publish</button>
+          <button
+            v-if="step <= 2"
+            v-ripple
+            class="secondary-btn px-8"
+            @click="goToNextStep"
+          >
+            Next
+          </button>
+
+          <button
+            v-if="step === 3"
+            v-ripple
+            class="secondary-btn px-7"
+            @click="goToNextStep"
+          >
+            Preview
+          </button>
+
+          <button
+            v-if="step === 4"
+            v-ripple
+            class="secondary-btn px-7"
+            @click="goToNextStep"
+          >
+            Publish
+          </button>
         </div>
-      </div>
+
+        <section class="progress-circle mt-8">
+          <span
+            v-for="(stepNo, index) in totalSteps"
+            :key="index"
+            :class="stepNo === step && 'active'"
+          />
+        </section>
+      </section>
     </template>
   </AppFeel>
 </template>
@@ -111,9 +165,11 @@ export default {
 
   data() {
     return {
-      blogCategory: getFromLocalStorageOrReturnDefault('blogCategory'),
-      blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),
+      totalSteps: [1, 2, 3, 4],
       blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
+      blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),
+      blogCategory: getFromLocalStorageOrReturnDefault('blogCategory'),
+      coverImageUrl: getFromLocalStorageOrReturnDefault('coverImageUrl'),
       step: 1,
       navigationRoutes,
       pageTitle: 'Create New Blog',
@@ -147,11 +203,17 @@ export default {
     blogTitle: (newContent) => {
       localStorage.setItem('blogTitle', newContent)
     },
+    coverImageUrl: (newContent) => {
+      localStorage.setItem('coverImageUrl', newContent)
+    },
   },
 
   methods: {
     goToNextStep() {
-      this.step = 2
+      this.step++
+    },
+    goToPrevStep() {
+      this.step--
     },
     publish() {
       alert('NOT Implemented Yet')
@@ -170,10 +232,13 @@ export default {
 @import 'assets/all-variables';
 
 .create-new-blog-page {
-  .step-1 {
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 84px);
+  .bottom-section {
+    height: 130px;
+  }
+
+  .steps {
+    border: 1px solid transparent;
+    height: calc(100vh - 56px - 130px);
   }
 
   .progress-circle {
@@ -185,21 +250,27 @@ export default {
     span {
       height: $micro-unit;
       width: $micro-unit;
-      background-color: $muted;
+      background-color: darken($disabled, $lighten-percentage);
       border-radius: 50%;
       margin: 0 $micro-unit;
       box-shadow: $default-box-shadow;
 
       &.active {
-        height: $medium-unit;
-        width: $medium-unit;
+        height: $micro-unit + $double-unit;
+        width: $micro-unit + $double-unit;
         background-color: $secondary-highlight;
       }
     }
   }
 
-  .styled-select {
-    position: relative;
-  }
+  //.slide-fade-enter-active,
+  //.slide-fade-leave-active {
+  //  transition: all 0.4s ease-in-out;
+  //}
+  //.slide-fade-enter,
+  //.slide-fade-leave-to {
+  //  transform: translateX(10px);
+  //  opacity: 0;
+  //}
 }
 </style>
