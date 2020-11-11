@@ -77,12 +77,13 @@
       <div v-else-if="step === 3" :key="2" class="steps">
         <section class="mx-4 my-4">
           <h6 class="heading-title mb-8">Write the Blog below</h6>
-          <p class="text-center my-6">Editor will come here</p>
+          <textarea id="blogContent" v-model="content" name="blogContent" />
         </section>
       </div>
       <div v-else-if="step === 4" :key="4" class="steps">
         <section class="mx-4 my-4">
           <h6 class="heading-title mb-8">Preview</h6>
+          <div class="my-4" v-html="$md.render(content)" />
         </section>
       </div>
       <!--      </transition-group>-->
@@ -239,6 +240,29 @@ export default {
   .steps {
     border: 1px solid transparent;
     height: calc(100vh - 56px - 130px);
+    overflow: auto;
+
+    textarea {
+      width: 100%;
+      color: white;
+      background: #101019;
+      border-radius: 16px;
+      padding: 1rem;
+      height: 430px;
+      outline: none;
+      box-shadow: $default-box-shadow;
+
+      &:hover,
+      &:focus,
+      &:focus-visible,
+      &:active,
+      &:focus-within {
+        border-radius: $nano-unit;
+        outline: none 0;
+        box-shadow: 0 0 $double-unit $single-unit
+          darken($white, $darken-percentage);
+      }
+    }
   }
 
   .progress-circle {
