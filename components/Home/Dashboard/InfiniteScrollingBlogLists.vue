@@ -62,7 +62,7 @@
             {{ blog.totalComments }}
           </span>
         </div>
-        <div v-ripple class="share" @click="share(blog)">
+        <div v-ripple class="share" @click="share(blog, index)">
           <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
           <span class="value inline-block align-middle">
             {{ blog.totalShares }}
