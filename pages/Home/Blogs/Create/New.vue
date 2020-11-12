@@ -82,9 +82,6 @@
               ref="editor"
               v-model="content"
               :options="editorOption"
-              @blur="onEditorBlur($event)"
-              @focus="onEditorFocus($event)"
-              @ready="onEditorReady($event)"
             />
           </div>
         </client-only>
@@ -294,7 +291,7 @@ export default {
   },
 
   beforeDestroy() {
-    document.removeEventListener('backbutton', this.yourCallBackFunction)
+    document.removeEventListener('backbutton', this.goToPrevStep)
   },
 
   methods: {
@@ -309,7 +306,6 @@ export default {
       }
     },
     async publish() {
-      console.log('Sending data to server')
       await this.$axios
         .$post(endpoints.blog.create, {
           category: this.blogCategory,
@@ -319,7 +315,7 @@ export default {
           content: this.content,
         })
         .then((response) => {
-          alert(response)
+          alert(response.message)
           this.cleanupCurrentDraft()
           this.$router.replace(navigationRoutes.Home.DashBoard)
         })
@@ -328,21 +324,13 @@ export default {
           console.error(error.response)
         })
     },
-    onEditorBlur(editor) {
-      console.log('editor blur!', editor)
-    },
-    onEditorFocus(editor) {
-      console.log('editor focus!', editor)
-    },
-    onEditorReady(editor) {
-      console.log('editor ready!', editor)
-    },
+
     cleanupCurrentDraft() {
-      // localStorage.removeItem('draft')
-      // localStorage.removeItem('blogCategory')
-      // localStorage.removeItem('blogSubtitle')
-      // localStorage.removeItem('blogTitle')
-      // localStorage.removeItem('coverImageUrl')
+      localStorage.removeItem('draft')
+      localStorage.removeItem('blogCategory')
+      localStorage.removeItem('blogSubtitle')
+      localStorage.removeItem('blogTitle')
+      localStorage.removeItem('coverImageUrl')
     },
   },
 
