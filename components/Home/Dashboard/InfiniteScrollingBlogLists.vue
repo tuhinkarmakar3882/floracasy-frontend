@@ -7,11 +7,17 @@
     <article v-for="blog in blogs" v-else :key="blog.id">
       <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
-          <nuxt-link to="/Home/Account/Details" class="no-underline">
+          <nuxt-link
+            :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+            class="no-underline"
+          >
             {{ blog.author.displayName }}
           </nuxt-link>
           IN
-          <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
+          <nuxt-link
+            :to="navigationRoutes.Home.Blogs.CategoryWise"
+            class="no-underline"
+          >
             {{ blog.category.name }}
           </nuxt-link>
         </p>
@@ -68,6 +74,7 @@
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import utility from '@/utils/utility'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
@@ -80,6 +87,7 @@ export default {
   },
   data() {
     return {
+      navigationRoutes,
       dataLoading: true,
       backendData: null,
       parse: utility.timeStringParser,
