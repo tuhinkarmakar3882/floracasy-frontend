@@ -75,8 +75,6 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/eslint-module',
   ],
 
   build: {
@@ -144,9 +142,6 @@ export default {
   pageTransition: {
     name: 'page',
     mode: 'out-in',
-  },
-  eslint: {
-    fix: true,
   },
 
   content: {},
