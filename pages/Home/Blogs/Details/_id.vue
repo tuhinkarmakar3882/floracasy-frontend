@@ -2,11 +2,17 @@
   <div class="blog-details-page py-4">
     <section v-if="blog" class="px-4">
       <p class="mb-2">
-        <nuxt-link to="/Home/Account/BlogDetails" class="no-underline">
+        <nuxt-link
+          :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+          class="no-underline"
+        >
           {{ blog.author.displayName }}
         </nuxt-link>
         IN
-        <nuxt-link to="/Home/Blogs/CategoryWise" class="no-underline">
+        <nuxt-link
+          :to="navigationRoutes.Home.Blogs.CategoryWise"
+          class="no-underline"
+        >
           {{ blog.category.name }}
         </nuxt-link>
       </p>
@@ -52,6 +58,7 @@ import utility from '@/utils/utility'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'highlight.js/styles/tomorrow.css'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'BlogDetails',
@@ -67,6 +74,7 @@ export default {
 
   data() {
     return {
+      navigationRoutes,
       parse: utility.timeStringParser,
       noXSS: sanitizeHtml,
       sanitizationConfig: {
