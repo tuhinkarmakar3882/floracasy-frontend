@@ -19,6 +19,7 @@ export default {
   router: {
     middleware: 'auto-redirect',
   },
+
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
@@ -34,11 +35,10 @@ export default {
       src: '~/plugins/axios.js',
       mode: 'client',
     },
-    // '~/plugins/token-renewal-service.js',
-    // {
-    //   src: '~/plugins/authenticationStateInitializer.js',
-    //   mode: 'client',
-    // },
+    {
+      src: '~/plugins/nuxt-quill-editor.js',
+      mode: 'client',
+    },
   ],
 
   modules: [
@@ -69,12 +69,7 @@ export default {
         },
       },
     ],
-    '@nuxtjs/markdownit',
   ],
-
-  markdownit: {
-    injected: true,
-  },
 
   buildModules: [
     '@nuxt/typescript-build',
