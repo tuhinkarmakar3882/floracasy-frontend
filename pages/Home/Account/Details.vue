@@ -26,7 +26,8 @@
             </div>
             <div class="item">
               <span class="number">{{
-                statisticsItem['totalEngagements']
+                statisticsItem['peopleSharedMyBlogs'] +
+                statisticsItem['peopleLikedMyBlogs']
               }}</span>
               <p class="type">Engagements</p>
             </div>
