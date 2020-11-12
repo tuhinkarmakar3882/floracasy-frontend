@@ -1,6 +1,5 @@
 <template>
   <div class="text-center py-6 details-page">
-    Overview!
     <main v-if="loadingProfile">
       <div class="pageLoading">
         <LoadingIcon />
@@ -8,7 +7,7 @@
       </div>
     </main>
     <main v-else>
-      <section class="user-profile">
+      <section v-if="otherUser" class="user-profile">
         <div class="basic-data">
           <img
             alt="profile-picture"
@@ -155,6 +154,8 @@ export default {
         .catch((error) => {
           console.error(error)
         })
+
+      this.otherUser = this.statisticsItem.user
 
       this.recentActivities = await this.$axios
         .$get(endpoints.blog.getBlogsByUid, {
