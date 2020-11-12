@@ -4,7 +4,7 @@
 
     <LoadingIcon v-if="dataLoading" />
 
-    <article v-for="blog in blogs" v-else :key="blog.id">
+    <article v-for="(blog, index) in blogs" v-else :key="blog.id">
       <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
           <nuxt-link
@@ -47,8 +47,11 @@
       </section>
 
       <section class="blog-actions px-4 pb-8">
-        <div v-ripple class="like" @click="like(blog)">
-          <i class="mdi mdi-heart-outline mr-2 inline-block align-middle" />
+        <div v-ripple class="like" @click="like(blog, index)">
+          <i
+            class="mdi mr-2 inline-block align-middle"
+            :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          />
           <span class="value inline-block align-middle">
             {{ blog.totalLikes }}
           </span>
@@ -89,7 +92,7 @@ export default {
     return {
       navigationRoutes,
       dataLoading: true,
-      backendData: null,
+      blogs: [],
       parse: utility.timeStringParser,
     }
   },
@@ -123,10 +126,20 @@ export default {
     navigateTo(path) {
       this.$router.push(path)
     },
-    like(blog) {
-      alert(
-        `Wow, I'm amazed to see that you are trying to like ${blog.title}. But, the developer is too lazy to implement that feature. Should we fire this developer?`
-      )
+    async like(blog, index) {
+      await this.$axios
+        .$post(endpoints.blog.like, {
+          blog_id: blog.id,
+        })
+        .then((response) => {
+          response.action === 'like'
+            ? this.blogs[index].totalLikes++
+            : this.blogs[index].totalLikes--
+          this.blogs[index].isLiked = !this.blogs[index].isLiked
+        })
+        .catch((e) => {
+          console.error(e)
+        })
     },
     comment(blog) {
       alert(
