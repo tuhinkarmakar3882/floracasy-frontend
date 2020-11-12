@@ -8,122 +8,121 @@
     </template>
     <template slot="main">
       <!--      <transition-group mode="out-in" name="slide-fade">-->
-      <div v-if="step === 1" :key="0" class="steps">
-        <section class="px-4 my-4">
-          <h6 class="heading-title">What is it about?</h6>
-          <div class="my-4 form-label-group">
-            <label for="blog-title">Enter the Blog Title</label>
-            <input
-              id="blog-title"
-              v-model="blogTitle"
-              type="text"
-              placeholder="Enter the Blog Title"
-              required
-              autofocus
-              autocomplete="off"
-            />
-          </div>
+      <div v-if="step === 1" :key="0" class="steps-bounded px-4 mt-4">
+        <h5 class="heading-title mb-8">What is it about?</h5>
+        <div class="mt-8 mb-4 form-label-group">
+          <label for="blog-title">Enter the Blog Title</label>
+          <input
+            id="blog-title"
+            v-model="blogTitle"
+            type="text"
+            placeholder="Enter the Blog Title"
+            required
+            autofocus
+            autocomplete="off"
+          />
+        </div>
 
-          <div class="my-6 form-label-group">
-            <input
-              id="blog-subtitle"
-              v-model="blogSubtitle"
-              type="text"
-              placeholder="Enter the Blog Title"
-              required
-              autocomplete="off"
-            />
-            <label for="blog-subtitle">Enter the Blog Subtitle</label>
-          </div>
-        </section>
+        <div class="my-6 form-label-group">
+          <input
+            id="blog-subtitle"
+            v-model="blogSubtitle"
+            type="text"
+            placeholder="Enter the Blog Title"
+            required
+            autocomplete="off"
+          />
+          <label for="blog-subtitle">Enter the Blog Subtitle</label>
+        </div>
       </div>
-      <div v-else-if="step === 2" :key="1" class="steps">
-        <section class="px-4 my-4">
-          <h6 class="heading-title">Add That</h6>
+      <div v-else-if="step === 2" :key="1" class="steps-bounded px-4 mt-4">
+        <h5 class="heading-title mb-8">Add Details</h5>
 
-          <div class="my-6 form-label-group">
-            <input
-              id="cover-image-url"
-              v-model="coverImageUrl"
-              type="text"
-              placeholder="Enter the Blog Title"
-              required
+        <div class="mt-8 mb-4 form-label-group">
+          <input
+            id="cover-image-url"
+            v-model="coverImageUrl"
+            type="text"
+            placeholder="Enter the Blog Title"
+            required
+            autocomplete="off"
+          />
+          <label for="cover-image-url">Enter the Cover Image URL</label>
+        </div>
+
+        <div class="mt-8">
+          <label for="blog-category" style="font-size: 20px">Enter the Blog Category</label>
+          <div class="my-5">
+            <select
+              id="blog-category"
+              v-model="blogCategory"
+              name="blog-category"
               autocomplete="off"
-            />
-            <label for="cover-image-url">Enter the Cover Image URL</label>
-          </div>
-
-          <div class="my-4">
-            <label for="blog-category">Enter the Blog Category</label>
-            <div class="styled-select my-5">
-              <select
-                id="blog-category"
-                v-model="blogCategory"
-                name="blog-category"
-                autocomplete="off"
+            >
+              <option
+                v-for="category in categories"
+                :key="category.id"
+                :value="category.id"
               >
-                <option
-                  v-for="category in categories"
-                  :key="category.id"
-                  :value="category.id"
-                >
-                  {{ category.name }}
-                </option>
-              </select>
-            </div>
+                {{ category.name }}
+              </option>
+            </select>
           </div>
-        </section>
+        </div>
       </div>
-      <div v-else-if="step === 3" :key="2" class="steps">
-        <section class="px-4 my-4">
-          <h6 class="heading-title mb-8">Write the Blog below</h6>
-          <textarea id="blogContent" v-model="content" name="blogContent" />
-        </section>
+      <div v-else-if="step === 3" :key="2" class="steps-unbounded mt-4">
+        <h5 class="heading-title mb-8">Write the Blog below</h5>
+        <client-only>
+          <quill-editor
+            ref="editor"
+            v-model="content"
+            :options="editorOption"
+            @blur="onEditorBlur($event)"
+            @focus="onEditorFocus($event)"
+            @ready="onEditorReady($event)"
+          />
+        </client-only>
       </div>
 
-      <div v-else-if="step === 4" :key="4" class="steps">
-        <section class="my-4">
-          <h6 class="heading-title mb-8">Preview</h6>
-          <section class="px-4 blog-body">
-            <p class="mb-2">
-              <nuxt-link
-                :to="navigationRoutes.Home.Blogs.Create.New"
-                class="no-underline"
-              >
-                {{ user.displayName }}
-              </nuxt-link>
-              IN
-              <nuxt-link
-                :to="navigationRoutes.Home.Blogs.Create.New"
-                class="no-underline"
-              >
-                {{ categories[blogCategory - 1].name }}
-              </nuxt-link>
-            </p>
-            <h3 class="blog-title mb-4">
-              {{ blogTitle }}
-            </h3>
-            <small class="timestamp">
-              <span class="mdi mdi-clock-time-nine-outline" />
-              {{ parse(new Date()) }}
-            </small>
-
-            <img
-              class="my-5 blog-intro-image"
-              :src="coverImageUrl"
-              :alt="blogTitle"
-              style="width: 100%; object-fit: cover; max-height: 250px"
-            />
-            <article
-              class="blog-body my-6"
-              v-html="noXSS($md.render(content))"
-            />
-          </section>
+      <div v-else-if="step === 4" :key="4" class="steps mt-4">
+        <h5 class="heading-title mb-8">Preview</h5>
+        <section class="px-4 blog-body">
+          <p class="mb-2">
+            <nuxt-link
+              :to="navigationRoutes.Home.Blogs.Create.New"
+              class="no-underline"
+            >
+              {{ user.displayName }}
+            </nuxt-link>
+            IN
+            <nuxt-link
+              :to="navigationRoutes.Home.Blogs.Create.New"
+              class="no-underline"
+            >
+              {{ categories[blogCategory - 1].name }}
+            </nuxt-link>
+          </p>
+          <h3 class="blog-title mb-4">
+            {{ blogTitle }}
+          </h3>
+          <small class="timestamp">
+            <span class="mdi mdi-clock-time-nine-outline"/>
+            {{ parse(new Date()) }}
+          </small>
+          <img
+            class="mt-5 blog-intro-image"
+            :src="coverImageUrl"
+            :alt="blogTitle"
+            style="width: 100%; object-fit: cover; max-height: 210px"
+          />
         </section>
+        <article class="ql-snow">
+          <div class="ql-editor" v-html="content"/>
+        </article>
       </div>
       <!--      </transition-group>-->
 
-      <section :key="'fixed'" class="bottom-section">
+      <section :key="'fixed'" class="py-5" :class="step === 4 ? 'bottom-section-floating' : 'bottom-section'">
         <div class="text-center">
           <button
             v-if="step >= 2"
@@ -176,11 +175,14 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
-import { navigationRoutes } from '@/navigation/navigationRoutes'
+import {navigationRoutes} from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
 import utility from '@/utils/utility'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'highlight.js/styles/tomorrow.css'
 
 function getFromLocalStorageOrReturnDefault(keyName, value) {
   return process.client && localStorage.getItem(keyName)
@@ -195,15 +197,39 @@ export default {
     AppFeel,
   },
 
-  async asyncData({ $axios }) {
+  async asyncData({$axios}) {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
-    return { categories: response }
+    return {categories: response}
   },
 
   data() {
     return {
+      editorOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{header: 1}, {header: 2}],
+            [{list: 'ordered'}, {list: 'bullet'}],
+            [{script: 'sub'}, {script: 'super'}],
+            [{indent: '-1'}, {indent: '+1'}],
+            [{direction: 'rtl'}],
+            [{size: ['small', false, 'large', 'huge']}],
+            [{header: [1, 2, 3, 4, 5, 6, false]}],
+            [{font: []}],
+            [{color: []}, {background: []}],
+            [{align: []}],
+            ['clean'],
+            ['link', 'image', 'video'],
+          ],
+          // syntax: {
+          // highlight: (text) => hljs.highlightAuto(text).value,
+          // },
+        },
+      },
+
       navigationRoutes,
       parse: utility.timeStringParser,
       noXSS: sanitizeHtml,
@@ -213,7 +239,6 @@ export default {
       blogCategory: getFromLocalStorageOrReturnDefault('blogCategory'),
       coverImageUrl: getFromLocalStorageOrReturnDefault('coverImageUrl'),
       step: 1,
-      navigationRoutes,
       pageTitle: 'Create New Blog',
       customToolbar: [
         [
@@ -222,7 +247,7 @@ export default {
           },
         ],
         ['bold', 'italic', 'underline'],
-        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{list: 'ordered'}, {list: 'bullet'}],
         ['image', 'code-block'],
       ],
       content: getFromLocalStorageOrReturnDefault(
@@ -230,6 +255,12 @@ export default {
         `<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...</p>`
       ),
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   watch: {
@@ -250,12 +281,6 @@ export default {
     },
   },
 
-  computed: {
-    ...mapGetters({
-      user: 'UserManagement/getUser',
-    }),
-  },
-
   async mounted() {
     const currentUser = await this.$store.getters['UserManagement/getUser']
     if (!currentUser) {
@@ -272,7 +297,17 @@ export default {
       this.step--
     },
     publish() {
-      alert('NOT Implemented Yet')
+      this.$axios.$post(endpoints.blog.create, {})
+    },
+
+    onEditorBlur(editor) {
+      console.log('editor blur!', editor)
+    },
+    onEditorFocus(editor) {
+      console.log('editor focus!', editor)
+    },
+    onEditorReady(editor) {
+      console.log('editor ready!', editor)
     },
   },
 
@@ -284,17 +319,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
 
 .create-new-blog-page {
+
   .bottom-section {
     height: 130px;
   }
 
-  .steps {
+  .bottom-section-floating {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+    background: rgba(5, 5, 21, .9);
+    box-shadow: 0 -2px 4px #050515;
+  }
+
+  .steps, .steps-bounded, .steps-unbounded {
     border: 1px solid transparent;
-    height: calc(100vh - 56px - 130px);
     overflow: auto;
 
     textarea {
@@ -314,10 +358,21 @@ export default {
       &:focus-within {
         border-radius: $nano-unit;
         outline: none 0;
-        box-shadow: 0 0 $double-unit $single-unit
-          darken($white, $darken-percentage);
+        box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
       }
     }
+  }
+
+  .steps {
+    margin-bottom: 122px;
+  }
+
+  .steps-bounded {
+    height: calc(100vh - 56px - 130px);
+  }
+
+  .steps-unbounded {
+    min-height: calc(100vh - 56px - 130px);
   }
 
   .progress-circle {
@@ -346,10 +401,7 @@ export default {
     blockquote,
     ul,
     ol,
-    hr {
-      margin: $large-unit 0;
-    }
-
+    hr,
     h1,
     h2,
     h3,
@@ -358,28 +410,24 @@ export default {
     h6 {
       position: relative;
       margin: $large-unit 0;
-
-      //&::after {
-      //  content: '';
-      //  border-radius: $standard-unit;
-      //  position: absolute;
-      //  bottom: -$micro-unit;
-      //  left: 0;
-      //  height: $nano-unit;
-      //  width: clamp(100px, 20%, 250px);
-      //  background-color: darken($secondary-matte, $lighten-percentage);
-      //}
     }
   }
 
-  //.slide-fade-enter-active,
-  //.slide-fade-leave-active {
-  //  transition: all 0.4s ease-in-out;
-  //}
-  //.slide-fade-enter,
-  //.slide-fade-leave-to {
-  //  transform: translateX(10px);
-  //  opacity: 0;
-  //}
+  .quill-editor {
+
+    .ql-toolbar.ql-snow {
+      background-color: wheat !important;
+      box-shadow: $default-box-shadow !important;
+    }
+
+    .ql-container.ql-snow {
+      padding: 0 !important;
+    }
+
+    .ql-toolbar.ql-snow,
+    .ql-container.ql-snow {
+      border: none !important;
+    }
+  }
 }
 </style>
