@@ -13,6 +13,7 @@ const endpoints = {
     detail: 'blog/detail/',
     update: 'blog/update/',
     delete: 'blog/delete/',
+    like: 'blog/like/',
     getBlogsByUid: 'blog/get_blogs_by_uid/',
   },
   categories: {
