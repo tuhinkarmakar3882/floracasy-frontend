@@ -146,10 +146,34 @@ export default {
         `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
       )
     },
-    share(blog) {
-      alert(
-        `Duh? And Now Share??? Like Seriously? Google is not going to pay us. Anyways, here is a consolidation line : You're sharing ${blog.title}`
-      )
+    share(blog, index) {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: blog.title + '- Floracasy',
+            text: blog.subtitle,
+            url: navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id),
+          })
+          .then(async () => {
+            await this.$axios
+              .$post(endpoints.blog.like, {
+                blog_id: blog.id,
+              })
+              .then(() => {
+                this.blogs[index].totalShares++
+              })
+              .catch((e) => {
+                this.blogs[index].totalShares--
+                console.error(e)
+              })
+            console.log('Successful share')
+          })
+          .catch((error) => console.log('Error sharing:', error))
+      } else {
+        alert(
+          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
+        )
+      }
     },
   },
 }
