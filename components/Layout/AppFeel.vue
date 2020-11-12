@@ -1,8 +1,15 @@
 <template>
   <div class="app">
-    <header>
-      <h5 v-ripple class="mdi mdi-arrow-left" @click="navigateTo(onBack)" />
-      <p class="ml-6"><slot name="app-bar-title" /></p>
+    <header :style="centerAligned && 'justify-content : center'">
+      <h5
+        v-if="showBackButton"
+        v-ripple
+        class="mdi mdi-arrow-left"
+        @click="navigateTo(onBack)"
+      />
+      <p :class="{ 'ml-6': showBackButton }">
+        <slot name="app-bar-title" />
+      </p>
     </header>
     <main>
       <slot name="main"></slot>
@@ -17,6 +24,14 @@ export default {
     onBack: {
       type: String,
       required: true,
+    },
+    showBackButton: {
+      type: Boolean,
+      default: true,
+    },
+    centerAligned: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -51,8 +66,8 @@ export default {
   }
 
   main {
-    //padding-top: $standard-unit;
     background-color: $body-background;
+
     blockquote,
     ul,
     ol,
