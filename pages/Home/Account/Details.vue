@@ -273,6 +273,7 @@ export default {
       place-items: center;
 
       img {
+        height: 100px;
         width: 100%;
         object-fit: cover;
         border-radius: 50%;

@@ -109,7 +109,8 @@ export default {
       width: clamp(100px, 40vw, 150px);
 
       img {
-        width: 100%;
+        width: 150px;
+        height: 150px;
         object-fit: cover;
         border-radius: 50%;
       }

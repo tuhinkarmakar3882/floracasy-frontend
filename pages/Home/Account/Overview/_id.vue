@@ -68,7 +68,9 @@
             v-ripple
             class="activity py-8 my-4"
             @click="
-              navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+              $router.push(
+                navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+              )
             "
           >
             <div class="content">
@@ -269,6 +271,7 @@ export default {
       place-items: center;
 
       img {
+        height: 100px;
         width: 100%;
         object-fit: cover;
         border-radius: 50%;
