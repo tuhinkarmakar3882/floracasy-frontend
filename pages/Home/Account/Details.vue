@@ -75,8 +75,10 @@
               <img :alt="activity.title" :src="activity.coverImage" />
               <div class="data text-left">
                 <h6>{{ activity.title }}</h6>
-                <p>{{ activity.subtitle }}</p>
-                <small> {{ activity.createdAt }}</small>
+                <p>{{ activity.subtitle.substr(0, 30) }}...</p>
+                <small style="font-size: 13px">
+                  {{ parse(activity.createdAt) }}</small
+                >
               </div>
             </div>
           </section>
@@ -113,6 +115,7 @@ import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/LoadingIcon'
 import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import utility from '~/utils/utility'
 
 export default {
   name: 'Details',
@@ -128,6 +131,7 @@ export default {
       statisticsItem: null,
       recentActivities: null,
       loadingRecentActivities: null,
+      parse: utility.timeStringParser,
     }
   },
 

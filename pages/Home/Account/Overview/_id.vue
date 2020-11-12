@@ -77,8 +77,10 @@
               <img :alt="activity.title" :src="activity.coverImage" />
               <div class="data text-left">
                 <h6>{{ activity.title }}</h6>
-                <p>{{ activity.subtitle }}</p>
-                <small> {{ activity.createdAt }}</small>
+                <p>{{ activity.subtitle.substr(0, 30) }}...</p>
+                <small style="font-size: 13px">
+                  {{ parse(activity.createdAt) }}</small
+                >
               </div>
             </div>
           </section>
@@ -106,6 +108,7 @@ import { mapGetters } from 'vuex'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import utility from '~/utils/utility'
 
 export default {
   name: 'Overview',
@@ -122,6 +125,7 @@ export default {
       recentActivities: null,
       loadingRecentActivities: null,
       otherUser: null,
+      parse: utility.timeStringParser,
     }
   },
 
@@ -271,7 +275,7 @@ export default {
       place-items: center;
 
       img {
-        height: 100px;
+        height: 84px;
         width: 100%;
         object-fit: cover;
         border-radius: 50%;

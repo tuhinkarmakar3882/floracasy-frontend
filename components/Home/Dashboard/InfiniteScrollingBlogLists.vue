@@ -41,8 +41,8 @@
         <p>
           {{ blog.subtitle }}...
           <nuxt-link :to="`/Home/Blogs/Details/${blog.id}`">
-            Read More</nuxt-link
-          >
+            Read More
+          </nuxt-link>
         </p>
       </section>
 
