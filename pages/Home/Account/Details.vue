@@ -65,6 +65,11 @@
             :key="activity.id"
             v-ripple
             class="activity py-8 my-4"
+            @click="
+              $router.push(
+                navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+              )
+            "
           >
             <div class="content">
               <img :alt="activity.title" :src="activity.coverImage" />
@@ -107,6 +112,7 @@ import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/LoadingIcon'
 import Logo from '@/components/global/Logo'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'Details',
@@ -116,6 +122,7 @@ export default {
 
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'Profile Details',
       loadingProfile: true,
       statisticsItem: null,

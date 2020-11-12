@@ -67,6 +67,9 @@
             :key="activity.id"
             v-ripple
             class="activity py-8 my-4"
+            @click="
+              navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+            "
           >
             <div class="content">
               <img :alt="activity.title" :src="activity.coverImage" />
@@ -110,6 +113,7 @@ export default {
 
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'Profile Details',
       loadingProfile: true,
       statisticsItem: null,
