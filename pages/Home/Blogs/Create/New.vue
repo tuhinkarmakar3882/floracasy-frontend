@@ -1,6 +1,8 @@
 <template>
   <AppFeel
     class="create-new-blog-page"
+    :show-back-button="false"
+    center-aligned
     :on-back="navigationRoutes.Home.Blogs.Create.index"
   >
     <template slot="app-bar-title">
@@ -51,7 +53,9 @@
         </div>
 
         <div class="mt-8">
-          <label for="blog-category" style="font-size: 20px">Enter the Blog Category</label>
+          <label for="blog-category" style="font-size: 20px"
+            >Enter the Blog Category</label
+          >
           <div class="my-5">
             <select
               id="blog-category"
@@ -73,14 +77,16 @@
       <div v-else-if="step === 3" :key="2" class="steps-unbounded mt-4">
         <h5 class="heading-title mb-8">Write the Blog below</h5>
         <client-only>
-          <quill-editor
-            ref="editor"
-            v-model="content"
-            :options="editorOption"
-            @blur="onEditorBlur($event)"
-            @focus="onEditorFocus($event)"
-            @ready="onEditorReady($event)"
-          />
+          <div class="blog-body">
+            <quill-editor
+              ref="editor"
+              v-model="content"
+              :options="editorOption"
+              @blur="onEditorBlur($event)"
+              @focus="onEditorFocus($event)"
+              @ready="onEditorReady($event)"
+            />
+          </div>
         </client-only>
       </div>
 
@@ -106,7 +112,7 @@
             {{ blogTitle }}
           </h3>
           <small class="timestamp">
-            <span class="mdi mdi-clock-time-nine-outline"/>
+            <span class="mdi mdi-clock-time-nine-outline" />
             {{ parse(new Date()) }}
           </small>
           <img
@@ -116,13 +122,19 @@
             style="width: 100%; object-fit: cover; max-height: 210px"
           />
         </section>
-        <article class="ql-snow">
-          <div class="ql-editor" v-html="content"/>
-        </article>
+        <div class="blog-body">
+          <article class="ql-snow">
+            <div class="ql-editor" v-html="content" />
+          </article>
+        </div>
       </div>
       <!--      </transition-group>-->
 
-      <section :key="'fixed'" class="py-5" :class="step === 4 ? 'bottom-section-floating' : 'bottom-section'">
+      <section
+        :key="'fixed'"
+        class="py-5"
+        :class="step === 4 ? 'bottom-section-floating' : 'bottom-section'"
+      >
         <div class="text-center">
           <button
             v-if="step >= 2"
@@ -175,14 +187,15 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
-import {navigationRoutes} from '@/navigation/navigationRoutes'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
 import utility from '@/utils/utility'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'highlight.js/styles/tomorrow.css'
+import hljs from 'highlight.js'
 
 function getFromLocalStorageOrReturnDefault(keyName, value) {
   return process.client && localStorage.getItem(keyName)
@@ -197,11 +210,11 @@ export default {
     AppFeel,
   },
 
-  async asyncData({$axios}) {
+  async asyncData({ $axios }) {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
-    return {categories: response}
+    return { categories: response }
   },
 
   data() {
@@ -211,45 +224,35 @@ export default {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],
             ['blockquote', 'code-block'],
-            [{header: 1}, {header: 2}],
-            [{list: 'ordered'}, {list: 'bullet'}],
-            [{script: 'sub'}, {script: 'super'}],
-            [{indent: '-1'}, {indent: '+1'}],
-            [{direction: 'rtl'}],
-            [{size: ['small', false, 'large', 'huge']}],
-            [{header: [1, 2, 3, 4, 5, 6, false]}],
-            [{font: []}],
-            [{color: []}, {background: []}],
-            [{align: []}],
+            [{ header: 1 }, { header: 2 }],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{ script: 'sub' }, { script: 'super' }],
+            [{ indent: '-1' }, { indent: '+1' }],
+            [{ direction: 'rtl' }],
+            [{ size: ['small', false, 'large', 'huge'] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ font: [] }],
+            [{ color: [] }, { background: [] }],
+            [{ align: [] }],
             ['clean'],
             ['link', 'image', 'video'],
           ],
-          // syntax: {
-          // highlight: (text) => hljs.highlightAuto(text).value,
-          // },
+          syntax: {
+            highlight: (text) => hljs.highlightAuto(text).value,
+          },
         },
       },
-
       navigationRoutes,
       parse: utility.timeStringParser,
       noXSS: sanitizeHtml,
+      step: 1,
+      pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
+
       blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
       blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),
       blogCategory: getFromLocalStorageOrReturnDefault('blogCategory'),
       coverImageUrl: getFromLocalStorageOrReturnDefault('coverImageUrl'),
-      step: 1,
-      pageTitle: 'Create New Blog',
-      customToolbar: [
-        [
-          {
-            header: [false, 1, 2, 3, 4, 5, 6],
-          },
-        ],
-        ['bold', 'italic', 'underline'],
-        [{list: 'ordered'}, {list: 'bullet'}],
-        ['image', 'code-block'],
-      ],
       content: getFromLocalStorageOrReturnDefault(
         'draft',
         `<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...</p>`
@@ -287,6 +290,11 @@ export default {
       this.loadingProfile = true
       await this.$store.dispatch('UserManagement/fetchData')
     }
+    document.addEventListener('backbutton', this.goToPrevStep, false)
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('backbutton', this.yourCallBackFunction)
   },
 
   methods: {
@@ -294,12 +302,32 @@ export default {
       this.step++
     },
     goToPrevStep() {
-      this.step--
+      if (this.step === 1) {
+        this.$router.replace(this.navigationRoutes.Home.Blogs.Create.index)
+      } else {
+        this.step--
+      }
     },
-    publish() {
-      this.$axios.$post(endpoints.blog.create, {})
+    async publish() {
+      console.log('Sending data to server')
+      await this.$axios
+        .$post(endpoints.blog.create, {
+          category: this.blogCategory,
+          coverImage: this.coverImageUrl,
+          title: this.blogTitle,
+          subtitle: this.blogTitle,
+          content: this.content,
+        })
+        .then((response) => {
+          alert(response)
+          this.cleanupCurrentDraft()
+          this.$router.replace(navigationRoutes.Home.DashBoard)
+        })
+        .catch((error) => {
+          alert('Error')
+          console.error(error.response)
+        })
     },
-
     onEditorBlur(editor) {
       console.log('editor blur!', editor)
     },
@@ -308,6 +336,13 @@ export default {
     },
     onEditorReady(editor) {
       console.log('editor ready!', editor)
+    },
+    cleanupCurrentDraft() {
+      // localStorage.removeItem('draft')
+      // localStorage.removeItem('blogCategory')
+      // localStorage.removeItem('blogSubtitle')
+      // localStorage.removeItem('blogTitle')
+      // localStorage.removeItem('coverImageUrl')
     },
   },
 
@@ -323,7 +358,6 @@ export default {
 @import 'assets/all-variables';
 
 .create-new-blog-page {
-
   .bottom-section {
     height: 130px;
   }
@@ -333,11 +367,13 @@ export default {
     bottom: 0;
     width: 100%;
     z-index: 1;
-    background: rgba(5, 5, 21, .9);
+    background: rgba(5, 5, 21, 0.9);
     box-shadow: 0 -2px 4px #050515;
   }
 
-  .steps, .steps-bounded, .steps-unbounded {
+  .steps,
+  .steps-bounded,
+  .steps-unbounded {
     border: 1px solid transparent;
     overflow: auto;
 
@@ -358,7 +394,8 @@ export default {
       &:focus-within {
         border-radius: $nano-unit;
         outline: none 0;
-        box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
+        box-shadow: 0 0 $double-unit $single-unit
+          darken($white, $darken-percentage);
       }
     }
   }
@@ -411,22 +448,21 @@ export default {
       position: relative;
       margin: $large-unit 0;
     }
-  }
 
-  .quill-editor {
+    .quill-editor {
+      .ql-toolbar.ql-snow {
+        background-color: wheat !important;
+        box-shadow: $default-box-shadow !important;
+      }
 
-    .ql-toolbar.ql-snow {
-      background-color: wheat !important;
-      box-shadow: $default-box-shadow !important;
-    }
+      .ql-container.ql-snow {
+        padding: 0 !important;
+      }
 
-    .ql-container.ql-snow {
-      padding: 0 !important;
-    }
-
-    .ql-toolbar.ql-snow,
-    .ql-container.ql-snow {
-      border: none !important;
+      .ql-toolbar.ql-snow,
+      .ql-container.ql-snow {
+        border: none !important;
+      }
     }
   }
 }
