@@ -12,7 +12,7 @@ body {
     color: $white;
     font-weight: 400;
     font-style: normal;
-    font-family: $Prata;
+    font-family: $Prata !important;
     line-height: 1.8 !important;
     letter-spacing: $single-unit;
 
@@ -22,27 +22,27 @@ body {
   }
 
   h1 {
-    font-size: 2.2rem;
+    font-size: 2.2rem !important;
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
 
   h3 {
-    font-size: 1.8rem;
+    font-size: 1.8rem !important;
   }
 
   h4 {
-    font-size: 1.6rem;
+    font-size: 1.6rem !important;
   }
 
   h5 {
-    font-size: 1.4rem;
+    font-size: 1.4rem !important;
   }
 
   h6 {
-    font-size: 1.2rem;
+    font-size: 1.2rem !important;
   }
 
   p {
@@ -50,7 +50,7 @@ body {
     font-family: $Raleway;
     letter-spacing: 1px;
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 1rem !important;
     line-height: 1.85 !important;
   }
 
@@ -61,7 +61,7 @@ body {
   small {
     font-family: $Nunito-Sans;
     font-weight: 300;
-    font-size: 0.9rem;
+    font-size: 0.9rem !important;
   }
 
   span, p, small {
@@ -83,6 +83,7 @@ body {
   ul, li {
     font-family: $Nunito;
     font-weight: 300;
+    font-size: 1rem;
   }
 }
 
