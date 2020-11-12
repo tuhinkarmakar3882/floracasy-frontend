@@ -1,6 +1,9 @@
 <template>
   <div class="app">
-    <header :style="centerAligned && 'justify-content : center'">
+    <header v-if="customHeader">
+      <slot name="app-bar-custom-header" />
+    </header>
+    <header v-else :style="centerAligned && 'justify-content : center'">
       <h5
         v-if="showBackButton"
         v-ripple
@@ -28,6 +31,10 @@ export default {
     showBackButton: {
       type: Boolean,
       default: true,
+    },
+    customHeader: {
+      type: Boolean,
+      default: false,
     },
     centerAligned: {
       type: Boolean,

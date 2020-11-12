@@ -25,15 +25,15 @@
         :alt="blog.title"
         style="width: 100%; object-fit: cover; max-height: 250px"
       />
-      <div class="blog-body">
-        <article class="ql-snow">
-          <div
-            class="ql-editor"
-            v-html="noXSS(blog.content, sanitizationConfig)"
-          />
-        </article>
-      </div>
     </section>
+    <div v-if="blog" class="blog-body">
+      <article class="ql-snow">
+        <div
+          class="ql-editor"
+          v-html="noXSS(blog.content, sanitizationConfig)"
+        />
+      </article>
+    </div>
     <div
       v-else
       class="text-center"
