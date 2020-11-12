@@ -25,10 +25,14 @@
         :alt="blog.title"
         style="width: 100%; object-fit: cover; max-height: 250px"
       />
-      <article
-        class="blog-body my-6"
-        v-html="noXSS(blog.content, sanitizationConfig)"
-      />
+      <div class="blog-body">
+        <article class="ql-snow">
+          <div
+            class="ql-editor"
+            v-html="noXSS(blog.content, sanitizationConfig)"
+          />
+        </article>
+      </div>
     </section>
     <div
       v-else
@@ -45,6 +49,9 @@ import sanitizeHtml from 'sanitize-html'
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import utility from '@/utils/utility'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'highlight.js/styles/tomorrow.css'
 
 export default {
   name: 'BlogDetails',
@@ -138,15 +145,15 @@ export default {
         disallowedTagsMode: 'discard',
         allowedAttributes: {
           a: ['href', 'name', 'target'],
-          h1: ['class'],
-          h2: ['class'],
-          h3: ['class'],
-          h4: ['class'],
-          h5: ['class'],
-          h6: ['class'],
-          p: ['class'],
+          h1: ['class', 'style'],
+          h2: ['class', 'style'],
+          h3: ['class', 'style'],
+          h4: ['class', 'style'],
+          h5: ['class', 'style'],
+          h6: ['class', 'style'],
+          p: ['class', 'style'],
           span: ['class', 'style'],
-          img: ['src'],
+          img: ['src', 'style', 'alt'],
         },
         selfClosing: [
           'img',
