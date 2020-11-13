@@ -16,8 +16,8 @@
           />
           <div class="basic-details">
             <p class="name">{{ otherUser.displayName }}</p>
-            <p class="designation">
-              {{ otherUser.designation || 'Designation Not Set' }}
+            <p v-if="otherUser.designation" class="designation">
+              {{ otherUser.designation }}
             </p>
           </div>
         </div>
@@ -48,8 +48,8 @@
         </div>
 
         <section class="other-info">
-          <p class="about text-center">
-            {{ otherUser.about || 'About Not Set' }}
+          <p v-if="otherUser.about" class="about text-center">
+            {{ otherUser.about }}
           </p>
         </section>
 
