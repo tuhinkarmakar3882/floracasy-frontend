@@ -1,19 +1,41 @@
 <template>
   <div class="notification-page mb-6">
-    <section class="banner text-center mb-6">
-      <h6 class="mb-4">Would you like to receive notifications?</h6>
-      <small>
+    <section
+      ref="banner-block"
+      :key="'banner-item'"
+      class="banner text-center mb-6"
+      :style="[showBanner ? { height: computedHeight } : {}]"
+    >
+      <h5 v-if="!maybe" class="mb-4">
+        Would you like to receive notifications?
+      </h5>
+      <small v-if="!maybe">
         You can always change this setting later in the
         <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences"
-          >Preferences</nuxt-link
-        >
+          >Preferences
+        </nuxt-link>
       </small>
-      <div class="actions mt-6 mb-4">
+      <div v-if="!maybe" class="actions mt-6 mb-4">
         <button v-ripple class="secondary-btn mr-5">Yes</button>
-        <button v-ripple class="danger-outlined-btn">May be later</button>
+        <button
+          v-ripple
+          class="danger-outlined-btn"
+          @click="showMaybeAndCollapse"
+        >
+          May be later
+        </button>
       </div>
+      <h5 v-if="maybe" class="text-center mb-4">No Problem</h5>
+      <p v-if="maybe" class="text-center mb-4">
+        Tip: You can always change this setting later in the
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences"
+          >Preferences
+        </nuxt-link>
+      </p>
     </section>
-
+    <!--    <button v-ripple class="success-outlined-btn" @click="showTheBanner">-->
+    <!--      Show-->
+    <!--    </button>-->
     <section v-if="isContentLoading">
       <LoadingIcon />
     </section>
@@ -44,10 +66,13 @@ export default {
   data() {
     return {
       navigationRoutes,
+      showBanner: false,
       pageTitle: 'Notifications',
       isContentLoading: true,
       notifications: null,
       hasError: false,
+      maybe: false,
+      computedHeight: 0,
     }
   },
 
@@ -60,6 +85,10 @@ export default {
   async mounted() {
     this.isContentLoading = true
     this.hasError = false
+    this.initHeight()
+
+    this.showBanner = !localStorage.getItem('hide-notification-consent')
+
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
     })
@@ -82,6 +111,40 @@ export default {
     this.isContentLoading = false
   },
 
+  methods: {
+    showMaybeAndCollapse() {
+      this.maybe = true
+
+      setTimeout(() => {
+        this.showBanner = false
+      }, 5000)
+      localStorage.setItem('hide-notification-consent', 'true')
+    },
+
+    //  Todo Only DebugPurpose
+    // showTheBanner() {
+    //   this.showBanner = true
+    //   this.maybe = false
+    //   localStorage.removeItem('hide-notification-consent')
+    // },
+
+    initHeight() {
+      this.$refs['banner-block'].style.height = 'auto'
+      this.$refs['banner-block'].style.position = 'absolute'
+      this.$refs['banner-block'].style.visibility = 'hidden'
+      this.$refs['banner-block'].style.display = 'block'
+
+      this.computedHeight = getComputedStyle(this.$refs['banner-block']).height
+      this.computedHeight =
+        (parseInt(this.computedHeight.replace('px', '')) + 40).toString() + 'px'
+
+      this.$refs['banner-block'].style.position = null
+      this.$refs['banner-block'].style.visibility = null
+      this.$refs['banner-block'].style.display = null
+      this.$refs['banner-block'].style.height = 0
+    },
+  },
+
   head() {
     return {
       title: this.pageTitle,
@@ -92,12 +155,23 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+@import 'assets/transitions-and-animations';
 
 .notification-page {
+  * {
+    transition: all 0.3s ease-in-out;
+  }
+
   .banner {
-    padding: $medium-unit $micro-unit;
+    padding: 0 $micro-unit;
     background-color: $card-background;
     box-shadow: $default-box-shadow;
+    height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 
     .actions {
       text-align: center;
