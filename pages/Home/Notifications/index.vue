@@ -17,6 +17,9 @@
     <section v-if="isContentLoading">
       <LoadingIcon />
     </section>
+    <section v-else-if="hasError">
+      <p class="text-center">No Notifications are Available.</p>
+    </section>
     <div v-else class="notifications px-4">
       <section v-for="(notification, index) in notifications" :key="index">
         <h1 :class="`mdi ${notification.notificationType.icon}`" />
@@ -44,6 +47,7 @@ export default {
       pageTitle: 'Notifications',
       isContentLoading: true,
       notifications: null,
+      hasError: false,
     }
   },
 
@@ -55,6 +59,7 @@ export default {
 
   async mounted() {
     this.isContentLoading = true
+    this.hasError = false
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
     })
@@ -71,9 +76,9 @@ export default {
         })
         .then(({ details }) => details)
     } catch (e) {
-      this.notifications = []
+      this.notifications = null
+      this.hasError = true
     }
-    console.log(this.notifications)
     this.isContentLoading = false
   },
 
