@@ -4,6 +4,8 @@
 
     <LoadingIcon v-if="dataLoading" />
 
+    <!--    <pre v-if="blogs">{{ blogs }}</pre>-->
+
     <article v-for="(blog, index) in blogs" v-else :key="blog.id">
       <section v-ripple class="content px-4 pt-8 pb-6">
         <p class="mb-2">
