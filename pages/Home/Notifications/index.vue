@@ -164,8 +164,8 @@ export default {
 
   .banner {
     padding: 0 $micro-unit;
-    background-color: $card-background;
-    box-shadow: $default-box-shadow;
+    background-color: $segment-background;
+    box-shadow: $down-only-box-shadow;
     height: 0;
     display: flex;
     flex-direction: column;
