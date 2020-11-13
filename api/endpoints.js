@@ -35,6 +35,9 @@ const endpoints = {
   leaderboard: {
     test: 'leaderboard/',
   },
+  notification_system: {
+    getNotificationsByUid: 'notification_system/get_notifications_by_uid/',
+  },
   profile_statistics: {
     detail: 'profile_statistics/detail/',
   },
