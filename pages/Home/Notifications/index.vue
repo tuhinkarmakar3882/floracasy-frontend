@@ -9,8 +9,8 @@
         >
       </small>
       <div class="actions mt-6 mb-4">
-        <button class="secondary-btn mr-5">Yes</button>
-        <button class="danger-outlined-btn">May be later</button>
+        <button v-ripple class="secondary-btn mr-5">Yes</button>
+        <button v-ripple class="danger-outlined-btn">May be later</button>
       </div>
     </section>
 
