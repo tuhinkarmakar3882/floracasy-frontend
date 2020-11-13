@@ -16,7 +16,13 @@
         </nuxt-link>
       </small>
       <div v-if="!maybe" class="actions mt-6 mb-4">
-        <button v-ripple class="secondary-btn mr-5">Yes</button>
+        <button
+          v-ripple
+          class="secondary-btn mr-5"
+          @click="alert('Will be implemented shortly')"
+        >
+          Yes
+        </button>
         <button
           v-ripple
           class="danger-outlined-btn"
@@ -87,7 +93,7 @@ export default {
     this.hasError = false
     this.initHeight()
 
-    this.showBanner = !localStorage.getItem('hide-notification-consent')
+    this.showBanner = true //! localStorage.getItem('hide-notification-consent')
 
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
@@ -117,8 +123,10 @@ export default {
 
       setTimeout(() => {
         this.showBanner = false
-      }, 5000)
-      localStorage.setItem('hide-notification-consent', 'true')
+      }, 3000)
+      // localStorage.setItem('hide-notification-consent', 'true')
+      localStorage.removeItem('hide-notification-consent')
+      // localStorage.setItem('hide-notification-consent', 'true')
     },
 
     //  Todo Only DebugPurpose
