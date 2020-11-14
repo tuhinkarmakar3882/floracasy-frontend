@@ -93,7 +93,7 @@ export default {
     this.hasError = false
     this.initHeight()
 
-    this.showBanner = true //! localStorage.getItem('hide-notification-consent')
+    this.showBanner = true
 
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
@@ -110,6 +110,10 @@ export default {
           },
         })
         .then(({ details }) => details)
+      await this.$store.dispatch('BottomNavigation/updateNewContent', {
+        position: 3,
+        value: false,
+      })
     } catch (e) {
       this.notifications = null
       this.hasError = true
@@ -124,17 +128,8 @@ export default {
       setTimeout(() => {
         this.showBanner = false
       }, 3000)
-      // localStorage.setItem('hide-notification-consent', 'true')
       localStorage.removeItem('hide-notification-consent')
-      // localStorage.setItem('hide-notification-consent', 'true')
     },
-
-    //  Todo Only DebugPurpose
-    // showTheBanner() {
-    //   this.showBanner = true
-    //   this.maybe = false
-    //   localStorage.removeItem('hide-notification-consent')
-    // },
 
     initHeight() {
       this.$refs['banner-block'].style.height = 'auto'
