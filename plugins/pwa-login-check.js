@@ -3,7 +3,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 export default async ({ store, redirect }) => {
   if (process.client) {
     localStorage.getItem('is_auth')
-      ? (window.location = navigationRoutes.Home.DashBoard)
+      ? redirect(navigationRoutes.Home.DashBoard)
       : await forceLogout(store, redirect)
   }
 }

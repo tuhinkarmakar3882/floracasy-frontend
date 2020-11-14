@@ -49,9 +49,11 @@ export const actions = {
   login({ commit }, { user }) {
     commit('SET_USER', user)
   },
+
   updateTokens({ commit }, { tokens }) {
     commit('SET_TOKENS', tokens)
   },
+
   logout({ commit }) {
     process.client && localStorage.removeItem('is_auth')
     this.$cookies.remove('access')
