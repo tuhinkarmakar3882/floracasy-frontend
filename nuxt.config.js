@@ -212,6 +212,7 @@ export default {
       display: 'standalone',
     },
     workbox: {
+      offline: false,
       runtimeCaching: [
         {
           urlPattern: 'https://fonts.googleapis.com/.*',
