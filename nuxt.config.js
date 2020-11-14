@@ -39,10 +39,6 @@ export default {
       src: '~/plugins/nuxt-quill-editor.js',
       mode: 'client',
     },
-    {
-      src: '~/plugins/pwa-login-check.js',
-      mode: 'client',
-    },
   ],
 
   modules: [
