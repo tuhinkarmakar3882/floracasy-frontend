@@ -1,6 +1,5 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
-localStorage.setItem('is_auth', 'true')
 export default async ({ store }) => {
   if (process.client) {
     localStorage.getItem('is_auth')
