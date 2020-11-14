@@ -130,6 +130,7 @@ export default {
 
       this.updateInfo('Welcome')
       this.$router.replace('/Home/Dashboard')
+      localStorage.setItem('is_auth', 'true')
     },
 
     async abort() {
@@ -138,6 +139,7 @@ export default {
       await this.$store.dispatch('logout')
       this.hideLoader()
       this.updateInfo('Checking...')
+      localStorage.removeItem('is_auth')
     },
 
     showLoader() {
