@@ -36,6 +36,7 @@ export const state = () => ({
       route: '/Home/MoreOptions',
     },
   ],
+  newContentAvailable: [false, false, false, false, false],
   activeLink: 0,
 })
 
@@ -43,16 +44,28 @@ export const mutations = {
   SET_ACTIVE_LINK(state, linkPosition) {
     state.activeLink = linkPosition
   },
+
+  SET_NEW_CONTENT_AVAILABLE(state, newState) {
+    state.newContentAvailable[newState.position] = newState.value
+  },
 }
 
 export const actions = {
   async update({ commit }, { linkPosition }) {
     await commit('SET_ACTIVE_LINK', linkPosition)
   },
+
+  async updateNewContent({ commit }, newState) {
+    await commit('SET_NEW_CONTENT_AVAILABLE', newState)
+  },
 }
+
 export const getters = {
   getMenuOptions(state) {
     return state.menuOptions
+  },
+  getNewContentAvailableInfo(state) {
+    return state.newContentAvailable
   },
   getActiveLink(state) {
     return state.activeLink
