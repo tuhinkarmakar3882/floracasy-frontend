@@ -57,6 +57,7 @@ export const actions = {
   },
 
   logout({ commit }) {
+    process.client && localStorage.removeItem('is_auth')
     this.$cookies.remove('access')
     this.$cookies.remove('refresh')
     commit('SET_AUTH_STATE', false)
