@@ -37,6 +37,8 @@ const endpoints = {
   },
   notification_system: {
     getNotificationsByUid: 'notification_system/get_notifications_by_uid/',
+    getNotificationChannelId:
+      'notification_system/get_my_notifications_channel_id/',
   },
   profile_statistics: {
     detail: 'profile_statistics/detail/',
