@@ -12,6 +12,14 @@
     </header>
 
     <main>
+      <div
+        class="notification-badge"
+        :style="[{ height: socketMessage ? '56px' : 0 }]"
+        @click="navigateTo(navigationRoutes.Home.Notifications.index)"
+      >
+        <span class="mdi mdi-bell mr-3" />
+        <p>{{ socketMessage }}</p>
+      </div>
       <nuxt />
     </main>
 
@@ -48,12 +56,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'MobileApp',
   components: {},
   data() {
     return {
+      navigationRoutes,
       drawer: false,
     }
   },
@@ -69,7 +79,9 @@ export default {
     ...mapGetters({
       menuOptions: 'BottomNavigation/getMenuOptions',
       newContentAvailable: 'BottomNavigation/getNewContentAvailableInfo',
+      socketMessage: 'SocketHandler/getSocketMessage',
     }),
+
     color() {
       return this.menuOptions[this.activeLink].color
     },
@@ -153,6 +165,56 @@ export default {
 
   main {
     padding: 2 * $x-large-unit 0;
+
+    .notification-badge {
+      position: fixed;
+      overflow: hidden;
+      text-align: center;
+      background: #1d1d1d;
+      transition: all 300ms ease-in-out;
+      height: 2 * $x-large-unit;
+      width: 100%;
+      z-index: 9999999;
+      top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        color: rgb(143, 242, 224);
+        font-weight: 500;
+        font-size: 13px !important;
+      }
+
+      span {
+        color: rgb(143, 242, 224);
+        font-size: 20px;
+        animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both 0.3s;
+
+        @keyframes shake {
+          10%,
+          90% {
+            transform: translate3d(-1px, 0, 0);
+          }
+
+          20%,
+          80% {
+            transform: translate3d(2px, 0, 0);
+          }
+
+          30%,
+          50%,
+          70% {
+            transform: translate3d(-4px, 0, 0);
+          }
+
+          40%,
+          60% {
+            transform: translate3d(4px, 0, 0);
+          }
+        }
+      }
+    }
   }
 }
 </style>
