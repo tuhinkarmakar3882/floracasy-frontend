@@ -127,6 +127,7 @@ export default {
       await this.updateVuexStates(payload)
 
       this.updateInfo('Welcome')
+
       await this.$router.replace(navigationRoutes.Home.DashBoard)
     },
 
