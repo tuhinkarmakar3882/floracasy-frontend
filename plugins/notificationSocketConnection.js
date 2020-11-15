@@ -17,29 +17,34 @@ export default async ({ store }) => {
 
     const socket = new WebSocket(endpoint)
 
-    socket.onopen = function (e) {
-      console.log('open', e)
+    socket.onopen = async () => {
+      await store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Connected',
+        notificationType: 'success',
+      })
     }
 
-    socket.onmessage = async function (e) {
+    socket.onmessage = async (e) => {
       const data = JSON.parse(e.data)
       await store.dispatch('BottomNavigation/updateNewContent', {
         position: 3,
         value: true,
       })
-      data.action === 'generic' &&
-        (await store.dispatch(
-          'SocketHandler/updateSocketMessage',
-          data.message
-        ))
+      await store.dispatch('SocketHandler/updateSocketMessage', {
+        message: data.message,
+        notificationType: data.action,
+      })
     }
 
-    socket.onerror = function (e) {
+    socket.onerror = (e) => {
       console.log('error', e)
     }
 
-    socket.onclose = function (e) {
-      console.error('socket closed unexpectedly', e)
+    socket.onclose = async (e) => {
+      await store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Trouble connect to Server. Please Refresh.',
+        notificationType: 'error',
+      })
     }
   }
 }
