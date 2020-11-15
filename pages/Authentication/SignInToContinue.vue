@@ -44,6 +44,7 @@ import 'firebase/auth'
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import * as secrets from '@/environmentalVariables'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'SignInToContinue',
@@ -103,15 +104,14 @@ export default {
         this.updateInfo('Validating Credentials...')
         await this.$axios
           .$post(endpoints.auth.authenticate, backendPayload)
-          .then((response) => {
+          .then(async (response) => {
             const frontendPayload = {
               ...commonPayload,
             }
             this.updateInfo('Logging you in...')
-            this.login(frontendPayload, response)
+            await this.login(frontendPayload, response)
           })
-          .catch(async (e) => {
-            console.log(e)
+          .catch(async () => {
             await this.abort()
           })
       } else {
@@ -119,18 +119,16 @@ export default {
       }
     },
 
-    login(payload, { token: tokens }) {
+    async login(payload, { token: tokens }) {
       this.updateInfo('Setting up things for you...')
-      this.$cookies.set('access', tokens.access, secrets.cookieSavingConfig)
-      this.$cookies.set('refresh', tokens.refresh, secrets.cookieSavingConfig)
+      await this.saveAndApplyTokens(tokens)
 
       this.updateInfo('Securing the Connection...')
-
-      this.$store.commit('SET_AUTH_STATE', true)
+      await this.updateVuexStates(payload)
 
       this.updateInfo('Welcome')
-      this.$router.replace('/Home/Dashboard')
-      localStorage.setItem('is_auth', 'true')
+
+      await this.$router.replace(navigationRoutes.Home.DashBoard)
     },
 
     async abort() {
@@ -139,7 +137,31 @@ export default {
       await this.$store.dispatch('logout')
       this.hideLoader()
       this.updateInfo('Checking...')
-      localStorage.removeItem('is_auth')
+      localStorage.clear()
+    },
+
+    async saveAndApplyTokens(tokens) {
+      await this.$cookies.set(
+        'access',
+        tokens.access,
+        secrets.cookieSavingConfig
+      )
+      await this.$cookies.set(
+        'refresh',
+        tokens.refresh,
+        secrets.cookieSavingConfig
+      )
+      this.$axios.setToken(this.$cookies.get('access'), 'Bearer')
+    },
+
+    async updateVuexStates(payload) {
+      await this.$store.dispatch('login')
+      await this.$store.dispatch('UserManagement/setUserData', {
+        user: payload,
+      })
+      await this.store.dispatch(
+        'NotificationChannel/fetchNotificationChannelId'
+      )
     },
 
     showLoader() {

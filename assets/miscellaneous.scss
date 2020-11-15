@@ -83,6 +83,36 @@ html {
       padding-left: $medium-unit;
     }
 
+
+    input {
+      border-radius: $nano-unit;
+      color: $white;
+      background-color: darken($card-background, $darken-percentage);
+      font-weight: 400;
+
+      &:hover,
+      &:focus,
+      &:focus-visible,
+      &:active,
+      &:focus-within {
+        border-radius: $nano-unit;
+        outline: none 0;
+        box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
+      }
+    }
+
+    select {
+      color: white;
+      background: #101019;
+      width: 100%;
+      height: 3.125rem;
+      border-radius: 4px;
+      padding: 0.75rem;
+      letter-spacing: 1px;
+      font-size: 1rem;
+    }
+
+
     .form-label-group {
       position: relative;
       margin-bottom: 1rem;
@@ -95,23 +125,6 @@ html {
         width: 100%;
         letter-spacing: 1px;
         font-size: 1rem;
-      }
-
-      input {
-        border-radius: $nano-unit;
-        color: $white;
-        background-color: darken($card-background, $darken-percentage) !important;
-        font-weight: 400;
-
-        &:hover,
-        &:focus,
-        &:focus-visible,
-        &:active,
-        &:focus-within {
-          border-radius: $nano-unit;
-          outline: none 0;
-          box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
-        }
       }
 
       label {
@@ -149,17 +162,6 @@ html {
         font-size: 1rem;
         background-color: darken($card-background, $darken-percentage) !important;
       }
-    }
-
-    select {
-      color: white;
-      background: #101019;
-      width: 100%;
-      height: 3.125rem;
-      border-radius: 4px;
-      padding: 0.75rem;
-      letter-spacing: 1px;
-      font-size: 1rem;
     }
 
   }

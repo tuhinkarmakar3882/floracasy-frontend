@@ -63,7 +63,9 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
   name: 'BlogDetails',
   components: { LoadingIcon },
-  layout: 'MobileApp',
+  layout({ store }) {
+    return store.state.authState ? 'MobileApp' : 'PublicRoutes'
+  },
 
   async asyncData({ $axios, params }) {
     const response = await $axios.$get(endpoints.blog.detail, {

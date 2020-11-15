@@ -21,7 +21,10 @@ export const mutations = {
 export const actions = {
   async fetchData({ commit }) {
     const { data } = await this.$axios.get(endpoints.auth.whoAmI, {})
-    console.log(data)
     commit('SET_USER', data)
+  },
+
+  setUserData({ commit }, { user }) {
+    commit('SET_USER', user)
   },
 }

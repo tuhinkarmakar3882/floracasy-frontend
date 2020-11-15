@@ -12,6 +12,9 @@
     </header>
 
     <main>
+      <NotificationBadge
+        @click="navigateTo(navigationRoutes.Home.Notifications.index)"
+      />
       <nuxt />
     </main>
 
@@ -24,13 +27,18 @@
         :to="menuOption.route"
       >
         <span
-          :class="`mdi ${menuOption.icon}${
-            index !== activeLink ? '-outline' : ''
-          }`"
+          :class="[
+            index !== activeLink
+              ? menuOption.icon + '-outline'
+              : menuOption.icon,
+            newContentAvailable[index] ? 'has-notification' : '',
+          ]"
+          class="mdi"
           style="
-            transition: all 0.2s linear;
+            transition: all 0.2s ease-in-out;
             margin-bottom: -2px;
             font-size: 22px;
+            position: relative;
           "
         />
         <small style="transition: all 0.2s linear; font-size: 12.3px">
@@ -43,12 +51,15 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
+import NotificationBadge from '@/components/NotificationBadge'
 
 export default {
   name: 'MobileApp',
-  components: {},
+  components: { NotificationBadge },
   data() {
     return {
+      navigationRoutes,
       drawer: false,
     }
   },
@@ -58,13 +69,14 @@ export default {
         return this.$store.state.BottomNavigation.activeLink
       },
       set(newValue) {
-        // console.log(newValue)
         this.$store.commit('BottomNavigation/update', newValue)
       },
     },
     ...mapGetters({
       menuOptions: 'BottomNavigation/getMenuOptions',
+      newContentAvailable: 'BottomNavigation/getNewContentAvailableInfo',
     }),
+
     color() {
       return this.menuOptions[this.activeLink].color
     },
@@ -108,6 +120,19 @@ export default {
       width: 100%;
       height: 100%;
       color: $muted;
+    }
+
+    .has-notification {
+      &::after {
+        content: '';
+        position: absolute;
+        height: 6px;
+        width: 6px;
+        background-color: #8ff2e1;
+        border-radius: 50%;
+        top: 0;
+        right: 0;
+      }
     }
 
     #active-bottom-nav-link {
