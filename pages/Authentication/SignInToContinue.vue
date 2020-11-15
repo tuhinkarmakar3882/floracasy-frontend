@@ -104,12 +104,12 @@ export default {
         this.updateInfo('Validating Credentials...')
         await this.$axios
           .$post(endpoints.auth.authenticate, backendPayload)
-          .then((response) => {
+          .then(async (response) => {
             const frontendPayload = {
               ...commonPayload,
             }
             this.updateInfo('Logging you in...')
-            this.login(frontendPayload, response)
+            await this.login(frontendPayload, response)
           })
           .catch(async () => {
             await this.abort()
@@ -157,7 +157,7 @@ export default {
       await this.$store.dispatch('UserManagement/setUserData', {
         user: payload,
       })
-      await this.store.dispatch(
+      await this.$store.dispatch(
         'NotificationChannel/fetchNotificationChannelId'
       )
     },
