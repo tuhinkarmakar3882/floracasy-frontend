@@ -21,16 +21,12 @@ export default {
   },
 
   plugins: [
-    '~/plugins/custom-material-ripple.js',
-    '~/plugins/firebase.js',
-    {
-      src: '~/plugins/notificationSocketConnection.js',
-      mode: 'client',
-    },
     {
       src: '~/plugins/workbox-refresh-to-update.js',
       mode: 'client',
     },
+    '~/plugins/custom-material-ripple.js',
+    '~/plugins/firebase.js',
     {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
@@ -41,6 +37,10 @@ export default {
     },
     {
       src: '~/plugins/nuxt-quill-editor.js',
+      mode: 'client',
+    },
+    {
+      src: '~/plugins/notificationSocketConnection.js',
       mode: 'client',
     },
   ],
