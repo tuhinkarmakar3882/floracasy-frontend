@@ -24,6 +24,10 @@ export default {
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
     {
+      src: '~/plugins/notificationSocketConnection.js',
+      mode: 'client',
+    },
+    {
       src: '~/plugins/workbox-refresh-to-update.js',
       mode: 'client',
     },
