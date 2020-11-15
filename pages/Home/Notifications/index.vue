@@ -88,6 +88,13 @@ export default {
     }),
   },
 
+  async created() {
+    await this.$store.dispatch('BottomNavigation/updateNewContent', {
+      position: 3,
+      value: false,
+    })
+  },
+
   async mounted() {
     this.isContentLoading = true
     this.hasError = false
@@ -110,10 +117,6 @@ export default {
           },
         })
         .then(({ details }) => details)
-      await this.$store.dispatch('BottomNavigation/updateNewContent', {
-        position: 3,
-        value: false,
-      })
     } catch (e) {
       this.notifications = null
       this.hasError = true
