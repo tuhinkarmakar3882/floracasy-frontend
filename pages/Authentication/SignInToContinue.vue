@@ -128,7 +128,8 @@ export default {
 
       this.updateInfo('Welcome')
 
-      await this.$router.replace(navigationRoutes.Home.DashBoard)
+      // await this.$router.replace(navigationRoutes.Home.DashBoard)
+      window.location = navigationRoutes.Home.DashBoard
     },
 
     async abort() {
@@ -159,7 +160,7 @@ export default {
       await this.$store.dispatch('UserManagement/setUserData', {
         user: payload,
       })
-      await this.store.dispatch(
+      await this.$store.dispatch(
         'NotificationChannel/fetchNotificationChannelId'
       )
     },
