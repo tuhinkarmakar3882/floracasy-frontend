@@ -31,27 +31,31 @@ export const actions = {
       {},
       { withCredentials: true }
     )
-    console.log(data.authState, new Date())
+
     if (data.authState) {
       const cookieSavingConfig = {
         path: '/',
         maxAge: secrets.cookieMaxAge,
       }
+
       this.$cookies.set('access', data.access, cookieSavingConfig)
       this.$cookies.set('refresh', data.refresh, cookieSavingConfig)
     } else {
       this.$cookies.remove('access')
       this.$cookies.remove('refresh')
     }
+
     commit('SET_AUTH_STATE', data.authState)
   },
 
-  login({ commit }, { user }) {
-    commit('SET_USER', user)
+  login({ commit }) {
+    commit('SET_AUTH_STATE', true)
   },
+
   updateTokens({ commit }, { tokens }) {
     commit('SET_TOKENS', tokens)
   },
+
   logout({ commit }) {
     this.$cookies.remove('access')
     this.$cookies.remove('refresh')
