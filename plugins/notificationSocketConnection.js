@@ -1,19 +1,11 @@
+import * as secrets from '~/environmentalVariables'
+
 export default async ({ store }) => {
   if (process.client && store.state.authState) {
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
-    const backendUrl = 'localhost:8000'
-
-    // const wsStart = window.location.protocol === 'https:' ? 'wss://' : 'wss://'
-    const wsStart = 'ws://'
-
-    const endpoint =
-      wsStart +
-      backendUrl +
-      '/ws/notification_socket/' +
-      notificationChannelId +
-      '/'
+    const endpoint = secrets.websocketUrl + notificationChannelId + '/'
 
     const socket = new WebSocket(endpoint)
 
