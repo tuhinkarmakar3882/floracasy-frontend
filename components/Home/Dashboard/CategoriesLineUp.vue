@@ -1,7 +1,10 @@
 <template>
   <section class="categories" :class="classList">
     <h4 class="heading-title">Explore Categories</h4>
-    <CustomListView>
+    <div v-if="contentIsLoading" class="my-6">
+      <LoadingIcon />
+    </div>
+    <CustomListView v-else>
       <template slot="list-items">
         <li
           v-for="category in categories"
@@ -37,10 +40,11 @@
 import endpoints from '@/api/endpoints'
 import CustomListView from '@/components/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import LoadingIcon from '@/components/LoadingIcon'
 
 export default {
   name: 'CategoriesLineUp',
-  components: { CustomListView },
+  components: { LoadingIcon, CustomListView },
   props: {
     classList: {
       type: String,
@@ -51,12 +55,14 @@ export default {
     return {
       navigationRoutes,
       categories: [],
+      contentIsLoading: true,
     }
   },
 
   async mounted() {
     const response = await this.$axios.$get(endpoints.categories.fetch)
     this.categories = response.data
+    this.contentIsLoading = false
   },
 }
 </script>
