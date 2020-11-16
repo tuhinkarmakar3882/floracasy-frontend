@@ -96,7 +96,7 @@ export default {
   name: 'InfiniteScrollingBlogLists',
   props: {
     category: {
-      type: Number,
+      type: String,
       default: null,
     },
   },
@@ -185,7 +185,7 @@ export default {
           .get(endpoints.blog.fetch, {
             params: {
               page: this.page,
-              category_id: this.category,
+              category_name: this.category,
             },
           })
           .then(({ data }) => data)
