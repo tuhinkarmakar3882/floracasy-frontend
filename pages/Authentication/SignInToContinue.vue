@@ -111,7 +111,8 @@ export default {
             this.updateInfo('Logging you in...')
             await this.login(frontendPayload, response)
           })
-          .catch(async () => {
+          .catch(async (e) => {
+            console.error(e)
             await this.abort()
           })
       } else {

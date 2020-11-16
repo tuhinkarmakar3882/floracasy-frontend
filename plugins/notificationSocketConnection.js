@@ -33,6 +33,7 @@ export default async ({ store }) => {
     }
 
     socket.onclose = async (e) => {
+      console.log('close', e)
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Trouble connect to Server. Please Refresh.',
         notificationType: 'error',
