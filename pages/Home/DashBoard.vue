@@ -1,6 +1,10 @@
 <template>
   <div class="dashboard-page">
-    <Carousel :carousel-items="carouselItems" />
+    <Carousel
+      :carousel-items="carouselItems"
+      :style="[tabNumber === 2 && { height: 0 }]"
+      style="overflow: hidden; transition: all 0.3s ease-in-out"
+    />
 
     <section class="tab-bar">
       <p
