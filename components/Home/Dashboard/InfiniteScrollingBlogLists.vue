@@ -1,7 +1,5 @@
 <template>
-  <div class="my-6 scrollable-blog-list">
-    <!--    <h2 class="heading-title">{{ category }} Blogs</h2>-->
-
+  <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
         <section v-ripple class="content px-4 pt-8 pb-6">

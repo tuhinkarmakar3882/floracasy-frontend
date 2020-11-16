@@ -1,5 +1,6 @@
 <template>
   <section class="categories" :class="classList">
+    <h4 class="heading-title">Explore Categories</h4>
     <CustomListView>
       <template slot="list-items">
         <li
@@ -14,7 +15,9 @@
               :alt="category.name"
               style="border-radius: 50%; max-height: 64px; max-width: 64px"
             />
-            <span class="option-name ml-4">{{ category.name }}</span>
+            <span class="option-name ml-4" style="font-size: 18px">{{
+              category.name
+            }}</span>
             <span class="mdi mdi-chevron-right arrow-go" />
           </p>
         </li>
@@ -52,20 +55,11 @@ export default {
 @import 'assets/all-variables';
 
 .categories {
-  display: flex;
-  flex-wrap: wrap;
-
-  button {
-    display: flex;
-
-    img {
-      width: 2 * $x-large-unit;
-      height: 2 * $x-large-unit;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    min-width: auto;
+  img {
+    width: 2 * $x-large-unit;
+    height: 2 * $x-large-unit;
+    border-radius: 50%;
+    object-fit: cover;
   }
 }
 </style>
