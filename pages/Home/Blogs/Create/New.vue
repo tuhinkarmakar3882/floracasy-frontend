@@ -44,7 +44,7 @@
           <input
             id="cover-image-url"
             v-model="coverImageUrl"
-            type="text"
+            type="url"
             placeholder="Enter the Blog Title"
             required
             autocomplete="off"
@@ -314,14 +314,16 @@ export default {
           subtitle: this.blogTitle,
           content: this.content,
         })
-        .then((response) => {
-          alert(response.message)
+        .then(async () => {
           this.cleanupCurrentDraft()
-          this.$router.replace(navigationRoutes.Home.DashBoard)
+          await this.$router.replace(navigationRoutes.Home.DashBoard)
         })
-        .catch((error) => {
-          alert('Error')
-          console.error(error.response)
+        .catch(async () => {
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Network error. Please Retry',
+            notificationType: 'error',
+            dismissible: true,
+          })
         })
     },
 
