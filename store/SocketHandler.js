@@ -33,10 +33,7 @@ export const actions = {
       ? commit('SET_SOCKET_MESSAGE_TYPE', payload.notificationType)
       : commit('SET_SOCKET_MESSAGE_TYPE', 'generic')
 
-    if (
-      this.state.SocketHandler.socketMessage &&
-      payload.notificationType !== 'error'
-    ) {
+    if (this.state.SocketHandler.socketMessage && payload.dismissible) {
       timeout = setTimeout(() => {
         commit('SET_SOCKET_MESSAGE', '')
       }, 2500)
