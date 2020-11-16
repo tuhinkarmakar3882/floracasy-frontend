@@ -176,29 +176,33 @@ export default {
       }
     },
 
-    infiniteHandler($state) {
-      this.$axios
-        .get(endpoints.blog.fetch, {
-          params: {
-            page: this.page,
-            category_id: this.category,
-          },
-        })
-        .then(({ data }) => {
-          if (data.results.length) {
-            console.log(data)
-            this.page += 1
-            this.blogs.push(...data.results)
-            $state.loaded()
-          } else {
-            $state.complete()
-          }
-        })
-        .catch((e) => {
-          console.error(e)
+    async infiniteHandler($state) {
+      console.log('making Request')
+      try {
+        const { results } = await this.$axios
+          .get(endpoints.blog.fetch, {
+            params: {
+              page: this.page,
+              category_id: this.category,
+            },
+          })
+          .then(({ data }) => data)
+
+        console.log('received', results)
+        if (results.length) {
+          console.log('in if', results)
+          this.page += 1
+          this.blogs.push(...results)
+          $state.loaded()
+        } else {
+          console.log('in else', results)
           $state.complete()
-          // $state.error()
-        })
+        }
+      } catch (e) {
+        console.error(e)
+        // $state.complete()
+        $state.error()
+      }
     },
   },
 }
