@@ -29,7 +29,6 @@
     <div ref="tabNavigation"></div>
 
     <InfiniteScrollingBlogLists v-if="tabNumber === 0" />
-
     <InfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
 
     <div v-if="tabNumber === 2">
@@ -37,39 +36,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-$blog-border-radius: 20px;
-
-.dashboard-page {
-  transition: all 0.5s ease-in-out;
-
-  .tab-bar {
-    display: grid;
-    text-align: center;
-    grid-template-columns: repeat(3, 1fr);
-    position: sticky;
-    top: (2 * $x-large-unit) - $double-unit;
-    background-color: $nav-bar-bg;
-    box-shadow: $down-only-box-shadow;
-    z-index: 1;
-    transition: all 0.3s ease-in-out;
-
-    * {
-      padding: 0.7rem 0;
-      font-size: 1rem;
-      font-weight: 300;
-    }
-
-    .active-tab {
-      color: $secondary;
-      font-weight: 400;
-    }
-  }
-}
-</style>
 
 <script>
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
@@ -137,3 +103,36 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+$blog-border-radius: 20px;
+
+.dashboard-page {
+  transition: all 0.5s ease-in-out;
+
+  .tab-bar {
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(3, 1fr);
+    position: sticky;
+    top: (2 * $x-large-unit) - $double-unit;
+    background-color: $nav-bar-bg;
+    box-shadow: $down-only-box-shadow;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+
+    * {
+      padding: 0.7rem 0;
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    .active-tab {
+      color: $secondary;
+      font-weight: 400;
+    }
+  }
+}
+</style>
