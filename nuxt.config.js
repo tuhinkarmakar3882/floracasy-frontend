@@ -36,11 +36,15 @@ export default {
       mode: 'client',
     },
     {
+      src: '~/plugins/notificationSocketConnection.js',
+      mode: 'client',
+    },
+    {
       src: '~/plugins/nuxt-quill-editor.js',
       mode: 'client',
     },
     {
-      src: '~/plugins/notificationSocketConnection.js',
+      src: '~/plugins/vue-infinite-loading.js',
       mode: 'client',
     },
   ],
