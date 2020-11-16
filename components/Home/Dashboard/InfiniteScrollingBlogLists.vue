@@ -186,6 +186,7 @@ export default {
         })
         .then(({ data }) => {
           if (data.results.length) {
+            console.log(data)
             this.page += 1
             this.blogs.push(...data.results)
             $state.loaded()
