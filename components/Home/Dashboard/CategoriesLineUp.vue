@@ -8,6 +8,14 @@
           :key="category.id"
           v-ripple=""
           class="px-4 py-2"
+          @click="
+            $router.push(
+              navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+                '{name}',
+                category.name
+              )
+            )
+          "
         >
           <p>
             <img
@@ -28,6 +36,7 @@
 <script>
 import endpoints from '@/api/endpoints'
 import CustomListView from '@/components/Layout/CustomListView'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'CategoriesLineUp',
@@ -40,6 +49,7 @@ export default {
   },
   data() {
     return {
+      navigationRoutes,
       categories: [],
     }
   },
