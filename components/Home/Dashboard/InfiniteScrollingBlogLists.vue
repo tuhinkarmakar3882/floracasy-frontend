@@ -2,88 +2,92 @@
   <div class="my-6 scrollable-blog-list">
     <h2 class="heading-title">{{ mode }} Blogs</h2>
 
-    <LoadingIcon v-if="dataLoading" />
+    <section v-if="blogs">
+      <article v-for="(blog, index) in blogs" :key="blog.id">
+        <section v-ripple class="content px-4 pt-8 pb-6">
+          <p class="mb-2">
+            <nuxt-link
+              :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+              class="no-underline"
+            >
+              {{ blog.author.displayName }}
+            </nuxt-link>
+            IN
+            <nuxt-link
+              :to="navigationRoutes.Home.Blogs.CategoryWise"
+              class="no-underline"
+            >
+              {{ blog.category.name }}
+            </nuxt-link>
+          </p>
 
-    <!--    <pre v-if="blogs">{{ blogs }}</pre>-->
+          <h5 @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)">
+            {{ blog.title }}
+          </h5>
 
-    <article v-for="(blog, index) in blogs" v-else :key="blog.id">
-      <section v-ripple class="content px-4 pt-8 pb-6">
-        <p class="mb-2">
-          <nuxt-link
-            :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
-            class="no-underline"
-          >
-            {{ blog.author.displayName }}
-          </nuxt-link>
-          IN
-          <nuxt-link
-            :to="navigationRoutes.Home.Blogs.CategoryWise"
-            class="no-underline"
-          >
-            {{ blog.category.name }}
-          </nuxt-link>
-        </p>
+          <small class="timestamp mt-3">
+            <span class="mdi mdi-clock-time-nine-outline" />
+            {{ parse(blog.createdAt) }}
+          </small>
 
-        <h5 @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)">
-          {{ blog.title }}
-        </h5>
-
-        <small class="timestamp mt-3">
-          <span class="mdi mdi-clock-time-nine-outline" />
-          {{ parse(blog.createdAt) }}
-        </small>
-
-        <img
-          class="my-5"
-          :src="blog.coverImage"
-          :alt="blog.title"
-          @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
-        />
-
-        <p>
-          {{ blog.subtitle }}...
-          <nuxt-link :to="`/Home/Blogs/Details/${blog.id}`">
-            Read More
-          </nuxt-link>
-        </p>
-      </section>
-
-      <section class="blog-actions px-4 pb-8">
-        <div v-ripple class="like" @click="like(blog, index)">
-          <i
-            class="mdi mr-2 inline-block align-middle"
-            :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          <img
+            class="my-5"
+            :src="blog.coverImage"
+            :alt="blog.title"
+            @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
           />
-          <span class="value inline-block align-middle">
-            {{ blog.totalLikes }}
-          </span>
-        </div>
-        <div v-ripple class="comment" @click="comment(blog)">
-          <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
-          <span class="value inline-block align-middle">
-            {{ blog.totalComments }}
-          </span>
-        </div>
-        <div v-ripple class="share" @click="share(blog, index)">
-          <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
-          <span class="value inline-block align-middle">
-            {{ blog.totalShares }}
-          </span>
-        </div>
-      </section>
-    </article>
+
+          <p>
+            {{ blog.subtitle }}...
+            <nuxt-link :to="`/Home/Blogs/Details/${blog.id}`">
+              Read More
+            </nuxt-link>
+          </p>
+        </section>
+
+        <section class="blog-actions px-4 pb-8">
+          <div v-ripple class="like" @click="like(blog, index)">
+            <i
+              class="mdi mr-2 inline-block align-middle"
+              :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+            />
+            <span class="value inline-block align-middle">
+              {{ blog.totalLikes }}
+            </span>
+          </div>
+          <div v-ripple class="comment" @click="comment(blog)">
+            <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
+            <span class="value inline-block align-middle">
+              {{ blog.totalComments }}
+            </span>
+          </div>
+          <div v-ripple class="share" @click="share(blog, index)">
+            <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
+            <span class="value inline-block align-middle">
+              {{ blog.totalShares }}
+            </span>
+          </div>
+        </section>
+      </article>
+    </section>
+
+    <client-only>
+      <infinite-loading spinner="bubbles" @infinite="infiniteHandler">
+        <template v-slot:error>
+          <p>Network Error</p>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
 <script>
-import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import utility from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
-  components: { LoadingIcon },
   props: {
     mode: {
       type: String,
@@ -96,6 +100,7 @@ export default {
       dataLoading: true,
       blogs: [],
       parse: utility.timeStringParser,
+      page: 1,
     }
   },
 
@@ -113,13 +118,13 @@ export default {
     },
   },
 
-  async mounted() {
-    this.blogs = await this.$axios
-      .$get(endpoints.blog.fetch)
-      .then(({ data }) => data)
-      .catch((error) => {
-        console.error('From IBL', error)
-      })
+  mounted() {
+    // this.blogs = await this.$axios
+    //   .$get(endpoints.blog.fetch)
+    //   .then(({ data }) => data)
+    //   .catch((error) => {
+    //     console.error('From IBL', error)
+    //   })
 
     this.dataLoading = false
   },
@@ -177,6 +182,28 @@ export default {
         )
       }
     },
+
+    infiniteHandler($state) {
+      this.$axios
+        .get(endpoints.blog.fetch, {
+          params: {
+            page: this.page,
+          },
+        })
+        .then(({ data }) => {
+          console.log(data.data)
+          if (data.data.length) {
+            this.page += 1
+            this.blogs.push(...data.data)
+            $state.loaded()
+          } else {
+            $state.complete()
+          }
+        })
+        .catch((e) => {
+          $state.error()
+        })
+    },
   },
 }
 </script>
@@ -185,7 +212,7 @@ export default {
 @import 'assets/all-variables';
 
 .scrollable-blog-list {
-  min-height: calc(100vh - 220px);
+  //min-height: calc(100vh - 220px);
 
   article {
     .content {
