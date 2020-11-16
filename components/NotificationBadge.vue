@@ -28,11 +28,13 @@ export default {
   methods: {
     getIconFor(notificationType) {
       if (notificationType === 'blog_like') return 'mdi-thumb-up-outline'
+      if (notificationType === 'warning') return 'mdi-alert'
       if (notificationType === 'success') return 'mdi-check-circle-outline'
       if (notificationType === 'error') return 'mdi-alert-circle-outline'
       return 'mdi-bell'
     },
     getColorFor(notificationType) {
+      if (notificationType === 'warning') return '#eae500'
       if (notificationType === 'success') return '#67ea67'
       if (notificationType === 'error') return '#f77479'
       return '#8FF2E0'
