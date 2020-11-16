@@ -1,6 +1,6 @@
 <template>
   <div class="my-6 scrollable-blog-list">
-    <h2 class="heading-title">{{ mode }} Blogs</h2>
+    <!--    <h2 class="heading-title">{{ category }} Blogs</h2>-->
 
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
@@ -74,7 +74,10 @@
     <client-only>
       <infinite-loading spinner="bubbles" @infinite="infiniteHandler">
         <template v-slot:error>
-          <p>Network Error</p>
+          <p class="danger-light my-6">Network Error</p>
+        </template>
+        <template v-slot:no-more>
+          <p class="success my-6">That's all for now :)</p>
         </template>
       </infinite-loading>
     </client-only>
@@ -89,15 +92,14 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
   name: 'InfiniteScrollingBlogLists',
   props: {
-    mode: {
-      type: String,
-      default: 'All',
+    category: {
+      type: Number,
+      default: null,
     },
   },
   data() {
     return {
       navigationRoutes,
-      dataLoading: true,
       blogs: [],
       parse: utility.timeStringParser,
       page: 1,
@@ -118,16 +120,7 @@ export default {
     },
   },
 
-  mounted() {
-    // this.blogs = await this.$axios
-    //   .$get(endpoints.blog.fetch)
-    //   .then(({ data }) => data)
-    //   .catch((error) => {
-    //     console.error('From IBL', error)
-    //   })
-
-    this.dataLoading = false
-  },
+  mounted() {},
 
   methods: {
     navigateTo(path) {
@@ -188,20 +181,22 @@ export default {
         .get(endpoints.blog.fetch, {
           params: {
             page: this.page,
+            category_id: this.category,
           },
         })
         .then(({ data }) => {
-          console.log(data.data)
-          if (data.data.length) {
+          if (data.results.length) {
             this.page += 1
-            this.blogs.push(...data.data)
+            this.blogs.push(...data.results)
             $state.loaded()
           } else {
             $state.complete()
           }
         })
         .catch((e) => {
-          $state.error()
+          console.error(e)
+          $state.complete()
+          // $state.error()
         })
     },
   },
