@@ -25,7 +25,6 @@
         Categories
       </p>
     </section>
-
     <div ref="tabNavigation"></div>
     <section v-if="tabNumber === 0">
       <h3 class="heading-title">All Blogs</h3>
@@ -61,7 +60,7 @@ export default {
   data() {
     return {
       pageTitle: 'Welcome to Floracasy',
-      tabNumber: 0,
+      tabNumber: parseInt(this.$route.query.tabNumber) || 0,
       carouselItems: [
         {
           name: 'First Item in the carousel',

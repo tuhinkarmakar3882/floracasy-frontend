@@ -1,24 +1,49 @@
 <template>
-  <div class="text-center my-6 py-6 px-4">
-    <span> mdi-apps </span>
-    <h1 class="my-4">This is my super duper Category View Page</h1>
-    <p class="my-4">And I love it</p>
-  </div>
+  <AppFeel
+    custom-header
+    class="about-page"
+    :on-back="navigationRoutes.Home.DashBoard"
+  >
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple
+        class="mdi mdi-arrow-left"
+        @click="
+          $router.push({
+            path: navigationRoutes.Home.DashBoard,
+            query: {
+              tabNumber: 2,
+            },
+          })
+        "
+      />
+      <p class="ml-6">
+        {{ pageTitle }}
+      </p>
+    </template>
+    <template slot="main">
+      <h4 class="heading-title">{{ $route.params.name }}</h4>
+      <InfiniteScrollingBlogLists :category="$route.params.name" />
+    </template>
+  </AppFeel>
 </template>
 
 <script>
+import AppFeel from '@/components/Layout/AppFeel'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
+import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
+
 export default {
   name: 'CategoryWise',
-  layout: 'MobileApp',
+  components: { InfiniteScrollingBlogLists, AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {
-      pageTitle: 'Search Blogs in Category Wise',
+      navigationRoutes,
+      pageTitle: this.$route.params.name,
     }
   },
-  mounted() {
-    this.$store.commit('BottomNavigation/update', { linkPosition: 0 })
-  },
+  mounted() {},
 
   head() {
     return {

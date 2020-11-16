@@ -39,9 +39,6 @@
         </nuxt-link>
       </p>
     </section>
-    <!--    <button v-ripple class="success-outlined-btn" @click="showTheBanner">-->
-    <!--      Show-->
-    <!--    </button>-->
     <section v-if="isContentLoading">
       <LoadingIcon />
     </section>
