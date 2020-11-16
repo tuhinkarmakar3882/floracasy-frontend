@@ -156,7 +156,7 @@ export default {
           })
           .then(async () => {
             await this.$axios
-              .$post(endpoints.blog.like, {
+              .$post(endpoints.blog.share, {
                 blog_id: blog.id,
               })
               .then(() => {
@@ -177,7 +177,6 @@ export default {
     },
 
     async infiniteHandler($state) {
-      console.log('making Request')
       try {
         const { results } = await this.$axios
           .get(endpoints.blog.fetch, {
@@ -187,21 +186,16 @@ export default {
             },
           })
           .then(({ data }) => data)
-
-        console.log('received', results)
         if (results.length) {
-          console.log('in if', results)
           this.page += 1
           this.blogs.push(...results)
           $state.loaded()
         } else {
-          console.log('in else', results)
           $state.complete()
         }
       } catch (e) {
-        console.error(e)
-        // $state.complete()
-        $state.error()
+        $state.complete()
+        // $state.error()
       }
     },
   },
