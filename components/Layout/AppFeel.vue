@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <NotificationBadge />
     <header v-if="customHeader">
       <slot name="app-bar-custom-header" />
     </header>
@@ -21,8 +22,10 @@
 </template>
 
 <script>
+import NotificationBadge from '@/components/NotificationBadge'
 export default {
   name: 'AppFeel',
+  components: { NotificationBadge },
   props: {
     onBack: {
       type: String,
@@ -90,17 +93,6 @@ export default {
     h6 {
       position: relative;
       margin: $large-unit 0;
-
-      //&::after {
-      //  content: '';
-      //  border-radius: $standard-unit;
-      //  position: absolute;
-      //  bottom: -$micro-unit;
-      //  left: 0;
-      //  height: $nano-unit;
-      //  width: clamp(100px, 20%, 250px);
-      //  background-color: darken($secondary-matte, $lighten-percentage);
-      //}
     }
   }
 
