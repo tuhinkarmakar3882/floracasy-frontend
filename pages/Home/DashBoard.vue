@@ -27,9 +27,15 @@
     </section>
 
     <div ref="tabNavigation"></div>
+    <section v-if="tabNumber === 0">
+      <h3 class="heading-title">All Blogs</h3>
+      <InfiniteScrollingBlogLists />
+    </section>
 
-    <InfiniteScrollingBlogLists v-if="tabNumber === 0" />
-    <InfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
+    <section v-if="tabNumber === 1">
+      <h3 class="heading-title">Trending Blogs</h3>
+      <InfiniteScrollingBlogLists />
+    </section>
 
     <div v-if="tabNumber === 2">
       <CategoriesLineUp />
