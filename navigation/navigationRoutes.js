@@ -18,7 +18,9 @@ export const navigationRoutes = {
         Drafts: '/Home/Blogs/Create/Drafts',
       },
 
-      CategoryWise: '/Home/Blogs/CategoryWise',
+      CategoryWise: {
+        Name: '/Home/Blogs/CategoryWise/{name}',
+      },
       Details: '/Home/Blogs/Details/{id}',
     },
 

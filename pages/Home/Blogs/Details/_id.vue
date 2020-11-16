@@ -10,7 +10,12 @@
         </nuxt-link>
         IN
         <nuxt-link
-          :to="navigationRoutes.Home.Blogs.CategoryWise"
+          :to="
+            navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+              '{name}',
+              blog.category.name
+            )
+          "
           class="no-underline"
         >
           {{ blog.category.name }}
