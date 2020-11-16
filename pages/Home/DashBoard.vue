@@ -32,20 +32,20 @@
     <InfiniteScrollingBlogLists v-if="tabNumber === 1" mode="Trending" />
 
     <div v-if="tabNumber === 2">
-      <CategoriesShowcase />
+      <CategoriesLineUp />
     </div>
   </div>
 </template>
 
 <script>
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
-import CategoriesShowcase from '@/components/LandingPage/CategoriesShowcase'
+import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {
   name: 'DashBoard',
   components: {
-    CategoriesShowcase,
+    CategoriesLineUp,
     InfiniteScrollingBlogLists,
     Carousel,
   },
