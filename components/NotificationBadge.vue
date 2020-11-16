@@ -29,7 +29,7 @@ export default {
     getIconFor(notificationType) {
       if (notificationType === 'blog_like') return 'mdi-thumb-up-outline'
       if (notificationType === 'warning') return 'mdi-alert'
-      if (notificationType === 'success') return 'mdi-check-circle-outline'
+      if (notificationType === 'success') return 'mdi-check-circle'
       if (notificationType === 'error') return 'mdi-alert-circle-outline'
       return 'mdi-bell'
     },
