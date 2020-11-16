@@ -12,7 +12,7 @@
             <img
               :src="category.photo_url"
               :alt="category.name"
-              style="border-radius: 50%"
+              style="border-radius: 50%; max-height: 64px; max-width: 64px"
             />
             <span class="option-name ml-4">{{ category.name }}</span>
             <span class="mdi mdi-chevron-right arrow-go" />
