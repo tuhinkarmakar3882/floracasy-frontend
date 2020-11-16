@@ -13,6 +13,7 @@ export default async ({ store }) => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connected',
         notificationType: 'success',
+        dismissible: true,
       })
     }
 
@@ -21,10 +22,12 @@ export default async ({ store }) => {
       await store.dispatch('BottomNavigation/updateNewContent', {
         position: 3,
         value: true,
+        dismissible: true,
       })
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: data.message,
         notificationType: data.action,
+        dismissible: true,
       })
     }
 
@@ -37,6 +40,7 @@ export default async ({ store }) => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Trouble connect to Server. Please Refresh.',
         notificationType: 'error',
+        dismissible: false,
       })
     }
   }
