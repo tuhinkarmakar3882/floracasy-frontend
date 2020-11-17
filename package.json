@@ -72,6 +72,7 @@
     "stylelint-config-standard": "^20.0.0",
     "ts-jest": "^26.3.0",
     "vue": "^2.6.12",
+    "vue-client-only": "^2.0.0",
     "vue-jest": "^3.0.4"
   },
   "lint-staged": {

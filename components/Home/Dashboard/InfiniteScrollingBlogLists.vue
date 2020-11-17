@@ -75,13 +75,17 @@
     </section>
 
     <client-only>
-      <infinite-loading spinner="bubbles" @infinite="infiniteHandler">
-        <template v-slot:error>
+      <infinite-loading @infinite="infiniteHandler">
+        <template slot="spinner">
+          <LoadingIcon />
+        </template>
+        <template slot="error">
           <p class="danger-light my-6">Network Error</p>
         </template>
-        <template v-slot:no-more>
+        <template slot="no-more">
           <p class="success my-6">That's all for now :)</p>
         </template>
+        <!--        <template slot="no-results">No results message</template>-->
       </infinite-loading>
     </client-only>
   </div>
@@ -90,10 +94,16 @@
 <script>
 import endpoints from '@/api/endpoints'
 import utility from '@/utils/utility'
+import ClientOnly from 'vue-client-only'
+import LoadingIcon from '@/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
+  components: {
+    LoadingIcon,
+    ClientOnly,
+  },
   props: {
     category: {
       type: String,
