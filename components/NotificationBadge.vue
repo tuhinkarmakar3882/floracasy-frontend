@@ -27,13 +27,15 @@ export default {
   },
   methods: {
     getIconFor(notificationType) {
-      if (notificationType === 'blog_like') return 'mdi-thumb-up-outline'
+      if (notificationType === 'info') return 'mdi-information'
       if (notificationType === 'warning') return 'mdi-alert'
       if (notificationType === 'success') return 'mdi-check-circle'
       if (notificationType === 'error') return 'mdi-alert-circle-outline'
+      if (notificationType === 'blog_like') return 'mdi-thumb-up-outline'
       return 'mdi-bell'
     },
     getColorFor(notificationType) {
+      if (notificationType === 'info') return '#f5a049'
       if (notificationType === 'warning') return '#eae500'
       if (notificationType === 'success') return '#67ea67'
       if (notificationType === 'error') return '#f77479'
