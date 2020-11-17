@@ -216,12 +216,7 @@ export default {
       display: 'standalone',
     },
     workbox: {
-      precaching: null,
       cleanupOutdatedCaches: true,
-
-      offline: true,
-      offlineStrategy: 'NetworkFirst',
-      offlinePage: null,
 
       config: {
         debug: true,

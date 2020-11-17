@@ -26,6 +26,7 @@ export const mutations = {
 export const actions = {
   updateSocketMessage({ commit }, payload) {
     clearTimeout(timeout)
+    console.log(payload)
     commit('SET_SOCKET_MESSAGE', payload.message)
 
     payload.notificationType

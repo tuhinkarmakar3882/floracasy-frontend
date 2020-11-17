@@ -3,11 +3,11 @@ import * as secrets from '~/environmentalVariables'
 
 export default async ({ store }) => {
   if (process.client && store.state.authState) {
-    await store.dispatch('SocketHandler/updateSocketMessage', {
-      message: 'Connecting to Server...',
-      notificationType: 'info',
-      dismissible: true,
-    })
+    // await store.dispatch('SocketHandler/updateSocketMessage', {
+    //   message: 'Connecting to Server...',
+    //   notificationType: 'info',
+    //   dismissible: true,
+    // })
 
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
@@ -27,7 +27,8 @@ export default async ({ store }) => {
       [],
       connectionOptions
     )
-    reconnectingSocket.onopen = async () => {
+    reconnectingSocket.onopen = async (e) => {
+      console.log(e)
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connected',
         notificationType: 'success',
@@ -36,6 +37,7 @@ export default async ({ store }) => {
     }
 
     reconnectingSocket.onmessage = async (e) => {
+      console.log(e)
       const data = JSON.parse(e.data)
       await store.dispatch('BottomNavigation/updateNewContent', {
         position: 3,
@@ -55,7 +57,8 @@ export default async ({ store }) => {
       }
     }
 
-    reconnectingSocket.onerror = async () => {
+    reconnectingSocket.onerror = async (e) => {
+      console.log(e)
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connection Lost. Reconnecting...',
         notificationType: 'info',
@@ -63,7 +66,8 @@ export default async ({ store }) => {
       })
     }
 
-    reconnectingSocket.onclose = async () => {
+    reconnectingSocket.onclose = async (e) => {
+      console.log(e)
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Disconnected. Please Refresh',
         notificationType: 'error',
