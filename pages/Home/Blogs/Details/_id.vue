@@ -31,11 +31,14 @@
 
       <img
         v-if="blog.coverImage"
-        class="my-5 blog-intro-image"
+        class="mt-5 blog-intro-image"
         :src="blog.coverImage"
         :alt="blog.title"
         style="width: 100%; object-fit: cover; max-height: 250px"
       />
+      <p class="my-4">
+        {{ blog.subtitle }}
+      </p>
     </section>
     <div v-if="blog" class="blog-body">
       <article class="ql-snow">

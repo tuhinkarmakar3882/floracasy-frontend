@@ -311,7 +311,7 @@ export default {
           category: this.blogCategory,
           coverImage: this.coverImageUrl,
           title: this.blogTitle,
-          subtitle: this.blogTitle,
+          subtitle: this.blogSubtitle,
           content: this.content,
         })
         .then(async () => {
