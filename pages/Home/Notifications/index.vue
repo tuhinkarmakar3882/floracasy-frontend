@@ -2,9 +2,10 @@
   <div class="notification-page mb-6">
     <div
       class="banner-container"
-      :style="{
-        opacity: showBanner ? 1 : 0,
-      }"
+      :style="[
+        { opacity: showBanner ? 1 : 0 },
+        !showBanner && { display: 'none' },
+      ]"
     >
       <section
         ref="banner-block"
@@ -52,24 +53,39 @@
     <section v-else-if="hasError">
       <p class="text-center">No Notifications are Available.</p>
     </section>
-    <div v-else class="notifications px-4">
-      <section v-for="(notification, index) in notifications" :key="index">
-        <h3 :class="`mdi ${notification.notificationType.icon}`" />
-        <p>{{ notification.message }}</p>
-      </section>
-    </div>
+    <CustomListView v-else>
+      <template slot="list-items">
+        <li
+          v-for="notification in notifications"
+          :key="notification.id"
+          v-ripple="notification.notificationType.color + '55'"
+          class="px-4 py-2"
+        >
+          <p :style="{ color: notification.notificationType.color }">
+            <span
+              :class="notification.notificationType.icon"
+              style="font-size: 24px"
+            />
+            <span class="option-name ml-4" style="font-size: 16px">
+              {{ notification.message }}
+            </span>
+          </p>
+        </li>
+      </template>
+    </CustomListView>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import CustomListView from '@/components/Layout/CustomListView'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'Notifications',
-  components: { LoadingIcon },
+  components: { CustomListView, LoadingIcon },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
 
@@ -104,8 +120,18 @@ export default {
     this.hasError = false
     this.initHeight()
 
-    this.showBanner = true
+    const hideNotificationConsent = localStorage.getItem(
+      'hide-notification-consent'
+    )
+    this.showBanner = hideNotificationConsent
+      ? hideNotificationConsent < 0
+      : true
 
+    hideNotificationConsent &&
+      localStorage.setItem(
+        'hide-notification-consent',
+        (parseInt(hideNotificationConsent) - 1).toString()
+      )
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
     })
@@ -134,8 +160,8 @@ export default {
 
       setTimeout(() => {
         this.showBanner = false
-      }, 3000)
-      localStorage.removeItem('hide-notification-consent')
+      }, 2500)
+      localStorage.setItem('hide-notification-consent', '200')
     },
 
     initHeight() {
@@ -203,15 +229,6 @@ export default {
           }
         }
       }
-    }
-  }
-
-  .notifications {
-    section {
-      display: grid;
-      grid-template-columns: 1fr 3fr;
-      grid-column-gap: 1rem;
-      place-items: center;
     }
   }
 }
