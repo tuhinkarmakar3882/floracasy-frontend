@@ -14,8 +14,4 @@ export default async function ({ $axios, $cookies, store }) {
     }
     handleAxiosRequestError(error)
   })
-
-  $axios.onRequest((req) => {
-    console.log(req.headers)
-  })
 }
