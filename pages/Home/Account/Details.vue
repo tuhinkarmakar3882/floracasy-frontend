@@ -136,12 +136,6 @@ export default {
     }
   },
 
-  head() {
-    return {
-      title: this.pageTitle,
-    }
-  },
-
   computed: {
     ...mapGetters({
       user: 'UserManagement/getUser',
@@ -181,6 +175,12 @@ export default {
       })
 
     this.loadingRecentActivities = false
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
   },
 }
 </script>
