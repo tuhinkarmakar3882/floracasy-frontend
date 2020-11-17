@@ -25,7 +25,7 @@
         </button>
         <button
           v-ripple
-          class="danger-outlined-btn"
+          class="secondary-outlined-btn"
           @click="showMaybeAndCollapse"
         >
           May be later
@@ -167,14 +167,18 @@ export default {
 
   .banner {
     padding: 0 $micro-unit;
-    background-color: $segment-background;
-    box-shadow: $down-only-box-shadow;
+    background-color: lighten($segment-background, $darken-percentage);
     height: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: fixed;
+    top: calc(50% - 132px);
+    box-shadow: 0 0 0 100vh #0e0e18e6;
+    border-radius: $milli-unit;
+    margin: 0 $standard-unit;
 
     .actions {
       text-align: center;
