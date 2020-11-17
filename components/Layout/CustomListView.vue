@@ -38,6 +38,12 @@ export default {
           width: 100%;
         }
 
+        .option-time {
+          font-family: $Nunito-Sans;
+          font-size: 12px;
+          color: $muted;
+        }
+
         .arrow-go {
           font-size: clamp(20px, 8vw, 28px);
           color: #3a3a3a;

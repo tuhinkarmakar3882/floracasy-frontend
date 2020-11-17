@@ -53,39 +53,40 @@
     <section v-else-if="hasError">
       <p class="text-center">No Notifications are Available.</p>
     </section>
-    <CustomListView v-else>
-      <template slot="list-items">
-        <li
-          v-for="notification in notifications"
-          :key="notification.id"
-          v-ripple="notification.notificationType.color + '55'"
-          class="px-4 py-2"
-        >
-          <p :style="{ color: notification.notificationType.color }">
-            <span
-              :class="notification.notificationType.icon"
-              style="font-size: 24px"
-            />
-            <span class="option-name ml-4" style="font-size: 16px">
-              {{ notification.message }}
-            </span>
-          </p>
-        </li>
-      </template>
-    </CustomListView>
+    <section class="notifications">
+      <div
+        v-for="notification in notifications"
+        :key="notification.id"
+        v-ripple="notification.notificationType.color + '55'"
+        class="px-4 py-2"
+      >
+        <p
+          :class="notification.notificationType.icon"
+          :style="{ color: notification.notificationType.color }"
+          style="font-size: 24px"
+        />
+        <p>
+          <span class="message">
+            {{ notification.message }}
+          </span>
+          <br />
+          2 hr
+          <span class="dot" />
+        </p>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import CustomListView from '@/components/Layout/CustomListView'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'Notifications',
-  components: { CustomListView, LoadingIcon },
+  components: { LoadingIcon },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
 
@@ -229,6 +230,42 @@ export default {
             width: 142px;
           }
         }
+      }
+    }
+  }
+
+  .notifications {
+    div {
+      display: grid;
+      align-items: center;
+      grid-template-columns: 10% 90%;
+      grid-column-gap: $standard-unit;
+      padding: $medium-unit;
+
+      p {
+        font-family: $Nunito-Sans;
+        font-size: $milli-unit;
+        align-self: flex-start;
+
+        .message {
+          color: $white;
+          font-family: $Raleway;
+          font-size: $standard-unit;
+        }
+      }
+
+      .dot {
+        display: inline-block;
+        width: $nano-unit + $single-unit;
+        height: $nano-unit + $single-unit;
+        border-radius: 50%;
+        background-color: $success-light;
+        margin-left: $nano-unit;
+        margin-bottom: $single-unit;
+      }
+
+      &:nth-child(even) {
+        background-color: $nav-bar-bg;
       }
     }
   }
