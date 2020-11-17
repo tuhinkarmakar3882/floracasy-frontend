@@ -36,11 +36,12 @@
     </CustomListView>
   </section>
 </template>
+
 <script>
-import endpoints from '@/api/endpoints'
 import CustomListView from '@/components/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import LoadingIcon from '@/components/LoadingIcon'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'CategoriesLineUp',
@@ -54,14 +55,18 @@ export default {
   data() {
     return {
       navigationRoutes,
-      categories: [],
       contentIsLoading: true,
     }
   },
+  computed: {
+    ...mapGetters({
+      categories: 'CategoriesManagement/getCategories',
+    }),
+  },
 
   async mounted() {
-    const response = await this.$axios.$get(endpoints.categories.fetch)
-    this.categories = response.data
+    !this.categories &&
+      (await this.$store.dispatch('CategoriesManagement/fetchCategories'))
     this.contentIsLoading = false
   },
 }
