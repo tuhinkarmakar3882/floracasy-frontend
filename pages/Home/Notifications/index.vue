@@ -1,52 +1,45 @@
 <template>
   <div class="notification-page mb-6">
-    <div
-      class="banner-container"
-      :style="[
-        { opacity: showBanner ? 1 : 0 },
-        !showBanner && { display: 'none' },
-      ]"
+    <section
+      ref="banner-block"
+      :key="'banner-item'"
+      class="banner text-center mb-6 px-2"
+      :style="[showBanner ? { height: '300px' } : {}]"
     >
-      <section
-        ref="banner-block"
-        :key="'banner-item'"
-        class="banner text-center mb-6"
-        :style="[showBanner ? { height: '272px' } : {}]"
-      >
-        <h5 v-if="!maybe" class="mb-4">
-          Would you like to receive notifications?
-        </h5>
-        <small v-if="!maybe">
-          You can always change this setting later in the
-          <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences"
-            >Preferences
-          </nuxt-link>
-        </small>
-        <div v-if="!maybe" class="actions mt-6 mb-4">
-          <button
-            v-ripple
-            class="secondary-btn mr-5"
-            @click="alert('Will be implemented shortly')"
-          >
-            Yes
-          </button>
-          <button
-            v-ripple
-            class="secondary-outlined-btn"
-            @click="showMaybeAndCollapse"
-          >
-            May be later
-          </button>
-        </div>
-        <h5 v-if="maybe" class="text-center mb-4">No Problem</h5>
-        <p v-if="maybe" class="text-center mb-4">
-          Tip: You can always change this setting later in the
-          <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences"
-            >Preferences
-          </nuxt-link>
-        </p>
-      </section>
-    </div>
+      <h5 v-if="!maybe" class="my-4">
+        Would you like to receive notifications?
+      </h5>
+      <div v-if="!maybe" class="actions my-3">
+        <button
+          v-ripple=""
+          class="secondary-btn mb-4 mx-2"
+          @click="alert('Will be implemented shortly')"
+        >
+          Yes
+        </button>
+        <button
+          v-ripple=""
+          class="secondary-outlined-btn mb-4 mx-2"
+          @click="showMaybeAndCollapse"
+        >
+          May be later
+        </button>
+      </div>
+      <p v-if="!maybe" class="mb-3">
+        You can always change this setting later in the
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences"
+          >Preferences
+        </nuxt-link>
+      </p>
+
+      <h5 v-if="maybe" class="text-center mb-4">No Problem</h5>
+      <p v-if="maybe" class="text-center mb-4">
+        Tip: You can always change this setting later in the
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences"
+          >Preferences
+        </nuxt-link>
+      </p>
+    </section>
     <section v-if="isContentLoading">
       <LoadingIcon />
     </section>
@@ -200,36 +193,28 @@ export default {
     transition: all 0.3s ease-in-out;
   }
 
-  .banner-container {
-    display: grid;
-    place-items: center;
-    height: calc(100vh - 112px);
-    transition: all 0.5s ease-in-out;
-    position: fixed;
-    background: transparent;
-    width: 100%;
+  .banner {
+    background-color: $card-background;
+    height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    .banner {
-      padding: $medium-unit $milli-unit;
-      background-color: lighten($segment-background, $darken-percentage);
-      height: 0;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      box-shadow: 0 0 0 100vh #0e0e18e6;
-      border-radius: $milli-unit;
-      margin: 0 $standard-unit;
+    p {
+      font-size: $standard-unit - $double-unit;
+    }
 
-      .actions {
-        text-align: center;
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      align-items: center;
 
-        button {
-          min-width: auto;
-
-          &:nth-child(1) {
-            width: 142px;
-          }
-        }
+      button {
+        min-width: auto;
+        width: 148px;
       }
     }
   }
