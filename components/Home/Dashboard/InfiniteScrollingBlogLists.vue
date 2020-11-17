@@ -130,34 +130,34 @@ export default {
       this.$router.push(path)
     },
     async like(blog, index) {
-      await this.$axios
-        .$post(endpoints.blog.like, {
-          blog_id: blog.id,
-        })
-        .then((response) => {
-          response.action === 'like'
-            ? this.blogs[index].totalLikes++
-            : this.blogs[index].totalLikes--
-          this.blogs[index].isLiked = !this.blogs[index].isLiked
-        })
-        .catch((e) => {
-          console.error(e)
-        })
+      try {
+        const action = await this.$axios
+          .$post(endpoints.blog.like, {
+            blog_id: blog.id,
+          })
+          .then(({ action }) => action)
+        action === 'like'
+          ? this.blogs[index].totalLikes++
+          : this.blogs[index].totalLikes--
+        this.blogs[index].isLiked = !this.blogs[index].isLiked
+      } catch (e) {
+        console.error(e)
+      }
     },
     comment(blog) {
       alert(
         `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
       )
     },
-    share(blog, index) {
+    async share(blog, index) {
       if (navigator.share) {
-        navigator
-          .share({
+        try {
+          await navigator.share({
             title: blog.title + '- Floracasy',
             text: blog.subtitle,
             url: navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id),
           })
-          .then(async () => {
+          try {
             await this.$axios
               .$post(endpoints.blog.share, {
                 blog_id: blog.id,
@@ -165,13 +165,12 @@ export default {
               .then(() => {
                 this.blogs[index].totalShares++
               })
-              .catch((e) => {
-                this.blogs[index].totalShares--
-                console.error(e)
-              })
-            console.log('Successful share')
-          })
-          .catch((error) => console.log('Error sharing:', error))
+          } catch (e) {
+            this.blogs[index].totalShares--
+          }
+        } catch (error) {
+          console.log('Error sharing:', error)
+        }
       } else {
         alert(
           'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
@@ -198,7 +197,6 @@ export default {
         }
       } catch (e) {
         $state.complete()
-        // $state.error()
       }
     },
   },
@@ -209,8 +207,6 @@ export default {
 @import 'assets/all-variables';
 
 .scrollable-blog-list {
-  //min-height: calc(100vh - 220px);
-
   article {
     .content {
       img {
