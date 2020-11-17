@@ -3,6 +3,12 @@ import * as secrets from '~/environmentalVariables'
 
 export default async ({ store }) => {
   if (process.client && store.state.authState) {
+    await store.dispatch('SocketHandler/updateSocketMessage', {
+      message: 'Connecting to Server...',
+      notificationType: 'info',
+      dismissible: true,
+    })
+
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
@@ -21,12 +27,6 @@ export default async ({ store }) => {
       [],
       connectionOptions
     )
-    await store.dispatch('SocketHandler/updateSocketMessage', {
-      message: 'Connecting to Server...',
-      notificationType: 'info',
-      dismissible: true,
-    })
-
     reconnectingSocket.onopen = async () => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connected',
@@ -63,7 +63,7 @@ export default async ({ store }) => {
       })
     }
 
-    reconnectingSocket.onclose = async (e) => {
+    reconnectingSocket.onclose = async () => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Disconnected. Please Refresh',
         notificationType: 'error',
