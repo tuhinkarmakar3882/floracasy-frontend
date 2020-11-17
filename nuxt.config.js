@@ -221,11 +221,6 @@ export default {
       config: {
         debug: true,
       },
-      cacheOptions: {
-        cacheId: Date.now().toString(),
-        directoryIndex: '/',
-        revision: Date.now().toString(),
-      },
       runtimeCaching: [
         {
           urlPattern: 'https://fonts.googleapis.com/.*',

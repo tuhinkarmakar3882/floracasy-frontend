@@ -8,12 +8,10 @@ export default async ({ store }) => {
       notificationType: 'info',
       dismissible: true,
     })
-    console.log(2)
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
     const endpoint = secrets.websocketUrl + notificationChannelId + '/'
-    console.log(2)
     const connectionOptions = {
       maxReconnectionDelay: 10000,
       minReconnectionDelay: 1000 + Math.random() * 4000,
@@ -22,7 +20,6 @@ export default async ({ store }) => {
       connectionTimeout: 4000,
       maxRetries: 100,
     }
-    console.log(3)
     const reconnectingSocket = new ReconnectingWebSocket(
       endpoint,
       [],
