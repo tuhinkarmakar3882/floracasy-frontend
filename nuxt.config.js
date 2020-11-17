@@ -216,7 +216,7 @@ export default {
       display: 'standalone',
     },
     workbox: {
-      precaching: [],
+      precaching: null,
       cleanupOutdatedCaches: true,
 
       offline: true,
