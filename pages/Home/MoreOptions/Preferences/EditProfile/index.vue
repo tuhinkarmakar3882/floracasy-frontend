@@ -6,18 +6,31 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <main class="px-6 my-8">
+      <main v-if="loadingProfile">
+        <div class="page-loading my-8">
+          <LoadingIcon />
+          <p class="my-8">Fetching data from server</p>
+        </div>
+      </main>
+
+      <main v-else class="px-6 my-8">
         <section class="display-picture">
-          <img
-            src="https://images.unsplash.com/photo-1605557626613-748697e50913?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
-            class="image-placeholder"
-          />
+          <div style="position: relative">
+            <img
+              v-ripple="'#ff0000'"
+              :src="user.photoURL"
+              alt="profile-picture"
+              class="image-placeholder"
+            />
+            <span class="overlay" />
+          </div>
           <span class="dp-icon mdi mdi-camera-plus" />
         </section>
         <section class="mt-8">
           <div class="material-form-field">
             <input
               id="designation"
+              v-model="designation"
               type="text"
               required
               name="text"
@@ -30,6 +43,7 @@
           <div class="material-form-field mt-2">
             <input
               id="about"
+              v-model="about"
               type="text"
               required
               name="text"
@@ -49,16 +63,40 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { mapGetters } from 'vuex'
+import LoadingIcon from '@/components/LoadingIcon'
 
 export default {
   name: 'EditProfile',
-  components: { AppFeel },
+  middleware: 'isAuthenticated',
+  components: { LoadingIcon, AppFeel },
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Edit Profile',
+      loadingProfile: true,
+      about: '',
+      designation: '',
     }
   },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
+  async mounted() {
+    const currentUser = await this.$store.getters['UserManagement/getUser']
+    if (!currentUser) {
+      this.loadingProfile = true
+      await this.$store.dispatch('UserManagement/fetchData')
+    }
+    this.about = this.user.about || ''
+    this.designation = this.user.designation || ''
+    this.loadingProfile = false
+  },
+
   head() {
     return {
       title: this.pageTitle,
@@ -87,30 +125,6 @@ $material-textInputPaddingTopBottom: $milli-unit;
   main {
     display: grid;
 
-    .display-picture {
-      position: relative;
-
-      img {
-        margin: auto;
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 50%;
-        position: relative;
-        box-shadow: $default-box-shadow;
-      }
-
-      .dp-icon {
-        position: absolute;
-        bottom: -$micro-unit;
-        left: calc(50% + 24px);
-        background: transparent;
-        font-size: $xx-large-unit;
-        color: $secondary-matte;
-        border-radius: 50%;
-      }
-    }
-
     input {
       border-radius: unset;
       color: unset;
@@ -125,6 +139,40 @@ $material-textInputPaddingTopBottom: $milli-unit;
         border-radius: unset;
         outline: unset;
         box-shadow: unset;
+      }
+    }
+
+    .display-picture {
+      position: relative;
+
+      img {
+        margin: auto;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        position: relative;
+        box-shadow: $default-box-shadow;
+      }
+      .overlay {
+        background: #0008;
+        height: 150px;
+        width: 150px;
+        display: block;
+        position: absolute;
+        top: 0;
+        border-radius: 50%;
+        left: calc(50% - 75px);
+      }
+
+      .dp-icon {
+        position: absolute;
+        bottom: -$micro-unit;
+        left: calc(50% + 24px);
+        background: transparent;
+        font-size: $xx-large-unit;
+        color: $secondary-highlight;
+        border-radius: 50%;
       }
     }
 
@@ -193,6 +241,11 @@ $material-textInputPaddingTopBottom: $milli-unit;
           }
         }
       }
+    }
+
+    .page-loading {
+      display: grid;
+      place-items: center;
     }
   }
 }

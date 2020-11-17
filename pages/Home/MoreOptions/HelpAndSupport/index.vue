@@ -19,6 +19,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'HelpAndSupport',
+  middleware: 'isAuthenticated',
   components: { AppFeel },
   data() {
     return {
