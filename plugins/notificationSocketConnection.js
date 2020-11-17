@@ -29,6 +29,11 @@ export default async ({ store }) => {
         notificationType: data.action,
         dismissible: true,
       })
+      try {
+        navigator.setAppBadge(1)
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     socket.onerror = (e) => {
