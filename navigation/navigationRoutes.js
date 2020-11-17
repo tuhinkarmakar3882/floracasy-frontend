@@ -35,7 +35,12 @@ export const navigationRoutes = {
       GoPremium: '/Home/MoreOptions/GoPremium',
       HelpAndSupport: '/Home/MoreOptions/HelpAndSupport',
       Payments: '/Home/MoreOptions/Payments',
-      Preferences: '/Home/MoreOptions/Preferences',
+      Preferences: {
+        index: '/Home/MoreOptions/Preferences',
+        EditProfile: {
+          index: '/Home/MoreOptions/Preferences/EditProfile',
+        },
+      },
       WriteAndEarn: '/Home/MoreOptions/WriteAndEarn',
     },
 
