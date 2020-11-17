@@ -233,7 +233,7 @@ export default {
         align-self: flex-start;
 
         .message {
-          color: $white;
+          color: #cacaca;
           font-family: $Raleway;
           font-size: $standard-unit;
         }
