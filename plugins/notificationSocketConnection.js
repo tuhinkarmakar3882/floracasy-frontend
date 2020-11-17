@@ -1,3 +1,4 @@
+import ReconnectingWebSocket from 'reconnecting-websocket'
 import * as secrets from '~/environmentalVariables'
 
 export default async ({ store }) => {
@@ -6,10 +7,27 @@ export default async ({ store }) => {
       'NotificationChannel/getNotificationChannelId'
     ]
     const endpoint = secrets.websocketUrl + notificationChannelId + '/'
+    const connectionOptions = {
+      maxReconnectionDelay: 10000,
+      minReconnectionDelay: 1000 + Math.random() * 4000,
+      reconnectionDelayGrowFactor: 1.3,
+      minUptime: 5000,
+      connectionTimeout: 4000,
+      maxRetries: 100,
+    }
 
-    const socket = new WebSocket(endpoint)
+    const reconnectingSocket = new ReconnectingWebSocket(
+      endpoint,
+      [],
+      connectionOptions
+    )
+    await store.dispatch('SocketHandler/updateSocketMessage', {
+      message: 'Connecting to Server...',
+      notificationType: 'info',
+      dismissible: true,
+    })
 
-    socket.onopen = async () => {
+    reconnectingSocket.onopen = async () => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connected',
         notificationType: 'success',
@@ -17,7 +35,7 @@ export default async ({ store }) => {
       })
     }
 
-    socket.onmessage = async (e) => {
+    reconnectingSocket.onmessage = async (e) => {
       const data = JSON.parse(e.data)
       await store.dispatch('BottomNavigation/updateNewContent', {
         position: 3,
@@ -29,6 +47,7 @@ export default async ({ store }) => {
         notificationType: data.action,
         dismissible: true,
       })
+      //  Todo Experimental
       try {
         navigator.setAppBadge(1)
       } catch (e) {
@@ -36,14 +55,17 @@ export default async ({ store }) => {
       }
     }
 
-    socket.onerror = (e) => {
-      console.log('error', e)
+    reconnectingSocket.onerror = async () => {
+      await store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Connection Lost. Reconnecting...',
+        notificationType: 'info',
+        dismissible: false,
+      })
     }
 
-    socket.onclose = async (e) => {
-      console.log('close', e)
+    reconnectingSocket.onclose = async (e) => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Connection Lost. Please Refresh.',
+        message: 'Disconnected. Please Refresh',
         notificationType: 'error',
         dismissible: false,
       })
