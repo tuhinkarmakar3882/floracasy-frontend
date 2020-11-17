@@ -11,10 +11,10 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  // client: true,
+  // server: true,
+  // },
 
   router: {
     middleware: 'auto-redirect',
@@ -216,6 +216,21 @@ export default {
       display: 'standalone',
     },
     workbox: {
+      precaching: [],
+      cleanupOutdatedCaches: true,
+
+      offline: true,
+      offlineStrategy: 'NetworkFirst',
+      offlinePage: null,
+
+      config: {
+        debug: true,
+      },
+      cacheOptions: {
+        cacheId: Date.now().toString(),
+        directoryIndex: '/',
+        revision: Date.now().toString(),
+      },
       runtimeCaching: [
         {
           urlPattern: 'https://fonts.googleapis.com/.*',
@@ -236,7 +251,6 @@ export default {
           strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
         },
       ],
-      cleanupOutdatedCaches: true,
     },
   },
 }
