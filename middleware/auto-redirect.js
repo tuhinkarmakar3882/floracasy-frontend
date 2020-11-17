@@ -5,7 +5,7 @@ export default function ({ route, redirect }) {
   if (modifiedFullPath !== route.fullPath) {
     if (process.client) {
       console.log('client...')
-      window.location = modifiedFullPath
+      redirect(modifiedFullPath)
     } else {
       console.log('server...')
       redirect(modifiedFullPath)
