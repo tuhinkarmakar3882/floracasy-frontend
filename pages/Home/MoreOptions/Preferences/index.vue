@@ -58,25 +58,26 @@ export default {
           name: 'Edit Profile',
           icon: 'mdi mdi-pencil',
           color: '#8FF2E1',
-          route: '/Home/MoreOptions/Preferences',
+          route:
+            navigationRoutes.Home.MoreOptions.Preferences.EditProfile.index,
         },
         {
           name: 'Set Notifications',
           icon: 'mdi mdi-bell',
           color: '#5dd75d',
-          route: '/Home/MoreOptions/Preferences',
+          route: navigationRoutes.Home.MoreOptions.Preferences.index,
         },
         {
           name: 'Who can Message',
           icon: 'mdi mdi-message',
           color: '#ABEDAB',
-          route: '/Home/MoreOptions/Preferences',
+          route: navigationRoutes.Home.MoreOptions.Preferences.index,
         },
         {
           name: 'Saved Blogs',
           icon: 'mdi mdi-bookmark',
           color: '#18e5e5',
-          route: '/Home/MoreOptions/Preferences',
+          route: navigationRoutes.Home.MoreOptions.Preferences.index,
         },
       ],
     }
@@ -84,13 +85,6 @@ export default {
   head() {
     return {
       title: this.pageTitle,
-      meta: [
-        {
-          // hid: 'description',
-          // name: 'description',
-          // content: 'My custom description',
-        },
-      ],
     }
   },
 }
