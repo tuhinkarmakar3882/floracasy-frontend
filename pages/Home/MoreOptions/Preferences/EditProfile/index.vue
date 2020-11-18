@@ -53,7 +53,7 @@
           </div>
         </section>
         <div class="text-center mt-8 pt-8">
-          <button class="primary-btn px-8 mt-4">Save</button>
+          <button v-ripple="" class="primary-btn px-8 mt-4">Save</button>
         </div>
       </main>
     </template>
