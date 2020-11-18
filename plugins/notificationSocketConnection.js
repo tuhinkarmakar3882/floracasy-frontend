@@ -20,11 +20,13 @@ export default async ({ store }) => {
       connectionTimeout: 4000,
       maxRetries: 100,
     }
-    const reconnectingSocket = new ReconnectingWebSocket(
-      endpoint,
-      [],
-      connectionOptions
-    )
+    // const reconnectingSocket = new ReconnectingWebSocket(
+    //   endpoint,
+    //   [],
+    //   connectionOptions
+    // )
+    const reconnectingSocket = new WebSocket(endpoint)
+
     reconnectingSocket.onopen = async (e) => {
       console.log(e)
       await store.dispatch('SocketHandler/updateSocketMessage', {
@@ -51,7 +53,7 @@ export default async ({ store }) => {
       try {
         navigator.setAppBadge(1)
       } catch (e) {
-        console.log(e)
+        console.log('huh', e)
       }
     }
 
