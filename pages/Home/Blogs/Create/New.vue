@@ -9,47 +9,51 @@
       {{ pageTitle }}
     </template>
     <template slot="main">
-      <!--      <transition-group mode="out-in" name="slide-fade">-->
-      <div v-if="step === 1" :key="0" class="steps-bounded px-4 mt-4">
+      <div v-if="step === 1" class="steps-bounded px-4 mt-4">
         <h5 class="heading-title mb-8">What is it about?</h5>
-        <div class="mt-8 mb-4 form-label-group">
-          <label for="blog-title">Enter the Blog Title</label>
+        <div class="material-form-field mt-8">
           <input
             id="blog-title"
             v-model="blogTitle"
             type="text"
-            placeholder="Enter the Blog Title"
             required
-            autofocus
+            name="text"
             autocomplete="off"
           />
+          <label class="material-form-field-label" for="blog-title">
+            Title
+          </label>
         </div>
-
-        <div class="my-6 form-label-group">
+        <div class="material-form-field mt-2">
           <input
             id="blog-subtitle"
             v-model="blogSubtitle"
             type="text"
-            placeholder="Enter the Blog Title"
             required
+            name="text"
             autocomplete="off"
           />
-          <label for="blog-subtitle">Enter the Blog Subtitle</label>
+          <label class="material-form-field-label" for="blog-subtitle">
+            Subtitle
+          </label>
         </div>
       </div>
-      <div v-else-if="step === 2" :key="1" class="steps-bounded px-4 mt-4">
+
+      <div v-else-if="step === 2" class="steps-bounded px-4 mt-4">
         <h5 class="heading-title mb-8">Add Details</h5>
 
-        <div class="mt-8 mb-4 form-label-group">
+        <div class="material-form-field mt-2">
           <input
             id="cover-image-url"
             v-model="coverImageUrl"
-            type="url"
-            placeholder="Enter the Blog Title"
+            type="text"
             required
+            name="text"
             autocomplete="off"
           />
-          <label for="cover-image-url">Enter the Cover Image URL</label>
+          <label class="material-form-field-label" for="cover-image-url">
+            Cover Photo URL
+          </label>
         </div>
 
         <div class="mt-8">
@@ -74,7 +78,8 @@
           </div>
         </div>
       </div>
-      <div v-else-if="step === 3" :key="2" class="steps-unbounded mt-4">
+
+      <div v-else-if="step === 3" class="steps-unbounded mt-4">
         <h5 class="heading-title mb-8">Write the Blog below</h5>
         <client-only>
           <div class="blog-body">
@@ -87,7 +92,7 @@
         </client-only>
       </div>
 
-      <div v-else-if="step === 4" :key="4" class="steps mt-4">
+      <div v-else-if="step === 4" class="steps mt-4">
         <h5 class="heading-title mb-8">Preview</h5>
         <section class="px-4 blog-body">
           <p class="mb-2">
@@ -128,8 +133,6 @@
           </article>
         </div>
       </div>
-      <!--      </transition-group>-->
-
       <section
         :key="'fixed'"
         class="py-5"
@@ -403,6 +406,38 @@ export default {
 
   .steps-unbounded {
     min-height: calc(100vh - 56px - 130px);
+
+    .blog-body {
+      blockquote,
+      ul,
+      ol,
+      hr,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        position: relative;
+        margin: $large-unit 0;
+      }
+
+      .quill-editor {
+        .ql-toolbar.ql-snow {
+          background-color: wheat !important;
+          box-shadow: $default-box-shadow !important;
+        }
+
+        .ql-container.ql-snow {
+          padding: 0 !important;
+        }
+
+        .ql-toolbar.ql-snow,
+        .ql-container.ql-snow {
+          border: none !important;
+        }
+      }
+    }
   }
 
   .progress-circle {
@@ -423,38 +458,6 @@ export default {
         height: $micro-unit + $double-unit;
         width: $micro-unit + $double-unit;
         background-color: $secondary-highlight;
-      }
-    }
-  }
-
-  .blog-body {
-    blockquote,
-    ul,
-    ol,
-    hr,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      position: relative;
-      margin: $large-unit 0;
-    }
-
-    .quill-editor {
-      .ql-toolbar.ql-snow {
-        background-color: wheat !important;
-        box-shadow: $default-box-shadow !important;
-      }
-
-      .ql-container.ql-snow {
-        padding: 0 !important;
-      }
-
-      .ql-toolbar.ql-snow,
-      .ql-container.ql-snow {
-        border: none !important;
       }
     }
   }
