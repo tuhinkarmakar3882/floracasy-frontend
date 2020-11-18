@@ -116,8 +116,11 @@
             class="mt-5 blog-intro-image"
             :src="coverImageUrl"
             :alt="blogTitle"
-            style="width: 100%; object-fit: cover; max-height: 210px"
+            style="width: 100%; object-fit: cover; max-height: 250px"
           />
+          <p class="my-4">
+            {{ blogSubtitle }}
+          </p>
         </section>
         <div class="blog-body">
           <article class="ql-snow">
