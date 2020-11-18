@@ -3,11 +3,11 @@ import * as secrets from '~/environmentalVariables'
 
 export default async ({ store }) => {
   if (process.client && store.state.authState) {
-    // await store.dispatch('SocketHandler/updateSocketMessage', {
-    //   message: 'Connecting to Server...',
-    //   notificationType: 'info',
-    //   dismissible: true,
-    // })
+    await store.dispatch('SocketHandler/updateSocketMessage', {
+      message: 'Connecting to Server...',
+      notificationType: 'info',
+      dismissible: true,
+    })
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
