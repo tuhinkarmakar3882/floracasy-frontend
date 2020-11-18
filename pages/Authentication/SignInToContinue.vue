@@ -69,6 +69,11 @@ export default {
 
   methods: {
     async signInWithPopup() {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: '',
+        notificationType: '',
+        dismissible: true,
+      })
       this.showLoader()
       this.updateInfo('Loading OAuth Provider')
 
@@ -129,7 +134,6 @@ export default {
 
       this.updateInfo('Welcome')
 
-      // await this.$router.replace(navigationRoutes.Home.DashBoard)
       window.location = navigationRoutes.Home.DashBoard
     },
 
@@ -140,6 +144,11 @@ export default {
       this.hideLoader()
       this.updateInfo('Checking...')
       localStorage.clear()
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Unable to Login. Please Refresh',
+        notificationType: 'error',
+        dismissible: false,
+      })
     },
 
     async saveAndApplyTokens(tokens) {

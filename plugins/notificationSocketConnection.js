@@ -18,17 +18,15 @@ export default async ({ store }) => {
       reconnectionDelayGrowFactor: 1.3,
       minUptime: 5000,
       connectionTimeout: 4000,
-      maxRetries: 100,
     }
+
     const reconnectingSocket = new ReconnectingWebSocket(
       endpoint,
       [],
       connectionOptions
     )
-    // const reconnectingSocket = new WebSocket(endpoint)
 
-    reconnectingSocket.onopen = async (e) => {
-      console.log(e)
+    reconnectingSocket.onopen = async () => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connected',
         notificationType: 'success',
@@ -37,7 +35,6 @@ export default async ({ store }) => {
     }
 
     reconnectingSocket.onmessage = async (e) => {
-      console.log(e)
       const data = JSON.parse(e.data)
       await store.dispatch('BottomNavigation/updateNewContent', {
         position: 3,
@@ -49,28 +46,20 @@ export default async ({ store }) => {
         notificationType: data.action,
         dismissible: true,
       })
-      //  Todo Experimental
-      try {
-        navigator.setAppBadge(1)
-      } catch (e) {
-        console.log('huh', e)
-      }
     }
 
-    reconnectingSocket.onerror = async (e) => {
-      console.log(e)
+    // reconnectingSocket.onerror = async (e) => {
+    //   await store.dispatch('SocketHandler/updateSocketMessage', {
+    //     message: 'Disconnected. Please Refresh',
+    //     notificationType: 'error',
+    //     dismissible: false,
+    //   })
+    // }
+
+    reconnectingSocket.onclose = async () => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connection Lost. Reconnecting...',
-        notificationType: 'info',
-        dismissible: false,
-      })
-    }
-
-    reconnectingSocket.onclose = async (e) => {
-      console.log(e)
-      await store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Disconnected. Please Refresh',
-        notificationType: 'error',
+        notificationType: 'reconnecting',
         dismissible: false,
       })
     }

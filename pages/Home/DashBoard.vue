@@ -63,7 +63,7 @@ export default {
 
   data() {
     return {
-      pageTitle: 'Welcome to Floracasy',
+      pageTitle: 'Dashboard',
       tabNumber: parseInt(this.$route.query.tabNumber) || 0,
       carouselItems: [
         {

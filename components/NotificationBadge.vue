@@ -30,6 +30,7 @@ export default {
   methods: {
     getIconFor(notificationType) {
       if (notificationType === 'info') return 'mdi-information'
+      if (notificationType === 'reconnecting') return 'mdi-signal-off'
       if (notificationType === 'warning') return 'mdi-alert'
       if (notificationType === 'success') return 'mdi-check-circle'
       if (notificationType === 'error') return 'mdi-alert-circle-outline'
@@ -37,7 +38,8 @@ export default {
       return 'mdi-bell'
     },
     getColorFor(notificationType) {
-      if (notificationType === 'info') return '#f5a049'
+      if (notificationType === 'info') return '#a6c52c'
+      if (notificationType === 'reconnecting') return '#ff8282'
       if (notificationType === 'warning') return '#eae500'
       if (notificationType === 'success') return '#67ea67'
       if (notificationType === 'error') return '#f77479'
