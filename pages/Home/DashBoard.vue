@@ -90,11 +90,7 @@ export default {
     }
   },
 
-  async mounted() {
-    await this.$store.dispatch('BottomNavigation/update', {
-      linkPosition: 0,
-    })
-  },
+  mounted() {},
 
   methods: {
     changeTab(newTabNumber) {
