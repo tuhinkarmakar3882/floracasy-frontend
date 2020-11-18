@@ -1,12 +1,15 @@
 <template>
   <main class="modal-style">
+    <NotificationBadge />
     <nuxt />
   </main>
 </template>
 
 <script>
+import NotificationBadge from '@/components/NotificationBadge'
 export default {
   name: 'Authentication',
+  components: { NotificationBadge },
 }
 </script>
 
