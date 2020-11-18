@@ -1,18 +1,20 @@
 <template>
-  <div
-    class="notification-badge"
-    :style="[{ height: socketMessage ? '56px' : 0 }]"
-  >
-    <span
-      v-if="socketMessage"
-      class="mdi mr-3"
-      :class="getIconFor(socketMessageType)"
-      :style="{ color: getColorFor(socketMessageType) }"
-    />
-    <p :style="{ color: getColorFor(socketMessageType) }">
-      {{ socketMessage }}
-    </p>
-  </div>
+  <client-only>
+    <div
+      class="notification-badge"
+      :style="[{ height: socketMessage ? '56px' : 0 }]"
+    >
+      <span
+        v-if="socketMessage"
+        class="mdi mr-3"
+        :class="getIconFor(socketMessageType)"
+        :style="{ color: getColorFor(socketMessageType) }"
+      />
+      <p :style="{ color: getColorFor(socketMessageType) }">
+        {{ socketMessage }}
+      </p>
+    </div>
+  </client-only>
 </template>
 <script>
 import { mapGetters } from 'vuex'
