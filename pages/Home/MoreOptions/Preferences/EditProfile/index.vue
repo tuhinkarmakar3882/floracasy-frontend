@@ -111,21 +111,24 @@ export default {
     async updateProfileData() {
       this.updateProfileDataLoading = true
       try {
-        await this.$axios.$post(
-          endpoints.profile_statistics.updateProfileData,
-          {
-            designation: this.designation,
-            about: this.about,
-          }
-        )
+        await this.$axios.$post(endpoints.profile_statistics.profileData, {
+          designation: this.designation,
+          about: this.about,
+        })
+        await this.$store.dispatch('UserManagement/setUserAbout', {
+          about: this.about,
+        })
+        await this.$store.dispatch('UserManagement/setUserDesignation', {
+          designation: this.designation,
+        })
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
           message: 'Profile Data Updated Successfully',
           notificationType: 'success',
           dismissible: true,
         })
-        // await this.$router.replace(
-        //   navigationRoutes.Home.MoreOptions.Preferences.index
-        // )
+        await this.$router.replace(
+          navigationRoutes.Home.MoreOptions.Preferences.index
+        )
       } catch (e) {
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
           message: 'Error while Updating... Try Again',
