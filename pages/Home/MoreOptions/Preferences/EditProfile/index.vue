@@ -53,7 +53,14 @@
           </div>
         </section>
         <div class="text-center mt-8 pt-8">
-          <button v-ripple="" class="primary-btn px-8 mt-4">Save</button>
+          <RippleButton
+            class="px-8 mt-4"
+            class-list="primary-btn"
+            :on-click="updateProfileData"
+            :loading="updateProfileDataLoading"
+          >
+            Save
+          </RippleButton>
         </div>
       </main>
     </template>
@@ -65,11 +72,13 @@ import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 import LoadingIcon from '@/components/LoadingIcon'
+import endpoints from '@/api/endpoints'
+import RippleButton from '@/components/global/RippleButton'
 
 export default {
   name: 'EditProfile',
   middleware: 'isAuthenticated',
-  components: { LoadingIcon, AppFeel },
+  components: { RippleButton, LoadingIcon, AppFeel },
   data() {
     return {
       navigationRoutes,
@@ -77,6 +86,7 @@ export default {
       loadingProfile: true,
       about: '',
       designation: '',
+      updateProfileDataLoading: false,
     }
   },
 
@@ -95,6 +105,36 @@ export default {
     this.about = this.user.about || ''
     this.designation = this.user.designation || ''
     this.loadingProfile = false
+  },
+
+  methods: {
+    async updateProfileData() {
+      this.updateProfileDataLoading = true
+      try {
+        await this.$axios.$post(
+          endpoints.profile_statistics.updateProfileData,
+          {
+            designation: this.designation,
+            about: this.about,
+          }
+        )
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Profile Data Updated Successfully',
+          notificationType: 'success',
+          dismissible: true,
+        })
+        // await this.$router.replace(
+        //   navigationRoutes.Home.MoreOptions.Preferences.index
+        // )
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Error while Updating... Try Again',
+          notificationType: 'error',
+          dismissible: true,
+        })
+      }
+      this.updateProfileDataLoading = false
+    },
   },
 
   head() {
@@ -124,6 +164,7 @@ export default {
         position: relative;
         box-shadow: $default-box-shadow;
       }
+
       .overlay {
         background: #0008;
         height: 150px;
