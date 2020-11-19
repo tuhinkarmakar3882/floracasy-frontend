@@ -18,6 +18,7 @@ export default async ({ store }) => {
       reconnectionDelayGrowFactor: 1.3,
       minUptime: 5000,
       connectionTimeout: 4000,
+      maxEnqueuedMessages: 50,
     }
 
     const reconnectingSocket = new ReconnectingWebSocket(
