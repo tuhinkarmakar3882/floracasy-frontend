@@ -42,7 +42,7 @@ const endpoints = {
   },
   profile_statistics: {
     detail: 'profile_statistics/detail/',
-    updateProfileData: 'profile_statistics/update_profile_data/',
+    profileData: 'profile_statistics/profile_data/',
   },
   reward_system: {
     test: 'reward_system/',
