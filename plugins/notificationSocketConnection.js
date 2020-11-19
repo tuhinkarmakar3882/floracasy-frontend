@@ -1,7 +1,7 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import * as secrets from '~/environmentalVariables'
 
-export default async ({ store }) => {
+export default async ({ store, $cookies }) => {
   if (process.client && store.state.authState) {
     await store.dispatch('SocketHandler/updateSocketMessage', {
       message: 'Connecting to Server...',
@@ -11,7 +11,12 @@ export default async ({ store }) => {
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
-    const endpoint = secrets.websocketUrl + notificationChannelId + '/'
+    const endpoint =
+      secrets.websocketUrl +
+      notificationChannelId +
+      '/?access=' +
+      $cookies.get('access')
+
     const connectionOptions = {
       maxReconnectionDelay: 10000,
       minReconnectionDelay: 1000 + Math.random() * 4000,
