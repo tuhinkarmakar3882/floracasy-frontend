@@ -157,16 +157,19 @@ export default {
       this.loadingProfile = false
       this.loadingRecentActivities = true
 
-      this.statisticsItem = await this.$axios
+      const data = await this.$axios
         .$get(endpoints.profile_statistics.detail, {
           params: { uid: this.$route.params.id },
         })
-        .then(({ details }) => details)
         .catch((error) => {
           console.error(error)
         })
 
+      this.statisticsItem = data.statistics
+
       this.otherUser = this.statisticsItem.user
+      this.otherUser.about = data.userData.about
+      this.otherUser.designation = data.userData.designation
 
       this.recentActivities = await this.$axios
         .$get(endpoints.blog.getBlogsByUid, {

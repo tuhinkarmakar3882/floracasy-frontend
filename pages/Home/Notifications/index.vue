@@ -67,7 +67,7 @@
             {{ notification.message }}
           </span>
           <br />
-          2 hr
+          {{ parse(notification.createdAt) }}
           <span class="dot" />
         </p>
       </div>
@@ -77,6 +77,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import utility from '@/utils/utility'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
@@ -89,6 +90,7 @@ export default {
 
   data() {
     return {
+      parse: utility.timeStringParser,
       navigationRoutes,
       showBanner: false,
       pageTitle: 'Notifications',

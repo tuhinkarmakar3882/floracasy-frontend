@@ -160,7 +160,7 @@ export default {
       .$get(endpoints.profile_statistics.detail, {
         params: { uid: this.user.uid },
       })
-      .then(({ details }) => details)
+      .then(({ statistics }) => statistics)
       .catch((error) => {
         console.error(error)
       })
