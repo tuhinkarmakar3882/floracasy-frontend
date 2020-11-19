@@ -6,7 +6,7 @@ export default async ({ store }) => {
     await store.dispatch('SocketHandler/updateSocketMessage', {
       message: 'Connecting to Server...',
       notificationType: 'info',
-      dismissible: true,
+      dismissible: false,
     })
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
