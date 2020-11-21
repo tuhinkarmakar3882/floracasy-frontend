@@ -152,7 +152,6 @@ export default {
       this.hasError = true
     }
     this.isContentLoading = false
-    navigator.setAppBadge(0)
   },
 
   methods: {
