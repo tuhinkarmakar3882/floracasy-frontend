@@ -2,9 +2,10 @@
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
-        <section v-ripple class="content px-4 pt-8 pb-6">
-          <p class="mb-2">
+        <section class="content px-4 pt-8 pb-6">
+          <p class="mb-2 top-line">
             <nuxt-link
+              v-ripple=""
               :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
               class="no-underline"
             >
@@ -12,6 +13,7 @@
             </nuxt-link>
             IN
             <nuxt-link
+              v-ripple=""
               :to="
                 navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
                   '{name}',
@@ -22,6 +24,7 @@
             >
               {{ blog.category.name }}
             </nuxt-link>
+            <i class="mdi mdi-dots-vertical mr-2 inline-block align-middle" />
           </p>
 
           <h5 @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)">
@@ -229,6 +232,24 @@ export default {
 
       small {
         color: $muted;
+      }
+
+      .top-line {
+        position: relative;
+
+        i {
+          position: absolute;
+          right: -$medium-unit;
+          font-size: $x-large-unit;
+          top: -($standard-unit + $single-unit);
+          height: 2 * $xx-large-unit;
+          width: 2 * $xx-large-unit;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          border-radius: 50%;
+          color: $secondary;
+        }
       }
     }
 
