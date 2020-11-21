@@ -32,7 +32,7 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
-import KeyPoint from '@/components/global/KeyPoint'
+import KeyPoint from '@/components/common/KeyPoint'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {

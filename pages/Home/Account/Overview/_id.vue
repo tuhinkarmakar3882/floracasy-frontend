@@ -59,46 +59,49 @@
         </section>
       </section>
 
-      <section v-if="!loadingRecentActivities" class="recent-activity">
+      <section class="recent-activity">
         <h4 class="heading-title">Recent Activities</h4>
 
-        <div v-if="recentActivities">
-          <section
-            v-for="activity in recentActivities"
-            :key="activity.id"
-            v-ripple
-            class="activity py-8 my-4"
-            @click="
-              $router.push(
-                navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
-              )
-            "
-          >
-            <div class="content">
-              <img :alt="activity.title" :src="activity.coverImage" />
-              <div class="data text-left">
-                <h6>{{ activity.title }}</h6>
-                <p>{{ activity.subtitle.substr(0, 30) }}...</p>
-                <small style="font-size: 13px">
-                  {{ parseTimeUsingMoment(activity.createdAt) }}</small
-                >
-              </div>
+        <section
+          v-for="activity in recentActivities"
+          :key="activity.id"
+          v-ripple
+          class="activity py-8 my-4"
+          @click="
+            $router.push(
+              navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+            )
+          "
+        >
+          <div class="content">
+            <img :alt="activity.title" :src="activity.coverImage" />
+            <div class="data text-left">
+              <h6>{{ activity.title }}</h6>
+              <p>{{ activity.subtitle.substr(0, 30) }}...</p>
+              <small style="font-size: 13px">
+                {{ parseTimeUsingMoment(activity.createdAt) }}</small
+              >
             </div>
-          </section>
-        </div>
-
-        <div v-else class="no-activity">
-          <p class="my-5">No Activities</p>
-        </div>
-      </section>
-
-      <section v-else class="recent-activity">
-        <h4 class="heading-title">Recent Activities</h4>
-
-        <section class="text-center my-8">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Recent Activities Data...</p>
+          </div>
         </section>
+
+        <client-only>
+          <infinite-loading @infinite="infiniteHandler">
+            <template slot="spinner">
+              <LoadingIcon class="mt-4 mb-6" />
+              <p>Loading Recent Activities Data...</p>
+            </template>
+            <template slot="error">
+              <p class="danger-light my-6">Network Error</p>
+            </template>
+            <template slot="no-more" />
+            <template slot="no-results">
+              <div class="no-activity">
+                <p class="my-5">It's Lonely Here...</p>
+              </div>
+            </template>
+          </infinite-loading>
+        </client-only>
       </section>
     </main>
   </div>
@@ -123,8 +126,7 @@ export default {
       pageTitle: 'Profile Details',
       loadingProfile: true,
       statisticsItem: null,
-      recentActivities: null,
-      loadingRecentActivities: null,
+      recentActivities: [],
       otherUser: null,
     }
   },
@@ -148,7 +150,6 @@ export default {
       await this.$router.replace(navigationRoutes.Home.Account.Details)
     } else {
       this.loadingProfile = false
-      this.loadingRecentActivities = true
 
       const data = await this.$axios
         .$get(endpoints.profile_statistics.detail, {
@@ -163,23 +164,30 @@ export default {
       this.otherUser = this.statisticsItem.user
       this.otherUser.about = data.userData.about
       this.otherUser.designation = data.userData.designation
-
-      this.recentActivities = await this.$axios
-        .$get(endpoints.blog.getBlogsByUid, {
-          params: { uid: this.$route.params.id },
-        })
-        .then(({ details }) => details)
-        .catch((error) => {
-          console.error(error)
-        })
-
-      this.loadingRecentActivities = false
     }
   },
 
   methods: {
     parseTimeUsingMoment,
+
+    async infiniteHandler($state) {
+      try {
+        const results = await this.$axios.$get(endpoints.blog.getBlogsByUid, {
+          params: { uid: this.$route.params.id, page: this.page },
+        })
+        if (results.length) {
+          this.page += 1
+          this.recentActivities.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      } catch (e) {
+        $state.complete()
+      }
+    },
   },
+
   head() {
     return {
       title: this.pageTitle,

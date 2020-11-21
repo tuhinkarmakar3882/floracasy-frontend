@@ -40,6 +40,8 @@ export const navigationRoutes = {
         EditProfile: {
           index: '/Home/MoreOptions/Preferences/EditProfile',
         },
+        NotificationSettings:
+          '/Home/MoreOptions/Preferences/NotificationSettings',
       },
       WriteAndEarn: '/Home/MoreOptions/WriteAndEarn',
     },

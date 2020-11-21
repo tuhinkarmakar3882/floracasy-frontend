@@ -892,8 +892,8 @@
 </template>
 
 <script>
-import KeyPoint from '@/components/global/KeyPoint'
-import RippleButton from '~/components/global/RippleButton'
+import KeyPoint from '@/components/common/KeyPoint'
+import RippleButton from '~/components/common/RippleButton'
 
 export default {
   name: 'HeroContent',

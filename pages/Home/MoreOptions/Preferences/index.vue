@@ -3,7 +3,7 @@
     class="preferences-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
   >
-    <template slot="app-bar-title"> {{ pageTitle }} </template>
+    <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
       <CustomListView>
@@ -26,12 +26,25 @@
             </p>
           </li>
         </template>
-
         <template slot="last-item">
-          <li v-ripple="'#f774795F'" class="px-4 py-3">
+          <li
+            v-ripple="'#5dd75d5F'"
+            class="px-4 py-2"
+            @click="switchState = !switchState"
+          >
             <p>
-              <span class="icon mdi mdi-delete" style="color: #f77479" />
-              <span class="option-name">Delete Account</span>
+              <span class="icon mdi mdi-bell" style="color: #5dd75d" />
+              <span class="option-name">Notification</span>
+              <span>
+                <SwitchButton :switch-state="switchState" />
+              </span>
+            </p>
+          </li>
+          <li v-ripple="'#ABEDAB5F'" class="px-4 py-2">
+            <p>
+              <span class="icon mdi mdi-message" style="color: #abedab" />
+              <span class="option-name">Who can Message</span>
+              <span class="mdi mdi-chevron-down arrow-go" />
             </p>
           </li>
         </template>
@@ -44,15 +57,17 @@
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import CustomListView from '@/components/Layout/CustomListView'
+import SwitchButton from '@/components/common/SwitchButton'
 
 export default {
   name: 'Preferences',
-  components: { CustomListView, AppFeel },
+  components: { SwitchButton, CustomListView, AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Preferences',
+      switchState: false,
       options: [
         {
           name: 'Edit Profile',
@@ -60,18 +75,6 @@ export default {
           color: '#8FF2E1',
           route:
             navigationRoutes.Home.MoreOptions.Preferences.EditProfile.index,
-        },
-        {
-          name: 'Set Notifications',
-          icon: 'mdi mdi-bell',
-          color: '#5dd75d',
-          route: navigationRoutes.Home.MoreOptions.Preferences.index,
-        },
-        {
-          name: 'Who can Message',
-          icon: 'mdi mdi-message',
-          color: '#ABEDAB',
-          route: navigationRoutes.Home.MoreOptions.Preferences.index,
         },
         {
           name: 'Saved Blogs',

@@ -115,7 +115,7 @@
           </h3>
           <small class="timestamp">
             <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parse(new Date()) }}
+            {{ parseTimeUsingMoment(new Date()) }}
           </small>
           <img
             class="mt-5 blog-intro-image"
@@ -193,7 +193,7 @@ import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
-import utility from '@/utils/utility'
+import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -246,7 +246,6 @@ export default {
         },
       },
       navigationRoutes,
-      parse: utility.parseTimeUsingMoment,
       noXSS: sanitizeHtml,
       step: 1,
       pageTitle: 'Create New Blog',
@@ -301,6 +300,8 @@ export default {
   },
 
   methods: {
+    parseTimeUsingMoment,
+
     goToNextStep() {
       this.step++
     },
