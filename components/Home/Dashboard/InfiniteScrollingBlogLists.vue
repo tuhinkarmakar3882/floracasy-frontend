@@ -157,9 +157,10 @@ export default {
         console.error(e)
       }
     },
-    comment(blog) {
-      console.log(
-        `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
+
+    async comment(blog) {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Comments.BlogId.replace('{BlogId}', blog.id)
       )
     },
     async share(blog, index) {
