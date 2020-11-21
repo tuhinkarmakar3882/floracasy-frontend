@@ -2,10 +2,9 @@
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
-        <section class="content px-4 pt-8 pb-6">
-          <p class="mb-2 top-line">
+        <section class="content pt-8">
+          <p v-ripple="" class="px-4 mb-2 top-line">
             <nuxt-link
-              v-ripple=""
               :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
               class="no-underline"
             >
@@ -13,7 +12,6 @@
             </nuxt-link>
             IN
             <nuxt-link
-              v-ripple=""
               :to="
                 navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
                   '{name}',
@@ -27,28 +25,28 @@
             <i class="mdi mdi-dots-vertical mr-2 inline-block align-middle" />
           </p>
 
-          <h5 @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)">
-            {{ blog.title }}
-          </h5>
-
-          <small class="timestamp mt-3">
-            <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parse(blog.createdAt) }}
-          </small>
-
-          <img
-            class="my-5"
-            :src="blog.coverImage"
-            :alt="blog.title"
+          <div
+            v-ripple=""
+            class="px-4 pb-6"
             @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
-          />
+          >
+            <h5>
+              {{ blog.title }}
+            </h5>
 
-          <p>
-            {{ blog.subtitle }}...
-            <nuxt-link :to="`/Home/Blogs/Details/${blog.id}`">
-              Read More
-            </nuxt-link>
-          </p>
+            <small v-ripple="" class="timestamp mt-3">
+              <span class="mdi mdi-clock-time-nine-outline" />
+              {{ parse(blog.createdAt) }}
+            </small>
+
+            <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
+            <p>
+              {{ blog.subtitle }}...
+              <nuxt-link v-ripple="" :to="`/Home/Blogs/Details/${blog.id}`">
+                Read More
+              </nuxt-link>
+            </p>
+          </div>
         </section>
 
         <section class="blog-actions px-4 pb-8">
@@ -158,7 +156,7 @@ export default {
       }
     },
     comment(blog) {
-      alert(
+      console.log(
         `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
       )
     },
@@ -185,7 +183,7 @@ export default {
           console.log('Error sharing:', error)
         }
       } else {
-        alert(
+        console.log(
           'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
         )
       }
@@ -239,7 +237,7 @@ export default {
 
         i {
           position: absolute;
-          right: -$standard-unit;
+          right: -$nano-unit;
           font-size: $x-large-unit - $double-unit;
           top: -$standard-unit;
           height: 2 * $xx-large-unit;
