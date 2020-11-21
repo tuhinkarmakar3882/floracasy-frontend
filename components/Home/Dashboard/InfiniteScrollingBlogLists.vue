@@ -193,14 +193,12 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const { results } = await this.$axios
-          .get(endpoints.blog.fetch, {
-            params: {
-              page: this.page,
-              category_name: this.category,
-            },
-          })
-          .then(({ data }) => data)
+        const { data: results } = await this.$axios.get(endpoints.blog.fetch, {
+          params: {
+            page: this.page,
+            category_name: this.category,
+          },
+        })
         if (results.length) {
           this.page += 1
           this.blogs.push(...results)
