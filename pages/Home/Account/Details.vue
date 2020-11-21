@@ -57,54 +57,67 @@
         </section>
       </section>
 
-      <section v-if="!loadingRecentActivities" class="recent-activity">
+      <section class="recent-activity">
         <h4 class="heading-title">Recent Activities</h4>
 
-        <div v-if="recentActivities">
-          <section
-            v-for="activity in recentActivities"
-            :key="activity.id"
-            v-ripple
-            class="activity py-8 my-4"
-            @click="
-              $router.push(
-                navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
-              )
-            "
-          >
-            <div class="content">
-              <img :alt="activity.title" :src="activity.coverImage" />
-              <div class="data text-left">
-                <h6>{{ activity.title }}</h6>
-                <p>{{ activity.subtitle.substr(0, 30) }}...</p>
-                <small style="font-size: 13px">
-                  {{ parseTimeUsingMoment(activity.createdAt) }}</small
-                >
-              </div>
+        <section
+          v-for="activity in recentActivities"
+          :key="activity.id"
+          v-ripple
+          class="activity py-8 my-4"
+          @click="
+            $router.push(
+              navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+            )
+          "
+        >
+          <div class="content">
+            <img :alt="activity.title" :src="activity.coverImage" />
+            <div class="data text-left">
+              <h6>{{ activity.title }}</h6>
+              <p>{{ activity.subtitle.substr(0, 30) }}...</p>
+              <small style="font-size: 13px">
+                {{ parseTimeUsingMoment(activity.createdAt) }}</small
+              >
             </div>
-          </section>
-        </div>
-
-        <div v-else class="no-activity">
-          <Logo style="width: 56px" />
-          <p class="my-5">It's Lonely Here...</p>
-          <button
-            v-ripple
-            class="secondary-outlined-btn"
-            @click="$router.push('/Home/Blogs/Create')"
-          >
-            Publish Your First Blog Now!
-          </button>
-        </div>
-      </section>
-
-      <section v-else class="recent-activity">
-        <h4 class="heading-title">Recent Activities</h4>
-
-        <section class="text-center my-8">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Recent Activities Data...</p>
+          </div>
         </section>
+
+        <client-only>
+          <infinite-loading @infinite="infiniteHandler">
+            <template slot="spinner">
+              <LoadingIcon class="mt-4 mb-6" />
+              <p>Loading Recent Activities Data...</p>
+            </template>
+            <template slot="error">
+              <p class="danger-light my-6">Network Error</p>
+            </template>
+            <template slot="no-more">
+              <div class="no-activity">
+                <button
+                  v-ripple
+                  class="secondary-outlined-btn"
+                  @click="$router.push('/Home/Blogs/Create')"
+                >
+                  Create More
+                </button>
+              </div>
+            </template>
+            <template slot="no-results">
+              <div class="no-activity">
+                <Logo style="width: 56px" />
+                <p class="my-5">It's Lonely Here...</p>
+                <button
+                  v-ripple
+                  class="secondary-outlined-btn"
+                  @click="$router.push('/Home/Blogs/Create')"
+                >
+                  Publish Your First Blog Now!
+                </button>
+              </div>
+            </template>
+          </infinite-loading>
+        </client-only>
       </section>
     </main>
   </div>
@@ -130,8 +143,8 @@ export default {
       pageTitle: 'Profile Details',
       loadingProfile: true,
       statisticsItem: null,
-      recentActivities: null,
-      loadingRecentActivities: null,
+      recentActivities: [],
+      page: 1,
     }
   },
 
@@ -153,8 +166,6 @@ export default {
     }
     this.loadingProfile = false
 
-    this.loadingRecentActivities = true
-
     this.statisticsItem = await this.$axios
       .$get(endpoints.profile_statistics.detail, {
         params: { uid: this.user.uid },
@@ -163,21 +174,26 @@ export default {
       .catch((error) => {
         console.error(error)
       })
-
-    this.recentActivities = await this.$axios
-      .$get(endpoints.blog.getBlogsByUid, {
-        params: { uid: this.user.uid },
-      })
-      .then(({ details }) => details)
-      .catch((error) => {
-        console.error(error)
-      })
-
-    this.loadingRecentActivities = false
   },
 
   methods: {
     parseTimeUsingMoment,
+    async infiniteHandler($state) {
+      try {
+        const results = await this.$axios.$get(endpoints.blog.getBlogsByUid, {
+          params: { uid: this.user.uid, page: this.page },
+        })
+        if (results.length) {
+          this.page += 1
+          this.recentActivities.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      } catch (e) {
+        $state.complete()
+      }
+    },
   },
 
   head() {
