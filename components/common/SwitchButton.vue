@@ -3,8 +3,8 @@
     <div
       class="switch-button"
       :style="[
-        { transform: switchState ? 'translateX(40px)' : 'translateX(4px)' },
-        { backgroundColor: switchState ? '#65db65' : '#ff8282' },
+        { transform: switchState ? 'translateX(32px)' : 'translateX(4px)' },
+        { backgroundColor: switchState ? '#6DD0BF' : '#9a9a9a' },
       ]"
     />
   </section>
@@ -25,7 +25,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$size: 36px;
+$size: 28px;
 main {
   .switch-container {
     position: relative;
