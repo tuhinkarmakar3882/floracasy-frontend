@@ -28,21 +28,24 @@
         </template>
         <template slot="last-item">
           <li
-            v-ripple="'#5dd75d5F'"
+            v-ripple="'#34b3345F'"
             class="px-4 py-2"
             @click="switchState = !switchState"
           >
             <p>
-              <span class="icon mdi mdi-bell" style="color: #5dd75d" />
+              <span class="icon mdi mdi-bell" style="color: #34b334" />
               <span class="option-name">Notification</span>
               <span>
-                <SwitchButton :switch-state="switchState" />
+                <SwitchButton
+                  :switch-state="switchState"
+                  active-color="#7ee809"
+                />
               </span>
             </p>
           </li>
-          <li v-ripple="'#ABEDAB5F'" class="px-4 py-2">
+          <li v-ripple="'#9c9aff5F'" class="px-4 py-2">
             <p>
-              <span class="icon mdi mdi-message" style="color: #abedab" />
+              <span class="icon mdi mdi-message" style="color: #9c9aff" />
               <span class="option-name">Who can Message</span>
               <span class="mdi mdi-chevron-down arrow-go" />
             </p>
@@ -72,14 +75,15 @@ export default {
         {
           name: 'Edit Profile',
           icon: 'mdi mdi-pencil',
-          color: '#8FF2E1',
+          color: '#6dd0bf',
           route:
             navigationRoutes.Home.MoreOptions.Preferences.EditProfile.index,
         },
         {
           name: 'Saved Blogs',
           icon: 'mdi mdi-bookmark',
-          color: '#18e5e5',
+          color: '#f5a049',
+
           route: navigationRoutes.Home.MoreOptions.Preferences.index,
         },
       ],
