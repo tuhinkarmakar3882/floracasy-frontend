@@ -42,9 +42,7 @@
             <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
             <p>
               {{ blog.subtitle }}...
-              <nuxt-link v-ripple="" :to="`/Home/Blogs/Details/${blog.id}`">
-                Read More
-              </nuxt-link>
+              <span class="secondary"> Read More </span>
             </p>
           </div>
         </section>
@@ -159,9 +157,10 @@ export default {
         console.error(e)
       }
     },
-    comment(blog) {
-      console.log(
-        `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
+
+    async comment(blog) {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Comments.BlogId.replace('{BlogId}', blog.id)
       )
     },
     async share(blog, index) {
@@ -195,14 +194,12 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const { results } = await this.$axios
-          .get(endpoints.blog.fetch, {
-            params: {
-              page: this.page,
-              category_name: this.category,
-            },
-          })
-          .then(({ data }) => data)
+        const { data: results } = await this.$axios.get(endpoints.blog.fetch, {
+          params: {
+            page: this.page,
+            category_name: this.category,
+          },
+        })
         if (results.length) {
           this.page += 1
           this.blogs.push(...results)

@@ -79,7 +79,7 @@ export default {
     const response = await $axios.$get(endpoints.blog.detail, {
       params: { id: params.id },
     })
-    return { blog: response.details }
+    return { blog: response }
   },
 
   data() {

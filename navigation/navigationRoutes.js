@@ -21,6 +21,9 @@ export const navigationRoutes = {
       CategoryWise: {
         Name: '/Home/Blogs/CategoryWise/{name}',
       },
+      Comments: {
+        BlogId: '/Home/Blogs/Comments/{BlogId}',
+      },
       Details: '/Home/Blogs/Details/{id}',
     },
 
