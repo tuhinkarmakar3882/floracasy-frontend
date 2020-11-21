@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       pageTitle: 'Messages',
-      parse: utility.timeStringParser,
+      parse: utility.parseTimeUsingMoment,
       messageThreads: [
         {
           name: 'Alice Milli',

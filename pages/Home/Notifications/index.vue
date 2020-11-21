@@ -90,7 +90,7 @@ export default {
 
   data() {
     return {
-      parse: utility.timeStringParser,
+      parse: utility.parseTimeUsingMoment,
       navigationRoutes,
       showBanner: false,
       pageTitle: 'Notifications',
