@@ -239,9 +239,9 @@ export default {
 
         i {
           position: absolute;
-          right: -$medium-unit;
-          font-size: $x-large-unit;
-          top: -($standard-unit + $single-unit);
+          right: -$standard-unit;
+          font-size: $x-large-unit - $double-unit;
+          top: -$standard-unit;
           height: 2 * $xx-large-unit;
           width: 2 * $xx-large-unit;
           display: flex;
