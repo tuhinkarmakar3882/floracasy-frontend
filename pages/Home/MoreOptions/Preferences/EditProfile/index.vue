@@ -73,7 +73,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import RippleButton from '@/components/global/RippleButton'
+import RippleButton from '@/components/common/RippleButton'
 
 export default {
   name: 'EditProfile',

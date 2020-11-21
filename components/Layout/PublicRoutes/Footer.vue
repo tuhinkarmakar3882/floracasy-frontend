@@ -187,7 +187,7 @@
 </template>
 
 <script lang="js">
-import RippleButton from "@/components/global/RippleButton";
+import RippleButton from "@/components/common/RippleButton";
 export default {
   name: 'Footer',
   components: {RippleButton},

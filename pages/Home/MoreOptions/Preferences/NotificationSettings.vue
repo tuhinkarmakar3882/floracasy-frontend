@@ -7,17 +7,9 @@
 
     <template slot="main">
       <main>
-        <section class="switch-container" @click="switchState = !switchState">
-          <div
-            class="switch-button"
-            :style="[
-              {
-                transform: switchState ? 'translateX(40px)' : 'translateX(4px)',
-              },
-              { backgroundColor: switchState ? '#65db65' : '#ff8282' },
-            ]"
-          />
-        </section>
+        <div @click="switchState = !switchState">
+          <SwitchButton :switch-state="switchState" />
+        </div>
       </main>
     </template>
   </AppFeel>
@@ -26,10 +18,12 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import SwitchButton from '@/components/common/SwitchButton'
 
 export default {
   name: 'NotificationSettings',
-  components: { AppFeel },
+  components: { SwitchButton, AppFeel },
+
   data() {
     return {
       navigationRoutes,
@@ -37,6 +31,7 @@ export default {
       switchState: false,
     }
   },
+
   head() {
     return {
       title: this.pageTitle,
@@ -44,33 +39,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-.notification-settings-page {
-  main {
-    padding: 1rem;
-    $size: 36px;
-
-    .switch-container {
-      position: relative;
-      height: $size;
-      width: 2 * $size;
-      border-radius: 50px;
-      background-color: #33404e;
-      box-shadow: $default-box-shadow;
-
-      .switch-button {
-        position: absolute;
-        top: $nano-unit;
-        height: $size - $micro-unit;
-        width: $size - $micro-unit;
-        border-radius: 50px;
-        box-shadow: $default-box-shadow;
-        transition: all 250ms ease-in-out;
-      }
-    }
-  }
-}
-</style>

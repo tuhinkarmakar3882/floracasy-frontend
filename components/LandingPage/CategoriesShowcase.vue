@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import RippleButton from '@/components/global/RippleButton'
+import RippleButton from '@/components/common/RippleButton'
 import endpoints from '@/api/endpoints'
 
 export default {
