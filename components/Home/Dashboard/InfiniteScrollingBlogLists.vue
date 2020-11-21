@@ -95,7 +95,6 @@
 import endpoints from '@/api/endpoints'
 import utility from '@/utils/utility'
 import ClientOnly from 'vue-client-only'
-import InfiniteLoading from 'vue-infinite-loading'
 import LoadingIcon from '@/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -104,7 +103,6 @@ export default {
   components: {
     LoadingIcon,
     ClientOnly,
-    InfiniteLoading,
   },
   props: {
     category: {
