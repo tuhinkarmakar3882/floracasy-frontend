@@ -65,7 +65,8 @@ export default {
           name: 'Set Notifications',
           icon: 'mdi mdi-bell',
           color: '#5dd75d',
-          route: navigationRoutes.Home.MoreOptions.Preferences.index,
+          route:
+            navigationRoutes.Home.MoreOptions.Preferences.NotificationSettings,
         },
         {
           name: 'Who can Message',
