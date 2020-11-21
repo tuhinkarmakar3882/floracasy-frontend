@@ -42,9 +42,7 @@
             <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
             <p>
               {{ blog.subtitle }}...
-              <nuxt-link v-ripple="" :to="`/Home/Blogs/Details/${blog.id}`">
-                Read More
-              </nuxt-link>
+              <span class="secondary"> Read More </span>
             </p>
           </div>
         </section>
