@@ -132,7 +132,7 @@ export default {
       statisticsItem: null,
       recentActivities: null,
       loadingRecentActivities: null,
-      parse: utility.timeStringParser,
+      parse: utility.parseTimeUsingMoment,
     }
   },
 
@@ -273,13 +273,13 @@ export default {
 
     .content {
       display: grid;
-      grid-template-columns: 1fr 3fr;
+      grid-template-columns: 84px calc(95vw - 84px);
       grid-column-gap: 1rem;
-      place-items: center;
+      align-items: center;
 
       img {
-        height: 100px;
-        width: 100%;
+        height: 84px;
+        width: 84px;
         object-fit: cover;
         border-radius: 50%;
       }
