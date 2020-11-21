@@ -4,7 +4,7 @@
       class="switch-button"
       :style="[
         { transform: switchState ? 'translateX(32px)' : 'translateX(4px)' },
-        { backgroundColor: switchState ? '#6DD0BF' : '#9a9a9a' },
+        { backgroundColor: switchState ? activeColor : '#9a9a9a' },
       ]"
     />
   </section>
@@ -17,6 +17,10 @@ export default {
     switchState: {
       type: Boolean,
       required: true,
+    },
+    activeColor: {
+      type: String,
+      default: '#6DD0BF',
     },
   },
 }

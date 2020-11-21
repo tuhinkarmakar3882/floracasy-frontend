@@ -10,7 +10,7 @@
             >
               {{ blog.author.displayName }}
             </nuxt-link>
-            IN
+            <strong>IN</strong>
             <nuxt-link
               :to="
                 navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
