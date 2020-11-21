@@ -17,7 +17,7 @@
           <div class="basic-details">
             <p class="name">{{ otherUser.displayName }}</p>
             <p v-if="otherUser.designation" class="designation">
-              {{ otherUser.designation }}
+              <em>{{ otherUser.designation }}</em>
             </p>
           </div>
         </div>

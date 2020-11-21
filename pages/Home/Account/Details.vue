@@ -13,7 +13,7 @@
           <div class="basic-details">
             <p class="name">{{ user.displayName }}</p>
             <p class="designation">
-              {{ user.designation || 'Designation Not Set' }}
+              <em>{{ user.designation || 'Designation Not Set' }}</em>
             </p>
           </div>
         </div>
@@ -44,9 +44,7 @@
         </div>
 
         <section class="other-info">
-          <p class="about text-center">
-            {{ user.about || 'About Not Set' }}
-          </p>
+          <p class="about text-center">{{ user.about || 'About Not Set' }}</p>
         </section>
 
         <section class="actions">
