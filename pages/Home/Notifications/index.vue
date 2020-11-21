@@ -44,12 +44,6 @@
         </nuxt-link>
       </p>
     </section>
-    <section v-if="isContentLoading">
-      <LoadingIcon />
-    </section>
-    <section v-else-if="hasError">
-      <p class="text-center">No Notifications are Available.</p>
-    </section>
     <section class="notifications">
       <div
         v-for="notification in notifications"
@@ -72,6 +66,24 @@
         </p>
       </div>
     </section>
+
+    <client-only>
+      <infinite-loading @infinite="infiniteHandler">
+        <template slot="spinner">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p>Loading Recent Activities Data...</p>
+        </template>
+        <template slot="error">
+          <p class="danger-light my-6">Network Error</p>
+        </template>
+        <template slot="no-more">
+          <p class="my-4">That's all</p>
+        </template>
+        <template slot="no-results">
+          <p class="my-4">That's all</p>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
@@ -91,11 +103,10 @@ export default {
   data() {
     return {
       navigationRoutes,
-      showBanner: false,
       pageTitle: 'Notifications',
-      isContentLoading: true,
-      notifications: null,
-      hasError: false,
+      notifications: [],
+      page: 1,
+      showBanner: false,
       maybe: false,
       computedHeight: 0,
     }
@@ -115,8 +126,6 @@ export default {
   },
 
   async mounted() {
-    this.isContentLoading = true
-    this.hasError = false
     this.initHeight()
 
     const hideNotificationConsent = localStorage.getItem(
@@ -134,22 +143,7 @@ export default {
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
     })
-    const currentUser = await this.$store.getters['UserManagement/getUser']
-    if (!currentUser) {
-      await this.$store.dispatch('UserManagement/fetchData')
-    }
-    try {
-      this.notifications = await this.$axios
-        .$get(endpoints.notification_system.getNotificationsByUid, {
-          params: {
-            uid: this.user.uid,
-          },
-        })
-        .then(({ details }) => details)
-    } catch (e) {
-      this.notifications = null
-      this.hasError = true
-    }
+
     this.isContentLoading = false
   },
 
@@ -179,6 +173,34 @@ export default {
       this.$refs['banner-block'].style.visibility = null
       this.$refs['banner-block'].style.display = null
       this.$refs['banner-block'].style.height = 0
+    },
+
+    async infiniteHandler($state) {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
+
+      try {
+        const results = await this.$axios.$get(
+          endpoints.notification_system.getNotificationsByUid,
+          {
+            params: {
+              page: this.page,
+              uid: this.user.uid,
+            },
+          }
+        )
+        if (results.length) {
+          this.page += 1
+          this.notifications.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      } catch (e) {
+        $state.complete()
+      }
     },
   },
 
