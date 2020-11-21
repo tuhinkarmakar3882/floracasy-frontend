@@ -67,7 +67,7 @@
             {{ notification.message }}
           </span>
           <br />
-          {{ parse(notification.createdAt) }}
+          {{ parseTimeUsingMoment(notification.createdAt) }}
           <span class="dot" />
         </p>
       </div>
@@ -77,10 +77,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import utility from '@/utils/utility'
+import { parseTimeUsingMoment } from '@/utils/utility'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
-import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'Notifications',
@@ -90,7 +90,6 @@ export default {
 
   data() {
     return {
-      parse: utility.parseTimeUsingMoment,
       navigationRoutes,
       showBanner: false,
       pageTitle: 'Notifications',
@@ -155,6 +154,8 @@ export default {
   },
 
   methods: {
+    parseTimeUsingMoment,
+
     showMaybeAndCollapse() {
       this.maybe = true
 
