@@ -90,7 +90,7 @@ export default {
 
   data() {
     return {
-      parse: utility.timeStringParser,
+      parse: utility.parseTimeUsingMoment,
       navigationRoutes,
       showBanner: false,
       pageTitle: 'Notifications',
@@ -152,7 +152,6 @@ export default {
       this.hasError = true
     }
     this.isContentLoading = false
-    navigator.setAppBadge(0)
   },
 
   methods: {

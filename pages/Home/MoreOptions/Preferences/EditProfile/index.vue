@@ -52,9 +52,9 @@
             <label class="material-form-field-label" for="about"> About</label>
           </div>
         </section>
-        <div class="text-center mt-8 pt-8">
+        <div class="text-center mt-8">
           <RippleButton
-            class="px-8 mt-4"
+            class="px-8 mt-2"
             class-list="primary-btn"
             :on-click="updateProfileData"
             :loading="updateProfileDataLoading"

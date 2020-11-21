@@ -6,9 +6,27 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <main class="px-6 my-8">
-        <h1>This is my Super duper Help and Support Page</h1>
-      </main>
+      <CustomListView>
+        <template slot="list-items">
+          <li
+            v-for="(option, index) in options"
+            :key="index"
+            v-ripple="`${option.color}5F`"
+            class="px-4 py-2"
+            @click="$router.push(option.route)"
+          >
+            <p>
+              <span
+                class="icon"
+                :class="option.icon"
+                :style="{ color: option.color }"
+              />
+              <span class="option-name">{{ option.name }}</span>
+              <span class="mdi mdi-chevron-right arrow-go" />
+            </p>
+          </li>
+        </template>
+      </CustomListView>
     </template>
   </AppFeel>
 </template>
@@ -16,15 +34,48 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import CustomListView from '@/components/Layout/CustomListView'
 
 export default {
   name: 'HelpAndSupport',
   middleware: 'isAuthenticated',
-  components: { AppFeel },
+  components: { CustomListView, AppFeel },
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Help And Support',
+      options: [
+        {
+          name: 'Report a Problem',
+          icon: 'mdi mdi-pencil-circle-outline',
+          color: '#6DD0BF',
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+        },
+        {
+          name: 'View Ticket Status',
+          icon: 'mdi mdi-currency-usd',
+          color: '#4fca4f',
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+        },
+        {
+          name: 'Explore Popular Topics',
+          icon: 'mdi mdi-currency-usd',
+          color: '#4fca4f',
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+        },
+        {
+          name: 'Privacy & Security',
+          icon: 'mdi mdi-currency-usd',
+          color: '#4fca4f',
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+        },
+        {
+          name: 'Write a Feedback',
+          icon: 'mdi mdi-currency-usd',
+          color: '#4fca4f',
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+        },
+      ],
     }
   },
 

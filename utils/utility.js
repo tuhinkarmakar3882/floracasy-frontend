@@ -1,8 +1,11 @@
 import moment from 'moment'
 
 const utility = {
-  timeStringParser(timeString) {
+  parseTimeUsingMoment(timeString) {
     return moment(timeString).fromNow()
+  },
+  pareTimeUsingStandardLibrary(timeString) {
+    return new Date(timeString)
   },
   convertIntoMilliseconds(duration) {
     const years = duration?.years ? duration?.years : 0

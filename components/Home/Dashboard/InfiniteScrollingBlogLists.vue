@@ -114,7 +114,7 @@ export default {
     return {
       navigationRoutes,
       blogs: [],
-      parse: utility.timeStringParser,
+      parse: utility.pareTimeUsingStandardLibrary,
       page: 1,
     }
   },

@@ -246,7 +246,7 @@ export default {
         },
       },
       navigationRoutes,
-      parse: utility.timeStringParser,
+      parse: utility.parseTimeUsingMoment,
       noXSS: sanitizeHtml,
       step: 1,
       pageTitle: 'Create New Blog',

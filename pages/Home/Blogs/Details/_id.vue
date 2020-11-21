@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       navigationRoutes,
-      parse: utility.timeStringParser,
+      parse: utility.pareTimeUsingStandardLibrary,
       noXSS: sanitizeHtml,
       sanitizationConfig: {
         allowedTags: [

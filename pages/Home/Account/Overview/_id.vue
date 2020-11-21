@@ -126,7 +126,7 @@ export default {
       recentActivities: null,
       loadingRecentActivities: null,
       otherUser: null,
-      parse: utility.timeStringParser,
+      parse: utility.parseTimeUsingMoment,
     }
   },
 
@@ -274,13 +274,13 @@ export default {
 
     .content {
       display: grid;
-      grid-template-columns: 1fr 3fr;
+      grid-template-columns: 84px calc(95vw - 84px);
       grid-column-gap: 1rem;
-      place-items: center;
+      align-items: center;
 
       img {
         height: 84px;
-        width: 100%;
+        width: 84px;
         object-fit: cover;
         border-radius: 50%;
       }
