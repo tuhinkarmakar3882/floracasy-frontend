@@ -26,7 +26,7 @@
       </h3>
       <small class="timestamp">
         <span class="mdi mdi-clock-time-nine-outline" />
-        {{ parse(blog.createdAt) }}
+        {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
       </small>
 
       <img
@@ -62,7 +62,7 @@
 import sanitizeHtml from 'sanitize-html'
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import utility from '@/utils/utility'
+import { parseTimeUsingStandardLibrary } from '@/utils/utility'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'highlight.js/styles/tomorrow.css'
@@ -85,7 +85,6 @@ export default {
   data() {
     return {
       navigationRoutes,
-      parse: utility.pareTimeUsingStandardLibrary,
       noXSS: sanitizeHtml,
       sanitizationConfig: {
         allowedTags: [
@@ -195,6 +194,10 @@ export default {
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
+  },
+
+  methods: {
+    parseTimeUsingStandardLibrary,
   },
 
   head() {

@@ -80,7 +80,7 @@
                 <h6>{{ activity.title }}</h6>
                 <p>{{ activity.subtitle.substr(0, 30) }}...</p>
                 <small style="font-size: 13px">
-                  {{ parse(activity.createdAt) }}</small
+                  {{ parseTimeUsingMoment(activity.createdAt) }}</small
                 >
               </div>
             </div>
@@ -109,7 +109,7 @@ import { mapGetters } from 'vuex'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import utility from '~/utils/utility'
+import { parseTimeUsingMoment } from '~/utils/utility'
 
 export default {
   name: 'Overview',
@@ -126,13 +126,6 @@ export default {
       recentActivities: null,
       loadingRecentActivities: null,
       otherUser: null,
-      parse: utility.parseTimeUsingMoment,
-    }
-  },
-
-  head() {
-    return {
-      title: this.pageTitle,
     }
   },
 
@@ -181,6 +174,15 @@ export default {
         })
 
       this.loadingRecentActivities = false
+    }
+  },
+
+  methods: {
+    parseTimeUsingMoment,
+  },
+  head() {
+    return {
+      title: this.pageTitle,
     }
   },
 }

@@ -2,8 +2,8 @@
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
-        <section v-ripple class="content px-4 pt-8 pb-6">
-          <p class="mb-2">
+        <section class="content pt-8">
+          <p v-ripple="" class="px-4 mb-2 top-line">
             <nuxt-link
               :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
               class="no-underline"
@@ -22,30 +22,31 @@
             >
               {{ blog.category.name }}
             </nuxt-link>
+            <i class="mdi mdi-dots-vertical mr-2 inline-block align-middle" />
           </p>
 
-          <h5 @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)">
-            {{ blog.title }}
-          </h5>
-
-          <small class="timestamp mt-3">
-            <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parse(blog.createdAt) }}
-          </small>
-
-          <img
-            class="my-5"
-            :src="blog.coverImage"
-            :alt="blog.title"
+          <div
+            v-ripple=""
+            class="px-4 pb-6"
             @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
-          />
+          >
+            <h5>
+              {{ blog.title }}
+            </h5>
 
-          <p>
-            {{ blog.subtitle }}...
-            <nuxt-link :to="`/Home/Blogs/Details/${blog.id}`">
-              Read More
-            </nuxt-link>
-          </p>
+            <small v-ripple="" class="timestamp mt-3">
+              <span class="mdi mdi-clock-time-nine-outline" />
+              {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
+            </small>
+
+            <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
+            <p>
+              {{ blog.subtitle }}...
+              <nuxt-link v-ripple="" :to="`/Home/Blogs/Details/${blog.id}`">
+                Read More
+              </nuxt-link>
+            </p>
+          </div>
         </section>
 
         <section class="blog-actions px-4 pb-8">
@@ -55,19 +56,19 @@
               :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
             />
             <span class="value inline-block align-middle">
-              {{ blog.totalLikes }}
+              {{ shorten(blog.totalLikes) }}
             </span>
           </div>
           <div v-ripple class="comment" @click="comment(blog)">
             <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
             <span class="value inline-block align-middle">
-              {{ blog.totalComments }}
+              {{ shorten(blog.totalComments) }}
             </span>
           </div>
           <div v-ripple class="share" @click="share(blog, index)">
             <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
             <span class="value inline-block align-middle">
-              {{ blog.totalShares }}
+              {{ shorten(blog.totalShares) }}
             </span>
           </div>
         </section>
@@ -93,9 +94,10 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import utility from '@/utils/utility'
+import { shorten, parseTimeUsingStandardLibrary } from '@/utils/utility'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/LoadingIcon'
+
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
@@ -114,7 +116,6 @@ export default {
     return {
       navigationRoutes,
       blogs: [],
-      parse: utility.pareTimeUsingStandardLibrary,
       page: 1,
     }
   },
@@ -136,9 +137,13 @@ export default {
   mounted() {},
 
   methods: {
+    parseTimeUsingStandardLibrary,
+    shorten,
+
     navigateTo(path) {
       this.$router.push(path)
     },
+
     async like(blog, index) {
       try {
         const action = await this.$axios
@@ -155,7 +160,7 @@ export default {
       }
     },
     comment(blog) {
-      alert(
+      console.log(
         `Hmmm... So now you want to comment on ${blog.title}. Wasn't just liking a post satisfactory? The Dev is just overwhelmed by this. Buy him a Chocolate`
       )
     },
@@ -182,7 +187,7 @@ export default {
           console.log('Error sharing:', error)
         }
       } else {
-        alert(
+        console.log(
           'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
         )
       }
@@ -229,6 +234,24 @@ export default {
 
       small {
         color: $muted;
+      }
+
+      .top-line {
+        position: relative;
+
+        i {
+          position: absolute;
+          right: -$nano-unit;
+          font-size: $x-large-unit - $double-unit;
+          top: -$standard-unit;
+          height: 2 * $xx-large-unit;
+          width: 2 * $xx-large-unit;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          border-radius: 50%;
+          color: $secondary;
+        }
       }
     }
 

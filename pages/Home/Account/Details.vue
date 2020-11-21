@@ -78,7 +78,7 @@
                 <h6>{{ activity.title }}</h6>
                 <p>{{ activity.subtitle.substr(0, 30) }}...</p>
                 <small style="font-size: 13px">
-                  {{ parse(activity.createdAt) }}</small
+                  {{ parseTimeUsingMoment(activity.createdAt) }}</small
                 >
               </div>
             </div>
@@ -116,7 +116,7 @@ import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/LoadingIcon'
 import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import utility from '~/utils/utility'
+import { parseTimeUsingMoment } from '~/utils/utility'
 
 export default {
   name: 'Details',
@@ -132,7 +132,6 @@ export default {
       statisticsItem: null,
       recentActivities: null,
       loadingRecentActivities: null,
-      parse: utility.parseTimeUsingMoment,
     }
   },
 
@@ -175,6 +174,10 @@ export default {
       })
 
     this.loadingRecentActivities = false
+  },
+
+  methods: {
+    parseTimeUsingMoment,
   },
 
   head() {

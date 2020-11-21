@@ -15,7 +15,7 @@
           </p>
           <small class="time-stamp">
             <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parse(messageThread.updatedAt) }}
+            {{ parseTimeUsingMoment(messageThread.updatedAt) }}
           </small>
         </section>
       </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import utility from '@/utils/utility'
+import { parseTimeUsingMoment } from '@/utils/utility'
 
 export default {
   name: 'Messages',
@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       pageTitle: 'Messages',
-      parse: utility.parseTimeUsingMoment,
       messageThreads: [
         {
           name: 'Alice Milli',
@@ -234,6 +233,10 @@ export default {
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
+  },
+
+  methods: {
+    parseTimeUsingMoment,
   },
 
   head() {
