@@ -36,7 +36,7 @@
 
             <small v-ripple="" class="timestamp mt-3">
               <span class="mdi mdi-clock-time-nine-outline" />
-              {{ parse(blog.createdAt) }}
+              {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
             </small>
 
             <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
@@ -56,19 +56,19 @@
               :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
             />
             <span class="value inline-block align-middle">
-              {{ blog.totalLikes }}
+              {{ shorten(blog.totalLikes) }}
             </span>
           </div>
           <div v-ripple class="comment" @click="comment(blog)">
             <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
             <span class="value inline-block align-middle">
-              {{ blog.totalComments }}
+              {{ shorten(blog.totalComments) }}
             </span>
           </div>
           <div v-ripple class="share" @click="share(blog, index)">
             <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
             <span class="value inline-block align-middle">
-              {{ blog.totalShares }}
+              {{ shorten(blog.totalShares) }}
             </span>
           </div>
         </section>
@@ -94,9 +94,10 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import utility from '@/utils/utility'
+import { shorten, parseTimeUsingStandardLibrary } from '@/utils/utility'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/LoadingIcon'
+
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
@@ -115,7 +116,6 @@ export default {
     return {
       navigationRoutes,
       blogs: [],
-      parse: utility.pareTimeUsingStandardLibrary,
       page: 1,
     }
   },
@@ -137,9 +137,13 @@ export default {
   mounted() {},
 
   methods: {
+    parseTimeUsingStandardLibrary,
+    shorten,
+
     navigateTo(path) {
       this.$router.push(path)
     },
+
     async like(blog, index) {
       try {
         const action = await this.$axios
