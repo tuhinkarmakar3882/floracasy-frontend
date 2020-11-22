@@ -23,7 +23,7 @@ const endpoints = {
     fetch: 'categories/fetch/',
   },
   comment_system: {
-    test: 'comment_system/',
+    fetchByBlogId: 'comment_system/fetchByBlogId/',
   },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
