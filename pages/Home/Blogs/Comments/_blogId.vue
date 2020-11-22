@@ -36,7 +36,7 @@
           <div class="comment-message-container">
             <p class="top-line">
               <span class="username secondary">{{
-                comment.user.displayName
+                getInitials(comment.user.displayName)
               }}</span>
               <span class="timestamp">
                 <span class="mdi mdi-clock-time-nine-outline" />
@@ -65,6 +65,12 @@
           </template>
         </infinite-loading>
       </client-only>
+
+      <section class="bottom-area px-4">
+        <img src="https://picsum.photos/100" alt="profile-image" />
+        <input type="text" placeholder="Add a comment..." />
+        <span v-ripple="" class="mdi mdi-send" />
+      </section>
     </template>
   </AppFeel>
 </template>
@@ -117,7 +123,6 @@ export default {
           endpoints.comment_system.fetchByBlogId,
           { params: { page: this.page, blog_id: this.$route.params.blogId } }
         )
-        console.log(results)
         if (results.length) {
           this.page += 1
           this.comments.push(...results)
@@ -128,6 +133,10 @@ export default {
       } catch (e) {
         $state.complete()
       }
+    },
+
+    getInitials(name) {
+      return name.split(' ')[0]
     },
   },
 
@@ -171,13 +180,58 @@ export default {
     }
   }
 
+  .bottom-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 2 * $xx-large-unit;
+    display: flex;
+    align-items: center;
+    background-color: $nav-bar-bg;
+    box-shadow: $up-only-box-shadow;
+
+    img {
+      width: 2 * $medium-unit;
+      height: 2 * $medium-unit;
+      object-position: center;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: $default-box-shadow;
+    }
+
+    input {
+      border: 1px solid #4a4a4a;
+      background-color: $segment-background;
+      width: 100%;
+      margin: 0 $micro-unit;
+      height: 2 * $medium-unit;
+      padding: 0 $micro-unit;
+      border-radius: $micro-unit;
+
+      &::placeholder {
+        color: darken($muted, $darken-percentage);
+      }
+
+      &:not(:placeholder-shown) {
+        color: $secondary-matte;
+        border: 1px solid $secondary-matte;
+      }
+    }
+
+    span {
+      font-size: 26px;
+      padding: 0;
+      color: $secondary-matte;
+    }
+  }
+
   main {
     .comment {
       display: flex;
 
       img {
-        width: 2 * $x-large-unit;
-        height: 2 * $x-large-unit;
+        width: 2 * $medium-unit;
+        height: 2 * $medium-unit;
         object-position: center;
         object-fit: cover;
         border-radius: 50%;
