@@ -3,7 +3,7 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <section class="top-section px-4">
+      <section v-if="blog" class="top-section px-4">
         <div class="introduction">
           <h6>{{ blog.title }}</h6>
           <div
@@ -67,9 +67,21 @@
       </client-only>
 
       <section class="bottom-area px-4">
-        <img src="https://picsum.photos/100" alt="profile-image" />
-        <input type="text" placeholder="Add a comment..." />
-        <span v-ripple="" class="mdi mdi-send" />
+        <img v-if="user" :src="user.photoURL" alt="profile-image" />
+        <input
+          v-model="commentMessage"
+          type="text"
+          placeholder="Add a comment..."
+          :disabled="isSendingComment"
+          @keyup="sendCommentOnEnter"
+        />
+        <RippleButton
+          :on-click="addComment"
+          :disabled="!canSendComment"
+          :loading="isSendingComment"
+        >
+          <span class="mdi mdi-send" />
+        </RippleButton>
       </section>
     </template>
   </AppFeel>
@@ -82,9 +94,11 @@ import AppFeel from '@/components/Layout/AppFeel'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/LoadingIcon'
 import { parseTimeUsingMoment } from '@/utils/utility'
+import { mapGetters } from 'vuex'
+import RippleButton from '@/components/common/RippleButton'
 
 export default {
-  components: { LoadingIcon, AppFeel, ClientOnly },
+  components: { RippleButton, LoadingIcon, AppFeel, ClientOnly },
 
   async asyncData({ $axios, params }) {
     const response = await $axios.$get(endpoints.blog.info, {
@@ -99,11 +113,31 @@ export default {
       pageTitle: 'Comments',
       comments: [],
       page: 1,
+      commentMessage: '',
+      isSendingComment: false,
+      canSendComment: false,
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
+  watch: {
+    commentMessage(a) {
+      this.canSendComment = a.trim().length > 0
+    },
+  },
+
+  async created() {
+    await this.setupUser()
   },
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
+    await this.setupUser()
   },
 
   methods: {
@@ -137,6 +171,57 @@ export default {
 
     getInitials(name) {
       return name.split(' ')[0]
+    },
+
+    async sendCommentOnEnter(e) {
+      if (e.keyCode === 13) {
+        await this.addComment()
+      }
+    },
+
+    async addComment() {
+      this.canSendComment = false
+      this.isSendingComment = true
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Adding Comment...',
+        notificationType: 'info',
+        dismissible: true,
+      })
+      try {
+        await this.$axios.$post(
+          endpoints.comment_system.createCommentForBlogId,
+          {
+            blogId: this.$route.params.blogId,
+            message: this.commentMessage,
+          }
+        )
+        const newComment = {
+          id: Date.now(),
+          user: {
+            photoURL: this.user.photoURL,
+            displayName: this.user.displayName,
+          },
+          createdAt: Date.now(),
+          message: this.commentMessage,
+        }
+
+        this.comments.unshift(newComment)
+        this.commentMessage = ''
+        this.isSendingComment = false
+
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Comment Added',
+          notificationType: 'success',
+          dismissible: true,
+        })
+      } catch (e) {
+        this.isSendingComment = false
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Failed to Add Comment. Please Retry',
+          notificationType: 'error',
+          dismissible: true,
+        })
+      }
     },
   },
 
@@ -218,7 +303,7 @@ export default {
       }
     }
 
-    span {
+    button {
       font-size: 26px;
       padding: 0;
       color: $secondary-matte;
