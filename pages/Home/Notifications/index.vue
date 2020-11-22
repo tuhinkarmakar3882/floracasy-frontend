@@ -159,27 +159,16 @@ export default {
       localStorage.setItem('hide-notification-consent', '200')
     },
 
-    initHeight() {
-      this.$refs['banner-block'].style.height = 'auto'
-      this.$refs['banner-block'].style.position = 'absolute'
-      this.$refs['banner-block'].style.visibility = 'hidden'
-      this.$refs['banner-block'].style.display = 'block'
-
-      this.computedHeight = getComputedStyle(this.$refs['banner-block']).height
-      this.computedHeight =
-        (parseInt(this.computedHeight.replace('px', '')) + 40).toString() + 'px'
-
-      this.$refs['banner-block'].style.position = null
-      this.$refs['banner-block'].style.visibility = null
-      this.$refs['banner-block'].style.display = null
-      this.$refs['banner-block'].style.height = 0
+    async setupUser() {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        this.loadingProfile = true
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
     },
 
     async infiniteHandler($state) {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
+      await this.setupUser()
 
       try {
         const results = await this.$axios.$get(
@@ -201,6 +190,22 @@ export default {
       } catch (e) {
         $state.complete()
       }
+    },
+
+    initHeight() {
+      this.$refs['banner-block'].style.height = 'auto'
+      this.$refs['banner-block'].style.position = 'absolute'
+      this.$refs['banner-block'].style.visibility = 'hidden'
+      this.$refs['banner-block'].style.display = 'block'
+
+      this.computedHeight = getComputedStyle(this.$refs['banner-block']).height
+      this.computedHeight =
+        (parseInt(this.computedHeight.replace('px', '')) + 40).toString() + 'px'
+
+      this.$refs['banner-block'].style.position = null
+      this.$refs['banner-block'].style.visibility = null
+      this.$refs['banner-block'].style.display = null
+      this.$refs['banner-block'].style.height = 0
     },
   },
 

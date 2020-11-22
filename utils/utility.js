@@ -1,7 +1,28 @@
 import moment from 'moment'
 
+moment.updateLocale('en', {
+  relativeTime: {
+    future: 'in %s',
+    past: '%s ago',
+    s: 'a few seconds',
+    ss: '%d seconds',
+    m: '1 min',
+    mm: '%d mins',
+    h: '1 hr',
+    hh: '%d hrs',
+    d: '1 d',
+    dd: '%d d',
+    w: '1 w',
+    ww: '%d w',
+    M: 'a m',
+    MM: '%d m',
+    y: 'a yr',
+    yy: '%d yrs',
+  },
+})
+
 export const parseTimeUsingMoment = (timeString) => {
-  return moment(timeString).fromNow()
+  return moment(timeString).fromNow(true)
 }
 
 export const shorten = (value) => {

@@ -9,10 +9,13 @@ const endpoints = {
   },
   blog: {
     fetch: 'blog/fetch/',
+    info: 'blog/info/',
+
     create: 'blog/create/',
     detail: 'blog/detail/',
-    update: 'blog/update/',
-    delete: 'blog/delete/',
+
+    // update: 'blog/update/',
+    // delete: 'blog/delete/',
 
     like: 'blog/like/',
     share: 'blog/share/',
@@ -23,7 +26,8 @@ const endpoints = {
     fetch: 'categories/fetch/',
   },
   comment_system: {
-    test: 'comment_system/',
+    fetchByBlogId: 'comment_system/fetchByBlogId/',
+    createCommentForBlogId: 'comment_system/createCommentForBlogId/',
   },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
