@@ -3,6 +3,7 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
+      <div ref="commentStart" />
       <section v-if="blog" class="top-section px-4">
         <div class="introduction">
           <h6>{{ blog.title }}</h6>
@@ -41,7 +42,7 @@
         <hr class="my-4" />
       </section>
 
-      <main class="px-4 mb-8 pb-4">
+      <main class="px-4">
         <section
           v-for="comment in comments"
           :key="comment.id"
@@ -64,21 +65,23 @@
       </main>
 
       <client-only>
-        <infinite-loading @infinite="infiniteHandler">
-          <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p>Loading Recent Activities Data...</p>
-          </template>
-          <template slot="error">
-            <p class="danger-light my-6">Network Error</p>
-          </template>
-          <template slot="no-more">
-            <p class="my-8">No More Comments</p>
-          </template>
-          <template slot="no-results">
-            <p class="my-8">Be the first to comment on this!</p>
-          </template>
-        </infinite-loading>
+        <div class="pb-8 mb-8">
+          <infinite-loading @infinite="infiniteHandler">
+            <template slot="spinner">
+              <LoadingIcon class="mt-4 mb-6" />
+              <p>Loading Recent Activities Data...</p>
+            </template>
+            <template slot="error">
+              <p class="danger-light mb-8">Network Error</p>
+            </template>
+            <template slot="no-more">
+              <p class="mb-8">No More Comments</p>
+            </template>
+            <template slot="no-results">
+              <p class="mb-8">Be the first to comment on this!</p>
+            </template>
+          </infinite-loading>
+        </div>
       </client-only>
 
       <section class="bottom-area px-4">
@@ -112,7 +115,27 @@ import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/common/RippleButton'
 
+function keepUniqueValues(array) {
+  const tempArray = []
+
+  for (const value of array) {
+    let found = false
+    for (const value2 of tempArray) {
+      if (value.createdAt === value2.createdAt) {
+        found = true
+        break
+      }
+    }
+    if (!found) {
+      tempArray.push(value)
+    }
+  }
+  return tempArray
+}
+
 export default {
+  name: 'BlogComments',
+  middleware: 'isAuthenticated',
   components: { RippleButton, LoadingIcon, AppFeel, ClientOnly },
 
   async asyncData({ $axios, params }) {
@@ -175,6 +198,18 @@ export default {
         if (results.length) {
           this.page += 1
           this.comments.push(...results)
+          const prevSize = this.comments.length
+          this.comments = keepUniqueValues(this.comments)
+          const newSize = this.comments.length
+
+          if (prevSize !== newSize) {
+            //  New Things got added... Display a refresh to update notification
+            await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+              message: 'New Comments Available. Refresh to view them',
+              notificationType: 'info',
+              dismissible: true,
+            })
+          }
           $state.loaded()
         } else {
           $state.complete()
@@ -229,6 +264,7 @@ export default {
           notificationType: 'success',
           dismissible: true,
         })
+        this.$refs.commentStart.scrollIntoView()
       } catch (e) {
         this.isSendingComment = false
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
