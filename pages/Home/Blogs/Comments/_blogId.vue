@@ -27,7 +27,11 @@
       </section>
 
       <main class="px-4">
-        <section v-for="comment in comments" :key="comment.id" class="comment">
+        <section
+          v-for="comment in comments"
+          :key="comment.id"
+          class="comment my-6"
+        >
           <img :src="comment.user.photoURL" alt="profile-image" />
           <div class="comment-message-container">
             <p class="top-line">
