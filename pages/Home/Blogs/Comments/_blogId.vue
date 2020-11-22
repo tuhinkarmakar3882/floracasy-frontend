@@ -19,14 +19,29 @@
           </div>
         </div>
         <p>
-          <span class="secondary">{{ blog.author.displayName }}</span>
+          <nuxt-link
+            :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+            class="no-underline"
+          >
+            {{ blog.author.displayName }}
+          </nuxt-link>
           <strong>IN</strong>
-          <span class="secondary">{{ blog.category.name }}</span>
+          <nuxt-link
+            :to="
+              navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+                '{name}',
+                blog.category.name
+              )
+            "
+            class="no-underline"
+          >
+            {{ blog.category.name }}
+          </nuxt-link>
         </p>
         <hr class="my-4" />
       </section>
 
-      <main class="px-4">
+      <main class="px-4 mb-8 pb-4">
         <section
           v-for="comment in comments"
           :key="comment.id"
