@@ -3,8 +3,9 @@
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
         <section class="content pt-8">
-          <p v-ripple="" class="px-4 mb-2 top-line">
+          <p class="px-4 mb-2 top-line">
             <nuxt-link
+              v-ripple=""
               :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
               class="no-underline"
             >
@@ -12,6 +13,7 @@
             </nuxt-link>
             <strong>IN</strong>
             <nuxt-link
+              v-ripple=""
               :to="
                 navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
                   '{name}',
@@ -22,7 +24,10 @@
             >
               {{ blog.category.name }}
             </nuxt-link>
-            <i class="mdi mdi-dots-vertical mr-2 inline-block align-middle" />
+            <i
+              v-ripple=""
+              class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
+            />
           </p>
 
           <div
@@ -237,14 +242,14 @@ export default {
         position: relative;
 
         i {
-          position: absolute;
-          right: -$nano-unit;
+          position: absolute !important;
+          right: -$medium-unit;
           font-size: $x-large-unit - $double-unit;
           top: -$standard-unit;
           height: 2 * $xx-large-unit;
           width: 2 * $xx-large-unit;
           display: flex;
-          justify-content: flex-end;
+          justify-content: center;
           align-items: center;
           border-radius: 50%;
           color: $secondary;
