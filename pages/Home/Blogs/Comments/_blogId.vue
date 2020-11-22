@@ -3,6 +3,7 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
+      <div ref="commentStart" />
       <section v-if="blog" class="top-section px-4">
         <div class="introduction">
           <h6>{{ blog.title }}</h6>
@@ -113,6 +114,8 @@ import { mapGetters } from 'vuex'
 import RippleButton from '@/components/common/RippleButton'
 
 export default {
+  name: 'BlogComments',
+  middleware: 'isAuthenticated',
   components: { RippleButton, LoadingIcon, AppFeel, ClientOnly },
 
   async asyncData({ $axios, params }) {
@@ -229,6 +232,7 @@ export default {
           notificationType: 'success',
           dismissible: true,
         })
+        this.$refs.commentStart.scrollIntoView()
       } catch (e) {
         this.isSendingComment = false
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
