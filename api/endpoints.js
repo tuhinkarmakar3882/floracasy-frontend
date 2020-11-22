@@ -27,6 +27,7 @@ const endpoints = {
   },
   comment_system: {
     fetchByBlogId: 'comment_system/fetchByBlogId/',
+    createCommentForBlogId: 'comment_system/createCommentForBlogId/',
   },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
