@@ -35,6 +35,7 @@ export default {
       if (notificationType === 'success') return 'mdi-check-circle'
       if (notificationType === 'error') return 'mdi-alert-circle-outline'
       if (notificationType === 'blog_like') return 'mdi-thumb-up-outline'
+      if (notificationType === 'blog_comment') return 'mdi-comment-multiple'
       return 'mdi-bell'
     },
     getColorFor(notificationType) {
