@@ -9,10 +9,13 @@ const endpoints = {
   },
   blog: {
     fetch: 'blog/fetch/',
+    info: 'blog/info/',
+
     create: 'blog/create/',
     detail: 'blog/detail/',
-    update: 'blog/update/',
-    delete: 'blog/delete/',
+
+    // update: 'blog/update/',
+    // delete: 'blog/delete/',
 
     like: 'blog/like/',
     share: 'blog/share/',

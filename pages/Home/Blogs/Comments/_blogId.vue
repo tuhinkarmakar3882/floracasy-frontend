@@ -5,13 +5,23 @@
     <template slot="main">
       <section class="top-section px-4">
         <div class="introduction">
-          <h6>This is Another Great Apple Eye-Pads Review</h6>
-          <div v-ripple="'#52B2A25F'" class="view-blog py-4">View Blog</div>
+          <h6>{{ blog.title }}</h6>
+          <div
+            v-ripple="'#52B2A25F'"
+            class="view-blog py-4"
+            @click="
+              $router.push(
+                navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id)
+              )
+            "
+          >
+            View Blog
+          </div>
         </div>
         <p>
-          <span class="secondary">Tuhin Karmakar</span>
+          <span class="secondary">{{ blog.author.displayName }}</span>
           <strong>IN</strong>
-          <span class="secondary">Technology</span>
+          <span class="secondary">{{ blog.category.name }}</span>
         </p>
         <hr class="my-4" />
       </section>
@@ -43,11 +53,11 @@
           <template slot="error">
             <p class="danger-light my-6">Network Error</p>
           </template>
-          <template slot="no-more" />
+          <template slot="no-more">
+            <p class="my-8">No More Comments</p>
+          </template>
           <template slot="no-results">
-            <div class="no-activity">
-              <p class="my-5">Be the first to comment on this!</p>
-            </div>
+            <p class="my-8">Be the first to comment on this!</p>
           </template>
         </infinite-loading>
       </client-only>
@@ -65,6 +75,14 @@ import { parseTimeUsingMoment } from '@/utils/utility'
 
 export default {
   components: { LoadingIcon, AppFeel, ClientOnly },
+
+  async asyncData({ $axios, params }) {
+    const response = await $axios.$get(endpoints.blog.info, {
+      params: { id: params.blogId },
+    })
+    return { blog: response }
+  },
+
   data() {
     return {
       navigationRoutes,
