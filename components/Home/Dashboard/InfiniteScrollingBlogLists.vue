@@ -34,7 +34,7 @@
               {{ blog.title }}
             </h5>
 
-            <small v-ripple="" class="timestamp mt-3">
+            <small class="timestamp mt-3">
               <span class="mdi mdi-clock-time-nine-outline" />
               {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
             </small>
