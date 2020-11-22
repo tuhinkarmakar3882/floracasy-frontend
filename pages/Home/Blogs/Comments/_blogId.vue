@@ -198,7 +198,18 @@ export default {
         if (results.length) {
           this.page += 1
           this.comments.push(...results)
+          const prevSize = this.comments.length
           this.comments = keepUniqueValues(this.comments)
+          const newSize = this.comments.length
+
+          if (prevSize !== newSize) {
+            //  New Things got added... Display a refresh to update notification
+            await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+              message: 'New Comments Available. Refresh to view them',
+              notificationType: 'info',
+              dismissible: true,
+            })
+          }
           $state.loaded()
         } else {
           $state.complete()
