@@ -109,6 +109,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import ClientOnly from 'vue-client-only'
 import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
@@ -116,7 +117,7 @@ import { parseTimeUsingMoment } from '~/utils/utility'
 
 export default {
   name: 'Overview',
-  components: { LoadingIcon },
+  components: { LoadingIcon, ClientOnly },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
 
@@ -140,35 +141,38 @@ export default {
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
 
-    const currentUser = await this.$store.getters['UserManagement/getUser']
-    if (!currentUser) {
-      this.loadingProfile = true
-      await this.$store.dispatch('UserManagement/fetchData')
-    }
+    await this.setupUser()
 
     if (this.$route.params.id === this.user.uid) {
       await this.$router.replace(navigationRoutes.Home.Account.Details)
     } else {
       this.loadingProfile = false
 
-      const data = await this.$axios
-        .$get(endpoints.profile_statistics.detail, {
-          params: { uid: this.$route.params.id },
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-
-      this.statisticsItem = data.statistics
-
-      this.otherUser = this.statisticsItem.user
-      this.otherUser.about = data.userData.about
-      this.otherUser.designation = data.userData.designation
+      try {
+        const data = await this.$axios.$get(
+          endpoints.profile_statistics.detail,
+          { params: { uid: this.$route.params.id } }
+        )
+        this.statisticsItem = data.statistics
+        this.otherUser = this.statisticsItem.user
+        this.otherUser.about = data.userData.about
+        this.otherUser.designation = data.userData.designation
+      } catch (e) {
+        console.error(e)
+      }
     }
   },
 
   methods: {
     parseTimeUsingMoment,
+
+    async setupUser() {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        this.loadingProfile = true
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
+    },
 
     async infiniteHandler($state) {
       try {
