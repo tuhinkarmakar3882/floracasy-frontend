@@ -42,7 +42,7 @@
         <hr class="my-4" />
       </section>
 
-      <main class="px-4 mb-8 pb-4">
+      <main class="px-4">
         <section
           v-for="comment in comments"
           :key="comment.id"
@@ -65,21 +65,23 @@
       </main>
 
       <client-only>
-        <infinite-loading @infinite="infiniteHandler">
-          <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p>Loading Recent Activities Data...</p>
-          </template>
-          <template slot="error">
-            <p class="danger-light my-6">Network Error</p>
-          </template>
-          <template slot="no-more">
-            <p class="my-8">No More Comments</p>
-          </template>
-          <template slot="no-results">
-            <p class="my-8">Be the first to comment on this!</p>
-          </template>
-        </infinite-loading>
+        <div class="pb-8 mb-8">
+          <infinite-loading @infinite="infiniteHandler">
+            <template slot="spinner">
+              <LoadingIcon class="mt-4 mb-6" />
+              <p>Loading Recent Activities Data...</p>
+            </template>
+            <template slot="error">
+              <p class="danger-light mb-8">Network Error</p>
+            </template>
+            <template slot="no-more">
+              <p class="mb-8">No More Comments</p>
+            </template>
+            <template slot="no-results">
+              <p class="mb-8">Be the first to comment on this!</p>
+            </template>
+          </infinite-loading>
+        </div>
       </client-only>
 
       <section class="bottom-area px-4">
@@ -112,6 +114,24 @@ import LoadingIcon from '@/components/LoadingIcon'
 import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/common/RippleButton'
+
+function keepUniqueValues(array) {
+  const tempArray = []
+
+  for (const value of array) {
+    let found = false
+    for (const value2 of tempArray) {
+      if (value.createdAt === value2.createdAt) {
+        found = true
+        break
+      }
+    }
+    if (!found) {
+      tempArray.push(value)
+    }
+  }
+  return tempArray
+}
 
 export default {
   name: 'BlogComments',
@@ -178,6 +198,7 @@ export default {
         if (results.length) {
           this.page += 1
           this.comments.push(...results)
+          this.comments = keepUniqueValues(this.comments)
           $state.loaded()
         } else {
           $state.complete()
