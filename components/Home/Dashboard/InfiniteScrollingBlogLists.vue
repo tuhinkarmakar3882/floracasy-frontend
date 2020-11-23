@@ -81,7 +81,8 @@
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
         <template slot="spinner">
-          <LoadingIcon />
+          <LoadingIcon class="mt-4 mb-6" />
+          <p class="text-center">Getting Latest Articles...</p>
         </template>
         <template slot="error">
           <p class="danger-light my-6">Network Error</p>
