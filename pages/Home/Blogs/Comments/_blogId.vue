@@ -5,7 +5,7 @@
         v-ripple
         class="mdi mdi-arrow-left"
         @click="
-          prevUrl
+          prevURL
             ? $router.back()
             : $router.replace(navigationRoutes.Home.DashBoard)
         "
@@ -142,6 +142,8 @@ export default {
 
   data() {
     return {
+      prevURL: null,
+      blog: null,
       navigationRoutes,
       pageTitle: 'Comments',
       comments: [],
@@ -159,8 +161,8 @@ export default {
   },
 
   watch: {
-    commentMessage(a) {
-      this.canSendComment = a.trim().length > 0
+    commentMessage(msg) {
+      this.canSendComment = msg.trim().length > 0
     },
   },
 
