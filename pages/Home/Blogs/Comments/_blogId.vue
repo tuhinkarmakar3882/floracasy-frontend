@@ -150,7 +150,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Comments',
       comments: [],
-      page: 1,
+      fetchCommentsEndpoint: endpoints.comment_system.fetchByBlogId,
       commentMessage: '',
       isSendingComment: false,
       canSendComment: false,
@@ -191,25 +191,13 @@ export default {
     async infiniteHandler($state) {
       await this.setupUser()
       try {
-        const { data: results } = await this.$axios.get(
-          endpoints.comment_system.fetchByBlogId,
-          { params: { page: this.page, blog_id: this.$route.params.blogId } }
+        const { results, next } = await this.$axios.$get(
+          this.fetchCommentsEndpoint,
+          { params: { blog_id: this.$route.params.blogId } }
         )
         if (results.length) {
-          this.page += 1
+          this.fetchCommentsEndpoint = next
           this.comments.push(...results)
-          const prevSize = this.comments.length
-          this.comments = keepUniqueValues(this.comments)
-          const newSize = this.comments.length
-
-          if (prevSize !== newSize) {
-            //  New Things got added... Display a refresh to update notification
-            await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-              message: 'New Comments Available. Refresh to view them',
-              notificationType: 'info',
-              dismissible: true,
-            })
-          }
           $state.loaded()
         } else {
           $state.complete()
