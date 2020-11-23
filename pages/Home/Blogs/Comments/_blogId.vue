@@ -1,6 +1,19 @@
 <template>
-  <AppFeel class="blog-comment-page" :on-back="navigationRoutes.Home.DashBoard">
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
+  <AppFeel custom-header class="blog-comment-page" on-back="/">
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple
+        class="mdi mdi-arrow-left"
+        @click="
+          prevUrl
+            ? $router.back()
+            : $router.replace(navigationRoutes.Home.DashBoard)
+        "
+      />
+      <p class="ml-6">
+        {{ pageTitle }}
+      </p>
+    </template>
 
     <template slot="main">
       <div ref="commentStart" />
@@ -115,34 +128,16 @@ import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/common/RippleButton'
 
-function keepUniqueValues(array) {
-  const tempArray = []
-
-  for (const value of array) {
-    let found = false
-    for (const value2 of tempArray) {
-      if (value.createdAt === value2.createdAt) {
-        found = true
-        break
-      }
-    }
-    if (!found) {
-      tempArray.push(value)
-    }
-  }
-  return tempArray
-}
-
 export default {
   name: 'BlogComments',
   middleware: 'isAuthenticated',
   components: { RippleButton, LoadingIcon, AppFeel, ClientOnly },
 
-  async asyncData({ $axios, params }) {
-    const response = await $axios.$get(endpoints.blog.info, {
+  async asyncData({ $axios, params, from: prevURL }) {
+    const blog = await $axios.$get(endpoints.blog.info, {
       params: { id: params.blogId },
     })
-    return { blog: response }
+    return { blog, prevURL }
   },
 
   data() {
