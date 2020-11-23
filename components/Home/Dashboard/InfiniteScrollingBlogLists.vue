@@ -120,6 +120,7 @@ export default {
       navigationRoutes,
       blogs: [],
       page: 1,
+      blogFetchCursorEndpoint: endpoints.blog.fetch,
     }
   },
 
@@ -168,6 +169,7 @@ export default {
         navigationRoutes.Home.Blogs.Comments.BlogId.replace('{BlogId}', blog.id)
       )
     },
+
     async share(blog, index) {
       if (navigator.share) {
         try {
@@ -199,14 +201,13 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const { data: results } = await this.$axios.get(endpoints.blog.fetch, {
-          params: {
-            page: this.page,
-            category_name: this.category,
-          },
+        const {
+          data: { results, next },
+        } = await this.$axios.get(this.blogFetchCursorEndpoint, {
+          params: { category_name: this.category },
         })
         if (results.length) {
-          this.page += 1
+          this.blogFetchCursorEndpoint = next
           this.blogs.push(...results)
           $state.loaded()
         } else {
