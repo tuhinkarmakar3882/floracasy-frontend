@@ -201,11 +201,10 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const {
-          data: { results, next },
-        } = await this.$axios.get(this.blogFetchCursorEndpoint, {
-          params: { category_name: this.category },
-        })
+        const { results, next } = await this.$axios.$get(
+          this.blogFetchCursorEndpoint,
+          { params: { category_name: this.category } }
+        )
         if (results.length) {
           this.blogFetchCursorEndpoint = next
           this.blogs.push(...results)
