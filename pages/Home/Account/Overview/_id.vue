@@ -129,6 +129,7 @@ export default {
       statisticsItem: null,
       recentActivities: [],
       otherUser: null,
+      userBlogEndpoint: endpoints.blog.getBlogsByUid,
     }
   },
 
@@ -176,11 +177,12 @@ export default {
 
     async infiniteHandler($state) {
       try {
-        const results = await this.$axios.$get(endpoints.blog.getBlogsByUid, {
-          params: { uid: this.$route.params.id, page: this.page },
-        })
+        const { results, next } = await this.$axios.$get(
+          this.userBlogEndpoint,
+          { params: { uid: this.$route.params.id } }
+        )
         if (results.length) {
-          this.page += 1
+          this.userBlogEndpoint = next
           this.recentActivities.push(...results)
           $state.loaded()
         } else {
