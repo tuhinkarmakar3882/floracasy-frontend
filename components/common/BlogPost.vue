@@ -23,23 +23,27 @@
           {{ blog.category.name }}
         </nuxt-link>
         <i
-          v-ripple=""
           class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
-          @click="showOptions"
+          @click="showOptions = !showOptions"
         />
       </p>
-      <div class="options">
-        <ul>
-          <li v-ripple="'#f5a0495F'" class="py-2 px-6" style="color: #f5a049">
-            <span class="icon mdi mdi-bookmark" />
-            Save for Later
-          </li>
-          <li v-ripple="'#ff82825F'" class="py-2 px-6" style="color: #ff8282">
-            <span class="icon mdi mdi-alert-octagon" />
-            Report Post
-          </li>
-        </ul>
-      </div>
+
+      <transition name="gray-shift">
+        <div v-if="showOptions" class="options">
+          <ul>
+            <li
+              v-for="(optionItem, index) in dropdownOptionItems"
+              :key="index"
+              v-ripple="`${optionItem.color}5F`"
+              class="py-2 px-6"
+              :style="{ color: optionItem.color }"
+            >
+              <span class="icon mdi" :class="optionItem.icon" />
+              {{ optionItem.text }}
+            </li>
+          </ul>
+        </div>
+      </transition>
 
       <div
         v-ripple=""
@@ -105,6 +109,29 @@ export default {
   data() {
     return {
       navigationRoutes,
+      dropdownOptionItems: [
+        {
+          text: 'Save for later',
+          icon: 'mdi-bookmark',
+          color: '#f5a049',
+        },
+        {
+          text: 'Report Blog',
+          icon: 'mdi-alert-octagon',
+          color: '#ff8282',
+        },
+        {
+          text: 'Not Interested',
+          icon: 'mdi-alert-octagon',
+          color: '#ff8282',
+        },
+        {
+          text: "Don't Show Blog from this Blogger",
+          icon: 'mdi-alert-octagon',
+          color: '#ff8282',
+        },
+      ],
+      showOptions: false,
     }
   },
   methods: {
@@ -169,16 +196,13 @@ export default {
         )
       }
     },
-
-    showOptions() {
-      console.log('opening Modal')
-    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+@import 'assets/transitions-and-animations';
 
 .blog-post-component {
   .content {
@@ -200,15 +224,14 @@ export default {
 
       i {
         position: absolute !important;
-        right: -$medium-unit;
+        right: -7px;
         font-size: $x-large-unit - $double-unit;
         top: -$standard-unit;
         height: 2 * $xx-large-unit;
-        width: 2 * $xx-large-unit;
+        width: 2 * $medium-unit;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 50%;
         color: $secondary;
       }
     }
