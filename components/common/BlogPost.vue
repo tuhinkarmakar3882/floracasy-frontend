@@ -247,6 +247,7 @@ export default {
       box-shadow: $down-only-box-shadow;
       max-width: 300px;
       min-width: 232px;
+      z-index: $bring-to-front - 100;
 
       ul {
         list-style: none;
