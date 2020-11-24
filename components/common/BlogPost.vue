@@ -144,7 +144,10 @@ export default {
           await navigator.share({
             title: this.blog.title + '- Floracasy',
             text: this.blog.subtitle,
-            url: navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id),
+            url: navigationRoutes.Home.Blogs.Details.replace(
+              '{id}',
+              this.blog.id
+            ),
           })
           try {
             await this.$axios
