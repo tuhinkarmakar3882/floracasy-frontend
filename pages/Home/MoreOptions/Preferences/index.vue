@@ -76,8 +76,7 @@ export default {
           name: 'Edit Profile',
           icon: 'mdi mdi-pencil',
           color: '#6dd0bf',
-          route:
-            navigationRoutes.Home.MoreOptions.Preferences.EditProfile.index,
+          route: navigationRoutes.Home.MoreOptions.Preferences.EditProfile,
         },
         {
           name: 'Saved Blogs',

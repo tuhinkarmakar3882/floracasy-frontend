@@ -27,9 +27,7 @@
       </div>
       <p v-if="!maybe" class="mb-3">
         You can always change this setting later in the
-        <nuxt-link
-          :to="navigationRoutes.Home.MoreOptions.Preferences.EditProfile.index"
-        >
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences.index">
           Preferences
         </nuxt-link>
       </p>
@@ -37,9 +35,7 @@
       <h5 v-if="maybe" class="text-center mb-4">No Problem</h5>
       <p v-if="maybe" class="text-center mb-4">
         Tip: You can always change this setting later in the
-        <nuxt-link
-          :to="navigationRoutes.Home.MoreOptions.Preferences.EditProfile.index"
-        >
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences.index">
           Preferences
         </nuxt-link>
       </p>
