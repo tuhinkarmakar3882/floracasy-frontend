@@ -40,7 +40,15 @@
 
         <h6>To show all blogs insight view tap the below button</h6>
 
-        <button>Insight View</button>
+        <button
+          v-ripple=""
+          class="success-outlined-btn"
+          @click="
+            $router.push(navigationRoutes.Home.MoreOptions.Payments.InsightView)
+          "
+        >
+          Insight View
+        </button>
       </main>
     </template>
   </AppFeel>
