@@ -32,14 +32,20 @@
       <transition name="gray-shift">
         <div v-if="showOptions" class="options">
           <ul>
+            <li v-ripple="" class="close-btn" @click="showOptions = false">
+              &times;
+            </li>
             <li
               v-for="(optionItem, index) in dropdownOptionItems"
               :key="index"
               v-ripple="`${optionItem.color}5F`"
               class="py-2 px-6"
-              :style="{ color: optionItem.color }"
             >
-              <span class="icon mdi" :class="optionItem.icon" />
+              <span
+                class="icon mdi"
+                :class="optionItem.icon"
+                :style="{ color: optionItem.color }"
+              />
               {{ optionItem.text }}
             </li>
           </ul>
@@ -114,20 +120,15 @@ export default {
         {
           text: 'Save for later',
           icon: 'mdi-bookmark',
+          color: '#6DD0BF',
+        },
+        {
+          text: 'Not Interested',
+          icon: 'mdi-cancel',
           color: '#f5a049',
         },
         {
           text: 'Report Blog',
-          icon: 'mdi-alert-octagon',
-          color: '#ff8282',
-        },
-        {
-          text: 'Not Interested',
-          icon: 'mdi-alert-octagon',
-          color: '#ff8282',
-        },
-        {
-          text: "Don't Show Blog from this Blogger",
           icon: 'mdi-alert-octagon',
           color: '#ff8282',
         },
@@ -245,14 +246,26 @@ export default {
       right: $medium-unit;
       box-shadow: $down-only-box-shadow;
       max-width: 300px;
+      min-width: 232px;
 
       ul {
         list-style: none;
-        padding: 0;
+        padding: $xxx-large-unit 0 0;
 
         li {
           display: flex;
           align-items: center;
+          color: #dadada;
+        }
+
+        .close-btn {
+          position: absolute !important;
+          border-radius: $nano-unit;
+          top: $zero-unit;
+          right: $zero-unit;
+          color: $danger-light;
+          font-size: $x-large-unit;
+          padding: 0 14px;
         }
       }
 
