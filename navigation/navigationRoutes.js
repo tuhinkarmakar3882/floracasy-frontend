@@ -37,7 +37,10 @@ export const navigationRoutes = {
       FAQ: '/Home/MoreOptions/FAQ',
       GoPremium: '/Home/MoreOptions/GoPremium',
       HelpAndSupport: '/Home/MoreOptions/HelpAndSupport',
-      Payments: '/Home/MoreOptions/Payments',
+      Payments: {
+        index: '/Home/MoreOptions/Payments',
+        InsightView: '/Home/MoreOptions/Payments/InsightView',
+      },
       Preferences: {
         index: '/Home/MoreOptions/Preferences',
         EditProfile: '/Home/MoreOptions/Preferences/EditProfile',
