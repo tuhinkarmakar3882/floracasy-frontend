@@ -1,6 +1,19 @@
 <template>
-  <AppFeel class="blog-comment-page" :on-back="navigationRoutes.Home.DashBoard">
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
+  <AppFeel custom-header class="blog-comment-page" on-back="/">
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple
+        class="mdi mdi-arrow-left"
+        @click="
+          prevURL
+            ? $router.back()
+            : $router.replace(navigationRoutes.Home.DashBoard)
+        "
+      />
+      <p class="ml-6">
+        {{ pageTitle }}
+      </p>
+    </template>
 
     <template slot="main">
       <div ref="commentStart" />
@@ -69,7 +82,7 @@
           <infinite-loading @infinite="infiniteHandler">
             <template slot="spinner">
               <LoadingIcon class="mt-4 mb-6" />
-              <p>Loading Recent Activities Data...</p>
+              <p class="text-center">Fetching Comments...</p>
             </template>
             <template slot="error">
               <p class="danger-light mb-8">Network Error</p>
@@ -115,42 +128,26 @@ import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/common/RippleButton'
 
-function keepUniqueValues(array) {
-  const tempArray = []
-
-  for (const value of array) {
-    let found = false
-    for (const value2 of tempArray) {
-      if (value.createdAt === value2.createdAt) {
-        found = true
-        break
-      }
-    }
-    if (!found) {
-      tempArray.push(value)
-    }
-  }
-  return tempArray
-}
-
 export default {
   name: 'BlogComments',
   middleware: 'isAuthenticated',
   components: { RippleButton, LoadingIcon, AppFeel, ClientOnly },
 
-  async asyncData({ $axios, params }) {
-    const response = await $axios.$get(endpoints.blog.info, {
+  async asyncData({ $axios, params, from: prevURL }) {
+    const blog = await $axios.$get(endpoints.blog.info, {
       params: { id: params.blogId },
     })
-    return { blog: response }
+    return { blog, prevURL }
   },
 
   data() {
     return {
+      prevURL: null,
+      blog: null,
       navigationRoutes,
       pageTitle: 'Comments',
       comments: [],
-      page: 1,
+      fetchCommentsEndpoint: endpoints.comment_system.fetchByBlogId,
       commentMessage: '',
       isSendingComment: false,
       canSendComment: false,
@@ -164,8 +161,8 @@ export default {
   },
 
   watch: {
-    commentMessage(a) {
-      this.canSendComment = a.trim().length > 0
+    commentMessage(msg) {
+      this.canSendComment = msg.trim().length > 0
     },
   },
 
@@ -191,25 +188,13 @@ export default {
     async infiniteHandler($state) {
       await this.setupUser()
       try {
-        const { data: results } = await this.$axios.get(
-          endpoints.comment_system.fetchByBlogId,
-          { params: { page: this.page, blog_id: this.$route.params.blogId } }
+        const { results, next } = await this.$axios.$get(
+          this.fetchCommentsEndpoint,
+          { params: { blog_id: this.$route.params.blogId } }
         )
         if (results.length) {
-          this.page += 1
+          this.fetchCommentsEndpoint = next
           this.comments.push(...results)
-          const prevSize = this.comments.length
-          this.comments = keepUniqueValues(this.comments)
-          const newSize = this.comments.length
-
-          if (prevSize !== newSize) {
-            //  New Things got added... Display a refresh to update notification
-            await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-              message: 'New Comments Available. Refresh to view them',
-              notificationType: 'info',
-              dismissible: true,
-            })
-          }
           $state.loaded()
         } else {
           $state.complete()

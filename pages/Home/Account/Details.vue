@@ -142,7 +142,7 @@ export default {
       loadingProfile: true,
       statisticsItem: null,
       recentActivities: [],
-      page: 1,
+      userBlogEndpoint: endpoints.blog.getBlogsByUid,
     }
   },
 
@@ -178,11 +178,12 @@ export default {
     parseTimeUsingMoment,
     async infiniteHandler($state) {
       try {
-        const results = await this.$axios.$get(endpoints.blog.getBlogsByUid, {
-          params: { uid: this.user.uid, page: this.page },
-        })
+        const { results, next } = await this.$axios.$get(
+          this.userBlogEndpoint,
+          { params: { uid: this.user.uid } }
+        )
         if (results.length) {
-          this.page += 1
+          this.userBlogEndpoint = next
           this.recentActivities.push(...results)
           $state.loaded()
         } else {

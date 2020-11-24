@@ -1,17 +1,36 @@
 <template>
-  <div>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <a href="/"> Home page </a>
+  <div class="error-page my-4 px-4">
+    <section v-if="error.statusCode === 404">
+      <header class="text-center">
+        <h6 class="heading-title">
+          {{ pageNotFound }}
+        </h6>
+      </header>
+
+      <main class="my-6">
+        <Icon404 class="error-svg mb-8" />
+        <a href="/" class="my-8"> Go to Homepage </a>
+      </main>
+    </section>
+    <section v-else>
+      <header class="text-center">
+        <h6>
+          {{ otherError }}
+        </h6>
+      </header>
+
+      <main class="my-6">
+        <a href="/" class="my-8"> Go to Homepage </a>
+      </main>
+    </section>
   </div>
 </template>
 
 <script>
+import Icon404 from '@/components/Icons/Icon404'
+
 export default {
+  components: { Icon404 },
   layout: 'empty',
   props: {
     error: {
@@ -21,8 +40,8 @@ export default {
   },
   data() {
     return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred',
+      pageNotFound: 'Page Not Found',
+      otherError: 'Something Went Wrong.',
     }
   },
   head() {
@@ -34,3 +53,18 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.error-page {
+  main {
+    display: grid;
+    place-items: center;
+
+    .error-svg {
+      width: 300px;
+    }
+  }
+}
+</style>

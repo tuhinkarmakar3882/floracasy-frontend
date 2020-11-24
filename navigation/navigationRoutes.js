@@ -37,12 +37,12 @@ export const navigationRoutes = {
       FAQ: '/Home/MoreOptions/FAQ',
       GoPremium: '/Home/MoreOptions/GoPremium',
       HelpAndSupport: '/Home/MoreOptions/HelpAndSupport',
-      Payments: '/Home/MoreOptions/Payments',
+      Payments: {
+        index: '/Home/MoreOptions/Payments',
+      },
       Preferences: {
         index: '/Home/MoreOptions/Preferences',
-        EditProfile: {
-          index: '/Home/MoreOptions/Preferences/EditProfile',
-        },
+        EditProfile: '/Home/MoreOptions/Preferences/EditProfile',
         NotificationSettings:
           '/Home/MoreOptions/Preferences/NotificationSettings',
       },
