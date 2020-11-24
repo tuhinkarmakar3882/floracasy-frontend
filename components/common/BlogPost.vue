@@ -1,6 +1,5 @@
 <template>
   <div class="blog-post-component">
-<!--    <pre>{{ blog }}</pre>-->
     <section class="content pt-8">
       <p class="px-4 mb-2 top-line">
         <nuxt-link

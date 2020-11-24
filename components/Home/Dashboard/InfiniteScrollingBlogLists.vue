@@ -1,80 +1,8 @@
 <template>
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
-      <article v-for="(blog, index) in blogs" :key="blog.id">
-        <section class="content pt-8">
-          <p class="px-4 mb-2 top-line">
-            <nuxt-link
-              v-ripple=""
-              :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
-              class="no-underline"
-            >
-              {{ blog.author.displayName }}
-            </nuxt-link>
-            <strong class="mx-1">IN</strong>
-            <nuxt-link
-              v-ripple=""
-              :to="
-                navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
-                  '{name}',
-                  blog.category.name
-                )
-              "
-              class="no-underline"
-            >
-              {{ blog.category.name }}
-            </nuxt-link>
-            <i
-              v-ripple=""
-              class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
-            />
-          </p>
-
-          <div
-            v-ripple=""
-            class="px-4 pb-6"
-            @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
-          >
-            <h5>
-              {{ blog.title }}
-            </h5>
-
-            <small class="timestamp mt-3">
-              <span class="mdi mdi-clock-time-nine-outline" />
-              {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
-            </small>
-
-            <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
-            <p>
-              {{ blog.subtitle }}...
-              <span class="secondary"> Read More </span>
-            </p>
-          </div>
-        </section>
-
-        <section class="blog-actions px-4 pb-8">
-          <div v-ripple class="like" @click="like(blog, index)">
-            <i
-              class="mdi mr-2 inline-block align-middle"
-              :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
-            />
-            <span class="value inline-block align-middle">
-              {{ shorten(blog.totalLikes) }}
-            </span>
-          </div>
-          <div v-ripple class="comment" @click="comment(blog)">
-            <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
-            <span class="value inline-block align-middle">
-              {{ shorten(blog.totalComments) }}
-            </span>
-          </div>
-          <div v-ripple class="share" @click="share(blog, index)">
-            <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
-            <span class="value inline-block align-middle">
-              {{ shorten(blog.totalShares) }}
-            </span>
-          </div>
-        </section>
+      <article v-for="blog in blogs" :key="blog.id">
+        <BlogPost :blog="blog" />
       </article>
     </section>
 
@@ -98,15 +26,14 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import { shorten, parseTimeUsingStandardLibrary } from '@/utils/utility'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/LoadingIcon'
-
-import { navigationRoutes } from '~/navigation/navigationRoutes'
+import BlogPost from '~/components/common/BlogPost'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
   components: {
+    BlogPost,
     LoadingIcon,
     ClientOnly,
   },
@@ -118,7 +45,6 @@ export default {
   },
   data() {
     return {
-      navigationRoutes,
       blogs: [],
       page: 1,
       blogFetchCursorEndpoint: endpoints.blog.fetch,
@@ -142,64 +68,6 @@ export default {
   mounted() {},
 
   methods: {
-    parseTimeUsingStandardLibrary,
-    shorten,
-
-    navigateTo(path) {
-      this.$router.push(path)
-    },
-
-    async like(blog, index) {
-      try {
-        const action = await this.$axios
-          .$post(endpoints.blog.like, {
-            blog_id: blog.id,
-          })
-          .then(({ action }) => action)
-        action === 'like'
-          ? this.blogs[index].totalLikes++
-          : this.blogs[index].totalLikes--
-        this.blogs[index].isLiked = !this.blogs[index].isLiked
-      } catch (e) {
-        console.error(e)
-      }
-    },
-
-    async comment(blog) {
-      await this.$router.push(
-        navigationRoutes.Home.Blogs.Comments.BlogId.replace('{BlogId}', blog.id)
-      )
-    },
-
-    async share(blog, index) {
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: blog.title + '- Floracasy',
-            text: blog.subtitle,
-            url: navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id),
-          })
-          try {
-            await this.$axios
-              .$post(endpoints.blog.share, {
-                blog_id: blog.id,
-              })
-              .then(() => {
-                this.blogs[index].totalShares++
-              })
-          } catch (e) {
-            this.blogs[index].totalShares--
-          }
-        } catch (error) {
-          console.log('Error sharing:', error)
-        }
-      } else {
-        console.log(
-          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
-        )
-      }
-    },
-
     async infiniteHandler($state) {
       try {
         const { results, next } = await this.$axios.$get(
@@ -226,61 +94,6 @@ export default {
 
 .scrollable-blog-list {
   article {
-    .content {
-      img {
-        width: 100%;
-        object-fit: cover;
-        height: 155px;
-        box-shadow: $default-box-shadow;
-        border-radius: $double-unit;
-      }
-
-      small {
-        color: $muted;
-      }
-
-      .top-line {
-        display: flex !important;
-        position: relative;
-
-        i {
-          position: absolute !important;
-          right: -$medium-unit;
-          font-size: $x-large-unit - $double-unit;
-          top: -$standard-unit;
-          height: 2 * $xx-large-unit;
-          width: 2 * $xx-large-unit;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-          color: $secondary;
-        }
-      }
-    }
-
-    .blog-actions {
-      font-family: $Nunito-Sans;
-      color: $secondary;
-      font-size: 1.3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      div {
-        display: flex;
-        justify-content: center;
-        height: 2 * $large-unit;
-        width: 100%;
-        align-items: center;
-
-        .value {
-          color: $muted;
-          font-size: 1rem;
-        }
-      }
-    }
-
     &:nth-child(even) {
       background: $nav-bar-bg;
       box-shadow: $default-box-shadow;
