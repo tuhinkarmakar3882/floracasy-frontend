@@ -39,7 +39,6 @@ export const navigationRoutes = {
       HelpAndSupport: '/Home/MoreOptions/HelpAndSupport',
       Payments: {
         index: '/Home/MoreOptions/Payments',
-        InsightView: '/Home/MoreOptions/Payments/InsightView',
       },
       Preferences: {
         index: '/Home/MoreOptions/Preferences',
