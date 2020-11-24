@@ -11,7 +11,7 @@
             >
               {{ blog.author.displayName }}
             </nuxt-link>
-            <strong>IN</strong>
+            <strong class="mx-1">IN</strong>
             <nuxt-link
               v-ripple=""
               :to="
@@ -240,6 +240,7 @@ export default {
       }
 
       .top-line {
+        display: flex !important;
         position: relative;
 
         i {

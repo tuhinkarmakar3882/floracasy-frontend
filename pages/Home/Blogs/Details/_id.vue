@@ -1,14 +1,14 @@
 <template>
   <div class="blog-details-page py-4">
     <section v-if="blog" class="px-4">
-      <p class="mb-2">
+      <p class="mb-2" style="display: flex !important">
         <nuxt-link
           :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
           class="no-underline"
         >
           {{ blog.author.displayName }}
         </nuxt-link>
-        IN
+        <strong class="mx-1">IN</strong>
         <nuxt-link
           :to="
             navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
