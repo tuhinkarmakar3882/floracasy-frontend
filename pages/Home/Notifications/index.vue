@@ -109,6 +109,7 @@ export default {
       showBanner: false,
       maybe: false,
       computedHeight: 0,
+      notificationEndpoint: endpoints.notification_system.getNotificationsByUid,
     }
   },
 
@@ -171,17 +172,12 @@ export default {
       await this.setupUser()
 
       try {
-        const results = await this.$axios.$get(
-          endpoints.notification_system.getNotificationsByUid,
-          {
-            params: {
-              page: this.page,
-              uid: this.user.uid,
-            },
-          }
+        const { results, next } = await this.$axios.$get(
+          this.notificationEndpoint,
+          { params: { uid: this.user.uid } }
         )
         if (results.length) {
-          this.page += 1
+          this.notificationEndpoint = next
           this.notifications.push(...results)
           $state.loaded()
         } else {
