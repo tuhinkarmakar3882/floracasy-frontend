@@ -40,9 +40,7 @@ export const navigationRoutes = {
       Payments: '/Home/MoreOptions/Payments',
       Preferences: {
         index: '/Home/MoreOptions/Preferences',
-        EditProfile: {
-          index: '/Home/MoreOptions/Preferences/EditProfile',
-        },
+        EditProfile: '/Home/MoreOptions/Preferences/EditProfile',
         NotificationSettings:
           '/Home/MoreOptions/Preferences/NotificationSettings',
       },
