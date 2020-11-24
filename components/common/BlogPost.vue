@@ -23,6 +23,7 @@
           {{ blog.category.name }}
         </nuxt-link>
         <i
+          v-ripple="'#4f4f4f5F'"
           class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
           @click="showOptions = !showOptions"
         />
@@ -233,6 +234,7 @@ export default {
         justify-content: center;
         align-items: center;
         color: $secondary;
+        border-radius: $nano-unit;
       }
     }
 
@@ -242,6 +244,7 @@ export default {
       border-radius: $nano-unit;
       right: $medium-unit;
       box-shadow: $down-only-box-shadow;
+      max-width: 300px;
 
       ul {
         list-style: none;
