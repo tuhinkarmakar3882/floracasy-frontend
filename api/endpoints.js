@@ -14,13 +14,12 @@ const endpoints = {
     create: 'blog/create/',
     detail: 'blog/detail/',
 
-    // update: 'blog/update/',
-    // delete: 'blog/delete/',
-
     like: 'blog/like/',
     share: 'blog/share/',
 
     getBlogsByUid: 'blog/get_blogs_by_uid/',
+
+    addOrRemoveToSaveBlogs: 'blog/add_or_remove_to_save_blogs/',
   },
   categories: {
     fetch: 'categories/fetch/',
