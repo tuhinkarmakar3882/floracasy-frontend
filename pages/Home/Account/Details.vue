@@ -48,8 +48,24 @@
         </section>
 
         <section class="actions">
-          <button v-ripple class="primary-btn px-6">Payments</button>
-          <button v-ripple class="primary-outlined-btn px-6">
+          <button
+            v-ripple=""
+            class="primary-btn px-6"
+            @click="
+              $router.push(navigationRoutes.Home.MoreOptions.Payments.index)
+            "
+          >
+            Payments
+          </button>
+          <button
+            v-ripple=""
+            class="primary-outlined-btn px-6"
+            @click="
+              $router.push(
+                navigationRoutes.Home.MoreOptions.Preferences.SavedBlogs
+              )
+            "
+          >
             Saved Blogs
           </button>
         </section>
