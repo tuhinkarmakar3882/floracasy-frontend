@@ -268,7 +268,11 @@ export default {
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
-        console.error(e)
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Network Error',
+          notificationType: 'error',
+          dismissible: true,
+        })
       }
     },
     async addOrRemoveToSaveBlogs() {
@@ -278,7 +282,11 @@ export default {
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
-        console.error(e)
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Network Error',
+          notificationType: 'error',
+          dismissible: true,
+        })
       }
     },
     async comment() {
@@ -312,12 +320,18 @@ export default {
             this.blog.totalShares--
           }
         } catch (error) {
-          console.log('Error sharing:', error)
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Unable to share',
+            notificationType: 'error',
+            dismissible: true,
+          })
         }
       } else {
-        console.log(
-          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
-        )
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Not Yet Supported on this Browser',
+          notificationType: 'warning',
+          dismissible: true,
+        })
       }
     },
     async handleBackButtonPress() {
