@@ -1,61 +1,88 @@
 <template>
-  <div class="blog-details-page py-4">
-    <section v-if="blog" class="px-4">
-      <p class="mb-2" style="display: flex !important">
-        <nuxt-link
-          :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
-          class="no-underline"
-        >
-          {{ blog.author.displayName }}
-        </nuxt-link>
-        <strong class="mx-1">IN</strong>
-        <nuxt-link
-          :to="
-            navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
-              '{name}',
-              blog.category.name
-            )
-          "
-          class="no-underline"
-        >
-          {{ blog.category.name }}
-        </nuxt-link>
-      </p>
-      <h3 class="blog-title mb-4">
-        {{ blog.title }}
-      </h3>
-      <small class="timestamp">
-        <span class="mdi mdi-clock-time-nine-outline" />
-        {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
-      </small>
-
-      <img
-        v-if="blog.coverImage"
-        class="mt-5 blog-intro-image"
-        :src="blog.coverImage"
-        :alt="blog.title"
-        style="width: 100%; object-fit: cover; max-height: 250px"
+  <AppFeel
+    custom-header
+    class="blog-details-page"
+    :on-back="navigationRoutes.Home.DashBoard"
+  >
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple=""
+        class="mdi mdi-arrow-left"
+        @click="handleBackButtonPress"
       />
-      <p class="my-4">
-        {{ blog.subtitle }}
-      </p>
-    </section>
-    <div v-if="blog" class="blog-body">
-      <article class="ql-snow">
-        <div
-          class="ql-editor"
-          v-html="noXSS(blog.content, sanitizationConfig)"
-        />
-      </article>
-    </div>
-    <div
-      v-else
-      class="text-center"
-      style="display: grid; place-items: center; height: calc(100vh - 120px)"
-    >
-      <LoadingIcon />
-    </div>
-  </div>
+      <h6 v-ripple="" class="ml-4">
+        <nuxt-link
+          class="brand-name no-underline"
+          to="/"
+          style="color: white !important"
+        >
+          Floracasy
+        </nuxt-link>
+      </h6>
+      <nuxt-link v-ripple="" to="/Home/Messages" class="ml-auto">
+        <h5 class="mdi mdi-message-text" />
+      </nuxt-link>
+    </template>
+    <template slot="main">
+      <div v-if="blog" class="my-6">
+        <section class="px-4">
+          <p class="mb-2" style="display: flex !important">
+            <nuxt-link
+              :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+              class="no-underline"
+            >
+              {{ blog.author.displayName }}
+            </nuxt-link>
+            <strong class="mx-1">IN</strong>
+            <nuxt-link
+              :to="
+                navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+                  '{name}',
+                  blog.category.name
+                )
+              "
+              class="no-underline"
+            >
+              {{ blog.category.name }}
+            </nuxt-link>
+          </p>
+          <h3 class="blog-title mb-4">
+            {{ blog.title }}
+          </h3>
+          <small class="timestamp">
+            <span class="mdi mdi-clock-time-nine-outline" />
+            {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
+          </small>
+
+          <img
+            v-if="blog.coverImage"
+            class="mt-5 blog-intro-image"
+            :src="blog.coverImage"
+            :alt="blog.title"
+            style="width: 100%; object-fit: cover; max-height: 250px"
+          />
+          <p class="my-4">
+            {{ blog.subtitle }}
+          </p>
+        </section>
+        <section class="blog-body">
+          <article class="ql-snow">
+            <div
+              class="ql-editor"
+              v-html="noXSS(blog.content, sanitizationConfig)"
+            />
+          </article>
+        </section>
+      </div>
+      <div
+        v-else
+        class="text-center"
+        style="display: grid; place-items: center; height: calc(100vh - 120px)"
+      >
+        <LoadingIcon />
+      </div>
+    </template>
+  </AppFeel>
 </template>
 
 <script>
@@ -67,23 +94,26 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'highlight.js/styles/tomorrow.css'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import AppFeel from '~/components/Layout/AppFeel'
 
 export default {
   name: 'BlogDetails',
-  components: { LoadingIcon },
+  components: { AppFeel, LoadingIcon },
   layout({ store }) {
-    return store.state.authState ? 'MobileApp' : 'PublicRoutes'
+    return store.state.authState ? '' : 'PublicRoutes'
   },
 
-  async asyncData({ $axios, params }) {
+  async asyncData({ $axios, params, from: prevURL }) {
     const response = await $axios.$get(endpoints.blog.detail, {
       params: { id: params.id },
     })
-    return { blog: response }
+    return { blog: response, prevURL }
   },
 
   data() {
     return {
+      pageTitle: this.$route.params.name,
+      prevURL: null,
       navigationRoutes,
       noXSS: sanitizeHtml,
       sanitizationConfig: {
@@ -198,6 +228,18 @@ export default {
 
   methods: {
     parseTimeUsingStandardLibrary,
+    async handleBackButtonPress() {
+      if (this.prevURL) {
+        await this.$router.back()
+      } else {
+        await this.$router.replace({
+          path: navigationRoutes.Home.DashBoard,
+          query: {
+            tabNumber: 2,
+          },
+        })
+      }
+    },
   },
 
   head() {
