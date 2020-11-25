@@ -36,6 +36,20 @@
               &times;
             </li>
             <li
+              v-ripple="'#6DD0BF5F'"
+              class="py-2 px-6"
+              @click="addOrRemoveToSaveBlogs"
+            >
+              <span
+                class="icon mdi"
+                :class="
+                  blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
+                "
+                style="color: #6dd0bf"
+              />
+              {{ !blog.isSavedForLater ? 'Save for later' : 'Saved' }}
+            </li>
+            <li
               v-for="(optionItem, index) in dropdownOptionItems"
               :key="index"
               v-ripple="`${optionItem.color}5F`"
@@ -118,11 +132,6 @@ export default {
       navigationRoutes,
       dropdownOptionItems: [
         {
-          text: 'Save for later',
-          icon: 'mdi-bookmark',
-          color: '#6DD0BF',
-        },
-        {
           text: 'Not Interested',
           icon: 'mdi-cancel',
           color: '#f5a049',
@@ -198,6 +207,21 @@ export default {
         )
       }
     },
+
+    async addOrRemoveToSaveBlogs() {
+      try {
+        await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
+          blog_id: this.blog.id,
+        })
+        this.blog.isSavedForLater = !this.blog.isSavedForLater
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Network Error',
+          notificationType: 'error',
+          dismissible: true,
+        })
+      }
+    },
   },
 }
 </script>
@@ -207,6 +231,8 @@ export default {
 @import 'assets/transitions-and-animations';
 
 .blog-post-component {
+  transition: all 150ms ease-in-out;
+
   .content {
     img {
       width: 100%;
@@ -248,6 +274,7 @@ export default {
       max-width: 300px;
       min-width: 232px;
       z-index: $bring-to-front - 100;
+      transition: all 150ms ease-in-out;
 
       ul {
         list-style: none;

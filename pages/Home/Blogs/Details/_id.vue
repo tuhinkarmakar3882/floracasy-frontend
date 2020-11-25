@@ -275,6 +275,7 @@ export default {
         })
       }
     },
+
     async addOrRemoveToSaveBlogs() {
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
@@ -289,6 +290,7 @@ export default {
         })
       }
     },
+
     async comment() {
       await this.$router.push(
         navigationRoutes.Home.Blogs.Comments.BlogId.replace(
@@ -297,6 +299,7 @@ export default {
         )
       )
     },
+
     async share() {
       if (navigator.share) {
         try {
@@ -334,6 +337,7 @@ export default {
         })
       }
     },
+
     async handleBackButtonPress() {
       if (this.prevURL) {
         await this.$router.back()
