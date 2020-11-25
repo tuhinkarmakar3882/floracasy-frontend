@@ -1,6 +1,7 @@
 <template>
   <AppFeel
     custom-header
+    auto-hide
     class="blog-details-page"
     :on-back="navigationRoutes.Home.DashBoard"
   >
@@ -82,6 +83,32 @@
         <LoadingIcon />
       </div>
     </template>
+    <template slot="footer">
+      <section class="actions">
+        <div v-ripple class="like" @click="like()">
+          <i
+            class="mdi"
+            :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          />
+        </div>
+        <div v-ripple="" class="comment" @click="comment()">
+          <i class="mdi mdi-message-text" />
+        </div>
+        <div
+          v-ripple=""
+          class="save"
+          @click="blog['isSaved'] = !blog['isSaved']"
+        >
+          <i
+            class="mdi"
+            :class="blog.isSaved ? 'mdi-bookmark' : 'mdi-bookmark-outline'"
+          />
+        </div>
+        <div v-ripple="" class="share" @click="share()">
+          <i class="mdi mdi-share-variant" />
+        </div>
+      </section>
+    </template>
   </AppFeel>
 </template>
 
@@ -89,7 +116,7 @@
 import sanitizeHtml from 'sanitize-html'
 import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import { parseTimeUsingStandardLibrary } from '@/utils/utility'
+import { parseTimeUsingStandardLibrary, shorten } from '@/utils/utility'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'highlight.js/styles/tomorrow.css'
@@ -228,6 +255,63 @@ export default {
 
   methods: {
     parseTimeUsingStandardLibrary,
+    shorten,
+
+    navigateTo(path) {
+      this.$router.push(path)
+    },
+    async like() {
+      try {
+        const action = await this.$axios
+          .$post(endpoints.blog.like, {
+            blog_id: this.blog.id,
+          })
+          .then(({ action }) => action)
+        action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
+        this.blog.isLiked = !this.blog.isLiked
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async comment() {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Comments.BlogId.replace(
+          '{BlogId}',
+          this.blog.id
+        )
+      )
+    },
+    async share() {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: this.blog.title + '- Floracasy',
+            text: this.blog.subtitle,
+            url: navigationRoutes.Home.Blogs.Details.replace(
+              '{id}',
+              this.blog.id
+            ),
+          })
+          try {
+            await this.$axios
+              .$post(endpoints.blog.share, {
+                blog_id: this.blog.id,
+              })
+              .then(() => {
+                this.blog.totalShares++
+              })
+          } catch (e) {
+            this.blog.totalShares--
+          }
+        } catch (error) {
+          console.log('Error sharing:', error)
+        }
+      } else {
+        console.log(
+          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
+        )
+      }
+    },
     async handleBackButtonPress() {
       if (this.prevURL) {
         await this.$router.back()
@@ -241,7 +325,6 @@ export default {
       }
     },
   },
-
   head() {
     return {
       title: this.blog.title,
@@ -280,18 +363,43 @@ export default {
     h5,
     h6 {
       position: relative;
-      margin: $large-unit 0;
+    }
 
-      //&::after {
-      //  content: '';
-      //  border-radius: $standard-unit;
-      //  position: absolute;
-      //  bottom: -$micro-unit;
-      //  left: 0;
-      //  height: $nano-unit;
-      //  width: clamp(100px, 20%, 250px);
-      //  background-color: darken($secondary-matte, $lighten-percentage);
-      //}
+    h1,
+    h2,
+    h3 {
+      margin: $large-unit 0;
+    }
+
+    h4,
+    h5,
+    h6 {
+      margin: $medium-unit 0;
+    }
+  }
+
+  .actions {
+    border-radius: 0;
+    position: fixed;
+    width: 100%;
+    z-index: $bring-to-front;
+    bottom: 0;
+    background-color: $nav-bar-bg;
+    height: 56px;
+    font-family: $Nunito-Sans;
+    color: $secondary;
+    box-shadow: $up-only-box-shadow;
+    font-size: $large-unit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 2 * $large-unit;
+      width: 100%;
     }
   }
 }

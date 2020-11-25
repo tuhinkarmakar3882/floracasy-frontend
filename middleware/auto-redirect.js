@@ -3,7 +3,6 @@ export default function ({ route, redirect }) {
   console.log(modifiedFullPath, route.fullPath)
 
   if (modifiedFullPath !== route.fullPath) {
-    console.log('client...')
     process.client ? (window.location = '/') : redirect('/')
   }
 }
