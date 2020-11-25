@@ -1,9 +1,11 @@
+$animation-duration: 300ms;
+
 .the-router-page-content {
-  transition: all .4s cubic-bezier(.55, 0, .1, 1);
+  transition: all $animation-duration cubic-bezier(.55, 0, .1, 1);
 }
 
 .page-enter-active, .page-leave-active {
-  transition: all .4s cubic-bezier(.55, 0, .1, 1);
+  transition: all $animation-duration cubic-bezier(.55, 0, .1, 1);
 }
 
 .page-enter, .page-leave-active {
@@ -18,4 +20,22 @@
   opacity: 0;
   transform: scale(.99);
   filter: grayscale(100%);
+}
+
+.slide-left-enter-active, .slide-left-leave-active {
+  transition: all $animation-duration ease-in-out;
+}
+
+.slide-left-enter, .slide-left-leave-active {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
+.slide-right-enter-active, .slide-right-leave-active {
+  transition: all $animation-duration ease-in-out;
+}
+
+.slide-right-enter, .slide-right-leave-active {
+  transform: translateY(-100px);
+  opacity: 0;
 }
