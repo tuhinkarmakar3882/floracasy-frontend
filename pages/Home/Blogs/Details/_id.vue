@@ -85,26 +85,24 @@
     </template>
     <template slot="footer">
       <section class="actions">
-        <div v-ripple class="like" @click="like()">
+        <div v-ripple class="like" @click="like">
           <i
             class="mdi"
             :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
           />
         </div>
-        <div v-ripple="" class="comment" @click="comment()">
+        <div v-ripple="" class="comment" @click="comment">
           <i class="mdi mdi-message-text" />
         </div>
-        <div
-          v-ripple=""
-          class="save"
-          @click="blog['isSaved'] = !blog['isSaved']"
-        >
+        <div v-ripple="" class="save" @click="addOrRemoveToSaveBlogs">
           <i
             class="mdi"
-            :class="blog.isSaved ? 'mdi-bookmark' : 'mdi-bookmark-outline'"
+            :class="
+              blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
+            "
           />
         </div>
-        <div v-ripple="" class="share" @click="share()">
+        <div v-ripple="" class="share" @click="share">
           <i class="mdi mdi-share-variant" />
         </div>
       </section>
@@ -269,6 +267,16 @@ export default {
           .then(({ action }) => action)
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async addOrRemoveToSaveBlogs() {
+      try {
+        await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
+          blog_id: this.blog.id,
+        })
+        this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
         console.error(e)
       }
