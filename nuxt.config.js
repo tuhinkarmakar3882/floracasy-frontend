@@ -143,10 +143,12 @@ export default {
   },
 
   loading: { color: '#C5C2FF' },
+
   layoutTransition: {
     name: 'gray-shift',
     mode: 'out-in',
   },
+
   pageTransition: {
     name: 'page',
     mode: 'out-in',
