@@ -40,7 +40,7 @@
       <InfiniteScrollingBlogLists />
     </section>
 
-    <div v-if="tabNumber === 2">
+    <div v-if="tabNumber === 2" style="min-height: calc(100vh - 180px)">
       <CategoriesLineUp />
     </div>
   </div>

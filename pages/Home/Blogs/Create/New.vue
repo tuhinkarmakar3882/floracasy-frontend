@@ -1,8 +1,6 @@
 <template>
   <AppFeel
     class="create-new-blog-page"
-    :show-back-button="false"
-    center-aligned
     :on-back="navigationRoutes.Home.Blogs.Create.index"
   >
     <template slot="app-bar-title">
@@ -257,7 +255,7 @@ export default {
       coverImageUrl: getFromLocalStorageOrReturnDefault('coverImageUrl'),
       content: getFromLocalStorageOrReturnDefault(
         'draft',
-        `<h2>Every Great Blog starts with an Amazing title</h2><p>Your great Blog content goes here...</p>`
+        `<small>Write your content here...</small>`
       ),
     }
   },

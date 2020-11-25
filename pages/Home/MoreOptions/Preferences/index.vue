@@ -82,8 +82,7 @@ export default {
           name: 'Saved Blogs',
           icon: 'mdi mdi-bookmark',
           color: '#f5a049',
-
-          route: navigationRoutes.Home.MoreOptions.Preferences.index,
+          route: navigationRoutes.Home.MoreOptions.Preferences.SavedBlogs,
         },
       ],
     }

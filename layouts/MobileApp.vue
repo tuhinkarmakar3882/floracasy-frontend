@@ -2,11 +2,9 @@
   <div class="app-layout">
     <header>
       <h6 v-ripple>
-        <nuxt-link class="brand-name" to="/" style="color: white !important">
-          Floracasy
-        </nuxt-link>
+        <nuxt-link class="brand-name" to="/"> Floracasy </nuxt-link>
       </h6>
-      <nuxt-link to="/Home/Messages">
+      <nuxt-link v-ripple="" to="/Home/Messages">
         <h5 class="mdi mdi-message-text" />
       </nuxt-link>
     </header>
@@ -153,7 +151,7 @@ export default {
 
       a {
         text-decoration: none;
-        color: white;
+        color: white !important;
       }
     }
   }

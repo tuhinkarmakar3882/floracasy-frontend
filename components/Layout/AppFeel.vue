@@ -1,13 +1,20 @@
 <template>
   <div class="app">
     <NotificationBadge />
-    <header v-if="customHeader">
+    <header
+      v-if="customHeader"
+      :style="[
+        autoHide && {
+          top: showTopBar ? '0 !important' : '-56px !important',
+        },
+      ]"
+    >
       <slot name="app-bar-custom-header" />
     </header>
     <header v-else :style="centerAligned && 'justify-content : center'">
       <h5
         v-if="showBackButton"
-        v-ripple
+        v-ripple=""
         class="mdi mdi-arrow-left"
         @click="navigateTo(onBack)"
       />
@@ -18,11 +25,15 @@
     <main>
       <slot name="main"></slot>
     </main>
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
   </div>
 </template>
 
 <script>
 import NotificationBadge from '@/components/NotificationBadge'
+
 export default {
   name: 'AppFeel',
   components: { NotificationBadge },
@@ -43,10 +54,38 @@ export default {
       type: Boolean,
       default: false,
     },
+    autoHide: {
+      type: Boolean,
+      default: false,
+    },
   },
+
+  data() {
+    return {
+      showTopBar: true,
+      prevScrollPos: 0,
+    }
+  },
+
+  mounted() {
+    this.autoHide && document.addEventListener('scroll', this.autoHideOnScroll)
+  },
+
+  beforeDestroy() {
+    this.autoHide &&
+      document.removeEventListener('scroll', this.autoHideOnScroll)
+  },
+
   methods: {
     async navigateTo(path) {
       await this.$router.replace(path)
+    },
+
+    autoHideOnScroll() {
+      console.log('yay')
+      const currentScrollPos = window.pageYOffset
+      this.showTopBar = this.prevScrollPos > currentScrollPos
+      this.prevScrollPos = currentScrollPos
     },
   },
 }
@@ -67,6 +106,7 @@ export default {
     height: 2 * $x-large-unit;
     background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;
+    transition: all 0.2s ease-in-out;
 
     p {
       font-size: 1.2rem;

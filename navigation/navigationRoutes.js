@@ -43,6 +43,7 @@ export const navigationRoutes = {
       Preferences: {
         index: '/Home/MoreOptions/Preferences',
         EditProfile: '/Home/MoreOptions/Preferences/EditProfile',
+        SavedBlogs: '/Home/MoreOptions/Preferences/SavedBlogs',
         NotificationSettings:
           '/Home/MoreOptions/Preferences/NotificationSettings',
       },

@@ -5,18 +5,7 @@
     :on-back="navigationRoutes.Home.DashBoard"
   >
     <template slot="app-bar-custom-header">
-      <h5
-        v-ripple
-        class="mdi mdi-arrow-left"
-        @click="
-          $router.push({
-            path: navigationRoutes.Home.DashBoard,
-            query: {
-              tabNumber: 2,
-            },
-          })
-        "
-      />
+      <h5 v-ripple class="mdi mdi-arrow-left" @click="handleBackButtonPress" />
       <p class="ml-6">
         {{ pageTitle }}
       </p>
@@ -37,13 +26,34 @@ export default {
   name: 'CategoryWise',
   components: { InfiniteScrollingBlogLists, AppFeel },
   middleware: 'isAuthenticated',
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
       navigationRoutes,
       pageTitle: this.$route.params.name,
+      prevURL: null,
     }
   },
   mounted() {},
+
+  methods: {
+    async handleBackButtonPress() {
+      if (this.prevURL) {
+        await this.$router.back()
+      } else {
+        await this.$router.replace({
+          path: navigationRoutes.Home.DashBoard,
+          query: {
+            tabNumber: 2,
+          },
+        })
+      }
+    },
+  },
 
   head() {
     return {

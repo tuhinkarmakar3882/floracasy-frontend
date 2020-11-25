@@ -11,10 +11,10 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   router: {
     middleware: 'auto-redirect',
@@ -143,10 +143,12 @@ export default {
   },
 
   loading: { color: '#C5C2FF' },
+
   layoutTransition: {
     name: 'gray-shift',
     mode: 'out-in',
   },
+
   pageTransition: {
     name: 'page',
     mode: 'out-in',
