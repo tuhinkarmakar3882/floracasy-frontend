@@ -3,12 +3,7 @@ export default function ({ route, redirect }) {
   console.log(modifiedFullPath, route.fullPath)
 
   if (modifiedFullPath !== route.fullPath) {
-    if (process.client) {
-      console.log('client...')
-      redirect(modifiedFullPath)
-    } else {
-      console.log('server...')
-      redirect(modifiedFullPath)
-    }
+    console.log('client...')
+    process.client ? (window.location = '/') : redirect('/')
   }
 }
