@@ -110,6 +110,7 @@
           :on-click="addComment"
           :disabled="!canSendComment"
           :loading="isSendingComment"
+          style="background: transparent !important"
         >
           <span class="mdi mdi-send" />
         </RippleButton>
