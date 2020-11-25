@@ -1,8 +1,6 @@
 <template>
   <AppFeel
     class="create-new-blog-page"
-    :show-back-button="false"
-    center-aligned
     :on-back="navigationRoutes.Home.Blogs.Create.index"
   >
     <template slot="app-bar-title">
