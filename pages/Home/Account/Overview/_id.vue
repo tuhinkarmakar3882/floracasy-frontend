@@ -1,13 +1,13 @@
 <template>
-  <div class="text-center py-6 details-page">
-    <main v-if="loadingProfile">
+  <div class="py-6 details-page">
+    <main v-if="loadingProfile" class="text-center">
       <div class="pageLoading">
         <LoadingIcon />
         Fetching data from server
       </div>
     </main>
     <main v-else>
-      <section v-if="otherUser" class="user-profile">
+      <section v-if="otherUser" class="text-center user-profile px-1">
         <div class="basic-data">
           <img
             alt="profile-picture"
@@ -60,50 +60,39 @@
       </section>
 
       <section class="recent-activity">
-        <h4 class="heading-title">Recent Activities</h4>
+        <h4 class="heading-title" style="margin-bottom: 2rem !important">
+          Recent Activities
+        </h4>
 
-        <section
+        <BlogPost
           v-for="activity in recentActivities"
           :key="activity.id"
-          v-ripple
-          class="activity py-8 my-4"
-          @click="
-            $router.push(
-              navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
-            )
-          "
-        >
-          <div class="content">
-            <img :alt="activity.title" :src="activity.coverImage" />
-            <div class="data text-left">
-              <h6>{{ activity.title }}</h6>
-              <p>{{ activity.subtitle.substr(0, 30) }}...</p>
-              <small style="font-size: 13px">
-                {{ parseTimeUsingMoment(activity.createdAt) }}</small
-              >
-            </div>
-          </div>
-        </section>
-
-        <client-only>
-          <infinite-loading @infinite="infiniteHandler">
-            <template slot="spinner">
-              <LoadingIcon class="mt-4 mb-6" />
-              <p>Loading Recent Activities Data...</p>
-            </template>
-            <template slot="error">
-              <p class="danger-light my-6">Network Error</p>
-            </template>
-            <template slot="no-more" />
-            <template slot="no-results">
-              <div class="no-activity">
-                <p class="my-5">It's Lonely Here...</p>
-              </div>
-            </template>
-          </infinite-loading>
-        </client-only>
+          class="activity"
+          :blog="activity"
+        />
       </section>
     </main>
+    <client-only>
+      <infinite-loading @infinite="infiniteHandler">
+        <template slot="spinner">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p>Loading Recent Activities Data...</p>
+        </template>
+        <template slot="error">
+          <p class="danger-light my-6">Network Error</p>
+        </template>
+        <template slot="no-more">
+          <div class="no-activity">
+            <p class="my-5">That's all :)</p>
+          </div>
+        </template>
+        <template slot="no-results">
+          <div class="no-activity">
+            <p class="my-5">It's Lonely Here...</p>
+          </div>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
@@ -114,10 +103,11 @@ import endpoints from '~/api/endpoints'
 import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '~/utils/utility'
+import BlogPost from '~/components/common/BlogPost'
 
 export default {
   name: 'Overview',
-  components: { LoadingIcon, ClientOnly },
+  components: { BlogPost, LoadingIcon, ClientOnly },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
 
@@ -206,7 +196,7 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  padding: 2rem 0.5rem;
+  padding: 2rem 0;
 
   button {
     min-width: auto;
@@ -304,6 +294,7 @@ export default {
   }
 
   .no-activity {
+    color: $muted;
     display: grid;
     place-items: center;
   }
