@@ -11,20 +11,14 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
-
-  router: {
-    middleware: 'auto-redirect',
+  modern: {
+    client: true,
+    server: true,
   },
 
+  router: {},
+
   plugins: [
-    {
-      src: '~/plugins/workbox-refresh-to-update.js',
-      mode: 'client',
-    },
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
     {
@@ -51,7 +45,7 @@ export default {
 
   modules: [
     '@nuxtjs/axios',
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     '@nuxt/content',
     'cookie-universal-nuxt',
     [
@@ -123,6 +117,16 @@ export default {
         href: '/favicon.ico',
       },
       {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: 'https://fonts.gstatic.com/',
+      },
+      {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: 'https://cdn.materialdesignicons.com/',
+      },
+      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
@@ -130,6 +134,7 @@ export default {
       },
       {
         rel: 'stylesheet',
+        type: 'text/css',
         href:
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
@@ -197,52 +202,65 @@ export default {
     },
   },
 
-  // pwa: {
-  //   meta: {
-  //     name: packageJson.appName,
-  //     author: 'Floracasy Team',
-  //     appleStatusBarStyle: 'black',
-  //     nativeUI: true,
-  //     background_color: packageJson.themeColor,
-  //     theme_color: packageJson.themeColor,
-  //     status_bar: packageJson.themeColor,
-  //   },
-  //   manifest: {
-  //     name: packageJson.appName,
-  //     description: packageJson.description,
-  //     short_name: 'Floracasy',
-  //     lang: 'en-US',
-  //     background_color: packageJson.themeColor,
-  //     theme_color: packageJson.themeColor,
-  //     status_bar: packageJson.themeColor,
-  //     display: 'standalone',
-  //   },
-  //   workbox: {
-  //     cleanupOutdatedCaches: true,
-  //
-  //     config: {
-  //       debug: true,
-  //     },
-  //     runtimeCaching: [
-  //       {
-  //         urlPattern: 'https://fonts.googleapis.com/.*',
-  //         handler: 'cacheFirst',
-  //         method: 'GET',
-  //         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-  //       },
-  //       {
-  //         urlPattern: 'https://cdn.materialdesignicons.com/.*',
-  //         handler: 'cacheFirst',
-  //         method: 'GET',
-  //         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-  //       },
-  //       {
-  //         urlPattern: 'https://fonts.gstatic.com/.*',
-  //         handler: 'cacheFirst',
-  //         method: 'GET',
-  //         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-  //       },
-  //     ],
-  //   },
-  // },
+  pwa: {
+    meta: {
+      name: packageJson.appName,
+      author: 'Floracasy Team',
+      appleStatusBarStyle: 'black',
+      nativeUI: true,
+      background_color: packageJson.themeColor,
+      theme_color: packageJson.themeColor,
+      status_bar: packageJson.themeColor,
+    },
+    manifest: {
+      name: packageJson.appName,
+      description: packageJson.description,
+      short_name: 'Floracasy',
+      lang: 'en-US',
+      background_color: packageJson.themeColor,
+      theme_color: packageJson.themeColor,
+      status_bar: packageJson.themeColor,
+      display: 'standalone',
+    },
+    workbox: {
+      cleanupOutdatedCaches: true,
+      offline: false,
+      enabled: true,
+      importScripts: [],
+      preCaching: [
+        {
+          url: '/?standalone=true',
+          revision: Date.now(),
+        },
+      ],
+      cacheOptions: {
+        cacheId: 'floracasy' + Date.now().toString(),
+        directoryIndex: '/',
+        revision: Date.now(),
+      },
+      config: {
+        debug: true,
+      },
+      runtimeCaching: [
+        {
+          urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://cdn.materialdesignicons.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://fonts.gstatic.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+      ],
+    },
+  },
 }
