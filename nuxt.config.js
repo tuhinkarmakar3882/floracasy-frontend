@@ -221,7 +221,7 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
-      start_url: '',
+      start_url: '/',
     },
     workbox: {
       cleanupOutdatedCaches: true,
