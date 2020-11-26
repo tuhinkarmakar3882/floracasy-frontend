@@ -1,5 +1,14 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target" : { "namespace": "android_app", "package_name": "com.floracasy.dev",
-    "sha256_cert_fingerprints": ["48:EF:5A:93:46:5B:40:FE:8A:13:DA:DF:97:7E:E7:1E:03:15:DB:67:BA:04:6C:FD:EF:82:71:ED:C3:B5:6E:BC"] }
-}]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "live.nubes.floracasy.dev",
+      "sha256_cert_fingerprints": [
+        "E0:43:15:80:87:99:7F:9C:2E:CB:E2:65:A5:B2:76:46:80:ED:65:45:76:21:12:9F:D1:33:8E:B7:4C:1F:C0:B5"
+      ]
+    }
+  }
+]
