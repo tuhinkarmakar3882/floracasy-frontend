@@ -308,9 +308,9 @@ export default {
 
       // Sw
       // swTemplate: undefined,
-      swUrl: 'service-worker.js',
-      swScope: '/',
-      swDest: undefined,
+      // swUrl: 'service-worker.js',
+      // swScope: '/',
+      // swDest: undefined,
 
       // Router
       // routerBase: undefined,
