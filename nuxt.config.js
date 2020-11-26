@@ -221,19 +221,14 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
-      start_url: '/',
+      start_url: '',
     },
     workbox: {
       cleanupOutdatedCaches: true,
       offline: false,
       enabled: true,
       importScripts: [],
-      preCaching: [
-        {
-          url: '/?standalone=true',
-          revision: Date.now(),
-        },
-      ],
+      preCaching: [],
       cacheOptions: {
         cacheId: 'floracasy' + Date.now().toString(),
         directoryIndex: '/',
