@@ -71,6 +71,30 @@ export default {
         },
       },
     ],
+
+    //  The Following should be used only while building an TWA app
+    // [
+    //   'nuxt-twa-module',
+    //   {
+    //     /* module options */
+    //     defaultUrl: 'https://dev.floracasy.nubes.live',
+    //     hostName: 'dev.floracasy.nubes.live',
+    //     applicationId: 'com.floracasy.dev',
+    //     launcherName: 'Floracasy',
+    //     versionCode: 1,
+    //     versionName: '1.0',
+    //     statusBarColor: packageJson.themeColor,
+    //     // The sha256Fingerprints by is an array with one SHA-256 key string.
+    //     // But if you have multiple you can add them to the array. More information about the website asociation:
+    //     // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
+    //     sha256Fingerprints: ['/* your SHA-256 keys */'],
+    //     /* optional */
+    //     /* overwrite default location for icon */
+    //     iconPath: '/static/icon.png',
+    //     /* Overwrite folder where to put .wellknown */
+    //     distFolder: '.nuxt/dist/client',
+    //   },
+    // ],
   ],
 
   buildModules: [
