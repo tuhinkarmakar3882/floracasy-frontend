@@ -245,7 +245,7 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
-      start_url: '/Home/Account/Details',
+      start_url: '/Home/Dashboard',
     },
     // workbox: false,
     workbox: {
