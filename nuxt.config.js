@@ -275,7 +275,7 @@ export default {
       cleanupOutdatedCaches: true,
 
       // Offline
-      offline: true,
+      offline: false,
       offlineStrategy: 'NetworkOnly',
       offlinePage: null,
       offlineAssets: [],
@@ -303,8 +303,8 @@ export default {
       ],
       routingExtensions: [],
       cacheAssets: true,
-      assetsURLPattern: undefined,
-      pagesURLPattern: undefined,
+      // assetsURLPattern: undefined,
+      // pagesURLPattern: undefined,
 
       // Sw
       // swTemplate: undefined,
