@@ -245,43 +245,45 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
-      start_url: '/',
+      start_url: '/Home/Account/Details',
     },
-    workbox: false,
-    // workbox: {
-    //   cleanupOutdatedCaches: true,
-    //   offline: false,
-    //   enabled: true,
-    //   importScripts: [],
-    //   preCaching: [],
-    //   cacheOptions: {
-    //     cacheId: 'floracasy' + Date.now().toString(),
-    //     directoryIndex: '/',
-    //     revision: Date.now(),
-    //   },
-    //   config: {
-    //     debug: true,
-    //   },
-    //   runtimeCaching: [
-    //     {
-    //       urlPattern: 'https://fonts.googleapis.com/.*',
-    //       handler: 'cacheFirst',
-    //       method: 'GET',
-    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-    //     },
-    //     {
-    //       urlPattern: 'https://cdn.materialdesignicons.com/.*',
-    //       handler: 'cacheFirst',
-    //       method: 'GET',
-    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-    //     },
-    //     {
-    //       urlPattern: 'https://fonts.gstatic.com/.*',
-    //       handler: 'cacheFirst',
-    //       method: 'GET',
-    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-    //     },
-    //   ],
-    // },
+    // workbox: false,
+    workbox: {
+      swUrl: 'service-worker.js',
+      swScope: '/',
+      cleanupOutdatedCaches: true,
+      offline: false,
+      enabled: true,
+      importScripts: [],
+      preCaching: [],
+      cacheOptions: {
+        cacheId: 'floracasy' + Date.now().toString(),
+        directoryIndex: '/',
+        revision: Date.now(),
+      },
+      config: {
+        debug: true,
+      },
+      runtimeCaching: [
+        {
+          urlPattern: 'https://fonts.googleapis.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://cdn.materialdesignicons.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+        {
+          urlPattern: 'https://fonts.gstatic.com/.*',
+          handler: 'cacheFirst',
+          method: 'GET',
+          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+        },
+      ],
+    },
   },
 }
