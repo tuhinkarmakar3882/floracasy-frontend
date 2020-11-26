@@ -245,7 +245,7 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
-      start_url: '/Home/Dashboard',
+      start_url: '/',
     },
     // workbox: false,
     workbox: {
@@ -276,7 +276,7 @@ export default {
 
       // Offline
       offline: false,
-      offlineStrategy: 'NetworkOnly',
+      offlineStrategy: 'NetworkFirst',
       offlinePage: null,
       offlineAssets: [],
 
