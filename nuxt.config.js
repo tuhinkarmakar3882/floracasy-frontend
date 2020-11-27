@@ -11,20 +11,14 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
-
-  router: {
-    middleware: 'auto-redirect',
+  modern: {
+    client: true,
+    server: true,
   },
 
+  router: {},
+
   plugins: [
-    {
-      src: '~/plugins/workbox-refresh-to-update.js',
-      mode: 'client',
-    },
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
     {
@@ -77,6 +71,24 @@ export default {
         },
       },
     ],
+
+    // The Following should be used only while building an TWA app
+    [
+      'nuxt-twa-module',
+      {
+        /* module options */
+        defaultUrl: 'https://dev.floracasy.nubes.live',
+        hostName: 'dev.floracasy.nubes.live',
+        applicationId: 'com.floracasy.dev',
+        launcherName: 'Floracasy',
+        versionCode: 1,
+        versionName: '1.0',
+        statusBarColor: packageJson.themeColor,
+        sha256Fingerprints: [''],
+        iconPath: '/static/icon.png',
+        distFolder: '.nuxt/dist/client',
+      },
+    ],
   ],
 
   buildModules: [
@@ -123,6 +135,16 @@ export default {
         href: '/favicon.ico',
       },
       {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: 'https://fonts.gstatic.com/',
+      },
+      {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: 'https://cdn.materialdesignicons.com/',
+      },
+      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
@@ -130,6 +152,7 @@ export default {
       },
       {
         rel: 'stylesheet',
+        type: 'text/css',
         href:
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
@@ -216,33 +239,76 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
+      start_url: '/',
     },
-    workbox: {
-      cleanupOutdatedCaches: true,
-
-      config: {
-        debug: true,
-      },
-      runtimeCaching: [
-        {
-          urlPattern: 'https://fonts.googleapis.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          urlPattern: 'https://cdn.materialdesignicons.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          urlPattern: 'https://fonts.gstatic.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-      ],
-    },
+    workbox: false,
+    // workbox: {
+    //   // workboxVersion: require('workbox-cdn/package.json').version,
+    //   // workboxURL: undefined,
+    //   // importScripts: [],
+    //   enabled: true,
+    //   autoRegister: true,
+    //   // dev: undefined,
+    //   // Config
+    //   config: {
+    //     debug: true,
+    //   },
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    //   offlineAnalytics: false,
+    //   workboxExtensions: [],
+    //
+    //   // Precache
+    //   preCaching: [],
+    //   cacheOptions: {
+    //     cacheId: 'floracasy' + Date.now().toString(),
+    //     directoryIndex: '/',
+    //     revision: Date.now(),
+    //   },
+    //   cachingExtensions: [],
+    //   cleanupOutdatedCaches: true,
+    //
+    //   // Offline
+    //   offline: false,
+    //   offlineStrategy: 'NetworkFirst',
+    //   offlinePage: null,
+    //   offlineAssets: [],
+    //
+    //   // Runtime Caching
+    //   runtimeCaching: [
+    //     {
+    //       urlPattern: 'https://fonts.googleapis.com/.*',
+    //       handler: 'cacheFirst',
+    //       method: 'GET',
+    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+    //     },
+    //     {
+    //       urlPattern: 'https://cdn.materialdesignicons.com/.*',
+    //       handler: 'cacheFirst',
+    //       method: 'GET',
+    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+    //     },
+    //     {
+    //       urlPattern: 'https://fonts.gstatic.com/.*',
+    //       handler: 'cacheFirst',
+    //       method: 'GET',
+    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+    //     },
+    //   ],
+    //   routingExtensions: [],
+    //   cacheAssets: true,
+    //   // assetsURLPattern: undefined,
+    //   // pagesURLPattern: undefined,
+    //
+    //   // Sw
+    //   // swTemplate: undefined,
+    //   // swUrl: 'service-worker.js',
+    //   // swScope: '/',
+    //   // swDest: undefined,
+    //
+    //   // Router
+    //   // routerBase: undefined,
+    //   // publicPath: undefined
+    // },
   },
 }

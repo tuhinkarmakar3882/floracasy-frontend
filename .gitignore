@@ -1,4 +1,5 @@
 environmentalVariables.js
+deploy/keys/*
 # Created by https://www.toptal.com/developers/gitignore/api/vue,vuejs,pycharm+all,yarn,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=vue,vuejs,pycharm+all,yarn,node
 # Created by https://www.toptal.com/developers/gitignore/api/firebase
