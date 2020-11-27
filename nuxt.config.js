@@ -241,74 +241,74 @@ export default {
       display: 'standalone',
       start_url: '/',
     },
-    // workbox: false,
-    workbox: {
-      // workboxVersion: require('workbox-cdn/package.json').version,
-      // workboxURL: undefined,
-      // importScripts: [],
-      enabled: true,
-      autoRegister: true,
-      // dev: undefined,
-      // Config
-      config: {
-        debug: true,
-      },
-      clientsClaim: true,
-      skipWaiting: true,
-      offlineAnalytics: false,
-      workboxExtensions: [],
-
-      // Precache
-      preCaching: [],
-      cacheOptions: {
-        cacheId: 'floracasy' + Date.now().toString(),
-        directoryIndex: '/',
-        revision: Date.now(),
-      },
-      cachingExtensions: [],
-      cleanupOutdatedCaches: true,
-
-      // Offline
-      offline: false,
-      offlineStrategy: 'NetworkFirst',
-      offlinePage: null,
-      offlineAssets: [],
-
-      // Runtime Caching
-      runtimeCaching: [
-        {
-          urlPattern: 'https://fonts.googleapis.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          urlPattern: 'https://cdn.materialdesignicons.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-        {
-          urlPattern: 'https://fonts.gstatic.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-        },
-      ],
-      routingExtensions: [],
-      cacheAssets: true,
-      // assetsURLPattern: undefined,
-      // pagesURLPattern: undefined,
-
-      // Sw
-      // swTemplate: undefined,
-      // swUrl: 'service-worker.js',
-      // swScope: '/',
-      // swDest: undefined,
-
-      // Router
-      // routerBase: undefined,
-      // publicPath: undefined
-    },
+    workbox: false,
+    // workbox: {
+    //   // workboxVersion: require('workbox-cdn/package.json').version,
+    //   // workboxURL: undefined,
+    //   // importScripts: [],
+    //   enabled: true,
+    //   autoRegister: true,
+    //   // dev: undefined,
+    //   // Config
+    //   config: {
+    //     debug: true,
+    //   },
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    //   offlineAnalytics: false,
+    //   workboxExtensions: [],
+    //
+    //   // Precache
+    //   preCaching: [],
+    //   cacheOptions: {
+    //     cacheId: 'floracasy' + Date.now().toString(),
+    //     directoryIndex: '/',
+    //     revision: Date.now(),
+    //   },
+    //   cachingExtensions: [],
+    //   cleanupOutdatedCaches: true,
+    //
+    //   // Offline
+    //   offline: false,
+    //   offlineStrategy: 'NetworkFirst',
+    //   offlinePage: null,
+    //   offlineAssets: [],
+    //
+    //   // Runtime Caching
+    //   runtimeCaching: [
+    //     {
+    //       urlPattern: 'https://fonts.googleapis.com/.*',
+    //       handler: 'cacheFirst',
+    //       method: 'GET',
+    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+    //     },
+    //     {
+    //       urlPattern: 'https://cdn.materialdesignicons.com/.*',
+    //       handler: 'cacheFirst',
+    //       method: 'GET',
+    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+    //     },
+    //     {
+    //       urlPattern: 'https://fonts.gstatic.com/.*',
+    //       handler: 'cacheFirst',
+    //       method: 'GET',
+    //       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+    //     },
+    //   ],
+    //   routingExtensions: [],
+    //   cacheAssets: true,
+    //   // assetsURLPattern: undefined,
+    //   // pagesURLPattern: undefined,
+    //
+    //   // Sw
+    //   // swTemplate: undefined,
+    //   // swUrl: 'service-worker.js',
+    //   // swScope: '/',
+    //   // swDest: undefined,
+    //
+    //   // Router
+    //   // routerBase: undefined,
+    //   // publicPath: undefined
+    // },
   },
 }
