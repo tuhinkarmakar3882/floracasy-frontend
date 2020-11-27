@@ -29,6 +29,7 @@ export const navigationRoutes = {
 
     Messages: {
       index: '/Home/Messages',
+      ChatScreen: '/Home/Messages/ChatScreen/{messageThreadId}',
     },
 
     MoreOptions: {
