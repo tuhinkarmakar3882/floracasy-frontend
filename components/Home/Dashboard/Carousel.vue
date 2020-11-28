@@ -15,12 +15,36 @@
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit at blanditiis.
       </p>
-      <button v-ripple class="primary-btn" style="min-width: auto">
+      <button
+        v-ripple=""
+        class="primary-btn"
+        style="min-width: auto"
+        @click="sendNotification"
+      >
         Go Now
       </button>
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  name: 'Carousel',
+  props: {
+    carouselItems: {
+      type: Array,
+      required: true,
+    },
+  },
+  methods: {
+    sendNotification() {
+      setTimeout(() => {
+        new Notification('This is a Test Notification')
+      }, 2000)
+    },
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 .carousel {
@@ -47,15 +71,3 @@
   }
 }
 </style>
-
-<script>
-export default {
-  name: 'Carousel',
-  props: {
-    carouselItems: {
-      type: Array,
-      required: true,
-    },
-  },
-}
-</script>
