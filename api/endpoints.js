@@ -32,6 +32,7 @@ const endpoints = {
     fetchThreads: 'chat_system/fetchThreads/',
     fetchMessages: 'chat_system/fetchMessages/',
     send: 'chat_system/send/',
+    markAsRead: 'chat_system/markAsRead/',
   },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
