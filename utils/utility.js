@@ -24,6 +24,9 @@ moment.updateLocale('en', {
 export const parseTimeUsingMoment = (timeString) => {
   return moment(timeString).fromNow(true)
 }
+export const parseStandardTimeUsingMoment = (timeString) => {
+  return moment(timeString).format('LT')
+}
 
 export const shorten = (value) => {
   if (value < 1000) return value
