@@ -116,7 +116,7 @@ export default {
 
   watch: {
     textMessage(msg) {
-      this.canSendMessage = msg.trim().length > 0
+      this.canSendMessage = msg.trim().length > 0 && msg.length <= 4098
     },
   },
 
@@ -151,13 +151,7 @@ export default {
       connectionOptions
     )
 
-    this.chatSocket.onopen = async () => {
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Online',
-        notificationType: 'success',
-        dismissible: true,
-      })
-    }
+    this.chatSocket.onopen = () => {}
 
     this.chatSocket.onmessage = (e) => {
       const data = JSON.parse(e.data)
@@ -171,30 +165,28 @@ export default {
         message: data.message,
         messageType: data.messageType || 'RECEIVED',
       }
+
+      if (data.messageType === 'SENT') {
+        this.textMessage = ''
+        this.isSendingMessage = false
+      }
+
       this.chatMessages.push(newMessage)
       this.$refs.textMessageInput.focus()
       this.$refs.messageStart.scrollIntoView()
     }
 
-    this.chatSocket.onerror = async () => {
-      this.chatMessages.pop()
-
+    this.chatSocket.onclose = async () => {
       await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'ERROR!',
-        notificationType: 'error',
-        dismissible: false,
+        message: 'Message is too large to send...',
+        notificationType: 'warning',
+        dismissible: true,
+        timeout: 3000,
       })
-    }
-
-    this.chatSocket.onclose = async (e) => {
-      console.warn(e)
-      this.chatMessages.pop()
-
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'ERROR!',
-        notificationType: 'reconnecting',
-        dismissible: false,
-      })
+      this.isSendingMessage = false
+      this.canSendMessage = true
+      this.$refs.textMessageInput.focus()
+      this.$refs.messageStart.scrollIntoView()
     }
   },
 
@@ -237,18 +229,8 @@ export default {
       if (this.canSendMessage) {
         this.canSendMessage = false
         this.isSendingMessage = true
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Sending Message...',
-          notificationType: 'info',
-          dismissible: true,
-        })
 
         try {
-          // await this.$axios.$post(endpoints.chat_system.send, {
-          //   thread_id: this.$route.params.messageThreadId,
-          //   message: this.textMessage,
-          // })
-
           const newMessage = {
             id: Date.now(),
             user: {
@@ -260,6 +242,12 @@ export default {
             messageType: 'SENT',
           }
 
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Sending Message...',
+            notificationType: 'info',
+            dismissible: true,
+          })
+
           this.chatSocket.send(
             JSON.stringify({
               ...newMessage,
@@ -267,17 +255,8 @@ export default {
               thread_id: this.$route.params.messageThreadId,
             })
           )
-
-          // this.chatMessages.push(newMessage)
-          this.textMessage = ''
-          this.isSendingMessage = false
         } catch (e) {
           this.isSendingMessage = false
-          // await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          //   message: 'Failed to Add Comment. Please Retry',
-          //   notificationType: 'error',
-          //   dismissible: true,
-          // })
         }
       }
     },
