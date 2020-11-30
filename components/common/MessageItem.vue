@@ -21,7 +21,7 @@
       </p>
       <p class="timestamp">
         <span class="mdi mdi-clock-time-nine-outline" />
-        {{ parseTimeUsingMoment(chatMessage.createdAt) }}
+        {{ parseStandardTimeUsingMoment(chatMessage.createdAt) }}
       </p>
     </section>
   </div>
@@ -29,7 +29,7 @@
 
 <script>
 import { CustomMessageType } from '@/interfaces/CustomMessageTypes'
-import { parseTimeUsingMoment } from '~/utils/utility'
+import { parseStandardTimeUsingMoment } from '~/utils/utility'
 
 export default {
   name: 'MessageItem',
@@ -45,7 +45,7 @@ export default {
   },
 
   methods: {
-    parseTimeUsingMoment,
+    parseStandardTimeUsingMoment,
     getInitials(name) {
       return name.split(' ')[0]
     },
