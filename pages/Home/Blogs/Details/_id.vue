@@ -66,7 +66,7 @@
             {{ blog.subtitle }}
           </p>
         </section>
-        <section class="blog-body">
+        <section class="blog-body pb-8">
           <article class="ql-snow">
             <div
               class="ql-editor"
