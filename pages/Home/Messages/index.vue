@@ -49,10 +49,10 @@
           <p class="danger-light mb-8">Network Error</p>
         </template>
         <template slot="no-more">
-          <p class="mb-8"></p>
+          <p class="my-8" />
         </template>
         <template slot="no-results">
-          <p class="mb-8"></p>
+          <p class="my-8">You Haven't Started Chatting yet..</p>
         </template>
       </infinite-loading>
     </client-only>
