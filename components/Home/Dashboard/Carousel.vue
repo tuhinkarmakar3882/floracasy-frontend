@@ -51,13 +51,16 @@ export default {
   display: flex;
   align-items: center;
   text-align: center;
-  overflow-x: auto;
+  overflow: auto !important;
   scroll-snap-type: x mandatory;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
   height: 250px;
 
-  & > div {
+  div {
     padding: 0 1rem;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     flex-shrink: 0;
     width: 100%;
     height: 100%;
