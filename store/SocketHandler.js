@@ -35,7 +35,7 @@ export const actions = {
     if (this.state.SocketHandler.socketMessage && payload.dismissible) {
       timeout = setTimeout(() => {
         commit('SET_SOCKET_MESSAGE', '')
-      }, 2500)
+      }, payload.timeout || 2500)
     }
   },
 }
