@@ -49,7 +49,7 @@
       </section>
 
       <client-only>
-        <infinite-loading direction="top" @infinite="infiniteHandler">
+        <infinite-loading @infinite="infiniteHandler">
           <template slot="spinner">
             <LoadingIcon class="mt-4 mb-6" />
             <p class="text-center">Loading Messages...</p>
@@ -122,6 +122,7 @@ export default {
   },
 
   async mounted() {
+    window.scrollTo(0, document.body.scrollHeight)
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
     await this.setupUser()
 
@@ -206,6 +207,7 @@ export default {
             thread_id: this.$route.params.messageThreadId,
           },
         })
+        console.log(results)
         if (results.length) {
           this.fetchMessages = next
           this.chatMessages.push(...results)
