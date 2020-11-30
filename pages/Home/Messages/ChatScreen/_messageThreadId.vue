@@ -65,8 +65,6 @@
           </template>
         </infinite-loading>
       </client-only>
-
-      <div ref="messageStart" class="" style="margin-top: 120px" />
     </template>
   </AppFeel>
 </template>
@@ -79,7 +77,6 @@ import LoadingIcon from '@/components/LoadingIcon'
 import RippleButton from '@/components/common/RippleButton'
 import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import * as CustomSocketCodes from '@/api/CustomSocketCodes'
 import MessageItem from '~/components/common/MessageItem.vue'
 import endpoints from '~/api/endpoints'
 
@@ -133,9 +130,7 @@ export default {
       { params: { thread_id: this.$route.params.messageThreadId } }
     )
 
-    await this.$axios.$post(endpoints.chat_system.markAsRead, {
-      thread_id: this.$route.params.messageThreadId,
-    })
+    await this.resetUnreadCount()
     const { channelId: mailBoxId } = await this.$axios.$get(
       endpoints.chat_system.getMailBoxId
     )
@@ -160,7 +155,7 @@ export default {
 
     this.chatSocket.onopen = () => {}
 
-    this.chatSocket.onmessage = (e) => {
+    this.chatSocket.onmessage = async (e) => {
       const data = JSON.parse(e.data)
       const newMessage = {
         user: {
@@ -179,42 +174,8 @@ export default {
       }
 
       this.chatMessages.push(newMessage)
-      this.$refs.textMessageInput.focus()
-      this.$refs.messageStart.scrollIntoView()
-    }
-
-    this.chatSocket.onclose = async (e) => {
-      if (e.code === CustomSocketCodes.MESSAGE_TOO_LONG) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Message is too large to send...',
-          notificationType: 'warning',
-          dismissible: true,
-          timeout: 3000,
-        })
-        this.continueNormalFlow()
-      }
-      if (e.code === CustomSocketCodes.SYSTEM_INCONSISTENCY) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Inconsistent Credentials. Refresh',
-          notificationType: 'error',
-          dismissible: true,
-          timeout: 3000,
-        })
-        this.continueNormalFlow()
-      }
-    }
-    this.chatSocket.onerror = async (e) => {
-      console.log('onerror', e)
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'on error',
-        notificationType: 'warning',
-        dismissible: true,
-        timeout: 3000,
-      })
-      this.isSendingMessage = false
-      this.canSendMessage = true
-      this.$refs.textMessageInput.focus()
-      this.$refs.messageStart.scrollIntoView()
+      await this.resetUnreadCount()
+      window.scrollTo(0, document.body.scrollHeight)
     }
   },
 
@@ -223,11 +184,10 @@ export default {
   },
 
   methods: {
-    continueNormalFlow() {
-      this.isSendingMessage = false
-      this.canSendMessage = true
-      this.$refs.textMessageInput.focus()
-      this.$refs.messageStart.scrollIntoView()
+    async resetUnreadCount() {
+      await this.$axios.$post(endpoints.chat_system.markAsRead, {
+        thread_id: this.$route.params.messageThreadId,
+      })
     },
 
     async setupUser() {
@@ -264,6 +224,10 @@ export default {
         this.isSendingMessage = true
 
         try {
+          await this.$axios.$post(endpoints.chat_system.send, {
+            thread_id: this.$route.params.messageThreadId,
+            message: this.textMessage,
+          })
           const newMessage = {
             id: Date.now(),
             user: {
@@ -279,18 +243,28 @@ export default {
             message: 'Sending Message...',
             notificationType: 'info',
             dismissible: true,
+            timeout: 1000,
           })
-
-          this.chatSocket.send(
-            JSON.stringify({
-              ...newMessage,
-              action: 'outgoing_message',
-              thread_id: this.$route.params.messageThreadId,
-            })
-          )
+          this.chatMessages.push(newMessage)
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Sent',
+            notificationType: 'success',
+            dismissible: true,
+            timeout: 1000,
+          })
+          this.textMessage = ''
         } catch (e) {
-          this.isSendingMessage = false
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: "Couldn't Sent",
+            notificationType: 'warning',
+            dismissible: true,
+            timeout: 1000,
+          })
         }
+        this.isSendingMessage = false
+        this.canSendMessage = true
+        this.$refs.textMessageInput.focus()
+        window.scrollTo(0, document.body.scrollHeight)
       }
     },
   },
