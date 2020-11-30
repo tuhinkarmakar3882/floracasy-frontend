@@ -31,7 +31,8 @@ const endpoints = {
   chat_system: {
     fetchThreads: 'chat_system/fetchThreads/',
     fetchMessages: 'chat_system/fetchMessages/',
-    send: 'chat_system/send/',
+    // send: 'chat_system/send/',
+    threadDetail: 'chat_system/threadDetail/',
     markAsRead: 'chat_system/markAsRead/',
     getMailBoxId: 'chat_system/getMailBoxId/',
   },
