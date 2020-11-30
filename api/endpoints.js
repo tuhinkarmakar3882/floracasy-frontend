@@ -29,9 +29,13 @@ const endpoints = {
     createCommentForBlogId: 'comment_system/createCommentForBlogId/',
   },
   chat_system: {
+    initializeChatThread: 'chat_system/initializeChatThread/',
+
     fetchThreads: 'chat_system/fetchThreads/',
     fetchMessages: 'chat_system/fetchMessages/',
     send: 'chat_system/send/',
+    threadDetail: 'chat_system/threadDetail/',
+
     markAsRead: 'chat_system/markAsRead/',
     getMailBoxId: 'chat_system/getMailBoxId/',
   },

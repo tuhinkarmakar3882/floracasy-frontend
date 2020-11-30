@@ -16,7 +16,7 @@
             },
       ]"
     >
-      <p class="message-body">
+      <p class="message-body" style="overflow-wrap: break-word">
         {{ chatMessage.message }}
       </p>
       <p class="timestamp">

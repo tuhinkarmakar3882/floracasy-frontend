@@ -1,7 +1,6 @@
 <template>
   <div class="message-page mb-6">
     <section class="message-thread-list">
-      <pre>{{ messageThreads }}</pre>
       <div
         v-for="messageThread in messageThreads"
         :key="messageThread.id"
@@ -39,6 +38,24 @@
         </span>
       </div>
     </section>
+
+    <client-only>
+      <infinite-loading direction="top" @infinite="infiniteHandler">
+        <template slot="spinner">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p class="text-center">Loading Messages...</p>
+        </template>
+        <template slot="error">
+          <p class="danger-light mb-8">Network Error</p>
+        </template>
+        <template slot="no-more">
+          <p class="my-8" />
+        </template>
+        <template slot="no-results">
+          <p class="my-8">You Haven't Started Chatting yet..</p>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
@@ -46,9 +63,11 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
+import LoadingIcon from '@/components/LoadingIcon'
 
 export default {
   name: 'Messages',
+  components: { LoadingIcon },
   middleware: 'isAuthenticated',
   layout: 'MobileApp',
 
@@ -56,21 +75,43 @@ export default {
     return {
       pageTitle: 'Messages',
       messageThreads: [],
+      fetchThreads: endpoints.chat_system.fetchThreads,
       navigationRoutes,
     }
   },
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
-    this.messageThreads = await this.$axios
-      .$get(endpoints.chat_system.fetchThreads)
-      .then(({ results }) => results)
   },
 
   methods: {
     parseTimeUsingMoment,
     getCount(countValue) {
       return countValue > 99 ? `${countValue.toString()}+` : countValue
+    },
+
+    async setupUser() {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        this.loadingProfile = true
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
+    },
+
+    async infiniteHandler($state) {
+      await this.setupUser()
+      try {
+        const { results, next } = await this.$axios.$get(this.fetchThreads)
+        if (results.length) {
+          this.fetchThreads = next
+          this.messageThreads.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      } catch (e) {
+        $state.complete()
+      }
     },
   },
 

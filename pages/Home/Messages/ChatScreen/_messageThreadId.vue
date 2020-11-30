@@ -7,11 +7,11 @@
         @click="
           prevURL
             ? $router.back()
-            : $router.replace(navigationRoutes.Home.DashBoard)
+            : $router.replace(navigationRoutes.Home.Messages.index)
         "
       />
       <p class="ml-6">
-        {{ pageTitle }}
+        {{ threadDetail ? threadDetail.name : pageTitle }}
       </p>
     </template>
 
@@ -25,8 +25,6 @@
           :message-type="chatMessage.messageType"
         />
       </main>
-
-      <div ref="messageStart" />
 
       <section class="bottom-area px-4">
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
@@ -51,23 +49,21 @@
       </section>
 
       <client-only>
-        <div class="">
-          <infinite-loading direction="top" @infinite="infiniteHandler">
-            <template slot="spinner">
-              <LoadingIcon class="mt-4 mb-6" />
-              <p class="text-center">Loading Messages...</p>
-            </template>
-            <template slot="error">
-              <p class="danger-light mb-8">Network Error</p>
-            </template>
-            <template slot="no-more">
-              <p class="mb-8"></p>
-            </template>
-            <template slot="no-results">
-              <p class="mb-8"></p>
-            </template>
-          </infinite-loading>
-        </div>
+        <infinite-loading @infinite="infiniteHandler">
+          <template slot="spinner">
+            <LoadingIcon class="mt-4 mb-6" />
+            <p class="text-center">Loading Messages...</p>
+          </template>
+          <template slot="error">
+            <p class="danger-light mb-8">Network Error</p>
+          </template>
+          <template slot="no-more">
+            <p class="mb-8"></p>
+          </template>
+          <template slot="no-results">
+            <p class="mb-8"></p>
+          </template>
+        </infinite-loading>
       </client-only>
     </template>
   </AppFeel>
@@ -96,6 +92,7 @@ export default {
 
   data() {
     return {
+      threadDetail: null,
       chatSocket: null,
       prevURL: null,
       navigationRoutes,
@@ -116,7 +113,7 @@ export default {
 
   watch: {
     textMessage(msg) {
-      this.canSendMessage = msg.trim().length > 0
+      this.canSendMessage = msg.trim().length > 0 && msg.length <= 4098
     },
   },
 
@@ -125,14 +122,20 @@ export default {
   },
 
   async mounted() {
+    window.scrollTo(0, document.body.scrollHeight)
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
     await this.setupUser()
-    await this.$axios.$post(endpoints.chat_system.markAsRead, {
-      thread_id: this.$route.params.messageThreadId,
-    })
+
+    this.threadDetail = await this.$axios.$get(
+      endpoints.chat_system.threadDetail,
+      { params: { thread_id: this.$route.params.messageThreadId } }
+    )
+
+    await this.resetUnreadCount()
     const { channelId: mailBoxId } = await this.$axios.$get(
       endpoints.chat_system.getMailBoxId
     )
+
     // eslint-disable-next-line
     const chatSocketUrl = `${secrets.websocketBaseUrl}chat_system_socket/${mailBoxId}/?access=${this.$cookies.get('access')}`
 
@@ -151,36 +154,43 @@ export default {
       connectionOptions
     )
 
-    this.chatSocket.onopen = (e) => {
-      console.log('onopen', e)
-    }
+    this.chatSocket.onopen = () => {}
 
-    this.chatSocket.onmessage = (e) => {
+    this.chatSocket.onmessage = async (e) => {
       const data = JSON.parse(e.data)
       const newMessage = {
-        id: Date.now(),
         user: {
           photoURL: this.user.photoURL,
           displayName: this.user.displayName,
         },
-        createdAt: Date.now(),
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
         message: data.message,
-        messageType: 'RECEIVED',
+        messageType: data.messageType || 'RECEIVED',
       }
+
+      if (data.messageType === 'SENT') {
+        this.textMessage = ''
+        this.isSendingMessage = false
+      }
+
       this.chatMessages.push(newMessage)
-      this.$refs.messageStart.scrollIntoView()
-    }
-
-    this.chatSocket.onerror = (e) => {
-      console.log('onerror', e)
-    }
-
-    this.chatSocket.onclose = (e) => {
-      console.log('onclose', e)
+      await this.resetUnreadCount()
+      window.scrollTo(0, document.body.scrollHeight)
     }
   },
 
+  beforeDestroy() {
+    this.chatSocket.close()
+  },
+
   methods: {
+    async resetUnreadCount() {
+      await this.$axios.$post(endpoints.chat_system.markAsRead, {
+        thread_id: this.$route.params.messageThreadId,
+      })
+    },
+
     async setupUser() {
       const currentUser = await this.$store.getters['UserManagement/getUser']
       if (!currentUser) {
@@ -207,7 +217,6 @@ export default {
         }
       } catch (e) {
         $state.complete()
-        console.log(e)
       }
     },
 
@@ -215,13 +224,9 @@ export default {
       if (this.canSendMessage) {
         this.canSendMessage = false
         this.isSendingMessage = true
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Sending Message...',
-          notificationType: 'info',
-          dismissible: true,
-        })
+
         try {
-          const result = await this.$axios.$post(endpoints.chat_system.send, {
+          await this.$axios.$post(endpoints.chat_system.send, {
             thread_id: this.$route.params.messageThreadId,
             message: this.textMessage,
           })
@@ -236,25 +241,32 @@ export default {
             messageType: 'SENT',
           }
 
-          this.chatMessages.push(newMessage)
-          this.textMessage = ''
-          this.isSendingMessage = false
-
           await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Message Sent',
+            message: 'Sending Message...',
+            notificationType: 'info',
+            dismissible: true,
+            timeout: 1000,
+          })
+          this.chatMessages.push(newMessage)
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Sent',
             notificationType: 'success',
             dismissible: true,
+            timeout: 1000,
           })
-          this.$refs.textMessageInput.focus()
-          this.$refs.messageStart.scrollIntoView()
+          this.textMessage = ''
         } catch (e) {
-          this.isSendingMessage = false
           await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Failed to Add Comment. Please Retry',
-            notificationType: 'error',
+            message: "Couldn't Sent",
+            notificationType: 'warning',
             dismissible: true,
+            timeout: 1000,
           })
         }
+        this.isSendingMessage = false
+        this.canSendMessage = true
+        this.$refs.textMessageInput.focus()
+        window.scrollTo(0, document.body.scrollHeight)
       }
     },
   },
