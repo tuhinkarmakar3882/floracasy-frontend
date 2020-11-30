@@ -79,6 +79,8 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import AppFeel from '@/components/Layout/AppFeel'
 import LoadingIcon from '@/components/LoadingIcon'
 import RippleButton from '@/components/common/RippleButton'
+import * as secrets from '@/environmentalVariables'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 import MessageItem from '~/components/common/MessageItem.vue'
 import endpoints from '~/api/endpoints'
 
@@ -128,6 +130,54 @@ export default {
     await this.$axios.$post(endpoints.chat_system.markAsRead, {
       thread_id: this.$route.params.messageThreadId,
     })
+    const { channelId: mailBoxId } = await this.$axios.$get(
+      endpoints.chat_system.getMailBoxId
+    )
+    // eslint-disable-next-line
+    const chatSocketUrl = `${secrets.websocketBaseUrl}chat_system_socket/${mailBoxId}/?access=${this.$cookies.get('access')}`
+
+    const connectionOptions = {
+      maxReconnectionDelay: 10000,
+      minReconnectionDelay: 1000 + Math.random() * 4000,
+      reconnectionDelayGrowFactor: 1.3,
+      minUptime: 5000,
+      connectionTimeout: 4000,
+      maxEnqueuedMessages: 50,
+    }
+
+    this.chatSocket = new ReconnectingWebSocket(
+      chatSocketUrl,
+      [],
+      connectionOptions
+    )
+
+    this.chatSocket.onopen = (e) => {
+      console.log('onopen', e)
+    }
+
+    this.chatSocket.onmessage = (e) => {
+      const data = JSON.parse(e.data)
+      const newMessage = {
+        id: Date.now(),
+        user: {
+          photoURL: this.user.photoURL,
+          displayName: this.user.displayName,
+        },
+        createdAt: Date.now(),
+        message: data.message,
+        messageType: 'RECEIVED',
+      }
+      this.chatMessages.push(newMessage)
+      this.$refs.messageStart.scrollIntoView()
+    }
+
+    this.chatSocket.onerror = (e) => {
+      console.log('onerror', e)
+    }
+
+    this.chatSocket.onclose = (e) => {
+      console.log('onclose', e)
+    }
   },
 
   methods: {
@@ -219,6 +269,22 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 
 .chat-screen-page {
   .top-section {
