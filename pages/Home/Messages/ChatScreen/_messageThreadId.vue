@@ -68,7 +68,7 @@
         </div>
       </client-only>
 
-      <div ref="messageStart" class="dbx" style="margin-top: 120px" />
+      <div ref="messageStart" class="" style="margin-top: 120px" />
     </template>
   </AppFeel>
 </template>
