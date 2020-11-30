@@ -7,7 +7,7 @@
         @click="
           prevURL
             ? $router.back()
-            : $router.replace(navigationRoutes.Home.DashBoard)
+            : $router.replace(navigationRoutes.Home.Messages.index)
         "
       />
       <p class="ml-6">
@@ -79,6 +79,7 @@ import LoadingIcon from '@/components/LoadingIcon'
 import RippleButton from '@/components/common/RippleButton'
 import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
+import * as CustomSocketCodes from '@/api/CustomSocketCodes'
 import MessageItem from '~/components/common/MessageItem.vue'
 import endpoints from '~/api/endpoints'
 
@@ -182,9 +183,30 @@ export default {
       this.$refs.messageStart.scrollIntoView()
     }
 
-    this.chatSocket.onclose = async () => {
+    this.chatSocket.onclose = async (e) => {
+      if (e.code === CustomSocketCodes.MESSAGE_TOO_LONG) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Message is too large to send...',
+          notificationType: 'warning',
+          dismissible: true,
+          timeout: 3000,
+        })
+        this.continueNormalFlow()
+      }
+      if (e.code === CustomSocketCodes.SYSTEM_INCONSISTENCY) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Inconsistent Credentials. Refresh',
+          notificationType: 'error',
+          dismissible: true,
+          timeout: 3000,
+        })
+        this.continueNormalFlow()
+      }
+    }
+    this.chatSocket.onerror = async (e) => {
+      console.log('onerror', e)
       await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Message is too large to send...',
+        message: 'on error',
         notificationType: 'warning',
         dismissible: true,
         timeout: 3000,
@@ -201,6 +223,13 @@ export default {
   },
 
   methods: {
+    continueNormalFlow() {
+      this.isSendingMessage = false
+      this.canSendMessage = true
+      this.$refs.textMessageInput.focus()
+      this.$refs.messageStart.scrollIntoView()
+    },
+
     async setupUser() {
       const currentUser = await this.$store.getters['UserManagement/getUser']
       if (!currentUser) {
