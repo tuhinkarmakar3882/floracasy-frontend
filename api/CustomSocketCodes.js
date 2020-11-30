@@ -1,0 +1,2 @@
+export const MESSAGE_TOO_LONG = 4000
+export const SYSTEM_INCONSISTENCY = 4001
