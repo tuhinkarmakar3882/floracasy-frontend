@@ -49,23 +49,21 @@
       </section>
 
       <client-only>
-        <div class="">
-          <infinite-loading direction="top" @infinite="infiniteHandler">
-            <template slot="spinner">
-              <LoadingIcon class="mt-4 mb-6" />
-              <p class="text-center">Loading Messages...</p>
-            </template>
-            <template slot="error">
-              <p class="danger-light mb-8">Network Error</p>
-            </template>
-            <template slot="no-more">
-              <p class="mb-8"></p>
-            </template>
-            <template slot="no-results">
-              <p class="mb-8"></p>
-            </template>
-          </infinite-loading>
-        </div>
+        <infinite-loading direction="top" @infinite="infiniteHandler">
+          <template slot="spinner">
+            <LoadingIcon class="mt-4 mb-6" />
+            <p class="text-center">Loading Messages...</p>
+          </template>
+          <template slot="error">
+            <p class="danger-light mb-8">Network Error</p>
+          </template>
+          <template slot="no-more">
+            <p class="mb-8"></p>
+          </template>
+          <template slot="no-results">
+            <p class="mb-8"></p>
+          </template>
+        </infinite-loading>
       </client-only>
 
       <div ref="messageStart" class="" style="margin-top: 120px" />
