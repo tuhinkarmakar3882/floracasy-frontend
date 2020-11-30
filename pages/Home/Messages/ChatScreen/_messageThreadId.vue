@@ -11,7 +11,7 @@
         "
       />
       <p class="ml-6">
-        {{ pageTitle }}
+        {{ threadDetail ? threadDetail.name : pageTitle }}
       </p>
     </template>
 
@@ -96,6 +96,7 @@ export default {
 
   data() {
     return {
+      threadDetail: null,
       chatSocket: null,
       prevURL: null,
       navigationRoutes,
@@ -127,12 +128,19 @@ export default {
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
     await this.setupUser()
+
+    this.threadDetail = await this.$axios.$get(
+      endpoints.chat_system.threadDetail,
+      { params: { thread_id: this.$route.params.messageThreadId } }
+    )
+
     await this.$axios.$post(endpoints.chat_system.markAsRead, {
       thread_id: this.$route.params.messageThreadId,
     })
     const { channelId: mailBoxId } = await this.$axios.$get(
       endpoints.chat_system.getMailBoxId
     )
+
     // eslint-disable-next-line
     const chatSocketUrl = `${secrets.websocketBaseUrl}chat_system_socket/${mailBoxId}/?access=${this.$cookies.get('access')}`
 
@@ -211,7 +219,6 @@ export default {
             thread_id: this.$route.params.messageThreadId,
           },
         })
-        console.log(results)
         if (results.length) {
           this.fetchMessages = next
           this.chatMessages.push(...results)
@@ -221,7 +228,6 @@ export default {
         }
       } catch (e) {
         $state.complete()
-        console.log(e)
       }
     },
 
