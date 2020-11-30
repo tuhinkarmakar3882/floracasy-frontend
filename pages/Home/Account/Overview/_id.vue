@@ -54,8 +54,14 @@
         </section>
 
         <section class="actions">
-          <button v-ripple class="primary-btn px-6">Follow</button>
-          <button v-ripple class="primary-outlined-btn px-6">Messages</button>
+          <button v-ripple="" class="primary-btn px-6">Follow</button>
+          <button
+            v-ripple=""
+            class="primary-outlined-btn px-6"
+            @click="initializeChatThread(otherUser)"
+          >
+            Messages
+          </button>
         </section>
       </section>
 
@@ -180,6 +186,30 @@ export default {
         }
       } catch (e) {
         $state.complete()
+      }
+    },
+
+    async initializeChatThread(receiverData) {
+      try {
+        const {
+          chat_thread_id: chatThreadId,
+        } = await this.$axios.$post(
+          endpoints.chat_system.initializeChatThread,
+          { uid: receiverData.uid }
+        )
+
+        await this.$router.push({
+          path: navigationRoutes.Home.Messages.ChatScreen.replace(
+            /{messageThreadId}/,
+            chatThreadId
+          ),
+        })
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Unable to start Chatting! Try Again',
+          notificationType: 'alert',
+          dismissible: true,
+        })
       }
     },
   },
