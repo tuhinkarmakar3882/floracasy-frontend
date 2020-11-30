@@ -2,7 +2,7 @@
   <AppFeel custom-header class="chat-screen-page" on-back="/">
     <template slot="app-bar-custom-header">
       <h5
-        v-ripple
+        v-ripple=""
         class="mdi mdi-arrow-left"
         @click="
           prevURL
@@ -16,26 +16,6 @@
     </template>
 
     <template slot="main">
-      <pre>{{ chatMessages }}</pre>
-      <client-only>
-        <div class="">
-          <infinite-loading direction="top" @infinite="infiniteHandler">
-            <template slot="spinner">
-              <LoadingIcon class="mt-4 mb-6" />
-              <p class="text-center">Loading Messages...</p>
-            </template>
-            <template slot="error">
-              <p class="danger-light mb-8">Network Error</p>
-            </template>
-            <template slot="no-more">
-              <p class="mb-8"></p>
-            </template>
-            <template slot="no-results">
-              <p class="mb-8"></p>
-            </template>
-          </infinite-loading>
-        </div>
-      </client-only>
       <main class="px-4 pb-8 mb-8">
         <MessageItem
           v-for="chatMessage in chatMessages"
@@ -69,6 +49,26 @@
           <span class="mdi mdi-send" />
         </RippleButton>
       </section>
+
+      <client-only>
+        <div class="">
+          <infinite-loading direction="top" @infinite="infiniteHandler">
+            <template slot="spinner">
+              <LoadingIcon class="mt-4 mb-6" />
+              <p class="text-center">Loading Messages...</p>
+            </template>
+            <template slot="error">
+              <p class="danger-light mb-8">Network Error</p>
+            </template>
+            <template slot="no-more">
+              <p class="mb-8"></p>
+            </template>
+            <template slot="no-results">
+              <p class="mb-8"></p>
+            </template>
+          </infinite-loading>
+        </div>
+      </client-only>
     </template>
   </AppFeel>
 </template>
@@ -94,6 +94,7 @@ export default {
 
   data() {
     return {
+      chatSocket: null,
       prevURL: null,
       navigationRoutes,
       pageTitle: 'Chat Screen',
@@ -174,7 +175,6 @@ export default {
             thread_id: this.$route.params.messageThreadId,
             message: this.textMessage,
           })
-          console.log(result)
           const newMessage = {
             id: Date.now(),
             user: {
