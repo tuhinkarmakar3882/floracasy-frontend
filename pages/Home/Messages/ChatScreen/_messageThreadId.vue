@@ -26,8 +26,6 @@
         />
       </main>
 
-      <div ref="messageStart" />
-
       <section class="bottom-area px-4">
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
         <input
@@ -69,6 +67,8 @@
           </infinite-loading>
         </div>
       </client-only>
+
+      <div ref="messageStart" class="dbx" style="margin-top: 120px" />
     </template>
   </AppFeel>
 </template>
@@ -151,33 +151,55 @@ export default {
       connectionOptions
     )
 
-    this.chatSocket.onopen = (e) => {
-      console.log('onopen', e)
+    this.chatSocket.onopen = async () => {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Online',
+        notificationType: 'success',
+        dismissible: true,
+      })
     }
 
     this.chatSocket.onmessage = (e) => {
       const data = JSON.parse(e.data)
       const newMessage = {
-        id: Date.now(),
         user: {
           photoURL: this.user.photoURL,
           displayName: this.user.displayName,
         },
-        createdAt: Date.now(),
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
         message: data.message,
-        messageType: 'RECEIVED',
+        messageType: data.messageType || 'RECEIVED',
       }
       this.chatMessages.push(newMessage)
+      this.$refs.textMessageInput.focus()
       this.$refs.messageStart.scrollIntoView()
     }
 
-    this.chatSocket.onerror = (e) => {
-      console.log('onerror', e)
+    this.chatSocket.onerror = async () => {
+      this.chatMessages.pop()
+
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'ERROR!',
+        notificationType: 'error',
+        dismissible: false,
+      })
     }
 
-    this.chatSocket.onclose = (e) => {
-      console.log('onclose', e)
+    this.chatSocket.onclose = async (e) => {
+      console.warn(e)
+      this.chatMessages.pop()
+
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'ERROR!',
+        notificationType: 'reconnecting',
+        dismissible: false,
+      })
     }
+  },
+
+  beforeDestroy() {
+    this.chatSocket.close()
   },
 
   methods: {
@@ -220,11 +242,13 @@ export default {
           notificationType: 'info',
           dismissible: true,
         })
+
         try {
-          const result = await this.$axios.$post(endpoints.chat_system.send, {
-            thread_id: this.$route.params.messageThreadId,
-            message: this.textMessage,
-          })
+          // await this.$axios.$post(endpoints.chat_system.send, {
+          //   thread_id: this.$route.params.messageThreadId,
+          //   message: this.textMessage,
+          // })
+
           const newMessage = {
             id: Date.now(),
             user: {
@@ -236,24 +260,24 @@ export default {
             messageType: 'SENT',
           }
 
-          this.chatMessages.push(newMessage)
+          this.chatSocket.send(
+            JSON.stringify({
+              ...newMessage,
+              action: 'outgoing_message',
+              thread_id: this.$route.params.messageThreadId,
+            })
+          )
+
+          // this.chatMessages.push(newMessage)
           this.textMessage = ''
           this.isSendingMessage = false
-
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Message Sent',
-            notificationType: 'success',
-            dismissible: true,
-          })
-          this.$refs.textMessageInput.focus()
-          this.$refs.messageStart.scrollIntoView()
         } catch (e) {
           this.isSendingMessage = false
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Failed to Add Comment. Please Retry',
-            notificationType: 'error',
-            dismissible: true,
-          })
+          // await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          //   message: 'Failed to Add Comment. Please Retry',
+          //   notificationType: 'error',
+          //   dismissible: true,
+          // })
         }
       }
     },
