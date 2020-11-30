@@ -104,7 +104,7 @@
           type="text"
           placeholder="Add a comment..."
           :disabled="isSendingComment"
-          @keyup="sendCommentOnEnter"
+          @keyup.enter="addComment"
         />
         <RippleButton
           :on-click="addComment"
@@ -209,55 +209,51 @@ export default {
       return name.split(' ')[0]
     },
 
-    async sendCommentOnEnter(e) {
-      if (e.keyCode === 13) {
-        await this.addComment()
-      }
-    },
-
     async addComment() {
-      this.canSendComment = false
-      this.isSendingComment = true
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Adding Comment...',
-        notificationType: 'info',
-        dismissible: true,
-      })
-      try {
-        await this.$axios.$post(
-          endpoints.comment_system.createCommentForBlogId,
-          {
-            blog_id: this.$route.params.blogId,
+      if (this.canSendComment) {
+        this.canSendComment = false
+        this.isSendingComment = true
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Adding Comment...',
+          notificationType: 'info',
+          dismissible: true,
+        })
+        try {
+          await this.$axios.$post(
+            endpoints.comment_system.createCommentForBlogId,
+            {
+              blog_id: this.$route.params.blogId,
+              message: this.commentMessage,
+            }
+          )
+          const newComment = {
+            id: Date.now(),
+            user: {
+              photoURL: this.user.photoURL,
+              displayName: this.user.displayName,
+            },
+            createdAt: Date.now(),
             message: this.commentMessage,
           }
-        )
-        const newComment = {
-          id: Date.now(),
-          user: {
-            photoURL: this.user.photoURL,
-            displayName: this.user.displayName,
-          },
-          createdAt: Date.now(),
-          message: this.commentMessage,
+
+          this.comments.unshift(newComment)
+          this.commentMessage = ''
+          this.isSendingComment = false
+
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Comment Added',
+            notificationType: 'success',
+            dismissible: true,
+          })
+          this.$refs.commentStart.scrollIntoView()
+        } catch (e) {
+          this.isSendingComment = false
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Failed to Add Comment. Please Retry',
+            notificationType: 'error',
+            dismissible: true,
+          })
         }
-
-        this.comments.unshift(newComment)
-        this.commentMessage = ''
-        this.isSendingComment = false
-
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Comment Added',
-          notificationType: 'success',
-          dismissible: true,
-        })
-        this.$refs.commentStart.scrollIntoView()
-      } catch (e) {
-        this.isSendingComment = false
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Failed to Add Comment. Please Retry',
-          notificationType: 'error',
-          dismissible: true,
-        })
       }
     },
   },

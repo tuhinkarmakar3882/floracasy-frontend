@@ -72,23 +72,23 @@ export default {
       },
     ],
 
-    // The Following should be used only while building an TWA app
-    [
-      'nuxt-twa-module',
-      {
-        /* module options */
-        defaultUrl: 'https://dev.floracasy.nubes.live',
-        hostName: 'dev.floracasy.nubes.live',
-        applicationId: 'com.floracasy.dev',
-        launcherName: 'Floracasy',
-        versionCode: 1,
-        versionName: '1.0',
-        statusBarColor: packageJson.themeColor,
-        sha256Fingerprints: [''],
-        iconPath: '/static/icon.png',
-        distFolder: '.nuxt/dist/client',
-      },
-    ],
+    //  // The Following should be used only while building an TWA app
+    // [
+    //   'nuxt-twa-module',
+    //   {
+    //     /* module options */
+    //     defaultUrl: 'https://dev.floracasy.nubes.live',
+    //     hostName: 'dev.floracasy.nubes.live',
+    //     applicationId: 'com.floracasy.dev',
+    //     launcherName: 'Floracasy',
+    //     versionCode: 1,
+    //     versionName: '1.0',
+    //     statusBarColor: packageJson.themeColor,
+    //     sha256Fingerprints: [''],
+    //     iconPath: '/static/icon.png',
+    //     distFolder: '.nuxt/dist/client',
+    //   },
+    // ],
   ],
 
   buildModules: [

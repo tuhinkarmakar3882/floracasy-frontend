@@ -28,6 +28,13 @@ const endpoints = {
     fetchByBlogId: 'comment_system/fetchByBlogId/',
     createCommentForBlogId: 'comment_system/createCommentForBlogId/',
   },
+  chat_system: {
+    fetchThreads: 'chat_system/fetchThreads/',
+    fetchMessages: 'chat_system/fetchMessages/',
+    send: 'chat_system/send/',
+    markAsRead: 'chat_system/markAsRead/',
+    getMailBoxId: 'chat_system/getMailBoxId/',
+  },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
     create: 'help_and_support/create/',

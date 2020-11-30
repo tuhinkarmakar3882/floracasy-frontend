@@ -11,11 +11,8 @@ export default async ({ store, $cookies }) => {
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
-    const endpoint =
-      secrets.websocketUrl +
-      notificationChannelId +
-      '/?access=' +
-      $cookies.get('access')
+    // eslint-disable-next-line
+    const endpoint = `${secrets.websocketBaseUrl}notification_socket/${notificationChannelId}/?access=${$cookies.get('access')}`
 
     const connectionOptions = {
       maxReconnectionDelay: 10000,

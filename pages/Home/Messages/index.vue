@@ -1,30 +1,51 @@
 <template>
   <div class="message-page mb-6">
     <section class="message-thread-list">
+      <pre>{{ messageThreads }}</pre>
       <div
-        v-for="(messageThread, index) in messageThreads"
-        :key="index"
+        v-for="messageThread in messageThreads"
+        :key="messageThread.id"
         v-ripple=""
-        class="message-thread px-4 py-8"
+        class="message-thread px-4 py-4"
+        @click="
+          $router.push(
+            navigationRoutes.Home.Messages.ChatScreen.replace(
+              /{messageThreadId}/,
+              messageThread.id
+            )
+          )
+        "
       >
-        <img :src="messageThread.image" :alt="messageThread.name" />
-        <section class="">
-          <p class="name">{{ messageThread.name.substr(0, 17) }}</p>
+        <img
+          :src="messageThread.receiver.photoURL"
+          :alt="messageThread.receiver.displayName"
+        />
+
+        <section>
+          <p class="name">
+            {{ messageThread.receiver.displayName.substr(0, 17) }}
+          </p>
           <p class="message-body mb-3">
-            {{ messageThread.body.substr(0, 50) }}
+            {{ messageThread.lastMessage.substr(0, 50) }}
           </p>
           <small class="time-stamp">
-            <span class="mdi mdi-clock-time-nine-outline" />
+            <span class="mdi mdi-clock-time-nine-outline mr-1" />
             {{ parseTimeUsingMoment(messageThread.updatedAt) }}
           </small>
         </section>
+
+        <span v-if="messageThread.unreadCount > 0" class="unread-count">
+          {{ getCount(messageThread.unreadCount) }}
+        </span>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '@/utils/utility'
+import endpoints from '@/api/endpoints'
 
 export default {
   name: 'Messages',
@@ -34,209 +55,23 @@ export default {
   data() {
     return {
       pageTitle: 'Messages',
-      messageThreads: [
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Alice Milli',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-        {
-          name: 'Larrisa Cheverson',
-          updatedAt: '2020-11-18T18:28:08.798261+05:30',
-          image:
-            'https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&auto=format&fit=crop&w=2190&q=80',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad corporis cupiditate error illo ipsam ipsum iure minus molestias nobis nostrum nulla provident, quae quisquam rerum tempora. Blanditiis, ipsam?',
-        },
-      ],
+      messageThreads: [],
+      navigationRoutes,
     }
   },
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
+    this.messageThreads = await this.$axios
+      .$get(endpoints.chat_system.fetchThreads)
+      .then(({ results }) => results)
   },
 
   methods: {
     parseTimeUsingMoment,
+    getCount(countValue) {
+      return countValue > 99 ? `${countValue.toString()}+` : countValue
+    },
   },
 
   head() {
@@ -254,6 +89,7 @@ $image-size: 84px;
 
 .message-page {
   .message-thread {
+    position: relative;
     display: grid;
     grid-column-gap: $large-unit;
     grid-template-columns: $image-size auto;
@@ -271,7 +107,7 @@ $image-size: 84px;
     .name {
       color: #ededed;
       font-family: $Prata;
-      font-size: 22px;
+      font-size: $medium-unit;
     }
 
     .message-body {
@@ -283,11 +119,24 @@ $image-size: 84px;
       display: flex;
       align-items: center;
       color: darken($muted, $lighten-percentage);
-      text-transform: capitalize;
     }
 
     &:nth-child(even) {
       background-color: #08081f;
+    }
+
+    .unread-count {
+      position: absolute;
+      background-color: $primary-matte;
+      height: $x-large-unit;
+      width: 2 * $large-unit;
+      color: $white;
+      right: $milli-unit;
+      display: grid;
+      place-items: center;
+      font-family: $Nunito-Sans;
+      border-radius: 50px;
+      font-size: 13px;
     }
   }
 }

@@ -82,7 +82,6 @@ export default {
     },
 
     autoHideOnScroll() {
-      console.log('yay')
       const currentScrollPos = window.pageYOffset
       this.showTopBar = this.prevScrollPos > currentScrollPos
       this.prevScrollPos = currentScrollPos
