@@ -6,7 +6,7 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <h6>This is my super duper Feedback Page</h6>
+      <h6>This is my super duper {{ pageTitle }} Page</h6>
       <p>And I Love it</p>
     </template>
   </AppFeel>
