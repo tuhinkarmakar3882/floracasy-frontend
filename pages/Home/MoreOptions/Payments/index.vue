@@ -6,7 +6,7 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <main class="px-6 my-8">
+      <section class="px-4">
         <h3>Your total earning</h3>
 
         <h5>$0.00</h5>
@@ -39,7 +39,7 @@
         <h3>4k</h3>
 
         <h6>To show all blogs insight view tap the below button</h6>
-      </main>
+      </section>
     </template>
   </AppFeel>
 </template>
