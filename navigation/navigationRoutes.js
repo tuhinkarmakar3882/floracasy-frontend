@@ -43,6 +43,7 @@ export const navigationRoutes = {
         PopularTopics: {
           index: '/Home/MoreOptions/HelpAndSupport/PopularTopics',
         },
+        ReportProblem: '/Home/MoreOptions/HelpAndSupport/ReportProblem',
       },
       Payments: {
         index: '/Home/MoreOptions/Payments',
