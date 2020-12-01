@@ -6,14 +6,13 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
     <template slot="main">
       <h4 class="heading-title">Saved Blogs</h4>
-
-      <section v-if="blogs">
-        <article v-for="{ blog } in blogs" :key="blog.id">
-          <BlogPost :blog="blog" />
-        </article>
-      </section>
-
       <client-only>
+        <section v-if="blogs">
+          <article v-for="{ blog } in blogs" :key="blog.id">
+            <BlogPost :blog="blog" />
+          </article>
+        </section>
+
         <infinite-loading @infinite="infiniteHandler">
           <template slot="spinner">
             <LoadingIcon class="mt-4 mb-6" />
@@ -35,13 +34,15 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import BlogPost from '@/components/common/BlogPost'
-import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
 
 export default {
   name: 'SavedBlogs',
-  components: { LoadingIcon, BlogPost, AppFeel },
+  components: {
+    LoadingIcon: () => import('@/components/LoadingIcon'),
+    BlogPost: () => import('@/components/common/BlogPost'),
+    AppFeel,
+  },
   middleware: 'isAuthenticated',
   data() {
     return {
@@ -59,7 +60,6 @@ export default {
           this.savedBlogFetchEndpoint,
           { params: { category_name: this.category } }
         )
-        console.log(results)
         if (results.length) {
           this.savedBlogFetchEndpoint = next
           this.blogs.push(...results)
