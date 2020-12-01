@@ -55,6 +55,18 @@ button {
   }
 }
 
+.premium-outlined-btn {
+  background-color: transparent;
+  color: darken($premium, $darken-percentage);
+  border: $single-unit solid darken($premium, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($premium, .1);
+    border-color: lighten($premium, $lighten-percentage);
+    color: lighten($premium, $lighten-percentage);
+  }
+}
+
 .success-outlined-btn {
   background-color: transparent;
   color: #34b334;
@@ -129,6 +141,16 @@ button {
 
   &:focus, &:hover, &:active {
     background-color: lighten($gold-dark, $lighten-percentage);
+  }
+
+}
+
+.premium-btn {
+  color: $black;
+  background-color: darken($premium, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($premium, $lighten-percentage);
   }
 
 }
