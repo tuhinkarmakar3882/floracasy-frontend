@@ -62,16 +62,23 @@
       </div>
     </template>
     <template slot="main">
-      <div v-if="step === 1" class="steps-bounded px-4 mt-4">
+      <div v-if="step === 1" class="steps px-4 mt-4">
         <h5 class="heading-title mb-8">What is it about?</h5>
         <div class="material-form-field mt-8">
           <input
             id="blog-title"
+            ref="blogTitle"
             v-model="blogTitle"
             type="text"
             required
             name="text"
             autocomplete="off"
+            @keyup.enter="
+              () => {
+                $refs.blogSubtitle.focus()
+                $refs.blogSubtitle.scrollIntoView()
+              }
+            "
           />
           <label class="material-form-field-label" for="blog-title">
             Title
@@ -80,6 +87,7 @@
         <div class="material-form-field mt-2">
           <input
             id="blog-subtitle"
+            ref="blogSubtitle"
             v-model="blogSubtitle"
             type="text"
             required
@@ -92,17 +100,24 @@
         </div>
       </div>
 
-      <div v-else-if="step === 2" class="steps-bounded px-4 mt-4">
+      <div v-else-if="step === 2" class="steps px-4 mt-4">
         <h5 class="heading-title mb-8">Add Details</h5>
 
         <div class="material-form-field mt-2">
           <input
             id="cover-image-url"
+            ref="coverImageUrl"
             v-model="coverImageUrl"
             type="text"
             required
             name="text"
             autocomplete="off"
+            @keyup.enter="
+              () => {
+                $refs.blogCategory.focus()
+                $refs.blogCategory.scrollIntoView()
+              }
+            "
           />
           <label class="material-form-field-label" for="cover-image-url">
             Cover Photo URL
@@ -116,6 +131,7 @@
           <div class="my-5">
             <select
               id="blog-category"
+              ref="blogCategory"
               v-model="blogCategory"
               name="blog-category"
               autocomplete="off"
@@ -132,7 +148,7 @@
         </div>
       </div>
 
-      <div v-else-if="step === 3" class="steps-unbounded mt-4">
+      <div v-else-if="step === 3" class="steps mt-4">
         <h5 class="heading-title mb-8">Write the Blog below</h5>
         <client-only>
           <div class="blog-body">
@@ -452,9 +468,7 @@ export default {
     box-shadow: 0 -2px 4px #050515;
   }
 
-  .steps,
-  .steps-bounded,
-  .steps-unbounded {
+  .steps {
     border: 1px solid transparent;
     overflow: auto;
 
@@ -479,18 +493,6 @@ export default {
           darken($white, $darken-percentage);
       }
     }
-  }
-
-  .steps {
-    margin-bottom: 122px;
-  }
-
-  .steps-bounded {
-    height: calc(100vh - 56px - 130px);
-  }
-
-  .steps-unbounded {
-    min-height: calc(100vh - 56px - 130px);
 
     .blog-body {
       blockquote,
