@@ -71,14 +71,16 @@
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
-import LoadingIcon from '@/components/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import RippleButton from '@/components/common/RippleButton'
 
 export default {
   name: 'EditProfile',
   middleware: 'isAuthenticated',
-  components: { RippleButton, LoadingIcon, AppFeel },
+  components: {
+    RippleButton: () => import('@/components/common/RippleButton'),
+    LoadingIcon: () => import('@/components/LoadingIcon'),
+    AppFeel,
+  },
   data() {
     return {
       navigationRoutes,
