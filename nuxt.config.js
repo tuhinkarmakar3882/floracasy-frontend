@@ -335,5 +335,5 @@ export default {
   //     devtools: true,
   //   },
   // },
-  // watch: ['~/module/csp.js'],
+  watch: ['~/module/csp.js'],
 }

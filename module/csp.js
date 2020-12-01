@@ -12,6 +12,7 @@ export default function cspModule() {
       // https://csp.withgoogle.com/docs/strict-csp.html
       'script-src': [
         'self',
+        'apis.google.com',
         // A random nonce as well as hashes for inline scripts are added to script-src
         // by nuxt.
         // Allow the execution of scripts dynamically added to the page, as long as they were loaded by a safe, already-trusted script.
@@ -19,7 +20,7 @@ export default function cspModule() {
         // "'strict-dynamic'",
         // Allow unsafe inline scripts. This is used as a fallback for browsers that do not support CSP2.
         // Browsers supporting CSP2 will ignore unsafe-inline because we set a nonce and hashes.
-        "'unsafe-inline'",
+        // "'unsafe-inline'",
         // Allow scripts to be loaded from all hosts. This is used as a fallback for browsers that do not support CSP3
         // to make our site compatible with those older browsers. We don't have full protection in those older browsers.
         // 'https:',
