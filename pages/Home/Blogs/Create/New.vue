@@ -1,10 +1,65 @@
 <template>
   <AppFeel
+    custom-header
     class="create-new-blog-page"
     :on-back="navigationRoutes.Home.Blogs.Create.index"
   >
-    <template slot="app-bar-title">
-      {{ pageTitle }}
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple=""
+        class="mdi mdi-arrow-left"
+        @click="handleBackButtonPress"
+      />
+      <p v-ripple="" class="ml-4">{{ pageTitle }}</p>
+      <div class="ml-auto">
+        <button
+          v-if="step === 1"
+          v-ripple=""
+          class="px-8"
+          :class="
+            !hasTitle && !hasSubtitle
+              ? 'disabled-btn'
+              : 'secondary-outlined-btn'
+          "
+          :disabled="!hasTitle && !hasSubtitle"
+          @click="goToNextStep"
+        >
+          Next
+        </button>
+
+        <button
+          v-if="step === 2"
+          v-ripple=""
+          class="px-8"
+          :class="
+            !hasCoverImageUrl && !hasCoverImageUrl
+              ? 'disabled-btn'
+              : 'secondary-outlined-btn'
+          "
+          :disabled="!hasCoverImageUrl && !hasCoverImageUrl"
+          @click="goToNextStep"
+        >
+          Next
+        </button>
+
+        <button
+          v-if="step === 3"
+          v-ripple=""
+          class="secondary-btn px-7"
+          @click="goToNextStep"
+        >
+          Preview
+        </button>
+
+        <button
+          v-if="step === 4"
+          v-ripple=""
+          class="secondary-btn px-7"
+          @click="publish"
+        >
+          Publish
+        </button>
+      </div>
     </template>
     <template slot="main">
       <div v-if="step === 1" class="steps-bounded px-4 mt-4">
@@ -85,6 +140,11 @@
               ref="editor"
               v-model="content"
               :options="editorOption"
+              style="
+                position: sticky !important;
+                top: 56px !important;
+                z-index: 1234567890 !important;
+              "
             />
           </div>
         </client-only>
@@ -127,61 +187,61 @@
         </section>
         <div class="blog-body">
           <article class="ql-snow">
-            <div class="ql-editor" v-html="content" />
+            <div class="ql-editor" v-html="noXSS(content)" />
           </article>
         </div>
       </div>
-      <section
-        :key="'fixed'"
-        class="py-5"
-        :class="step === 4 ? 'bottom-section-floating' : 'bottom-section'"
-      >
-        <div class="text-center">
-          <button
-            v-if="step >= 2"
-            v-ripple
-            class="secondary-outlined-btn mr-4 px-8"
-            @click="goToPrevStep"
-          >
-            Back
-          </button>
+      <!--      <section-->
+      <!--        :key="'fixed'"-->
+      <!--        class="py-5"-->
+      <!--        :class="step === 4 ? 'bottom-section-floating' : 'bottom-section'"-->
+      <!--      >-->
+      <!--        <div class="text-center">-->
+      <!--          <button-->
+      <!--            v-if="step >= 2"-->
+      <!--            v-ripple=""-->
+      <!--            class="secondary-outlined-btn mr-4 px-8"-->
+      <!--            @click="goToPrevStep"-->
+      <!--          >-->
+      <!--            Back-->
+      <!--          </button>-->
 
-          <button
-            v-if="step <= 2"
-            v-ripple
-            class="secondary-btn px-8"
-            @click="goToNextStep"
-          >
-            Next
-          </button>
+      <!--          <button-->
+      <!--            v-if="step <= 2"-->
+      <!--            v-ripple=""-->
+      <!--            class="secondary-btn px-8"-->
+      <!--            @click="goToNextStep"-->
+      <!--          >-->
+      <!--            Next-->
+      <!--          </button>-->
 
-          <button
-            v-if="step === 3"
-            v-ripple
-            class="secondary-btn px-7"
-            @click="goToNextStep"
-          >
-            Preview
-          </button>
+      <!--          <button-->
+      <!--            v-if="step === 3"-->
+      <!--            v-ripple=""-->
+      <!--            class="secondary-btn px-7"-->
+      <!--            @click="goToNextStep"-->
+      <!--          >-->
+      <!--            Preview-->
+      <!--          </button>-->
 
-          <button
-            v-if="step === 4"
-            v-ripple
-            class="secondary-btn px-7"
-            @click="publish"
-          >
-            Publish
-          </button>
-        </div>
+      <!--          <button-->
+      <!--            v-if="step === 4"-->
+      <!--            v-ripple=""-->
+      <!--            class="secondary-btn px-7"-->
+      <!--            @click="publish"-->
+      <!--          >-->
+      <!--            Publish-->
+      <!--          </button>-->
+      <!--        </div>-->
 
-        <section class="progress-circle mt-8">
-          <span
-            v-for="(stepNo, index) in totalSteps"
-            :key="index"
-            :class="stepNo === step && 'active'"
-          />
-        </section>
-      </section>
+      <!--        <section class="progress-circle mt-8">-->
+      <!--          <span-->
+      <!--            v-for="(stepNo, index) in totalSteps"-->
+      <!--            :key="index"-->
+      <!--            :class="stepNo === step && 'active'"-->
+      <!--          />-->
+      <!--        </section>-->
+      <!--      </section>-->
     </template>
   </AppFeel>
 </template>
@@ -211,15 +271,16 @@ export default {
     AppFeel,
   },
 
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, from: prevURL }) {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
-    return { categories: response }
+    return { categories: response, prevURL }
   },
 
   data() {
     return {
+      prevURL: null,
       editorOption: {
         modules: {
           toolbar: [
@@ -249,6 +310,11 @@ export default {
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
 
+      hasTitle: true,
+      hasSubtitle: true,
+      hasCoverImageUrl: true,
+      hasBlogCategory: true,
+
       blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
       blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),
       blogCategory: getFromLocalStorageOrReturnDefault('blogCategory'),
@@ -272,15 +338,19 @@ export default {
     },
     blogCategory: (newContent) => {
       localStorage.setItem('blogCategory', newContent)
+      // this.hasBlogCategory = newContent.length > 0
     },
     blogSubtitle: (newContent) => {
       localStorage.setItem('blogSubtitle', newContent)
+      // this.hasSubtitle = newContent.trim().length > 0
     },
     blogTitle: (newContent) => {
       localStorage.setItem('blogTitle', newContent)
+      // this.hasTitle = newContent.trim().length > 0
     },
     coverImageUrl: (newContent) => {
       localStorage.setItem('coverImageUrl', newContent)
+      // this.hasCoverImageUrl = newContent.trim().length > 0
     },
   },
 
@@ -293,11 +363,19 @@ export default {
     document.addEventListener('backbutton', this.goToPrevStep, false)
   },
 
-  beforeDestroy() {
-    document.removeEventListener('backbutton', this.goToPrevStep)
-  },
+  beforeDestroy() {},
 
   methods: {
+    async handleBackButtonPress() {
+      if (this.step === 1) {
+        this.prevURL
+          ? await this.$router.back()
+          : await this.$router.replace(navigationRoutes.Home.Blogs.Create.index)
+      } else {
+        this.step--
+      }
+    },
+
     parseTimeUsingMoment,
 
     goToNextStep() {
@@ -353,6 +431,14 @@ export default {
 @import 'assets/all-variables';
 
 .create-new-blog-page {
+  button {
+    min-width: auto;
+    font-size: 14px;
+    width: auto;
+    height: auto;
+    padding: 8px 20px;
+  }
+
   .bottom-section {
     height: 130px;
   }
