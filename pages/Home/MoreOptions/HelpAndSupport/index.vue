@@ -78,7 +78,7 @@ export default {
           name: 'Report a Problem',
           icon: 'mdi mdi-alert-octagon',
           color: '#ff8282',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.ReportProblem,
         },
       ],
     }
