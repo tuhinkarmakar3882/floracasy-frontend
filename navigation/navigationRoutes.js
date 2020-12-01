@@ -39,6 +39,7 @@ export const navigationRoutes = {
       GoPremium: '/Home/MoreOptions/GoPremium',
       HelpAndSupport: {
         index: '/Home/MoreOptions/HelpAndSupport',
+        Feedback: '/Home/MoreOptions/HelpAndSupport/Feedback',
         PopularTopics: {
           index: '/Home/MoreOptions/HelpAndSupport/PopularTopics',
         },
