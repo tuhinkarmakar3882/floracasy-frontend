@@ -88,11 +88,12 @@ import { mapGetters } from 'vuex'
 import { parseTimeUsingMoment } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import LoadingIcon from '~/components/LoadingIcon'
 
 export default {
   name: 'Notifications',
-  components: { LoadingIcon },
+  components: {
+    LoadingIcon: () => import('@/components/LoadingIcon'),
+  },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
 
@@ -124,19 +125,20 @@ export default {
 
   async mounted() {
     this.initHeight()
-
-    const hideNotificationConsent = localStorage.getItem(
-      'hide-notification-consent'
-    )
-    this.showBanner = hideNotificationConsent
-      ? hideNotificationConsent < 0
-      : true
-
-    hideNotificationConsent &&
-      localStorage.setItem(
-        'hide-notification-consent',
-        (parseInt(hideNotificationConsent) - 1).toString()
+    if (Notification.permission !== 'granted') {
+      const hideNotificationConsent = localStorage.getItem(
+        'hide-notification-consent'
       )
+      this.showBanner = hideNotificationConsent
+        ? hideNotificationConsent < 0
+        : true
+
+      hideNotificationConsent &&
+        localStorage.setItem(
+          'hide-notification-consent',
+          (parseInt(hideNotificationConsent) - 1).toString()
+        )
+    }
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 3,
     })
