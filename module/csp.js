@@ -7,7 +7,7 @@ export default function cspModule() {
     // reportOnly: true,
     hashAlgorithm: 'sha256',
     // Make sure unsafe-inline is always sent along with generated hashes to support browsers not compatible with CSP2.
-    unsafeInlineCompatibility: true,
+    // unsafeInlineCompatibility: true,
     policies: {
       // https://csp.withgoogle.com/docs/strict-csp.html
       'script-src': [
