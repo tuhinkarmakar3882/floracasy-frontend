@@ -38,6 +38,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'GoPremium',
+  middleware: 'isAuthenticated',
   components: { KeyPoint, AppFeel },
   data() {
     return {
