@@ -46,7 +46,6 @@ export default {
   data() {
     return {
       blogs: [],
-      page: 1,
       blogFetchCursorEndpoint: endpoints.blog.fetch,
     }
   },

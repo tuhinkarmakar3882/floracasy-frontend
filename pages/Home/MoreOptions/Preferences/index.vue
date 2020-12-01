@@ -30,7 +30,7 @@
           <li
             v-ripple="'#34b3345F'"
             class="px-4 py-2"
-            @click="switchState = !switchState"
+            @click="toggleNotificationPermission"
           >
             <p>
               <span class="icon mdi mdi-bell" style="color: #34b334" />
@@ -59,12 +59,14 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import CustomListView from '@/components/Layout/CustomListView'
-import SwitchButton from '@/components/common/SwitchButton'
 
 export default {
   name: 'Preferences',
-  components: { SwitchButton, CustomListView, AppFeel },
+  components: {
+    SwitchButton: () => import('@/components/common/SwitchButton'),
+    CustomListView: () => import('@/components/Layout/CustomListView'),
+    AppFeel,
+  },
   middleware: 'isAuthenticated',
   data() {
     return {
@@ -86,6 +88,40 @@ export default {
         },
       ],
     }
+  },
+  mounted() {
+    this.switchState = Notification.permission === 'granted'
+  },
+  methods: {
+    async toggleNotificationPermission() {
+      try {
+        const notificationState = await Notification.requestPermission().then()
+        if (notificationState === 'granted') {
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Notifications are enabled',
+            notificationType: 'success',
+            dismissible: true,
+          })
+          this.switchState = true
+        }
+        if (notificationState === 'default') {
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'May be some other day? No Problem.',
+            notificationType: 'info',
+            dismissible: true,
+          })
+        }
+        if (notificationState === 'denied') {
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Please Turn on Manually.',
+            notificationType: 'error',
+            dismissible: true,
+          })
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
   },
   head() {
     return {

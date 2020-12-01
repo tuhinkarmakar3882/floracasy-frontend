@@ -34,12 +34,14 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import CustomListView from '@/components/Layout/CustomListView'
 
 export default {
   name: 'HelpAndSupport',
   middleware: 'isAuthenticated',
-  components: { CustomListView, AppFeel },
+  components: {
+    CustomListView: () => import('@/components/Layout/CustomListView'),
+    AppFeel,
+  },
   data() {
     return {
       navigationRoutes,

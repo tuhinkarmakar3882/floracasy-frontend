@@ -19,6 +19,8 @@ const endpoints = {
 
     getBlogsByUid: 'blog/get_blogs_by_uid/',
 
+    getSavedBlogs: 'blog/get_saved_blogs/',
+
     addOrRemoveToSaveBlogs: 'blog/add_or_remove_to_save_blogs/',
   },
   categories: {

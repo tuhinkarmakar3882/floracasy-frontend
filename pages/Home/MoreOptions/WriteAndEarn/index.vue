@@ -36,11 +36,13 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import CustomListView from '@/components/Layout/CustomListView'
 
 export default {
   name: 'WriteAndEarn',
-  components: { CustomListView, AppFeel },
+  components: {
+    CustomListView: () => import('@/components/Layout/CustomListView'),
+    AppFeel,
+  },
   middleware: 'isAuthenticated',
   data() {
     return {
