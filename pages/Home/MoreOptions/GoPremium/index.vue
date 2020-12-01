@@ -10,19 +10,16 @@
       <section class="px-4">
         <div class="">
           <h4 class="heading-title">The Premium Perks!</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam,
-            cupiditate, sint. Asperiores autem corporis cum ducimus inventore
-            nobis omnis quasi quibusdam ratione repudiandae similique sint
-            soluta, unde voluptatem voluptates voluptatum.
+          <p class="text-center pt-5">
+            Lorem ipsum dolor sit amet, The Pro Zone
           </p>
           <ul>
             <li v-for="(point, index) in points" :key="index">
-              <KeyPoint tick-color="#ffc800" :tick-size="24" :point="point" />
+              <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
             </li>
           </ul>
           <div class="text-center my-4">
-            <button v-ripple="" class="warning-btn">Join Eco Pack</button>
+            <button v-ripple="" class="premium-btn">Buy Premium</button>
           </div>
         </div>
         <hr class="mt-8" />
@@ -44,10 +41,10 @@ export default {
     return {
       pageTitle: 'Go Premium',
       points: [
-        'Ad-free Experience',
         'Get Detailed Insights',
         'Premium Interface',
         'Audible Blogs',
+        'Reach More People Faster',
         'Get Messaging Functionality',
         'Avail Faster Customer Support',
         'And Much More!',
