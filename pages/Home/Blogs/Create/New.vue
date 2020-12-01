@@ -10,18 +10,14 @@
         class="mdi mdi-arrow-left"
         @click="handleBackButtonPress"
       />
-      <p v-ripple="" class="ml-4">{{ pageTitle }}</p>
+      <p v-ripple="" class="ml-4" style="font-size: 1.1rem">{{ pageTitle }}</p>
       <div class="ml-auto">
         <button
           v-if="step === 1"
           v-ripple=""
           class="px-8"
-          :class="
-            !hasTitle && !hasSubtitle
-              ? 'disabled-btn'
-              : 'secondary-outlined-btn'
-          "
-          :disabled="!hasTitle && !hasSubtitle"
+          :class="!(hasTitle && hasSubtitle) ? 'disabled-btn' : 'secondary-btn'"
+          :disabled="!(hasTitle && hasSubtitle)"
           @click="goToNextStep"
         >
           Next
@@ -32,11 +28,11 @@
           v-ripple=""
           class="px-8"
           :class="
-            !hasCoverImageUrl && !hasCoverImageUrl
+            !(hasCoverImageUrl && hasCoverImageUrl)
               ? 'disabled-btn'
-              : 'secondary-outlined-btn'
+              : 'secondary-btn'
           "
-          :disabled="!hasCoverImageUrl && !hasCoverImageUrl"
+          :disabled="!(hasCoverImageUrl && hasCoverImageUrl)"
           @click="goToNextStep"
         >
           Next
@@ -326,10 +322,10 @@ export default {
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
 
-      hasTitle: true,
-      hasSubtitle: true,
-      hasCoverImageUrl: true,
-      hasBlogCategory: true,
+      hasTitle: false,
+      hasSubtitle: false,
+      hasCoverImageUrl: false,
+      hasBlogCategory: false,
 
       blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
       blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),
@@ -349,24 +345,24 @@ export default {
   },
 
   watch: {
-    content: (newContent) => {
+    content(newContent) {
       localStorage.setItem('draft', newContent)
     },
-    blogCategory: (newContent) => {
+    blogCategory(newContent) {
       localStorage.setItem('blogCategory', newContent)
-      // this.hasBlogCategory = newContent.length > 0
+      this.hasBlogCategory = newContent.length > 0
     },
-    blogSubtitle: (newContent) => {
+    blogSubtitle(newContent) {
       localStorage.setItem('blogSubtitle', newContent)
-      // this.hasSubtitle = newContent.trim().length > 0
+      this.hasSubtitle = newContent.trim().length > 0
     },
-    blogTitle: (newContent) => {
+    blogTitle(newContent) {
       localStorage.setItem('blogTitle', newContent)
-      // this.hasTitle = newContent.trim().length > 0
+      this.hasTitle = newContent.trim().length > 0
     },
-    coverImageUrl: (newContent) => {
+    coverImageUrl(newContent) {
       localStorage.setItem('coverImageUrl', newContent)
-      // this.hasCoverImageUrl = newContent.trim().length > 0
+      this.hasCoverImageUrl = newContent.trim().length > 0
     },
   },
 
@@ -376,7 +372,18 @@ export default {
       this.loadingProfile = true
       await this.$store.dispatch('UserManagement/fetchData')
     }
-    document.addEventListener('backbutton', this.goToPrevStep, false)
+    this.hasTitle = localStorage.getItem('blogTitle')
+      ? localStorage.getItem('blogTitle').trim().length > 0
+      : false
+    this.hasSubtitle = localStorage.getItem('blogSubtitle')
+      ? localStorage.getItem('blogSubtitle').trim().length > 0
+      : false
+    this.hasBlogCategory = localStorage.getItem('blogCategory')
+      ? localStorage.getItem('blogCategory').trim().length > 0
+      : false
+    this.hasCoverImageUrl = localStorage.getItem('coverImageUrl')
+      ? localStorage.getItem('coverImageUrl').trim().length > 0
+      : false
   },
 
   beforeDestroy() {},
