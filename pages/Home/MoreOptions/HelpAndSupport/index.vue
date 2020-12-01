@@ -51,7 +51,7 @@ export default {
           name: 'Write a Feedback',
           icon: 'mdi mdi-message-alert',
           color: '#f5a049',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback,
         },
         {
           name: 'Privacy & Security',
