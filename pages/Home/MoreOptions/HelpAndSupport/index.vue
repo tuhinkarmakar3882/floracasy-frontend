@@ -51,32 +51,34 @@ export default {
           name: 'Write a Feedback',
           icon: 'mdi mdi-message-alert',
           color: '#f5a049',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
         },
         {
           name: 'Privacy & Security',
           icon: 'mdi mdi-security',
           color: '#52B2A2',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
         },
 
         {
           name: 'Explore Popular Topics',
           icon: 'mdi mdi-compass',
           color: '#9c9aff',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+          route:
+            navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
+              .index,
         },
         {
           name: 'View Ticket Status',
           icon: 'mdi mdi-bulletin-board',
           color: '#34b334',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
         },
         {
           name: 'Report a Problem',
           icon: 'mdi mdi-alert-octagon',
           color: '#ff8282',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
         },
       ],
     }
