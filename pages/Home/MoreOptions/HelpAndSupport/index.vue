@@ -72,7 +72,7 @@ export default {
           name: 'View Ticket Status',
           icon: 'mdi mdi-bulletin-board',
           color: '#34b334',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index,
         },
         {
           name: 'Report a Problem',

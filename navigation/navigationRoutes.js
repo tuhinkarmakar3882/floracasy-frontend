@@ -44,6 +44,9 @@ export const navigationRoutes = {
           index: '/Home/MoreOptions/HelpAndSupport/PopularTopics',
         },
         ReportProblem: '/Home/MoreOptions/HelpAndSupport/ReportProblem',
+        Tickets: {
+          index: '/Home/MoreOptions/HelpAndSupport/Tickets',
+        },
       },
       Payments: {
         index: '/Home/MoreOptions/Payments',
