@@ -47,8 +47,8 @@
 </template>
 
 <script>
-import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
 import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
+import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {

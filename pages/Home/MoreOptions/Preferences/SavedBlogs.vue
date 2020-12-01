@@ -33,13 +33,14 @@
 
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
+import LoadingIcon from '@/components/LoadingIcon'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 
 export default {
   name: 'SavedBlogs',
   components: {
-    LoadingIcon: () => import('@/components/LoadingIcon'),
+    LoadingIcon,
     BlogPost: () => import('@/components/common/BlogPost'),
     AppFeel,
   },

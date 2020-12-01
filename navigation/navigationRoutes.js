@@ -37,7 +37,17 @@ export const navigationRoutes = {
       About: '/Home/MoreOptions/About',
       FAQ: '/Home/MoreOptions/FAQ',
       GoPremium: '/Home/MoreOptions/GoPremium',
-      HelpAndSupport: '/Home/MoreOptions/HelpAndSupport',
+      HelpAndSupport: {
+        index: '/Home/MoreOptions/HelpAndSupport',
+        Feedback: '/Home/MoreOptions/HelpAndSupport/Feedback',
+        PopularTopics: {
+          index: '/Home/MoreOptions/HelpAndSupport/PopularTopics',
+        },
+        ReportProblem: '/Home/MoreOptions/HelpAndSupport/ReportProblem',
+        Tickets: {
+          index: '/Home/MoreOptions/HelpAndSupport/Tickets',
+        },
+      },
       Payments: {
         index: '/Home/MoreOptions/Payments',
       },

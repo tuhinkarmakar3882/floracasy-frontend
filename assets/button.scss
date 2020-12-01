@@ -26,7 +26,7 @@ button {
 
   &:focus, &:hover, &:active {
     background-color: rgba($primary-light, .1);
-    border-color: lighten($primary-light,  $lighten-percentage);
+    border-color: lighten($primary-light, $lighten-percentage);
     color: lighten($primary-light, $lighten-percentage);
   }
 }
@@ -40,6 +40,30 @@ button {
     background-color: rgba($secondary, .1);
     border-color: lighten($secondary, $lighten-percentage);
     color: lighten($secondary, $lighten-percentage);
+  }
+}
+
+.warning-outlined-btn {
+  background-color: transparent;
+  color: darken($gold-dark, $darken-percentage);
+  border: $single-unit solid darken($gold-dark, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($gold-dark, .1);
+    border-color: lighten($gold-dark, $lighten-percentage);
+    color: lighten($gold-dark, $lighten-percentage);
+  }
+}
+
+.premium-outlined-btn {
+  background-color: transparent;
+  color: darken($premium, $darken-percentage);
+  border: $single-unit solid darken($premium, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($premium, .1);
+    border-color: lighten($premium, $lighten-percentage);
+    color: lighten($premium, $lighten-percentage);
   }
 }
 
@@ -107,6 +131,26 @@ button {
 
   &:focus, &:hover, &:active {
     background-color: lighten($secondary, $lighten-percentage);
+  }
+
+}
+
+.warning-btn {
+  color: $black;
+  background-color: darken($gold-dark, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($gold-dark, $lighten-percentage);
+  }
+
+}
+
+.premium-btn {
+  color: $black;
+  background-color: darken($premium, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($premium, $lighten-percentage);
   }
 
 }

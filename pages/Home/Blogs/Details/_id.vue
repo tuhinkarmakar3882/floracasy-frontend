@@ -84,7 +84,7 @@
       </div>
     </template>
     <template slot="footer">
-      <section class="actions">
+      <section v-if="blog" class="actions">
         <div v-ripple class="like" @click="like">
           <i
             class="mdi"
@@ -141,6 +141,7 @@ export default {
       prevURL: null,
       navigationRoutes,
       noXSS: sanitizeHtml,
+      blog: null,
       sanitizationConfig: {
         allowedTags: [
           'address',
@@ -249,6 +250,12 @@ export default {
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
+    if (!this.prevURL) {
+      const response = await this.$axios.$get(endpoints.blog.detail, {
+        params: { id: this.$route.params.id },
+      })
+      this.blog = response
+    }
   },
 
   methods: {

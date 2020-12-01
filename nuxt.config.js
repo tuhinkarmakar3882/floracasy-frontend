@@ -1,6 +1,8 @@
 import * as secrets from './environmentalVariables'
 import * as packageJson from './package.json'
 
+// const PRIMARY_HOSTS = [`localhost:3001`, 'localhost']
+
 export default {
   ssr: true,
   components: true,
@@ -44,6 +46,7 @@ export default {
   ],
 
   modules: [
+    '~/module/csp.js',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxt/content',
@@ -98,7 +101,22 @@ export default {
   ],
 
   build: {
-    extractCSS: true,
+    extractCSS: {
+      ignoreOrder: true,
+    },
+    optimizeCSS: true,
+  },
+
+  render: {
+    asyncScripts: true,
+
+    csp: {
+      addMeta: true,
+      hashAlgorithm: 'sha256',
+      policies: {
+        'default-src': ["'self'"],
+      },
+    },
   },
 
   axios: {
@@ -106,10 +124,7 @@ export default {
     retry: { retries: 1 },
   },
 
-  css: [
-    '~/styles/main.scss',
-    //
-  ],
+  css: ['~/styles/main.scss'],
   head: {
     titleTemplate: '%s - Floracasy',
     title: process.env.npm_package_name || '',
@@ -311,4 +326,14 @@ export default {
     //   // publicPath: undefined
     // },
   },
+
+  telemetry: false,
+
+  // vue: {
+  //   config: {
+  //     productionTip: true,
+  //     devtools: true,
+  //   },
+  // },
+  watch: ['~/module/csp.js'],
 }
