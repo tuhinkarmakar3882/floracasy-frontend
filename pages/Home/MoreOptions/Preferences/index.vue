@@ -59,12 +59,14 @@
 <script>
 import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import CustomListView from '@/components/Layout/CustomListView'
-import SwitchButton from '@/components/common/SwitchButton'
 
 export default {
   name: 'Preferences',
-  components: { SwitchButton, CustomListView, AppFeel },
+  components: {
+    SwitchButton: () => import('@/components/common/SwitchButton'),
+    CustomListView: () => import('@/components/Layout/CustomListView'),
+    AppFeel,
+  },
   middleware: 'isAuthenticated',
   data() {
     return {
