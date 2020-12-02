@@ -155,6 +155,8 @@ $blog-border-radius: 20px;
     .active-tab {
       color: $secondary;
       font-weight: 400;
+      background: $card-background;
+      transition: all 100ms ease-in-out;
     }
   }
 }
