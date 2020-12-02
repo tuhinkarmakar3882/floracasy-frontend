@@ -50,7 +50,6 @@
 <script>
 import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
-import { navigationRoutes } from '@/navigation/navigationRoutes'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {
