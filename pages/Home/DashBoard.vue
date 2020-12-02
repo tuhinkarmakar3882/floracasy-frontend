@@ -30,17 +30,22 @@
       </p>
     </section>
     <div ref="tabNavigation"></div>
-    <section v-if="tabNumber === 0">
+
+    <section v-if="tabNumber === 0" v-touch:swipe="swipeHandler">
       <h3 class="heading-title">All Blogs</h3>
       <InfiniteScrollingBlogLists />
     </section>
 
-    <section v-if="tabNumber === 1">
+    <section v-if="tabNumber === 1" v-touch:swipe="swipeHandler">
       <h3 class="heading-title">Trending Blogs</h3>
       <InfiniteScrollingBlogLists />
     </section>
 
-    <div v-if="tabNumber === 2" style="min-height: calc(100vh - 180px)">
+    <div
+      v-if="tabNumber === 2"
+      v-touch:swipe="swipeHandler"
+      style="min-height: calc(100vh - 180px)"
+    >
       <CategoriesLineUp />
     </div>
   </div>
@@ -49,6 +54,7 @@
 <script>
 import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {
@@ -100,6 +106,16 @@ export default {
       this.$nextTick(() => {
         this.$refs.tabNavigation.scrollTop = 0
       })
+    },
+    async swipeHandler(direction) {
+      if (direction === 'left') {
+        this.tabNumber === 2
+          ? await this.$router.push(navigationRoutes.Home.Account.Details)
+          : this.tabNumber++
+      }
+      if (direction === 'right') {
+        this.tabNumber === 0 ? (this.tabNumber = 0) : this.tabNumber--
+      }
     },
   },
 
