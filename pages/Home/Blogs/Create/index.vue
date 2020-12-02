@@ -1,5 +1,5 @@
 <template>
-  <div class="draft-blog-page">
+  <div v-touch:swipe="swipeHandler" class="create-new-index-page">
     <h4 class="heading-title px-4">How do you want to start?</h4>
 
     <CustomListView>
@@ -29,6 +29,7 @@
 <script>
 import CustomListView from '@/components/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+
 export default {
   name: 'BlogCreation',
   components: { CustomListView },
@@ -60,6 +61,16 @@ export default {
     })
   },
 
+  methods: {
+    async swipeHandler(direction) {
+      console.log(direction)
+      if (direction === 'right')
+        await this.$router.push(navigationRoutes.Home.Account.Details)
+      if (direction === 'left')
+        await this.$router.push(navigationRoutes.Home.Notifications.index)
+    },
+  },
+
   head() {
     return {
       title: this.pageTitle,
@@ -71,80 +82,12 @@ export default {
 <style lang="scss">
 @import 'assets/all-variables';
 
-.create-blog-page {
+.create-new-index-page {
+  min-height: calc(100vh - 120px);
   button {
     min-width: auto;
     height: auto;
     width: auto;
-  }
-
-  .ql-picker-label.ql-active {
-    width: 110px;
-  }
-
-  .ql-toolbar.ql-snow {
-    position: sticky;
-    top: 0;
-    //top: 2 * $x-large-unit;
-    background-color: $editor-toolbar-background;
-    z-index: 1;
-    border: none;
-    box-shadow: $down-only-box-shadow;
-  }
-
-  .test {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-column-gap: 1rem;
-
-    @media only screen and (min-width: $medium) {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    blockquote,
-    ul,
-    ol {
-      margin: $medium-unit 0 !important;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4 {
-      position: relative;
-      margin: $large-unit 0;
-
-      &::after {
-        content: '';
-        border-radius: $standard-unit;
-        position: absolute;
-        bottom: -$micro-unit;
-        left: 0;
-        height: $nano-unit;
-        width: clamp(100px, 20%, 250px);
-        background-color: darken($secondary-matte, $lighten-percentage);
-      }
-    }
-  }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 $medium-unit;
-    height: 2 * $x-large-unit;
-    background-color: $nav-bar-bg;
-    box-shadow: $down-only-box-shadow;
-
-    button {
-      min-width: auto;
-      height: $xxx-large-unit;
-      width: 4 * $xx-large-unit;
-    }
-  }
-
-  main {
-    padding-top: $standard-unit;
   }
 }
 </style>
