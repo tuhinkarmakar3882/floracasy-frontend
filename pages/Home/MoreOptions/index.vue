@@ -1,5 +1,5 @@
 <template>
-  <div class="more-options-page">
+  <div v-touch:swipe="swipeHandler" class="more-options-page">
     <h3 class="heading-title">More Options</h3>
     <CustomListView>
       <template slot="list-items">
@@ -36,6 +36,7 @@
 <script>
 import endpoints from '@/api/endpoints'
 import CustomListView from '@/components/Layout/CustomListView'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'MoreOptions',
@@ -44,6 +45,7 @@ export default {
   layout: 'MobileApp',
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'More Options',
       options: [
         {
@@ -105,6 +107,11 @@ export default {
   },
 
   methods: {
+    async swipeHandler(direction) {
+      if (direction === 'right')
+        await this.$router.push(navigationRoutes.Home.Notifications.index)
+    },
+
     async performLogout() {
       await this.$axios.setToken(false)
       await this.$store.dispatch('logout')
