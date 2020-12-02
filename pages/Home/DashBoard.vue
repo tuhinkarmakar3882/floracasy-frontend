@@ -114,7 +114,7 @@ export default {
           : this.tabNumber++
       }
       if (direction === 'right') {
-        this.tabNumber === 0 ? (this.tabNumber = 0) : this.tabNumber--
+        this.tabNumber <= 0 ? (this.tabNumber = 0) : this.tabNumber--
       }
     },
   },

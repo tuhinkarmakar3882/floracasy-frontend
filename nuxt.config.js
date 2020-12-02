@@ -1,8 +1,6 @@
 import * as secrets from './environmentalVariables'
 import * as packageJson from './package.json'
 
-// const PRIMARY_HOSTS = [`localhost:3001`, 'localhost']
-
 export default {
   ssr: true,
   components: true,
@@ -13,10 +11,10 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: true,
+    server: true,
+  },
 
   router: {},
 
