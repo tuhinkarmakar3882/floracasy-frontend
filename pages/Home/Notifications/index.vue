@@ -1,5 +1,5 @@
 <template>
-  <div v-touch:swipe="swipeHandler" class="notification-page mb-6">
+  <div class="notification-page mb-6">
     <section
       ref="banner-block"
       :key="'banner-item'"
@@ -147,13 +147,6 @@ export default {
   },
 
   methods: {
-    async swipeHandler(direction) {
-      if (direction === 'right')
-        await this.$router.push(navigationRoutes.Home.Blogs.Create.index)
-      if (direction === 'left')
-        await this.$router.push(navigationRoutes.Home.MoreOptions.index)
-    },
-
     parseTimeUsingMoment,
 
     showMaybeAndCollapse() {

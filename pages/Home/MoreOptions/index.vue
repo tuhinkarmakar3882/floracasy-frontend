@@ -1,5 +1,5 @@
 <template>
-  <div v-touch:swipe="swipeHandler" class="more-options-page">
+  <div class="more-options-page">
     <h3 class="heading-title">More Options</h3>
     <CustomListView>
       <template slot="list-items">
@@ -107,11 +107,6 @@ export default {
   },
 
   methods: {
-    async swipeHandler(direction) {
-      if (direction === 'right')
-        await this.$router.push(navigationRoutes.Home.Notifications.index)
-    },
-
     async performLogout() {
       await this.$axios.setToken(false)
       await this.$store.dispatch('logout')

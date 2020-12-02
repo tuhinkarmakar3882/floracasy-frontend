@@ -1,5 +1,5 @@
 <template>
-  <div v-touch:swipe="swipeHandler" class="create-new-index-page">
+  <div class="create-new-index-page">
     <h4 class="heading-title px-4">How do you want to start?</h4>
 
     <CustomListView>
@@ -59,16 +59,6 @@ export default {
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 2,
     })
-  },
-
-  methods: {
-    async swipeHandler(direction) {
-      console.log(direction)
-      if (direction === 'right')
-        await this.$router.push(navigationRoutes.Home.Account.Details)
-      if (direction === 'left')
-        await this.$router.push(navigationRoutes.Home.Notifications.index)
-    },
   },
 
   head() {
