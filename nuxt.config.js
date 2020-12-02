@@ -13,10 +13,10 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   router: {},
 
@@ -41,6 +41,10 @@ export default {
     },
     {
       src: '~/plugins/vue-infinite-loading.js',
+      mode: 'client',
+    },
+    {
+      src: '~/plugins/vue-touch-events.js',
       mode: 'client',
     },
   ],
