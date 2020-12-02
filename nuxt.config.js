@@ -1,8 +1,6 @@
 import * as secrets from './environmentalVariables'
 import * as packageJson from './package.json'
 
-// const PRIMARY_HOSTS = [`localhost:3001`, 'localhost']
-
 export default {
   ssr: true,
   components: true,
@@ -43,6 +41,10 @@ export default {
       src: '~/plugins/vue-infinite-loading.js',
       mode: 'client',
     },
+    // {
+    //   src: '~/plugins/vue-touch-events.js',
+    //   mode: 'client',
+    // },
   ],
 
   modules: [
@@ -112,10 +114,10 @@ export default {
 
     csp: {
       addMeta: true,
-      hashAlgorithm: 'sha256',
-      policies: {
-        'default-src': ["'self'"],
-      },
+      // hashAlgorithm: 'sha256',
+      // policies: {
+      //   'default-src': ["'self'"],
+      // },
     },
   },
 

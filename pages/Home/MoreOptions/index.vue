@@ -36,6 +36,7 @@
 <script>
 import endpoints from '@/api/endpoints'
 import CustomListView from '@/components/Layout/CustomListView'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'MoreOptions',
@@ -44,6 +45,7 @@ export default {
   layout: 'MobileApp',
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'More Options',
       options: [
         {

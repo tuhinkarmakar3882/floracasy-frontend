@@ -30,6 +30,7 @@
       </p>
     </section>
     <div ref="tabNavigation"></div>
+
     <section v-if="tabNumber === 0">
       <h3 class="heading-title">All Blogs</h3>
       <InfiniteScrollingBlogLists />
@@ -49,6 +50,7 @@
 <script>
 import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
 import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import Carousel from '~/components/Home/Dashboard/Carousel'
 
 export default {
@@ -139,6 +141,8 @@ $blog-border-radius: 20px;
     .active-tab {
       color: $secondary;
       font-weight: 400;
+      background: $card-background;
+      transition: all 100ms ease-in-out;
     }
   }
 }
