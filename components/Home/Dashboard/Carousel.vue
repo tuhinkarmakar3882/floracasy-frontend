@@ -1,6 +1,6 @@
 <template>
   <section class="carousel">
-    <div
+    <article
       v-for="(item, index) in carouselItems"
       :key="index"
       class="item"
@@ -23,7 +23,7 @@
       >
         Go Now
       </button>
-    </div>
+    </article>
   </section>
 </template>
 
@@ -90,7 +90,7 @@ export default {
   scroll-snap-stop: always;
   height: 250px;
 
-  div {
+  article {
     padding: 0 1rem;
     scroll-snap-align: start;
     scroll-snap-stop: always;
@@ -104,6 +104,22 @@ export default {
     align-items: center;
     justify-content: space-around;
     font-size: 100px;
+
+    * {
+      z-index: 1;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(black, 0.4);
+      content: '';
+      z-index: 0;
+      backdrop-filter: blur(1px);
+    }
   }
 }
 </style>
