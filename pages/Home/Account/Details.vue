@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center py-6 details-page">
+  <div v-touch:swipe="swipeHandler" class="text-center py-6 details-page">
     <main v-if="loadingProfile">
       <div class="pageLoading">
         <LoadingIcon />
@@ -191,6 +191,13 @@ export default {
   },
 
   methods: {
+    async swipeHandler(direction) {
+      if (direction === 'right')
+        await this.$router.push(navigationRoutes.Home.DashBoard)
+      if (direction === 'left')
+        await this.$router.push(navigationRoutes.Home.Blogs.Create.index)
+    },
+
     parseTimeUsingMoment,
     async infiniteHandler($state) {
       try {
