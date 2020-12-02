@@ -73,7 +73,7 @@ export default {
 @import 'assets/all-variables';
 
 .create-new-index-page {
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 250px);
   button {
     min-width: auto;
     height: auto;
