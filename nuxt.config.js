@@ -50,7 +50,7 @@ export default {
   modules: [
     '~/module/csp.js',
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxt/content',
     'cookie-universal-nuxt',
     [
