@@ -9,7 +9,7 @@
       <client-only>
         <section v-if="blogs">
           <article v-for="{ blog } in blogs" :key="blog.id">
-            <BlogPost :blog="blog" />
+            <BlogPost class="pt-4" :blog="blog" />
           </article>
         </section>
 

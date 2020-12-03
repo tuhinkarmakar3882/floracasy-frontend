@@ -1,6 +1,6 @@
 <template>
   <div class="blog-post-component">
-    <section class="content pt-8">
+    <section class="content">
       <p class="px-4 mb-2 top-line">
         <nuxt-link
           v-ripple=""
