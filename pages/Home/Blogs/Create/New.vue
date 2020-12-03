@@ -138,11 +138,13 @@
                 :key="category.id"
                 :value="category.id"
               >
-                {{ category.name }}
+                {{ category.id }} | {{ category.name }}
               </option>
             </select>
           </div>
         </div>
+
+        <pre>{{ categories }}</pre>
       </div>
 
       <div v-else-if="step === 3">
@@ -437,7 +439,6 @@
         </section>
         <section class="blog-body px-4 pb-8">
           <article v-html="noXSS(content, sanitizationConfig)" />
-          <!--          <article v-html="content" />-->
         </section>
       </div>
     </template>
@@ -494,6 +495,7 @@ export default {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
+    console.log(response)
     return { categories: response, prevURL }
   },
 
