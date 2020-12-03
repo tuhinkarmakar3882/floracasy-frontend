@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
@@ -77,8 +77,8 @@ export default {
   name: 'EditProfile',
   middleware: 'isAuthenticated',
   components: {
-    RippleButton: () => import('@/components/common/RippleButton'),
-    LoadingIcon: () => import('@/components/LoadingIcon'),
+    RippleButton: () => import('@/components/global/RippleButton'),
+    LoadingIcon: () => import('@/components/global/LoadingIcon'),
     AppFeel,
   },
   data() {

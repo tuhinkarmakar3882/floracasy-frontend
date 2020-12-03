@@ -18,13 +18,15 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
 
 export default {
   name: 'CategoryWise',
-  components: { InfiniteScrollingBlogLists, AppFeel },
+  components: {
+    InfiniteScrollingBlogLists: () =>
+      import('@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'),
+    AppFeel: () => import('@/components/global/Layout/AppFeel'),
+  },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {

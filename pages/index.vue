@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import HeroContent from '~/components/LandingPage/HeroContent'
-import CategoriesShowcase from '~/components/LandingPage/CategoriesShowcase'
-import HearTheExperiences from '~/components/LandingPage/HearTheExperiences'
+import HeroContent from '@/components/global/LandingPage/HeroContent'
+import CategoriesShowcase from '@/components/global/LandingPage/CategoriesShowcase'
+import HearTheExperiences from '@/components/global/LandingPage/HearTheExperiences'
 
 export default {
   name: 'LandingPage',

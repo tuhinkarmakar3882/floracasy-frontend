@@ -63,7 +63,7 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
-import LoadingIcon from '@/components/LoadingIcon'
+import LoadingIcon from '@/components/global/LoadingIcon'
 
 export default {
   name: 'Messages',

@@ -98,9 +98,9 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-// import CustomListView from '@/components/Layout/CustomListView'
+// import CustomListView from '@/components/global/Layout/CustomListView'
 export default {
   name: 'FAQ',
   components: { AppFeel },

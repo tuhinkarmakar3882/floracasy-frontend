@@ -80,9 +80,9 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import KeyPoint from '~/components/common/KeyPoint'
+import KeyPoint from '@/components/global/KeyPoint'
 
 export default {
   name: 'Earning',

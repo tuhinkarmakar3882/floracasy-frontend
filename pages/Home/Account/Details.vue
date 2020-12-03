@@ -140,8 +140,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
-import LoadingIcon from '@/components/LoadingIcon'
-import Logo from '@/components/common/Logo'
+import LoadingIcon from '@/components/global/LoadingIcon'
+import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '~/utils/utility'
 

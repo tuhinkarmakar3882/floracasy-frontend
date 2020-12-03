@@ -76,8 +76,8 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
-import Logo from '@/components/common/Logo'
+import AppFeel from '@/components/global/Layout/AppFeel'
+import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {

@@ -92,7 +92,7 @@ import endpoints from '~/api/endpoints'
 export default {
   name: 'Notifications',
   components: {
-    LoadingIcon: () => import('@/components/LoadingIcon'),
+    LoadingIcon: () => import('@/components/global/LoadingIcon'),
   },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',

@@ -57,14 +57,14 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'Preferences',
   components: {
-    SwitchButton: () => import('@/components/common/SwitchButton'),
-    CustomListView: () => import('@/components/Layout/CustomListView'),
+    SwitchButton: () => import('@/components/global/SwitchButton'),
+    CustomListView: () => import('@/components/global/Layout/CustomListView'),
     AppFeel,
   },
   middleware: 'isAuthenticated',

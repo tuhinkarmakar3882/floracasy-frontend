@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import CustomListView from '@/components/Layout/CustomListView'
+import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {

@@ -72,12 +72,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import AppFeel from '@/components/Layout/AppFeel'
-import LoadingIcon from '@/components/LoadingIcon'
-import RippleButton from '@/components/common/RippleButton'
+import AppFeel from '@/components/global/Layout/AppFeel'
+import LoadingIcon from '@/components/global/LoadingIcon'
+import RippleButton from '@/components/global/RippleButton'
 import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import MessageItem from '~/components/common/MessageItem.vue'
+import MessageItem from '@/components/global/MessageItem.vue'
 import endpoints from '~/api/endpoints'
 
 export default {
