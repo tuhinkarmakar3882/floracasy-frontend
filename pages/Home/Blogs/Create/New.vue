@@ -417,7 +417,7 @@
               :to="navigationRoutes.Home.Blogs.Create.New"
               class="no-underline"
             >
-              {{ categories[blogCategory - 1].name }}
+              {{ mappingTable[blogCategory].name }}
             </nuxt-link>
           </p>
           <h3 class="blog-title mb-4">
@@ -482,6 +482,14 @@ import {
 // import { supportedLanguages } from '~/config/code-hightlighting'
 // import 'highlight.js/styles/tomorrow.css'
 
+function createMappingFor(categoryList) {
+  const mappingTable = {}
+  categoryList.forEach((category) => {
+    mappingTable[category.id] = category
+  })
+  return mappingTable
+}
+
 export default {
   name: 'CreateNewBlog',
   middleware: 'isAuthenticated',
@@ -496,7 +504,10 @@ export default {
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
     console.log(response)
-    return { categories: response, prevURL }
+
+    const mappingTable = createMappingFor(response)
+
+    return { categories: response, mappingTable, prevURL }
   },
 
   data() {
@@ -510,6 +521,8 @@ export default {
       step: 1,
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
+
+      mappingTable: {},
 
       hasTitle: false,
       hasSubtitle: false,
