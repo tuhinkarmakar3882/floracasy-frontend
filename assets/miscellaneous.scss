@@ -84,19 +84,23 @@ html {
       overflow: auto;
     }
 
-    ul {
-      list-style: inside;
+    code {
+      padding: .2rem .5rem;
+      margin: .2rem;
+    }
+
+    ul, ol {
+      list-style: disc;
+      display: block;
 
       li {
-        margin: .5rem 0;
+        margin: 1rem;
       }
     }
 
     ol {
       list-style: decimal;
-      padding-left: $medium-unit;
     }
-
 
     input {
       border-radius: unset;
