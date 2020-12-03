@@ -22,7 +22,7 @@
         <slot name="app-bar-title" />
       </p>
     </header>
-    <main>
+    <main style="max-width: 1024px; margin: auto">
       <slot name="main"></slot>
     </main>
     <footer>
