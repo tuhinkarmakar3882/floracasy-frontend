@@ -651,27 +651,27 @@ export default {
     goToNextStep() {
       this.step++
     },
-    publish() {
-      console.log(this.content)
-      // await this.$axios
-      //   .$post(endpoints.blog.create, {
-      //     category: this.blogCategory,
-      //     coverImage: this.coverImageUrl,
-      //     title: this.blogTitle,
-      //     subtitle: this.blogSubtitle,
-      //     content: this.content,
-      //   })
-      //   .then(async () => {
-      //     this.cleanupCurrentDraft()
-      //     await this.$router.replace(navigationRoutes.Home.DashBoard)
-      //   })
-      //   .catch(async () => {
-      //     await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-      //       message: 'Network error. Please Retry',
-      //       notificationType: 'error',
-      //       dismissible: true,
-      //     })
-      //   })
+    async publish() {
+      // console.log(this.content)
+      await this.$axios
+        .$post(endpoints.blog.create, {
+          category: this.blogCategory,
+          coverImage: this.coverImageUrl,
+          title: this.blogTitle,
+          subtitle: this.blogSubtitle,
+          content: this.content,
+        })
+        .then(async () => {
+          localStorage.clear()
+          await this.$router.replace(navigationRoutes.Home.DashBoard)
+        })
+        .catch(async () => {
+          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+            message: 'Network error. Please Retry',
+            notificationType: 'error',
+            dismissible: true,
+          })
+        })
     },
   },
 
