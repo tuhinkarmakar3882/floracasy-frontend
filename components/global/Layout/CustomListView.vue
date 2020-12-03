@@ -21,6 +21,8 @@ export default {
     list-style: none;
 
     li {
+      margin: 0;
+
       p {
         display: grid;
         grid-template-columns: 1fr 4fr 0.5fr;
