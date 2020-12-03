@@ -95,7 +95,7 @@ export const sanitizationConfig = {
     'link',
     'meta',
   ],
-  allowedSchemes: ['http', 'https', 'mailto'],
+  allowedSchemes: ['https', 'mailto'],
   allowedSchemesByTag: {},
   allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
   allowProtocolRelative: true,
