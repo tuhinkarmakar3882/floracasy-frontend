@@ -57,36 +57,36 @@ html {
     blockquote {
       font-weight: 300;
       font-family: $Raleway;
-      border-left: 4px solid $info !important;
+      border-left: 4px solid $info;
       background: $segment-background;
-      padding: 1.5rem 1rem !important;
+      padding: 1.5rem 1rem;
       line-height: 1.9;
       box-shadow: $default-box-shadow;
       border-radius: $nano-unit;
       color: $body-text-default;
 
       a {
-        color: $secondary-highlight !important;
+        color: $secondary-highlight;
       }
     }
 
     pre, code, kbd, samp {
       font-weight: 300;
-      font-family: $monospace !important;
-      background: #131111 !important;
-      color: #8cb53d !important;
+      font-family: $monospace;
+      background: #131111;
+      color: white; // #8cb53d;
       padding: 1rem;
       margin: 1rem 0;
-      border-radius: $nano-unit !important;
-      word-break: break-all !important;
-      white-space: pre !important;
-      line-height: 1.8 !important;
+      border-radius: $nano-unit;
+      word-break: break-all;
+      white-space: pre;
+      line-height: 1.8;
       overflow: auto;
     }
 
     code {
-      padding: .2rem .5rem;
-      margin: .2rem;
+      padding: 0;
+      margin: 0;
     }
 
     ul, ol {
@@ -207,58 +207,5 @@ html {
         box-shadow: unset;
       }
     }
-
-
-    //.form-label-group {
-    //  position: relative;
-    //  margin-bottom: 1rem;
-    //  transition: all 250ms ease-in-out;
-    //
-    //  input,
-    //  label {
-    //    height: 3.125rem;
-    //    padding: 0.75rem;
-    //    width: 100%;
-    //    letter-spacing: 1px;
-    //    font-size: 1rem;
-    //  }
-    //
-    //  label {
-    //    position: absolute;
-    //    top: 0;
-    //    left: 0;
-    //    display: block;
-    //    width: 100%;
-    //    margin-bottom: 0;
-    //    line-height: 1.8;
-    //    pointer-events: none;
-    //    font-weight: 300;
-    //    color: $body-text-default;
-    //    cursor: text;
-    //    border: 1px solid transparent;
-    //    border-radius: 0.25rem;
-    //    transition: all 0.1s ease-in-out;
-    //  }
-    //
-    //  input::placeholder {
-    //    color: transparent;
-    //    background-color: darken($card-background, $darken-percentage) !important;
-    //  }
-    //
-    //  input:not(:placeholder-shown) {
-    //    padding-top: 3.75rem;
-    //    padding-bottom: 1.75rem;
-    //    font-size: 1.4rem;
-    //    background-color: darken($card-background, $darken-percentage) !important;
-    //  }
-    //
-    //  input:not(:placeholder-shown) ~ label {
-    //    padding-top: 0.25rem;
-    //    padding-bottom: 0.25rem;
-    //    font-size: 1rem;
-    //    background-color: darken($card-background, $darken-percentage) !important;
-    //  }
-    //}
-
   }
 }
