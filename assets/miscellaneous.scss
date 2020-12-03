@@ -119,6 +119,27 @@ html {
       }
     }
 
+    table {
+      display: table;
+
+      tbody {
+        display: table;
+        min-width: 20px;
+        min-height: 20px;
+
+        tr {
+          min-width: 20px;
+          min-height: 20px;
+
+          td {
+            min-width: 20px;
+            min-height: 20px;
+            border: 1px solid lighten($card-background, $lighten-percentage);
+            text-align: center;
+          }
+        }
+      }
+    }
 
     .material-form-field {
       font-family: 'Roboto', sans-serif;
