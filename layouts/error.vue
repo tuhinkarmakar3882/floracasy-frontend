@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Icon404 from '@/components/Icons/Icon404'
+import Icon404 from '@/components/global/Icons/Icon404'
 
 export default {
   components: { Icon404 },
