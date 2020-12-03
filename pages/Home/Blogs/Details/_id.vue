@@ -24,8 +24,9 @@
         <h5 class="mdi mdi-message-text" />
       </nuxt-link>
     </template>
+
     <template slot="main">
-      <div v-if="blog" class="my-6">
+      <div v-if="blog" class="my-6 blog">
         <section class="px-4">
           <p class="mb-2" style="display: flex !important">
             <nuxt-link
@@ -66,13 +67,8 @@
             {{ blog.subtitle }}
           </p>
         </section>
-        <section class="blog-body pb-8">
-          <article class="ql-snow">
-            <div
-              class="ql-editor"
-              v-html="noXSS(blog.content, sanitizationConfig)"
-            />
-          </article>
+        <section class="blog-body px-4 pb-8">
+          <article v-html="noXSS(blog.content, sanitizationConfig)" />
         </section>
       </div>
       <div
@@ -83,6 +79,7 @@
         <LoadingIcon />
       </div>
     </template>
+
     <template slot="footer">
       <section v-if="blog" class="actions">
         <div v-ripple class="like" @click="like">
@@ -112,21 +109,17 @@
 
 <script>
 import sanitizeHtml from 'sanitize-html'
-import LoadingIcon from '@/components/LoadingIcon'
+import AppFeel from '@/components/global/Layout/AppFeel'
+import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import { parseTimeUsingStandardLibrary, shorten } from '@/utils/utility'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'highlight.js/styles/tomorrow.css'
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-import AppFeel from '~/components/Layout/AppFeel'
+import 'highlight.js/styles/monokai.css'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { sanitizationConfig } from '@/config/sanitizationConfig'
 
 export default {
   name: 'BlogDetails',
   components: { AppFeel, LoadingIcon },
-  layout({ store }) {
-    return store.state.authState ? '' : 'PublicRoutes'
-  },
 
   async asyncData({ $axios, params, from: prevURL }) {
     const response = await $axios.$get(endpoints.blog.detail, {
@@ -142,119 +135,16 @@ export default {
       navigationRoutes,
       noXSS: sanitizeHtml,
       blog: null,
-      sanitizationConfig: {
-        allowedTags: [
-          'address',
-          'article',
-          'aside',
-          'footer',
-          'header',
-          'h1',
-          'h2',
-          'h3',
-          'h4',
-          'h5',
-          'h6',
-          'hgroup',
-          'main',
-          'nav',
-          'section',
-          'blockquote',
-          'dd',
-          'div',
-          'dl',
-          'dt',
-          'figcaption',
-          'figure',
-          'hr',
-          'li',
-          'main',
-          'ol',
-          'p',
-          'pre',
-          'ul',
-          'a',
-          'abbr',
-          'b',
-          'bdi',
-          'bdo',
-          'br',
-          'cite',
-          'code',
-          'data',
-          'dfn',
-          'em',
-          'i',
-          'kbd',
-          'mark',
-          'q',
-          'rb',
-          'rp',
-          'rt',
-          'rtc',
-          'ruby',
-          's',
-          'samp',
-          'small',
-          'span',
-          'strong',
-          'sub',
-          'sup',
-          'time',
-          'u',
-          'var',
-          'wbr',
-          'caption',
-          'col',
-          'colgroup',
-          'table',
-          'tbody',
-          'td',
-          'tfoot',
-          'th',
-          'thead',
-          'tr',
-        ],
-        disallowedTagsMode: 'discard',
-        allowedAttributes: {
-          a: ['href', 'name', 'target'],
-          h1: ['class', 'style'],
-          h2: ['class', 'style'],
-          h3: ['class', 'style'],
-          h4: ['class', 'style'],
-          h5: ['class', 'style'],
-          h6: ['class', 'style'],
-          p: ['class', 'style'],
-          span: ['class', 'style'],
-          img: ['src', 'style', 'alt'],
-        },
-        selfClosing: [
-          'img',
-          'br',
-          'hr',
-          'area',
-          'base',
-          'basefont',
-          'input',
-          'link',
-          'meta',
-        ],
-        allowedSchemes: ['http', 'https', 'mailto'],
-        allowedSchemesByTag: {},
-        allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
-        allowProtocolRelative: true,
-        enforceHtmlBoundary: true,
-      },
+      sanitizationConfig,
     }
   },
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
     if (!this.prevURL) {
-      const response = await this.$axios.$get(endpoints.blog.detail, {
+      this.blog = await this.$axios.$get(endpoints.blog.detail, {
         params: { id: this.$route.params.id },
       })
-      this.blog = response
     }
   },
 
@@ -377,37 +267,12 @@ export default {
 @import 'assets/all-variables';
 
 .blog-details-page {
-  .blog-intro-image {
-    box-shadow: $down-only-box-shadow;
-  }
+  .blog {
+    max-width: 1024px;
+    margin: auto;
 
-  .blog-body {
-    blockquote,
-    ul,
-    ol,
-    hr {
-      margin: $large-unit 0;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      position: relative;
-    }
-
-    h1,
-    h2,
-    h3 {
-      margin: $large-unit 0;
-    }
-
-    h4,
-    h5,
-    h6 {
-      margin: $medium-unit 0;
+    .blog-intro-image {
+      box-shadow: $down-only-box-shadow;
     }
   }
 
