@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import CustomListView from '@/components/Layout/CustomListView'
+import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import LoadingIcon from '@/components/LoadingIcon'
+import LoadingIcon from '@/components/global/LoadingIcon'
 import { mapGetters } from 'vuex'
 
 export default {

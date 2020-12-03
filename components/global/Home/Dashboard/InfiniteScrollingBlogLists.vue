@@ -27,8 +27,8 @@
 <script>
 import endpoints from '@/api/endpoints'
 import ClientOnly from 'vue-client-only'
-import LoadingIcon from '@/components/LoadingIcon'
-import BlogPost from '~/components/common/BlogPost'
+import LoadingIcon from '@/components/global/LoadingIcon'
+import BlogPost from '@/components/global/BlogPost'
 
 export default {
   name: 'InfiniteScrollingBlogLists',

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import SegmentTitle from '@/components/LandingPage/SegmentTitle'
+import SegmentTitle from '@/components/global/LandingPage/SegmentTitle'
 
 export default {
   name: 'HearTheExperiences',

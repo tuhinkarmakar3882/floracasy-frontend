@@ -176,6 +176,7 @@
 </template>
 
 <script>
+import 'highlight.js/styles/tomorrow.css'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import {
   Blockquote,
@@ -183,21 +184,28 @@ import {
   BulletList,
   Code,
   CodeBlock,
+  CodeBlockHighlight,
   HardBreak,
   Heading,
   History,
   HorizontalRule,
+  Image,
   Italic,
   Link,
   ListItem,
   OrderedList,
   Placeholder,
   Strike,
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
   TodoItem,
   TodoList,
   TrailingNode,
   Underline,
 } from 'tiptap-extensions'
+import { supportedLanguages } from '~/config/code-hightlighting'
 
 export default {
   name: 'RichTextEditor',
@@ -217,20 +225,29 @@ export default {
         new Blockquote(),
         new BulletList(),
         new CodeBlock(),
+        new CodeBlockHighlight({
+          languages: supportedLanguages,
+        }),
         new HardBreak(),
         new Heading({ levels: [1, 2, 3, 4, 5, 6] }),
         new HorizontalRule(),
+        new Image(),
         new ListItem(),
         new OrderedList(),
+        new Table(),
+        new TableHeader(),
+        new TableCell(),
+        new TableRow(),
         new TodoItem(),
         new TodoList(),
-        new Link(),
         new Bold(),
         new Code(),
         new Italic(),
+        new Link(),
         new Strike(),
         new Underline(),
         new History(),
+
         new Placeholder({
           emptyEditorClass: 'is-editor-empty',
           emptyNodeClass: 'is-empty',
@@ -249,7 +266,7 @@ export default {
     })
   },
   beforeDestroy() {
-    this.editor.destroy()
+    this.editor && this.editor.destroy()
   },
 }
 </script>
