@@ -11,8 +11,8 @@
         color: 'white',
       }"
     >
-      <h3>{{ item.name }}</h3>
-      <p>
+      <h4 class="my-0">{{ item.name }}</h4>
+      <p style="margin: 20px 0 24px">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit at blanditiis.
       </p>
       <button
@@ -37,44 +37,7 @@ export default {
     },
   },
   methods: {
-    async sendNotification() {
-      const notificationOptions = {
-        body: 'Lorem Ipsum Dolor Sit Amet...',
-        icon: '/icon.png',
-        image: '/icon.png',
-        vibrate: [300, 100, 400, 100, 400, 100, 400],
-      }
-
-      if (!('Notification' in window)) {
-        alert('This browser does not support desktop notification')
-      } else if (Notification.permission === 'granted') {
-        const notification = new Notification('Hi there!', notificationOptions)
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'This is a Test Notification',
-          notificationType: 'info',
-          dismissible: true,
-        })
-      } else if (Notification.permission !== 'denied') {
-        const permission = await Notification.requestPermission()
-        if (permission === 'granted') {
-          const notification = new Notification(
-            'Hi there!',
-            notificationOptions
-          )
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'This is a Test Notification',
-            notificationType: 'info',
-            dismissible: true,
-          })
-        }
-      } else {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: "Can't Create Notification",
-          notificationType: 'warning',
-          dismissible: true,
-        })
-      }
-    },
+    sendNotification() {},
   },
 }
 </script>
@@ -102,7 +65,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     font-size: 100px;
 
     * {
