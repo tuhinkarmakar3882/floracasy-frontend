@@ -117,26 +117,9 @@ export default {
   main {
     background-color: $body-background;
 
-    blockquote,
-    ul,
-    ol,
-    hr {
-      margin: $large-unit 0;
+    button {
+      min-width: auto;
     }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      position: relative;
-      margin: $large-unit 0;
-    }
-  }
-
-  button {
-    min-width: auto;
   }
 }
 </style>

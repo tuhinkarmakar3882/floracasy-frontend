@@ -29,7 +29,7 @@
         <template slot="last-item">
           <li
             v-ripple="'#34b3345F'"
-            class="px-4 py-2"
+            class="px-4 py-3"
             @click="toggleNotificationPermission"
           >
             <p>
@@ -43,7 +43,7 @@
               </span>
             </p>
           </li>
-          <li v-ripple="'#9c9aff5F'" class="px-4 py-2">
+          <li v-ripple="'#9c9aff5F'" class="px-4 py-3">
             <p>
               <span class="icon mdi mdi-message" style="color: #9c9aff" />
               <span class="option-name">Who can Message</span>
