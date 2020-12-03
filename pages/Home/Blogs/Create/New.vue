@@ -138,13 +138,11 @@
                 :key="category.id"
                 :value="category.id"
               >
-                {{ category.id }} | {{ category.name }}
+                {{ category.name }}
               </option>
             </select>
           </div>
         </div>
-
-        <pre>{{ categories }}</pre>
       </div>
 
       <div v-else-if="step === 3">
