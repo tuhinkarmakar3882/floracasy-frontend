@@ -55,6 +55,7 @@
             :key="index"
             v-ripple=""
             class="py-4 px-4"
+            @click="drawerIsOpened = false"
           >
             <a :href="`#${question.id}`" class="no-underline secondary-matte">
               {{ question.statement }}
@@ -198,7 +199,7 @@ export default {
   position: fixed;
   top: 54px;
   right: 0;
-  min-height: 100vh;
+  min-height: calc(100vh - 54px);
   background-color: #0d0d17;
   box-shadow: 2px 0 4px #0d0d17;
   z-index: 123456789098765;
