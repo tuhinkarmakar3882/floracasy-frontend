@@ -1,6 +1,6 @@
 <template>
   <section class="question-card">
-    <blockquote>
+    <blockquote :style="{ borderLeft: `4px solid ${borderShade}` }">
       <h5 class="my-0 px-4">{{ content.statement }}</h5>
       <hr class="mx-4" />
       <p class="px-4">
@@ -69,6 +69,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    borderShade: {
+      type: String,
+      default: '#7872ec',
+    },
   },
 
   data() {
@@ -94,7 +98,6 @@ export default {
 <style lang="scss" scoped>
 .question-card {
   blockquote {
-    border-left: 4px solid #7872ec;
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 0;

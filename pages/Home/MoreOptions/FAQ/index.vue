@@ -13,6 +13,7 @@
         class="px-4"
         :content="question"
         :show-default-feedback="true"
+        border-shade="#364075"
       />
     </template>
   </AppFeel>
