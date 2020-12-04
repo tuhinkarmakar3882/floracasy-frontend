@@ -10,6 +10,7 @@
       <QuestionCard
         v-for="(question, index) in questions"
         :key="index"
+        class="px-4"
         :content="question"
         :show-default-feedback="true"
       />
