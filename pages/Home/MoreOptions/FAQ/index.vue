@@ -7,37 +7,12 @@
     <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
-      <article v-for="(question, index) in questions" :key="index">
-        <blockquote>
-          <h5 class="my-0 px-4">{{ question.statement }}</h5>
-
-          <hr class="mx-4" />
-
-          <p class="px-4">
-            <span class="secondary">Answer: </span>
-            <br />
-            {{ question.answer }}
-          </p>
-
-          <hr class="mt-8 mb-7 mx-4" data-v-258ab808="" />
-
-          <aside class="pb-8">
-            <p class="text-center mb-6">Did you find it useful?</p>
-
-            <section class="feedback-options">
-              <button v-ripple="" class="secondary-outlined-btn">
-                <span class="mdi mdi-emoticon-outline secondary" />
-                Yes
-              </button>
-
-              <button v-ripple="" class="danger-outlined-btn">
-                <span class="mdi mdi-emoticon-frown-outline danger-light" />
-                No
-              </button>
-            </section>
-          </aside>
-        </blockquote>
-      </article>
+      <QuestionCard
+        v-for="(question, index) in questions"
+        :key="index"
+        :content="question"
+        :show-default-feedback="true"
+      />
     </template>
   </AppFeel>
 </template>
@@ -45,10 +20,11 @@
 <script>
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import QuestionCard from '~/pages/Home/MoreOptions/FAQ/QuestionCard'
 
 export default {
   name: 'FAQ',
-  components: { AppFeel },
+  components: { QuestionCard, AppFeel },
   data() {
     return {
       navigationRoutes,
@@ -150,33 +126,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.faq-page {
-  article {
-    padding: 1rem;
-
-    blockquote {
-      border-left: 4px solid #7872ec;
-      padding-left: 0;
-      padding-right: 0;
-      padding-bottom: 0;
-    }
-
-    aside {
-      section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 2rem;
-        width: 208px;
-        margin: auto;
-
-        button {
-          min-width: auto;
-        }
-      }
-    }
-  }
-}
-</style>
