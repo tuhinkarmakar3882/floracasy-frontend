@@ -9,7 +9,7 @@
       <client-only>
         <section v-if="blogs">
           <article v-for="{ blog } in blogs" :key="blog.id">
-            <BlogPost :blog="blog" />
+            <BlogPost class="pt-4" :blog="blog" />
           </article>
         </section>
 
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
-import LoadingIcon from '@/components/LoadingIcon'
+import AppFeel from '@/components/global/Layout/AppFeel'
+import LoadingIcon from '@/components/global/LoadingIcon'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 
@@ -41,7 +41,7 @@ export default {
   name: 'SavedBlogs',
   components: {
     LoadingIcon,
-    BlogPost: () => import('@/components/common/BlogPost'),
+    BlogPost: () => import('@/components/global/BlogPost'),
     AppFeel,
   },
   middleware: 'isAuthenticated',

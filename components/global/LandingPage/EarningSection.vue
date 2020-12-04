@@ -24,7 +24,7 @@
 export default {
   name: 'EarningSection',
   components: {
-    SegmentTitle: () => import('@/components/LandingPage/SegmentTitle'),
+    SegmentTitle: () => import('@/components/global/LandingPage/SegmentTitle'),
   },
   data() {
     return {

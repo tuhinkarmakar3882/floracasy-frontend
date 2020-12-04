@@ -48,10 +48,9 @@
 </template>
 
 <script>
-import CategoriesLineUp from '@/components/Home/Dashboard/CategoriesLineUp'
-import InfiniteScrollingBlogLists from '@/components/Home/Dashboard/InfiniteScrollingBlogLists'
-import { navigationRoutes } from '@/navigation/navigationRoutes'
-import Carousel from '~/components/Home/Dashboard/Carousel'
+import CategoriesLineUp from '@/components/global/Home/Dashboard/CategoriesLineUp'
+import InfiniteScrollingBlogLists from '@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'
+import Carousel from '@/components/global/Home/Dashboard/Carousel'
 
 export default {
   name: 'DashBoard',
@@ -70,23 +69,23 @@ export default {
       carouselItems: [
         {
           name: 'First Item in the carousel',
-          image: 'https://picsum.photos/500',
+          image: 'https://picsum.photos/501',
         },
         {
           name: 'Second Item in the carousel',
-          image: 'https://picsum.photos/500',
+          image: 'https://picsum.photos/502',
         },
         {
           name: 'Third Item in the carousel',
-          image: 'https://picsum.photos/500',
+          image: 'https://picsum.photos/503',
         },
         {
           name: 'Fourth Item in the carousel',
-          image: 'https://picsum.photos/500',
+          image: 'https://picsum.photos/504',
         },
         {
           name: 'Fifth Item in the carousel',
-          image: 'https://picsum.photos/500',
+          image: 'https://picsum.photos/505',
         },
       ],
     }

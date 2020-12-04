@@ -38,10 +38,10 @@
 </template>
 
 <script>
-import GoogleIcon from '@/components/Icons/GoogleIcon'
+import GoogleIcon from '@/components/global/Icons/GoogleIcon'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import LoadingIcon from '@/components/LoadingIcon'
+import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import * as secrets from '@/environmentalVariables'
 import { navigationRoutes } from '@/navigation/navigationRoutes'

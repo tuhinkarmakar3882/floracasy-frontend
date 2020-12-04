@@ -40,14 +40,14 @@
 </template>
 
 <script>
-import RippleButton from '@/components/common/RippleButton'
+import RippleButton from '@/components/global/RippleButton'
 import endpoints from '@/api/endpoints'
 
 export default {
   name: 'CategoriesShowcase',
   components: {
     RippleButton,
-    SegmentTitle: () => import('@/components/LandingPage/SegmentTitle'),
+    SegmentTitle: () => import('@/components/global/LandingPage/SegmentTitle'),
   },
 
   data() {

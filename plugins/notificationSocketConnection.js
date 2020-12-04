@@ -51,14 +51,6 @@ export default async ({ store, $cookies }) => {
       })
     }
 
-    // reconnectingSocket.onerror = async (e) => {
-    //   await store.dispatch('SocketHandler/updateSocketMessage', {
-    //     message: 'Disconnected. Please Refresh',
-    //     notificationType: 'error',
-    //     dismissible: false,
-    //   })
-    // }
-
     reconnectingSocket.onclose = async () => {
       await store.dispatch('SocketHandler/updateSocketMessage', {
         message: 'Connection Lost. Reconnecting...',

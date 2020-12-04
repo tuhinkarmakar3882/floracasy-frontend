@@ -10,7 +10,7 @@
           v-for="category in categories"
           :key="category.id"
           v-ripple=""
-          class="px-4 py-2"
+          class="px-4 py-3"
           @click="
             $router.push(
               navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import CustomListView from '@/components/Layout/CustomListView'
+import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import LoadingIcon from '@/components/LoadingIcon'
+import LoadingIcon from '@/components/global/LoadingIcon'
 import { mapGetters } from 'vuex'
 
 export default {

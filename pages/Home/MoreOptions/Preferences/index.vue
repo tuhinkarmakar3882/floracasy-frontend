@@ -12,7 +12,7 @@
             v-for="(option, index) in options"
             :key="index"
             v-ripple="`${option.color}5F`"
-            class="px-4 py-2"
+            class="px-4 py-3"
             @click="$router.push(option.route)"
           >
             <p>
@@ -29,7 +29,7 @@
         <template slot="last-item">
           <li
             v-ripple="'#34b3345F'"
-            class="px-4 py-2"
+            class="px-4 py-3"
             @click="toggleNotificationPermission"
           >
             <p>
@@ -43,7 +43,7 @@
               </span>
             </p>
           </li>
-          <li v-ripple="'#9c9aff5F'" class="px-4 py-2">
+          <li v-ripple="'#9c9aff5F'" class="px-4 py-3">
             <p>
               <span class="icon mdi mdi-message" style="color: #9c9aff" />
               <span class="option-name">Who can Message</span>
@@ -57,14 +57,14 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'Preferences',
   components: {
-    SwitchButton: () => import('@/components/common/SwitchButton'),
-    CustomListView: () => import('@/components/Layout/CustomListView'),
+    SwitchButton: () => import('@/components/global/SwitchButton'),
+    CustomListView: () => import('@/components/global/Layout/CustomListView'),
     AppFeel,
   },
   middleware: 'isAuthenticated',

@@ -73,7 +73,7 @@
         <BlogPost
           v-for="activity in recentActivities"
           :key="activity.id"
-          class="activity"
+          class="activity pt-4"
           :blog="activity"
         />
       </section>
@@ -105,11 +105,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import ClientOnly from 'vue-client-only'
+import LoadingIcon from '@/components/global/LoadingIcon'
+import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
-import LoadingIcon from '~/components/LoadingIcon'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '~/utils/utility'
-import BlogPost from '~/components/common/BlogPost'
 
 export default {
   name: 'Overview',

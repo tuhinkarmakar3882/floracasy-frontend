@@ -9,47 +9,70 @@
     <template slot="main">
       <main class="px-4 my-4">
         <div>
-          <h4>How to earn by writing</h4>
+          <h4 class="heading-title">How to earn by writing</h4>
 
-          <ul>
-            <li>
-              You can easily earn by writing blogs. You can earn a good amount
-              of money by being consistent as a writer.
-            </li>
+          <section>
+            <KeyPoint
+              class="my-4"
+              point="You can easily earn by writing blogs. You can earn a good amount
+              of money by being consistent as a writer."
+              tick-color="#6DD0BF"
+              :tick-size="20"
+            />
+            <KeyPoint
+              class="my-4"
+              point="Your earnings will be depend on your Blog engagement"
+              tick-color="#6DD0BF"
+              :tick-size="20"
+            />
+            <KeyPoint
+              class="my-4"
+              point="Consistency is the main policy to be a famous blogger"
+              tick-color="#6DD0BF"
+              :tick-size="20"
+            />
+          </section>
 
-            <li>your earnings will be depend on your Blog engagement</li>
+          <section class="my-4">
+            <h4>Great Heading</h4>
+            <p class="text-justify">
+              One can earn $100 to $1000 in a month. we don&#39;t promise that
+              every writer can earn that much but yes some of our use can if
+              they give their best performance in a consistent way. So don&#39;t
+              further a do , start writing now &amp; earn independently. If you
+              already been a writer then wish a best of luck so that you can
+              continue your writing &amp; earning.
+            </p>
+          </section>
 
-            <li>Consistency is the main policy to be a famous blogger</li>
-          </ul>
+          <section class="my-4">
+            <h4>Great Heading</h4>
+            <p class="text-justify">
+              we create an amazing hassle free environment so that you can write
+              freely &amp; earn easily. You don&#39;t need to do any complex
+              things . Just earn write freely &amp; earn easily.
+            </p>
+          </section>
 
-          <h5>
-            One can earn $100 to $1000 in a month. we don&#39;t promise that
-            every writer can earn that much but yes some of our use can if they
-            give their best performance in a consistent way. So don&#39;t
-            further a do , start writing now &amp; earn independently. If you
-            already been a writer then wish a best of luck so that you can
-            continue your writing &amp; earning.
-          </h5>
+          <section class="my-4">
+            <h4>Great Heading</h4>
+            <p class="text-justify">
+              To get paymen all you need to do is . First verify your mobile
+              number &amp; add your a/c details where your earned maney will be
+              transferred. But first you need to earn $100 essentially otherwise
+              you can&#39;t claim your money.
+            </p>
+          </section>
 
-          <h5>
-            we create an amazing hassle free environment so that you can write
-            freely &amp; earn easily. You don&#39;t need to do any complex
-            things . Just earn write freely &amp; earn easily.
-          </h5>
-
-          <h5>
-            To get paymen all you need to do is . First verify your mobile
-            number &amp; add your a/c details where your earned maney will be
-            transferred. But first you need to earn $100 essentially otherwise
-            you can&#39;t claim your money.
-          </h5>
-
-          <h5>
-            You can&#39;t write any sexual or bad content . otherwise you will
-            be blocked by floracasy team. If you will do any violence then you
-            can also get blocked. If you broke our roule then your account will
-            be blocked by floracasy team.
-          </h5>
+          <section class="my-4">
+            <h4>Great Heading</h4>
+            <p class="text-justify">
+              You can&#39;t write any sexual or bad content . otherwise you will
+              be blocked by floracasy team. If you will do any violence then you
+              can also get blocked. If you broke our roule then your account
+              will be blocked by floracasy team.
+            </p>
+          </section>
         </div>
       </main>
     </template>
@@ -57,11 +80,13 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import KeyPoint from '@/components/global/KeyPoint'
+
 export default {
   name: 'Earning',
-  components: { AppFeel },
+  components: { KeyPoint, AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {

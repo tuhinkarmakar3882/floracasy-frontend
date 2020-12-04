@@ -2,7 +2,7 @@
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="blog in blogs" :key="blog.id">
-        <BlogPost :blog="blog" />
+        <BlogPost class="pt-4" :blog="blog" />
       </article>
     </section>
 
@@ -27,8 +27,8 @@
 <script>
 import endpoints from '@/api/endpoints'
 import ClientOnly from 'vue-client-only'
-import LoadingIcon from '@/components/LoadingIcon'
-import BlogPost from '~/components/common/BlogPost'
+import LoadingIcon from '@/components/global/LoadingIcon'
+import BlogPost from '@/components/global/BlogPost'
 
 export default {
   name: 'InfiniteScrollingBlogLists',

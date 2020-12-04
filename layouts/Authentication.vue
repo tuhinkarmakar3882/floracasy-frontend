@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import NotificationBadge from '@/components/NotificationBadge'
+import NotificationBadge from '@/components/global/NotificationBadge'
 export default {
   name: 'Authentication',
   components: { NotificationBadge },

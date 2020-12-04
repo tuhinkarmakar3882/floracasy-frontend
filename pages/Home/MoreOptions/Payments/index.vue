@@ -6,56 +6,45 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <section class="px-4">
-        <h3>Your total earning</h3>
-
-        <h5>$0.00</h5>
-
-        <ul>
-          <li>You can earn unlimited money per month</li>
-
-          <li>
-            You can claim your money only when you have already earned $ 100
-          </li>
-
-          <li>
-            If you have done any kind of bad thing which is against of our
-            rule(like opened floracasy repeatedly by a single user, use any
-            network bouncing app etc. for more details you can check out our
-            earning policy page) ,we will cut money from your earnings .
-          </li>
-        </ul>
-
-        <h4>
-          This section will be replaced by graph. ami onk kuja6i but ki6u bujta
-          prini kisb code 6ilo.
-        </h4>
-
-        <h3>Your blogs total reach</h3>
-        <h3>300</h3>
-
-        <h3>Your profiles total engagement</h3>
-
-        <h3>4k</h3>
-
-        <h6>To show all blogs insight view tap the below button</h6>
+      <h4 class="text-center px-4">You've Earned : <span>$27</span></h4>
+      <section class="px-4 text-center">
+        <label for="redeem-meter">
+          You can Redeem it once you reach the threshold
+        </label>
+        <br />
+        <progress id="redeem-meter" class="my-4" value="27" max="100" />
+      </section>
+      <section class="tips-to-improve px-4 my-6">
+        <fieldset class="pl-3 py-4" style="border: 1px solid #333">
+          <legend class="px-3">Few Tips to Increase Your Earning:</legend>
+          <KeyPoint
+            v-for="(point, index) in points"
+            :key="index"
+            class="py-2"
+            tick-color="#6DD0BF"
+            :tick-size="24"
+            :point="point"
+          />
+        </fieldset>
       </section>
     </template>
   </AppFeel>
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import KeyPoint from '@/components/global/KeyPoint'
 
 export default {
   name: 'Payments',
   middleware: 'isAuthenticated',
-  components: { AppFeel },
+  components: { KeyPoint, AppFeel },
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Payments',
+      points: ['Try Sharing it More', 'Keep Writing Great Content'],
     }
   },
 

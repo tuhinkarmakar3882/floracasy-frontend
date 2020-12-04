@@ -14,7 +14,7 @@
             v-for="(option, index) in options"
             :key="index"
             v-ripple="`${option.color}5F`"
-            class="px-4 py-2"
+            class="px-4 py-3"
             @click="$router.push(option.route)"
           >
             <p>
@@ -34,13 +34,13 @@
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'WriteAndEarn',
   components: {
-    CustomListView: () => import('@/components/Layout/CustomListView'),
+    CustomListView: () => import('@/components/global/Layout/CustomListView'),
     AppFeel,
   },
   middleware: 'isAuthenticated',

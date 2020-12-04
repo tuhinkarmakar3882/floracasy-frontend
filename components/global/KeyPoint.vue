@@ -3,9 +3,9 @@
     <span
       :style="{
         color: tickColor,
-        fontSize: tickSize,
+        fontSize: tickSize + 'px',
       }"
-      class="mdi mdi-check-circle-outline"
+      class="mdi mdi-check-circle-outline mr-3"
     />
     <span>
       {{ point }}
@@ -44,9 +44,5 @@ div {
   align-items: flex-start;
   font-size: 18px;
   font-weight: 300;
-
-  span {
-    margin-left: 24px;
-  }
 }
 </style>

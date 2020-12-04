@@ -122,12 +122,12 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import ClientOnly from 'vue-client-only'
-import LoadingIcon from '@/components/LoadingIcon'
+import LoadingIcon from '@/components/global/LoadingIcon'
 import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
-import RippleButton from '@/components/common/RippleButton'
+import RippleButton from '@/components/global/RippleButton'
 
 export default {
   name: 'BlogComments',

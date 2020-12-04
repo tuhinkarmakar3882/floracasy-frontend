@@ -50,7 +50,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import NotificationBadge from '@/components/NotificationBadge'
+import NotificationBadge from '@/components/global/NotificationBadge'
 
 export default {
   name: 'MobileApp',

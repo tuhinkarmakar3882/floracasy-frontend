@@ -11,7 +11,15 @@
     >
       <slot name="app-bar-custom-header" />
     </header>
-    <header v-else :style="centerAligned && 'justify-content : center'">
+    <header
+      v-else
+      :style="[
+        centerAligned && { justifyContent: 'center' },
+        autoHide && {
+          top: showTopBar ? '0 !important' : '-56px !important',
+        },
+      ]"
+    >
       <h5
         v-if="showBackButton"
         v-ripple=""
@@ -22,7 +30,7 @@
         <slot name="app-bar-title" />
       </p>
     </header>
-    <main>
+    <main style="max-width: 1024px; margin: auto">
       <slot name="main"></slot>
     </main>
     <footer>
@@ -32,7 +40,7 @@
 </template>
 
 <script>
-import NotificationBadge from '@/components/NotificationBadge'
+import NotificationBadge from '@/components/global/NotificationBadge'
 
 export default {
   name: 'AppFeel',
@@ -117,26 +125,9 @@ export default {
   main {
     background-color: $body-background;
 
-    blockquote,
-    ul,
-    ol,
-    hr {
-      margin: $large-unit 0;
+    button {
+      min-width: auto;
     }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      position: relative;
-      margin: $large-unit 0;
-    }
-  }
-
-  button {
-    min-width: auto;
   }
 }
 </style>

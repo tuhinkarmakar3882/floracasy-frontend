@@ -57,8 +57,9 @@
         </button>
       </div>
     </template>
+
     <template slot="main">
-      <div v-if="step === 1" class="steps px-4 mt-4">
+      <div v-if="step === 1" class="px-4 mt-4">
         <h5 class="heading-title mb-8">What is it about?</h5>
         <div class="material-form-field mt-8">
           <input
@@ -96,7 +97,7 @@
         </div>
       </div>
 
-      <div v-else-if="step === 2" class="steps px-4 mt-4">
+      <div v-else-if="step === 2" class="px-4 mt-4">
         <h5 class="heading-title mb-8">Add Details</h5>
 
         <div class="material-form-field mt-2">
@@ -144,19 +145,256 @@
         </div>
       </div>
 
-      <div v-else-if="step === 3" class="steps mt-4">
+      <div v-else-if="step === 3">
         <h5 class="heading-title mb-8">Write the Blog below</h5>
         <client-only>
-          <div class="blog-body">
-            <quill-editor
-              ref="editor"
-              v-model="content"
-              :options="editorOption"
-              style="
-                position: sticky !important;
-                top: 56px !important;
-                z-index: 1234567890 !important;
-              "
+          <div class="editor">
+            <editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
+              <div class="menubar">
+                <!--Basic-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.bold() }"
+                  @click="commands.bold"
+                >
+                  <i class="mdi mdi-format-bold" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.italic() }"
+                  @click="commands.italic"
+                >
+                  <i class="mdi mdi-format-italic" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.strike() }"
+                  @click="commands.strike"
+                >
+                  <i class="mdi mdi-format-strikethrough-variant" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.underline() }"
+                  @click="commands.underline"
+                >
+                  <i class="mdi mdi-format-underline" />
+                </button>
+
+                <!--inline code-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.code() }"
+                  @click="commands.code"
+                >
+                  <i class="mdi mdi-code-tags" />
+                </button>
+
+                <!--Paragraph-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.paragraph() }"
+                  @click="commands.paragraph"
+                >
+                  <i class="mdi mdi-format-paragraph" />
+                </button>
+
+                <!--Heading Tags-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                  @click="commands.heading({ level: 1 })"
+                >
+                  <i class="mdi mdi-format-header-1" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                  @click="commands.heading({ level: 2 })"
+                >
+                  <i class="mdi mdi-format-header-2" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                  @click="commands.heading({ level: 3 })"
+                >
+                  <i class="mdi mdi-format-header-3" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+                  @click="commands.heading({ level: 4 })"
+                >
+                  <i class="mdi mdi-format-header-4" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.heading({ level: 5 }) }"
+                  @click="commands.heading({ level: 5 })"
+                >
+                  <i class="mdi mdi-format-header-5" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.heading({ level: 6 }) }"
+                  @click="commands.heading({ level: 6 })"
+                >
+                  <i class="mdi mdi-format-header-6" />
+                </button>
+
+                <!--UL-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.bullet_list() }"
+                  @click="commands.bullet_list"
+                >
+                  <i class="mdi mdi-format-list-bulleted" />
+                </button>
+
+                <!--OL-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.ordered_list() }"
+                  @click="commands.ordered_list"
+                >
+                  <i class="mdi mdi-format-list-numbered" />
+                </button>
+
+                <!--BlockQuote-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.blockquote() }"
+                  @click="commands.blockquote"
+                >
+                  <i class="mdi mdi-format-quote-close" />
+                </button>
+
+                <!--Code-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  :class="{ 'is-active': isActive.code_block() }"
+                  @click="commands.code_block"
+                >
+                  <i class="mdi mdi-xml" />
+                </button>
+
+                <!--HR-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  @click="commands.horizontal_rule"
+                >
+                  <i class="mdi mdi-minus" />
+                </button>
+
+                <!--Undo + Redo-->
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  @click="commands.undo"
+                >
+                  <i class="mdi mdi-undo" />
+                </button>
+                <button
+                  v-ripple="'#0000005f'"
+                  class="menubar__button"
+                  @click="commands.redo"
+                >
+                  <i class="mdi mdi-redo" />
+                </button>
+
+                <!--Table-->
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.deleteTable"
+                >
+                  <span class="mdi mdi-table-large-remove" />
+                </button>
+                <button
+                  class="menubar__button"
+                  @click="
+                    commands.createTable({
+                      rowsCount: 3,
+                      colsCount: 3,
+                      withHeaderRow: false,
+                    })
+                  "
+                >
+                  <span class="mdi mdi-table-large-plus" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.addColumnBefore"
+                >
+                  <span class="mdi mdi-table-column-plus-after" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.addColumnAfter"
+                >
+                  <span class="mdi mdi-table-column-plus-before" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.deleteColumn"
+                >
+                  <span class="mdi mdi-table-column-remove" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.addRowBefore"
+                >
+                  <span class="mdi mdi-table-row-plus-after" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.addRowAfter"
+                >
+                  <span class="mdi mdi-table-row-plus-before" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.deleteRow"
+                >
+                  <span class="mdi mdi-table-column-remove" />
+                </button>
+                <button
+                  v-if="isActive.table()"
+                  class="menubar__button"
+                  @click="commands.toggleCellMerge"
+                >
+                  <span class="mdi mdi-table-merge-cells" />
+                </button>
+              </div>
+            </editor-menu-bar>
+
+            <editor-content
+              class="editor__content px-4 pt-4"
+              :editor="editor"
             />
           </div>
         </client-only>
@@ -177,7 +415,7 @@
               :to="navigationRoutes.Home.Blogs.Create.New"
               class="no-underline"
             >
-              {{ categories[blogCategory - 1].name }}
+              {{ mappingTable[blogCategory].name }}
             </nuxt-link>
           </p>
           <h3 class="blog-title mb-4">
@@ -197,83 +435,57 @@
             {{ blogSubtitle }}
           </p>
         </section>
-        <div class="blog-body">
-          <article class="ql-snow">
-            <div class="ql-editor" v-html="noXSS(content)" />
-          </article>
-        </div>
+        <section class="blog-body px-4 pb-8">
+          <article v-html="noXSS(content, sanitizationConfig)" />
+        </section>
       </div>
-      <!--      <section-->
-      <!--        :key="'fixed'"-->
-      <!--        class="py-5"-->
-      <!--        :class="step === 4 ? 'bottom-section-floating' : 'bottom-section'"-->
-      <!--      >-->
-      <!--        <div class="text-center">-->
-      <!--          <button-->
-      <!--            v-if="step >= 2"-->
-      <!--            v-ripple=""-->
-      <!--            class="secondary-outlined-btn mr-4 px-8"-->
-      <!--            @click="goToPrevStep"-->
-      <!--          >-->
-      <!--            Back-->
-      <!--          </button>-->
-
-      <!--          <button-->
-      <!--            v-if="step <= 2"-->
-      <!--            v-ripple=""-->
-      <!--            class="secondary-btn px-8"-->
-      <!--            @click="goToNextStep"-->
-      <!--          >-->
-      <!--            Next-->
-      <!--          </button>-->
-
-      <!--          <button-->
-      <!--            v-if="step === 3"-->
-      <!--            v-ripple=""-->
-      <!--            class="secondary-btn px-7"-->
-      <!--            @click="goToNextStep"-->
-      <!--          >-->
-      <!--            Preview-->
-      <!--          </button>-->
-
-      <!--          <button-->
-      <!--            v-if="step === 4"-->
-      <!--            v-ripple=""-->
-      <!--            class="secondary-btn px-7"-->
-      <!--            @click="publish"-->
-      <!--          >-->
-      <!--            Publish-->
-      <!--          </button>-->
-      <!--        </div>-->
-
-      <!--        <section class="progress-circle mt-8">-->
-      <!--          <span-->
-      <!--            v-for="(stepNo, index) in totalSteps"-->
-      <!--            :key="index"-->
-      <!--            :class="stepNo === step && 'active'"-->
-      <!--          />-->
-      <!--        </section>-->
-      <!--      </section>-->
     </template>
   </AppFeel>
 </template>
 
 <script>
-import AppFeel from '@/components/Layout/AppFeel'
+import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
 import { parseTimeUsingMoment } from '@/utils/utility'
 import { mapGetters } from 'vuex'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'highlight.js/styles/tomorrow.css'
-import hljs from 'highlight.js'
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import { sanitizationConfig } from '@/config/sanitizationConfig'
+import {
+  Blockquote,
+  Bold,
+  BulletList,
+  Code,
+  CodeBlock,
+  CodeBlockHighlight,
+  HardBreak,
+  Heading,
+  History,
+  HorizontalRule,
+  Image,
+  Italic,
+  Link,
+  ListItem,
+  OrderedList,
+  Placeholder,
+  Strike,
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+  TrailingNode,
+  Underline,
+} from 'tiptap-extensions'
+// import { supportedLanguages } from '~/config/code-hightlighting'
+// import 'highlight.js/styles/tomorrow.css'
 
-function getFromLocalStorageOrReturnDefault(keyName, value) {
-  return process.client && localStorage.getItem(keyName)
-    ? localStorage.getItem(keyName)
-    : value || ''
+function createMappingFor(categoryList) {
+  const mappingTable = {}
+  categoryList.forEach((category) => {
+    mappingTable[category.id] = category
+  })
+  return mappingTable
 }
 
 export default {
@@ -281,60 +493,45 @@ export default {
   middleware: 'isAuthenticated',
   components: {
     AppFeel,
+    EditorContent,
+    EditorMenuBar,
   },
 
   async asyncData({ $axios, from: prevURL }) {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
-    return { categories: response, prevURL }
+    console.log(response)
+
+    const mappingTable = createMappingFor(response)
+
+    return { categories: response, mappingTable, prevURL }
   },
 
   data() {
     return {
+      editor: null,
+      previewEditor: null,
       prevURL: null,
-      editorOption: {
-        modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'],
-            [{ header: 1 }, { header: 2 }],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ script: 'sub' }, { script: 'super' }],
-            [{ indent: '-1' }, { indent: '+1' }],
-            [{ direction: 'rtl' }],
-            [{ size: ['small', false, 'large', 'huge'] }],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ font: [] }],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ['clean'],
-            ['link', 'image', 'video'],
-          ],
-          syntax: {
-            highlight: (text) => hljs.highlightAuto(text).value,
-          },
-        },
-      },
       navigationRoutes,
       noXSS: sanitizeHtml,
+      sanitizationConfig,
       step: 1,
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
+
+      mappingTable: {},
 
       hasTitle: false,
       hasSubtitle: false,
       hasCoverImageUrl: false,
       hasBlogCategory: false,
 
-      blogTitle: getFromLocalStorageOrReturnDefault('blogTitle'),
-      blogSubtitle: getFromLocalStorageOrReturnDefault('blogSubtitle'),
-      blogCategory: getFromLocalStorageOrReturnDefault('blogCategory'),
-      coverImageUrl: getFromLocalStorageOrReturnDefault('coverImageUrl'),
-      content: getFromLocalStorageOrReturnDefault(
-        'draft',
-        `<small>Write your content here...</small>`
-      ),
+      blogTitle: null,
+      blogSubtitle: null,
+      blogCategory: null,
+      coverImageUrl: null,
+      content: null,
     }
   },
 
@@ -345,9 +542,6 @@ export default {
   },
 
   watch: {
-    content(newContent) {
-      localStorage.setItem('draft', newContent)
-    },
     blogCategory(newContent) {
       localStorage.setItem('blogCategory', newContent)
       this.hasBlogCategory = newContent.length > 0
@@ -372,21 +566,74 @@ export default {
       this.loadingProfile = true
       await this.$store.dispatch('UserManagement/fetchData')
     }
-    this.hasTitle = localStorage.getItem('blogTitle')
-      ? localStorage.getItem('blogTitle').trim().length > 0
+    this.blogTitle = localStorage.getItem('blogTitle')
+    this.blogSubtitle = localStorage.getItem('blogSubtitle')
+    this.blogCategory = localStorage.getItem('blogCategory')
+    this.coverImageUrl = localStorage.getItem('coverImageUrl')
+
+    this.hasTitle = this.blogTitle ? this.blogTitle.trim().length > 0 : false
+    this.hasSubtitle = this.blogSubtitle
+      ? this.blogSubtitle.trim().length > 0
       : false
-    this.hasSubtitle = localStorage.getItem('blogSubtitle')
-      ? localStorage.getItem('blogSubtitle').trim().length > 0
+    this.hasBlogCategory = this.blogCategory
+      ? this.blogCategory.trim().length > 0
       : false
-    this.hasBlogCategory = localStorage.getItem('blogCategory')
-      ? localStorage.getItem('blogCategory').trim().length > 0
+    this.hasCoverImageUrl = this.coverImageUrl
+      ? this.coverImageUrl.trim().length > 0
       : false
-    this.hasCoverImageUrl = localStorage.getItem('coverImageUrl')
-      ? localStorage.getItem('coverImageUrl').trim().length > 0
-      : false
+
+    this.editor = new Editor({
+      extensions: [
+        new Blockquote(),
+        new BulletList(),
+        new CodeBlock(),
+        new CodeBlockHighlight({
+          // languages: supportedLanguages,
+        }),
+        new HardBreak(),
+        new Heading({ levels: [1, 2, 3, 4, 5, 6] }),
+        new HorizontalRule(),
+        new Image(),
+        new ListItem(),
+        new OrderedList(),
+        new Table({
+          resizable: true,
+        }),
+        new TableHeader(),
+        new TableCell(),
+        new TableRow(),
+        new Bold(),
+        new Code(),
+        new Italic(),
+        new Link(),
+        new Strike(),
+        new Underline(),
+        new History(),
+
+        new Placeholder({
+          emptyEditorClass: 'is-editor-empty',
+          emptyNodeClass: 'is-empty',
+          emptyNodeText:
+            '[Placeholder] Your Writing Journey Restarts from here...[ Just Start Typing ]',
+          showOnlyWhenEditable: true,
+          showOnlyCurrent: false,
+        }),
+        new TrailingNode({
+          node: 'paragraph',
+          notAfter: ['paragraph'],
+        }),
+      ],
+      autoFocus: true,
+      content: this.content,
+      onUpdate: ({ getHTML }) => {
+        this.content = getHTML()
+      },
+    })
   },
 
-  beforeDestroy() {},
+  beforeDestroy() {
+    this.editor && this.editor.destroy()
+  },
 
   methods: {
     async handleBackButtonPress() {
@@ -404,14 +651,8 @@ export default {
     goToNextStep() {
       this.step++
     },
-    goToPrevStep() {
-      if (this.step === 1) {
-        this.$router.replace(this.navigationRoutes.Home.Blogs.Create.index)
-      } else {
-        this.step--
-      }
-    },
     async publish() {
+      // console.log(this.content)
       await this.$axios
         .$post(endpoints.blog.create, {
           category: this.blogCategory,
@@ -421,7 +662,7 @@ export default {
           content: this.content,
         })
         .then(async () => {
-          this.cleanupCurrentDraft()
+          localStorage.clear()
           await this.$router.replace(navigationRoutes.Home.DashBoard)
         })
         .catch(async () => {
@@ -431,14 +672,6 @@ export default {
             dismissible: true,
           })
         })
-    },
-
-    cleanupCurrentDraft() {
-      localStorage.removeItem('draft')
-      localStorage.removeItem('blogCategory')
-      localStorage.removeItem('blogSubtitle')
-      localStorage.removeItem('blogTitle')
-      localStorage.removeItem('coverImageUrl')
     },
   },
 
@@ -475,83 +708,57 @@ export default {
     box-shadow: 0 -2px 4px #050515;
   }
 
-  .steps {
-    border: 1px solid transparent;
-    overflow: auto;
+  .editor {
+    p.is-editor-empty:first-child::before {
+      content: attr(data-empty-text);
+      color: #555;
+      pointer-events: none;
+      height: 0;
+      font-style: italic;
+    }
 
-    textarea {
+    .menubar {
+      text-align: center;
+      background: wheat;
+      position: sticky;
+      top: 56px;
+      z-index: 12345678909876543;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 120px;
+      flex-wrap: wrap;
+      overflow: auto;
       width: 100%;
-      color: white;
-      background: #101019;
-      border-radius: 16px;
-      padding: 1rem;
-      height: 430px;
-      outline: none;
-      box-shadow: $default-box-shadow;
+      margin: 0;
+      padding: 0;
 
-      &:hover,
-      &:focus,
-      &:focus-visible,
-      &:active,
-      &:focus-within {
-        border-radius: $nano-unit;
-        outline: none 0;
-        box-shadow: 0 0 $double-unit $single-unit
-          darken($white, $darken-percentage);
-      }
-    }
+      .menubar__button {
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        width: 60px;
+        font-size: 28px;
+        height: 60px;
 
-    .blog-body {
-      blockquote,
-      ul,
-      ol,
-      hr,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        position: relative;
-        margin: $large-unit 0;
-      }
-
-      .quill-editor {
-        .ql-toolbar.ql-snow {
-          background-color: wheat !important;
-          box-shadow: $default-box-shadow !important;
-        }
-
-        .ql-container.ql-snow {
-          padding: 0 !important;
-        }
-
-        .ql-toolbar.ql-snow,
-        .ql-container.ql-snow {
-          border: none !important;
+        &.is-active {
+          color: red;
         }
       }
     }
-  }
 
-  .progress-circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    .editor__content {
+      background: #000;
 
-    span {
-      height: $micro-unit;
-      width: $micro-unit;
-      background-color: darken($disabled, $lighten-percentage);
-      border-radius: 50%;
-      margin: 0 $micro-unit;
-      box-shadow: $default-box-shadow;
+      .ProseMirror {
+        min-height: calc(100vh - 220px);
 
-      &.active {
-        height: $micro-unit + $double-unit;
-        width: $micro-unit + $double-unit;
-        background-color: $secondary-highlight;
+        &.ProseMirror-focused {
+          outline: none 0 !important;
+          border: none;
+        }
       }
     }
   }

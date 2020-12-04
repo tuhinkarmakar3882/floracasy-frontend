@@ -80,17 +80,19 @@ body {
     transition: all 150ms ease-in-out;
   }
 
-  ul, li {
-    font-family: $Nunito;
-    font-weight: 300;
-    font-size: 1rem;
+  ul, ol {
+    li {
+      font-family: $Nunito;
+      font-weight: 300;
+      font-size: 1rem;
+    }
   }
 }
 
 .heading-title {
   text-align: center;
   position: relative;
-  margin: 2rem 0 3rem;
+  margin: 2rem 0 2.85rem;
   font-weight: 300;
 
   &::after {

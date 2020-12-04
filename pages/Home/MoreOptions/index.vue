@@ -7,7 +7,7 @@
           v-for="(option, index) in options"
           :key="index"
           v-ripple="`${option.color}5F`"
-          class="px-4 py-2"
+          class="px-4 py-3"
           @click="$router.push(option.route)"
         >
           <p>
@@ -35,7 +35,7 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import CustomListView from '@/components/Layout/CustomListView'
+import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
