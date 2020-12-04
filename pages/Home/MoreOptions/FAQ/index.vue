@@ -199,12 +199,11 @@ export default {
   position: fixed;
   top: 54px;
   right: 0;
-  min-height: calc(100vh - 54px);
+  height: calc(100vh - 54px);
   background-color: #0d0d17;
   box-shadow: 2px 0 4px #0d0d17;
   z-index: 123456789098765;
   transition: all 150ms ease-in-out;
   list-style: none;
-  height: 100vh;
 }
 </style>
