@@ -11,7 +11,15 @@
     >
       <slot name="app-bar-custom-header" />
     </header>
-    <header v-else :style="centerAligned && 'justify-content : center'">
+    <header
+      v-else
+      :style="[
+        centerAligned && { justifyContent: 'center' },
+        autoHide && {
+          top: showTopBar ? '0 !important' : '-56px !important',
+        },
+      ]"
+    >
       <h5
         v-if="showBackButton"
         v-ripple=""
