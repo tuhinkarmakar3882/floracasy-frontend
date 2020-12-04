@@ -154,7 +154,7 @@ export default {
 <style lang="scss" scoped>
 .faq-page {
   article {
-    padding: 2rem 1rem;
+    padding: 1rem;
 
     blockquote {
       border-left: 4px solid #7872ec;
