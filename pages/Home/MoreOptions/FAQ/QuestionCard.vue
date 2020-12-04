@@ -1,5 +1,5 @@
 <template>
-  <section class="question-card">
+  <section :id="content.id" class="question-card">
     <blockquote :style="{ borderLeft: `4px solid ${borderShade}` }">
       <h5 class="my-0 px-4">{{ content.statement }}</h5>
       <hr class="mx-4" />
