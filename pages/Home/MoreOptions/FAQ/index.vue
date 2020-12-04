@@ -4,7 +4,7 @@
     auto-hide
     :on-back="navigationRoutes.Home.MoreOptions.index"
   >
-    <template slot="app-bar-title"> {{ pageTitle }} </template>
+    <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
       <QuestionCard
@@ -24,6 +24,7 @@ import QuestionCard from '~/pages/Home/MoreOptions/FAQ/QuestionCard'
 
 export default {
   name: 'FAQ',
+  middleware: 'isAuthenticated',
   components: { QuestionCard, AppFeel },
   data() {
     return {
