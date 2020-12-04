@@ -1,12 +1,12 @@
 <template>
-  <section :id="content.id" class="question-card">
+  <section class="question-card">
     <blockquote :style="{ borderLeft: `4px solid ${borderShade}` }">
       <h5 class="my-0 px-4">{{ content.statement }}</h5>
-      <hr class="mx-4" />
+      <hr class="mx-4"/>
       <p class="px-4">
-        <span class="secondary">Answer: </span><br />{{ content.answer }}
+        <span class="secondary">Answer: </span><br/>{{ content.answer }}
       </p>
-      <hr class="mt-8 mb-7 mx-4" data-v-258ab808="" />
+      <hr class="mt-8 mb-7 mx-4" data-v-258ab808=""/>
 
       <aside v-if="showDefaultFeedback" class="pb-8">
         <section v-if="feedback" class="feedback-response">
@@ -36,7 +36,7 @@
               class="secondary-outlined-btn"
               @click="recordPositiveResponse"
             >
-              <span class="mdi mdi-emoticon-cool-outline secondary" />
+              <span class="mdi mdi-emoticon-cool-outline secondary"/>
               Yes
             </button>
 
@@ -45,7 +45,7 @@
               class="danger-outlined-btn"
               @click="recordNegativeResponse"
             >
-              <span class="mdi mdi-emoticon-cry-outline danger-light" />
+              <span class="mdi mdi-emoticon-cry-outline danger-light"/>
               No
             </button>
           </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { navigationRoutes } from '~/navigation/navigationRoutes'
+import {navigationRoutes} from '~/navigation/navigationRoutes'
 
 export default {
   name: 'QuestionCard',
@@ -88,7 +88,7 @@ export default {
       this.feedback = "Great! We'll keep doing the great stuff"
     },
     recordNegativeResponse() {
-      this.feedback = "We're sorry to hear that"
+      this.feedback = "We'd love to know how can we improve."
       this.requestFeedback = true
     },
   },
@@ -120,6 +120,20 @@ export default {
     .feedback-response {
       padding: 0.5rem 1rem;
       text-align: center;
+
+      p {
+        display: grid;
+        place-items: center;
+
+        span {
+          font-size: 24px;
+        }
+      }
+
+      a {
+        display: block;
+        margin: 10px 0;
+      }
     }
   }
 }

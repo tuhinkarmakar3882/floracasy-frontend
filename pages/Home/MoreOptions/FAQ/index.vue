@@ -24,6 +24,7 @@
     <template slot="main">
       <QuestionCard
         v-for="question in questions"
+        :id="question.statement"
         :key="question.id"
         class="px-4"
         :content="question"
@@ -57,7 +58,10 @@
             class="py-4 px-4"
             @click="drawerIsOpened = false"
           >
-            <a :href="`#${question.id}`" class="no-underline secondary-matte">
+            <a
+              :href="`#${question.statement}`"
+              class="no-underline secondary-matte"
+            >
               {{ question.statement }}
             </a>
           </li>
