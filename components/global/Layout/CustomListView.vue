@@ -27,7 +27,7 @@ export default {
         display: grid;
         grid-template-columns: 1fr 4fr 0.5fr;
         grid-column-gap: 1rem;
-        place-items: center;
+        align-items: center;
         text-align: left;
 
         .icon {
