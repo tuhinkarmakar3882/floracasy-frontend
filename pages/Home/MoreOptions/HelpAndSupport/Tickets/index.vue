@@ -36,7 +36,7 @@ export default {
           name: 'This Ticket is Resolved',
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
-          state: 'RESOLVED',
+          status: 'RESOLVED',
         },
         {
           icon: 'mdi mdi-information',
@@ -44,7 +44,7 @@ export default {
           name: 'This Ticket is Raised',
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
-          state: 'RAISED',
+          status: 'RAISED',
         },
         {
           icon: 'mdi mdi-alert',
@@ -52,7 +52,7 @@ export default {
           name: 'This Ticket needs Attention ',
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
-          state: 'NEEDS_ATTENTION',
+          status: 'NEEDS ATTENTION',
         },
       ],
     }

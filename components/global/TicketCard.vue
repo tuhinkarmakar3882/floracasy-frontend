@@ -4,15 +4,24 @@
     class="px-4 py-3 my-8"
     :style="{ borderLeftColor: ticket.color }"
   >
-    <span :class="ticket.icon" class="icon" :style="{ color: ticket.color }" />
-    <p class="ticket-name">{{ ticket.name }}</p>
-    <i class="mdi mdi-chevron-right arrow-go" />
+    <p class="name">{{ ticket.name }}</p>
+    <p class="body">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus ad
+      dolorem dolores, eius id ipsam iure magnam modi pariatur possimus qui quis
+      quo recusandae reiciendis repellendus rerum sed voluptatum?
+    </p>
+    <small><i class="mdi mdi-home" />3d</small>
+    <Chip :background-color="ticket.color">
+      <template slot="content">{{ ticket.status }}</template>
+    </Chip>
   </blockquote>
 </template>
 
 <script>
+import Chip from '@/components/global/Chip'
 export default {
   name: 'TicketCard',
+  components: { Chip },
   props: {
     ticket: {
       type: Object,
