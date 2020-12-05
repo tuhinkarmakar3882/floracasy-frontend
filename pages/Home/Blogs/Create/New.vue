@@ -501,7 +501,6 @@ export default {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
-    console.log(response)
 
     const mappingTable = createMappingFor(response)
 
@@ -652,7 +651,6 @@ export default {
       this.step++
     },
     async publish() {
-      // console.log(this.content)
       await this.$axios
         .$post(endpoints.blog.create, {
           category: this.blogCategory,
