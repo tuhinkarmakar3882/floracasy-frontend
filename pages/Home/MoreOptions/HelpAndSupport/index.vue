@@ -75,7 +75,7 @@ export default {
           route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index,
         },
         {
-          name: 'Report a Problem',
+          name: 'Contact Support',
           icon: 'mdi mdi-alert-octagon',
           color: '#ff8282',
           route: navigationRoutes.Home.MoreOptions.HelpAndSupport.ReportProblem,

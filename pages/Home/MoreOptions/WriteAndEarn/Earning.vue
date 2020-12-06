@@ -34,7 +34,7 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Earn As Much as You Can!</h4>
             <p class="text-justify">
               One can earn $100 to $1000 in a month. we don&#39;t promise that
               every writer can earn that much but yes some of our use can if
@@ -46,7 +46,7 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Earn Independently</h4>
             <p class="text-justify">
               we create an amazing hassle free environment so that you can write
               freely &amp; earn easily. You don&#39;t need to do any complex
@@ -55,22 +55,22 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Claim Your Earning</h4>
             <p class="text-justify">
-              To get paymen all you need to do is . First verify your mobile
-              number &amp; add your a/c details where your earned maney will be
+              To get payment all you need to do is . First verify your mobile
+              number &amp; add your a/c details where your earned money will be
               transferred. But first you need to earn $100 essentially otherwise
               you can&#39;t claim your money.
             </p>
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Don't Misuse your Power</h4>
             <p class="text-justify">
               You can&#39;t write any sexual or bad content . otherwise you will
               be blocked by floracasy team. If you will do any violence then you
-              can also get blocked. If you broke our roule then your account
-              will be blocked by floracasy team.
+              can also get blocked. If you broke our role then your account will
+              be blocked by floracasy team.
             </p>
           </section>
         </div>

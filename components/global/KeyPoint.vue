@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <section class="keypoint">
     <span
       :style="{
         color: tickColor,
@@ -10,7 +10,7 @@
     <span>
       {{ point }}
     </span>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -35,14 +35,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/all-variables';
-
-div {
-  color: $muted;
+.keypoint {
+  color: #9a9a9a;
   text-align: left;
   display: flex;
-  align-items: flex-start;
-  font-size: 18px;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 16px;
   font-weight: 300;
 }
 </style>

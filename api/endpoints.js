@@ -45,8 +45,6 @@ const endpoints = {
     fetch: 'help_and_support/fetch/',
     create: 'help_and_support/create/',
     detail: 'help_and_support/detail/',
-    update: 'help_and_support/update/',
-    delete: 'help_and_support/delete/',
   },
   leaderboard: {
     test: 'leaderboard/',
