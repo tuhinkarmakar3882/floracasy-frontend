@@ -5,7 +5,7 @@
   >
     <template slot="app-bar-title"> {{ pageTitle }} </template>
 
-    <template slot="main">
+    <template v-if="tickets" slot="main">
       <TicketCard
         v-for="(ticket, index) in tickets"
         :key="index"
@@ -20,6 +20,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import TicketCard from '~/components/global/TicketCard'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Tickets',
@@ -29,33 +30,13 @@ export default {
     return {
       navigationRoutes,
       pageTitle: 'Tickets',
-      tickets: [
-        {
-          icon: 'mdi mdi-check-circle',
-          color: '#65db65',
-          name: 'Unable to create blogs!',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
-          status: 'RESOLVED',
-        },
-        {
-          icon: 'mdi mdi-information',
-          color: '#9c9aff',
-          name: 'This Ticket is Raised',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
-          status: 'RAISED',
-        },
-        {
-          icon: 'mdi mdi-alert',
-          color: '#ff8282',
-          name: 'This Ticket needs Attention ',
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
-          status: 'NEEDS ATTENTION',
-        },
-      ],
+      tickets: [],
     }
+  },
+
+  async mounted() {
+    const { results } = await this.$axios.$get(endpoints.help_and_support.fetch)
+    this.tickets = results
   },
 
   head() {
