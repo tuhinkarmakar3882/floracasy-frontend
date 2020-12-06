@@ -38,7 +38,7 @@ export default {
   ],
 
   modules: [
-    process.env.NODE_ENV === 'production' && '~/module/csp.js',
+    '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
     [
@@ -158,8 +158,6 @@ export default {
     mode: 'out-in',
   },
 
-  content: {},
-
   tailwindcss: {
     config: {
       future: {
@@ -186,5 +184,5 @@ export default {
 
   telemetry: false,
 
-  watch: [process.env.NODE_ENV === 'production' && '~/module/csp.js'],
+  watch: ['~/module/csp.js'],
 }
