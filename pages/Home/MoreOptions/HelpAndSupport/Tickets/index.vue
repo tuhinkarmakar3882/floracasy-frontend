@@ -3,13 +3,13 @@
     class="tickets-index-page"
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
   >
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
+    <template slot="app-bar-title"> {{ pageTitle }} </template>
 
     <template slot="main">
       <TicketCard
         v-for="(ticket, index) in tickets"
         :key="index"
-        class="mx-4"
+        class="mx-4 my-6"
         :ticket="ticket"
       />
     </template>
@@ -33,7 +33,7 @@ export default {
         {
           icon: 'mdi mdi-check-circle',
           color: '#65db65',
-          name: 'This Ticket is Resolved',
+          name: 'Unable to create blogs!',
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cum, est eum, ex fugit minus nam, neque nobis quam rem sapiente unde voluptatem. Assumenda commodi eius eveniet minus. Quis, tenetur?',
           status: 'RESOLVED',
