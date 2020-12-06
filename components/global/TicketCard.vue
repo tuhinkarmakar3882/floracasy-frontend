@@ -1,30 +1,23 @@
 <template>
   <blockquote
     v-ripple="`${ticket.color}5F`"
-    class="px-4 py-3 my-8"
+    class="px-4 py-3"
     :style="{ borderLeftColor: ticket.color }"
   >
-    <h6 class="name">{{ ticket.name }}</h6>
-    <p class="body">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus ad
-      dolorem dolores, eius id ipsam iure magnam modi pariatur possimus qui quis
-      quo recusandae reiciendis repellendus rerum sed voluptatum?
+    <h6 class="name my-0">{{ ticket.name }}</h6>
+    <p class="mt-2 mb-4" :style="{ color: ticket.color, fontWeight: 500 }">
+      {{ ticket.status }}
     </p>
-    <section class="bottom">
-      <small> <i class="mdi mdi-clock-time-nine-outline" />3 days ago </small>
-      <Chip :background-color="ticket.color">
-        <template slot="content">{{ ticket.status }}</template>
-      </Chip>
+    <p class="body">{{ ticket.body.substr(0, 50) }}...</p>
+    <section class="text-right">
+      <small> 3 days ago </small>
     </section>
   </blockquote>
 </template>
 
 <script>
-import Chip from '@/components/global/Chip'
-
 export default {
   name: 'TicketCard',
-  components: { Chip },
   props: {
     ticket: {
       type: Object,
@@ -38,7 +31,7 @@ export default {
 @import 'assets/all-variables';
 
 blockquote {
-  text-align: left;
+  text-align: center;
 
   span {
     font-size: clamp(1.6rem, 8vw, 2rem);
@@ -54,17 +47,6 @@ blockquote {
     color: #959595;
     font-size: 0.9rem;
     width: 100%;
-  }
-
-  .bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    small {
-      display: grid;
-      place-items: center;
-    }
   }
 
   i {
