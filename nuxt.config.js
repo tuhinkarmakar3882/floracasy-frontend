@@ -81,7 +81,7 @@ export default {
     asyncScripts: true,
 
     csp: {
-      // addMeta: true,
+      addMeta: process.env.NODE_ENV === 'production',
     },
   },
 
