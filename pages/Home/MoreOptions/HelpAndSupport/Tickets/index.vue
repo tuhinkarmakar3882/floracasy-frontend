@@ -28,7 +28,7 @@
             <p class="my-8" />
           </template>
           <template slot="no-results">
-            <p class="my-8">You Haven't Started Chatting yet..</p>
+            <p class="my-8">🎉 Great! There's no ticket.</p>
           </template>
         </infinite-loading>
       </client-only>
