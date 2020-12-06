@@ -1,11 +1,11 @@
 <template>
   <blockquote
     v-ripple="`${ticket.color}5F`"
-    class="px-4 py-3"
+    class="pl-2 pr-3 py-3"
     :style="{ borderLeftColor: ticket.color }"
   >
     <h6 class="name my-0">{{ ticket.name }}</h6>
-    <p class="mt-2 mb-4" :style="{ color: ticket.color, fontWeight: 500 }">
+    <p class="mt-2 mb-3" :style="{ color: ticket.color, fontWeight: 500 }">
       {{ ticket.status }}
     </p>
     <p class="body">{{ ticket.body.substr(0, 50) }}...</p>
