@@ -42,6 +42,8 @@ export const navigationRoutes = {
         Feedback: '/Home/MoreOptions/HelpAndSupport/Feedback',
         PopularTopics: {
           index: '/Home/MoreOptions/HelpAndSupport/PopularTopics',
+          WeeklyChallenge:
+            '/Home/MoreOptions/HelpAndSupport/PopularTopics/WeeklyChallenge',
         },
         ReportProblem: '/Home/MoreOptions/HelpAndSupport/ReportProblem',
         Tickets: {
