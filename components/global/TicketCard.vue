@@ -4,18 +4,20 @@
     class="pl-2 pr-3 py-3"
     :style="{ borderLeftColor: ticket.color }"
   >
-    <h6 class="name my-0">{{ ticket.name }}</h6>
+    <h6 class="name my-0">{{ ticket.title }}</h6>
     <p class="mt-2 mb-3" :style="{ color: ticket.color, fontWeight: 500 }">
       {{ ticket.status }}
     </p>
-    <p class="body">{{ ticket.body.substr(0, 50) }}...</p>
+    <p class="body">{{ ticket.issue.substr(0, 50) }}...</p>
     <section class="text-right">
-      <small> 3 days ago </small>
+      <small>{{ parseTimeUsingMoment(ticket.updatedAt) }}</small>
     </section>
   </blockquote>
 </template>
 
 <script>
+import { parseTimeUsingMoment } from '@/utils/utility'
+
 export default {
   name: 'TicketCard',
   props: {
@@ -23,6 +25,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    parseTimeUsingMoment,
   },
 }
 </script>
