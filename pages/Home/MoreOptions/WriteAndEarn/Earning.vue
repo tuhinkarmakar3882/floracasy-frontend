@@ -7,7 +7,7 @@
       {{ pageTitle }}
     </template>
     <template slot="main">
-      <main class="px-6 my-4">
+      <main class="px-4 my-4">
         <div>
           <h4 class="heading-title">How to earn by writing</h4>
 
