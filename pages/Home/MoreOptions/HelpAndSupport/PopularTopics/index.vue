@@ -74,7 +74,7 @@ export default {
           icon: 'mdi mdi-hand-pointing-right',
           route:
             navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
-              .index,
+              .AudioBlogs,
         },
         {
           name: "Our trending blog's",
