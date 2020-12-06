@@ -13,7 +13,7 @@
     >
       <h4 class="my-0">{{ item.name }}</h4>
       <p style="margin: 20px 0 24px">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit at blanditiis.
+        {{ item.body }}
       </p>
       <button
         v-ripple=""
