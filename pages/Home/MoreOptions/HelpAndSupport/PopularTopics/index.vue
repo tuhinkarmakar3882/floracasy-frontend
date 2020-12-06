@@ -50,7 +50,7 @@ export default {
           icon: 'mdi mdi-hand-pointing-right',
           route:
             navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
-              .index,
+              .WeeklyChallenge,
         },
         {
           name: 'Pickup Premium',
