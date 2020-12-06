@@ -7,7 +7,7 @@
       {{ pageTitle }}
     </template>
     <template slot="main">
-      <main class="px-4 my-4">
+      <main class="px-6 my-4">
         <div>
           <h4 class="heading-title">How to earn by writing</h4>
 
@@ -34,7 +34,7 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Great Heading</h4>
             <p class="text-justify">
               One can earn $100 to $1000 in a month. we don&#39;t promise that
               every writer can earn that much but yes some of our use can if
@@ -46,7 +46,7 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Great Heading</h4>
             <p class="text-justify">
               we create an amazing hassle free environment so that you can write
               freely &amp; earn easily. You don&#39;t need to do any complex
@@ -55,7 +55,7 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Great Heading</h4>
             <p class="text-justify">
               To get paymen all you need to do is . First verify your mobile
               number &amp; add your a/c details where your earned maney will be
@@ -65,7 +65,7 @@
           </section>
 
           <section class="my-4">
-            <h4>Great Heading</h4>
+            <h4 class="heading-title">Great Heading</h4>
             <p class="text-justify">
               You can&#39;t write any sexual or bad content . otherwise you will
               be blocked by floracasy team. If you will do any violence then you

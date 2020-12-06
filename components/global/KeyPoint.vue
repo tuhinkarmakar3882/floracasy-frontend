@@ -42,7 +42,7 @@ div {
   text-align: left;
   display: flex;
   align-items: flex-start;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 300;
 }
 </style>
