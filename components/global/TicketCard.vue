@@ -1,7 +1,7 @@
 <template>
   <blockquote
     v-ripple="`${ticket.color}5F`"
-    class="pl-2 pr-3 py-3"
+    class="px-3 py-3"
     :style="{ borderLeftColor: ticket.color }"
   >
     <h6 class="name my-0">{{ ticket.title }}</h6>
