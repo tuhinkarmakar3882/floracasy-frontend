@@ -46,39 +46,40 @@ export default {
       topics: [
         {
           name: 'Weekly challenges',
-          color: '#EFB33D',
-          icon: 'mdi mdi-hand-pointing-right',
+          color: '#8FF2E1',
+          icon: 'mdi mdi-calendar-range',
           route:
             navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
               .WeeklyChallenge,
         },
         {
-          name: 'Pickup Premium',
-          color: '#EFB33D',
-          icon: 'mdi mdi-hand-pointing-right',
-          route:
-            navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
-              .index,
-        },
-        {
-          name: 'New Categories',
-          color: '#EFB33D',
-          icon: 'mdi mdi-hand-pointing-right',
-          route:
-            navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
-              .index,
-        },
-        {
-          name: 'Audio reading blogs',
-          color: '#EFB33D',
-          icon: 'mdi mdi-hand-pointing-right',
+          name: 'Audible Blogs',
+          color: '#f5a049',
+          icon: 'mdi mdi-headphones',
           route:
             navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
               .AudioBlogs,
         },
+
+        {
+          name: 'New Categories',
+          color: '#4fca4f',
+          icon: 'mdi mdi-hand-pointing-right',
+          route:
+            navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
+              .index,
+        },
+        {
+          name: 'Pickup Premium',
+          color: '#f8e102',
+          icon: 'mdi mdi-hand-pointing-right',
+          route:
+            navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
+              .index,
+        },
         {
           name: "Our trending blog's",
-          color: '#EFB33D',
+          color: '#8c70fd',
           icon: 'mdi mdi-hand-pointing-right',
           route:
             navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
