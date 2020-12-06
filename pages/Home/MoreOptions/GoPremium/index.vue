@@ -22,7 +22,6 @@
             <button v-ripple="" class="premium-btn">Buy Premium</button>
           </div>
         </div>
-        <hr class="mt-8" />
       </section>
     </template>
   </AppFeel>
@@ -69,10 +68,6 @@ export default {
 
     ul {
       list-style: none;
-
-      li {
-        padding: 1rem 0;
-      }
     }
   }
 }
