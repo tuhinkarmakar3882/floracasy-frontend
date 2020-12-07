@@ -102,9 +102,16 @@ html {
       list-style: decimal;
     }
 
-    input {
+    input, textarea {
+      padding: $material-textInputPaddingTopBottom 0 $material-textInputPaddingTopBottom 0;
+      display: block;
+      width: 100%;
+      border: none;
+      font-size: $medium-unit - $double-unit !important;
+      color: $material-form-input-text !important;
+      border-bottom: 1px solid $material-form-line !important;
+      outline: none;
       border-radius: unset;
-      color: unset;
       background-color: unset;
       font-weight: unset;
 
@@ -113,9 +120,37 @@ html {
       &:focus-visible,
       &:active,
       &:focus-within {
-        border-radius: unset;
-        outline: unset;
-        box-shadow: unset;
+        outline: none;
+        color: $material-form-input-text-focus !important;
+        padding-bottom: $material-textInputPaddingTopBottom - 2;
+        border-bottom-width: 3px;
+        border-bottom-color: $secondary-matte !important;
+      }
+
+      &:invalid {
+        outline: none;
+        box-shadow: none;
+      }
+
+      &:valid,
+      &:focus {
+        & ~ label {
+          top: $material-labelOffset -
+              ($material-textInputPaddingTopBottom + 5);
+          font-size: 14px;
+        }
+      }
+
+      &:focus {
+        outline: none;
+        color: $material-form-input-text-focus;
+        padding-bottom: $material-textInputPaddingTopBottom - 2;
+        border-bottom-width: 3px;
+        border-bottom-color: $secondary-matte !important;
+
+        & ~ label {
+          color: $material-form-label-focus !important;
+        }
       }
     }
 
@@ -136,72 +171,6 @@ html {
             min-height: 20px;
             border: 1px solid lighten($card-background, $lighten-percentage);
             text-align: center;
-          }
-        }
-      }
-    }
-
-    .material-form-field {
-      font-family: 'Roboto', sans-serif;
-      font-size: $standard-unit;
-      position: relative;
-      display: block;
-      color: $material-form-label;
-      padding: $material-labelOffset 0 10px 0;
-
-      &::after {
-        content: '\00A0';
-        display: block;
-        color: $material-form-field-invalid-foreground;
-        font-size: $medium-unit - $double-unit;
-        padding-top: 5px;
-      }
-
-      .material-form-field-label {
-        position: absolute;
-        display: block;
-        top: $material-labelOffset + $material-textInputPaddingTopBottom;
-        left: 0;
-        transition: 0.2s ease all;
-        -moz-transition: 0.2s ease all;
-        -webkit-transition: 0.2s ease all;
-        pointer-events: none;
-        cursor: text;
-      }
-
-      input {
-        padding: $material-textInputPaddingTopBottom 0 $material-textInputPaddingTopBottom 0;
-        display: block;
-        width: 100%;
-        border: none;
-        font-size: $medium-unit - $double-unit;
-        color: $material-form-input-text;
-        border-bottom: 1px solid $material-form-line;
-        outline: none;
-
-        &:invalid {
-          outline: none;
-          box-shadow: none;
-        }
-
-        &:valid,
-        &:focus {
-          & ~ .material-form-field-label {
-            top: $material-labelOffset -
-              ($material-textInputPaddingTopBottom + 5);
-            font-size: 14px;
-          }
-        }
-
-        &:focus {
-          outline: none;
-          color: $material-form-input-text-focus;
-          padding-bottom: $material-textInputPaddingTopBottom - 2;
-          border-bottom-width: 3px;
-          border-bottom-color: $secondary-matte;
-
-          & ~ .material-form-field-label {
-            color: $material-form-label-focus;
           }
         }
       }
@@ -245,6 +214,35 @@ html {
       position: relative;
       margin: $medium-unit 0;
       line-height: 1.5;
+    }
+
+    .material-form-field {
+      font-family: $Roboto;
+      font-size: $standard-unit;
+      position: relative;
+      display: block;
+      color: $material-form-label;
+      padding: $material-labelOffset 0 10px 0;
+
+      &::after {
+        content: '\00A0';
+        display: block;
+        color: $material-form-field-invalid-foreground;
+        font-size: $medium-unit - $double-unit;
+        padding-top: 5px;
+      }
+
+      .material-form-field-label {
+        position: absolute;
+        display: block;
+        top: $material-labelOffset + $material-textInputPaddingTopBottom;
+        left: 0;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+        pointer-events: none;
+        cursor: text;
+      }
     }
   }
 }
