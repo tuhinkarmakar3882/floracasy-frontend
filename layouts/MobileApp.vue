@@ -1,8 +1,8 @@
 <template>
   <div class="app-layout">
     <header>
-      <h6 v-ripple>
-        <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
+      <h6 v-ripple="">
+        <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
       </h6>
       <nuxt-link v-ripple="" to="/Home/Messages">
         <h5 class="mdi mdi-message-text" />
@@ -143,18 +143,19 @@ export default {
   header {
     box-shadow: $down-only-box-shadow;
     top: 0;
-    padding: 0 $medium-unit;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 20px;
 
-    h6 {
-      font-size: 20px;
-
-      a {
-        text-decoration: none;
-        color: white !important;
-      }
+    a {
+      text-decoration: none;
+      color: white !important;
+      position: relative;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
     }
   }
 
