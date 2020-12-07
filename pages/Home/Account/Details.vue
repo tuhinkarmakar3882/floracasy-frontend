@@ -74,28 +74,26 @@
       <section class="recent-activity">
         <h4 class="heading-title">Recent Activities</h4>
 
-        <section
+        <article
           v-for="activity in recentActivities"
           :key="activity.id"
           v-ripple
-          class="activity py-8 my-4"
+          class="content py-3 px-1"
           @click="
             $router.push(
               navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
             )
           "
         >
-          <div class="content">
-            <img :alt="activity.title" :src="activity.coverImage" />
-            <div class="data text-left">
-              <h6>{{ activity.title }}</h6>
-              <p>{{ activity.subtitle.substr(0, 30) }}...</p>
-              <small style="font-size: 13px">
-                {{ parseTimeUsingMoment(activity.createdAt) }}</small
-              >
-            </div>
+          <img :alt="activity.title" :src="activity.coverImage" />
+          <div class="data text-left">
+            <h6>{{ activity.title }}</h6>
+            <p>{{ activity.subtitle.substr(0, 30) }}...</p>
+            <small style="font-size: 13px">
+              {{ parseTimeUsingMoment(activity.createdAt) }}</small
+            >
           </div>
-        </section>
+        </article>
 
         <client-only>
           <infinite-loading @infinite="infiniteHandler">
@@ -107,7 +105,7 @@
               <p class="danger-light my-6">Network Error</p>
             </template>
             <template slot="no-more">
-              <div class="no-activity">
+              <div class="no-activity mt-6">
                 <button
                   v-ripple
                   class="secondary-outlined-btn"
@@ -306,9 +304,7 @@ export default {
     }
 
     .content {
-      display: grid;
-      grid-template-columns: 84px calc(95vw - 84px);
-      grid-column-gap: 1rem;
+      display: flex;
       align-items: center;
 
       img {
@@ -316,6 +312,7 @@ export default {
         width: 84px;
         object-fit: cover;
         border-radius: 50%;
+        margin-right: $large-unit;
       }
     }
   }
