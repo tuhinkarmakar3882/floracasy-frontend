@@ -22,6 +22,10 @@ export default {
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
     {
+      src: '~/plugins/register-sw.js',
+      mode: 'client',
+    },
+    {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
     },
@@ -68,7 +72,7 @@ export default {
     asyncScripts: true,
 
     csp: {
-      addMeta: true,
+      addMeta: process.env.NODE_ENV === 'production',
     },
   },
 
@@ -169,10 +173,6 @@ export default {
     },
   },
 
-  telemetry: false,
-
-  watch: ['~/module/csp.js'],
-
   pwa: {
     meta: {
       name: packageJson.appName,
@@ -192,7 +192,12 @@ export default {
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
       display: 'standalone',
+      start_url: '/',
     },
     workbox: false,
   },
+
+  telemetry: false,
+
+  watch: ['~/module/csp.js'],
 }
