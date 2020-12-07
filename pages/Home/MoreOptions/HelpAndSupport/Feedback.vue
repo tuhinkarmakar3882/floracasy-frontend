@@ -99,11 +99,16 @@ export default {
     },
   },
   methods: {
-    sendFeedback() {
+    async sendFeedback() {
       this.sendFeedbackLoading = true
       setTimeout(() => {
         this.sendFeedbackLoading = false
       }, 2000)
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Functionality Not Ready Yet',
+        notificationType: 'warning',
+        dismissible: true,
+      })
     },
   },
   head() {
