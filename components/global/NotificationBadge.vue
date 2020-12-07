@@ -29,22 +29,52 @@ export default {
   },
   methods: {
     getIconFor(notificationType) {
-      if (notificationType === 'info') return 'mdi-information'
-      if (notificationType === 'reconnecting') return 'mdi-signal-off'
-      if (notificationType === 'warning') return 'mdi-alert'
-      if (notificationType === 'success') return 'mdi-check-circle'
-      if (notificationType === 'error') return 'mdi-alert-circle-outline'
-      if (notificationType === 'blog_like') return 'mdi-thumb-up-outline'
-      if (notificationType === 'blog_comment') return 'mdi-comment-multiple'
-      return 'mdi-bell'
+      switch (notificationType) {
+        case 'info':
+          return 'mdi-information'
+        case 'reconnecting':
+          return 'mdi-signal-off'
+        case 'warning':
+          return 'mdi-alert'
+        case 'success':
+          return 'mdi-check-circle'
+        case 'error':
+          return 'mdi-alert-circle-outline'
+        case 'blog_like':
+          return 'mdi-thumb-up-outline'
+        case 'blog_comment':
+          return 'mdi-comment-multiple'
+        case 'add_to_save_later':
+          return 'mdi-bookmark-check'
+        case 'remove_from_save_later':
+          return 'mdi-bookmark-minus'
+        case 'help_ticket_creation':
+          return 'mdi-ticket'
+        default:
+          return 'mdi-bell'
+      }
     },
     getColorFor(notificationType) {
-      if (notificationType === 'info') return '#a6c52c'
-      if (notificationType === 'reconnecting') return '#ff8282'
-      if (notificationType === 'warning') return '#eae500'
-      if (notificationType === 'success') return '#67ea67'
-      if (notificationType === 'error') return '#f77479'
-      return '#8FF2E0'
+      switch (notificationType) {
+        case 'info':
+          return '#a6c52c'
+        case 'reconnecting':
+          return '#ff8282'
+        case 'warning':
+          return '#eae500'
+        case 'success':
+          return '#67ea67'
+        case 'error':
+          return '#f77479'
+        case 'add_to_save_later':
+          return '#67ea67'
+        case 'remove_from_save_later':
+          return '#eae500'
+        case 'help_ticket_creation':
+          return '#67ea67'
+        default:
+          return '#8FF2E0'
+      }
     },
   },
 }
