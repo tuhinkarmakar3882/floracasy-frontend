@@ -1,4 +1,6 @@
+import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentalVariables'
+import * as packageJson from './package.json'
 
 export default {
   ssr: true,
@@ -41,23 +43,8 @@ export default {
     '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
-    [
-      'nuxt-lazy-load',
-      {
-        images: true,
-        videos: true,
-        audios: true,
-        iframes: true,
-        native: false,
-        polyfill: true,
-        directiveOnly: false,
-        defaultImage: '/images/default.svg',
-        loadingClass: 'isLoading',
-        loadedClass: 'isLoaded',
-        appendClass: 'lazyLoad',
-        observerConfig: {},
-      },
-    ],
+    ['nuxt-lazy-load', lazyLoadConfig],
+    ['@nuxtjs/pwa', { workbox: false }],
   ],
 
   buildModules: [
@@ -185,4 +172,27 @@ export default {
   telemetry: false,
 
   watch: ['~/module/csp.js'],
+
+  pwa: {
+    meta: {
+      name: packageJson.appName,
+      author: 'Floracasy Team',
+      appleStatusBarStyle: 'black',
+      nativeUI: true,
+      background_color: packageJson.themeColor,
+      theme_color: packageJson.themeColor,
+      status_bar: packageJson.themeColor,
+    },
+    manifest: {
+      name: packageJson.appName,
+      description: packageJson.description,
+      short_name: 'Floracasy',
+      lang: 'en-US',
+      background_color: packageJson.themeColor,
+      theme_color: packageJson.themeColor,
+      status_bar: packageJson.themeColor,
+      display: 'standalone',
+    },
+    workbox: false,
+  },
 }
