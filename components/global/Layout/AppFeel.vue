@@ -24,9 +24,11 @@
         v-if="showBackButton"
         v-ripple=""
         class="mdi mdi-arrow-left"
+        :class="{ 'px-5': showBackButton }"
+        style="height: 56px; display: flex; align-items: center"
         @click="navigateTo(onBack)"
       />
-      <p :class="{ 'ml-6': showBackButton }">
+      <p>
         <slot name="app-bar-title" />
       </p>
     </header>
@@ -109,7 +111,6 @@ export default {
     z-index: $bring-to-front;
     display: flex;
     align-items: center;
-    padding: 0 $medium-unit;
     height: 2 * $x-large-unit;
     background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;

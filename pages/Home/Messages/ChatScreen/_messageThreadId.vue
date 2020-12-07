@@ -2,17 +2,16 @@
   <AppFeel custom-header class="chat-screen-page" on-back="/">
     <template slot="app-bar-custom-header">
       <h5
-        v-ripple=""
-        class="mdi mdi-arrow-left"
+        v-ripple
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
         @click="
           prevURL
             ? $router.back()
             : $router.replace(navigationRoutes.Home.Messages.index)
         "
       />
-      <p class="ml-6">
-        {{ threadDetail ? threadDetail.name : pageTitle }}
-      </p>
+      <p>{{ threadDetail ? threadDetail.name : pageTitle }}</p>
     </template>
 
     <template slot="main">

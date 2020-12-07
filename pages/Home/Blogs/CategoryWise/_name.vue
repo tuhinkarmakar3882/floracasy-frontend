@@ -5,10 +5,13 @@
     :on-back="navigationRoutes.Home.DashBoard"
   >
     <template slot="app-bar-custom-header">
-      <h5 v-ripple class="mdi mdi-arrow-left" @click="handleBackButtonPress" />
-      <p class="ml-6">
-        {{ pageTitle }}
-      </p>
+      <h5
+        v-ripple
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
+        @click="handleBackButtonPress"
+      />
+      <p>{{ pageTitle }}</p>
     </template>
     <template slot="main">
       <h4 class="heading-title">{{ $route.params.name }}</h4>

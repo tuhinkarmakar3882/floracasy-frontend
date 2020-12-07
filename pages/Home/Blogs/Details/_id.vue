@@ -7,11 +7,12 @@
   >
     <template slot="app-bar-custom-header">
       <h5
-        v-ripple=""
-        class="mdi mdi-arrow-left"
+        v-ripple
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
         @click="handleBackButtonPress"
       />
-      <h6 v-ripple="" class="ml-4">
+      <h6 v-ripple="">
         <nuxt-link
           class="brand-name no-underline"
           to="/"
@@ -20,7 +21,12 @@
           Floracasy
         </nuxt-link>
       </h6>
-      <nuxt-link v-ripple="" to="/Home/Messages" class="ml-auto">
+      <nuxt-link
+        v-ripple=""
+        :to="navigationRoutes.Home.Messages.index"
+        class="ml-auto px-6"
+        style="height: 56px; display: flex; align-items: center"
+      >
         <h5 class="mdi mdi-message-text" />
       </nuxt-link>
     </template>

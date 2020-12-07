@@ -6,11 +6,12 @@
   >
     <template slot="app-bar-custom-header">
       <h5
-        v-ripple=""
-        class="mdi mdi-arrow-left"
+        v-ripple
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
         @click="handleBackButtonPress"
       />
-      <p v-ripple="" class="ml-4" style="font-size: 1.1rem">{{ pageTitle }}</p>
+      <p v-ripple="" style="font-size: 1.1rem">{{ pageTitle }}</p>
       <div class="ml-auto">
         <button
           v-if="step === 1"
