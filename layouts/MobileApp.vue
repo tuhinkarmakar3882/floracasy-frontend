@@ -2,7 +2,7 @@
   <div class="app-layout">
     <header>
       <h6 v-ripple>
-        <nuxt-link class="brand-name" to="/"> Floracasy </nuxt-link>
+        <nuxt-link class="brand-name" to="/"> Floracasy</nuxt-link>
       </h6>
       <nuxt-link v-ripple="" to="/Home/Messages">
         <h5 class="mdi mdi-message-text" />
@@ -13,7 +13,9 @@
       <NotificationBadge
         @click="navigateTo(navigationRoutes.Home.Notifications.index)"
       />
-      <nuxt />
+      <section class="main-router-content">
+        <nuxt />
+      </section>
     </main>
 
     <footer>
@@ -158,6 +160,11 @@ export default {
 
   main {
     padding: 2 * $x-large-unit 0;
+
+    .main-router-content {
+      max-width: $max-width;
+      margin: auto;
+    }
   }
 }
 </style>

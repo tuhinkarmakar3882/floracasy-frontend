@@ -70,7 +70,7 @@ export default {
 
   .message-container {
     width: clamp(250px, 100%, 75vw);
-    background-color: darken(#232340, $darken-percentage);
+    max-width: 700px;
     padding: $micro-unit $standard-unit;
     border-radius: $micro-unit;
     box-shadow: $default-box-shadow;

@@ -268,7 +268,7 @@ export default {
 
 .blog-details-page {
   .blog {
-    max-width: 1024px;
+    max-width: $max-width;
     margin: auto;
 
     .blog-intro-image {
