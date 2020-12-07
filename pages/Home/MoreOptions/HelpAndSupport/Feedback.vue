@@ -27,10 +27,27 @@
             Type your feedback here
           </label>
           <small
+            v-if="feedbackText.trim().length < 30"
             style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 hint-text"
           >
-            (Hint: At least 10 characters are required)
+            (Hint: At least {{ 30 - feedbackText.trim().length }} more
+            characters are required)
+          </small>
+          <small
+            v-if="feedbackText.trim().length >= 30 && !feedbackTextError"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 secondary-matte"
+          >
+            <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
+          </small>
+          <small
+            v-if="feedbackTextError"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 danger-light"
+          >
+            <i class="mdi mdi-alert-circle-outline" />
+            Exceed 300 character limit
           </small>
         </div>
 
@@ -40,7 +57,7 @@
             class-list="primary-btn"
             :on-click="sendFeedback"
             :loading="sendFeedbackLoading"
-            :disabled="!isValidForm"
+            :disabled="!(isValidFeedbackText && !feedbackTextError)"
             style="width: 212px"
           >
             Send Feedback
@@ -55,6 +72,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import RippleButton from '~/components/global/RippleButton'
+
 export default {
   name: 'Feedback',
   components: { RippleButton, AppFeel },
@@ -64,13 +82,20 @@ export default {
       navigationRoutes,
       pageTitle: 'Send Feedback',
       sendFeedbackLoading: false,
+
       feedbackText: '',
-      isValidForm: false,
+      isValidFeedbackText: false,
+      feedbackTextError: null,
     }
   },
   watch: {
     feedbackText(newValue) {
-      this.isValidForm = newValue.trim().length > 10
+      const contentLength = newValue.trim().length
+      const minAllowedLength = 30
+      const maxAllowedLength = 300
+      this.isValidFeedbackText =
+        contentLength >= minAllowedLength && contentLength <= maxAllowedLength
+      this.feedbackTextError = contentLength > maxAllowedLength
     },
   },
   methods: {

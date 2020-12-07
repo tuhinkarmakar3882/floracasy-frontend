@@ -91,7 +91,14 @@
             class-list="primary-btn"
             :on-click="raiseTicket"
             :loading="raiseTicketLoading"
-            :disabled="!(isValidIssueTitle && isValidIssueDetails)"
+            :disabled="
+              !(
+                isValidIssueTitle &&
+                isValidIssueDetails &&
+                !issueDetailsError &&
+                !issueTitleError
+              )
+            "
             style="width: 212px"
           >
             Raise Support Ticket
