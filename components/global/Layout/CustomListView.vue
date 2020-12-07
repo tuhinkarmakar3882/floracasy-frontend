@@ -24,17 +24,19 @@ export default {
       margin: 0;
 
       p {
-        display: grid;
-        grid-template-columns: 1fr 4fr 0.5fr;
-        grid-column-gap: 1rem;
+        display: flex;
+        width: 100%;
         align-items: center;
         text-align: left;
 
         .icon {
           font-size: clamp(1.6rem, 8vw, 2rem);
+          padding-left: $micro-unit;
         }
 
         .option-name {
+          margin-left: $large-unit;
+          padding-right: $standard-unit;
           color: lighten($body-text-default, $lighten-percentage);
           font-size: clamp(1.1rem, 8vw, 1.2rem);
           width: 100%;
@@ -47,6 +49,7 @@ export default {
         }
 
         .arrow-go {
+          max-width: 64px;
           font-size: clamp(20px, 8vw, 28px);
           color: #3a3a3a;
         }
