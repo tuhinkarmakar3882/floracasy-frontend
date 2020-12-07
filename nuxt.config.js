@@ -193,6 +193,7 @@ export default {
       status_bar: packageJson.themeColor,
       display: 'standalone',
       start_url: '/',
+      scope: '/',
     },
     workbox: false,
   },
