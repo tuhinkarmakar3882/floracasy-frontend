@@ -11,10 +11,10 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: process.env.NODE_ENV === 'production',
+    server: process.env.NODE_ENV === 'production',
+  },
 
   router: {},
 
