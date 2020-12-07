@@ -47,7 +47,7 @@ export const navigationRoutes = {
           AudioBlogs:
             '/Home/MoreOptions/HelpAndSupport/PopularTopics/AudioBlogs',
         },
-        ReportProblem: '/Home/MoreOptions/HelpAndSupport/ReportProblem',
+        ContactSupport: '/Home/MoreOptions/HelpAndSupport/ContactSupport',
         Tickets: {
           index: '/Home/MoreOptions/HelpAndSupport/Tickets',
         },
