@@ -16,7 +16,7 @@
 
     <template slot="footer">
       <client-only>
-        <infinite-loading direction="top" @infinite="infiniteHandler">
+        <infinite-loading @infinite="infiniteHandler">
           <template slot="spinner">
             <LoadingIcon class="mt-4 mb-6" />
             <p class="text-center">Getting Support Tickets...</p>
