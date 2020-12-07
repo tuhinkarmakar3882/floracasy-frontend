@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       navigationRoutes,
-      pageTitle: 'Tickets',
+      pageTitle: 'Ticket Status',
       tickets: [],
       ticketFetchEndpoint: endpoints.help_and_support.fetch,
     }
