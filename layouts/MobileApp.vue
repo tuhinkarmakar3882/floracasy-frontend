@@ -164,7 +164,8 @@ export default {
 
     .main-router-content {
       max-width: $max-width;
-      margin: auto;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }

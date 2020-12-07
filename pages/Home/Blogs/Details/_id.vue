@@ -269,7 +269,8 @@ export default {
 .blog-details-page {
   .blog {
     max-width: $max-width;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 
     .blog-intro-image {
       box-shadow: $down-only-box-shadow;

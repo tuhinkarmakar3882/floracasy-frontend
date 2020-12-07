@@ -44,6 +44,7 @@
     "tiptap": "^1.30.0",
     "tiptap-extensions": "^1.33.2",
     "vue-infinite-loading": "^2.4.5",
+    "vue-material": "^1.0.0-beta-15",
     "vue-quill-editor": "^3.0.6",
     "vue2-touch-events": "^3.0.0",
     "vuex": "^3.5.1"

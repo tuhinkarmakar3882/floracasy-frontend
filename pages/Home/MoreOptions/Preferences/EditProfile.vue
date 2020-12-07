@@ -161,7 +161,8 @@ export default {
       position: relative;
 
       img {
-        margin: auto;
+        margin-left: auto;
+        margin-right: auto;
         width: 150px;
         height: 150px;
         object-fit: cover;

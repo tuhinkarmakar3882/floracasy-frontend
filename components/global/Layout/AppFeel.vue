@@ -125,7 +125,8 @@ export default {
   .main-content {
     background-color: $body-background;
     max-width: $max-width;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
 
     button {
       min-width: auto;

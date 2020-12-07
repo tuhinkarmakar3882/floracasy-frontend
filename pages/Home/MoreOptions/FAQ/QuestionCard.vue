@@ -2,11 +2,11 @@
   <section class="question-card">
     <blockquote :style="{ borderLeft: `4px solid ${borderShade}` }">
       <h5 class="my-0 px-4">{{ content.statement }}</h5>
-      <hr class="mx-4"/>
+      <hr class="mx-4" />
       <p class="px-4">
-        <span class="secondary">Answer: </span><br/>{{ content.answer }}
+        <span class="secondary">Answer: </span><br />{{ content.answer }}
       </p>
-      <hr class="mt-8 mb-7 mx-4" data-v-258ab808=""/>
+      <hr class="mt-8 mb-7 mx-4" data-v-258ab808="" />
 
       <aside v-if="showDefaultFeedback" class="pb-8">
         <section v-if="feedback" class="feedback-response">
@@ -36,7 +36,7 @@
               class="secondary-outlined-btn"
               @click="recordPositiveResponse"
             >
-              <span class="mdi mdi-emoticon-cool-outline secondary"/>
+              <span class="mdi mdi-emoticon-cool-outline secondary" />
               Yes
             </button>
 
@@ -45,7 +45,7 @@
               class="danger-outlined-btn"
               @click="recordNegativeResponse"
             >
-              <span class="mdi mdi-emoticon-cry-outline danger-light"/>
+              <span class="mdi mdi-emoticon-cry-outline danger-light" />
               No
             </button>
           </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import {navigationRoutes} from '~/navigation/navigationRoutes'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'QuestionCard',
@@ -110,7 +110,8 @@ export default {
       align-items: center;
       font-size: 2rem;
       width: 208px;
-      margin: auto;
+      margin-left: auto;
+      margin-right: auto;
 
       button {
         min-width: auto;
