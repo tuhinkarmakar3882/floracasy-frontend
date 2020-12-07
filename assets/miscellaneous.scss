@@ -243,6 +243,42 @@ html {
         pointer-events: none;
         cursor: text;
       }
+      input {
+        padding: $material-textInputPaddingTopBottom 0 $material-textInputPaddingTopBottom 0;
+        display: block;
+        width: 100%;
+        border: none;
+        font-size: $medium-unit - $double-unit;
+        color: $material-form-input-text;
+        border-bottom: 1px solid $material-form-line;
+        outline: none;
+
+        &:invalid {
+          outline: none;
+          box-shadow: none;
+        }
+
+        &:valid,
+        &:focus {
+          & ~ .material-form-field-label {
+            top: $material-labelOffset -
+              ($material-textInputPaddingTopBottom + 5);
+            font-size: 14px;
+          }
+        }
+
+        &:focus {
+          outline: none;
+          color: $material-form-input-text-focus;
+          padding-bottom: $material-textInputPaddingTopBottom - 2;
+          border-bottom-width: 3px;
+          border-bottom-color: $secondary-matte;
+
+          & ~ .material-form-field-label {
+            color: $material-form-label-focus;
+          }
+        }
+      }
     }
   }
 }
