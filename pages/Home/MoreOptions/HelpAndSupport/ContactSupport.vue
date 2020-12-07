@@ -22,6 +22,21 @@
           <label class="material-form-field-label" for="issue-title">
             Issue Title
           </label>
+          <small
+            v-if="issueTitle.trim().length < 10"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 hint-text"
+          >
+            (Hint: At least {{ 10 - issueTitle.trim().length }} more characters
+            are required)
+          </small>
+          <small
+            v-if="issueTitle.trim().length >= 10"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 secondary-matte"
+          >
+            <i class="mdi mdi-check" /> Looks good!
+          </small>
         </div>
 
         <div class="material-form-field mt-2">
@@ -37,6 +52,21 @@
           <label class="material-form-field-label" for="issue-details">
             Issue Details
           </label>
+          <small
+            v-if="issueDetails.trim().length < 60"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 hint-text"
+          >
+            (Hint: At least {{ 60 - issueDetails.trim().length }} more
+            characters are required)
+          </small>
+          <small
+            v-if="issueDetails.trim().length >= 60"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 secondary-matte"
+          >
+            <i class="mdi mdi-check" /> Looks good!
+          </small>
         </div>
 
         <div class="text-center mt-8">
@@ -45,6 +75,7 @@
             class-list="primary-btn"
             :on-click="raiseTicket"
             :loading="raiseTicketLoading"
+            :disabled="!(isValidIssueTitle && isValidIssueDetails)"
             style="width: 212px"
           >
             Raise Support Ticket
@@ -69,10 +100,19 @@ export default {
       navigationRoutes,
       pageTitle: 'Contact Support',
       raiseTicketLoading: false,
-      isValidForm: true,
       issueTitle: '',
+      isValidIssueTitle: false,
       issueDetails: '',
+      isValidIssueDetails: false,
     }
+  },
+  watch: {
+    issueTitle(newValue) {
+      this.isValidIssueTitle = newValue.trim().length >= 10
+    },
+    issueDetails(newValue) {
+      this.isValidIssueDetails = newValue.trim().length >= 60
+    },
   },
   methods: {
     async raiseTicket() {
