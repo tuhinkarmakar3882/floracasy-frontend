@@ -21,10 +21,15 @@
           "
         >
           <p>
-            <img :src="category.photo_url" :alt="category.name" />
-            <span class="option-name ml-4" style="font-size: 18px">{{
-              category.name
-            }}</span>
+            <img
+              :src="category.photo_url"
+              :alt="category.name"
+              height="64"
+              width="64"
+            />
+            <span class="option-name ml-4" style="font-size: 18px">
+              {{ category.name }}
+            </span>
             <span class="mdi mdi-chevron-right arrow-go" />
           </p>
         </li>
@@ -73,11 +78,8 @@ export default {
 
 .categories {
   img {
-    width: 2 * $xx-large-unit;
-    height: 2 * $xx-large-unit;
     border-radius: 50%;
     object-fit: cover;
-    border: 1px solid yellow;
   }
 }
 </style>
