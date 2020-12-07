@@ -31,11 +31,19 @@
             are required)
           </small>
           <small
-            v-if="issueTitle.trim().length >= 10"
+            v-if="issueTitle.trim().length >= 10 && !issueTitleError"
             style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 secondary-matte"
           >
-            <i class="mdi mdi-check" /> Looks good!
+            <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
+          </small>
+          <small
+            v-if="issueTitleError"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 danger-light"
+          >
+            <i class="mdi mdi-alert-circle-outline" />
+            Exceed 300 character limit
           </small>
         </div>
 
@@ -61,11 +69,19 @@
             characters are required)
           </small>
           <small
-            v-if="issueDetails.trim().length >= 60"
+            v-if="issueDetails.trim().length >= 60 && !issueDetailsError"
             style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 secondary-matte"
           >
-            <i class="mdi mdi-check" /> Looks good!
+            <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
+          </small>
+          <small
+            v-if="issueDetailsError"
+            style="display: block; font-weight: 400; font-size: 13px"
+            class="mt-3 danger-light"
+          >
+            <i class="mdi mdi-alert-circle-outline" />
+            Exceed 1500 character limit
           </small>
         </div>
 
@@ -100,18 +116,32 @@ export default {
       navigationRoutes,
       pageTitle: 'Contact Support',
       raiseTicketLoading: false,
+
       issueTitle: '',
       isValidIssueTitle: false,
+      issueTitleError: null,
+
       issueDetails: '',
       isValidIssueDetails: false,
+      issueDetailsError: null,
     }
   },
   watch: {
     issueTitle(newValue) {
-      this.isValidIssueTitle = newValue.trim().length >= 10
+      const contentLength = newValue.trim().length
+      const minAllowedLength = 10
+      const maxAllowedLength = 300
+      this.isValidIssueTitle =
+        contentLength >= minAllowedLength && contentLength <= maxAllowedLength
+      this.issueTitleError = contentLength > maxAllowedLength
     },
     issueDetails(newValue) {
-      this.isValidIssueDetails = newValue.trim().length >= 60
+      const contentLength = newValue.trim().length
+      const minAllowedLength = 60
+      const maxAllowedLength = 1500
+      this.isValidIssueDetails =
+        contentLength >= minAllowedLength && contentLength <= maxAllowedLength
+      this.issueDetailsError = contentLength > maxAllowedLength
     },
   },
   methods: {
