@@ -13,6 +13,7 @@
           <input
             id="issue-title"
             ref="issueTitle"
+            v-model="issueTitle"
             type="text"
             required
             name="text"
@@ -27,6 +28,7 @@
           <input
             id="issue-details"
             ref="issueDetails"
+            v-model="issueDetails"
             type="text"
             required
             name="text"
@@ -43,7 +45,6 @@
             class-list="primary-btn"
             :on-click="raiseTicket"
             :loading="raiseTicketLoading"
-            :disabled="!isValidForm"
             style="width: 212px"
           >
             Raise Support Ticket
@@ -58,6 +59,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import RippleButton from '~/components/global/RippleButton'
+import endpoints from '~/api/endpoints'
 export default {
   name: 'ContactSupport',
   components: { RippleButton, AppFeel },
@@ -67,15 +69,30 @@ export default {
       navigationRoutes,
       pageTitle: 'Contact Support',
       raiseTicketLoading: false,
-      isValidForm: false,
+      isValidForm: true,
+      issueTitle: '',
+      issueDetails: '',
     }
   },
   methods: {
-    raiseTicket() {
+    async raiseTicket() {
       this.raiseTicketLoading = true
-      setTimeout(() => {
-        this.raiseTicketLoading = false
-      }, 2000)
+      try {
+        await this.$axios.$post(endpoints.help_and_support.create, {
+          title: this.issueTitle,
+          issue: this.issueDetails,
+        })
+        await this.$router.replace(
+          navigationRoutes.Home.MoreOptions.HelpAndSupport.index
+        )
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Network Error, Please Retry.',
+          notificationType: 'alert',
+          dismissible: true,
+        })
+      }
+      this.raiseTicketLoading = false
     },
   },
 
