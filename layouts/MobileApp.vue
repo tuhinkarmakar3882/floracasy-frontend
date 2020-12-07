@@ -34,17 +34,14 @@
             newContentAvailable[index] ? 'has-notification' : '',
           ]"
           class="mdi"
-          style="transition: all 0.2s ease-in-out; position: relative"
-          :style="[
-            index !== activeLink
-              ? { marginBottom: '-20px', fontSize: '28px' }
-              : { marginBottom: '4px', fontSize: '22px' },
-          ]"
+          style="
+            transition: all 0.2s ease-in-out;
+            margin-bottom: -2px;
+            font-size: 22px;
+            position: relative;
+          "
         />
-        <small
-          :style="[index !== activeLink && { opacity: 0 }]"
-          style="transition: all 0.2s linear; font-size: 13px; font-weight: 400"
-        >
+        <small style="transition: all 0.2s linear; font-size: 12.3px">
           {{ menuOption.text }}
         </small>
       </nuxt-link>
