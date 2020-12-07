@@ -49,7 +49,13 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
+    'nuxt-vue-material',
   ],
+
+  vueMaterial: {
+    theme: null,
+    components: ['MdField'],
+  },
 
   buildModules: [
     '@nuxt/typescript-build',

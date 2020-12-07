@@ -11709,6 +11709,13 @@ nuxt-twa-module@^1.3.1:
     rimraf "^3.0.0"
     tmp-promise "^2.0.2"
 
+nuxt-vue-material@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/nuxt-vue-material/-/nuxt-vue-material-1.2.0.tgz#35d73054c42b79f864c0828bbe70c5f005479db6"
+  integrity sha512-fjh2yXFSdveZGfWMxpP6jVoLBbjHB/oXuk7V4GG7z5XYHmk7H42OW/lr3AHGFhgDglkCUMQwoCDzAmKH5UoLBg==
+  dependencies:
+    vue-material latest
+
 nuxt@^2.14.5:
   version "2.14.9"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.14.9.tgz#823e98c687e0029d655349b3c0b8c1180623095d"
@@ -16673,7 +16680,7 @@ vue-loader@^15.9.5:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-material@^1.0.0-beta-15:
+vue-material@latest:
   version "1.0.0-beta-15"
   resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-15.tgz#949025464f8fe2ff3b9be2ba1365d9eab770ad8a"
   integrity sha512-nNC1mF1BQNKsyEjRXPYxweYlIOcVE9rK4LeeyppOU6h4vgQnZuNmlGIRnl6fUe8dj+x7c5x5/qydLhJRabPMng==
