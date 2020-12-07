@@ -12,37 +12,38 @@ body {
     color: $white;
     font-weight: 400;
     font-style: normal;
-    font-family: $Prata !important;
-    line-height: 1.8 !important;
+    font-family: $Prata;
+    line-height: 1.8;
     letter-spacing: $single-unit;
+    word-break: break-word;
 
     a {
-      color: $secondary-highlight !important;
+      color: $secondary-highlight;
     }
   }
 
   h1 {
-    font-size: 2.2rem !important;
+    font-size: 2.2rem;
   }
 
   h2 {
-    font-size: 2rem !important;
+    font-size: 2rem;
   }
 
   h3 {
-    font-size: 1.8rem !important;
+    font-size: 1.8rem;
   }
 
   h4 {
-    font-size: 1.6rem !important;
+    font-size: 1.6rem;
   }
 
   h5 {
-    font-size: 1.4rem !important;
+    font-size: 1.4rem;
   }
 
   h6 {
-    font-size: 1.2rem !important;
+    font-size: 1.2rem;
   }
 
   p {
@@ -51,11 +52,12 @@ body {
     letter-spacing: 1px;
     font-weight: 300;
     font-size: 1rem;
-    line-height: 1.85 !important;
+    line-height: 1.85;
+    word-break: break-word;
   }
 
   strong {
-    font-weight: 900 !important;
+    font-weight: 900;
   }
 
   small {
@@ -66,7 +68,7 @@ body {
 
   span, p, small {
     a {
-      color: $secondary-highlight !important;
+      color: $secondary-highlight;
     }
   }
 
@@ -92,7 +94,7 @@ body {
 .heading-title {
   text-align: center;
   position: relative;
-  margin: 2rem 0 2.85rem;
+  margin: 2rem 0 2.5rem;
   font-weight: 300;
 
   &::after {
@@ -148,6 +150,14 @@ body {
 
 .primary-matte {
   color: $primary-matte;
+}
+
+.primary-light {
+  color: $primary-light;
+}
+
+.hint-text {
+  color: #c3c300;
 }
 
 .secondary-matte {

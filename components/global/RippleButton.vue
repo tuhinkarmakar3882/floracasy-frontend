@@ -48,7 +48,8 @@ export default {
 @import 'assets/all-variables';
 
 .loading-animation {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   display: block;
   height: $x-large-unit !important;
   width: $x-large-unit !important;

@@ -115,17 +115,14 @@ export default {
     },
 
     async logout() {
-      await this.$axios
-        .post(endpoints.auth.logout, {
+      try {
+        await this.$axios.post(endpoints.auth.logout, {
           refresh: this.$cookies.get('refresh'),
         })
-        .then(() => {
-          this.performLogout()
-        })
-        .catch((e) => {
-          //  Todo Add UI hint
-          console.log(e)
-        })
+        await this.performLogout()
+      } catch (e) {
+        //  Todo Add UI hint
+      }
     },
   },
 

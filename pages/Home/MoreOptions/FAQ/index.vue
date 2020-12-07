@@ -7,16 +7,20 @@
     <template slot="app-bar-custom-header">
       <h5
         v-ripple
-        class="mdi mdi-arrow-left"
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
         @click="$router.replace(navigationRoutes.Home.MoreOptions.index)"
       />
-      <p class="ml-6">
-        {{ pageTitle }}
-      </p>
+      <p>{{ pageTitle }}</p>
       <span
         v-ripple=""
-        class="mdi mdi-menu ml-auto"
-        style="font-size: 24px"
+        class="mdi mdi-menu ml-auto px-5"
+        style="
+          height: 56px;
+          display: flex;
+          align-items: center;
+          font-size: 24px;
+        "
         @click="drawerIsOpened = !drawerIsOpened"
       />
     </template>

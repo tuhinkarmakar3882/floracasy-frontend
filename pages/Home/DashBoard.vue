@@ -51,6 +51,7 @@
 import CategoriesLineUp from '@/components/global/Home/Dashboard/CategoriesLineUp'
 import InfiniteScrollingBlogLists from '@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'
 import Carousel from '@/components/global/Home/Dashboard/Carousel'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DashBoard',
@@ -96,11 +97,24 @@ export default {
     }
   },
 
-  async mounted() {
-    await this.$store.dispatch('BottomNavigation/update', { linkPosition: 0 })
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
+  async mounted() {
+    await this.$store.dispatch('BottomNavigation/update', { linkPosition: 0 })
+    await this.setupUser()
+  },
   methods: {
+    async setupUser() {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        this.loadingProfile = true
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
+    },
     changeTab(newTabNumber) {
       this.tabNumber = newTabNumber
       this.$nextTick(() => {

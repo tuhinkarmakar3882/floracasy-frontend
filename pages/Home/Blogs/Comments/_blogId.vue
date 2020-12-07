@@ -3,16 +3,15 @@
     <template slot="app-bar-custom-header">
       <h5
         v-ripple
-        class="mdi mdi-arrow-left"
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
         @click="
           prevURL
             ? $router.back()
             : $router.replace(navigationRoutes.Home.DashBoard)
         "
       />
-      <p class="ml-6">
-        {{ pageTitle }}
-      </p>
+      <p>{{ pageTitle }}</p>
     </template>
 
     <template slot="main">

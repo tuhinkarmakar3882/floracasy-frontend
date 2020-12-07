@@ -43,7 +43,9 @@
               <span
                 class="icon mdi"
                 :class="
-                  blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
+                  blog.isSavedForLater
+                    ? 'mdi-bookmark-check'
+                    : 'mdi-bookmark-outline'
                 "
                 style="color: #6dd0bf"
               />

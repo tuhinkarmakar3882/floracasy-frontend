@@ -48,10 +48,16 @@ export default {
       pageTitle: 'Help And Support',
       options: [
         {
-          name: 'Write a Feedback',
-          icon: 'mdi mdi-message-alert',
-          color: '#f5a049',
+          name: 'Send Feedback',
+          icon: 'mdi mdi-message-draw',
+          color: '#daa43d',
           route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback,
+        },
+        {
+          name: 'View Ticket Status',
+          icon: 'mdi mdi-bulletin-board',
+          color: '#34b334',
+          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index,
         },
         {
           name: 'Privacy & Security',
@@ -59,7 +65,6 @@ export default {
           color: '#52B2A2',
           route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
         },
-
         {
           name: 'Explore Popular Topics',
           icon: 'mdi mdi-compass',
@@ -67,12 +72,6 @@ export default {
           route:
             navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
               .index,
-        },
-        {
-          name: 'View Ticket Status',
-          icon: 'mdi mdi-bulletin-board',
-          color: '#34b334',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index,
         },
         {
           name: 'Contact Support',
