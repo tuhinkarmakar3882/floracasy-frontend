@@ -269,6 +269,7 @@ export default {
 .blog-details-page {
   .blog {
     max-width: $max-width;
+    word-break: break-word;
     margin-left: auto;
     margin-right: auto;
 
