@@ -6,8 +6,21 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <h6>This is my super duper {{ pageTitle }} Page</h6>
-      <p>And I Love it</p>
+      <section class="px-4 my-4">
+        <div class="material-form-field mt-2">
+          <input
+            id="feedback-message"
+            ref="feedbackMessage"
+            type="text"
+            required
+            name="text"
+            autocomplete="off"
+          />
+          <label class="material-form-field-label" for="feedback-message">
+            Write your feedback
+          </label>
+        </div>
+      </section>
     </template>
   </AppFeel>
 </template>
