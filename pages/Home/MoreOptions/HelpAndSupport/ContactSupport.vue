@@ -16,13 +16,13 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 export default {
-  name: 'ReportProblem',
+  name: 'ContactSupport',
   components: { AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {
       navigationRoutes,
-      pageTitle: 'Report Problem',
+      pageTitle: 'Contact Support',
     }
   },
 

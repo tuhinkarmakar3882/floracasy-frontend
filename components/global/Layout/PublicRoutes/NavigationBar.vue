@@ -118,7 +118,7 @@ export default {
   padding: $milli-unit $micro-unit;
   box-shadow: $down-only-box-shadow;
 
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: $max-width) {
     padding-left: 64px;
     padding-right: 32px;
   }

@@ -30,7 +30,7 @@
         <slot name="app-bar-title" />
       </p>
     </header>
-    <main style="max-width: 1024px; margin: auto">
+    <main class="main-content">
       <slot name="main"></slot>
     </main>
     <footer>
@@ -122,8 +122,10 @@ export default {
     }
   }
 
-  main {
+  .main-content {
     background-color: $body-background;
+    max-width: $max-width;
+    margin: auto;
 
     button {
       min-width: auto;

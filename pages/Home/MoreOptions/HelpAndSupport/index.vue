@@ -78,7 +78,8 @@ export default {
           name: 'Contact Support',
           icon: 'mdi mdi-alert-octagon',
           color: '#ff8282',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.ReportProblem,
+          route:
+            navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
         },
       ],
     }

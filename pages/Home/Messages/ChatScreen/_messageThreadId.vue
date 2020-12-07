@@ -331,6 +331,7 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
+    max-width: $max-width;
     height: 2 * $xx-large-unit;
     display: flex;
     align-items: center;

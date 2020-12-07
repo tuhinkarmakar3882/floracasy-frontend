@@ -43,13 +43,6 @@
               </span>
             </p>
           </li>
-          <li v-ripple="'#9c9aff5F'" class="px-4 py-3">
-            <p>
-              <span class="icon mdi mdi-message" style="color: #9c9aff" />
-              <span class="option-name">Who can Message</span>
-              <span class="mdi mdi-chevron-down arrow-go" />
-            </p>
-          </li>
         </template>
       </CustomListView>
     </template>
