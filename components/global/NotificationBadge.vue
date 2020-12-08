@@ -50,6 +50,8 @@ export default {
           return 'mdi-bookmark-minus'
         case 'help_ticket_creation':
           return 'mdi-ticket'
+        case 'feedback_creation':
+          return 'mdi-comment-check'
         default:
           return 'mdi-bell'
       }
@@ -72,6 +74,8 @@ export default {
           return '#eae500'
         case 'help_ticket_creation':
           return '#67ea67'
+        case 'feedback_creation':
+          return '#daa43d'
         default:
           return '#8FF2E0'
       }

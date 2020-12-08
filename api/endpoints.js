@@ -41,6 +41,9 @@ const endpoints = {
     markAsRead: 'chat_system/markAsRead/',
     getMailBoxId: 'chat_system/getMailBoxId/',
   },
+  feedback_collection: {
+    create: 'feedback_collection/create/',
+  },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
     create: 'help_and_support/create/',

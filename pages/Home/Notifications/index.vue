@@ -67,7 +67,7 @@
       <infinite-loading @infinite="infiniteHandler">
         <template slot="spinner">
           <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Recent Activities Data...</p>
+          <p>Loading Notifications...</p>
         </template>
         <template slot="error">
           <p class="danger-light my-6">Network Error</p>

@@ -48,6 +48,7 @@ export default async ({ store, $cookies }) => {
         message: data.message,
         notificationType: data.action,
         dismissible: true,
+        timeout: data.timeout || 2500,
       })
     }
 

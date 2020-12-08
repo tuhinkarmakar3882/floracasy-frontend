@@ -76,10 +76,17 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
+$image-dimension: 64px;
 .categories {
   img {
     border-radius: 50%;
     object-fit: cover;
+    min-height: $image-dimension;
+    height: $image-dimension;
+    max-height: $image-dimension;
+    min-width: $image-dimension;
+    width: $image-dimension;
+    max-width: $image-dimension;
   }
 }
 </style>
