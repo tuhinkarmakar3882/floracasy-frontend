@@ -48,6 +48,8 @@ export const navigationRoutes = {
             '/Home/MoreOptions/HelpAndSupport/PopularTopics/AudioBlogs',
         },
         ContactSupport: '/Home/MoreOptions/HelpAndSupport/ContactSupport',
+        PrivacyAndSecurityHelp:
+          '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
         Tickets: {
           index: '/Home/MoreOptions/HelpAndSupport/Tickets',
         },
