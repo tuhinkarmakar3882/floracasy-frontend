@@ -80,6 +80,8 @@ export default {
   img {
     border-radius: 50%;
     object-fit: cover;
+    height: 64px;
+    width: 64px;
   }
 }
 </style>
