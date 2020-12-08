@@ -63,7 +63,9 @@ export default {
           name: 'Privacy & Security',
           icon: 'mdi mdi-security',
           color: '#52B2A2',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
+          route:
+            navigationRoutes.Home.MoreOptions.HelpAndSupport
+              .PrivacyAndSecurityHelp,
         },
         {
           name: 'Explore Popular Topics',
