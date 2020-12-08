@@ -75,7 +75,7 @@ export default {
         case 'help_ticket_creation':
           return '#67ea67'
         case 'feedback_creation':
-          return '#e981ff'
+          return '#daa43d'
         default:
           return '#8FF2E0'
       }
