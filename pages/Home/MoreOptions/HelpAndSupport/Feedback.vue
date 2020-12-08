@@ -72,6 +72,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import RippleButton from '~/components/global/RippleButton'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Feedback',
@@ -101,14 +102,21 @@ export default {
   methods: {
     async sendFeedback() {
       this.sendFeedbackLoading = true
-      setTimeout(() => {
-        this.sendFeedbackLoading = false
-      }, 2000)
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Functionality Not Ready Yet',
-        notificationType: 'warning',
-        dismissible: true,
-      })
+      try {
+        await this.$axios.$post(endpoints.feedback_collection.create, {
+          feedback: this.feedbackText,
+        })
+        await this.$router.replace(
+          navigationRoutes.Home.MoreOptions.HelpAndSupport.index
+        )
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Network Error, Please Retry.',
+          notificationType: 'alert',
+          dismissible: true,
+        })
+      }
+      this.sendFeedbackLoading = false
     },
   },
   head() {
