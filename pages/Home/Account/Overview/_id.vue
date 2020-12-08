@@ -1,105 +1,124 @@
 <template>
-  <div class="py-6 details-page">
-    <main v-if="loadingProfile" class="text-center">
-      <div class="pageLoading">
-        <LoadingIcon />
-        Fetching data from server
+  <AppFeel custom-header class="blog-comment-page" on-back="/">
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
+        @click="
+          prevURL
+            ? $router.back()
+            : $router.replace(navigationRoutes.Home.DashBoard)
+        "
+      />
+      <p>{{ pageTitle }}</p>
+    </template>
+    <template slot="main">
+      <div class="py-6 details-page">
+        <main v-if="loadingProfile" class="text-center">
+          <div class="pageLoading">
+            <LoadingIcon />
+            Fetching data from server
+          </div>
+        </main>
+        <main v-else>
+          <section v-if="otherUser" class="text-center user-profile px-1">
+            <div class="basic-data">
+              <img
+                alt="profile-picture"
+                class="picture"
+                :src="otherUser.photoURL"
+              />
+              <div class="basic-details">
+                <p class="name">{{ otherUser.displayName }}</p>
+                <p v-if="otherUser.designation" class="designation">
+                  <em>{{ otherUser.designation }}</em>
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <section v-if="statisticsItem" class="stats">
+                <div class="item">
+                  <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
+                  <p class="type">Blogs</p>
+                </div>
+                <div class="item">
+                  <span class="number">{{
+                    statisticsItem['peopleSharedMyBlogs'] +
+                    statisticsItem['peopleLikedMyBlogs']
+                  }}</span>
+                  <p class="type">Engagements</p>
+                </div>
+                <div class="item">
+                  <span class="number">{{
+                    statisticsItem['totalFollowers']
+                  }}</span>
+                  <p class="type">Followers</p>
+                </div>
+              </section>
+
+              <section v-else class="text-center my-8">
+                <LoadingIcon class="mt-4 mb-6" />
+                <p>Loading Profile Data...</p>
+              </section>
+            </div>
+
+            <section class="other-info">
+              <p v-if="otherUser.about" class="about text-center">
+                {{ otherUser.about }}
+              </p>
+            </section>
+
+            <section class="actions">
+              <button v-ripple="" class="primary-btn px-6">Follow</button>
+              <button
+                v-ripple=""
+                class="primary-outlined-btn px-6"
+                @click="initializeChatThread(otherUser)"
+              >
+                Messages
+              </button>
+            </section>
+          </section>
+
+          <section class="recent-activity">
+            <h4 class="heading-title" style="margin-bottom: 2rem !important">
+              Recent Activities
+            </h4>
+
+            <BlogPost
+              v-for="activity in recentActivities"
+              :key="activity.id"
+              class="activity pt-4"
+              :blog="activity"
+            />
+          </section>
+        </main>
+        <client-only>
+          <infinite-loading @infinite="infiniteHandler">
+            <template slot="spinner">
+              <LoadingIcon class="mt-4 mb-6" />
+              <p>Loading Recent Activities Data...</p>
+            </template>
+            <template slot="error">
+              <p class="danger-light my-6">Network Error</p>
+            </template>
+            <template slot="no-more">
+              <div class="no-activity">
+                <p class="my-5">That's all :)</p>
+              </div>
+            </template>
+            <template slot="no-results">
+              <div class="no-activity">
+                <p class="my-5">It's Lonely Here...</p>
+              </div>
+            </template>
+          </infinite-loading>
+        </client-only>
       </div>
-    </main>
-    <main v-else>
-      <section v-if="otherUser" class="text-center user-profile px-1">
-        <div class="basic-data">
-          <img
-            alt="profile-picture"
-            class="picture"
-            :src="otherUser.photoURL"
-          />
-          <div class="basic-details">
-            <p class="name">{{ otherUser.displayName }}</p>
-            <p v-if="otherUser.designation" class="designation">
-              <em>{{ otherUser.designation }}</em>
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <section v-if="statisticsItem" class="stats">
-            <div class="item">
-              <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
-              <p class="type">Blogs</p>
-            </div>
-            <div class="item">
-              <span class="number">{{
-                statisticsItem['peopleSharedMyBlogs'] +
-                statisticsItem['peopleLikedMyBlogs']
-              }}</span>
-              <p class="type">Engagements</p>
-            </div>
-            <div class="item">
-              <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
-              <p class="type">Followers</p>
-            </div>
-          </section>
-
-          <section v-else class="text-center my-8">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p>Loading Profile Data...</p>
-          </section>
-        </div>
-
-        <section class="other-info">
-          <p v-if="otherUser.about" class="about text-center">
-            {{ otherUser.about }}
-          </p>
-        </section>
-
-        <section class="actions">
-          <button v-ripple="" class="primary-btn px-6">Follow</button>
-          <button
-            v-ripple=""
-            class="primary-outlined-btn px-6"
-            @click="initializeChatThread(otherUser)"
-          >
-            Messages
-          </button>
-        </section>
-      </section>
-
-      <section class="recent-activity">
-        <h4 class="heading-title" style="margin-bottom: 2rem !important">
-          Recent Activities
-        </h4>
-
-        <BlogPost
-          v-for="activity in recentActivities"
-          :key="activity.id"
-          class="activity pt-4"
-          :blog="activity"
-        />
-      </section>
-    </main>
-    <client-only>
-      <infinite-loading @infinite="infiniteHandler">
-        <template slot="spinner">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Recent Activities Data...</p>
-        </template>
-        <template slot="error">
-          <p class="danger-light my-6">Network Error</p>
-        </template>
-        <template slot="no-more">
-          <div class="no-activity">
-            <p class="my-5">That's all :)</p>
-          </div>
-        </template>
-        <template slot="no-results">
-          <div class="no-activity">
-            <p class="my-5">It's Lonely Here...</p>
-          </div>
-        </template>
-      </infinite-loading>
-    </client-only>
-  </div>
+    </template>
+  </AppFeel>
 </template>
 
 <script>
@@ -110,12 +129,16 @@ import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '~/utils/utility'
+import AppFeel from '~/components/global/Layout/AppFeel'
 
 export default {
   name: 'Overview',
-  components: { BlogPost, LoadingIcon, ClientOnly },
-  layout: 'MobileApp',
+  components: { BlogPost, LoadingIcon, ClientOnly, AppFeel },
   middleware: 'isAuthenticated',
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
 
   data() {
     return {
