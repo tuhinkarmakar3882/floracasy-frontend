@@ -67,7 +67,8 @@
           </div>
           <div @click="initializeChatThread(otherUser)">
             <RippleButton
-              class="primary-outlined-btn px-6"
+              class="px-6"
+              class-list="primary-outlined-btn"
               :loading="messageLoading"
               :disabled="messageWorking"
             >
@@ -172,7 +173,11 @@ export default {
         this.otherUser.about = data.userData.about
         this.otherUser.designation = data.userData.designation
       } catch (e) {
-        console.error(e)
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Error while Fetching Data. Please Refresh',
+          notificationType: 'alert',
+          dismissible: true,
+        })
       }
     }
   },
