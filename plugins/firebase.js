@@ -12,11 +12,15 @@ const firebaseConfig = {
   appId: '1:804365562035:web:c45a8c8ff793dfe2ec00c6',
   measurementId: 'G-RJ7XT8K378',
 }
+
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig)
-  // process.client && firebase.analytics()
-  // process.client && console.log('analytics ready')
+  process.client && firebase.analytics()
+  process.client && console.log('analytics ready')
 }
 
 export const auth = firebase.auth()
-export default firebase
+
+export default ({ app }, inject) => {
+  inject('firebase', firebase)
+}
