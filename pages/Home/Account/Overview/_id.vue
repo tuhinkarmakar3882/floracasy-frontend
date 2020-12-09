@@ -71,6 +71,7 @@
           </div>
           <div @click="initializeChatThread(otherUser)">
             <RippleButton
+              style="width: 120px"
               class="px-6"
               class-list="primary-outlined-btn"
               :loading="messageLoading"

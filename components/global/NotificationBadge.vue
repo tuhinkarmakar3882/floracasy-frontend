@@ -52,6 +52,12 @@ export default {
           return 'mdi-ticket'
         case 'feedback_creation':
           return 'mdi-comment-check'
+        case 'following':
+          return 'mdi-account-plus'
+        case 'followed':
+          return 'mdi-account-plus'
+        case 'unfollow':
+          return 'mdi-account-minus'
         default:
           return 'mdi-bell'
       }
@@ -76,6 +82,12 @@ export default {
           return '#67ea67'
         case 'feedback_creation':
           return '#daa43d'
+        case 'following':
+          return '#cac9ff'
+        case 'followed':
+          return '#dadf2c'
+        case 'unfollow':
+          return '#ff7979'
         default:
           return '#8FF2E0'
       }
