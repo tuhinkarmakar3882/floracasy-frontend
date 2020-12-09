@@ -44,6 +44,9 @@ const endpoints = {
   feedback_collection: {
     create: 'feedback_collection/create/',
   },
+  follow_system: {
+    follow_or_unfollow: 'follow_system/follow_or_unfollow/',
+  },
   help_and_support: {
     fetch: 'help_and_support/fetch/',
     create: 'help_and_support/create/',
