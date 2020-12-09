@@ -54,7 +54,14 @@
         </section>
 
         <section class="actions">
-          <button v-ripple="" class="primary-btn px-6">Follow</button>
+          <button
+            v-ripple=""
+            class="px-6"
+            :class="statisticsItem.isFollowing ? 'danger-btn' : 'primary-btn'"
+            @click="followOrUnfollow(otherUser)"
+          >
+            {{ statisticsItem.isFollowing ? 'Unfollow' : 'Follow' }}
+          </button>
           <button
             v-ripple=""
             class="primary-outlined-btn px-6"
@@ -207,6 +214,21 @@ export default {
       } catch (e) {
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
           message: 'Unable to start Chatting! Try Again',
+          notificationType: 'alert',
+          dismissible: true,
+        })
+      }
+    },
+
+    async followOrUnfollow(receiverData) {
+      try {
+        await this.$axios.$post(endpoints.follow_system.follow_or_unfollow, {
+          uid: receiverData.uid,
+        })
+        this.statisticsItem.isFollowing = !this.statisticsItem.isFollowing
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Unable to Perform Operation! Try Again',
           notificationType: 'alert',
           dismissible: true,
         })
