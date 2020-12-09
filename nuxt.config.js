@@ -53,7 +53,7 @@ export default {
   ],
 
   googleAnalytics: {
-    id: 'UA-250494507',
+    id: 'G-RJ7XT8K378',
     autoTracking: {
       screenview: true,
     },
