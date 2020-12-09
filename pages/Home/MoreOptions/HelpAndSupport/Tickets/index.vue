@@ -55,6 +55,9 @@ export default {
       ticketFetchEndpoint: endpoints.help_and_support.fetch,
     }
   },
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
 
   methods: {
     async infiniteHandler($state) {

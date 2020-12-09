@@ -49,6 +49,9 @@ export default {
       navigationRoutes,
     }
   },
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
   head() {
     return {
       title: this.pageTitle,

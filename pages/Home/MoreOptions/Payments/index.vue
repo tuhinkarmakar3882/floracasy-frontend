@@ -47,6 +47,9 @@ export default {
       points: ['Try Sharing it More', 'Keep Writing Great Content'],
     }
   },
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
 
   head() {
     return {

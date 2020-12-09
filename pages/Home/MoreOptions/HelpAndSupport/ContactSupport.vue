@@ -151,6 +151,9 @@ export default {
       this.issueDetailsError = contentLength > maxAllowedLength
     },
   },
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
   methods: {
     async raiseTicket() {
       this.raiseTicketLoading = true

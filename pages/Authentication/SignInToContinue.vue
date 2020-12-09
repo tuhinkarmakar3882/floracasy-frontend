@@ -67,6 +67,10 @@ export default {
     }
   },
 
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
+
   methods: {
     async signInWithPopup() {
       await this.$store.dispatch('SocketHandler/updateSocketMessage', {

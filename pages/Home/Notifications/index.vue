@@ -124,6 +124,7 @@ export default {
   },
 
   async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
     this.initHeight()
     if (Notification.permission !== 'granted') {
       const hideNotificationConsent = localStorage.getItem(

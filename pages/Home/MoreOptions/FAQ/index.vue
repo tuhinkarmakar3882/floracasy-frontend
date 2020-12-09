@@ -192,6 +192,10 @@ export default {
     }
   },
 
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
+
   head() {
     return {
       navigationRoutes,

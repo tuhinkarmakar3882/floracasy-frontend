@@ -82,7 +82,8 @@ export default {
       ],
     }
   },
-  mounted() {
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
     this.switchState = Notification.permission === 'granted'
   },
   methods: {

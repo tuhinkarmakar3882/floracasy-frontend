@@ -99,6 +99,9 @@ export default {
       this.feedbackTextError = contentLength > maxAllowedLength
     },
   },
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
   methods: {
     async sendFeedback() {
       this.sendFeedbackLoading = true

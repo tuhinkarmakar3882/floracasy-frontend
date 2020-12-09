@@ -83,6 +83,10 @@ export default {
     }
   },
 
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
+
   methods: {
     recordPositiveResponse() {
       this.feedback = "Great! We'll keep doing the great stuff"

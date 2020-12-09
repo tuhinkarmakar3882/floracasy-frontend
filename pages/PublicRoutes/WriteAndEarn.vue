@@ -19,7 +19,9 @@ export default {
       pageTitle: 'Write and Earn with Us',
     }
   },
-
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
   head() {
     return {
       title: this.pageTitle,

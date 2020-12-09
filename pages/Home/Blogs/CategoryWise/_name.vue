@@ -43,7 +43,10 @@ export default {
       prevURL: null,
     }
   },
-  mounted() {},
+
+  async mounted() {
+    await this.$firebase.analytics().logEvent('page_view')
+  },
 
   methods: {
     async handleBackButtonPress() {
