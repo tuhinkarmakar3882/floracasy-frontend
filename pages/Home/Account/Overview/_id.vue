@@ -54,14 +54,31 @@
         </section>
 
         <section class="actions">
-          <button v-ripple="" class="primary-btn px-6">Follow</button>
-          <button
-            v-ripple=""
-            class="primary-outlined-btn px-6"
-            @click="initializeChatThread(otherUser)"
-          >
-            Messages
-          </button>
+          <div @click="followOrUnfollow(otherUser)">
+            <RippleButton
+              class="px-6"
+              :loading="followOrUnfollowLoading"
+              :disabled="followOrUnfollowWorking"
+              :class-list="
+                statisticsItem.isFollowing
+                  ? 'danger-outlined-btn'
+                  : 'primary-btn'
+              "
+              style="width: 120px"
+            >
+              {{ statisticsItem.isFollowing ? 'Unfollow' : 'Follow' }}
+            </RippleButton>
+          </div>
+          <div @click="initializeChatThread(otherUser)">
+            <RippleButton
+              class="px-6"
+              class-list="primary-outlined-btn"
+              :loading="messageLoading"
+              :disabled="messageWorking"
+            >
+              Messages
+            </RippleButton>
+          </div>
         </section>
       </section>
 
@@ -110,10 +127,11 @@ import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { parseTimeUsingMoment } from '~/utils/utility'
+import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'Overview',
-  components: { BlogPost, LoadingIcon, ClientOnly },
+  components: { RippleButton, BlogPost, LoadingIcon, ClientOnly },
   layout: 'MobileApp',
   middleware: 'isAuthenticated',
 
@@ -126,6 +144,10 @@ export default {
       recentActivities: [],
       otherUser: null,
       userBlogEndpoint: endpoints.blog.getBlogsByUid,
+      followOrUnfollowLoading: false,
+      followOrUnfollowWorking: false,
+      messageLoading: false,
+      messageWorking: false,
     }
   },
 
@@ -155,7 +177,11 @@ export default {
         this.otherUser.about = data.userData.about
         this.otherUser.designation = data.userData.designation
       } catch (e) {
-        console.error(e)
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Error while Fetching Data. Please Refresh',
+          notificationType: 'alert',
+          dismissible: true,
+        })
       }
     }
   },
@@ -190,6 +216,8 @@ export default {
     },
 
     async initializeChatThread(receiverData) {
+      this.messageLoading = true
+      this.messageWorking = true
       try {
         const {
           chat_thread_id: chatThreadId,
@@ -210,7 +238,28 @@ export default {
           notificationType: 'alert',
           dismissible: true,
         })
+        this.messageLoading = false
+        this.messageWorking = false
       }
+    },
+
+    async followOrUnfollow(receiverData) {
+      this.followOrUnfollowLoading = true
+      this.followOrUnfollowWorking = true
+      try {
+        await this.$axios.$post(endpoints.follow_system.follow_or_unfollow, {
+          uid: receiverData.uid,
+        })
+        this.statisticsItem.isFollowing = !this.statisticsItem.isFollowing
+      } catch (e) {
+        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+          message: 'Unable to Perform Operation! Try Again',
+          notificationType: 'alert',
+          dismissible: true,
+        })
+      }
+      this.followOrUnfollowLoading = false
+      this.followOrUnfollowWorking = false
     },
   },
 

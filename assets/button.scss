@@ -11,6 +11,7 @@ button {
   font-weight: 500;
   border-radius: 50px;
   outline: none 0;
+  transition: all .2s ease-in-out;
 
   &:hover, &:focus, &:focus-visible, &:active, &:focus-within {
     border-radius: 50px;
