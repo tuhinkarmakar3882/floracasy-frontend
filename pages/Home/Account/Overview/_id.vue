@@ -59,7 +59,11 @@
               class="px-6"
               :loading="followOrUnfollowLoading"
               :disabled="followOrUnfollowWorking"
-              :class="statisticsItem.isFollowing ? 'danger-btn' : 'primary-btn'"
+              :class-list="
+                statisticsItem.isFollowing
+                  ? 'danger-outlined-btn'
+                  : 'primary-btn'
+              "
               style="width: 120px"
             >
               {{ statisticsItem.isFollowing ? 'Unfollow' : 'Follow' }}
