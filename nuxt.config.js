@@ -11,13 +11,6 @@ export default {
   },
   serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
-  modern: {
-    client: process.env.NODE_ENV === 'production',
-    server: process.env.NODE_ENV === 'production',
-  },
-
-  router: {},
-
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
@@ -44,6 +37,7 @@ export default {
   ],
 
   modules: [
+    'nuxt-helmet',
     '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
@@ -56,6 +50,27 @@ export default {
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
   ],
+
+  modern: {
+    client: process.env.NODE_ENV === 'production',
+    server: process.env.NODE_ENV === 'production',
+  },
+
+  // helmet: {
+  //   contentSecurityPolicy: true,
+  //   dnsPrefetchControl: true,
+  //   expectCt: true,
+  //   frameguard: true,
+  //   hidePoweredBy: true,
+  //   hsts: true,
+  //   ieNoOpen: true,
+  //   noSniff: true,
+  //   permittedCrossDomainPolicies: true,
+  //   referrerPolicy: { policy: 'no-referrer' },
+  //   xssFilter: true,
+  // },
+
+  router: {},
 
   build: {
     extractCSS: {
