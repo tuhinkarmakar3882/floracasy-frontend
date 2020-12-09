@@ -49,7 +49,15 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-analytics',
   ],
+
+  googleAnalytics: {
+    id: 'UA-250494507',
+    autoTracking: {
+      screenview: true,
+    },
+  },
 
   // modern: {
   //   client: process.env.NODE_ENV === 'production',
