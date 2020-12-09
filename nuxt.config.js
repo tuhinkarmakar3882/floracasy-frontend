@@ -56,20 +56,6 @@ export default {
     server: process.env.NODE_ENV === 'production',
   },
 
-  // helmet: {
-  //   contentSecurityPolicy: true,
-  //   dnsPrefetchControl: true,
-  //   expectCt: true,
-  //   frameguard: true,
-  //   hidePoweredBy: true,
-  //   hsts: true,
-  //   ieNoOpen: true,
-  //   noSniff: true,
-  //   permittedCrossDomainPolicies: true,
-  //   referrerPolicy: { policy: 'no-referrer' },
-  //   xssFilter: true,
-  // },
-
   router: {},
 
   build: {
