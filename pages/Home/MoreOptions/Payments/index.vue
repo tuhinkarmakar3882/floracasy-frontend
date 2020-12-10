@@ -42,15 +42,19 @@
         </section>
 
         <section class="go-premium-card py-8 px-4">
+          <h5>Need more analytics?</h5>
           <p>
             To know your every bolg&#39;s insight view; total view and many more
             exciting than usual. please go &amp; check our premium pack
           </p>
-          <div
-            class="my-4"
-            style="height: 250px; width: 100%; background: #444"
-          />
-          <button v-ripple="" class="secondary-outlined-btn">Go premium</button>
+          <ul>
+            <li v-for="(point, index) in points" :key="index">
+              <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
+            </li>
+          </ul>
+          <div class="text-center mt-6">
+            <button v-ripple="" class="secondary-btn">Go premium</button>
+          </div>
         </section>
       </div>
     </template>
@@ -60,16 +64,25 @@
 <script>
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import KeyPoint from '@/components/global/KeyPoint'
 
 export default {
   name: 'Payments',
   middleware: 'isAuthenticated',
-  components: { AppFeel },
+  components: { KeyPoint, AppFeel },
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Payments',
-      points: ['Try Sharing it More', 'Keep Writing Great Content'],
+      points: [
+        'Get Detailed Insights',
+        'Premium Interface',
+        'Audible Blogs',
+        'Reach More People Faster',
+        'Get Messaging Functionality',
+        'Avail Faster Customer Support',
+        'And Much More!',
+      ],
     }
   },
   mounted() {},
@@ -172,6 +185,16 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+
+  .go-premium-card {
+    ul {
+      list-style: none;
+
+      section {
+        background: $body-background;
       }
     }
   }
