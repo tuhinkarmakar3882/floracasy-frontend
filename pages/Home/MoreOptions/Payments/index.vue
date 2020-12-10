@@ -41,19 +41,35 @@
           </aside>
         </section>
 
-        <section class="go-premium-card py-8 px-4">
-          <h5>Need more analytics?</h5>
-          <p>
-            To know your every bolg&#39;s insight view; total view and many more
-            exciting than usual. please go &amp; check our premium pack
-          </p>
-          <ul>
-            <li v-for="(point, index) in points" :key="index">
-              <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
-            </li>
-          </ul>
+        <section class="go-premium-card py-8">
+          <div class="px-4">
+            <h5>Need more analytics?</h5>
+            <p>
+              To know your every bolg&#39;s insight view; total view and many
+              more exciting than usual. please go &amp; check our premium pack
+            </p>
+            <ul>
+              <li v-for="(point, index) in points" :key="index">
+                <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
+              </li>
+            </ul>
+          </div>
           <div class="text-center mt-6">
-            <button v-ripple="" class="secondary-btn">Go premium</button>
+            <button
+              v-ripple=""
+              class="premium-btn mx-2 my-4"
+              style="width: 150px"
+            >
+              Buy Premium
+            </button>
+            <button
+              v-ripple=""
+              class="premium-outlined-btn mx-2 my-4"
+              style="width: 150px"
+              @click="$router.push(navigationRoutes.Home.MoreOptions.GoPremium)"
+            >
+              Learn More
+            </button>
           </div>
         </section>
       </div>
