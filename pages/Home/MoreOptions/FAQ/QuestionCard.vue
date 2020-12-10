@@ -83,6 +83,8 @@ export default {
     }
   },
 
+  mounted() {},
+
   methods: {
     recordPositiveResponse() {
       this.feedback = "Great! We'll keep doing the great stuff"

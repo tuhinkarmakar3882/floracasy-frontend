@@ -228,6 +228,7 @@ export default {
       ],
     }
   },
+  mounted() {},
   head() {
     return {
       title: this.pageTitle,

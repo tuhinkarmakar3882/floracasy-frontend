@@ -47,6 +47,7 @@ export default {
       points: ['Try Sharing it More', 'Keep Writing Great Content'],
     }
   },
+  mounted() {},
 
   head() {
     return {

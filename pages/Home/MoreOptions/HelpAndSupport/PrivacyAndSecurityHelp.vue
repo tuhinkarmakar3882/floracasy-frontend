@@ -93,6 +93,7 @@ export default {
       pageTitle: 'Privacy & Security Help',
     }
   },
+  mounted() {},
   methods: {},
   head() {
     return {

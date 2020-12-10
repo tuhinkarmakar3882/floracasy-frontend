@@ -67,6 +67,8 @@ export default {
     }
   },
 
+  mounted() {},
+
   methods: {
     async signInWithPopup() {
       await this.$store.dispatch('SocketHandler/updateSocketMessage', {

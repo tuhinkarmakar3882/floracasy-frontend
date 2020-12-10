@@ -151,6 +151,7 @@ export default {
       this.issueDetailsError = contentLength > maxAllowedLength
     },
   },
+  mounted() {},
   methods: {
     async raiseTicket() {
       this.raiseTicketLoading = true

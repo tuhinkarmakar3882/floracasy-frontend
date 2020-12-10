@@ -19,7 +19,7 @@ export default {
       pageTitle: 'Write and Earn with Us',
     }
   },
-
+  mounted() {},
   head() {
     return {
       title: this.pageTitle,

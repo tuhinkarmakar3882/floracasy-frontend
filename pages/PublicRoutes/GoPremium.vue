@@ -17,7 +17,7 @@ export default {
       pageTitle: 'Explore Premium',
     }
   },
-
+  mounted() {},
   head() {
     return {
       title: this.pageTitle,

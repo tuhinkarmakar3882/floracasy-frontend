@@ -85,6 +85,7 @@ export default {
       ],
     }
   },
+  mounted() {},
 
   head() {
     return {

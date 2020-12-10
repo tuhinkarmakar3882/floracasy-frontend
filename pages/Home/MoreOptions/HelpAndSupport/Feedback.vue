@@ -99,6 +99,7 @@ export default {
       this.feedbackTextError = contentLength > maxAllowedLength
     },
   },
+  mounted() {},
   methods: {
     async sendFeedback() {
       this.sendFeedbackLoading = true

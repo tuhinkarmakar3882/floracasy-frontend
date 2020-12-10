@@ -91,6 +91,7 @@ export default {
       navigationRoutes,
     }
   },
+  mounted() {},
   head() {
     return {
       title: this.pageTitle,

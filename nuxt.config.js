@@ -19,6 +19,10 @@ export default {
       mode: 'client',
     },
     {
+      src: '~/middleware/spa-analytics.js',
+      mode: 'client',
+    },
+    {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
     },

@@ -46,20 +46,6 @@
             deliver their prizes &amp; certificate
           </p>
         </article>
-        <div class="material-form-field mt-2">
-          <input
-            id="unknown-input"
-            ref="coverImageUrl"
-            type="text"
-            required
-            name="text"
-            autocomplete="off"
-          />
-          <label class="material-form-field-label" for="unknown-input">
-            Enter your name
-          </label>
-        </div>
-        <button class="primary-outlined-btn">shout out</button>
       </section>
     </template>
   </AppFeel>
@@ -79,6 +65,7 @@ export default {
       navigationRoutes,
     }
   },
+  mounted() {},
   head() {
     return {
       title: this.pageTitle,

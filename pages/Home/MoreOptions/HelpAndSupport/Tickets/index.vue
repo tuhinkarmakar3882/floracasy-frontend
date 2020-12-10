@@ -55,6 +55,7 @@ export default {
       ticketFetchEndpoint: endpoints.help_and_support.fetch,
     }
   },
+  mounted() {},
 
   methods: {
     async infiniteHandler($state) {

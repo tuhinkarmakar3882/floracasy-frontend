@@ -53,7 +53,7 @@ export default {
       pageTitle: 'Saved Blogs',
     }
   },
-
+  mounted() {},
   methods: {
     async infiniteHandler($state) {
       try {

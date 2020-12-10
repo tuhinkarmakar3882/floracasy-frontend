@@ -192,6 +192,8 @@ export default {
     }
   },
 
+  mounted() {},
+
   head() {
     return {
       navigationRoutes,

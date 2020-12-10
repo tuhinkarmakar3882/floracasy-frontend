@@ -82,7 +82,7 @@ export default {
       ],
     }
   },
-  mounted() {
+  async mounted() {
     this.switchState = Notification.permission === 'granted'
   },
   methods: {
