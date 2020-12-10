@@ -88,7 +88,8 @@ export default {
   border-left-color: #56bd40;
 
   section {
-    min-width: 120px;
+    width: clamp(120px, 70vw, 220px);
+    align-self: stretch;
 
     .amount {
       color: darken($success-light, $lighten-percentage);
@@ -100,9 +101,8 @@ export default {
   }
 
   aside {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    align-self: stretch;
+    width: 100%;
     border-left: 1px solid greenyellow;
     border-bottom: 1px solid greenyellow;
   }
