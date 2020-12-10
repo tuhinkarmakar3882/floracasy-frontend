@@ -6,10 +6,10 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <div class="my-4">
-        <section class="earning-info-card pl-5 pr-4 py-5">
+      <div class="mb-4">
+        <section class="earning-info-card pl-5 pr-4 py-8">
           <section>
-            <h4 class="mt-0 mb-2">At a Glance</h4>
+            <h4 class="mt-0 mb-3">At a Glance</h4>
             <p>
               You&rsquo;ve earned <br />
               <span class="amount">$ 100.0</span>
@@ -18,8 +18,8 @@
           <aside></aside>
         </section>
 
-        <section class="claim-your-money-card py-5 px-4">
-          <h4 class="mt-4">And to claim it,</h4>
+        <section class="claim-your-money-card py-8 px-4">
+          <h4>And to claim it,</h4>
           <div class="promotional-segment">
             <p>
               You need to reach the minimum threshold of
