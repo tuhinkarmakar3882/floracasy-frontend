@@ -6,30 +6,32 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <div class="px-4 my-4">
-        <blockquote class="earning-info-card">
+      <div class="my-4">
+        <section class="earning-info-card pl-5 pr-4 py-5">
           <section>
-            <h6 class="mt-0">At a glance</h6>
+            <h4 class="mt-0 mb-2">At a Glance</h4>
             <p>
               You&rsquo;ve earned <br />
               <span class="amount">$ 100.0</span>
             </p>
           </section>
-          <aside class="graph ml-4 text-center">
-            <small>This will eventually be replaced by charts</small>
-          </aside>
-        </blockquote>
+          <aside></aside>
+        </section>
 
-        <blockquote class="claim-your-money-card">
-          <h6 class="mt-0">Claim your Earned money</h6>
-          <p>
-            Now you just need to go steps to claim your money. When your earning
-            reaches to claimed money($100), your
-            <strong> claim button</strong> will be enabled.
-          </p>
-          <p>$ 20 more to claim your money</p>
-          <button v-ripple="" class="primary-btn">claim</button>
-        </blockquote>
+        <section class="claim-your-money-card py-5 px-4">
+          <h4 class="mt-4">And to claim it,</h4>
+          <div class="promotional-segment">
+            <p>
+              You need to reach the minimum threshold of
+              <strong>$100</strong> dollars. Once you do so, you'll be able to
+              claim the money.
+            </p>
+            <aside>
+              <div class="coin">$20</div>
+              <p class="need-more-text py-4">More to go</p>
+            </aside>
+          </div>
+        </section>
 
         <blockquote class="general-info-card">
           <h6 class="mt-0">
@@ -82,29 +84,95 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.earning-info-card {
-  display: flex;
-  justify-content: space-between;
-  border-left-color: #56bd40;
-
+.payments-page {
   section {
-    width: clamp(120px, 70vw, 220px);
-    align-self: stretch;
-
-    .amount {
-      color: darken($success-light, $lighten-percentage);
-      font-family: $Nunito-Sans;
-      font-size: $large-unit;
-      font-weight: 500;
-      filter: drop-shadow($right-only-box-shadow);
+    &:nth-child(odd) {
+      background: $segment-background;
     }
   }
 
-  aside {
-    align-self: stretch;
-    width: 100%;
-    border-left: 1px solid greenyellow;
-    border-bottom: 1px solid greenyellow;
+  .earning-info-card {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    grid-column-gap: 1rem;
+
+    section {
+      align-self: stretch;
+
+      .amount {
+        color: $secondary-highlight;
+        font-family: $Nunito-Sans;
+        font-size: $large-unit;
+        font-weight: 500;
+        filter: drop-shadow($right-only-box-shadow);
+      }
+    }
+
+    aside {
+      align-self: stretch;
+      width: 100%;
+      border-bottom: 1px solid greenyellow;
+    }
+  }
+
+  .claim-your-money-card {
+    .promotional-segment {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-column-gap: 1rem;
+
+      aside {
+        display: grid;
+        height: 100%;
+        place-items: center;
+
+        $coin-radius: 96px;
+
+        .coin {
+          height: $coin-radius;
+          width: $coin-radius;
+          border-radius: 50%;
+          background: $primary-matte;
+          font-size: 32px;
+          font-family: $Nunito-Sans;
+          display: grid;
+          color: #eee;
+          place-items: center;
+          transition: all ease-in-out;
+          box-shadow: 0 0 8px $card-background inset,
+            0 0 10px 4px $card-background;
+          animation: spin-it 0.5s ease-in-out forwards;
+
+          @keyframes spin-it {
+            from {
+              transform: translateX(30px);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+
+          .need-more-text {
+            text-align: center;
+            width: 100%;
+            color: $secondary;
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              height: 1px;
+              width: 84px;
+              bottom: 0;
+              left: calc(50% - 42px);
+              background: $secondary-matte;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>
