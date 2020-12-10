@@ -88,9 +88,7 @@ export default {
       ],
     }
   },
-  async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
-  },
+  mounted() {},
 
   head() {
     return {

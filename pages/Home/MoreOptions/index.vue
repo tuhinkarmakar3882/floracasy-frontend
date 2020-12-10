@@ -101,7 +101,6 @@ export default {
   },
 
   async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
     await this.$store.dispatch('BottomNavigation/update', {
       linkPosition: 4,
     })

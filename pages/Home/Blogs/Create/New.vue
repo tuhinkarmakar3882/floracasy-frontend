@@ -561,7 +561,6 @@ export default {
   },
 
   async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
     const currentUser = await this.$store.getters['UserManagement/getUser']
     if (!currentUser) {
       this.loadingProfile = true

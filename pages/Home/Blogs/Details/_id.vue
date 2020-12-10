@@ -146,7 +146,6 @@ export default {
   },
 
   async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
     if (!this.prevURL) {
       this.blog = await this.$axios.$get(endpoints.blog.detail, {

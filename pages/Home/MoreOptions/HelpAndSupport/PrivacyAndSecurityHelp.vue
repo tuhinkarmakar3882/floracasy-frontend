@@ -93,9 +93,7 @@ export default {
       pageTitle: 'Privacy & Security Help',
     }
   },
-  async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
-  },
+  mounted() {},
   methods: {},
   head() {
     return {

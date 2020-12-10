@@ -91,9 +91,7 @@ export default {
       navigationRoutes,
     }
   },
-  async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
-  },
+  mounted() {},
   head() {
     return {
       title: this.pageTitle,

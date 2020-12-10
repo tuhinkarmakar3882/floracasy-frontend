@@ -53,9 +53,7 @@ export default {
       pageTitle: 'Saved Blogs',
     }
   },
-  async mounted() {
-    // await this.$firebase.analytics().logEvent('page_view')
-  },
+  mounted() {},
   methods: {
     async infiniteHandler($state) {
       try {
