@@ -33,24 +33,25 @@
           </div>
         </section>
 
-        <blockquote class="general-info-card">
-          <h6 class="mt-0">
-            Just have a look to your earning history : Last 6th month
-          </h6>
+        <section class="general-info-card py-8 px-4">
+          <h6 class="mt-0">Earning Summary</h6>
 
-          <section class="graph dbx py-4 text-center">
+          <aside class="graph py-4 text-center">
             <p>This section is for graph but i can&#39;t make this</p>
-          </section>
-        </blockquote>
+          </aside>
+        </section>
 
-        <blockquote class="promotion-card">
+        <section class="go-premium-card py-8 px-4">
           <p>
             To know your every bolg&#39;s insight view; total view and many more
             exciting than usual. please go &amp; check our premium pack
           </p>
-          <div style="height: 250px; width: 100%; background: #444" />
-          <button v-ripple="" class="primary-btn">go premium</button>
-        </blockquote>
+          <div
+            class="my-4"
+            style="height: 250px; width: 100%; background: #444"
+          />
+          <button v-ripple="" class="secondary-outlined-btn">Go premium</button>
+        </section>
       </div>
     </template>
   </AppFeel>
