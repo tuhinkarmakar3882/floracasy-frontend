@@ -6,27 +6,64 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <h4 class="text-center px-4">You've Earned : <span>$27</span></h4>
-      <section class="px-4 text-center">
-        <label for="redeem-meter">
-          You can Redeem it once you reach the threshold
-        </label>
-        <br />
-        <progress id="redeem-meter" class="my-4" value="27" max="100" />
-      </section>
-      <section class="tips-to-improve px-4 my-6">
-        <fieldset class="pl-3 py-4" style="border: 1px solid #333">
-          <legend class="px-3">Few Tips to Increase Your Earning:</legend>
-          <KeyPoint
-            v-for="(point, index) in points"
-            :key="index"
-            class="py-2"
-            tick-color="#6DD0BF"
-            :tick-size="24"
-            :point="point"
-          />
-        </fieldset>
-      </section>
+      <div>
+        <div>
+          <div>
+            <button class="primary-btn">back</button>
+            <h3>Payment</h3>
+            <p>profile icon</p>
+
+            <hr />
+          </div>
+
+          <div>
+            <h2>How much you have earned</h2>
+            <p>total earnings in doller</p>
+            <strong> $. 100 </strong>
+
+            <p>this section is for graph</p>
+          </div>
+
+          <hr />
+
+          <div>
+            <h2>Claim your Earned money</h2>
+            <p>
+              Now you just need to go steps to claim your money. When your
+              earning reaches to calimed money($100), your
+              <strong> claim button</strong> will be enabled.
+            </p>
+            <div>
+              <p>$ 20 more to claim your money</p>
+              <button class="primary-btn">claim</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div>
+            <h2>just have a look to your earning history : Last 6th month</h2>
+
+            <div>This section is for graph but i can&#39;t make this</div>
+          </div>
+
+          <hr />
+
+          <div>
+            <p>
+              To know your every bolg&#39;s insight view; total view and many
+              more exciting than usual. please go &amp; check our premium pack
+            </p>
+
+            <img
+              src="https://images.unsplash.com/photo-1607448884844-646fe28e07a2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=668&amp;q=80"
+              alt="image of premium"
+            />
+
+            <button class="primary-btn">go premium</button>
+          </div>
+        </div>
+      </div>
     </template>
   </AppFeel>
 </template>
