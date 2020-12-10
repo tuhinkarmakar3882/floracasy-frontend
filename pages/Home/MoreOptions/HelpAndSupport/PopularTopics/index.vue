@@ -89,7 +89,7 @@ export default {
     }
   },
   async mounted() {
-    await this.$firebase.analytics().logEvent('page_view')
+    // await this.$firebase.analytics().logEvent('page_view')
   },
 
   head() {

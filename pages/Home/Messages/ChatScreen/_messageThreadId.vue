@@ -121,7 +121,7 @@ export default {
   },
 
   async mounted() {
-    await this.$firebase.analytics().logEvent('page_view')
+    // await this.$firebase.analytics().logEvent('page_view')
     window.scrollTo(0, document.body.scrollHeight)
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
     await this.setupUser()
