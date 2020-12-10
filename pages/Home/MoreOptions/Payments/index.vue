@@ -6,49 +6,44 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <section class="px-4 my-4">
-        <div>
-          <button class="primary-btn">back</button>
-          <h3>Payment</h3>
-          <p>profile icon</p>
-
-          <hr />
-        </div>
-
-        <div>
-          <h2>How much you have earned</h2>
-          <p>total earnings in doller</p>
-          <strong> $. 100 </strong>
-
-          <p>this section is for graph</p>
-        </div>
+      <div class="px-4 my-4">
+        <blockquote class="earning-info-card">
+          <h4 class="mt-0">How much you have earned</h4>
+          <p>total earnings in dollar</p>
+          <small class="secondary"> $ 100.0 </small>
+          <section class="graph dbx py-4 text-center">
+            <p>This section is for Graph</p>
+          </section>
+        </blockquote>
 
         <hr />
 
-        <div>
-          <h2>Claim your Earned money</h2>
+        <blockquote class="claim-your-money-card">
+          <h4 class="mt-0">Claim your Earned money</h4>
           <p>
             Now you just need to go steps to claim your money. When your earning
-            reaches to calimed money($100), your
+            reaches to claimed money($100), your
             <strong> claim button</strong> will be enabled.
           </p>
-          <div>
-            <p>$ 20 more to claim your money</p>
-            <button class="primary-btn">claim</button>
-          </div>
-        </div>
+          <p>$ 20 more to claim your money</p>
+          <button v-ripple="" class="primary-btn">claim</button>
+        </blockquote>
 
         <hr />
 
-        <div>
-          <h2>just have a look to your earning history : Last 6th month</h2>
+        <blockquote class="general-info-card">
+          <h4 class="mt-0">
+            Just have a look to your earning history : Last 6th month
+          </h4>
 
-          <div>This section is for graph but i can&#39;t make this</div>
-        </div>
+          <section class="graph dbx py-4 text-center">
+            <p>This section is for graph but i can&#39;t make this</p>
+          </section>
+        </blockquote>
 
         <hr />
 
-        <div>
+        <blockquote class="promotion-card">
           <p>
             To know your every bolg&#39;s insight view; total view and many more
             exciting than usual. please go &amp; check our premium pack
@@ -57,12 +52,18 @@
           <img
             src="https://images.unsplash.com/photo-1607448884844-646fe28e07a2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=668&amp;q=80"
             alt="image of premium"
-            height="250"
+            class="my-5"
+            style="
+              height: 350px;
+              width: 100%;
+              object-fit: cover;
+              object-position: center;
+            "
           />
 
-          <button class="primary-btn">go premium</button>
-        </div>
-      </section>
+          <button v-ripple="" class="primary-btn">go premium</button>
+        </blockquote>
+      </div>
     </template>
   </AppFeel>
 </template>
