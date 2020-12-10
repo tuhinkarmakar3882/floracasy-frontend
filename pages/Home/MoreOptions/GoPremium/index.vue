@@ -2,9 +2,20 @@
   <AppFeel
     class="go-premium-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    custom-header
   >
-    <template slot="app-bar-title">
-      {{ pageTitle }}
+    <template slot="app-bar-custom-header">
+      <h5
+        v-ripple
+        class="px-5 mdi mdi-arrow-left"
+        style="height: 56px; display: flex; align-items: center"
+        @click="
+          prevURL
+            ? $router.back()
+            : $router.replace(navigationRoutes.Home.MoreOptions.index)
+        "
+      />
+      <p>{{ pageTitle }}</p>
     </template>
     <template slot="main" class="my-4">
       <section class="px-4">
@@ -36,6 +47,11 @@ export default {
   name: 'GoPremium',
   middleware: 'isAuthenticated',
   components: { KeyPoint, AppFeel },
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
       pageTitle: 'Go Premium',
