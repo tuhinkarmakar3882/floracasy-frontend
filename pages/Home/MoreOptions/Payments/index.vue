@@ -19,14 +19,16 @@
         </section>
 
         <section class="claim-your-money-card py-8 px-4">
-          <h4>And to claim it,</h4>
+          <h4>This is a big line more line</h4>
           <div class="promotional-segment">
             <p>
               You need to reach the minimum threshold of
-              <strong>$100</strong> dollars. Once you do so, you'll be able to
-              claim the money.
+              <strong>$100</strong> dollars.
             </p>
             <aside>
+              <section class="stage">
+                <figure class="ball bubble"></figure>
+              </section>
               <div class="coin">$20</div>
               <p class="need-more-text py-4">More to go</p>
             </aside>
@@ -141,14 +143,18 @@ export default {
     aside {
       align-self: stretch;
       width: 100%;
-      border-bottom: 1px solid greenyellow;
+
+      canvas#line-chart.chartjs-render-monitor {
+        max-height: 100px;
+        max-width: 100px;
+      }
     }
   }
 
   .claim-your-money-card {
     .promotional-segment {
       display: grid;
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1fr 1fr;
       grid-column-gap: 1rem;
 
       aside {
@@ -156,21 +162,20 @@ export default {
         height: 100%;
         place-items: center;
 
-        $coin-radius: 96px;
+        $coin-radius: 72px;
 
         .coin {
           height: $coin-radius;
           width: $coin-radius;
           border-radius: 50%;
-          background: $primary-matte;
-          font-size: 32px;
+          background: #ce9a00;
+          font-size: 20px;
           font-family: $Nunito-Sans;
           display: grid;
           color: #eee;
           place-items: center;
           transition: all ease-in-out;
-          box-shadow: 0 0 8px $card-background inset,
-            0 0 10px 4px $card-background;
+          box-shadow: 0 0 8px 0 $nav-bar-bg inset, 0 0 10px 4px $card-background;
           animation: spin-it 0.5s ease-in-out forwards;
 
           @keyframes spin-it {
