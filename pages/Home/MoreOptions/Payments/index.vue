@@ -15,7 +15,14 @@
               <span class="amount">$ 100.0</span>
             </p>
           </section>
-          <aside></aside>
+          <aside>
+            <trend
+              :data="[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]"
+              :gradient="['#66b5fa', '#42b983', '#2c3e50']"
+              auto-draw
+              smooth
+            />
+          </aside>
         </section>
 
         <section class="claim-your-money-card py-8 px-4">
@@ -39,7 +46,12 @@
           <h6 class="mt-0">Earning Summary</h6>
 
           <aside class="graph py-4 text-center">
-            <p>This section is for graph but i can&#39;t make this</p>
+            <trend
+              :data="[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]"
+              :gradient="['#66b5fa', '#42b983', '#2c3e50']"
+              auto-draw
+              smooth
+            />
           </aside>
         </section>
 
@@ -83,11 +95,12 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import KeyPoint from '@/components/global/KeyPoint'
+import Trend from 'vuetrend'
 
 export default {
   name: 'Payments',
   middleware: 'isAuthenticated',
-  components: { KeyPoint, AppFeel },
+  components: { KeyPoint, AppFeel, Trend },
   data() {
     return {
       navigationRoutes,
@@ -101,6 +114,7 @@ export default {
         'Avail Faster Customer Support',
         'And Much More!',
       ],
+      values: [{ value: 10 }, { value: 20 }, { value: 30 }, { value: 20 }],
     }
   },
   mounted() {},
@@ -144,9 +158,9 @@ export default {
       align-self: stretch;
       width: 100%;
 
-      canvas#line-chart.chartjs-render-monitor {
-        max-height: 100px;
-        max-width: 100px;
+      svg {
+        height: 100%;
+        width: 100%;
       }
     }
   }
