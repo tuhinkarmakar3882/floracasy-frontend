@@ -67,6 +67,10 @@ const endpoints = {
   reward_system: {
     test: 'reward_system/',
   },
+  upload_handler_system: {
+    process_image: 'upload_handler_system/process_image/',
+  },
+
   health_check: {
     test: 'health_check/',
   },
