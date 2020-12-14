@@ -9,7 +9,13 @@
     <main v-else>
       <section class="user-profile">
         <div class="basic-data">
-          <img alt="profile-picture" class="picture" :src="user.photoURL" />
+          <img
+            alt="profile-picture"
+            class="picture"
+            :src="user.photoURL"
+            width="100"
+            height="100"
+          />
           <div class="basic-details">
             <p class="name">{{ user.displayName }}</p>
             <p class="designation">
@@ -243,7 +249,11 @@ export default {
       z-index: 2;
 
       .picture {
-        width: clamp(100px, 10vw, 150px);
+        max-width: 100px;
+        max-height: 100px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
         border-radius: 50%;
       }
 
