@@ -25,7 +25,7 @@
           <div style="position: relative">
             <img
               v-ripple="'#ff0000'"
-              :src="user.photoURL"
+              :src="outputPreview || user.photoURL"
               alt="profile-picture"
               class="image-placeholder"
             />
@@ -99,6 +99,7 @@ export default {
       updateProfileDataLoading: false,
       imageCompressProgress: null,
       output: null,
+      outputPreview: null,
     }
   },
 
@@ -136,6 +137,7 @@ export default {
         },
       }
       this.output = await imageCompression(file, options)
+      this.outputPreview = URL.createObjectURL(file)
     },
 
     async uploadProfileDataToBackendServer() {
