@@ -14,7 +14,14 @@
       </main>
 
       <main v-else class="px-6 my-8">
-        <section class="display-picture">
+        <input
+          ref="imageUpload"
+          style="width: 0; height: 0; display: none"
+          type="file"
+          accept="image/jpeg"
+          @change="compressImage"
+        />
+        <section class="display-picture" @click="changeImage">
           <div style="position: relative">
             <img
               v-ripple="'#ff0000'"
@@ -56,7 +63,7 @@
           <RippleButton
             class="px-8 mt-2"
             class-list="primary-btn"
-            :on-click="updateProfileData"
+            :on-click="uploadProfileDataToBackendServer"
             :loading="updateProfileDataLoading"
           >
             Save
@@ -72,6 +79,7 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
+import imageCompression from 'browser-image-compression'
 
 export default {
   name: 'EditProfile',
@@ -89,6 +97,8 @@ export default {
       about: '',
       designation: '',
       updateProfileDataLoading: false,
+      imageCompressProgress: null,
+      output: null,
     }
   },
 
@@ -110,35 +120,92 @@ export default {
   },
 
   methods: {
-    async updateProfileData() {
+    changeImage() {
+      this.$refs.imageUpload.click()
+    },
+
+    async compressImage(event) {
+      const file = event.target.files[0]
+      const useWebWorker = false
+      const options = {
+        maxSizeMB: 0.15,
+        maxWidthOrHeight: 750,
+        useWebWorker,
+        onProgress(compressProgress) {
+          this.imageCompressProgress = compressProgress
+        },
+      }
+      this.output = await imageCompression(file, options)
+    },
+
+    async uploadProfileDataToBackendServer() {
       this.updateProfileDataLoading = true
       try {
-        await this.$axios.$post(endpoints.profile_statistics.profileData, {
-          designation: this.designation,
-          about: this.about,
-        })
-        await this.$store.dispatch('UserManagement/setUserAbout', {
-          about: this.about,
-        })
-        await this.$store.dispatch('UserManagement/setUserDesignation', {
-          designation: this.designation,
-        })
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Profile Data Updated Successfully',
-          notificationType: 'success',
-          dismissible: true,
-        })
+        const formData = this.accumulateFormData()
+
+        const { photoURL } = await this.$axios.$post(
+          endpoints.profile_statistics.profileData,
+          formData,
+          { onUploadProgress: this.showUITip }
+        )
+
+        this.output && (await this.updateVuexPhotoURL(photoURL))
+
+        await this.updateVuexUserData()
+
         await this.$router.replace(
           navigationRoutes.Home.MoreOptions.Preferences.index
         )
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Error while Updating... Try Again',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await this.showErrorMessage()
+      } finally {
+        this.updateProfileDataLoading = false
       }
-      this.updateProfileDataLoading = false
+    },
+
+    async showUITip(progressEvent) {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: `Performing Secure Profile Update: ${Math.round(
+          (progressEvent.loaded / progressEvent.total) * 100
+        )}%`,
+        notificationType: 'info',
+        dismissible: false,
+      })
+    },
+
+    async updateVuexPhotoURL(photoURL) {
+      await this.$store.dispatch('UserManagement/setUserPhotoURL', { photoURL })
+    },
+
+    async updateVuexUserData() {
+      await this.$store.dispatch('UserManagement/setUserAbout', {
+        about: this.about,
+      })
+      await this.$store.dispatch('UserManagement/setUserDesignation', {
+        designation: this.designation,
+      })
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Profile Data Updated Successfully',
+        notificationType: 'success',
+        dismissible: true,
+      })
+    },
+
+    async showErrorMessage() {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Error while Updating... Try Again',
+        notificationType: 'error',
+        dismissible: true,
+      })
+    },
+
+    accumulateFormData() {
+      const formData = new FormData()
+      this.output && formData.append('file', this.output, this.output.name)
+
+      formData.append('designation', this.designation)
+      formData.append('about', this.about)
+      return formData
     },
   },
 
