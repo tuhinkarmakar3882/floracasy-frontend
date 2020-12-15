@@ -19,6 +19,9 @@ export const mutations = {
   SET_USER_ABOUT(state, about) {
     state.user.about = about
   },
+  SET_USER_PHOTO_URL(state, photoURL) {
+    state.user.photoURL = photoURL
+  },
   SET_USER_DESIGNATION(state, designation) {
     state.user.designation = designation
   },
@@ -45,6 +48,10 @@ export const actions = {
 
   setUserAbout({ commit }, { about }) {
     commit('SET_USER_ABOUT', about)
+  },
+
+  setUserPhotoURL({ commit }, { photoURL }) {
+    commit('SET_USER_PHOTO_URL', photoURL)
   },
 
   setUserDesignation({ commit }, { designation }) {
