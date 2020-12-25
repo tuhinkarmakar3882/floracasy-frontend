@@ -1,71 +1,72 @@
 const endpoints = {
   auth: {
-    authenticate: '/auth/authenticate/',
-    logout: '/auth/logout/',
-    generateToken: '/auth/token/generate/',
-    refreshToken: '/auth/token/refresh/',
-    checkToken: '/auth/checkToken/',
-    whoAmI: '/auth/whoAmI/',
+    authenticate: 'auth/authenticate/',
+    logout: 'auth/logout/',
+    generateToken: 'auth/token/generate/',
+    refreshToken: 'auth/token/refresh/',
+    checkToken: 'auth/checkToken/',
+    whoAmI: 'auth/safe_detail/',
   },
   blog: {
-    fetch: 'blog/fetch/',
-    info: 'blog/info/',
+    fetch: 'allow_authenticated/blog/fetch/',
+    info: 'allow_authenticated/blog/info/',
 
-    create: 'blog/create/',
-    detail: 'blog/detail/',
+    create: 'allow_authenticated/blog/create/',
+    detail: 'allow_authenticated/blog/detail/',
 
-    like: 'blog/like/',
-    share: 'blog/share/',
+    like: 'allow_authenticated/blog/like/',
+    share: 'allow_authenticated/blog/share/',
 
-    getBlogsByUid: 'blog/get_blogs_by_uid/',
+    getBlogsByUid: 'allow_authenticated/blog/get_blogs_by_uid/',
 
-    getSavedBlogs: 'blog/get_saved_blogs/',
+    getSavedBlogs: 'allow_authenticated/blog/get_saved_blogs/',
 
-    addOrRemoveToSaveBlogs: 'blog/add_or_remove_to_save_blogs/',
+    addOrRemoveToSaveBlogs:
+      'allow_authenticated/blog/add_or_remove_to_save_blogs/',
   },
   categories: {
-    fetch: 'categories/fetch/',
+    fetch: 'allow_any/categories/fetch/',
   },
   comment_system: {
-    fetchByBlogId: 'comment_system/fetchByBlogId/',
-    createCommentForBlogId: 'comment_system/createCommentForBlogId/',
+    fetchByBlogId: 'allow_authenticated/comment_system/fetchByBlogId/',
+    createCommentForBlogId:
+      'allow_authenticated/comment_system/createCommentForBlogId/',
   },
   chat_system: {
-    initializeChatThread: 'chat_system/initializeChatThread/',
+    initializeChatThread:
+      'allow_authenticated/message_system/initializeChatThread/',
 
-    fetchThreads: 'chat_system/fetchThreads/',
-    fetchMessages: 'chat_system/fetchMessages/',
-    send: 'chat_system/send/',
-    threadDetail: 'chat_system/threadDetail/',
+    fetchThreads: 'allow_authenticated/message_system/fetchThreads/',
+    fetchMessages: 'allow_authenticated/message_system/fetchMessages/',
+    send: 'allow_authenticated/message_system/send/',
+    threadDetail: 'allow_authenticated/message_system/threadDetail/',
 
-    markAsRead: 'chat_system/markAsRead/',
-    getMailBoxId: 'chat_system/getMailBoxId/',
+    markAsRead: 'allow_authenticated/message_system/markAsRead/',
+    getMailBoxId: 'allow_authenticated/message_system/getMailBoxId/',
   },
   feedback_collection: {
-    create: 'feedback_collection/create/',
+    create: 'allow_authenticated/feedback_collection/create/',
   },
   follow_system: {
-    follow_or_unfollow: 'follow_system/follow_or_unfollow/',
+    follow_or_unfollow: 'allow_authenticated/follow_system/follow_or_unfollow/',
   },
   help_and_support: {
-    fetch: 'help_and_support/fetch/',
-    create: 'help_and_support/create/',
-    detail: 'help_and_support/detail/',
+    fetch: 'allow_authenticated/help_and_support/fetch/',
+    create: 'allow_authenticated/help_and_support/create/',
+    detail: 'allow_authenticated/help_and_support/detail/',
   },
   leaderboard: {
     test: 'leaderboard/',
   },
   notification_system: {
-    getNotificationsByUid: 'notification_system/get_notifications_by_uid/',
+    getNotificationsByUid:
+      'allow_authenticated/notification_system/get_notifications_by_uid/',
     getNotificationChannelId:
-      'notification_system/get_my_notifications_channel_id/',
+      'allow_authenticated/notification_system/get_my_notifications_channel_id/',
   },
   profile_statistics: {
-    detail: 'profile_statistics/detail/',
-    profileData: 'profile_statistics/profile_data/',
-  },
-  reward_system: {
-    test: 'reward_system/',
+    detail: 'allow_authenticated/profile_statistics/detail/',
+    profileData: 'allow_authenticated/profile_statistics/profile_data/',
   },
   upload_handler_system: {
     process_image: 'upload_handler_system/process_image/',
