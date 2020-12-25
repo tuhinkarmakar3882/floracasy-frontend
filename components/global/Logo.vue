@@ -1,6 +1,6 @@
 <template>
   <svg
-    :width="this.$props.width ? this.$props.width : 36"
+    :width="this.$props.width"
     fill="none"
     viewBox="0 0 45 46"
     xmlns="http://www.w3.org/2000/svg"
@@ -17,10 +17,10 @@
 export default {
   name: 'Logo',
   props: {
-    // eslint-disable-next-line vue/require-default-prop
     width: {
       type: Number,
       required: false,
+      default: 36,
     },
   },
 }
