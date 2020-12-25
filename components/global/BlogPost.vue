@@ -76,7 +76,7 @@
       <div
         v-ripple=""
         class="px-4 pb-6"
-        @click="navigateTo(`/Home/Blogs/Details/${blog.id}`)"
+        @click="navigateTo(`/Home/Blogs/Details/${blog.identifier}`)"
       >
         <h5>
           {{ blog.title }}
@@ -178,7 +178,7 @@ export default {
       await this.$router.push(
         navigationRoutes.Home.Blogs.Comments.BlogId.replace(
           '{BlogId}',
-          this.blog.id
+          this.blog.identifier
         )
       )
     },

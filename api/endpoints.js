@@ -1,11 +1,11 @@
 const endpoints = {
   auth: {
-    authenticate: 'auth/authenticate/',
-    logout: 'auth/logout/',
-    generateToken: 'auth/token/generate/',
-    refreshToken: 'auth/token/refresh/',
-    checkToken: 'auth/checkToken/',
-    whoAmI: 'auth/safe_detail/',
+    authenticate: '/auth/authenticate/',
+    logout: '/auth/logout/',
+    generateToken: '/auth/token/generate/',
+    refreshToken: '/auth/token/refresh/',
+    checkToken: '/auth/checkToken/',
+    whoAmI: '/auth/safe_detail/',
   },
   blog: {
     fetch: '/allow_authenticated/blog/fetch/',
