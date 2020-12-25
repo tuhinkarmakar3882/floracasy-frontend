@@ -80,7 +80,7 @@ export default {
 
   axios: {
     baseURL: secrets.baseUrl,
-    retry: { retries: 1 },
+    // retry: { retries: 1 },
   },
 
   css: ['~/styles/main.scss'],
