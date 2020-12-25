@@ -26,10 +26,7 @@ export default {
       src: '~/plugins/firebase-authentication.js',
       mode: 'client',
     },
-    {
-      src: '~/plugins/axios.js',
-      mode: 'client',
-    },
+    '~/plugins/axios.js',
     {
       src: '~/plugins/notificationSocketConnection.js',
       mode: 'client',

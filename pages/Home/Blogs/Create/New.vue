@@ -654,7 +654,7 @@ export default {
     async publish() {
       await this.$axios
         .$post(endpoints.blog.create, {
-          category: this.blogCategory,
+          categoryID: this.blogCategory,
           coverImage: this.coverImageUrl,
           title: this.blogTitle,
           subtitle: this.blogSubtitle,

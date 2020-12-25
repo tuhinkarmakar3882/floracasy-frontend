@@ -1,13 +1,12 @@
 <template>
   <header class="navigation-bar-page">
-    <h5
+    <span
       v-ripple
-      class="mdi px-3 mdi-menu"
+      class="mdi mdi-menu icon"
       @click="drawerIsOpened = !drawerIsOpened"
     />
-    <section class="brand" @click="navigateTo('/')">
-      <h6 v-ripple class="brand-name">Floracasy</h6>
-    </section>
+    <h6 v-ripple class="brand" @click="navigateTo('/')">Floracasy</h6>
+
     <button
       v-ripple
       class="secondary-outlined-btn ml-auto"
@@ -115,18 +114,36 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  padding: $milli-unit $micro-unit;
+  height: 2 * $x-large-unit;
+  margin: 0;
   box-shadow: $down-only-box-shadow;
+
+  h6,
+  .icon {
+    display: flex;
+    align-items: center;
+    height: 2 * $x-large-unit;
+    margin: 0;
+    color: white;
+  }
+
+  h6 {
+    padding: 0 0.3rem;
+  }
+
+  .icon {
+    font-size: $large-unit;
+    padding: 0 0.9rem 0 1rem;
+  }
+
+  button {
+    height: 2 * $medium-unit;
+    margin-right: $micro-unit;
+  }
 
   @media only screen and (min-width: $max-width) {
     padding-left: 64px;
     padding-right: 32px;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
   }
 
   ul {
@@ -143,7 +160,7 @@ export default {
 
   .nav-drawer {
     position: absolute;
-    top: 2 * $xx-large-unit;
+    top: 2 * $x-large-unit;
     left: 0;
     min-height: 100vh;
     background-color: $nav-bar-bg;

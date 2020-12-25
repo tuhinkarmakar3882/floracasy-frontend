@@ -32,9 +32,6 @@
       <transition name="gray-shift">
         <div v-if="showOptions" class="options">
           <ul>
-            <li v-ripple="" class="close-btn" @click="showOptions = false">
-              &times;
-            </li>
             <li
               v-ripple="'#6DD0BF5F'"
               class="py-2 px-6"
@@ -63,6 +60,14 @@
                 :style="{ color: optionItem.color }"
               />
               {{ optionItem.text }}
+            </li>
+            <li class="my-0 py-2 px-4" style="display: block">
+              <hr style="background-color: #464646" class="my-0" />
+            </li>
+            <li v-ripple="`#ff82815f`" class="py-2 px-4">
+              <p class="danger-light text-center my-0" style="width: 100%">
+                Close
+              </p>
             </li>
           </ul>
         </div>
@@ -280,22 +285,14 @@ export default {
 
       ul {
         list-style: none;
-        padding: $xxx-large-unit 0 0;
+        margin: 0;
+        padding: $micro-unit 0;
 
         li {
           display: flex;
           align-items: center;
           color: #dadada;
-        }
-
-        .close-btn {
-          position: absolute !important;
-          border-radius: $nano-unit;
-          top: $zero-unit;
-          right: $zero-unit;
-          color: $danger-light;
-          font-size: $x-large-unit;
-          padding: 0 14px;
+          margin: 0;
         }
       }
 

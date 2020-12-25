@@ -19,12 +19,12 @@
     </main>
 
     <footer>
-      <nuxt-link
+      <section
         v-for="(menuOption, index) in menuOptions"
         :id="index === activeLink ? 'active-bottom-nav-link' : ''"
         :key="menuOption.id"
         v-ripple="'rgba(255, 255, 255, .2)'"
-        :to="menuOption.route"
+        @click="goto(menuOption.route)"
       >
         <span
           :class="[
@@ -34,17 +34,17 @@
             newContentAvailable[index] ? 'has-notification' : '',
           ]"
           class="mdi"
-          style="
-            transition: all 0.2s ease-in-out;
-            margin-bottom: -2px;
-            font-size: 22px;
-            position: relative;
-          "
+          :style="{
+            transition: 'all 0.2s ease-in-out',
+            marginBottom: '-2px',
+            fontSize: '22px',
+            position: 'relative',
+          }"
         />
-        <small style="transition: all 0.2s linear; font-size: 12.3px">
+        <small :style="{ transition: ' all 0.2s linear', fontSize: '12.3px' }">
           {{ menuOption.text }}
         </small>
-      </nuxt-link>
+      </section>
     </footer>
   </div>
 </template>
@@ -85,6 +85,10 @@ export default {
     navigateTo(path) {
       this.$router.push(path)
     },
+    async goto(path) {
+      await this.$router.push(path)
+      window.scrollTo(0, 0)
+    },
   },
 }
 </script>
@@ -110,7 +114,7 @@ export default {
     place-items: center;
     grid-template-columns: repeat(5, 1fr);
 
-    a {
+    section {
       text-decoration: none;
       display: flex;
       justify-content: center;
@@ -120,6 +124,7 @@ export default {
       width: 100%;
       height: 100%;
       color: $muted;
+      font-size: 20px;
     }
 
     .has-notification {
