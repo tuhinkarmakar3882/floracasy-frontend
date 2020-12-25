@@ -9,7 +9,7 @@
       <client-only>
         <section v-if="blogs">
           <article v-for="{ blog } in blogs" :key="blog.id">
-            <BlogPost class="pt-4" :blog="blog" />
+            <BlogPost class="pt-8 pb-0" :blog="blog" />
           </article>
         </section>
 
@@ -81,3 +81,18 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.saved-blogs-page {
+  section {
+    article {
+      &:nth-child(even) {
+        background: $nav-bar-bg;
+        box-shadow: $default-box-shadow;
+      }
+    }
+  }
+}
+</style>
