@@ -26,11 +26,10 @@ export const actions = {
   },
 
   async checkTokenValidity({ commit }) {
-    const { data } = await this.$axios.post(
-      endpoints.auth.checkToken,
-      {},
-      { withCredentials: true }
-    )
+    await this.$axios.setToken('', 'Bearer')
+
+    const { data } = await this.$axios
+      .post(endpoints.auth.checkToken, {}, { withCredentials: true })
 
     if (data.authState) {
       const cookieSavingConfig = {
@@ -38,11 +37,12 @@ export const actions = {
         maxAge: secrets.cookieMaxAge,
       }
 
-      this.$cookies.set('access', data.access, cookieSavingConfig)
-      this.$cookies.set('refresh', data.refresh, cookieSavingConfig)
+      await this.$cookies.set('access', data.access, cookieSavingConfig)
+      await this.$cookies.set('refresh', data.refresh, cookieSavingConfig)
+      await this.$axios.setToken(data.access, 'Bearer')
     } else {
-      this.$cookies.remove('access')
-      this.$cookies.remove('refresh')
+      await this.$cookies.remove('access')
+      await this.$cookies.remove('refresh')
     }
 
     commit('SET_AUTH_STATE', data.authState)
