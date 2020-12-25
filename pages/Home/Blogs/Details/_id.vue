@@ -147,11 +147,6 @@ export default {
 
   async mounted() {
     await this.$store.dispatch('BottomNavigation/update', { linkPosition: -1 })
-    if (!this.prevURL) {
-      this.blog = await this.$axios.$get(endpoints.blog.detail, {
-        params: { id: this.$route.params.id },
-      })
-    }
   },
 
   methods: {
