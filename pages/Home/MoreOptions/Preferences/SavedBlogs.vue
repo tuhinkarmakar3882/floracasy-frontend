@@ -58,8 +58,7 @@ export default {
     async infiniteHandler($state) {
       try {
         const { results, next } = await this.$axios.$get(
-          this.savedBlogFetchEndpoint,
-          { params: { category_name: this.category } }
+          this.savedBlogFetchEndpoint
         )
         if (results.length) {
           this.savedBlogFetchEndpoint = next
