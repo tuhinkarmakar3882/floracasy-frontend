@@ -135,7 +135,7 @@ export default {
 
   async asyncData({ $axios, params, from: prevURL }) {
     const blog = await $axios.$get(endpoints.blog.info, {
-      params: { id: params.blogId },
+      params: { identifier: params.blogId },
     })
     return { blog, prevURL }
   },
@@ -190,7 +190,7 @@ export default {
       try {
         const { results, next } = await this.$axios.$get(
           this.fetchCommentsEndpoint,
-          { params: { blog_id: this.$route.params.blogId } }
+          { params: { blogIdentifier: this.$route.params.blogId } }
         )
         if (results.length) {
           this.fetchCommentsEndpoint = next
