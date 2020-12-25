@@ -221,7 +221,7 @@ export default {
           await this.$axios.$post(
             endpoints.comment_system.createCommentForBlogId,
             {
-              blog_id: this.$route.params.blogId,
+              blogIdentifier: this.$route.params.blogId,
               message: this.commentMessage,
             }
           )
