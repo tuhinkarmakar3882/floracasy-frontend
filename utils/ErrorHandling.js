@@ -10,10 +10,10 @@ function handleUnauthorizedError(error) {
   }
   if (error.data.details === errorMessages.invalidTokens) {
     console.warn('Credentials Expired.')
-    location.reload()
+    process.client && window.location.reload()
   }
   console.error('Unhandled Error', error)
-  location.reload()
+  process.client && window.location.reload()
 }
 
 export default function handleAxiosRequestError(error) {
