@@ -7,22 +7,22 @@
       :style="{
         background: 'url(' + item.image + ') no-repeat center',
         backgroundSize: 'cover',
-        boxShadow: '0 0 0 100vw rgba(0, 0, 0, 0.6) inset',
         color: 'white',
       }"
+      @click="$router.push(item.route)"
     >
-      <h4 class="my-0">{{ item.name }}</h4>
-      <p style="margin: 20px 0 24px">
-        {{ item.body }}
-      </p>
-      <button
-        v-ripple=""
-        class="primary-btn"
-        style="min-width: auto"
-        @click="sendNotification"
-      >
-        Go Now
-      </button>
+      <!--      <h4 class="my-0">{{ item.name }}</h4>-->
+      <!--      <p style="margin: 20px 0 24px">-->
+      <!--        {{ item.body }}-->
+      <!--      </p>-->
+      <!--      <button-->
+      <!--        v-ripple=""-->
+      <!--        class="secondary-outlined-btn"-->
+      <!--        style="min-width: auto"-->
+      <!--        @click="sendNotification"-->
+      <!--      >-->
+      <!--        {{ item.buttonText || 'Go Now' }}-->
+      <!--      </button>-->
     </article>
   </section>
 </template>
@@ -51,7 +51,7 @@ export default {
   scroll-snap-type: x mandatory;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  height: 250px;
+  height: clamp(240px, 36vh, 640px);
 
   article {
     padding: 0 1rem;
@@ -72,17 +72,17 @@ export default {
       z-index: 1;
     }
 
-    &::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(black, 0.4);
-      content: '';
-      z-index: 0;
-      backdrop-filter: blur(1px);
-    }
+    //&::before {
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0;
+    //  height: 100%;
+    //  width: 100%;
+    //  //background-color: rgba(black, 0.5);
+    //  content: '';
+    //  z-index: 0;
+    //  //backdrop-filter: blur(1px);
+    //}
   }
 }
 </style>

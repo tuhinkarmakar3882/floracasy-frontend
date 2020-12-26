@@ -5,7 +5,7 @@
         color: tickColor,
         fontSize: tickSize + 'px',
       }"
-      class="mdi mdi-check-circle-outline mr-3"
+      class="mdi mdi-checkbox-marked-circle-outline mr-3"
     />
     <span>
       {{ point }}

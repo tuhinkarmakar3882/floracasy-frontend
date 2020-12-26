@@ -52,6 +52,7 @@ import CategoriesLineUp from '@/components/global/Home/Dashboard/CategoriesLineU
 import InfiniteScrollingBlogLists from '@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'
 import Carousel from '@/components/global/Home/Dashboard/Carousel'
 import { mapGetters } from 'vuex'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'DashBoard',
@@ -69,9 +70,12 @@ export default {
       tabNumber: parseInt(this.$route.query.tabNumber) || 0,
       carouselItems: [
         {
-          name: 'First Item in the carousel',
-          body: 'This is a body Text',
-          image: 'https://picsum.photos/501',
+          name: 'Listen on the Go',
+          body:
+            'Now you can continue to listen to your favourite articles whenever you want to',
+          image: '/images/image1.png',
+          buttonText: 'Avail Premium',
+          route: navigationRoutes.Home.MoreOptions.Payments.index,
         },
         {
           name: 'Second Item in the carousel',

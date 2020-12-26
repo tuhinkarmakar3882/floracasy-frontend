@@ -17,21 +17,25 @@
       />
       <p>{{ pageTitle }}</p>
     </template>
+
     <template slot="main" class="my-4">
-      <section class="px-4">
-        <div class="">
-          <h4 class="heading-title">The Premium Perks!</h4>
-          <p class="text-center pt-5">
-            Lorem ipsum dolor sit amet, The Pro Zone
-          </p>
-          <ul>
-            <li v-for="(point, index) in points" :key="index">
-              <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
-            </li>
-          </ul>
-          <div class="text-center my-4">
-            <button v-ripple="" class="premium-btn">Buy Premium</button>
-          </div>
+      <section class="main-content px-4">
+        <PremiumCrownLogo :width="120" class="mx-auto" />
+        <h4 class="heading-title">The Premium Perks!</h4>
+        <p>
+          Loved using Floracasy? You can now get even more curated set of
+          features with Floracasy Premium.
+        </p>
+
+        <h6>Features at a Glance:</h6>
+        <ul>
+          <li v-for="(point, index) in points" :key="index">
+            <KeyPoint tick-color="#EFB33D" :tick-size="24" :point="point" />
+          </li>
+        </ul>
+
+        <div class="text-center my-4">
+          <button v-ripple="" class="premium-btn">Continue to Buy</button>
         </div>
       </section>
     </template>
@@ -42,11 +46,12 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import KeyPoint from '@/components/global/KeyPoint'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import PremiumCrownLogo from '~/components/global/Icons/PremiumCrownLogo'
 
 export default {
   name: 'GoPremium',
   middleware: 'isAuthenticated',
-  components: { KeyPoint, AppFeel },
+  components: { PremiumCrownLogo, KeyPoint, AppFeel },
 
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -56,11 +61,13 @@ export default {
     return {
       pageTitle: 'Go Premium',
       points: [
-        'Get Detailed Insights',
         'Premium Interface',
-        'Audible Blogs',
+        'Customized Notification',
         'Reach More People Faster',
         'Get Messaging Functionality',
+        'Audible Blogs',
+        'Post Stories',
+        'Get Detailed Insights',
         'Avail Faster Customer Support',
         'And Much More!',
       ],
@@ -79,7 +86,11 @@ export default {
 
 <style lang="scss" scoped>
 .go-premium-page {
-  main {
+  .main-content {
+    .heading-title {
+      margin-top: 8px;
+    }
+
     button {
       min-width: auto;
     }
