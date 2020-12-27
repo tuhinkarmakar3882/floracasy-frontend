@@ -116,49 +116,49 @@ export default {
 }
 </script>
 
-<!--<style lang="scss" scoped>-->
-<!--@import 'assets/all-variables';-->
+<style lang="scss" scoped>
+@import 'assets/all-variables';
 
-<!--$blog-border-radius: 20px;-->
+$blog-border-radius: 20px;
 
-<!--.about-page {-->
-<!--  transition: all 0.5s ease-in-out;-->
+.about-page {
+  transition: all 0.5s ease-in-out;
 
-<!--  main {-->
-<!--    .banner {-->
-<!--      display: flex;-->
-<!--      align-items: center;-->
-<!--      justify-content: center;-->
+  main {
+    .banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-<!--      h4 {-->
-<!--        margin: $standard-unit 0;-->
-<!--      }-->
-<!--    }-->
+      h4 {
+        margin: $standard-unit 0;
+      }
+    }
 
-<!--    .tab-bar {-->
-<!--      display: grid;-->
-<!--      text-align: center;-->
-<!--      grid-template-columns: repeat(3, 1fr);-->
-<!--      position: sticky;-->
-<!--      top: (2 * $x-large-unit) - $double-unit;-->
-<!--      background-color: $nav-bar-bg;-->
-<!--      box-shadow: $down-only-box-shadow;-->
-<!--      z-index: 1;-->
-<!--      transition: all 0.3s ease-in-out;-->
+    .tab-bar {
+      display: grid;
+      text-align: center;
+      grid-template-columns: repeat(3, 1fr);
+      position: sticky;
+      top: (2 * $x-large-unit) - $double-unit;
+      background-color: $nav-bar-bg;
+      box-shadow: $down-only-box-shadow;
+      z-index: 1;
+      transition: all 0.3s ease-in-out;
 
-<!--      * {-->
-<!--        padding: 0.7rem 0;-->
-<!--        font-size: 1rem;-->
-<!--        font-weight: 300;-->
-<!--      }-->
+      * {
+        padding: 0.7rem 0;
+        font-size: 1rem;
+        font-weight: 300;
+      }
 
-<!--      .active-tab {-->
-<!--        color: $secondary;-->
-<!--        font-weight: 400;-->
-<!--        background: $card-background;-->
-<!--        transition: all 100ms ease-in-out;-->
-<!--      }-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</style>-->
+      .active-tab {
+        color: $secondary;
+        font-weight: 400;
+        background: $card-background;
+        transition: all 100ms ease-in-out;
+      }
+    }
+  }
+}
+</style>
