@@ -3,7 +3,7 @@ const options = {
   workboxURL:
     'https://cdn.jsdelivr.net/npm/workbox-cdn@5.1.4/workbox/workbox-sw.js',
   importScripts: [],
-  config: { debug: false },
+  config: { debug: true },
   cacheOptions: {
     cacheId: 'floracasy-' + revision,
     directoryIndex: null,
@@ -50,6 +50,12 @@ const options = {
     },
     {
       urlPattern: '/',
+      handler: 'NetworkOnly',
+      method: 'GET',
+      strategyPlugins: [],
+    },
+    {
+      urlPattern: '/Home/Dashboard',
       handler: 'NetworkOnly',
       method: 'GET',
       strategyPlugins: [],

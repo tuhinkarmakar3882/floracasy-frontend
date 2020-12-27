@@ -1,7 +1,7 @@
 <template>
   <footer class="full-width">
     <section class="contact-us">
-      <h3 class="text-center my-6">Contact Us</h3>
+      <h4 class="text-center my-6">Contact Us</h4>
       <ul>
         <li>
           <a href="#" target="_blank">
@@ -159,28 +159,28 @@
       </ul>
     </section>
 
-    <section class="py-8">
-      <h3 class="text-center my-4">Become A Floracasian</h3>
+    <!--    <section class="py-8">-->
+    <!--      <h3 class="text-center my-4">Become A Floracasian</h3>-->
 
-      <p class="text-center my-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim
-        lobortis ornare. Sed ut neque ac massa sagittis mollis. Quius lorem.
-      </p>
+    <!--      <p class="text-center my-4">-->
+    <!--        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dignissim-->
+    <!--        lobortis ornare. Sed ut neque ac massa sagittis mollis. Quius lorem.-->
+    <!--      </p>-->
 
-      <div class="text-center my-6">
-        <nuxt-link to="/Authentication/SignInToContinue">
-          <RippleButton
-            class-list="primary-btn"
-            :on-click="changeIt"
-            :loading="joinUsButtonLoading"
-          >
-            Join Floracasy
-          </RippleButton>
-        </nuxt-link>
-      </div>
-    </section>
+    <!--      <div class="text-center my-6">-->
+    <!--        <nuxt-link to="/Authentication/SignInToContinue">-->
+    <!--          <RippleButton-->
+    <!--            class-list="primary-btn"-->
+    <!--            :on-click="changeIt"-->
+    <!--            :loading="joinUsButtonLoading"-->
+    <!--          >-->
+    <!--            Join Floracasy-->
+    <!--          </RippleButton>-->
+    <!--        </nuxt-link>-->
+    <!--      </div>-->
+    <!--    </section>-->
 
-    <section class="text-center mb-8">
+    <section class="text-center">
       <a href="#">Back to Top</a>
     </section>
   </footer>
@@ -220,14 +220,13 @@ export default {
 footer {
   background-color: $footer-background;
   width: 100%;
-  padding: 12px 32px;
 
   .contact-us {
     ul {
       list-style: none;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      grid-column-gap: $standard-unit;
+      grid-column-gap: $nano-unit;
     }
   }
 }

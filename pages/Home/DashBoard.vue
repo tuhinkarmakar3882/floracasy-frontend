@@ -119,6 +119,7 @@ export default {
         await this.$store.dispatch('UserManagement/fetchData')
       }
     },
+
     changeTab(newTabNumber) {
       this.tabNumber = newTabNumber
       this.$nextTick(() => {
