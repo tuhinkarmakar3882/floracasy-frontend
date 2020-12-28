@@ -129,7 +129,7 @@ export default {
 
   async asyncData({ $axios, params, from: prevURL }) {
     const response = await $axios.$get(endpoints.blog.detail, {
-      params: { id: params.id },
+      params: { identifier: params.id },
     })
     return { blog: response, prevURL }
   },
@@ -160,7 +160,7 @@ export default {
       try {
         const action = await this.$axios
           .$post(endpoints.blog.like, {
-            blog_id: this.blog.id,
+            identifier: this.blog.identifier,
           })
           .then(({ action }) => action)
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
@@ -177,7 +177,7 @@ export default {
     async addOrRemoveToSaveBlogs() {
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
-          blog_id: this.blog.id,
+          identifier: this.blog.identifier,
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
@@ -193,7 +193,7 @@ export default {
       await this.$router.push(
         navigationRoutes.Home.Blogs.Comments.BlogId.replace(
           '{BlogId}',
-          this.blog.id
+          this.blog.identifier
         )
       )
     },
@@ -212,7 +212,7 @@ export default {
           try {
             await this.$axios
               .$post(endpoints.blog.share, {
-                blog_id: this.blog.id,
+                identifier: this.blog.identifier,
               })
               .then(() => {
                 this.blog.totalShares++

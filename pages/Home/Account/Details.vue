@@ -87,7 +87,10 @@
           class="content py-3 px-1"
           @click="
             $router.push(
-              navigationRoutes.Home.Blogs.Details.replace('{id}', activity.id)
+              navigationRoutes.Home.Blogs.Details.replace(
+                '{id}',
+                activity.identifier
+              )
             )
           "
         >

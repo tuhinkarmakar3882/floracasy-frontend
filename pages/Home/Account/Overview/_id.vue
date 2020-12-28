@@ -92,7 +92,7 @@
 
         <BlogPost
           v-for="activity in recentActivities"
-          :key="activity.id"
+          :key="activity.identifier"
           class="activity pt-4"
           :blog="activity"
         />

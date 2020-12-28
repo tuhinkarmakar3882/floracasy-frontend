@@ -106,7 +106,7 @@ export default {
       showBanner: false,
       maybe: false,
       computedHeight: 0,
-      notificationEndpoint: endpoints.notification_system.getNotificationsByUid,
+      notificationEndpoint: endpoints.notification_system.fetch,
     }
   },
 
