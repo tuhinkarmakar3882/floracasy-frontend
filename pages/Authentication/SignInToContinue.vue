@@ -164,7 +164,7 @@ export default {
         tokens.refresh,
         secrets.cookieSavingConfig
       )
-      this.$axios.setToken(this.$cookies.get('access'), 'Bearer')
+      this.$axios.setToken(tokens.access, 'Bearer')
     },
 
     async updateVuexStates(payload) {
