@@ -72,9 +72,15 @@ export default {
 
   render: {
     asyncScripts: true,
+    injectScripts: true,
+    resourceHints: true,
 
     csp: {
       addMeta: process.env.NODE_ENV === 'production',
+    },
+
+    http2: {
+      push: true,
     },
   },
 
