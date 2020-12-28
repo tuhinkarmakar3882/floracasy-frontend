@@ -27,10 +27,10 @@ export default {
       mode: 'client',
     },
     '~/plugins/axios.js',
-    {
-      src: '~/plugins/notificationSocketConnection.js',
-      mode: 'client',
-    },
+    // {
+    //   src: '~/plugins/notificationSocketConnection.js',
+    //   mode: 'client',
+    // },
     {
       src: '~/plugins/vue-infinite-loading.js',
       mode: 'client',
@@ -50,11 +50,21 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
+    'nuxt-compress',
   ],
 
+  'nuxt-compress': {
+    gzip: {
+      cache: true,
+    },
+    brotli: {
+      threshold: 10240,
+    },
+  },
+
   // modern: {
-  //   client: process.env.NODE_ENV === 'production',
-  //   server: process.env.NODE_ENV === 'production',
+  //   client: true,
+  //   server: true,
   // },
 
   router: {},
@@ -81,12 +91,16 @@ export default {
 
     http2: {
       push: true,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      pushAssets: (req, res, publicPath, preloadFiles) =>
+        preloadFiles
+          .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
+          .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
     },
   },
 
   axios: {
     baseURL: secrets.baseUrl,
-    // retry: { retries: 1 },
   },
 
   css: ['~/styles/main.scss'],
@@ -114,6 +128,7 @@ export default {
         type: 'image/x-icon',
         href: '/favicon.ico',
       },
+      // TODO MAKE CSS LOAD ASYNCHRONOUSLY
       {
         rel: 'preconnect',
         crossorigin: true,
