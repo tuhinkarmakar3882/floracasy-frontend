@@ -50,11 +50,21 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
+    'nuxt-compress',
   ],
 
+  'nuxt-compress': {
+    gzip: {
+      cache: true,
+    },
+    brotli: {
+      threshold: 10240,
+    },
+  },
+
   // modern: {
-  //   client: process.env.NODE_ENV === 'production',
-  //   server: process.env.NODE_ENV === 'production',
+  //   client: true,
+  //   server: true,
   // },
 
   router: {},
@@ -72,15 +82,25 @@ export default {
 
   render: {
     asyncScripts: true,
+    injectScripts: true,
+    resourceHints: true,
 
     csp: {
       addMeta: process.env.NODE_ENV === 'production',
+    },
+
+    http2: {
+      push: true,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      pushAssets: (req, res, publicPath, preloadFiles) =>
+        preloadFiles
+          .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
+          .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
     },
   },
 
   axios: {
     baseURL: secrets.baseUrl,
-    // retry: { retries: 1 },
   },
 
   css: ['~/styles/main.scss'],
@@ -108,6 +128,7 @@ export default {
         type: 'image/x-icon',
         href: '/favicon.ico',
       },
+      // TODO MAKE CSS LOAD ASYNCHRONOUSLY
       {
         rel: 'preconnect',
         crossorigin: true,
@@ -122,7 +143,7 @@ export default {
         rel: 'stylesheet',
         type: 'text/css',
         href:
-          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&display=swap',
+          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&family=Raleway:wght@300;400&display=swap',
       },
       {
         rel: 'stylesheet',

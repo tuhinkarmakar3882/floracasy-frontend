@@ -51,15 +51,13 @@ export default {
   scroll-snap-type: x mandatory;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  height: clamp(240px, 36vh, 640px);
 
   article {
-    padding: 0 1rem;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     flex-shrink: 0;
     width: 100%;
-    height: 100%;
+    padding-top: 56.25%;
     transform-origin: center center;
     position: relative;
     display: flex;

@@ -60,8 +60,7 @@ const endpoints = {
     test: 'leaderboard/',
   },
   notification_system: {
-    getNotificationsByUid:
-      '/allow_authenticated/notification_system/get_notifications_by_uid/',
+    fetch: '/allow_authenticated/notification_system/fetch/',
     getNotificationChannelId:
       '/allow_authenticated/notification_system/get_my_notifications_channel_id/',
   },

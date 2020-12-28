@@ -76,7 +76,11 @@
       <div
         v-ripple=""
         class="px-4 pb-6"
-        @click="navigateTo(`/Home/Blogs/Details/${blog.identifier}`)"
+        @click="
+          navigateTo(
+            navigationRoutes.Home.Blogs.Details.replace('{id}', blog.identifier)
+          )
+        "
       >
         <h5>
           {{ blog.title }}
@@ -164,7 +168,7 @@ export default {
       try {
         const action = await this.$axios
           .$post(endpoints.blog.like, {
-            blog_id: this.blog.id,
+            identifier: this.blog.identifier,
           })
           .then(({ action }) => action)
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
@@ -191,13 +195,13 @@ export default {
             text: this.blog.subtitle,
             url: navigationRoutes.Home.Blogs.Details.replace(
               '{id}',
-              this.blog.id
+              this.blog.identifier
             ),
           })
           try {
             await this.$axios
               .$post(endpoints.blog.share, {
-                blog_id: this.blog.id,
+                identifier: this.blog.identifier,
               })
               .then(() => {
                 this.blog.totalShares++
@@ -218,7 +222,7 @@ export default {
     async addOrRemoveToSaveBlogs() {
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
-          blog_id: this.blog.id,
+          identifier: this.blog.identifier,
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
