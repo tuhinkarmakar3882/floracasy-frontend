@@ -27,10 +27,10 @@ export default {
       mode: 'client',
     },
     '~/plugins/axios.js',
-    // {
-    //   src: '~/plugins/notificationSocketConnection.js',
-    //   mode: 'client',
-    // },
+    {
+      src: '~/plugins/notificationSocketConnection.js',
+      mode: 'client',
+    },
     {
       src: '~/plugins/vue-infinite-loading.js',
       mode: 'client',
