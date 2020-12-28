@@ -26,51 +26,34 @@
 
         <div ref="tabNavigation"></div>
 
-        <div v-if="activeTab === 0">
-          <h1 class="text-center">Tab {{ activeTab }}</h1>
+        <div v-if="activeTab === 0" class="the-pro-zone px-4">
+          <section
+            v-for="(item, index) in content[activeTab].data"
+            :key="`${activeTab}-${index}`"
+          >
+            <h4 class="heading-title">{{ item.title }}</h4>
+            <p>{{ item.body }}</p>
+          </section>
         </div>
 
         <div v-else-if="activeTab === 1" class="the-story px-4">
-          <section>
-            <h4 class="heading-title">We try to deliver more knowledge</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-              aliquid at delectus distinctio dolor eligendi ipsum laboriosam,
-              laborum magnam mollitia obcaecati sequi, soluta temporibus.
-              Aperiam cum deleniti eveniet nam reprehenderit.
-            </p>
-          </section>
-          <section>
-            <h4 class="heading-title">How it all started</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-              aliquid at delectus distinctio dolor eligendi ipsum laboriosam,
-              laborum magnam mollitia obcaecati sequi, soluta temporibus.
-              Aperiam cum deleniti eveniet nam reprehenderit.
-            </p>
-          </section>
-          <section>
-            <h4 class="heading-title">The Problem</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-              aliquid at delectus distinctio dolor eligendi ipsum laboriosam,
-              laborum magnam mollitia obcaecati sequi, soluta temporibus.
-              Aperiam cum deleniti eveniet nam reprehenderit.
-            </p>
-          </section>
-          <section>
-            <h4 class="heading-title">The Solution</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad
-              aliquid at delectus distinctio dolor eligendi ipsum laboriosam,
-              laborum magnam mollitia obcaecati sequi, soluta temporibus.
-              Aperiam cum deleniti eveniet nam reprehenderit.
-            </p>
+          <section
+            v-for="(item, index) in content[activeTab].data"
+            :key="`${activeTab}-${index}`"
+          >
+            <h4 class="heading-title">{{ item.title }}</h4>
+            <p>{{ item.body }}</p>
           </section>
         </div>
 
-        <div v-else-if="activeTab === 2">
-          <h1 class="text-center">Tab {{ activeTab }}</h1>
+        <div v-else-if="activeTab === 2" class="the-vision px-4">
+          <section
+            v-for="(item, index) in content[activeTab].data"
+            :key="`${activeTab}-${index}`"
+          >
+            <h4 class="heading-title">{{ item.title }}</h4>
+            <p>{{ item.body }}</p>
+          </section>
         </div>
       </main>
 
@@ -95,6 +78,50 @@ export default {
       pageTitle: 'About us',
       navigationRoutes,
       tabs: ['Pro Zone', 'Our Story', 'The Vision'],
+      content: [
+        {
+          data: [
+            {
+              title: 'Why Premium?',
+              body:
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid at delectus distinctio dolor eligendi ipsum laboriosam, laborum magnam mollitia obcaecati sequi, soluta temporibus. Aperiam cum deleniti eveniet nam reprehenderit.',
+            },
+          ],
+        },
+        {
+          data: [
+            {
+              title: 'We try to deliver more knowledge',
+              body:
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid at delectus distinctio dolor eligendi ipsum laboriosam, laborum magnam mollitia obcaecati sequi, soluta temporibus. Aperiam cum deleniti eveniet nam reprehenderit.',
+            },
+            {
+              title: 'How it all started',
+              body:
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid at delectus distinctio dolor eligendi ipsum laboriosam, laborum magnam mollitia obcaecati sequi, soluta temporibus. Aperiam cum deleniti eveniet nam reprehenderit.',
+            },
+            {
+              title: 'The Problem',
+              body:
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid at delectus distinctio dolor eligendi ipsum laboriosam, laborum magnam mollitia obcaecati sequi, soluta temporibus. Aperiam cum deleniti eveniet nam reprehenderit.',
+            },
+            {
+              title: 'The Solution',
+              body:
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid at delectus distinctio dolor eligendi ipsum laboriosam, laborum magnam mollitia obcaecati sequi, soluta temporibus. Aperiam cum deleniti eveniet nam reprehenderit.',
+            },
+          ],
+        },
+        {
+          data: [
+            {
+              title: 'Global Reach to Readers & Writers',
+              body:
+                'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid at delectus distinctio dolor eligendi ipsum laboriosam, laborum magnam mollitia obcaecati sequi, soluta temporibus. Aperiam cum deleniti eveniet nam reprehenderit.',
+            },
+          ],
+        },
+      ],
     }
   },
   mounted() {},
