@@ -32,9 +32,11 @@
         <slot name="app-bar-title" />
       </p>
     </header>
+
     <main class="main-content">
       <slot name="main"></slot>
     </main>
+
     <footer>
       <slot name="footer"></slot>
     </footer>
@@ -128,6 +130,7 @@ export default {
     max-width: $max-width;
     margin-left: auto;
     margin-right: auto;
+    min-height: 90vh;
 
     button {
       min-width: auto;

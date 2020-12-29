@@ -9,7 +9,7 @@
       </nuxt-link>
     </header>
 
-    <main>
+    <main style="min-height: 100vh">
       <NotificationBadge
         @click="navigateTo(navigationRoutes.Home.Notifications.index)"
       />
