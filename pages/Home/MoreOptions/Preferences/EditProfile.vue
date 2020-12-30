@@ -18,7 +18,7 @@
           ref="imageUpload"
           style="width: 0; height: 0; display: none"
           type="file"
-          accept="image/jpeg"
+          accept="image/jpeg, image/png"
           @change="compressImage"
         />
         <section class="display-picture" @click="changeImage">
@@ -143,15 +143,14 @@ export default {
     async uploadProfileDataToBackendServer() {
       this.updateProfileDataLoading = true
       try {
-        const formData = this.accumulateFormData()
+        await this.$axios.$post(endpoints.profile_statistics.profileData, {
+          designation: this.designation,
+          about: this.about,
+        })
 
-        const { photoURL } = await this.$axios.$post(
-          endpoints.profile_statistics.profileData,
-          formData,
-          { onUploadProgress: this.showUITip }
-        )
-
-        this.output && (await this.updateVuexPhotoURL(photoURL))
+        if (this.output) {
+          await this.uploadImage()
+        }
 
         await this.updateVuexUserData()
 
@@ -163,6 +162,19 @@ export default {
       } finally {
         this.updateProfileDataLoading = false
       }
+    },
+
+    async uploadImage() {
+      const formData = new FormData()
+      formData.append('image', this.output, this.output.name)
+      const { photoURL } = await this.$axios
+        .$post(endpoints.upload_handler_system.process_image, formData, {
+          onUploadProgress: this.showUITip,
+        })
+        .catch((e) => {
+          throw e
+        })
+      await this.updateVuexPhotoURL(photoURL)
     },
 
     async showUITip(progressEvent) {
@@ -199,15 +211,6 @@ export default {
         notificationType: 'error',
         dismissible: true,
       })
-    },
-
-    accumulateFormData() {
-      const formData = new FormData()
-      this.output && formData.append('file', this.output, this.output.name)
-
-      formData.append('designation', this.designation)
-      formData.append('about', this.about)
-      return formData
     },
   },
 

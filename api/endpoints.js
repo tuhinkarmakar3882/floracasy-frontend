@@ -1,3 +1,5 @@
+import { uploadServerBase } from '~/environmentalVariables'
+
 const endpoints = {
   auth: {
     authenticate: '/auth/authenticate/',
@@ -69,7 +71,7 @@ const endpoints = {
     profileData: '/allow_authenticated/profile_statistics/profile_data/',
   },
   upload_handler_system: {
-    process_image: 'upload_handler_system/process_image/',
+    process_image: uploadServerBase + '/upload/process_image/',
   },
 
   health_check: {
