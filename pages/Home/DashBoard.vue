@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-page">
     <Carousel
+      :visible="tabNumber !== 2"
       :carousel-items="carouselItems"
-      :style="[tabNumber === 2 && { height: 0 }]"
       style="overflow: hidden; transition: all 0.3s ease-in-out"
     />
 
