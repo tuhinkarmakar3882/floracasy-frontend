@@ -8,7 +8,7 @@ export const navigationRoutes = {
   Home: {
     Account: {
       Details: '/Home/Account/Details',
-      Overview: '/Home/Account/Overview/',
+      Overview: '/Home/Account/Overview/{userUID}',
     },
 
     Blogs: {
