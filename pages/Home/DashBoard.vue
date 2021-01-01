@@ -108,7 +108,12 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch('BottomNavigation/update', { linkPosition: 0 })
+    await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
+      linkPosition: 0,
+    })
+    await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
+      linkPosition: -1,
+    })
     await this.setupUser()
   },
   methods: {
