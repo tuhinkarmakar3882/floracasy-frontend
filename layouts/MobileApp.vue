@@ -1,12 +1,27 @@
 <template>
   <div class="app-layout">
     <header>
-      <h6 v-ripple="">
-        <nuxt-link class="brand-name" to="/">Floracasy</nuxt-link>
-      </h6>
-      <nuxt-link v-ripple="" to="/Home/Messages">
-        <h5 class="mdi mdi-message-text" />
+      <nuxt-link v-ripple="" :to="navigationRoutes.index">
+        <h6>Floracasy</h6>
       </nuxt-link>
+
+      <div class="ml-auto" style="display: flex">
+        <nuxt-link
+          v-for="(option, index) in topNavMenuOptions"
+          :key="option.id"
+          v-ripple="'rgba(255, 255, 255, .2)'"
+          :to="option.route"
+        >
+          <h5
+            class="mdi"
+            :class="
+              index === topNavActiveLink
+                ? [option.activeIcon, 'secondary']
+                : option.icon
+            "
+          />
+        </nuxt-link>
+      </div>
     </header>
 
     <main style="min-height: 100vh">
@@ -20,28 +35,24 @@
 
     <footer>
       <section
-        v-for="(menuOption, index) in menuOptions"
-        :id="index === activeLink ? 'active-bottom-nav-link' : ''"
+        v-for="(menuOption, index) in bottomNavMenuOptions"
+        :id="index === activeLink ? 'active-nav-link' : ''"
         :key="menuOption.id"
         v-ripple="'rgba(255, 255, 255, .2)'"
         @click="goto(menuOption.route)"
       >
         <span
           :class="[
-            index !== activeLink
-              ? menuOption.icon + '-outline'
-              : menuOption.icon,
+            index !== activeLink ? menuOption.icon : menuOption.activeIcon,
             newContentAvailable[index] ? 'has-notification' : '',
           ]"
-          class="mdi"
-          :style="{
-            transition: 'all 0.2s ease-in-out',
-            marginBottom: '-2px',
-            fontSize: '22px',
-            position: 'relative',
-          }"
+          :style="{ fontSize: index === activeLink ? '22px' : '24px' }"
+          class="mdi menu-option-icon"
         />
-        <small :style="{ transition: ' all 0.2s linear', fontSize: '12.3px' }">
+        <small
+          class="menu-option-text"
+          :style="{ height: index === activeLink ? '20px' : 0 }"
+        >
           {{ menuOption.text }}
         </small>
       </section>
@@ -64,21 +75,34 @@ export default {
     }
   },
   computed: {
-    activeLink: {
+    topNavActiveLink: {
       get() {
-        return this.$store.state.BottomNavigation.activeLink
+        return this.$store.state.NavigationState.topNavActiveLink
       },
       set(newValue) {
-        this.$store.commit('BottomNavigation/update', newValue)
+        this.$store.commit('NavigationState/updateTopNavActiveLink', newValue)
+      },
+    },
+
+    activeLink: {
+      get() {
+        return this.$store.state.NavigationState.activeLink
+      },
+      set(newValue) {
+        this.$store.commit(
+          'NavigationState/updateBottomNavActiveLink',
+          newValue
+        )
       },
     },
     ...mapGetters({
-      menuOptions: 'BottomNavigation/getMenuOptions',
-      newContentAvailable: 'BottomNavigation/getNewContentAvailableInfo',
+      bottomNavMenuOptions: 'NavigationState/getBottomNavMenuOptions',
+      topNavMenuOptions: 'NavigationState/getTopNavMenuOptions',
+      newContentAvailable: 'NavigationState/getNewContentAvailableInfo',
     }),
 
     color() {
-      return this.menuOptions[this.activeLink].color
+      return this.bottomNavMenuOptions[this.activeLink].color
     },
   },
   methods: {
@@ -125,22 +149,34 @@ export default {
       height: 100%;
       color: $muted;
       font-size: 20px;
-    }
 
-    .has-notification {
-      &::after {
-        content: '';
-        position: absolute;
-        height: 6px;
-        width: 6px;
-        background-color: #8ff2e1;
-        border-radius: 50%;
-        top: 0;
-        right: 0;
+      .menu-option-text {
+        transition: all 0.2s linear;
+        font-size: 12.3px;
+        overflow: hidden;
+      }
+
+      .menu-option-icon {
+        transition: all 0.2s ease-in-out;
+        margin-bottom: -2px;
+        position: relative;
+      }
+
+      .has-notification {
+        &::after {
+          content: '';
+          position: absolute;
+          height: 6px;
+          width: 6px;
+          background-color: #8ff2e1;
+          border-radius: 50%;
+          top: 0;
+          right: 0;
+        }
       }
     }
 
-    #active-bottom-nav-link {
+    #active-nav-link {
       color: $secondary-highlight;
     }
   }
