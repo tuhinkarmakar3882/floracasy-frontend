@@ -30,6 +30,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "cookieparser": "^0.1.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.9.8",
     "express": "^4.17.1",
     "firebase": "^8.0.0",
     "firebase-tools": "^8.11.2",
@@ -50,6 +51,7 @@
     "tiptap-extensions": "^1.33.2",
     "vue-infinite-loading": "^2.4.5",
     "vue-quill-editor": "^3.0.6",
+    "vue2-dropzone": "^3.6.0",
     "vue2-touch-events": "^3.0.0",
     "vuetrend": "^0.3.4",
     "vuex": "^3.5.1"

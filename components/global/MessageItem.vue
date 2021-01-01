@@ -29,7 +29,7 @@
 
 <script>
 import { CustomMessageType } from '@/interfaces/CustomMessageTypes'
-import { parseStandardTimeUsingMoment } from '~/utils/utility'
+import { getStandardTime } from '~/utils/utility'
 
 export default {
   name: 'MessageItem',
@@ -45,7 +45,7 @@ export default {
   },
 
   methods: {
-    parseStandardTimeUsingMoment,
+    parseStandardTimeUsingMoment: getStandardTime,
     getInitials(name) {
       return name.split(' ')[0]
     },

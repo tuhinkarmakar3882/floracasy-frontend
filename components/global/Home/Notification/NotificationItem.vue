@@ -19,7 +19,7 @@
         {{ notification.message }}
       </span>
       <br />
-      {{ parseTimeUsingMoment(notification.createdAt) }}
+      {{ getRelativeTime(notification.createdAt) }}
       <span class="dot" />
     </p>
   </div>
@@ -39,7 +39,7 @@ export default {
   },
 
   methods: {
-    parseTimeUsingMoment: getRelativeTime,
+    getRelativeTime,
     dispatchNotificationAction(actionName, actionInfo) {
       console.log(actionName, actionInfo)
     },

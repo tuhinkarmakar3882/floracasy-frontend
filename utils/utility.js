@@ -1,31 +1,35 @@
-import moment from 'moment'
+// import moment from 'moment'
+// dayjs().format()
+// moment.updateLocale('en', {
+//   relativeTime: {
+//     future: 'in %s',
+//     past: '%s ago',
+//     s: 'a few seconds',
+//     ss: '%d seconds',
+//     m: '1 min',
+//     mm: '%d mins',
+//     h: '1 hr',
+//     hh: '%d hrs',
+//     d: '1 d',
+//     dd: '%d d',
+//     w: '1 w',
+//     ww: '%d w',
+//     M: 'a m',
+//     MM: '%d m',
+//     y: 'a yr',
+//     yy: '%d yrs',
+//   },
+// })
 
-moment.updateLocale('en', {
-  relativeTime: {
-    future: 'in %s',
-    past: '%s ago',
-    s: 'a few seconds',
-    ss: '%d seconds',
-    m: '1 min',
-    mm: '%d mins',
-    h: '1 hr',
-    hh: '%d hrs',
-    d: '1 d',
-    dd: '%d d',
-    w: '1 w',
-    ww: '%d w',
-    M: 'a m',
-    MM: '%d m',
-    y: 'a yr',
-    yy: '%d yrs',
-  },
-})
+const dayjs = require('dayjs')
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(relativeTime)
 
-export const parseTimeUsingMoment = (timeString) => {
-  return moment(timeString).fromNow(true)
+export const getRelativeTime = (timeString) => {
+  return dayjs().to(dayjs(timeString))
 }
-export const parseStandardTimeUsingMoment = (timeString) => {
-  return moment(timeString).format('LT')
+export const getStandardTime = (timeString) => {
+  return dayjs(timeString).format('h:mm A')
 }
 
 export const shorten = (value) => {

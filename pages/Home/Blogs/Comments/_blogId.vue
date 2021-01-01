@@ -68,7 +68,7 @@
               }}</span>
               <span class="timestamp">
                 <span class="mdi mdi-clock-time-nine-outline" />
-                {{ parseTimeUsingMoment(comment.createdAt) }}
+                {{ getRelativeTime(comment.createdAt) }}
               </span>
             </p>
             <p class="message-body">{{ comment.message }}</p>
@@ -124,7 +124,7 @@ import endpoints from '@/api/endpoints'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import { parseTimeUsingMoment } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/global/RippleButton'
 
@@ -181,7 +181,7 @@ export default {
   },
 
   methods: {
-    parseTimeUsingMoment,
+    getRelativeTime,
     async setupUser() {
       const currentUser = await this.$store.getters['UserManagement/getUser']
       if (!currentUser) {

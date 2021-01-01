@@ -10,13 +10,13 @@
     </p>
     <p class="body">{{ ticket.issue.substr(0, 50) }}...</p>
     <section class="text-right">
-      <small>{{ parseTimeUsingMoment(ticket.updatedAt) }}</small>
+      <small>{{ getRelativeTime(ticket.updatedAt) }}</small>
     </section>
   </blockquote>
 </template>
 
 <script>
-import { parseTimeUsingMoment } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 
 export default {
   name: 'TicketCard',
@@ -27,7 +27,7 @@ export default {
     },
   },
   methods: {
-    parseTimeUsingMoment,
+    getRelativeTime,
   },
 }
 </script>

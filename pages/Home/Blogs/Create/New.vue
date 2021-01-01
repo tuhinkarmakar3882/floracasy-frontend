@@ -421,7 +421,7 @@
           </h3>
           <small class="timestamp">
             <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parseTimeUsingMoment(new Date()) }}
+            {{ getRelativeTime(new Date()) }}
           </small>
           <img
             class="mt-5 blog-intro-image"
@@ -446,7 +446,7 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
-import { parseTimeUsingMoment } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
@@ -628,7 +628,7 @@ export default {
       }
     },
 
-    parseTimeUsingMoment,
+    getRelativeTime,
 
     goToNextStep() {
       this.step++

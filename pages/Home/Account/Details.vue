@@ -99,7 +99,7 @@
             <h6>{{ activity.title }}</h6>
             <p>{{ activity.subtitle.substr(0, 30) }}...</p>
             <small style="font-size: 13px">
-              {{ parseTimeUsingMoment(activity.createdAt) }}</small
+              {{ getRelativeTime(activity.createdAt) }}</small
             >
           </div>
         </article>
@@ -150,7 +150,7 @@ import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { parseTimeUsingMoment } from '~/utils/utility'
+import { getRelativeTime } from '~/utils/utility'
 
 export default {
   name: 'Details',
@@ -201,7 +201,7 @@ export default {
   },
 
   methods: {
-    parseTimeUsingMoment,
+    getRelativeTime,
     async infiniteHandler($state) {
       try {
         const { results, next } = await this.$axios.$get(
