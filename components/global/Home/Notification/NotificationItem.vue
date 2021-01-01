@@ -2,12 +2,7 @@
   <div
     v-ripple="notification.notificationType.color + '55'"
     class="notification-item"
-    @click="
-      dispatchNotificationAction(
-        notification.onclickAction,
-        notification.onclickActionInfo
-      )
-    "
+    @click="performNotificationAction"
   >
     <p
       :class="notification.notificationType.icon"
@@ -27,6 +22,7 @@
 
 <script>
 import { getRelativeTime } from '@/utils/utility'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'NotificationItem',
@@ -40,8 +36,33 @@ export default {
 
   methods: {
     getRelativeTime,
-    dispatchNotificationAction(actionName, actionInfo) {
-      console.log(actionName, actionInfo)
+
+    async performNotificationAction() {
+      switch (this.notification.onclickAction) {
+        case 'open_blog':
+          console.log(this.notification.onclickActionInfo)
+          break
+        case 'open_ticket_detail':
+          console.log(this.notification.onclickActionInfo)
+          await this.$router.push(
+            navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index
+          )
+          break
+        case 'open_profile_details':
+          await this.$router.push(
+            navigationRoutes.Home.Account.Overview.replace(
+              '{userUID}',
+              this.notification.onclickActionInfo.followerUID
+            )
+          )
+          break
+        case 'open_comment_page':
+          console.log(this.notification.onclickActionInfo)
+          break
+        default:
+          console.log('NOT_IMPLEMENTED', this.notification.onclickAction)
+          break
+      }
     },
   },
 }
