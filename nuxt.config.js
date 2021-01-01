@@ -47,11 +47,21 @@ export default {
   ],
 
   buildModules: [
-    '@nuxtjs/tailwindcss',
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
+    '@nuxtjs/tailwindcss',
+    'nuxt-purgecss',
     'nuxt-compress',
   ],
+
+  purgecss: {
+    content: [
+      './pages/**/*.vue',
+      './layouts/**/*.vue',
+      './components/**/*.vue',
+    ],
+    whitelist: ['html', 'body'],
+  },
 
   'nuxt-compress': {
     gzip: {

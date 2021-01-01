@@ -10,7 +10,7 @@
       <button
         v-ripple=""
         class="secondary-btn mb-4 mx-2"
-        @click="alert('Will be implemented shortly')"
+        @click="requestPermission"
       >
         Yes
       </button>
@@ -72,6 +72,11 @@ export default {
   },
 
   methods: {
+    requestPermission() {
+      Notification.requestPermission()
+        .then((permission) => console.log(permission))
+        .catch((error) => console.error(error))
+    },
     showMaybeAndCollapse() {
       this.maybe = true
 
