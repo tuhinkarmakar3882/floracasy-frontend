@@ -27,6 +27,10 @@ export const navigationRoutes = {
       Details: '/Home/Blogs/Details/{id}',
     },
 
+    Community: {
+      index: '/Home/Community',
+    },
+
     Messages: {
       index: '/Home/Messages',
       ChatScreen: '/Home/Messages/ChatScreen/{messageThreadId}',
