@@ -47,9 +47,9 @@ export default {
   ],
 
   buildModules: [
+    '@nuxtjs/tailwindcss',
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/tailwindcss',
     'nuxt-compress',
   ],
 
@@ -78,6 +78,28 @@ export default {
       pages: true,
       commons: true,
     },
+
+    postcss: {
+      plugins: {
+        'postcss-import': {},
+        'postcss-url': {},
+        'postcss-preset-env': this.preset,
+        cssnano: {
+          preset: [
+            'default',
+            {
+              discardComments: {
+                removeAll: true,
+              },
+            },
+          ],
+        },
+      },
+      order: 'presetEnvAndCssnanoLast',
+      preset: {
+        stage: 2,
+      },
+    },
   },
 
   render: {
@@ -103,7 +125,7 @@ export default {
     baseURL: secrets.baseUrl,
   },
 
-  css: ['~/styles/main.scss'],
+  css: ['~/styles/main.scss', '@mdi/font/css/materialdesignicons.min.css'],
   head: {
     titleTemplate: '%s - Floracasy',
     title: process.env.npm_package_name || '',
@@ -113,8 +135,7 @@ export default {
       },
       {
         name: 'viewport',
-        content:
-          'width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no',
+        content: 'width=device-width, initial-scale=1, shrink-to-fit=no',
       },
       {
         hid: 'description',
@@ -135,22 +156,22 @@ export default {
         href: 'https://fonts.gstatic.com/',
       },
       {
-        rel: 'preconnect',
-        crossorigin: true,
-        href: 'https://cdn.materialdesignicons.com/',
-      },
-      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&family=Raleway:wght@300;400&display=swap',
       },
-      {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href:
-          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-      },
+      // {
+      //   rel: 'preconnect',
+      //   crossorigin: true,
+      //   href: 'https://cdn.materialdesignicons.com/',
+      // },
+      // {
+      //   rel: 'stylesheet',
+      //   type: 'text/css',
+      //   href:
+      //     'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+      // },
     ],
   },
 

@@ -11,6 +11,7 @@
           :key="option.id"
           v-ripple="'rgba(255, 255, 255, .2)'"
           :to="option.route"
+          :aria-label="option.text"
         >
           <h5
             class="mdi"
