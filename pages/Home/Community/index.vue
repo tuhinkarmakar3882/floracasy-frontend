@@ -13,16 +13,23 @@ export default {
   data() {
     return {
       navigationRoutes,
+      pageTitle: 'Community',
     }
   },
 
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
-      linkPosition: -1,
+      linkPosition: 1,
     })
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
-      linkPosition: 0,
+      linkPosition: -1,
     })
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
   },
 }
 </script>
