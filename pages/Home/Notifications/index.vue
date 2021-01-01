@@ -117,7 +117,7 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch('BottomNavigation/updateNewContent', {
+    await this.$store.dispatch('NavigationState/updateNewContent', {
       position: 3,
       value: false,
     })
@@ -139,8 +139,11 @@ export default {
           (parseInt(hideNotificationConsent) - 1).toString()
         )
     }
-    await this.$store.dispatch('BottomNavigation/update', {
+    await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: 3,
+    })
+    await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
+      linkPosition: -1,
     })
 
     this.isContentLoading = false

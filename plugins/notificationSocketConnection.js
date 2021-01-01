@@ -39,7 +39,7 @@ export default async ({ store, $cookies }) => {
 
     reconnectingSocket.onmessage = async (e) => {
       const data = JSON.parse(e.data)
-      await store.dispatch('BottomNavigation/updateNewContent', {
+      await store.dispatch('NavigationState/updateNewContent', {
         position: 3,
         value: true,
         dismissible: true,

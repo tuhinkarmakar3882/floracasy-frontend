@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-page">
     <Carousel
+      :visible="tabNumber !== 2"
       :carousel-items="carouselItems"
-      :style="[tabNumber === 2 && { height: 0 }]"
       style="overflow: hidden; transition: all 0.3s ease-in-out"
     />
 
@@ -108,7 +108,12 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch('BottomNavigation/update', { linkPosition: 0 })
+    await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
+      linkPosition: 0,
+    })
+    await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
+      linkPosition: -1,
+    })
     await this.setupUser()
   },
   methods: {

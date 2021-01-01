@@ -8,22 +8,11 @@
         background: 'url(' + item.image + ') no-repeat center',
         backgroundSize: 'cover',
         color: 'white',
+        paddingTop: visible ? '56.25%' : 0,
       }"
+      style="transition: all 0.3s ease-in-out"
       @click="$router.push(item.route)"
-    >
-      <!--      <h4 class="my-0">{{ item.name }}</h4>-->
-      <!--      <p style="margin: 20px 0 24px">-->
-      <!--        {{ item.body }}-->
-      <!--      </p>-->
-      <!--      <button-->
-      <!--        v-ripple=""-->
-      <!--        class="secondary-outlined-btn"-->
-      <!--        style="min-width: auto"-->
-      <!--        @click="sendNotification"-->
-      <!--      >-->
-      <!--        {{ item.buttonText || 'Go Now' }}-->
-      <!--      </button>-->
-    </article>
+    />
   </section>
 </template>
 
@@ -33,6 +22,10 @@ export default {
   props: {
     carouselItems: {
       type: Array,
+      required: true,
+    },
+    visible: {
+      type: Boolean,
       required: true,
     },
   },
@@ -57,7 +50,6 @@ export default {
     scroll-snap-stop: always;
     flex-shrink: 0;
     width: 100%;
-    padding-top: 56.25%;
     transform-origin: center center;
     position: relative;
     display: flex;
