@@ -1,6 +1,6 @@
 <template>
   <div
-    v-ripple="notification.notificationType.color + '55'"
+    v-ripple="fadedColor"
     class="notification-item"
     @click="performNotificationAction"
   >
@@ -34,21 +34,34 @@ export default {
     },
   },
 
+  computed: {
+    fadedColor() {
+      // return this.notification.notificationType.color + '55'
+      return '#FFAF0055'
+    },
+  },
+
   methods: {
     getRelativeTime,
 
     async performNotificationAction() {
+      const actionName = this.notification.onclickAction
+      const actionInfo = this.notification.onclickActionInfo
+
       switch (this.notification.onclickAction) {
         case 'open_blog':
-          console.log(this.notification.onclickActionInfo)
+          console.log(actionName, actionInfo)
           break
+
         case 'open_ticket_detail':
-          console.log(this.notification.onclickActionInfo)
+          console.log(actionName, actionInfo)
           await this.$router.push(
             navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index
           )
           break
+
         case 'open_profile_details':
+          console.log(actionName, actionInfo)
           await this.$router.push(
             navigationRoutes.Home.Account.Overview.replace(
               '{userUID}',
@@ -56,11 +69,13 @@ export default {
             )
           )
           break
+
         case 'open_comment_page':
-          console.log(this.notification.onclickActionInfo)
+          console.log(actionName, actionInfo)
           break
+
         default:
-          console.log('NOT_IMPLEMENTED', this.notification.onclickAction)
+          console.log('NOT_IMPLEMENTED', actionName, actionInfo)
           break
       }
     },
