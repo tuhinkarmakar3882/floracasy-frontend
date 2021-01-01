@@ -33,7 +33,12 @@
         </div>
         <p>
           <nuxt-link
-            :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+            :to="
+              navigationRoutes.Home.Account.Overview.replace(
+                '{userUID}',
+                blog.author.uid
+              )
+            "
             class="no-underline"
           >
             {{ blog.author.displayName }}
