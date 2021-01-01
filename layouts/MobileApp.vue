@@ -40,6 +40,7 @@
         :id="index === activeLink ? 'active-nav-link' : ''"
         :key="menuOption.id"
         v-ripple="'rgba(255, 255, 255, .2)'"
+        :aria-label="menuOption.text"
         @click="goto(menuOption.route)"
       >
         <span

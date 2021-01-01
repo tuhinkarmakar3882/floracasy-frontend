@@ -125,7 +125,11 @@ export default {
     baseURL: secrets.baseUrl,
   },
 
-  css: ['~/styles/main.scss', '@mdi/font/css/materialdesignicons.min.css'],
+  css: [
+    '~/styles/main.scss',
+    // '@mdi/font/css/materialdesignicons.min.css',
+  ],
+
   head: {
     titleTemplate: '%s - Floracasy',
     title: process.env.npm_package_name || '',
@@ -161,17 +165,17 @@ export default {
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&family=Raleway:wght@300;400&display=swap',
       },
-      // {
-      //   rel: 'preconnect',
-      //   crossorigin: true,
-      //   href: 'https://cdn.materialdesignicons.com/',
-      // },
-      // {
-      //   rel: 'stylesheet',
-      //   type: 'text/css',
-      //   href:
-      //     'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-      // },
+      {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: 'https://cdn.materialdesignicons.com/',
+      },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href:
+          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+      },
     ],
   },
 
