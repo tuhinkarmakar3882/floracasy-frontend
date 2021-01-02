@@ -16,7 +16,7 @@
         </span>
         <br />
         {{ getRelativeTime(notification.createdAt) }}
-        <span class="dot" />
+        <span v-if="notification.unread" class="dot" />
       </p>
     </section>
 
@@ -37,6 +37,7 @@
 <script>
 import { getRelativeTime } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'NotificationItem',
@@ -64,6 +65,8 @@ export default {
     getRelativeTime,
 
     async performNotificationAction() {
+      this.markAsRead()
+
       const actionName = this.notification.onclickAction
       const actionInfo = this.notification.onclickActionInfo
 
@@ -103,6 +106,16 @@ export default {
           console.log('NOT_IMPLEMENTED', actionName, actionInfo)
           break
       }
+    },
+
+    markAsRead() {
+      this.$axios
+        .$post(endpoints.notification_system.updateNotificationSeenStatus, {
+          identifier: this.notification.identifier,
+          is_read: true,
+        })
+        .then(() => (this.notification.unread = false))
+        .catch((e) => console.error(e))
     },
   },
 }

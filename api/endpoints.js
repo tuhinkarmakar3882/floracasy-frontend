@@ -43,7 +43,8 @@ const endpoints = {
     send: '/allow_authenticated/message_system/send/',
     threadDetail: '/allow_authenticated/message_system/threadDetail/',
 
-    markAsRead: '/allow_authenticated/message_system/markAsRead/',
+    markAsRead:
+      '/allow_authenticated/message_system/updateNotificationSeenStatus/',
     getMailBoxId: '/allow_authenticated/message_system/getMailBoxId/',
   },
   feedback_collection: {
@@ -63,6 +64,8 @@ const endpoints = {
   },
   notification_system: {
     fetch: '/allow_authenticated/notification_system/fetch/',
+    updateNotificationSeenStatus:
+      '/allow_authenticated/notification_system/update_notification_seen_status/',
     getNotificationChannelId:
       '/allow_authenticated/notification_system/get_my_notifications_channel_id/',
   },
