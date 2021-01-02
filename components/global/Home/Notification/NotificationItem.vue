@@ -29,7 +29,18 @@
         :modal-type="notification.onclickAction"
       >
         <template slot="title">
-          <h4>{{ notification.message }}</h4>
+          <h5>{{ notification.message }}</h5>
+        </template>
+
+        <template slot="body">
+          <section v-if="notification.onclickAction === 'open_comment_page'">
+            <blockquote>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+              debitis doloribus, eum excepturi facilis fugiat, inventore ipsum
+              itaque magni modi natus numquam porro rem, saepe sapiente sed
+              similique temporibus veritatis!
+            </blockquote>
+          </section>
         </template>
 
         <template slot="actions">

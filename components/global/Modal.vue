@@ -14,11 +14,11 @@
 
       <slot name="title" />
       <slot name="body" />
-
-      <p class="mt-8">What you do you like to do?</p>
     </main>
 
     <footer>
+      <p class="mb-4">What you do you like to do?</p>
+
       <slot name="actions" />
 
       <button
@@ -95,7 +95,9 @@ export default {
   }
 
   main {
-    padding-top: 10%;
+    padding-top: 36px;
+    max-height: 50vh;
+    overflow: auto;
 
     i {
       font-size: 40px;
@@ -103,7 +105,7 @@ export default {
   }
 
   footer {
-    padding-top: 10%;
+    padding-top: 20px;
     text-align: center;
   }
 }
