@@ -65,7 +65,7 @@ export default {
     getRelativeTime,
 
     async performNotificationAction() {
-      this.markAsRead()
+      this.notification.unread && this.markAsRead()
 
       const actionName = this.notification.onclickAction
       const actionInfo = this.notification.onclickActionInfo
