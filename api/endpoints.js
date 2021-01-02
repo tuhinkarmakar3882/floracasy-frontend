@@ -68,6 +68,7 @@ const endpoints = {
       '/allow_authenticated/notification_system/update_notification_seen_status/',
     getNotificationChannelId:
       '/allow_authenticated/notification_system/get_my_notifications_channel_id/',
+    markAllAsRead: '/allow_authenticated/notification_system/mark_all_as_read/',
   },
   profile_statistics: {
     detail: '/allow_authenticated/profile_statistics/detail/',
