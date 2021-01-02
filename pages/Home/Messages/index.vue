@@ -61,7 +61,7 @@
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { getRelativeTime } from '@/utils/utility'
+import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 
@@ -108,7 +108,7 @@ export default {
       try {
         const { results, next } = await this.$axios.$get(this.fetchThreads)
         if (results.length) {
-          this.fetchThreads = next
+          this.fetchThreads = processLink(next)
           this.messageThreads.push(...results)
           $state.loaded()
         } else {

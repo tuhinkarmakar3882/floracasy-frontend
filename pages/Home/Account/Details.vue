@@ -150,7 +150,7 @@ import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime } from '~/utils/utility'
+import { getRelativeTime, processLink } from '~/utils/utility'
 
 export default {
   name: 'Details',
@@ -209,7 +209,7 @@ export default {
           { params: { uid: this.user.uid } }
         )
         if (results.length) {
-          this.userBlogEndpoint = next
+          this.userBlogEndpoint = processLink(next)
           this.recentActivities.push(...results)
           $state.loaded()
         } else {

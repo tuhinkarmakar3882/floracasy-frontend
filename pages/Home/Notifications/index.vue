@@ -58,6 +58,7 @@ import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import NotificationItem from '~/components/global/Home/Notification/NotificationItem'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'Notifications',
@@ -122,7 +123,7 @@ export default {
           { params: { uid: this.user.uid } }
         )
         if (results.length) {
-          this.notificationEndpoint = next
+          this.notificationEndpoint = processLink(next)
           this.notifications.push(...results)
           $state.loaded()
         } else {
@@ -142,6 +143,7 @@ export default {
         .$post(endpoints.notification_system.markAllAsRead)
         .then(this.updateUI)
     },
+
     updateUI() {
       this.processingRequest = false
       this.processingRequestDone = true

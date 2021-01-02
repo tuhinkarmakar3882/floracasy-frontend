@@ -29,6 +29,7 @@ import endpoints from '@/api/endpoints'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import BlogPost from '@/components/global/BlogPost'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
@@ -74,7 +75,7 @@ export default {
           { params: { category_name: this.category } }
         )
         if (results.length) {
-          this.blogFetchCursorEndpoint = next
+          this.blogFetchCursorEndpoint = processLink(next)
           this.blogs.push(...results)
           $state.loaded()
         } else {

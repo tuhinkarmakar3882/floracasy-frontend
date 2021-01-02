@@ -42,6 +42,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import TicketCard from '@/components/global/TicketCard'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'Tickets',
@@ -65,7 +66,7 @@ export default {
           { params: { category_name: this.category } }
         )
         if (results.length) {
-          this.ticketFetchEndpoint = next
+          this.ticketFetchEndpoint = processLink(next)
           this.tickets.push(...results)
           $state.loaded()
         } else {

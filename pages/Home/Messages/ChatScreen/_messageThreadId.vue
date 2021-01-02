@@ -78,6 +78,7 @@ import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import MessageItem from '@/components/global/MessageItem.vue'
 import endpoints from '~/api/endpoints'
+import { processLink } from '~/utils/utility'
 
 export default {
   scrollToTop: false,
@@ -213,7 +214,7 @@ export default {
         })
         console.log(results)
         if (results.length) {
-          this.fetchMessages = next
+          this.fetchMessages = processLink(next)
           this.chatMessages.push(...results)
           $state.loaded()
         } else {

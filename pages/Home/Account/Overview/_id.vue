@@ -129,7 +129,7 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime } from '~/utils/utility'
+import { getRelativeTime, processLink } from '~/utils/utility'
 import RippleButton from '~/components/global/RippleButton'
 
 export default {
@@ -212,7 +212,7 @@ export default {
           { params: { uid: this.$route.params.id } }
         )
         if (results.length) {
-          this.userBlogEndpoint = next
+          this.userBlogEndpoint = processLink(next)
           this.recentActivities.push(...results)
           $state.loaded()
         } else {

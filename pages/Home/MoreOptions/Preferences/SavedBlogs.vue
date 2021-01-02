@@ -36,6 +36,7 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'SavedBlogs',
@@ -61,7 +62,7 @@ export default {
           this.savedBlogFetchEndpoint
         )
         if (results.length) {
-          this.savedBlogFetchEndpoint = next
+          this.savedBlogFetchEndpoint = processLink(next)
           this.blogs.push(...results)
           $state.loaded()
         } else {
