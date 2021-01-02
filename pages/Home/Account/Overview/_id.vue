@@ -129,7 +129,7 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { parseTimeUsingMoment } from '~/utils/utility'
+import { getRelativeTime } from '~/utils/utility'
 import RippleButton from '~/components/global/RippleButton'
 
 export default {
@@ -195,7 +195,7 @@ export default {
   },
 
   methods: {
-    parseTimeUsingMoment,
+    getRelativeTime,
 
     async setupUser() {
       const currentUser = await this.$store.getters['UserManagement/getUser']

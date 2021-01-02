@@ -3,6 +3,7 @@
     custom-header
     class="create-new-blog-page"
     :on-back="navigationRoutes.Home.Blogs.Create.index"
+    auto-hide
   >
     <template slot="app-bar-custom-header">
       <h5
@@ -17,8 +18,10 @@
           v-if="step === 1"
           v-ripple=""
           class="px-8"
-          :class="!(hasTitle && hasSubtitle) ? 'disabled-btn' : 'secondary-btn'"
-          :disabled="!(hasTitle && hasSubtitle)"
+          :class="
+            !(hasTitle && hasBlogCategory) ? 'disabled-btn' : 'secondary-btn'
+          "
+          :disabled="!(hasTitle && hasBlogCategory)"
           @click="goToNextStep"
         >
           Next
@@ -27,21 +30,6 @@
         <button
           v-if="step === 2"
           v-ripple=""
-          class="px-8"
-          :class="
-            !(hasCoverImageUrl && hasCoverImageUrl)
-              ? 'disabled-btn'
-              : 'secondary-btn'
-          "
-          :disabled="!(hasCoverImageUrl && hasCoverImageUrl)"
-          @click="goToNextStep"
-        >
-          Next
-        </button>
-
-        <button
-          v-if="step === 3"
-          v-ripple=""
           class="secondary-btn px-7"
           @click="goToNextStep"
         >
@@ -49,7 +37,7 @@
         </button>
 
         <button
-          v-if="step === 4"
+          v-if="step === 3"
           v-ripple=""
           class="secondary-btn px-7"
           @click="publish"
@@ -61,8 +49,8 @@
 
     <template slot="main">
       <div v-if="step === 1" class="px-4 mt-4">
-        <h5 class="heading-title mb-8">What is it about?</h5>
-        <div class="material-form-field mt-8">
+        <h5 class="heading-title mb-8">Basic Details</h5>
+        <div class="material-form-field mt-2">
           <input
             id="blog-title"
             ref="blogTitle"
@@ -96,10 +84,6 @@
             Subtitle
           </label>
         </div>
-      </div>
-
-      <div v-else-if="step === 2" class="px-4 mt-4">
-        <h5 class="heading-title mb-8">Add Details</h5>
 
         <div class="material-form-field mt-2">
           <input
@@ -122,10 +106,10 @@
           </label>
         </div>
 
-        <div class="mt-8">
-          <label for="blog-category" style="font-size: 20px"
-            >Enter the Blog Category</label
-          >
+        <div class="mt-2">
+          <label for="blog-category" style="font-size: 20px">
+            Enter the Blog Category
+          </label>
           <div class="my-5">
             <select
               id="blog-category"
@@ -146,12 +130,15 @@
         </div>
       </div>
 
-      <div v-else-if="step === 3">
+      <div v-else-if="step === 2">
         <h5 class="heading-title mb-8">Write the Blog below</h5>
         <client-only>
           <div class="editor">
-            <editor-menu-bar v-slot="{ commands, isActive }" :editor="editor">
-              <div class="menubar">
+            <editor-menu-bar
+              v-slot="{ commands, isActive, focused }"
+              :editor="editor"
+            >
+              <div class="menubar is-hidden" :class="{ 'is-focused': focused }">
                 <!--Basic-->
                 <button
                   v-ripple="'#0000005f'"
@@ -195,6 +182,16 @@
                 >
                   <i class="mdi mdi-code-tags" />
                 </button>
+
+                <!--                image code-->
+                <!--                <button-->
+                <!--                  v-ripple="'#0000005f'"-->
+                <!--                  class="menubar__button"-->
+                <!--                  :class="{ 'is-active': isActive.code() }"-->
+                <!--                  @click="commands.image"-->
+                <!--                >-->
+                <!--                  <i class="mdi mdi-file" />-->
+                <!--                </button>-->
 
                 <!--Paragraph-->
                 <button
@@ -401,7 +398,7 @@
         </client-only>
       </div>
 
-      <div v-else-if="step === 4" class="steps mt-4">
+      <div v-else-if="step === 3" class="steps mt-4">
         <h5 class="heading-title mb-8">Preview</h5>
         <section class="px-4 blog-body">
           <p class="mb-2">
@@ -424,7 +421,7 @@
           </h3>
           <small class="timestamp">
             <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parseTimeUsingMoment(new Date()) }}
+            {{ getRelativeTime(new Date()) }}
           </small>
           <img
             class="mt-5 blog-intro-image"
@@ -449,7 +446,7 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
-import { parseTimeUsingMoment } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
@@ -544,7 +541,7 @@ export default {
   watch: {
     blogCategory(newContent) {
       localStorage.setItem('blogCategory', newContent)
-      this.hasBlogCategory = newContent.length > 0
+      this.hasBlogCategory = !!newContent
     },
     blogSubtitle(newContent) {
       localStorage.setItem('blogSubtitle', newContent)
@@ -566,21 +563,6 @@ export default {
       this.loadingProfile = true
       await this.$store.dispatch('UserManagement/fetchData')
     }
-    this.blogTitle = localStorage.getItem('blogTitle')
-    this.blogSubtitle = localStorage.getItem('blogSubtitle')
-    this.blogCategory = localStorage.getItem('blogCategory')
-    this.coverImageUrl = localStorage.getItem('coverImageUrl')
-
-    this.hasTitle = this.blogTitle ? this.blogTitle.trim().length > 0 : false
-    this.hasSubtitle = this.blogSubtitle
-      ? this.blogSubtitle.trim().length > 0
-      : false
-    this.hasBlogCategory = this.blogCategory
-      ? this.blogCategory.trim().length > 0
-      : false
-    this.hasCoverImageUrl = this.coverImageUrl
-      ? this.coverImageUrl.trim().length > 0
-      : false
 
     this.editor = new Editor({
       extensions: [
@@ -614,7 +596,7 @@ export default {
           emptyEditorClass: 'is-editor-empty',
           emptyNodeClass: 'is-empty',
           emptyNodeText:
-            '[Placeholder] Your Writing Journey Restarts from here...[ Just Start Typing ]',
+            'Your Writing Journey Restarts from here...[ Just Start Typing ]',
           showOnlyWhenEditable: true,
           showOnlyCurrent: false,
         }),
@@ -646,7 +628,7 @@ export default {
       }
     },
 
-    parseTimeUsingMoment,
+    getRelativeTime,
 
     goToNextStep() {
       this.step++
@@ -685,6 +667,11 @@ export default {
 <style lang="scss">
 @import 'assets/all-variables';
 
+$inactive-background: #e8f8f5;
+$inactive-color: #7a7a7a;
+$active-background: $primary-matte;
+$active-color: $white;
+
 .create-new-blog-page {
   button {
     min-width: auto;
@@ -718,21 +705,21 @@ export default {
 
     .menubar {
       text-align: center;
-      background: wheat;
+      background: $inactive-background;
       position: sticky;
-      top: 56px;
-      z-index: 12345678909876543;
-      color: black;
+      top: 0;
+      z-index: $bring-to-front - 1;
+      color: $inactive-color;
+      font-weight: 300;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 120px;
       flex-wrap: wrap;
-      overflow: auto;
       width: 100%;
       margin: 0;
       padding: 0;
+      transition: all 0.3s ease-in-out;
 
       .menubar__button {
         margin: 0;
@@ -741,18 +728,32 @@ export default {
         width: 60px;
         font-size: 28px;
         height: 60px;
+        outline: 0 none;
 
         &.is-active {
-          color: red;
+          color: $active-color;
+          background: $active-background;
+          outline: 0 none;
+          box-shadow: 0 0 4px $card-background;
         }
       }
     }
 
+    .is-hidden {
+      height: 0;
+      overflow: hidden;
+    }
+
+    .is-focused {
+      height: 60px;
+      overflow: auto;
+    }
+
     .editor__content {
-      background: #000;
+      background: $nav-bar-bg;
 
       .ProseMirror {
-        min-height: calc(100vh - 220px);
+        min-height: calc(100vh - 132px);
 
         &.ProseMirror-focused {
           outline: none 0 !important;

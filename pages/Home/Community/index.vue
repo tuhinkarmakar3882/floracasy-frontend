@@ -1,5 +1,11 @@
 <template>
-  <h1>Community Page</h1>
+  <div class="community-page">
+    <p class="text-center premium">
+      <span class="mdi mdi-earth" />
+      <br />
+      <span>Community</span>
+    </p>
+  </div>
 </template>
 
 <script>
@@ -33,3 +39,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.community-page {
+  min-height: calc(100vh - 112px);
+  display: grid;
+  place-items: center;
+}
+</style>

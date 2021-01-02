@@ -11,13 +11,14 @@
           :key="option.id"
           v-ripple="'rgba(255, 255, 255, .2)'"
           :to="option.route"
+          :aria-label="option.text"
         >
           <h5
             class="mdi"
             :class="
               index === topNavActiveLink
                 ? [option.activeIcon, 'secondary']
-                : option.icon
+                : [option.icon, 'muted']
             "
           />
         </nuxt-link>
@@ -39,6 +40,7 @@
         :id="index === activeLink ? 'active-nav-link' : ''"
         :key="menuOption.id"
         v-ripple="'rgba(255, 255, 255, .2)'"
+        :aria-label="menuOption.text"
         @click="goto(menuOption.route)"
       >
         <span

@@ -29,7 +29,7 @@
           </p>
           <small class="time-stamp">
             <span class="mdi mdi-clock-time-nine-outline mr-1" />
-            {{ parseTimeUsingMoment(messageThread.updatedAt) }}
+            {{ getRelativeTime(messageThread.updatedAt) }}
           </small>
         </section>
 
@@ -61,7 +61,7 @@
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { parseTimeUsingMoment } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 
@@ -90,7 +90,7 @@ export default {
   },
 
   methods: {
-    parseTimeUsingMoment,
+    getRelativeTime,
     getCount(countValue) {
       return countValue > 99 ? `${countValue.toString()}+` : countValue
     },

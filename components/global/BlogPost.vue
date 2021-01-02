@@ -4,7 +4,12 @@
       <p class="px-4 mb-2 top-line">
         <nuxt-link
           v-ripple=""
-          :to="navigationRoutes.Home.Account.Overview + blog.author.uid"
+          :to="
+            navigationRoutes.Home.Account.Overview.replace(
+              '{userUID}',
+              blog.author.uid
+            )
+          "
           class="no-underline"
         >
           {{ blog.author.displayName }}
