@@ -29,13 +29,42 @@
         :modal-type="notification.onclickAction"
       >
         <template slot="title">
-          <h4>{{ headerText }}</h4>
+          <h4>{{ notification.message }}</h4>
         </template>
 
         <template slot="actions">
-          <section>
-            <button v-ripple="" class="primary-btn my-4 mx-2">View Blog</button>
-            <button v-ripple="" class="secondary-outlined-btn my-4 mx-2">
+          <!--          Comment Notification Actions-->
+          <section v-if="notification.onclickAction === 'open_comment_page'">
+            <button
+              v-ripple=""
+              class="primary-btn my-4 mx-2"
+              @click="openCommentDetailsPage"
+            >
+              View Comment
+            </button>
+            <button
+              v-ripple=""
+              class="secondary-outlined-btn my-4 mx-2"
+              @click="openProfilePage('commentedBy')"
+            >
+              See Profile
+            </button>
+          </section>
+
+          <!--          Blog Like Notification Actions-->
+          <section v-else-if="notification.onclickAction === 'like_blog'">
+            <button
+              v-ripple=""
+              class="primary-btn my-4 mx-2"
+              @click="openBlogDetailsPage('identifier')"
+            >
+              View Blog
+            </button>
+            <button
+              v-ripple=""
+              class="secondary-outlined-btn my-4 mx-2"
+              @click="openProfilePage('liked_by')"
+            >
               See Profile
             </button>
           </section>
@@ -70,23 +99,6 @@ export default {
     fadedColor() {
       return this.notification.notificationType.color + '55'
     },
-    headerText() {
-      const actionName = this.notification.onclickAction
-
-      switch (actionName) {
-        case 'like_blog':
-          return this.notification.message
-
-        case 'open_ticket_detail':
-          return `NOT_IMPLEMENTED - ${actionName}`
-
-        case 'open_comment_page':
-          return `NOT_IMPLEMENTED - ${actionName}`
-
-        default:
-          return `NOT_IMPLEMENTED - ${actionName}`
-      }
-    },
   },
 
   methods: {
@@ -100,12 +112,7 @@ export default {
 
       switch (actionName) {
         case 'open_blog':
-          await this.$router.push(
-            navigationRoutes.Home.Blogs.Details.replace(
-              '{id}',
-              actionInfo.identifier
-            )
-          )
+          await this.openBlogDetailsPage('identifier')
           break
 
         case 'like_blog':
@@ -121,13 +128,7 @@ export default {
           break
 
         case 'open_profile_details':
-          console.log(actionName, actionInfo)
-          await this.$router.push(
-            navigationRoutes.Home.Account.Overview.replace(
-              '{userUID}',
-              this.notification.onclickActionInfo.followerUID
-            )
-          )
+          await this.openProfilePage('followerUID')
           break
 
         case 'open_comment_page':
@@ -152,6 +153,32 @@ export default {
 
     hideModal() {
       this.showModal = false
+    },
+
+    async openProfilePage(keyName) {
+      await this.$router.push(
+        navigationRoutes.Home.Account.Overview.replace(
+          '{userUID}',
+          this.notification.onclickActionInfo[keyName]
+        )
+      )
+    },
+
+    async openCommentDetailsPage() {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Comments.BlogId.replace(
+          '{BlogId}',
+          this.notification.onclickActionInfo.blogIdentifier
+        )
+      )
+    },
+    async openBlogDetailsPage(keyName) {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Details.replace(
+          '{id}',
+          this.notification.onclickActionInfo[keyName]
+        )
+      )
     },
   },
 }
