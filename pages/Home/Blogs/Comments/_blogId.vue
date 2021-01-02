@@ -24,7 +24,10 @@
             class="view-blog py-4"
             @click="
               $router.push(
-                navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id)
+                navigationRoutes.Home.Blogs.Details.replace(
+                  '{id}',
+                  blog.identifier
+                )
               )
             "
           >

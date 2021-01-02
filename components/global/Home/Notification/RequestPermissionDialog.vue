@@ -87,13 +87,14 @@ export default {
           case 'granted':
             this.success = true
             this.maybeLater = false
+            this.hideBanner()
             break
           case 'denied':
             this.success = false
             this.maybeLater = true
+            this.hideBanner()
             break
         }
-        this.hideBanner()
       })
     },
     showMaybeAndCollapse() {

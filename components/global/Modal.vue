@@ -54,6 +54,8 @@ export default {
       switch (this.modalType) {
         case 'like_blog':
           return 'mdi mdi-heart'
+        case 'open_comment_page':
+          return 'mdi mdi-message-text'
         default:
           return 'mdi mdi-bell'
       }
@@ -65,7 +67,7 @@ export default {
 <style lang="scss" scoped>
 .modal-component {
   position: fixed;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
   width: 100%;
   height: calc(100% - 56px);
   top: 0;
@@ -73,7 +75,6 @@ export default {
   left: 0;
   box-shadow: 0 0 4px black;
   border-radius: 16px 0 16px 0;
-  backdrop-filter: blur(8px);
 
   button {
     min-width: auto;
@@ -107,6 +108,13 @@ export default {
   footer {
     padding-top: 20px;
     text-align: center;
+  }
+
+  @supports (
+    (-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))
+  ) {
+    backdrop-filter: blur(8px);
+    background: transparent;
   }
 }
 </style>

@@ -48,10 +48,10 @@
           <section v-if="notification.onclickAction === 'open_comment_page'">
             <button
               v-ripple=""
-              class="primary-btn my-4 mx-2"
+              class="primary-outlined-btn my-4 mx-2"
               @click="openCommentDetailsPage"
             >
-              View Comment
+              Send Reply
             </button>
             <button
               v-ripple=""
@@ -66,7 +66,7 @@
           <section v-else-if="notification.onclickAction === 'like_blog'">
             <button
               v-ripple=""
-              class="primary-btn my-4 mx-2"
+              class="primary-outlined-btn my-4 mx-2"
               @click="openBlogDetailsPage('identifier')"
             >
               View Blog
