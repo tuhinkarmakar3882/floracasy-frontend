@@ -1,8 +1,6 @@
 <template>
   <div
-    ref="banner-block"
-    :key="'banner-item'"
-    class="banner text-center mb-6 px-2"
+    class="request-permission-dialog text-center px-2"
     :style="[showBanner ? { height: '300px' } : {}]"
   >
     <section v-if="maybeLater">
@@ -101,7 +99,7 @@ export default {
     showMaybeAndCollapse() {
       this.success = false
       this.maybeLater = true
-      localStorage.setItem('hide-notification-consent', '2')
+      localStorage.setItem('hide-notification-consent', '120')
       this.hideBanner()
     },
 
@@ -113,3 +111,35 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.request-permission-dialog {
+  * {
+    transition: all 0.3s ease-in-out;
+  }
+
+  background-color: #191928;
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 14px;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+
+    button {
+      min-width: auto;
+      width: 148px;
+    }
+  }
+}
+</style>
