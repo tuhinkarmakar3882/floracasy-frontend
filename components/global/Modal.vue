@@ -1,16 +1,33 @@
 <template>
-  <div class="modal-component">
+  <div class="modal-component" :style="{ color: color }">
     <header>
-      <slot name="header" />
+      <span
+        v-ripple=""
+        class="mdi mdi-arrow-left px-4 py-2 my-0 danger-light"
+        @click="toggle"
+      />
+      <p>Notification Details</p>
     </header>
 
-    <main>
-      <slot name="main" />
+    <main class="px-4 text-center">
+      <i :class="getIconBasedOnModalType" />
+
+      <slot name="title" />
+      <slot name="body" />
+
+      <p class="mt-8">What you do you like to do?</p>
     </main>
 
     <footer>
-      <slot name="footer" />
-      <button @click="toggle">Hide</button>
+      <slot name="actions" />
+
+      <button
+        v-ripple=""
+        class="danger-outlined-btn my-5 mx-2 px-8"
+        @click="toggle"
+      >
+        Close
+      </button>
     </footer>
   </div>
 </template>
@@ -23,6 +40,24 @@ export default {
       type: Function,
       required: true,
     },
+    modalType: {
+      type: String,
+      required: true,
+    },
+    color: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    getIconBasedOnModalType() {
+      switch (this.modalType) {
+        case 'like_blog':
+          return 'mdi mdi-heart'
+        default:
+          return 'mdi mdi-bell'
+      }
+    },
   },
 }
 </script>
@@ -31,15 +66,10 @@ export default {
 .modal-component {
   position: fixed;
   background: rgba(0, 0, 0, 0.8);
-  color: #ff9090;
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: calc(100% - 56px);
   top: 0;
   z-index: 100000;
-  flex-direction: column;
   left: 0;
   box-shadow: 0 0 4px black;
   border-radius: 16px 0 16px 0;
@@ -48,6 +78,32 @@ export default {
   button {
     min-width: auto;
     width: auto;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #222;
+
+    span {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  main {
+    padding-top: 10%;
+    i {
+      font-size: 24px;
+    }
+  }
+
+  footer {
+    padding-top: 10%;
+    text-align: center;
   }
 }
 </style>
