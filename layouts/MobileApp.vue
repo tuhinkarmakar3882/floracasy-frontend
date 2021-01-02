@@ -18,7 +18,7 @@
             :class="
               index === topNavActiveLink
                 ? [option.activeIcon, 'secondary']
-                : option.icon
+                : [option.icon, 'muted']
             "
           />
         </nuxt-link>
