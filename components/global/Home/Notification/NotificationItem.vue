@@ -21,15 +21,19 @@
     </section>
 
     <transition name="gray-shift">
-      <section v-if="showModal" class="modal">
-        <h6>What do you want to do?</h6>
-        <aside>
-          <button class="secondary-outlined-btn" @click="showModal = false">
-            Action 1
-          </button>
-          <button class="secondary-outlined-btn">Action 2</button>
-        </aside>
-      </section>
+      <Modal
+        v-if="showModal"
+        class="modal"
+        :toggle="
+          () => {
+            showModal = false
+          }
+        "
+      >
+        <template slot="header">{{ headerText }}</template>
+        <template slot="main"> showModal = {{ showModal }} </template>
+        <template slot="footer" />
+      </Modal>
     </transition>
   </div>
 </template>
@@ -38,10 +42,11 @@
 import { getRelativeTime } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
+import Modal from '~/components/global/Modal'
 
 export default {
   name: 'NotificationItem',
-
+  components: { Modal },
   props: {
     notification: {
       type: Object,
@@ -56,8 +61,10 @@ export default {
 
   computed: {
     fadedColor() {
-      // return this.notification.notificationType.color + '55'
-      return '#FFAF0055'
+      return this.notification.notificationType.color + '55'
+    },
+    headerText() {
+      return 'What would you like to do?'
     },
   },
 
@@ -153,24 +160,6 @@ export default {
       background-color: $success-light;
       margin-left: $nano-unit;
       margin-bottom: $single-unit;
-    }
-  }
-
-  .modal {
-    position: fixed;
-    background: $card-background;
-    width: 100%;
-    height: calc(100vh - 112px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 56px;
-    z-index: 1;
-    flex-direction: column;
-
-    button {
-      min-width: auto;
-      width: auto;
     }
   }
 }
