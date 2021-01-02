@@ -6,6 +6,7 @@
       <NotificationItem
         v-for="notification in notifications"
         :key="notification.id"
+        class="notification-item py-4"
         :notification="notification"
       />
     </section>
@@ -149,6 +150,12 @@ export default {
         min-width: auto;
         width: 148px;
       }
+    }
+  }
+
+  .notification-item {
+    &:nth-child(even) {
+      background-color: $nav-bar-bg;
     }
   }
 }
