@@ -3,6 +3,28 @@
     <RequestPermissionDialog />
 
     <section class="notifications">
+      <button
+        v-ripple="'#65db655f'"
+        class="success my-4 px-4 ml-auto"
+        style="
+          display: flex;
+          align-items: center;
+          justify-items: center;
+          box-shadow: none;
+        "
+        :disabled="processingRequest || processingRequestDone"
+        @click="markAllAsUnread"
+      >
+        <span
+          v-if="processingRequest"
+          class="mdi mdi-36px mdi-spin mdi-loading mx-auto"
+        />
+        <span
+          v-else-if="processingRequestDone"
+          class="mdi mdi-36px mdi-check mx-auto"
+        />
+        <span v-else class="mx-auto">Mark all as Read</span>
+      </button>
       <NotificationItem
         v-for="notification in notifications"
         :key="notification.id"
@@ -53,6 +75,8 @@ export default {
       navigationRoutes,
       pageTitle: 'Notifications',
       notifications: [],
+      processingRequestDone: false,
+      processingRequest: false,
       page: 1,
       notificationEndpoint: endpoints.notification_system.fetch,
     }
@@ -108,6 +132,24 @@ export default {
         $state.complete()
       }
     },
+
+    markAllAsUnread() {
+      this.processingRequest = true
+      for (const notification of this.notifications) {
+        notification.unread = false
+      }
+      this.$axios
+        .$post(endpoints.notification_system.markAllAsRead)
+        .then(this.updateUI)
+    },
+    updateUI() {
+      this.processingRequest = false
+      this.processingRequestDone = true
+      setTimeout(() => {
+        this.processingRequest = false
+        this.processingRequestDone = false
+      }, 2500)
+    },
   },
 
   head() {
@@ -125,32 +167,6 @@ export default {
 .notification-page {
   * {
     transition: all 0.3s ease-in-out;
-  }
-
-  .banner {
-    background-color: $card-background;
-    height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    p {
-      font-size: $standard-unit - $double-unit;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: center;
-
-      button {
-        min-width: auto;
-        width: 148px;
-      }
-    }
   }
 
   .notification-item {
