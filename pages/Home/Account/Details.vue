@@ -202,6 +202,7 @@ export default {
 
   methods: {
     getRelativeTime,
+
     async infiniteHandler($state) {
       try {
         const { results, next } = await this.$axios.$get(

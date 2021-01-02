@@ -100,8 +100,12 @@ export default {
 
       switch (actionName) {
         case 'open_blog':
-          this.showModal = true
-          console.log(actionName, actionInfo)
+          await this.$router.push(
+            navigationRoutes.Home.Blogs.Details.replace(
+              '{id}',
+              actionInfo.identifier
+            )
+          )
           break
 
         case 'like_blog':
@@ -127,6 +131,7 @@ export default {
           break
 
         case 'open_comment_page':
+          this.showModal = true
           console.log(actionName, actionInfo)
           break
 
