@@ -83,5 +83,5 @@ export const blogImageParser = (blogToBeRendered) => {
 }
 
 export const processLink = (link) => {
-  return `allow_authenticated${link.substr(21)}`
+  return link ? `allow_authenticated${link.substr(21)}` : null
 }
