@@ -24,15 +24,22 @@
       <Modal
         v-if="showModal"
         class="modal"
-        :toggle="
-          () => {
-            showModal = false
-          }
-        "
+        :toggle="hideModal"
+        :color="notification.notificationType.color"
+        :modal-type="notification.onclickAction"
       >
-        <template slot="header">{{ headerText }}</template>
-        <template slot="main"> showModal = {{ showModal }} </template>
-        <template slot="footer" />
+        <template slot="title">
+          <h4>{{ headerText }}</h4>
+        </template>
+
+        <template slot="actions">
+          <section>
+            <button v-ripple="" class="primary-btn my-4 mx-2">View Blog</button>
+            <button v-ripple="" class="secondary-outlined-btn my-4 mx-2">
+              See Profile
+            </button>
+          </section>
+        </template>
       </Modal>
     </transition>
   </div>
@@ -64,7 +71,21 @@ export default {
       return this.notification.notificationType.color + '55'
     },
     headerText() {
-      return 'What would you like to do?'
+      const actionName = this.notification.onclickAction
+
+      switch (actionName) {
+        case 'like_blog':
+          return this.notification.message
+
+        case 'open_ticket_detail':
+          return `NOT_IMPLEMENTED - ${actionName}`
+
+        case 'open_comment_page':
+          return `NOT_IMPLEMENTED - ${actionName}`
+
+        default:
+          return `NOT_IMPLEMENTED - ${actionName}`
+      }
     },
   },
 
@@ -122,7 +143,10 @@ export default {
           is_read: true,
         })
         .then(() => (this.notification.unread = false))
-        .catch((e) => console.error(e))
+    },
+
+    hideModal() {
+      this.showModal = false
     },
   },
 }
