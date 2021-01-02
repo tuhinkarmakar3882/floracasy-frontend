@@ -667,6 +667,11 @@ export default {
 <style lang="scss">
 @import 'assets/all-variables';
 
+$inactive-background: #e8f8f5;
+$inactive-color: #7a7a7a;
+$active-background: $primary-matte;
+$active-color: $white;
+
 .create-new-blog-page {
   button {
     min-width: auto;
@@ -700,11 +705,11 @@ export default {
 
     .menubar {
       text-align: center;
-      background: #ffd27d;
+      background: $inactive-background;
       position: sticky;
       top: 0;
       z-index: $bring-to-front - 1;
-      color: black;
+      color: $inactive-color;
       font-weight: 300;
       display: flex;
       flex-direction: column;
@@ -723,9 +728,13 @@ export default {
         width: 60px;
         font-size: 28px;
         height: 60px;
+        outline: 0 none;
 
         &.is-active {
-          color: red !important;
+          color: $active-color;
+          background: $active-background;
+          outline: 0 none;
+          box-shadow: 0 0 4px $card-background;
         }
       }
     }
