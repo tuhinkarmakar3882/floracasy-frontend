@@ -81,3 +81,7 @@ export const blogImageParser = (blogToBeRendered) => {
 
   return defaultImagePath
 }
+
+export const processLink = (link) => {
+  return `allow_authenticated${link.substr(21)}`
+}
