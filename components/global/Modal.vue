@@ -96,8 +96,9 @@ export default {
 
   main {
     padding-top: 10%;
+
     i {
-      font-size: 24px;
+      font-size: 40px;
     }
   }
 
