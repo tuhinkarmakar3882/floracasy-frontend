@@ -206,6 +206,10 @@ export default {
 
     async infiniteHandler($state) {
       await this.setupUser()
+      if (!this.fetchMessages) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(this.fetchMessages, {
           params: {

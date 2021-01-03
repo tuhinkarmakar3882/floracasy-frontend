@@ -57,6 +57,10 @@ export default {
   mounted() {},
   methods: {
     async infiniteHandler($state) {
+      if (!this.savedBlogFetchEndpoint) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(
           this.savedBlogFetchEndpoint

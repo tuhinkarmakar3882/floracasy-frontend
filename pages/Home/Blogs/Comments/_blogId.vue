@@ -200,6 +200,10 @@ export default {
 
     async infiniteHandler($state) {
       await this.setupUser()
+      if (!this.fetchCommentsEndpoint) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(
           this.fetchCommentsEndpoint,

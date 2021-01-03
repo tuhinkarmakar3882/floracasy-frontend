@@ -69,6 +69,11 @@ export default {
 
   methods: {
     async infiniteHandler($state) {
+      if (!this.blogFetchCursorEndpoint) {
+        $state.complete()
+        return
+      }
+
       try {
         const { results, next } = await this.$axios.$get(
           this.blogFetchCursorEndpoint,

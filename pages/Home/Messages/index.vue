@@ -105,6 +105,12 @@ export default {
 
     async infiniteHandler($state) {
       await this.setupUser()
+
+      if (!this.fetchThreads) {
+        $state.complete()
+        return
+      }
+
       try {
         const { results, next } = await this.$axios.$get(this.fetchThreads)
         if (results.length) {

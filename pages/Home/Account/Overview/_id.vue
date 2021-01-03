@@ -206,6 +206,10 @@ export default {
     },
 
     async infiniteHandler($state) {
+      if (!this.userBlogEndpoint) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(
           this.userBlogEndpoint,

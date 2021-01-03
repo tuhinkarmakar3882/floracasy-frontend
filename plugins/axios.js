@@ -39,5 +39,5 @@ export default async function ({ $axios, $cookies, store }) {
     }
   })
 
-  // $axios.onRequest((req) => console.log(req.headers))
+  // $axios.onRequest((req) => console.log(req.url))
 }

@@ -60,6 +60,10 @@ export default {
 
   methods: {
     async infiniteHandler($state) {
+      if (!this.ticketFetchEndpoint) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(
           this.ticketFetchEndpoint,
