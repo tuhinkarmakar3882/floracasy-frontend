@@ -2,7 +2,7 @@
   <div class="community-page">
     <section class="top-actions pr-4 mt-6 mb-8">
       <div v-ripple class="add-post-btn px-4">
-        <span class="mdi mdi-camera mdi-36px secondary" />
+        <span class="mdi mdi-plus-box mdi-36px secondary" />
       </div>
 
       <div class="search-box">
