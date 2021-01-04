@@ -52,6 +52,8 @@
         </aside>
       </div>
     </section>
+
+    <hr class="faded-divider" />
   </div>
 </template>
 
@@ -83,7 +85,7 @@ export default {
         {
           user: {
             photoURL: 'https://picsum.photos/10',
-            displayName: 'Baire Chole Jachhe',
+            displayName: 'Somlata Dey',
           },
         },
         {
@@ -95,7 +97,7 @@ export default {
         {
           user: {
             photoURL: 'https://picsum.photos/10',
-            displayName: 'Alu De',
+            displayName: 'Tistua Bekar',
           },
         },
         {
@@ -107,13 +109,13 @@ export default {
         {
           user: {
             photoURL: 'https://picsum.photos/10',
-            displayName: 'Alan Walker',
+            displayName: 'Harry Potter',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
-            displayName: 'Alan Walker',
+            displayName: 'Tuhin Karmakar',
           },
         },
       ],
@@ -284,6 +286,10 @@ export default {
         }
       }
     }
+  }
+
+  .faded-divider {
+    background: linear-gradient(to right, #222, #111);
   }
 }
 </style>
