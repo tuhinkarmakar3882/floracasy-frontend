@@ -26,31 +26,12 @@
     </section>
 
     <section class="story-updates-container">
-      <div
+      <Story
         v-for="(story, index) in stories"
         :key="index"
-        v-ripple
-        class="story-update px-4 py-2"
-      >
-        <section class="wrapper mb-4">
-          <img
-            :src="story.user.photoURL + index"
-            :alt="story.user.photoURL"
-            height="72"
-            width="72"
-          />
-        </section>
-
-        <aside>
-          <p>
-            {{
-              story.user.displayName.length > 14
-                ? `${story.user.displayName.substr(0, 14)}...`
-                : story.user.displayName
-            }}
-          </p>
-        </aside>
-      </div>
+        class="px-4 py-2"
+        :story="story"
+      />
     </section>
 
     <hr class="faded-divider" />
@@ -59,9 +40,11 @@
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import Story from '~/components/global/Community/Story'
 
 export default {
   name: 'Community',
+  components: { Story },
   layout: 'MobileApp',
   // middleware: 'isAuthenticated',
 
@@ -72,49 +55,49 @@ export default {
       stories: [
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/101',
             displayName: 'Swagata Biswas',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/102',
             displayName: 'Dipti Mondal',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/103',
             displayName: 'Somlata Dey',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/104',
             displayName: 'Mosa Kamrachhe',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/105',
             displayName: 'Tistua Bekar',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
-            displayName: 'Thennarau WandaVision',
+            photoURL: 'https://picsum.photos/106',
+            displayName: 'Thennarasu WandaVision',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/107',
             displayName: 'Harry Potter',
           },
         },
         {
           user: {
-            photoURL: 'https://picsum.photos/10',
+            photoURL: 'https://picsum.photos/108',
             displayName: 'Tuhin Karmakar',
           },
         },
@@ -231,60 +214,6 @@ export default {
 
     &::-webkit-scrollbar {
       display: none;
-    }
-
-    .story-update {
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-
-      $wrapper-size: 74px;
-      $image-size: 64px;
-
-      .wrapper {
-        text-align: center;
-        position: relative;
-        min-height: $wrapper-size;
-        min-width: $wrapper-size;
-        display: grid;
-        place-items: center;
-
-        img {
-          min-height: $image-size;
-          height: $image-size;
-          min-width: $image-size;
-          width: $image-size;
-          object-fit: cover;
-          box-shadow: $default-box-shadow;
-          border-radius: 50%;
-        }
-
-        &::before {
-          content: '';
-          position: absolute;
-          height: $wrapper-size;
-          width: $wrapper-size;
-          top: 0;
-          left: 0;
-          z-index: -1;
-          border-radius: 50%;
-          border: 2px solid $secondary;
-        }
-      }
-
-      aside {
-        align-self: flex-start;
-        width: 100%;
-        height: 4ch;
-        overflow: hidden;
-
-        p {
-          font-weight: 300;
-          text-align: center;
-          font-size: 14px;
-          line-height: 1.48;
-        }
-      }
     }
   }
 
