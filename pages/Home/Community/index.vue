@@ -1,10 +1,15 @@
 <template>
   <div class="community-page">
-    <p class="text-center premium">
-      <span class="mdi mdi-earth" />
-      <br />
-      <span>Community</span>
-    </p>
+    <section class="story-updates py-2">
+      <div v-for="(story, index) in stories" :key="index" class="wrapper mx-4">
+        <img
+          :src="story.user.photoURL + index"
+          :alt="story.user.photoURL"
+          height="64"
+          width="64"
+        />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -14,12 +19,54 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
   name: 'Community',
   layout: 'MobileApp',
-  middleware: 'isAuthenticated',
+  // middleware: 'isAuthenticated',
 
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Community',
+      stories: [
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+        {
+          user: {
+            photoURL: 'https://picsum.photos/10',
+          },
+        },
+      ],
     }
   },
 
@@ -41,9 +88,50 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/all-variables';
+
 .community-page {
-  min-height: calc(100vh - 112px);
-  display: grid;
-  place-items: center;
+  .story-updates {
+    display: flex;
+    width: 100%;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    $wrapper-size: 74px;
+    $image-size: 64px;
+
+    .wrapper {
+      position: relative;
+      min-height: $wrapper-size;
+      min-width: $wrapper-size;
+      display: grid;
+      place-items: center;
+
+      img {
+        min-height: $image-size;
+        height: $image-size;
+        min-width: $image-size;
+        width: $image-size;
+        object-fit: cover;
+        box-shadow: $default-box-shadow;
+        border-radius: 50%;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        height: $wrapper-size;
+        width: $wrapper-size;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 50%;
+        border: 2px solid $secondary-highlight;
+      }
+    }
+  }
 }
 </style>
