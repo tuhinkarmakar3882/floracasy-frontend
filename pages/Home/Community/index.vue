@@ -1,9 +1,9 @@
 <template>
   <div class="community-page">
-    <section class="top-actions pr-4 mt-6 mb-8">
-      <div v-ripple class="add-post-btn px-4">
-        <span class="mdi mdi-plus-box mdi-36px secondary" />
-      </div>
+    <section class="top-actions px-4 my-6">
+      <!--      <div v-ripple class="add-post-btn px-4">-->
+      <!--        <span class="mdi mdi-plus-box mdi-36px secondary" />-->
+      <!--      </div>-->
 
       <div class="search-box">
         <input
@@ -25,14 +25,31 @@
       </div>
     </section>
 
-    <section class="story-updates py-2 px-4">
-      <div v-for="(story, index) in stories" :key="index" class="wrapper mx-4">
-        <img
-          :src="story.user.photoURL + index"
-          :alt="story.user.photoURL"
-          height="64"
-          width="64"
-        />
+    <section class="story-updates-container py-2">
+      <div
+        v-for="(story, index) in stories"
+        :key="index"
+        v-ripple
+        class="story-update px-4"
+      >
+        <section class="wrapper mb-4">
+          <img
+            :src="story.user.photoURL + index"
+            :alt="story.user.photoURL"
+            height="72"
+            width="72"
+          />
+        </section>
+
+        <aside>
+          <p>
+            {{
+              story.user.displayName.length > 14
+                ? `${story.user.displayName.substr(0, 14)}...`
+                : story.user.displayName
+            }}
+          </p>
+        </aside>
       </div>
     </section>
   </div>
@@ -54,41 +71,49 @@ export default {
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Swagata Biswas',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Dipti Mondal',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Baire Chole Jachhe',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Mosa Kamrachhe',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Alu De',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Thennarau WandaVision',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Alan Walker',
           },
         },
         {
           user: {
             photoURL: 'https://picsum.photos/10',
+            displayName: 'Alan Walker',
           },
         },
       ],
@@ -197,7 +222,7 @@ export default {
     }
   }
 
-  .story-updates {
+  .story-updates-container {
     display: flex;
     width: 100%;
     overflow: auto;
@@ -206,44 +231,56 @@ export default {
       display: none;
     }
 
-    $wrapper-size: 74px;
-    $image-size: 64px;
-
-    .wrapper {
-      position: relative;
-      min-height: $wrapper-size;
-      min-width: $wrapper-size;
+    .story-update {
       display: grid;
       place-items: center;
 
-      img {
-        min-height: $image-size;
-        height: $image-size;
-        min-width: $image-size;
-        width: $image-size;
-        object-fit: cover;
-        box-shadow: $default-box-shadow;
-        border-radius: 50%;
+      $wrapper-size: 74px;
+      $image-size: 64px;
+
+      .wrapper {
+        text-align: center;
+        position: relative;
+        min-height: $wrapper-size;
+        min-width: $wrapper-size;
+        display: grid;
+        place-items: center;
+
+        img {
+          min-height: $image-size;
+          height: $image-size;
+          min-width: $image-size;
+          width: $image-size;
+          object-fit: cover;
+          box-shadow: $default-box-shadow;
+          border-radius: 50%;
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          height: $wrapper-size;
+          width: $wrapper-size;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          border-radius: 50%;
+          border: 2px solid $secondary;
+        }
       }
 
-      &::before {
-        content: '';
-        position: absolute;
-        height: $wrapper-size;
-        width: $wrapper-size;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        border-radius: 50%;
-        border: 2px solid $secondary-highlight;
-      }
+      aside {
+        align-self: flex-start;
+        width: 100%;
+        height: 4ch;
+        overflow: hidden;
 
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
+        p {
+          font-weight: 300;
+          text-align: center;
+          font-size: 14px;
+          line-height: 1.48;
+        }
       }
     }
   }
