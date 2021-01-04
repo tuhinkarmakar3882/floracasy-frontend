@@ -39,7 +39,7 @@ export default {
 
   modules: [
     'nuxt-helmet',
-    // '~/module/csp.js',
+    '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
