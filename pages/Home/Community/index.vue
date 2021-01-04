@@ -12,6 +12,14 @@
     </section>
 
     <hr class="faded-divider" />
+
+    <section class="add-a-post px-4">
+      <h6 class="text-center">{ - Add a Post Section - }</h6>
+    </section>
+
+    <section class="posts-container px-4">
+      <FetchCommunityPosts />
+    </section>
   </div>
 </template>
 
@@ -19,10 +27,11 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import Story from '~/components/global/Community/Story'
 import TopActionBar from '~/components/global/Community/TopActionBar'
+import FetchCommunityPosts from '~/components/global/Community/FetchCommunityPosts'
 
 export default {
   name: 'Community',
-  components: { TopActionBar, Story },
+  components: { FetchCommunityPosts, TopActionBar, Story },
   layout: 'MobileApp',
   // middleware: 'isAuthenticated',
 
