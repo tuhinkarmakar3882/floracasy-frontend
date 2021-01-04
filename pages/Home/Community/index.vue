@@ -25,12 +25,12 @@
       </div>
     </section>
 
-    <section class="story-updates-container py-2">
+    <section class="story-updates-container">
       <div
         v-for="(story, index) in stories"
         :key="index"
         v-ripple
-        class="story-update px-4"
+        class="story-update px-4 py-2"
       >
         <section class="wrapper mb-4">
           <img
@@ -234,6 +234,7 @@ export default {
     .story-update {
       display: grid;
       place-items: center;
+      border-radius: 8px;
 
       $wrapper-size: 74px;
       $image-size: 64px;
