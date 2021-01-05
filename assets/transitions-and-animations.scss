@@ -22,20 +22,26 @@ $animation-duration: 300ms;
   filter: grayscale(100%);
 }
 
-.slide-left-enter-active, .slide-left-leave-active {
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-up-enter-active,
+.slide-up-leave-active {
   transition: all $animation-duration ease-in-out;
 }
 
 .slide-left-enter, .slide-left-leave-active {
-  transform: translateY(100px);
+  transform: translateX(100px);
   opacity: 0;
 }
 
-.slide-right-enter-active, .slide-right-leave-active {
-  transition: all $animation-duration ease-in-out;
+.slide-right-enter, .slide-right-leave-active {
+  transform: translateX(-100px);
+  opacity: 0;
 }
 
-.slide-right-enter, .slide-right-leave-active {
-  transform: translateY(-100px);
+.slide-up-enter, .slide-up-leave-active {
+  transform: translateY(100px);
   opacity: 0;
 }
