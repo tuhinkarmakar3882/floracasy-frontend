@@ -3,9 +3,9 @@
     <TopActionBar class="px-4 mt-5 mb-4" />
 
     <div class="story-updates-container">
-      <!--      <section class="top-line pl-4 mb-4">-->
-      <!--        <h6 class="py-4">Stories</h6>-->
-      <!--        <p v-ripple class="vibrant py-4 px-4">View All</p>-->
+      <!--      <section class="top-line pl-4">-->
+      <!--        <p class="py-2">Stories</p>-->
+      <!--        <p v-ripple class="vibrant py-2 px-4">View All</p>-->
       <!--      </section>-->
 
       <section class="stories">
