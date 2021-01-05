@@ -1,12 +1,12 @@
 <template>
   <div class="community-page">
-    <TopActionBar class="px-4 mt-6 mb-4" />
+    <TopActionBar class="px-4 mt-5 mb-4" />
 
     <div class="story-updates-container">
-      <section class="top-line pl-4 mb-4">
-        <h6 class="py-4">Stories</h6>
-        <p v-ripple class="vibrant py-4 px-4">View All</p>
-      </section>
+      <!--      <section class="top-line pl-4 mb-4">-->
+      <!--        <h6 class="py-4">Stories</h6>-->
+      <!--        <p v-ripple class="vibrant py-4 px-4">View All</p>-->
+      <!--      </section>-->
 
       <section class="stories">
         <div v-ripple class="add-a-story py-2 text-center">
@@ -30,7 +30,7 @@
       </section>
     </div>
 
-    <hr class="faded-divider" />
+    <hr class="faded-divider my-4" />
 
     <section class="add-a-post px-4">
       <h6 class="text-center">{ - Add a Post Section - }</h6>
@@ -188,11 +188,11 @@ export default {
           border-radius: 50%;
           background: $vibrant;
           right: 12px;
-          bottom: 56px;
+          bottom: 64px;
           color: #000;
           height: 24px;
           width: 24px;
-          font-size: 12px;
+          font-size: 14px;
           z-index: 1;
         }
       }
