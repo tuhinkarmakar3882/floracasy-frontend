@@ -1,6 +1,6 @@
 <template>
   <div class="follow-suggestions-component">
-    <h6 class="text-center">{ - FollowSuggestions - }</h6>
+    <code>FollowSuggestions.vue</code>
   </div>
 </template>
 
