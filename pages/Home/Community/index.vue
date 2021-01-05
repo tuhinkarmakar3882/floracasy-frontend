@@ -32,13 +32,7 @@
 
     <hr class="faded-divider my-4" />
 
-    <section class="add-a-post px-4">
-      <h6 class="text-center">{ - Add a Post Section - }</h6>
-    </section>
-
-    <section class="posts-container px-4">
-      <FetchCommunityPosts />
-    </section>
+    <FetchCommunityPosts class="px-4" />
   </div>
 </template>
 
@@ -197,10 +191,6 @@ export default {
         }
       }
     }
-  }
-
-  .faded-divider {
-    background: linear-gradient(to right, #222, #111);
   }
 }
 </style>
