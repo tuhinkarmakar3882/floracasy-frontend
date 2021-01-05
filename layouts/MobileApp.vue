@@ -27,7 +27,7 @@
 
     <main style="min-height: 100vh">
       <NotificationBadge
-        @click="navigateTo(navigationRoutes.Home.Notifications.index)"
+        @click="goto(navigationRoutes.Home.Notifications.index)"
       />
       <section class="main-router-content">
         <nuxt />
@@ -35,30 +35,76 @@
     </main>
 
     <footer>
-      <section
+      <div
         v-for="(menuOption, index) in bottomNavMenuOptions"
-        :id="index === activeLink ? 'active-nav-link' : ''"
         :key="menuOption.id"
-        v-ripple="'rgba(255, 255, 255, .2)'"
-        :aria-label="menuOption.text"
-        @click="goto(menuOption.route)"
       >
-        <span
-          :class="[
-            index !== activeLink ? menuOption.icon : menuOption.activeIcon,
-            newContentAvailable[index] ? 'has-notification' : '',
-          ]"
-          :style="{ fontSize: index === activeLink ? '22px' : '24px' }"
-          class="mdi menu-option-icon"
-        />
-        <small
-          class="menu-option-text"
-          :style="{ height: index === activeLink ? '20px' : 0 }"
+        <section
+          v-if="index !== 2"
+          :id="index === activeLink ? 'active-nav-link' : ''"
+          v-ripple="'rgba(255, 255, 255, .2)'"
+          :aria-label="menuOption.text"
+          @click="goto(menuOption.route)"
         >
-          {{ menuOption.text }}
-        </small>
-      </section>
+          <span
+            :class="[
+              index !== activeLink ? menuOption.icon : menuOption.activeIcon,
+              newContentAvailable[index] ? 'has-notification' : '',
+            ]"
+            :style="{ fontSize: index === activeLink ? '22px' : '24px' }"
+            class="mdi menu-option-icon"
+          />
+          <small
+            class="menu-option-text"
+            :style="{ height: index === activeLink ? '20px' : 0 }"
+          >
+            {{ menuOption.text }}
+          </small>
+        </section>
+
+        <section
+          v-else
+          v-ripple="'rgba(255, 255, 255, .2)'"
+          :class="showFragment ? 'active-nav-link' : ''"
+          :aria-label="menuOption.text"
+          @click="openCreateFragment"
+        >
+          <span
+            :class="showFragment ? menuOption.activeIcon : menuOption.icon"
+            :style="[
+              showFragment && { transform: 'rotate(45deg)' },
+              { fontSize: showFragment ? '36px' : '22px' },
+            ]"
+            class="mdi menu-option-icon"
+          />
+        </section>
+      </div>
     </footer>
+
+    <transition name="slide-up">
+      <aside v-if="showFragment">
+        <CustomListView>
+          <template slot="list-items">
+            <li
+              v-for="(option, index) in fragmentOptions"
+              :key="index"
+              v-ripple="`${option.color}5F`"
+              class="px-4 py-2"
+            >
+              <p>
+                <span
+                  class="icon"
+                  :class="option.icon"
+                  :style="{ color: option.color }"
+                />
+                <span class="option-name">{{ option.name }}</span>
+                <span class="mdi mdi-chevron-right arrow-go" />
+              </p>
+            </li>
+          </template>
+        </CustomListView>
+      </aside>
+    </transition>
   </div>
 </template>
 
@@ -66,16 +112,45 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
+import CustomListView from '~/components/global/Layout/CustomListView'
 
 export default {
   name: 'MobileApp',
-  components: { NotificationBadge },
+  components: { CustomListView, NotificationBadge },
+
   data() {
     return {
       navigationRoutes,
-      drawer: false,
+      showFragment: false,
+      fragmentOptions: [
+        {
+          name: 'Write New Blog',
+          icon: 'mdi mdi-pencil-circle',
+          color: '#f8e102',
+          route: navigationRoutes.Home.Blogs.Create.New,
+        },
+        {
+          name: 'Add New Post',
+          icon: 'mdi mdi-tooltip-plus',
+          color: '#8FF2E1',
+          route: navigationRoutes.Home.Blogs.Create.New,
+        },
+        {
+          name: 'Add New Story',
+          icon: 'mdi mdi-plus-box',
+          color: '#5dd75d',
+          route: navigationRoutes.Home.Blogs.Create.New,
+        },
+        // {
+        //   name: 'Start from Drafts',
+        //   icon: 'mdi mdi-file',
+        //   color: '#b377bd',
+        //   route: navigationRoutes.Home.Blogs.Create.Drafts,
+        // },
+      ],
     }
   },
+
   computed: {
     topNavActiveLink: {
       get() {
@@ -107,13 +182,30 @@ export default {
       return this.bottomNavMenuOptions[this.activeLink].color
     },
   },
+
+  mounted() {
+    this.$router.beforeEach((to, _, next) => {
+      if (to.hash === '') {
+        this.showFragment = false
+      }
+      next()
+    })
+  },
+
+  beforeDestroy() {
+    this.$router.beforeEach((__, _, next) => {
+      next()
+    })
+  },
+
   methods: {
-    navigateTo(path) {
-      this.$router.push(path)
-    },
     async goto(path) {
       await this.$router.push(path)
       window.scrollTo(0, 0)
+    },
+
+    openCreateFragment() {
+      this.showFragment = !this.showFragment
     },
   },
 }
@@ -140,7 +232,8 @@ export default {
     place-items: center;
     grid-template-columns: repeat(5, 1fr);
 
-    section {
+    section,
+    div {
       text-decoration: none;
       display: flex;
       justify-content: center;
@@ -181,6 +274,10 @@ export default {
     #active-nav-link {
       color: $secondary-highlight;
     }
+
+    .active-nav-link {
+      color: $danger-light;
+    }
   }
 
   header {
@@ -210,6 +307,21 @@ export default {
       margin-left: auto;
       margin-right: auto;
     }
+  }
+
+  aside {
+    text-align: center;
+    max-height: 50vh;
+    overflow: scroll;
+    width: 100%;
+    box-shadow: $up-only-box-shadow;
+    position: fixed;
+    bottom: 56px;
+    left: 0;
+    z-index: 1;
+    border-top-left-radius: 36px;
+    border-top-right-radius: 36px;
+    background: $segment-background;
   }
 }
 </style>
