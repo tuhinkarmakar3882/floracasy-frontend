@@ -112,6 +112,21 @@ export default {
     },
   },
 
+  mounted() {
+    this.$router.beforeEach((to, _, next) => {
+      if (to.hash === '') {
+        this.showModal = false
+      }
+      next()
+    })
+  },
+
+  beforeDestroy() {
+    this.$router.beforeEach((to, _, next) => {
+      next()
+    })
+  },
+
   methods: {
     getRelativeTime,
 
@@ -127,8 +142,7 @@ export default {
           break
 
         case 'like_blog':
-          this.showModal = true
-          console.log(actionName, actionInfo)
+          await this.openModal()
           break
 
         case 'open_ticket_detail':
@@ -143,8 +157,7 @@ export default {
           break
 
         case 'open_comment_page':
-          this.showModal = true
-          console.log(actionName, actionInfo)
+          await this.openModal()
           break
 
         default:
@@ -162,8 +175,14 @@ export default {
         .then(() => (this.notification.unread = false))
     },
 
-    hideModal() {
+    async hideModal() {
       this.showModal = false
+      await this.$router.back()
+    },
+
+    async openModal() {
+      await this.$router.push('#detail')
+      this.showModal = true
     },
 
     async openProfilePage(keyName) {

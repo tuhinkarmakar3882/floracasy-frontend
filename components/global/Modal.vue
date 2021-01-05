@@ -49,6 +49,7 @@ export default {
       required: true,
     },
   },
+
   computed: {
     getIconBasedOnModalType() {
       switch (this.modalType) {
