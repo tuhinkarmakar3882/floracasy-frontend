@@ -5,9 +5,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import FollowSuggestions from '~/components/global/Community/FollowSuggestions'
 import CommunityPost from '~/components/global/Community/CommunityPost'
+
+interface User {
+  displayName: string
+}
+
+interface Post {
+  id: number
+  user: User
+  isLiked: Boolean
+  totalLikes: number
+  totalShares: number
+  totalComments: number
+}
 
 export default {
   name: 'FetchCommunityPosts',
@@ -17,8 +30,15 @@ export default {
       posts: [
         {
           id: 1,
+          user: {
+            displayName: 'Tuhin Karmakar',
+          },
+          isLiked: true,
+          totalLikes: 2345,
+          totalShares: 428,
+          totalComments: 48,
         },
-      ],
+      ] as Post[],
     }
   },
 }
