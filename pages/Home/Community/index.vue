@@ -9,6 +9,18 @@
       </section>
 
       <section class="stories">
+        <div v-ripple class="add-a-story py-2 text-center">
+          <img
+            src="https://picsum.photos/100"
+            alt="image"
+            height="72"
+            width="72"
+            class="mb-4"
+          />
+          <span class="mdi mdi-plus" />
+          <small class="vibrant">Add New Story</small>
+        </div>
+
         <Story
           v-for="(story, index) in stories"
           :key="index"
@@ -153,6 +165,36 @@ export default {
 
       &::-webkit-scrollbar {
         display: none;
+      }
+
+      .add-a-story {
+        display: grid;
+        min-width: 100px;
+        place-items: center;
+        position: relative;
+        border-radius: 8px;
+
+        img {
+          size: 74px;
+          border-radius: 50%;
+        }
+
+        span {
+          position: absolute;
+          display: grid;
+          align-items: center;
+          justify-items: center;
+          place-items: center;
+          border-radius: 50%;
+          background: $vibrant;
+          right: 12px;
+          bottom: 56px;
+          color: #000;
+          height: 24px;
+          width: 24px;
+          font-size: 12px;
+          z-index: 1;
+        }
       }
     }
   }
