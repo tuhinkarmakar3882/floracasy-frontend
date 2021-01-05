@@ -90,6 +90,7 @@
               :key="index"
               v-ripple="`${option.color}5F`"
               class="px-4 py-2"
+              @click="goto(option.route)"
             >
               <p>
                 <span
