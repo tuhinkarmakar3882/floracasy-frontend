@@ -258,5 +258,13 @@ export default {
 
   telemetry: false,
 
+  typescript: {
+    typeCheck: {
+      eslint: {
+        files: './**/*.{ts,js,vue}',
+      },
+    },
+  },
+
   watch: ['~/module/csp.js'],
 }
