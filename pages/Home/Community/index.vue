@@ -1,15 +1,22 @@
 <template>
   <div class="community-page">
-    <TopActionBar class="px-4 my-6" />
+    <TopActionBar class="px-4 mt-6 mb-4" />
 
-    <section class="story-updates-container">
-      <Story
-        v-for="(story, index) in stories"
-        :key="index"
-        class="px-4 py-2"
-        :story="story"
-      />
-    </section>
+    <div class="story-updates-container">
+      <section class="top-line pl-4 mb-4">
+        <h6 class="py-4">Stories</h6>
+        <p v-ripple class="vibrant py-4 px-4">View All</p>
+      </section>
+
+      <section class="stories">
+        <Story
+          v-for="(story, index) in stories"
+          :key="index"
+          class="px-4 py-2"
+          :story="story"
+        />
+      </section>
+    </div>
 
     <hr class="faded-divider" />
 
@@ -114,12 +121,39 @@ export default {
 
 .community-page {
   .story-updates-container {
-    display: flex;
-    width: 100%;
-    overflow: auto;
+    .top-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-    &::-webkit-scrollbar {
-      display: none;
+      h6 {
+        margin: 0;
+        position: relative;
+
+        &::after {
+          content: '';
+          height: 2px;
+          width: 24px;
+          background: $primary-light;
+          bottom: 4px;
+          left: 0;
+          position: absolute;
+        }
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+
+    .stories {
+      display: flex;
+      width: 100%;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
