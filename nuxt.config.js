@@ -72,10 +72,10 @@ export default {
     },
   },
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: true,
+    server: true,
+  },
 
   router: {},
 
