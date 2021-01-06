@@ -2,8 +2,8 @@
   <div class="community-post-component">
     <section class="post-header">
       <img
-        :src="post.user.photoURL"
         :alt="post.user.displayName"
+        :src="post.user.photoURL"
         class="mr-3"
       />
       <div class="details">
@@ -25,8 +25,8 @@
     <section class="post-actions">
       <div v-ripple class="like" @click="like()">
         <i
-          class="mdi mr-2 inline-block align-middle"
           :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          class="mdi mr-2 inline-block align-middle"
         />
         <span class="value inline-block align-middle">
           {{ shorten(post.totalLikes) }}
