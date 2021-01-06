@@ -32,6 +32,18 @@ button {
   }
 }
 
+.vibrant-outlined-btn {
+  background-color: transparent;
+  color: lighten($vibrant, $darken-percentage);
+  border: $single-unit solid lighten($vibrant, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($vibrant, .1);
+    border-color: lighten($vibrant, $lighten-percentage);
+    color: lighten($vibrant, $lighten-percentage);
+  }
+}
+
 .secondary-outlined-btn {
   background-color: transparent;
   color: darken($secondary, $darken-percentage);
@@ -122,6 +134,16 @@ button {
 
   &:focus, &:hover, &:active {
     background-color: lighten($primary, $lighten-percentage);
+  }
+
+}
+
+.vibrant-btn {
+  color: $black;
+  background-color: darken($vibrant, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: lighten($vibrant, $lighten-percentage);
   }
 
 }

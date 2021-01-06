@@ -3,19 +3,22 @@
     <TopActionBar class="px-4 mt-5 mb-4" />
 
     <div class="story-updates-container">
-      <!--      <section class="top-line pl-4">-->
-      <!--        <p class="py-2">Stories</p>-->
-      <!--        <p v-ripple class="vibrant py-2 px-4">View All</p>-->
-      <!--      </section>-->
+      <section class="top-line pl-4">
+        <p class="py-2">
+          <span class="mdi mdi-party-popper primary-light" />
+          Stories
+        </p>
+        <p v-ripple class="vibrant py-2 px-4">View All</p>
+      </section>
 
       <section class="stories">
         <div v-ripple class="add-a-story py-2 text-center">
           <img
-            src="https://picsum.photos/100"
             alt="image"
-            height="72"
-            width="72"
             class="mb-4"
+            height="72"
+            src="https://picsum.photos/100"
+            width="72"
           />
           <span class="mdi mdi-plus" />
           <small class="vibrant">Add New Story</small>
@@ -24,29 +27,42 @@
         <Story
           v-for="(story, index) in stories"
           :key="index"
-          class="px-4 py-2"
           :story="story"
+          class="px-4 py-2"
         />
       </section>
     </div>
 
-    <hr class="faded-divider my-4" />
+    <hr class="faded-divider mt-6 mb-0" />
 
-    <FetchCommunityPosts class="px-4" />
+    <AddPostPreview v-ripple />
+
+    <hr class="faded-divider mt-0 mb-6" />
+
+    <p class="px-4" style="font-size: 14px">
+      <span class="mdi mdi-earth primary-light" />
+      Across The World
+    </p>
+    <FetchCommunityPosts />
   </div>
 </template>
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import Story from '~/components/global/Community/Story'
-import TopActionBar from '~/components/global/Community/TopActionBar'
-import FetchCommunityPosts from '~/components/global/Community/FetchCommunityPosts'
 
 export default {
   name: 'Community',
-  components: { FetchCommunityPosts, TopActionBar, Story },
+  components: {
+    AddPostPreview: () =>
+      import('@/components/global/Community/AddPostPreview'),
+    FetchCommunityPosts: () =>
+      import('@/components/global/Community/FetchCommunityPosts'),
+    TopActionBar: () => import('@/components/global/Community/TopActionBar'),
+    Story: () => import('@/components/global/Community/Story'),
+  },
+
   layout: 'MobileApp',
-  // middleware: 'isAuthenticated',
+  middleware: 'isAuthenticated',
 
   data() {
     return {

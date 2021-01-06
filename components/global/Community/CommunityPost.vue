@@ -1,10 +1,14 @@
 <template>
   <div class="community-post-component">
     <section class="post-header">
-      <img src="https://picsum.photos/100" alt="1234567890" class="mr-3" />
+      <img
+        :alt="post.user.displayName"
+        :src="post.user.photoURL"
+        class="mr-3"
+      />
       <div class="details">
         <p class="vibrant">{{ post.user.displayName }}</p>
-        <small>{{ getRelativeTime(1609867645646) }}</small>
+        <small>{{ getRelativeTime(post.createdAt) }}</small>
       </div>
       <i
         v-ripple="'#4f4f4f5F'"
@@ -14,16 +18,15 @@
 
     <section class="post-body pt-5 pb-3">
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam
-        asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!
+        {{ post.body }}
       </p>
     </section>
 
-    <section class="post-actions pb-8">
+    <section class="post-actions">
       <div v-ripple class="like" @click="like()">
         <i
-          class="mdi mr-2 inline-block align-middle"
           :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          class="mdi mr-2 inline-block align-middle"
         />
         <span class="value inline-block align-middle">
           {{ shorten(post.totalLikes) }}
