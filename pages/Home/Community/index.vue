@@ -4,10 +4,7 @@
 
     <div class="story-updates-container">
       <section class="top-line pl-4">
-        <p class="py-2">
-          <!--          <span class="mdi mdi-party-popper primary" />-->
-          Stories
-        </p>
+        <p class="py-2">Stories</p>
         <p v-ripple class="vibrant py-2 px-4">
           <span class="mdi mdi-play" />
           View All
@@ -52,8 +49,6 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
   name: 'Community',
   components: {
-    AddPostPreview: () =>
-      import('@/components/global/Community/AddPostPreview'),
     FetchCommunityPosts: () =>
       import('@/components/global/Community/FetchCommunityPosts'),
     TopActionBar: () => import('@/components/global/Community/TopActionBar'),
