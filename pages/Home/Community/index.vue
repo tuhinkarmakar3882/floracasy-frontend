@@ -30,9 +30,9 @@
       </section>
     </div>
 
-    <hr class="faded-divider my-4" />
+    <hr class="faded-divider mt-4 mb-0" />
 
-    <FetchCommunityPosts class="px-4" />
+    <FetchCommunityPosts />
   </div>
 </template>
 
