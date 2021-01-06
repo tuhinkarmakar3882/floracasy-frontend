@@ -20,6 +20,8 @@
       <p>
         {{ post.body }}
       </p>
+
+      <img v-if="post.images" class="my-4" :src="post.images[0]" alt="image" />
     </section>
 
     <hr class="faded-divider my-2" />
@@ -84,6 +86,14 @@ export default {
   .post-body {
     p {
       font-size: 15px;
+    }
+
+    img {
+      border-radius: 0 20px;
+      height: 250px;
+      width: 100%;
+      object-fit: cover;
+      box-shadow: $default-box-shadow;
     }
   }
 

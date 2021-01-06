@@ -49,6 +49,9 @@ export default {
           totalShares: 42821,
           totalComments: 681,
           createdAt: 1609877848646,
+          images: [
+            'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1280&q=80',
+          ],
         },
         {
           id: 3,
@@ -86,6 +89,9 @@ export default {
           },
           body:
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          images: [
+            'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80',
+          ],
           isLiked: true,
           totalLikes: 278,
           totalShares: 428,
