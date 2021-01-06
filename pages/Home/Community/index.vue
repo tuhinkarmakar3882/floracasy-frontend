@@ -45,16 +45,20 @@
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import Story from '~/components/global/Community/Story'
-import TopActionBar from '~/components/global/Community/TopActionBar'
-import FetchCommunityPosts from '~/components/global/Community/FetchCommunityPosts'
-import AddPostPreview from '~/components/global/Community/AddPostPreview'
 
 export default {
   name: 'Community',
-  components: { AddPostPreview, FetchCommunityPosts, TopActionBar, Story },
+  components: {
+    AddPostPreview: () =>
+      import('@/components/global/Community/AddPostPreview'),
+    FetchCommunityPosts: () =>
+      import('@/components/global/Community/FetchCommunityPosts'),
+    TopActionBar: () => import('@/components/global/Community/TopActionBar'),
+    Story: () => import('@/components/global/Community/Story'),
+  },
+
   layout: 'MobileApp',
-  // middleware: 'isAuthenticated',
+  middleware: 'isAuthenticated',
 
   data() {
     return {
