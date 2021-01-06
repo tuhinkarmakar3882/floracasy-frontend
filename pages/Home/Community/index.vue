@@ -170,6 +170,81 @@ export default {
 @import 'assets/all-variables';
 
 .community-page {
+  .add-a-post {
+    .header {
+      display: flex;
+      align-items: center;
+
+      $size: 52px;
+
+      img {
+        width: $size;
+        min-width: $size;
+        height: $size;
+        min-height: $size;
+        border-radius: 50%;
+        box-shadow: $default-box-shadow;
+        object-fit: cover;
+      }
+
+      button {
+        min-width: auto;
+        font-size: 14px;
+        width: 117px;
+        height: 32px;
+        margin-left: auto;
+      }
+    }
+
+    .user-details {
+      p {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      small {
+        font-size: 13px;
+        font-family: $Nunito-Sans;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 16px;
+      }
+    }
+
+    .body {
+      position: relative;
+      color: $vibrant;
+      background: $segment-background;
+      border-radius: $micro-unit;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: $milli-unit;
+        top: -$x-large-unit;
+        border: $standard-unit solid transparent;
+        border-bottom-color: $segment-background;
+      }
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $muted;
+      }
+
+      &:nth-child(2) {
+        border-left: 1px solid yellow;
+        border-right: 1px solid yellow;
+      }
+    }
+  }
+
   .story-updates-container {
     .top-line {
       display: flex;
