@@ -54,7 +54,7 @@ export default {
           id: 3,
           user: {
             displayName: 'Tracy Parker',
-            photoURL: 'https://picsum.photos/569',
+            photoURL: 'https://picsum.photos/561',
           },
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
@@ -68,7 +68,7 @@ export default {
           id: 4,
           user: {
             displayName: 'Tony Stark',
-            photoURL: 'https://picsum.photos/569',
+            photoURL: 'https://picsum.photos/562',
           },
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
@@ -82,7 +82,7 @@ export default {
           id: 5,
           user: {
             displayName: 'Steve Rodgers',
-            photoURL: 'https://picsum.photos/569',
+            photoURL: 'https://picsum.photos/563',
           },
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
