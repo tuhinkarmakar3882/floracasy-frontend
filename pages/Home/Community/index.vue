@@ -35,10 +35,14 @@
 
     <hr class="faded-divider mt-6 mb-0" />
 
-    <AddPostPreview />
+    <AddPostPreview v-ripple />
 
-    <hr class="faded-divider my-0" />
+    <hr class="faded-divider mt-0 mb-6" />
 
+    <p class="px-4" style="font-size: 14px">
+      <span class="mdi mdi-earth primary-light" />
+      Across The World
+    </p>
     <FetchCommunityPosts />
   </div>
 </template>
