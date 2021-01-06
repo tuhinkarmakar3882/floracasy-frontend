@@ -1,26 +1,13 @@
 <template>
   <div class="fetch-community-posts-component">
     <CommunityPost v-for="(post, index) in posts" :key="index" :post="post" />
-    <FollowSuggestions />
+    <!--    <FollowSuggestions />-->
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import FollowSuggestions from '~/components/global/Community/FollowSuggestions'
 import CommunityPost from '~/components/global/Community/CommunityPost'
-
-interface User {
-  displayName: string
-}
-
-interface Post {
-  id: number
-  user: User
-  isLiked: Boolean
-  totalLikes: number
-  totalShares: number
-  totalComments: number
-}
 
 export default {
   name: 'FetchCommunityPosts',
@@ -38,7 +25,7 @@ export default {
           totalShares: 428,
           totalComments: 48,
         },
-      ] as Post[],
+      ],
     }
   },
 }

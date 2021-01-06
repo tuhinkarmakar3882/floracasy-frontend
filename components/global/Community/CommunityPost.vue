@@ -45,22 +45,9 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { getRelativeTime, shorten } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-
-interface User {
-  displayName: string
-}
-
-interface Post {
-  id: number
-  user: User
-  isLiked: Boolean
-  totalLikes: number
-  totalComments: number
-  totalShares: number
-}
 
 export default {
   name: 'CommunityPost',
@@ -68,7 +55,7 @@ export default {
     post: {
       type: Object,
       required: true,
-    } as Post,
+    },
   },
   data() {
     return {
