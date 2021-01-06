@@ -61,18 +61,6 @@ export default {
     * {
       z-index: 1;
     }
-
-    //&::before {
-    //  position: absolute;
-    //  top: 0;
-    //  left: 0;
-    //  height: 100%;
-    //  width: 100%;
-    //  //background-color: rgba(black, 0.5);
-    //  content: '';
-    //  z-index: 0;
-    //  //backdrop-filter: blur(1px);
-    //}
   }
 }
 </style>
