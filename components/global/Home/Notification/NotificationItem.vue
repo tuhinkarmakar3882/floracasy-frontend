@@ -16,20 +16,71 @@
         </span>
         <br />
         {{ getRelativeTime(notification.createdAt) }}
-        <span class="dot" />
+        <span v-if="notification.unread" class="dot" />
       </p>
     </section>
 
     <transition name="gray-shift">
-      <section v-if="showModal" class="modal">
-        <h6>What do you want to do?</h6>
-        <aside>
-          <button class="secondary-outlined-btn" @click="showModal = false">
-            Action 1
-          </button>
-          <button class="secondary-outlined-btn">Action 2</button>
-        </aside>
-      </section>
+      <Modal
+        v-if="showModal"
+        class="modal"
+        :toggle="hideModal"
+        :color="notification.notificationType.color"
+        :modal-type="notification.onclickAction"
+      >
+        <template slot="title">
+          <h5>{{ notification.message }}</h5>
+        </template>
+
+        <template slot="body">
+          <section v-if="notification.onclickAction === 'open_comment_page'">
+            <blockquote>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+              debitis doloribus, eum excepturi facilis fugiat, inventore ipsum
+              itaque magni modi natus numquam porro rem, saepe sapiente sed
+              similique temporibus veritatis!
+            </blockquote>
+          </section>
+        </template>
+
+        <template slot="actions">
+          <!--          Comment Notification Actions-->
+          <section v-if="notification.onclickAction === 'open_comment_page'">
+            <button
+              v-ripple=""
+              class="primary-outlined-btn my-4 mx-2"
+              @click="openCommentDetailsPage"
+            >
+              Send Reply
+            </button>
+            <button
+              v-ripple=""
+              class="secondary-outlined-btn my-4 mx-2"
+              @click="openProfilePage('commentedBy')"
+            >
+              See Profile
+            </button>
+          </section>
+
+          <!--          Blog Like Notification Actions-->
+          <section v-else-if="notification.onclickAction === 'like_blog'">
+            <button
+              v-ripple=""
+              class="primary-outlined-btn my-4 mx-2"
+              @click="openBlogDetailsPage('identifier')"
+            >
+              View Blog
+            </button>
+            <button
+              v-ripple=""
+              class="secondary-outlined-btn my-4 mx-2"
+              @click="openProfilePage('liked_by')"
+            >
+              See Profile
+            </button>
+          </section>
+        </template>
+      </Modal>
     </transition>
   </div>
 </template>
@@ -37,10 +88,12 @@
 <script>
 import { getRelativeTime } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import endpoints from '~/api/endpoints'
+import Modal from '~/components/global/Modal'
 
 export default {
   name: 'NotificationItem',
-
+  components: { Modal },
   props: {
     notification: {
       type: Object,
@@ -55,27 +108,41 @@ export default {
 
   computed: {
     fadedColor() {
-      // return this.notification.notificationType.color + '55'
-      return '#FFAF0055'
+      return this.notification.notificationType.color + '55'
     },
+  },
+
+  mounted() {
+    this.$router.beforeEach((to, _, next) => {
+      if (to.hash === '') {
+        this.showModal = false
+      }
+      next()
+    })
+  },
+
+  beforeDestroy() {
+    this.$router.beforeEach((to, _, next) => {
+      next()
+    })
   },
 
   methods: {
     getRelativeTime,
 
     async performNotificationAction() {
+      this.notification.unread && this.markAsRead()
+
       const actionName = this.notification.onclickAction
       const actionInfo = this.notification.onclickActionInfo
 
       switch (actionName) {
         case 'open_blog':
-          this.showModal = true
-          console.log(actionName, actionInfo)
+          await this.openBlogDetailsPage('identifier')
           break
 
         case 'like_blog':
-          this.showModal = true
-          console.log(actionName, actionInfo)
+          await this.openModal()
           break
 
         case 'open_ticket_detail':
@@ -86,23 +153,62 @@ export default {
           break
 
         case 'open_profile_details':
-          console.log(actionName, actionInfo)
-          await this.$router.push(
-            navigationRoutes.Home.Account.Overview.replace(
-              '{userUID}',
-              this.notification.onclickActionInfo.followerUID
-            )
-          )
+          await this.openProfilePage('followerUID')
           break
 
         case 'open_comment_page':
-          console.log(actionName, actionInfo)
+          await this.openModal()
           break
 
         default:
           console.log('NOT_IMPLEMENTED', actionName, actionInfo)
           break
       }
+    },
+
+    markAsRead() {
+      this.$axios
+        .$post(endpoints.notification_system.updateNotificationSeenStatus, {
+          identifier: this.notification.identifier,
+          is_read: true,
+        })
+        .then(() => (this.notification.unread = false))
+    },
+
+    async hideModal() {
+      this.showModal = false
+      await this.$router.back()
+    },
+
+    async openModal() {
+      await this.$router.push('#detail')
+      this.showModal = true
+    },
+
+    async openProfilePage(keyName) {
+      await this.$router.push(
+        navigationRoutes.Home.Account.Overview.replace(
+          '{userUID}',
+          this.notification.onclickActionInfo[keyName]
+        )
+      )
+    },
+
+    async openCommentDetailsPage() {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Comments.BlogId.replace(
+          '{BlogId}',
+          this.notification.onclickActionInfo.blogIdentifier
+        )
+      )
+    },
+    async openBlogDetailsPage(keyName) {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Details.replace(
+          '{id}',
+          this.notification.onclickActionInfo[keyName]
+        )
+      )
     },
   },
 }
@@ -140,24 +246,6 @@ export default {
       background-color: $success-light;
       margin-left: $nano-unit;
       margin-bottom: $single-unit;
-    }
-  }
-
-  .modal {
-    position: fixed;
-    background: $card-background;
-    width: 100%;
-    height: calc(100vh - 112px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 56px;
-    z-index: 1;
-    flex-direction: column;
-
-    button {
-      min-width: auto;
-      width: auto;
     }
   }
 }

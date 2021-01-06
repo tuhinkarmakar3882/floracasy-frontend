@@ -70,7 +70,11 @@
               <hr style="background-color: #464646" class="my-0" />
             </li>
             <li v-ripple="`#ff82815f`" class="py-2 px-4">
-              <p class="danger-light text-center my-0" style="width: 100%">
+              <p
+                class="danger-light text-center my-0"
+                style="width: 100%"
+                @click="showOptions = false"
+              >
                 Close
               </p>
             </li>

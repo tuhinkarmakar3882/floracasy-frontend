@@ -179,3 +179,11 @@ body {
 .premium {
   color: $premium;
 }
+
+.vibrant {
+  color: $vibrant;
+}
+
+.faded-divider {
+  background: linear-gradient(to right, #222, #111);
+}

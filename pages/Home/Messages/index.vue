@@ -61,7 +61,7 @@
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { getRelativeTime } from '@/utils/utility'
+import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 
@@ -105,10 +105,16 @@ export default {
 
     async infiniteHandler($state) {
       await this.setupUser()
+
+      if (!this.fetchThreads) {
+        $state.complete()
+        return
+      }
+
       try {
         const { results, next } = await this.$axios.$get(this.fetchThreads)
         if (results.length) {
-          this.fetchThreads = next
+          this.fetchThreads = processLink(next)
           this.messageThreads.push(...results)
           $state.loaded()
         } else {

@@ -10,7 +10,7 @@
 export default {
   name: 'GoPremium',
   layout: 'PublicRoutes',
-  middleware: 'publicRoute',
+  middleware: 'isNotAuthenticated',
 
   data() {
     return {

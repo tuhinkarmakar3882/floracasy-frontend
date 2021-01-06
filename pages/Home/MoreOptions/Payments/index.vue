@@ -16,13 +16,7 @@
               <p class="amount secondary-highlight">$25 Earned So far</p>
               <p class="danger-light amount my-4">$75 more to go</p>
             </div>
-            <aside>
-              <canvas
-                id="earning-info-chart"
-                style="width: 100%"
-                height="100"
-              />
-            </aside>
+            <aside class="earning-info-chart" />
           </div>
         </section>
 
@@ -46,14 +40,7 @@
         <section class="general-info-card py-8 px-4">
           <h6 class="mt-0">Earning Summary</h6>
 
-          <aside class="graph py-4 text-center">
-            <trend
-              :data="[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]"
-              :gradient="['#66b5fa', '#42b983', '#2c3e50']"
-              auto-draw
-              smooth
-            />
-          </aside>
+          <aside class="graph py-4 text-center" />
         </section>
 
         <section class="go-premium-card py-8">
@@ -96,13 +83,11 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import KeyPoint from '@/components/global/KeyPoint'
-import Trend from 'vuetrend'
-import Chart from 'chart.js'
 
 export default {
   name: 'Payments',
   middleware: 'isAuthenticated',
-  components: { KeyPoint, AppFeel, Trend },
+  components: { KeyPoint, AppFeel },
   data() {
     return {
       navigationRoutes,
@@ -116,60 +101,11 @@ export default {
         'Avail Faster Customer Support',
         'And Much More!',
       ],
-      chartType: 'doughnut',
-      chartData: {
-        datasets: [
-          {
-            data: [25, 75],
-            backgroundColor: ['#6DD0BF', '#3a3a3a'],
-            borderWidth: 1,
-            borderColor: '#000',
-          },
-        ],
-
-        labels: ['Money Earned', 'Money Needed'],
-      },
-      chartOptions: {
-        animation: {
-          duration: 2800,
-          easing: 'easeOutQuart',
-          animateScale: true,
-          animateRotate: true,
-        },
-        title: {
-          display: false,
-          text: 'caption2',
-          fontColor: '#FFF',
-          fontSize: 25,
-          fontStyle: '',
-          lineHeight: 1.3,
-        },
-        legend: {
-          display: false,
-          labels: {
-            fontColor: 'rgb(255, 255, 255)',
-            fontStyle: 'italic',
-          },
-        },
-        responsive: true,
-        responsiveAnimationDuration: 2000,
-      },
     }
   },
-  mounted() {
-    this.drawChart()
-  },
+  mounted() {},
 
-  methods: {
-    drawChart() {
-      const ctx = document.getElementById('earning-info-chart').getContext('2d')
-      const myChart = new Chart(ctx, {
-        data: this.chartData,
-        type: this.chartType,
-        options: this.chartOptions,
-      })
-    },
-  },
+  methods: {},
 
   head() {
     return {

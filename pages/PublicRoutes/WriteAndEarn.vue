@@ -12,7 +12,7 @@
 export default {
   name: 'WriteAndEarn',
   layout: 'PublicRoutes',
-  middleware: 'publicRoute',
+  middleware: 'isNotAuthenticated',
 
   data() {
     return {

@@ -24,7 +24,10 @@
             class="view-blog py-4"
             @click="
               $router.push(
-                navigationRoutes.Home.Blogs.Details.replace('{id}', blog.id)
+                navigationRoutes.Home.Blogs.Details.replace(
+                  '{id}',
+                  blog.identifier
+                )
               )
             "
           >
@@ -129,7 +132,7 @@ import endpoints from '@/api/endpoints'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import { getRelativeTime } from '@/utils/utility'
+import { getRelativeTime, processLink } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/global/RippleButton'
 
@@ -197,13 +200,17 @@ export default {
 
     async infiniteHandler($state) {
       await this.setupUser()
+      if (!this.fetchCommentsEndpoint) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(
           this.fetchCommentsEndpoint,
           { params: { blogIdentifier: this.$route.params.blogId } }
         )
         if (results.length) {
-          this.fetchCommentsEndpoint = next
+          this.fetchCommentsEndpoint = processLink(next)
           this.comments.push(...results)
           $state.loaded()
         } else {

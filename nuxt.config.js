@@ -37,6 +37,11 @@ export default {
     },
   ],
 
+  modern: {
+    client: true,
+    server: true,
+  },
+
   modules: [
     'nuxt-helmet',
     '~/module/csp.js',
@@ -71,11 +76,6 @@ export default {
       threshold: 10240,
     },
   },
-
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
 
   router: {},
 
@@ -257,6 +257,14 @@ export default {
   },
 
   telemetry: false,
+
+  // typescript: {
+  //   typeCheck: {
+  //     eslint: {
+  //       files: './**/*.{ts,js,vue}',
+  //     },
+  //   },
+  // },
 
   watch: ['~/module/csp.js'],
 }

@@ -42,6 +42,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import TicketCard from '@/components/global/TicketCard'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'Tickets',
@@ -59,13 +60,17 @@ export default {
 
   methods: {
     async infiniteHandler($state) {
+      if (!this.ticketFetchEndpoint) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(
           this.ticketFetchEndpoint,
           { params: { category_name: this.category } }
         )
         if (results.length) {
-          this.ticketFetchEndpoint = next
+          this.ticketFetchEndpoint = processLink(next)
           this.tickets.push(...results)
           $state.loaded()
         } else {

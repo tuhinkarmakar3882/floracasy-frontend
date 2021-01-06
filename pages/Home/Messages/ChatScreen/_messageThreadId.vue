@@ -78,6 +78,7 @@ import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import MessageItem from '@/components/global/MessageItem.vue'
 import endpoints from '~/api/endpoints'
+import { processLink } from '~/utils/utility'
 
 export default {
   scrollToTop: false,
@@ -205,6 +206,10 @@ export default {
 
     async infiniteHandler($state) {
       await this.setupUser()
+      if (!this.fetchMessages) {
+        $state.complete()
+        return
+      }
       try {
         const { results, next } = await this.$axios.$get(this.fetchMessages, {
           params: {
@@ -213,7 +218,7 @@ export default {
         })
         console.log(results)
         if (results.length) {
-          this.fetchMessages = next
+          this.fetchMessages = processLink(next)
           this.chatMessages.push(...results)
           $state.loaded()
         } else {

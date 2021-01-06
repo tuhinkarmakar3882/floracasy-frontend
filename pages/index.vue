@@ -16,7 +16,7 @@ import HearTheExperiences from '@/components/global/LandingPage/HearTheExperienc
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
-  middleware: 'publicRoute',
+  middleware: 'isNotAuthenticated',
   components: {
     HeroContent,
     CategoriesShowcase,

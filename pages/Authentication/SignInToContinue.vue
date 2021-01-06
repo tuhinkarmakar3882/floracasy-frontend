@@ -50,7 +50,7 @@ export default {
   name: 'SignInToContinue',
   components: { LoadingIcon, GoogleIcon },
   layout: 'Authentication',
-  middleware: 'publicRoute',
+  middleware: 'isNotAuthenticated',
 
   data() {
     return {

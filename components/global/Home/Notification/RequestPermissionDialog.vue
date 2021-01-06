@@ -1,42 +1,48 @@
 <template>
-  <section
-    ref="banner-block"
-    :key="'banner-item'"
-    class="banner text-center mb-6 px-2"
+  <div
+    class="request-permission-dialog text-center px-2"
     :style="[showBanner ? { height: '300px' } : {}]"
   >
-    <h5 v-if="!maybe" class="my-4">Would you like to receive notifications?</h5>
-    <div v-if="!maybe" class="actions my-3">
-      <button
-        v-ripple=""
-        class="secondary-btn mb-4 mx-2"
-        @click="requestPermission"
-      >
-        Yes
-      </button>
-      <button
-        v-ripple=""
-        class="secondary-outlined-btn mb-4 mx-2"
-        @click="showMaybeAndCollapse"
-      >
-        May be later
-      </button>
-    </div>
-    <p v-if="!maybe" class="mb-3">
-      You can always change this setting later in the
-      <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences.index">
-        Preferences
-      </nuxt-link>
-    </p>
+    <section v-if="maybeLater">
+      <h5 class="text-center mb-4">No Problem</h5>
+      <p class="text-center mb-4">
+        Tip: You can always change this setting later in the
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences.index">
+          Preferences
+        </nuxt-link>
+      </p>
+    </section>
 
-    <h5 v-if="maybe" class="text-center mb-4">No Problem</h5>
-    <p v-if="maybe" class="text-center mb-4">
-      Tip: You can always change this setting later in the
-      <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences.index">
-        Preferences
-      </nuxt-link>
-    </p>
-  </section>
+    <section v-else-if="success">
+      <h5 class="my-4">Success!</h5>
+    </section>
+
+    <section v-else>
+      <h5 class="my-4">Would you like to receive notifications?</h5>
+      <div class="actions my-3">
+        <button
+          v-ripple=""
+          class="secondary-btn mb-4 mx-2"
+          @click="requestPermission"
+        >
+          Yes
+        </button>
+        <button
+          v-ripple=""
+          class="secondary-outlined-btn mb-4 mx-2"
+          @click="showMaybeAndCollapse"
+        >
+          May be later
+        </button>
+      </div>
+      <p class="mb-3">
+        You can always change this setting later in the
+        <nuxt-link :to="navigationRoutes.Home.MoreOptions.Preferences.index">
+          Preferences
+        </nuxt-link>
+      </p>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -49,13 +55,16 @@ export default {
     return {
       navigationRoutes,
       showBanner: false,
-      maybe: false,
+      success: false,
+      maybeLater: false,
       computedHeight: 0,
     }
   },
   mounted() {
-    this.initHeight()
-    if (Notification.permission !== 'granted') {
+    if (
+      Notification.permission !== 'granted' &&
+      Notification.permission !== 'denied'
+    ) {
       const hideNotificationConsent = localStorage.getItem(
         'hide-notification-consent'
       )
@@ -73,72 +82,65 @@ export default {
 
   methods: {
     requestPermission() {
-      Notification.requestPermission()
-        .then((permission) => console.log(permission))
-        .catch((error) => console.error(error))
+      Notification.requestPermission().then((permission) => {
+        switch (permission) {
+          case 'granted':
+            this.success = true
+            this.maybeLater = false
+            this.hideBanner()
+            break
+          case 'denied':
+            this.success = false
+            this.maybeLater = true
+            this.hideBanner()
+            break
+        }
+      })
     },
     showMaybeAndCollapse() {
-      this.maybe = true
+      this.success = false
+      this.maybeLater = true
+      localStorage.setItem('hide-notification-consent', '120')
+      this.hideBanner()
+    },
 
+    hideBanner() {
       setTimeout(() => {
         this.showBanner = false
       }, 2500)
-      localStorage.setItem('hide-notification-consent', '2')
-    },
-
-    initHeight() {
-      this.$refs['banner-block'].style.height = 'auto'
-      this.$refs['banner-block'].style.position = 'absolute'
-      this.$refs['banner-block'].style.visibility = 'hidden'
-      this.$refs['banner-block'].style.display = 'block'
-
-      this.computedHeight = getComputedStyle(this.$refs['banner-block']).height
-      this.computedHeight =
-        (parseInt(this.computedHeight.replace('px', '')) + 40).toString() + 'px'
-
-      this.$refs['banner-block'].style.position = null
-      this.$refs['banner-block'].style.visibility = null
-      this.$refs['banner-block'].style.display = null
-      this.$refs['banner-block'].style.height = 0
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/all-variables';
+.request-permission-dialog {
+  * {
+    transition: all 0.3s ease-in-out;
+  }
 
-.notification-item {
-  display: grid;
+  background-color: #191928;
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  grid-template-columns: 10% 90%;
-  grid-column-gap: $standard-unit;
-  padding: $medium-unit;
 
   p {
-    font-family: $Nunito-Sans;
-    font-size: $milli-unit;
-    align-self: flex-start;
+    font-size: 14px;
+  }
 
-    .message {
-      color: #cacaca;
-      font-family: $Raleway;
-      font-size: $standard-unit;
+  .actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+
+    button {
+      min-width: auto;
+      width: 148px;
     }
-  }
-
-  .dot {
-    display: inline-block;
-    width: $nano-unit + $single-unit;
-    height: $nano-unit + $single-unit;
-    border-radius: 50%;
-    background-color: $success-light;
-    margin-left: $nano-unit;
-    margin-bottom: $single-unit;
-  }
-
-  &:nth-child(even) {
-    background-color: $nav-bar-bg;
   }
 }
 </style>
