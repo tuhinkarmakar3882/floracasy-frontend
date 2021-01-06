@@ -45,7 +45,49 @@ export default {
           body:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
           isLiked: true,
-          totalLikes: 2345,
+          totalLikes: 35,
+          totalShares: 428,
+          totalComments: 48,
+          createdAt: 1609867645646,
+        },
+        {
+          id: 3,
+          user: {
+            displayName: 'Tracy Parker',
+            photoURL: 'https://picsum.photos/569',
+          },
+          body:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+          isLiked: true,
+          totalLikes: 245,
+          totalShares: 428,
+          totalComments: 48,
+          createdAt: 1609867645646,
+        },
+        {
+          id: 4,
+          user: {
+            displayName: 'Tony Stark',
+            photoURL: 'https://picsum.photos/569',
+          },
+          body:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+          isLiked: true,
+          totalLikes: 12345,
+          totalShares: 428,
+          totalComments: 48,
+          createdAt: 1609867645646,
+        },
+        {
+          id: 5,
+          user: {
+            displayName: 'Steve Rodgers',
+            photoURL: 'https://picsum.photos/569',
+          },
+          body:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+          isLiked: true,
+          totalLikes: 278,
           totalShares: 428,
           totalComments: 48,
           createdAt: 1609867645646,
