@@ -5,10 +5,13 @@
     <div class="story-updates-container">
       <section class="top-line pl-4">
         <p class="py-2">
-          <span class="mdi mdi-party-popper primary-light" />
+          <!--          <span class="mdi mdi-party-popper primary" />-->
           Stories
         </p>
-        <p v-ripple class="vibrant py-2 px-4">View All</p>
+        <p v-ripple class="vibrant py-2 px-4">
+          <span class="mdi mdi-play" />
+          View All
+        </p>
       </section>
 
       <section class="stories">
@@ -33,11 +36,7 @@
       </section>
     </div>
 
-    <hr class="faded-divider mt-6 mb-0" />
-
-    <AddPostPreview v-ripple />
-
-    <hr class="faded-divider mt-0 mb-6" />
+    <hr class="faded-divider my-6" />
 
     <p class="px-4" style="font-size: 14px">
       <span class="mdi mdi-earth primary-light" />

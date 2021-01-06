@@ -7,7 +7,7 @@
         class="mr-3"
       />
       <div class="details">
-        <p class="vibrant">{{ post.user.displayName }}</p>
+        <p class="secondary">{{ post.user.displayName }}</p>
         <small>{{ getRelativeTime(post.createdAt) }}</small>
       </div>
       <i
@@ -21,6 +21,8 @@
         {{ post.body }}
       </p>
     </section>
+
+    <hr class="faded-divider my-2" />
 
     <section class="post-actions">
       <div v-ripple class="like" @click="like()">
@@ -79,6 +81,12 @@ export default {
 @import 'assets/all-variables';
 
 .community-post-component {
+  .post-body {
+    p {
+      font-size: 15px;
+    }
+  }
+
   .post-header {
     display: flex;
     position: relative;
@@ -97,7 +105,7 @@ export default {
 
     .details {
       p {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
         font-weight: 500;
         line-height: 23px;
         margin-bottom: 0.5rem;
@@ -115,18 +123,14 @@ export default {
       right: -8px;
       top: 0;
       height: 100%;
-      font-size: $x-large-unit;
+      font-size: $xxx-large-unit;
       width: 2 * $large-unit;
       display: flex;
       justify-content: center;
-      align-items: center;
-      color: $secondary;
+      align-items: flex-start;
+      color: $muted;
       border-radius: $nano-unit;
     }
-  }
-
-  .post-body {
-    text-align: justify;
   }
 
   .post-actions {

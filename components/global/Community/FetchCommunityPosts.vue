@@ -28,7 +28,7 @@ export default {
               'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=550&q=80',
           },
           body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           isLiked: true,
           totalLikes: 35,
           totalShares: 428,
@@ -43,7 +43,7 @@ export default {
               'https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
           },
           body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           isLiked: false,
           totalLikes: 345,
           totalShares: 42821,
@@ -57,7 +57,7 @@ export default {
             photoURL: 'https://picsum.photos/561',
           },
           body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           isLiked: true,
           totalLikes: 245,
           totalShares: 428,
@@ -71,7 +71,7 @@ export default {
             photoURL: 'https://picsum.photos/562',
           },
           body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           isLiked: true,
           totalLikes: 12345,
           totalShares: 428,
@@ -85,7 +85,7 @@ export default {
             photoURL: 'https://picsum.photos/563',
           },
           body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
           isLiked: true,
           totalLikes: 278,
           totalShares: 428,
