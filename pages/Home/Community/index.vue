@@ -3,19 +3,22 @@
     <TopActionBar class="px-4 mt-5 mb-4" />
 
     <div class="story-updates-container">
-      <!--      <section class="top-line pl-4">-->
-      <!--        <p class="py-2">Stories</p>-->
-      <!--        <p v-ripple class="vibrant py-2 px-4">View All</p>-->
-      <!--      </section>-->
+      <section class="top-line pl-4">
+        <p class="py-2">
+          <span class="mdi mdi-party-popper primary-light" />
+          Stories
+        </p>
+        <p v-ripple class="vibrant py-2 px-4">View All</p>
+      </section>
 
       <section class="stories">
         <div v-ripple class="add-a-story py-2 text-center">
           <img
-            src="https://picsum.photos/100"
             alt="image"
-            height="72"
-            width="72"
             class="mb-4"
+            height="72"
+            src="https://picsum.photos/100"
+            width="72"
           />
           <span class="mdi mdi-plus" />
           <small class="vibrant">Add New Story</small>
@@ -24,13 +27,54 @@
         <Story
           v-for="(story, index) in stories"
           :key="index"
-          class="px-4 py-2"
           :story="story"
+          class="px-4 py-2"
         />
       </section>
     </div>
 
-    <hr class="faded-divider mt-4 mb-0" />
+    <hr class="faded-divider mt-6 mb-0" />
+
+    <section class="add-a-post px-4 pb-8">
+      <p class="py-6" style="font-size: 14px">
+        <span class="mdi mdi-plus-circle primary-light" />
+        Create new Post
+      </p>
+      <div class="header mb-6">
+        <img
+          alt="display-image"
+          height="52"
+          src="https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+          width="52"
+        />
+
+        <section class="user-details ml-4">
+          <p class="secondary">Swagata</p>
+          <small>Beauty Blogger</small>
+        </section>
+
+        <button v-ripple class="vibrant-outlined-btn">New Post</button>
+      </div>
+
+      <p class="body py-5 text-center">What's on your mind?</p>
+
+      <div class="actions mt-4">
+        <p>
+          <span class="mdi mdi-image mdi-24px secondary mr-2" />
+          Photos
+        </p>
+        <p>
+          <span class="mdi mdi-headphones mdi-24px secondary mr-2" />
+          Audio
+        </p>
+        <p>
+          <span class="mdi mdi-emoticon mdi-24px secondary mr-2" />
+          Mood
+        </p>
+      </div>
+    </section>
+
+    <hr class="faded-divider my-0" />
 
     <FetchCommunityPosts />
   </div>
