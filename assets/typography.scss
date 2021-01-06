@@ -185,5 +185,5 @@ body {
 }
 
 .faded-divider {
-  background: linear-gradient(to right, #222, #111);
+  background: linear-gradient(to right, $card-background, $body-background);
 }
