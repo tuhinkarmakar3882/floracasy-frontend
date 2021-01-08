@@ -5,14 +5,22 @@
     <div class="story-updates-container">
       <section class="top-line pl-4">
         <p class="py-2">Stories</p>
-        <p v-ripple class="vibrant py-2 px-4">
+        <p
+          v-ripple
+          class="vibrant py-2 px-4"
+          @click="$router.push(navigationRoutes.Home.Community.Story.index)"
+        >
           <span class="mdi mdi-play" />
           View All
         </p>
       </section>
 
       <section class="stories">
-        <div v-ripple class="add-a-story py-2 text-center">
+        <div
+          v-ripple
+          class="add-a-story py-2 text-center"
+          @click="$router.push(navigationRoutes.Home.Community.Story.add)"
+        >
           <img
             alt="image"
             class="mb-4"
