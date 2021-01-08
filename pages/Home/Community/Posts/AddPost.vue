@@ -6,11 +6,11 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <main v-if="!isReady">
+      <div v-if="!isReady">
         <LoadingIcon />
-      </main>
+      </div>
 
-      <main v-else>
+      <div v-else class="my-4">
         <div class="header mb-6 px-4">
           <img
             :src="user.photoURL"
@@ -23,6 +23,7 @@
             <small v-if="user.designation">{{ user.designation }} </small>
           </section>
         </div>
+
         <div class="actions mt-4">
           <p v-ripple>
             <span class="mdi mdi-image mdi-24px secondary mr-2" />
@@ -37,7 +38,11 @@
             Mood
           </p>
         </div>
-      </main>
+
+        <section class="main px-4">
+          <textarea id="post" name="post" cols="30" rows="10" />
+        </section>
+      </div>
     </template>
   </AppFeel>
 </template>
