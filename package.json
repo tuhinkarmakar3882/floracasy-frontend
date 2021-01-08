@@ -10,7 +10,8 @@
   },
   "scripts": {
     "dev": "nuxt-ts",
-    "build": "nuxt-ts build",
+    "build": "nuxt-ts build --modern",
+    "serve": "nuxt-ts start --modern",
     "start": "nuxt-ts build --modern && nuxt-ts start --modern",
     "generate": "nuxt-ts generate",
     "pm2": "nuxt-ts build && pm2 start ecosystem.config.js",
