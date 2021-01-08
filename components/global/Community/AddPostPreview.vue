@@ -1,5 +1,5 @@
 <template>
-  <section class="add-a-post-preview px-4 pb-8">
+  <section class="add-a-post-preview px-4">
     <p class="py-6" style="font-size: 14px">
       <span class="mdi mdi-plus-circle primary-light" />
       Create new Post
@@ -114,11 +114,11 @@ export default {
       justify-content: center;
       align-items: center;
       color: $muted;
-    }
 
-    &:nth-child(2) {
-      border-left: 1px solid yellow;
-      border-right: 1px solid yellow;
+      &:nth-child(2) {
+        border-left: 1px solid $card-background;
+        border-right: 1px solid $card-background;
+      }
     }
   }
 }
