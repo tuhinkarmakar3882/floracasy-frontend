@@ -29,6 +29,14 @@ export const navigationRoutes = {
 
     Community: {
       index: '/Home/Community',
+      Posts: {
+        detail: '/Home/Community/Posts/{postIdentifier}',
+        add: '/Home/Community/Posts/AddPost',
+      },
+      Story: {
+        index: '/Home/Community/Stories',
+        add: '/Home/Community/Stories/AddStory',
+      },
     },
 
     Messages: {
