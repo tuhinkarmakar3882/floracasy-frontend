@@ -125,22 +125,22 @@ export default {
       showFragment: false,
       fragmentOptions: [
         {
+          name: 'Add New Post',
+          icon: 'mdi mdi-tooltip-plus',
+          color: '#8FF2E1',
+          route: navigationRoutes.Home.Community.Posts.add,
+        },
+        {
           name: 'Write New Blog',
           icon: 'mdi mdi-pencil-circle',
           color: '#f8e102',
           route: navigationRoutes.Home.Blogs.Create.New,
         },
         {
-          name: 'Add New Post',
-          icon: 'mdi mdi-tooltip-plus',
-          color: '#8FF2E1',
-          route: navigationRoutes.Home.Blogs.Create.New,
-        },
-        {
           name: 'Add New Story',
           icon: 'mdi mdi-plus-box',
           color: '#5dd75d',
-          route: navigationRoutes.Home.Blogs.Create.New,
+          route: navigationRoutes.Home.Community.Story.add,
         },
         // {
         //   name: 'Start from Drafts',
