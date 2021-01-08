@@ -8,13 +8,13 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
-  name: 'PostDetails',
+  name: 'AllStories',
   middleware: 'isAuthenticated',
 
   data() {
     return {
       navigationRoutes,
-      pageTitle: 'Post Details',
+      pageTitle: 'All Stories',
     }
   },
 
