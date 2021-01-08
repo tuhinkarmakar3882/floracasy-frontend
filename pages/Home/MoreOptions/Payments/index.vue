@@ -2,6 +2,8 @@
   <AppFeel
     class="payments-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    dynamic-back
+    :prev-url-path="prevURL"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -88,6 +90,11 @@ export default {
   name: 'Payments',
   middleware: 'isAuthenticated',
   components: { KeyPoint, AppFeel },
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
       navigationRoutes,
