@@ -96,3 +96,66 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.add-new-post-page {
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    p {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $muted;
+
+      &:nth-child(2) {
+        border-left: 1px solid $card-background;
+        border-right: 1px solid $card-background;
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+
+    $size: 52px;
+
+    img {
+      width: $size;
+      min-width: $size;
+      height: $size;
+      min-height: $size;
+      border-radius: 50%;
+      box-shadow: $default-box-shadow;
+      object-fit: cover;
+    }
+
+    button {
+      min-width: auto;
+      font-size: 14px;
+      width: 117px;
+      height: 32px;
+      margin-left: auto;
+    }
+
+    .user-details {
+      p {
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      small {
+        font-size: 13px;
+        font-family: $Nunito-Sans;
+        font-weight: 300;
+        font-style: italic;
+        line-height: 16px;
+      }
+    }
+  }
+}
+</style>
