@@ -4,7 +4,7 @@
       v-for="(post, index) in posts"
       :key="index"
       :post="post"
-      class="community-post px-4 py-8"
+      class="community-post py-8"
     />
     <FollowSuggestions />
   </div>

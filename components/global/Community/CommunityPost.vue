@@ -1,13 +1,13 @@
 <template>
   <div class="community-post-component">
-    <section class="post-header">
+    <section class="post-header px-4">
       <img
         :alt="post.user.displayName"
         :src="post.user.photoURL"
         class="mr-3"
       />
       <div class="details">
-        <p class="secondary">{{ post.user.displayName }}</p>
+        <p v-ripple class="secondary">{{ post.user.displayName }}</p>
         <small>{{ getRelativeTime(post.createdAt) }}</small>
       </div>
       <i
@@ -16,7 +16,7 @@
       />
     </section>
 
-    <section class="post-body pt-5 pb-3">
+    <section v-ripple class="post-body pt-5 pb-3 px-4">
       <p>
         {{ post.body }}
       </p>
@@ -24,9 +24,9 @@
       <img v-if="post.images" class="my-4" :src="post.images[0]" alt="image" />
     </section>
 
-    <hr class="faded-divider my-2" />
+    <hr class="faded-divider my-2 px-4" />
 
-    <section class="post-actions">
+    <section class="post-actions px-4">
       <div v-ripple class="like" @click="like()">
         <i
           :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
