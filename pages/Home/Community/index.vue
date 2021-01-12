@@ -71,7 +71,7 @@ export default {
     Story: () => import('@/components/global/Community/Story'),
   },
 
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {

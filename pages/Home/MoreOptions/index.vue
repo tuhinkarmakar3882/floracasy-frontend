@@ -42,7 +42,7 @@ export default {
   name: 'MoreOptions',
   components: { CustomListView },
   middleware: 'isAuthenticated',
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   data() {
     return {
       navigationRoutes,

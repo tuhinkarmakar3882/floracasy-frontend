@@ -69,7 +69,7 @@ export default {
   name: 'Messages',
   components: { LoadingIcon },
   middleware: 'isAuthenticated',
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
 
   data() {
     return {

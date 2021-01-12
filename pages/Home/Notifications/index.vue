@@ -68,7 +68,7 @@ export default {
     NotificationItem,
     LoadingIcon: () => import('@/components/global/LoadingIcon'),
   },
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {

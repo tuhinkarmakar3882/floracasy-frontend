@@ -155,7 +155,7 @@ import { getRelativeTime, processLink } from '~/utils/utility'
 export default {
   name: 'Details',
   components: { Logo, LoadingIcon },
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {

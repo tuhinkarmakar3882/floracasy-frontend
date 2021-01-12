@@ -33,7 +33,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 export default {
   name: 'BlogCreation',
   components: { CustomListView },
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
   data() {
     return {

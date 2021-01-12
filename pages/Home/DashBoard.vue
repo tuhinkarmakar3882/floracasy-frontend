@@ -62,7 +62,8 @@ export default {
     Carousel,
   },
   middleware: 'isAuthenticated',
-  layout: 'MobileApp',
+
+  layout: 'ResponsiveApp',
 
   data() {
     return {

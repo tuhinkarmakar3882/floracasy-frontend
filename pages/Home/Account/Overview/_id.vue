@@ -135,7 +135,7 @@ import RippleButton from '~/components/global/RippleButton'
 export default {
   name: 'Overview',
   components: { RippleButton, BlogPost, LoadingIcon, ClientOnly },
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {
