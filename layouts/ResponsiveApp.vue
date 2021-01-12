@@ -25,16 +25,6 @@
           </nuxt-link>
         </div>
       </header>
-
-      <main style="min-height: 100vh">
-        <NotificationBadge
-          @click="goto(navigationRoutes.Home.Notifications.index)"
-        />
-        <section class="main-router-content">
-          <nuxt />
-        </section>
-      </main>
-
       <footer>
         <div>
           <Logo :width="36" />
@@ -85,7 +75,6 @@
           </section>
         </div>
       </footer>
-
       <transition name="slide-right">
         <aside v-if="showFragment">
           <CustomListView>
@@ -113,6 +102,15 @@
       </transition>
     </section>
 
+    <main style="min-height: 100vh">
+      <NotificationBadge
+        @click="goto(navigationRoutes.Home.Notifications.index)"
+      />
+      <section class="main-router-content">
+        <nuxt />
+      </section>
+    </main>
+
     <section class="mobile-app-layout">
       <header>
         <nuxt-link v-ripple="" :to="navigationRoutes.index">
@@ -138,16 +136,6 @@
           </nuxt-link>
         </div>
       </header>
-
-      <main style="min-height: 100vh">
-        <NotificationBadge
-          @click="goto(navigationRoutes.Home.Notifications.index)"
-        />
-        <section class="main-router-content">
-          <nuxt />
-        </section>
-      </main>
-
       <footer>
         <div
           v-for="(menuOption, index) in bottomNavMenuOptions"
@@ -194,7 +182,6 @@
           </section>
         </div>
       </footer>
-
       <transition name="slide-up">
         <aside v-if="showFragment">
           <CustomListView>
@@ -230,11 +217,10 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
 import CustomListView from '~/components/global/Layout/CustomListView'
 import Logo from '~/components/global/Logo'
-import Footer from '~/components/global/Layout/PublicRoutes/Footer'
 
 export default {
   name: 'MobileApp',
-  components: { Footer, Logo, CustomListView, NotificationBadge },
+  components: { Logo, CustomListView, NotificationBadge },
 
   data() {
     return {
@@ -463,11 +449,6 @@ export default {
       }
     }
 
-    main {
-      margin-left: 2 * $xxx-large-unit;
-      padding: 2 * $x-large-unit 0;
-    }
-
     aside {
       text-align: center;
       overflow: scroll;
@@ -575,16 +556,6 @@ export default {
       }
     }
 
-    main {
-      padding: 2 * $x-large-unit 0;
-
-      .main-router-content {
-        max-width: $max-width;
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-
     aside {
       text-align: center;
       max-height: 50vh;
@@ -598,6 +569,18 @@ export default {
       border-top-left-radius: 36px;
       border-top-right-radius: 36px;
       background: $segment-background;
+    }
+  }
+
+  main {
+    padding: 2 * $x-large-unit 0;
+    @media only screen and (min-width: $small) {
+      margin-left: 2 * $xxx-large-unit;
+    }
+
+    .main-router-content {
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 }
