@@ -1,6 +1,6 @@
 <template>
   <div class="index-page">
-    <HeroContent />
+    <HeroContent class="px-4" />
 
     <CategoriesShowcase />
 

@@ -1,6 +1,6 @@
 <template>
   <div class="my-4 pb-6 hero-container">
-    <div class="svg-image px-8 mx-8">
+    <div class="hero-image">
       <svg
         fill="none"
         style="width: 100%"
@@ -836,10 +836,10 @@
         </defs>
       </svg>
     </div>
-    <div class="hero-content text-center my-4">
+    <div class="hero-content my-4">
       <h1>Reading Redefined.</h1>
 
-      <p class="py-6">
+      <p class="py-4">
         One good line, Which is really good,
         <br />
         followed by some other line, and this
@@ -850,19 +850,19 @@
       <section>
         <KeyPoint
           :tick-size="24"
-          class="my-4"
+          class="my-0 my-lg-4"
           point="Over 1000+ Articles"
           tick-color="#6DD0BF"
         />
         <KeyPoint
           :tick-size="24"
-          class="my-4"
+          class="my-0 my-lg-4"
           point="Build Your Community Faster"
           tick-color="#6DD0BF"
         />
         <KeyPoint
           :tick-size="24"
-          class="my-4"
+          class="my-0"
           point="Great Tip of the Day"
           tick-color="#6DD0BF"
         />
@@ -870,10 +870,10 @@
 
       <nuxt-link to="/Authentication/SignInToContinue">
         <RippleButton
+          :loading="heroButtonLoading"
+          :on-click="changeIt"
           class="my-6"
           class-list="primary-btn"
-          :on-click="changeIt"
-          :loading="heroButtonLoading"
         >
           Explore Now
         </RippleButton>
@@ -918,20 +918,39 @@ export default {
 @import 'assets/all-variables';
 
 .hero-container {
+  text-align: center;
+
+  @media only screen and (min-width: $small) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+  }
+
   .hero-image {
-    width: clamp(10rem, 40vw, 564px);
+    order: 0;
+    margin: auto;
+
+    @media only screen and (min-width: $small) {
+      order: 2;
+      margin: unset;
+    }
   }
 
   .hero-content {
+    text-align: center;
+    order: 1;
+
+    @media only screen and (min-width: $small) {
+      text-align: left;
+      order: 0;
+    }
+
     h1 {
       font-family: $Prata;
       font-size: $headline-title-font-size;
       font-weight: 400;
       color: $white;
-    }
-
-    p {
-      line-height: 1.92;
     }
 
     .optional-log-in-text {
