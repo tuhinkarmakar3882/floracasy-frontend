@@ -107,6 +107,7 @@ export default {
   transition: all 300ms ease-in-out;
   height: 2 * $x-large-unit;
   width: 100%;
+  right: 0;
   z-index: 9999999;
   top: 0;
   display: flex;
