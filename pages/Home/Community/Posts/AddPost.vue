@@ -47,18 +47,41 @@
         </div>
 
         <section class="main px-2">
-          <textarea id="post" class="px-4" cols="30" name="post" rows="10" />
+          <textarea
+            id="post"
+            class="px-4"
+            cols="30"
+            name="post"
+            rows="10"
+            :style="[
+              customStyle && {
+                background: customStyle.background,
+                color: customStyle.color,
+              },
+            ]"
+          />
         </section>
 
         <section class="background-selection mt-4">
           <p class="mb-8 px-2">Try with a background</p>
           <div class="choices">
             <section
-              v-for="(background, index) in backgroundOptions"
+              v-ripple
+              style="
+                background: transparent;
+                display: grid;
+                place-items: center;
+              "
+              class="option mx-1 mdi mdi-cancel mdi-24px"
+              @click="customStyle = null"
+            />
+            <section
+              v-for="(style, index) in customStyleOptions"
               :key="index"
               v-ripple
-              :style="{ background }"
+              :style="{ background: style.background }"
               class="option mx-1"
+              @click="customStyle = style"
             />
           </div>
         </section>
@@ -87,25 +110,44 @@ export default {
       navigationRoutes,
       pageTitle: 'Add New Post',
       isReady: false,
-      backgroundOptions: [
-        'orange',
-        'green',
-        'yellow',
-        'cyan',
-        'greenyellow',
-        'crimson',
-        'saddlebrown',
-        'aqua',
-        'aliceblue',
-        'orange',
-        'green',
-        'yellow',
-        'cyan',
-        'greenyellow',
-        'crimson',
-        'saddlebrown',
-        'aqua',
-        'aliceblue',
+      customStyle: null,
+      customStyleOptions: [
+        {
+          background: 'orange',
+          color: 'black',
+        },
+        {
+          background: 'green',
+          color: 'white',
+        },
+        {
+          background: 'yellow',
+          color: 'black',
+        },
+        {
+          background: 'cyan',
+          color: 'black',
+        },
+        {
+          background: 'greenyellow',
+          color: 'black',
+        },
+        {
+          background: 'crimson',
+          color: 'white',
+        },
+        {
+          background: 'saddlebrown',
+          color: 'white',
+        },
+        {
+          background: 'aqua',
+          color: 'black',
+        },
+        {
+          background: 'aliceblue',
+          color: 'black',
+        },
       ],
     }
   },
