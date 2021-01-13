@@ -1,9 +1,16 @@
 <template>
   <AppFeel
     :on-back="navigationRoutes.Home.Community.index"
+    :prev-url-path="prevURL"
     class="add-new-post-page"
+    dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
+    <template slot="app-bar-action-button">
+      <button v-ripple class="vibrant-outlined-btn" style="min-width: auto">
+        Post
+      </button>
+    </template>
 
     <template slot="main">
       <div v-if="!isReady">
@@ -24,7 +31,7 @@
           </section>
         </div>
 
-        <div class="actions mt-4">
+        <div class="actions my-4">
           <p v-ripple>
             <span class="mdi mdi-image mdi-24px secondary mr-2" />
             Photos
@@ -39,8 +46,21 @@
           </p>
         </div>
 
-        <section class="main px-4">
-          <textarea id="post" name="post" cols="30" rows="10" />
+        <section class="main px-2">
+          <textarea id="post" class="px-4" cols="30" name="post" rows="10" />
+        </section>
+
+        <section class="background-selection mt-4">
+          <p class="mb-8 px-2">Try with a background</p>
+          <div class="choices">
+            <section
+              v-for="(background, index) in backgroundOptions"
+              :key="index"
+              v-ripple
+              :style="{ background }"
+              class="option mx-1"
+            />
+          </div>
         </section>
       </div>
     </template>
@@ -58,11 +78,35 @@ export default {
   components: { LoadingIcon, AppFeel },
   middleware: 'isAuthenticated',
 
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Add New Post',
       isReady: false,
+      backgroundOptions: [
+        'orange',
+        'green',
+        'yellow',
+        'cyan',
+        'greenyellow',
+        'crimson',
+        'saddlebrown',
+        'aqua',
+        'aliceblue',
+        'orange',
+        'green',
+        'yellow',
+        'cyan',
+        'greenyellow',
+        'crimson',
+        'saddlebrown',
+        'aqua',
+        'aliceblue',
+      ],
     }
   },
 
@@ -106,6 +150,40 @@ export default {
 @import 'assets/all-variables';
 
 .add-new-post-page {
+  .background-selection {
+    p {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: 36px;
+        background: $primary-light;
+        bottom: -8px;
+        left: 8px;
+      }
+    }
+
+    .choices {
+      display: flex;
+      overflow: auto;
+      max-width: 100%;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .option {
+        border-radius: 12px;
+        min-height: 2 * $x-large-unit;
+        height: 2 * $x-large-unit;
+        min-width: 2 * $x-large-unit;
+        width: 2 * $x-large-unit;
+      }
+    }
+  }
+
   .actions {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -160,6 +238,16 @@ export default {
         font-style: italic;
         line-height: 16px;
       }
+    }
+  }
+
+  #post {
+    border: 1px solid #3a3a3a;
+    border-radius: 0 $standard-unit;
+    resize: none;
+
+    &:focus {
+      border: 1px solid $secondary;
     }
   }
 }
