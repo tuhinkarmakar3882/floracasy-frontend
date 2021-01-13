@@ -31,6 +31,9 @@
       <p>
         <slot name="app-bar-title" />
       </p>
+      <div class="ml-auto pr-4">
+        <slot name="app-bar-action-button" />
+      </div>
     </header>
 
     <main class="main-content">
