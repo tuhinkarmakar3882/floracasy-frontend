@@ -9,7 +9,10 @@
     <template slot="app-bar-action-button">
       <button
         v-ripple
-        class="vibrant-outlined-btn"
+        :class="
+          postBody.trim().length > 10 ? 'vibrant-outlined-btn' : 'disabled-btn'
+        "
+        :disabled="postBody.trim().length <= 10"
         style="min-width: auto"
         @click="createPost"
       >
@@ -123,7 +126,7 @@ import Dropdown from '~/components/global/Dropdown'
 export default {
   name: 'AddPost',
   components: { Dropdown, LoadingIcon, AppFeel },
-  // middleware: 'isAuthenticated',
+  middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -134,7 +137,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Add New Post',
       isReady: false,
-      postBody: null,
+      postBody: '',
       moodIcon: null,
       moodIconOptions: ['mdi-party-popper', 'mdi-emoticon-cool'],
       customStyle: null,
