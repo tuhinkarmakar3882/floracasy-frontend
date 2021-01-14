@@ -7,7 +7,12 @@
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
     <template slot="app-bar-action-button">
-      <button v-ripple class="vibrant-outlined-btn" style="min-width: auto">
+      <button
+        v-ripple
+        class="vibrant-outlined-btn"
+        style="min-width: auto"
+        @click="createPost"
+      >
         Post
       </button>
     </template>
@@ -29,6 +34,9 @@
             <p class="secondary">{{ user.displayName }}</p>
             <small v-if="user.designation">{{ user.designation }} </small>
           </section>
+          <section class="ml-auto">
+            <span class="mdi vibrant mdi-36px" :class="moodIcon" />
+          </section>
         </div>
 
         <div class="actions my-4">
@@ -46,19 +54,34 @@
           </p>
         </div>
 
+        <!--        <Dropdown class="dropdown">-->
+        <!--          <section slot="custom-head">duh</section>-->
+        <!--          <section slot="options">-->
+        <!--            <li-->
+        <!--              v-for="(option, index) in moodIconOptions"-->
+        <!--              :key="index"-->
+        <!--              v-ripple-->
+        <!--              @click="moodIcon = option"-->
+        <!--            >-->
+        <!--              {{ option }}-->
+        <!--            </li>-->
+        <!--          </section>-->
+        <!--        </Dropdown>-->
+
         <section class="main px-2">
-          <textarea
-            id="post"
-            class="px-4"
-            cols="30"
-            name="post"
-            rows="10"
+          <div
+            id="post-body"
             :style="[
               customStyle && {
                 background: customStyle.background,
                 color: customStyle.color,
+                display: 'grid',
+                placeItems: 'center',
               },
             ]"
+            class="px-4 py-4"
+            contenteditable="true"
+            @keyup="updateText"
           />
         </section>
 
@@ -67,12 +90,12 @@
           <div class="choices">
             <section
               v-ripple
+              class="option mx-1 mdi mdi-cancel mdi-24px"
               style="
                 background: transparent;
                 display: grid;
                 place-items: center;
               "
-              class="option mx-1 mdi mdi-cancel mdi-24px"
               @click="customStyle = null"
             />
             <section
@@ -95,11 +118,12 @@ import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
+import Dropdown from '~/components/global/Dropdown'
 
 export default {
   name: 'AddPost',
-  components: { LoadingIcon, AppFeel },
-  middleware: 'isAuthenticated',
+  components: { Dropdown, LoadingIcon, AppFeel },
+  // middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -110,8 +134,15 @@ export default {
       navigationRoutes,
       pageTitle: 'Add New Post',
       isReady: false,
+      postBody: null,
+      moodIcon: null,
+      moodIconOptions: ['mdi-party-popper', 'mdi-emoticon-cool'],
       customStyle: null,
       customStyleOptions: [
+        {
+          background: 'linear-gradient(to right, #CC2B5E, #753A88)',
+          color: 'white',
+        },
         {
           background: 'orange',
           color: 'black',
@@ -177,6 +208,17 @@ export default {
         this.loadingProfile = true
         await this.$store.dispatch('UserManagement/fetchData')
       }
+    },
+    async updateText() {
+      this.postBody = document.getElementById('post-body').textContent
+    },
+    createPost() {
+      const payload = {
+        body: this.postBody,
+        styles: this.customStyle,
+        mood: this.moodIcon,
+      }
+      console.log(payload)
     },
   },
 
@@ -283,10 +325,11 @@ export default {
     }
   }
 
-  #post {
+  #post-body {
     border: 1px solid #3a3a3a;
     border-radius: 0 $standard-unit;
-    resize: none;
+    min-height: 200px;
+    outline: 0 none;
 
     &:focus {
       border: 1px solid $secondary;
