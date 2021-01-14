@@ -149,7 +149,7 @@ export default {
     max-width: $max-width;
     margin-left: auto;
     margin-right: auto;
-    min-height: 90vh;
+    min-height: calc(100vh - 200px);
 
     button {
       min-width: auto;

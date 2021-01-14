@@ -102,7 +102,7 @@
       </transition>
     </section>
 
-    <main style="min-height: 100vh">
+    <main>
       <NotificationBadge
         @click="goto(navigationRoutes.Home.Notifications.index)"
       />
@@ -573,6 +573,7 @@ export default {
   }
 
   main {
+    min-height: calc(100vh - 200px);
     padding: 2 * $x-large-unit 0;
     @media only screen and (min-width: $small) {
       margin-left: 2 * $xxx-large-unit;
