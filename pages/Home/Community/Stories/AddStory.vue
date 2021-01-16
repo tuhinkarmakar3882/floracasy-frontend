@@ -125,49 +125,55 @@
       </section>
 
       <section v-if="activeTab === 2" class="audio-recording-container">
-        <div class="px-4 text-center pt-4">
-          <p>Record the Audio Story!</p>
+        <div class="text-center pt-8 mt-8">
+          <small class="timer">
+            {{ audio.audioRecordingDuration }} seconds
+          </small>
 
-          <i v-ripple class="mdi mdi-headphones mdi-48px headphone-icon" />
+          <section class="display-icon pt-8 mt-8">
+            <i v-ripple class="mdi mdi-microphone mdi-48px headphone-icon" />
+            <p>Audio Story</p>
+          </section>
 
-          <h4 class="timer">{{ audio.audioRecordingDuration }} seconds</h4>
+          <transition name="slide-up">
+            <audio
+              v-if="audio.source"
+              class="my-6 px-4"
+              controls
+              style="width: 100%"
+            >
+              <source :src="audio.source" />
+            </audio>
+          </transition>
 
-          <button
-            v-if="!audio.recordingStarted"
-            v-ripple
-            class="primary-outlined-btn"
-            @click="startRecording"
-          >
-            Start Recording
-          </button>
+          <section class="audio-controls">
+            <button
+              v-if="!audio.recordingStarted"
+              v-ripple
+              class="primary-outlined-btn mx-4"
+              @click="startRecording"
+            >
+              <span class="mdi mdi-microphone mdi-36px" />
+            </button>
 
-          <button
-            v-else
-            v-ripple
-            class="danger-outlined-btn"
-            @click="stopRecording"
-          >
-            Stop Recording
-          </button>
+            <button
+              v-else
+              v-ripple
+              class="danger-outlined-btn mx-4"
+              @click="stopRecording"
+            >
+              <span class="mdi mdi-check mdi-36px" />
+            </button>
 
-          <button
-            v-if="audio.recordingDone"
-            v-ripple
-            class="vibrant-outlined-btn"
-          >
-            Post
-          </button>
+            <button
+              v-if="audio.recordingDone"
+              v-ripple
+              class="vibrant-outlined-btn mx-4"
+            >
+              <span class="mdi mdi-send mdi-36px" />
+            </button>
+          </section>
         </div>
-        <transition name="slide-up">
-          <audio
-            v-if="audio.source"
-            class="my-6 px-4"
-            controls
-            style="width: 100%"
-          >
-            <source :src="audio.source" />
-          </audio>
-        </transition>
       </section>
     </template>
   </AppFeel>
@@ -545,6 +551,38 @@ export default {
     }
   }
 
+  .audio-recording-container {
+    .timer {
+      padding: 8px 24px;
+      border: 1px solid $vibrant;
+      border-radius: 50px;
+      color: $vibrant;
+    }
+
+    .headphone-icon {
+      display: block;
+      position: relative;
+    }
+    .audio-controls {
+      display: flex;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    button {
+      display: grid;
+      place-items: center;
+      padding: 0;
+      height: 64px;
+      width: 64px;
+    }
+  }
+
   .camera-recording-container {
     position: relative;
 
@@ -593,13 +631,6 @@ export default {
           border-radius: 100%;
         }
       }
-    }
-  }
-
-  .audio-recording-container {
-    .headphone-icon {
-      display: block;
-      position: relative;
     }
   }
 }
