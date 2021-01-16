@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    custom-header
-    class="create-new-blog-page"
     :on-back="navigationRoutes.Home.Blogs.Create.index"
     auto-hide
+    class="create-new-blog-page"
+    custom-header
   >
     <template slot="app-bar-custom-header">
       <h5
@@ -17,11 +17,11 @@
         <button
           v-if="step === 1"
           v-ripple=""
-          class="px-8"
           :class="
             !(hasTitle && hasBlogCategory) ? 'disabled-btn' : 'secondary-btn'
           "
           :disabled="!(hasTitle && hasBlogCategory)"
+          class="px-8"
           @click="goToNextStep"
         >
           Next
@@ -49,16 +49,18 @@
 
     <template slot="main">
       <div v-if="step === 1" class="px-4 mt-4">
-        <h5 class="heading-title mb-8">Basic Details</h5>
-        <div class="material-form-field mt-2">
+        <h5 class="heading-title" style="margin-bottom: 12pxaa">
+          Basic Details
+        </h5>
+        <section class="material-form-field">
           <input
             id="blog-title"
             ref="blogTitle"
             v-model="blogTitle"
-            type="text"
-            required
-            name="text"
             autocomplete="off"
+            name="text"
+            required
+            type="text"
             @keyup.enter="
               () => {
                 $refs.blogSubtitle.focus()
@@ -69,31 +71,38 @@
           <label class="material-form-field-label" for="blog-title">
             Title
           </label>
-        </div>
-        <div class="material-form-field mt-2">
+          <small
+            style="display: block; font-size: 0.6rem"
+            class="mt-2 hint-text"
+          >
+            *Required
+          </small>
+        </section>
+
+        <section class="material-form-field">
           <input
             id="blog-subtitle"
             ref="blogSubtitle"
             v-model="blogSubtitle"
-            type="text"
-            required
-            name="text"
             autocomplete="off"
+            name="text"
+            required
+            type="text"
           />
           <label class="material-form-field-label" for="blog-subtitle">
             Subtitle
           </label>
-        </div>
+        </section>
 
-        <div class="material-form-field mt-2">
+        <section class="material-form-field">
           <input
             id="cover-image-url"
             ref="coverImageUrl"
             v-model="coverImageUrl"
-            type="text"
-            required
-            name="text"
             autocomplete="off"
+            name="text"
+            required
+            type="text"
             @keyup.enter="
               () => {
                 $refs.blogCategory.focus()
@@ -104,30 +113,25 @@
           <label class="material-form-field-label" for="cover-image-url">
             Cover Photo URL
           </label>
-        </div>
+        </section>
 
-        <div class="mt-2">
-          <label for="blog-category" style="font-size: 20px">
-            Enter the Blog Category
-          </label>
-          <div class="my-5">
-            <select
-              id="blog-category"
-              ref="blogCategory"
+        <section>
+          <p ref="blogCategory">Category</p>
+          <client-only>
+            <v-select
               v-model="blogCategory"
-              name="blog-category"
+              :options="categories"
               autocomplete="off"
-            >
-              <option
-                v-for="category in categories"
-                :key="category.id"
-                :value="category.id"
-              >
-                {{ category.name }}
-              </option>
-            </select>
-          </div>
-        </div>
+              :reduce="(category) => category.id"
+              class="my-4 dropdown"
+              label="name"
+              placeholder="Choose a Blog Category"
+            />
+          </client-only>
+          <small style="display: block; font-size: 11px" class="mt-2 hint-text">
+            *Required
+          </small>
+        </section>
       </div>
 
       <div v-else-if="step === 2">
@@ -138,36 +142,36 @@
               v-slot="{ commands, isActive, focused }"
               :editor="editor"
             >
-              <div class="menubar is-hidden" :class="{ 'is-focused': focused }">
+              <div :class="{ 'is-focused': focused }" class="menubar is-hidden">
                 <!--Basic-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.bold() }"
+                  class="menubar__button"
                   @click="commands.bold"
                 >
                   <i class="mdi mdi-format-bold" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.italic() }"
+                  class="menubar__button"
                   @click="commands.italic"
                 >
                   <i class="mdi mdi-format-italic" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.strike() }"
+                  class="menubar__button"
                   @click="commands.strike"
                 >
                   <i class="mdi mdi-format-strikethrough-variant" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.underline() }"
+                  class="menubar__button"
                   @click="commands.underline"
                 >
                   <i class="mdi mdi-format-underline" />
@@ -176,8 +180,8 @@
                 <!--inline code-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.code() }"
+                  class="menubar__button"
                   @click="commands.code"
                 >
                   <i class="mdi mdi-code-tags" />
@@ -196,8 +200,8 @@
                 <!--Paragraph-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.paragraph() }"
+                  class="menubar__button"
                   @click="commands.paragraph"
                 >
                   <i class="mdi mdi-format-paragraph" />
@@ -206,48 +210,48 @@
                 <!--Heading Tags-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+                  class="menubar__button"
                   @click="commands.heading({ level: 1 })"
                 >
                   <i class="mdi mdi-format-header-1" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+                  class="menubar__button"
                   @click="commands.heading({ level: 2 })"
                 >
                   <i class="mdi mdi-format-header-2" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+                  class="menubar__button"
                   @click="commands.heading({ level: 3 })"
                 >
                   <i class="mdi mdi-format-header-3" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.heading({ level: 4 }) }"
+                  class="menubar__button"
                   @click="commands.heading({ level: 4 })"
                 >
                   <i class="mdi mdi-format-header-4" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.heading({ level: 5 }) }"
+                  class="menubar__button"
                   @click="commands.heading({ level: 5 })"
                 >
                   <i class="mdi mdi-format-header-5" />
                 </button>
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.heading({ level: 6 }) }"
+                  class="menubar__button"
                   @click="commands.heading({ level: 6 })"
                 >
                   <i class="mdi mdi-format-header-6" />
@@ -256,8 +260,8 @@
                 <!--UL-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.bullet_list() }"
+                  class="menubar__button"
                   @click="commands.bullet_list"
                 >
                   <i class="mdi mdi-format-list-bulleted" />
@@ -266,8 +270,8 @@
                 <!--OL-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.ordered_list() }"
+                  class="menubar__button"
                   @click="commands.ordered_list"
                 >
                   <i class="mdi mdi-format-list-numbered" />
@@ -276,8 +280,8 @@
                 <!--BlockQuote-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.blockquote() }"
+                  class="menubar__button"
                   @click="commands.blockquote"
                 >
                   <i class="mdi mdi-format-quote-close" />
@@ -286,8 +290,8 @@
                 <!--Code-->
                 <button
                   v-ripple="'#0000005f'"
-                  class="menubar__button"
                   :class="{ 'is-active': isActive.code_block() }"
+                  class="menubar__button"
                   @click="commands.code_block"
                 >
                   <i class="mdi mdi-xml" />
@@ -391,8 +395,8 @@
             </editor-menu-bar>
 
             <editor-content
-              class="editor__content px-4 pt-4"
               :editor="editor"
+              class="editor__content px-4 pt-4"
             />
           </div>
         </client-only>
@@ -424,9 +428,9 @@
             {{ getRelativeTime(new Date()) }}
           </small>
           <img
-            class="mt-5 blog-intro-image"
-            :src="coverImageUrl"
             :alt="blogTitle"
+            :src="coverImageUrl"
+            class="mt-5 blog-intro-image"
             style="width: 100%; object-fit: cover; max-height: 250px"
           />
           <p class="my-4">
@@ -542,6 +546,7 @@ export default {
     blogCategory(newContent) {
       localStorage.setItem('blogCategory', newContent)
       this.hasBlogCategory = !!newContent
+      console.log(this.blogCategory)
     },
     blogSubtitle(newContent) {
       localStorage.setItem('blogSubtitle', newContent)
@@ -666,6 +671,7 @@ export default {
 
 <style lang="scss">
 @import 'assets/all-variables';
+@import 'assets/dropdown';
 
 $inactive-background: #e8f8f5;
 $inactive-color: #7a7a7a;
