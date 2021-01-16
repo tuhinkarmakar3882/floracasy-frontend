@@ -236,8 +236,17 @@ export default {
       linkPosition: -1,
     })
 
-    if (!window.MediaRecorder)
-      window.MediaRecorder = require('audio-recorder-polyfill')
+    if (!window.MediaRecorder) {
+      const AudioRecorder = require('audio-recorder-polyfill')
+      AudioRecorder.encoder = require('audio-recorder-polyfill/mpeg-encoder')
+      AudioRecorder.prototype.mimeType = 'audio/mpeg'
+      window.MediaRecorder = AudioRecorder
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message: 'Polyfill for Apple Devices are Ready',
+        notificationType: 'info',
+        dismissible: true,
+      })
+    }
 
     this.audio.stream && this.destroySetup(this.audio.stream)
     this.photo.stream && this.destroySetup(this.photo.stream)

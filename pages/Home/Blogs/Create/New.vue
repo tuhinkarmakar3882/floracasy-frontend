@@ -49,9 +49,7 @@
 
     <template slot="main">
       <div v-if="step === 1" class="px-4 mt-4">
-        <h5 class="heading-title" style="margin-bottom: 12pxaa">
-          Basic Details
-        </h5>
+        <h5 class="heading-title" style="margin-bottom: 12px">Basic Details</h5>
         <section class="material-form-field">
           <input
             id="blog-title"
