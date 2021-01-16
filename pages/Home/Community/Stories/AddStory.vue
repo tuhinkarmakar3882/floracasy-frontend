@@ -137,11 +137,10 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
-import LoadingIcon from '~/components/global/LoadingIcon'
 
 export default {
   name: 'AddStory',
-  components: { LoadingIcon, AppFeel },
+  components: { AppFeel },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
@@ -152,15 +151,83 @@ export default {
     return {
       navigationRoutes,
       pageTitle: 'Add New Story',
-      isCameraOpen: false,
-      isPhotoTaken: false,
-      isShotPhoto: false,
-      isLoading: false,
-      link: '#',
-      activeTab: 1,
+      activeTab: 0,
       tabs: ['Write', 'Photo', 'Audio'],
+
+      arrayOfObjects: [],
+      object: {
+        name: 'Object Name',
+      },
+
+      photo: {
+        imageSize: {
+          height: 720,
+          width: 1280,
+        },
+        isCameraOpen: false,
+        isPhotoTaken: false,
+        isShotPhoto: false,
+        isLoading: false,
+        link: '#',
+        stream: null,
+        source: null,
+        mediaRecorder: null,
+        availableRatios: [
+          {
+            name: '16:9',
+            height: 720,
+            width: 1280,
+          },
+          {
+            name: '1:1',
+            height: 720,
+            width: 720,
+          },
+          {
+            name: '4:3',
+            height: 1280,
+            width: 548,
+          },
+        ],
+        aspectRatio: null,
+        availableDevices: [],
+      },
+
+      audio: {
+        audioRecordingInterval: null,
+        audioRecordingDuration: 100,
+        recordingStarted: false,
+        recordingDone: false,
+        stream: null,
+        source: null,
+        mediaRecorder: null,
+        audioClip: [],
+        availableDevices: [],
+      },
     }
   },
+
+  watch: {
+    activeTab(newValue, _) {
+      switch (newValue) {
+        case 0:
+          this.audio.stream && this.destroySetup(this.audio.stream)
+          this.photo.stream && this.destroySetup(this.photo.stream)
+          break
+
+        case 1:
+          this.prepareCameraRecordingInitialSetup()
+          this.audio.stream && this.destroySetup(this.audio.stream)
+          break
+
+        case 2:
+          this.prepareAudioRecordingInitialSetup()
+          this.photo.stream && this.destroySetup(this.photo.stream)
+          break
+      }
+    },
+  },
+
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: -1,
@@ -168,6 +235,227 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+
+    if (!window.MediaRecorder)
+      window.MediaRecorder = require('audio-recorder-polyfill')
+
+    this.audio.stream && this.destroySetup(this.audio.stream)
+    this.photo.stream && this.destroySetup(this.photo.stream)
+
+    const availableDevices = await navigator.mediaDevices.enumerateDevices()
+
+    this.photo.availableDevices = availableDevices.filter(
+      (device) => device.kind === 'videoinput'
+    )
+    this.audio.availableDevices = availableDevices.filter(
+      (device) => device.kind === 'audioinput'
+    )
+  },
+
+  beforeDestroy() {
+    this.audio.stream && this.destroySetup(this.audio.stream)
+    this.photo.stream && this.destroySetup(this.photo.stream)
+  },
+
+  methods: {
+    sayHi() {
+      console.log('hi')
+    },
+    async prepareCameraRecordingInitialSetup(constraint) {
+      const constraints = constraint ?? {
+        video: {
+          width: {
+            min: 1280,
+            ideal: 1920,
+            max: 2560,
+          },
+          height: {
+            min: 720,
+            ideal: 1080,
+            max: 1440,
+          },
+        },
+      }
+
+      this.photo.stream = await navigator.mediaDevices.getUserMedia(constraints)
+      this.photo.mediaRecorder = new MediaRecorder(this.photo.stream)
+      this.photo.mediaRecorder.ondataavailable = this.handleDataAvailable
+      this.$refs.videoPreview.srcObject = this.photo.stream
+    },
+
+    async prepareAudioRecordingInitialSetup() {
+      const constraints = {
+        audio: true,
+      }
+      this.audio.stream = await navigator.mediaDevices.getUserMedia(constraints)
+      this.audio.mediaRecorder = new MediaRecorder(this.audio.stream)
+      this.audio.mediaRecorder.ondataavailable = this.handleDataAvailable
+    },
+
+    destroySetup(stream) {
+      const tracks = stream.getTracks()
+      tracks.forEach(function (track) {
+        track.stop()
+      })
+    },
+
+    updatePhotoRatio(ratio) {
+      this.photo.stream && this.destroySetup(this.photo.stream)
+      this.prepareCameraRecordingInitialSetup({
+        video: {
+          width: {
+            ideal: ratio.width,
+          },
+          height: { ideal: ratio.height },
+        },
+      })
+    },
+
+    //  Audio Methods Start ---------------------------------------
+    startRecording() {
+      this.audio.audioClip = []
+      this.audio.source = null
+      this.audio.mediaRecorder.start()
+      this.audio.recordingStarted = true
+      this.audio.recordingDone = false
+      this.startTimer()
+    },
+
+    startTimer() {
+      this.audio.audioRecordingInterval = setInterval(() => {
+        this.audio.audioRecordingDuration <= 0
+          ? this.stopRecording()
+          : this.audio.audioRecordingDuration--
+      }, 1000)
+    },
+
+    handleDataAvailable(event) {
+      if (event.data.size > 0) {
+        this.audio.audioClip.push(event.data)
+
+        this.audio.source = URL.createObjectURL(event.data)
+
+        this.download()
+      }
+    },
+
+    download() {
+      // const blob = new Blob(this.audio.audioClip, {
+      //   type: 'audio/webm',
+      // })
+      //
+      // const url = URL.createObjectURL(blob)
+      // this.$refs.audioElement.src = url
+      // window.URL.revokeObjectURL(url)
+    },
+
+    stopRecording() {
+      clearInterval(this.audio.audioRecordingInterval)
+      this.audio.mediaRecorder.stop()
+      this.audio.audioRecordingDuration = 100
+      this.audio.recordingStarted = false
+      this.audio.recordingDone = true
+    },
+
+    custom() {
+      const controls = document.querySelector('.controls')
+      const cameraOptions = document.querySelector('.video-options>select')
+      const video = document.querySelector('video')
+      const canvas = document.querySelector('canvas')
+      const screenshotImage = document.querySelector('img')
+      const buttons = [...controls.querySelectorAll('button')]
+      const streamStarted = false
+
+      const [play, screenshot] = buttons
+
+      const constraints = {
+        video: {
+          width: {
+            min: 1280,
+            ideal: 1920,
+            max: 2560,
+          },
+          height: {
+            min: 720,
+            ideal: 1080,
+            max: 1440,
+          },
+        },
+      }
+
+      cameraOptions.onchange = () => {
+        const updatedConstraints = {
+          ...constraints,
+          deviceId: {
+            exact: cameraOptions.value,
+          },
+        }
+
+        startStream(updatedConstraints)
+      }
+
+      play.onclick = () => {
+        if (streamStarted) {
+          video.play()
+          play.classList.add('')
+          return
+        }
+        if (
+          'mediaDevices' in navigator &&
+          navigator.mediaDevices.getUserMedia
+        ) {
+          const updatedConstraints = {
+            ...constraints,
+            deviceId: {
+              exact: cameraOptions.value,
+            },
+          }
+          startStream(updatedConstraints)
+        }
+      }
+
+      screenshot.onclick = () => {
+        canvas.width = video.videoWidth
+        canvas.height = video.videoHeight
+        canvas.getContext('2d').drawImage(video, 0, 0)
+        screenshotImage.src = canvas.toDataURL('image/webp')
+        screenshotImage.classList.remove('')
+      }
+
+      const startStream = async (constraints) => {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints)
+        handleStream(stream)
+      }
+
+      const handleStream = (stream) => {
+        video.srcObject = stream
+      }
+
+      const getCameraSelection = async () => {
+        const devices = await navigator.mediaDevices.enumerateDevices()
+        const videoDevices = devices.filter(
+          (device) => device.kind === 'videoinput'
+        )
+        const options = videoDevices.map((videoDevice) => {
+          return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`
+        })
+        cameraOptions.innerHTML = options.join('')
+      }
+
+      getCameraSelection()
+    },
+
+    playAudio() {
+      const audio = new Audio('/audio/shutter.mp3')
+      audio.play()
+    },
+
+    setActiveTabTo(newTabNumber) {
+      this.activeTab = newTabNumber
+      this.$nextTick(() => {
+        this.$refs.tabNavigation.scrollTop = 0
+      })
+    },
   },
 
   head() {
