@@ -27,39 +27,66 @@
       </section>
 
       <section v-if="activeTab === 1" class="camera-recording-container">
-        <video ref="videoPreview" autoplay />
+        <LoadingIcon v-show="photo.isLoading" class="text-center my-6" />
+        <video v-show="!photo.isLoading" ref="videoPreview" autoplay />
+
         <canvas style="display: none" />
 
-        <div class="video-devices px-4 my-4">
-          <select id="" class="custom-select" name="">
-            <option
-              v-for="(device, index) in photo.availableDevices"
-              :key="index"
-              :value="device"
+        <client-only>
+          <div class="px-4 photo-options">
+            <v-select
+              v-model="photo.currentDevice"
+              :clearable="false"
+              :options="photo.availableDevices"
+              autocomplete="off"
+              class="my-4 dropdown"
+              placeholder="Choose a Camera"
             >
-              {{ device.label }}
-            </option>
-          </select>
-        </div>
+              <template #header>
+                <div class="my-2" style="opacity: 0.8">Currently Using</div>
+              </template>
 
-        <div class="video-aspect-ratio px-4 my-4">
-          <label for="aspect-ratio">Aspect-Ratio</label>
-          <select
-            id="aspect-ratio"
-            v-model="photo.aspectRatio"
-            class="custom-select"
-            name=""
-            @change="updatePhotoRatio(photo.aspectRatio)"
-          >
-            <option
-              v-for="(ratio, index) in photo.availableRatios"
-              :key="index"
-              :value="ratio"
+              <template #selected-option="{ label }">
+                <small>{{ label.split('(')[0] }}</small>
+              </template>
+
+              <template v-slot:option="{ label }">
+                <small> {{ label.split('(')[0] }}</small>
+              </template>
+
+              <template #no-options="{ search, searching, loading }">
+                No Such Camera Device Found
+              </template>
+            </v-select>
+
+            <v-select
+              v-model="photo.aspectRatio"
+              :clearable="false"
+              :options="photo.availableRatios"
+              autocomplete="off"
+              label="name"
+              class="my-4 dropdown"
+              placeholder="Choose a Aspect Ratio"
+              @input="updatePhotoRatio"
             >
-              {{ ratio.name }}
-            </option>
-          </select>
-        </div>
+              <template #header>
+                <div class="my-2" style="opacity: 0.8">Aspect Ratio</div>
+              </template>
+
+              <template #selected-option="{ name }">
+                <small>{{ name }}</small>
+              </template>
+
+              <template v-slot:option="option">
+                <small> {{ option.name }}</small>
+              </template>
+
+              <template #no-options="{ search, searching, loading }">
+                Invalid Aspect Ratio
+              </template>
+            </v-select>
+          </div>
+        </client-only>
 
         <transition name="slide-up">
           <img
@@ -137,10 +164,11 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
+import LoadingIcon from '~/components/global/LoadingIcon'
 
 export default {
   name: 'AddStory',
-  components: { AppFeel },
+  components: { LoadingIcon, AppFeel },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
@@ -153,11 +181,6 @@ export default {
       pageTitle: 'Add New Story',
       activeTab: 0,
       tabs: ['Write', 'Photo', 'Audio'],
-
-      arrayOfObjects: [],
-      object: {
-        name: 'Object Name',
-      },
 
       photo: {
         imageSize: {
@@ -174,23 +197,24 @@ export default {
         mediaRecorder: null,
         availableRatios: [
           {
-            name: '16:9',
+            name: 'Wide (16:9)',
             height: 720,
             width: 1280,
           },
           {
-            name: '1:1',
+            name: 'Square (1:1)',
             height: 720,
             width: 720,
           },
           {
-            name: '4:3',
+            name: 'Portrait (4:3)',
             height: 1280,
             width: 548,
           },
         ],
         aspectRatio: null,
         availableDevices: [],
+        currentDevice: null,
       },
 
       audio: {
@@ -259,6 +283,9 @@ export default {
     this.audio.availableDevices = availableDevices.filter(
       (device) => device.kind === 'audioinput'
     )
+
+    this.photo.currentDevice = this.photo.availableDevices[0]
+    this.photo.aspectRatio = this.photo.availableRatios[0]
   },
 
   beforeDestroy() {
@@ -267,10 +294,9 @@ export default {
   },
 
   methods: {
-    sayHi() {
-      console.log('hi')
-    },
     async prepareCameraRecordingInitialSetup(constraint) {
+      this.photo.isLoading = true
+
       const constraints = constraint ?? {
         video: {
           width: {
@@ -290,6 +316,7 @@ export default {
       this.photo.mediaRecorder = new MediaRecorder(this.photo.stream)
       this.photo.mediaRecorder.ondataavailable = this.handleDataAvailable
       this.$refs.videoPreview.srcObject = this.photo.stream
+      this.photo.isLoading = false
     },
 
     async prepareAudioRecordingInitialSetup() {
@@ -308,16 +335,16 @@ export default {
       })
     },
 
-    updatePhotoRatio(ratio) {
-      this.photo.stream && this.destroySetup(this.photo.stream)
-      this.prepareCameraRecordingInitialSetup({
-        video: {
-          width: {
-            ideal: ratio.width,
+    updatePhotoRatio() {
+      if (this.photo.aspectRatio) {
+        this.photo.stream && this.destroySetup(this.photo.stream)
+        this.prepareCameraRecordingInitialSetup({
+          video: {
+            width: { ideal: this.photo.aspectRatio.width },
+            height: { ideal: this.photo.aspectRatio.height },
           },
-          height: { ideal: ratio.height },
-        },
-      })
+        })
+      }
     },
 
     //  Audio Methods Start ---------------------------------------
@@ -475,8 +502,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
+@import 'assets/dropdown';
 
 .add-new-story-page {
   .tab-bar {
@@ -518,7 +546,7 @@ export default {
 
     video {
       width: 100%;
-      background: saddlebrown;
+      background: $card-background;
     }
 
     .controls {
@@ -534,6 +562,12 @@ export default {
         text-align: center;
         border-radius: 100%;
       }
+    }
+
+    .photo-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: $standard-unit;
     }
   }
 
