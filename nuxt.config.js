@@ -44,6 +44,7 @@ export default {
 
   modules: [
     'nuxt-helmet',
+    'nuxt-vue-select',
     '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
