@@ -164,6 +164,13 @@ export default {
         href: '/favicon.ico',
       },
       // TODO MAKE CSS LOAD ASYNCHRONOUSLY
+
+      //  Google Fonts
+      {
+        rel: 'dns-prefetch',
+        crossorigin: true,
+        href: 'https://fonts.gstatic.com/',
+      },
       {
         rel: 'preconnect',
         crossorigin: true,
@@ -174,6 +181,13 @@ export default {
         type: 'text/css',
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&family=Raleway:wght@300;400&display=swap',
+      },
+
+      //  Material Design Icons
+      {
+        rel: 'dns-prefetch',
+        crossorigin: true,
+        href: 'https://cdn.materialdesignicons.com/',
       },
       {
         rel: 'preconnect',
