@@ -20,59 +20,115 @@
         </p>
       </nav>
 
-      <div ref="tabNavigation"></div>
+      <div ref="tabNavigation" />
 
-      <section v-if="activeTab === 0" class="audio-recording-container">
+      <section v-if="activeTab === 0" class="writing-container">
         <p>This is <span class="mdi mdi-pen" /> Writing Division</p>
       </section>
-      <section v-if="activeTab === 1" class="camera-container">
-        <section class="audio-recording-container">
-          <p>This is <span class="mdi mdi-camera" /> Camera Division</p>
-        </section>
-        <div v-show="isCameraOpen && isLoading" class="camera-loading">
-          <LoadingIcon />
+
+      <section v-if="activeTab === 1" class="camera-recording-container">
+        <video ref="videoPreview" autoplay />
+        <canvas style="display: none" />
+
+        <div class="video-devices px-4 my-4">
+          <select id="" class="custom-select" name="">
+            <option
+              v-for="(device, index) in photo.availableDevices"
+              :key="index"
+              :value="device"
+            >
+              {{ device.label }}
+            </option>
+          </select>
         </div>
 
-        <div
-          v-if="isCameraOpen"
-          v-show="!isLoading"
-          :class="{ flash: isShotPhoto }"
-          class="camera-box"
-        >
-          <div :class="{ flash: isShotPhoto }" class="camera-shutter" />
-
-          <video v-show="!isPhotoTaken" ref="camera" autoplay />
-
-          <canvas v-show="isPhotoTaken" id="photoTaken" ref="canvas" />
-        </div>
-
-        <div v-if="isCameraOpen && !isLoading" class="camera-shoot">
-          <button
-            :class="
-              !isPhotoTaken ? 'vibrant-outlined-btn' : 'danger-outlined-btn'
-            "
-            type="button"
-            @click="takePhoto"
+        <div class="video-aspect-ratio px-4 my-4">
+          <label for="aspect-ratio">Aspect-Ratio</label>
+          <select
+            id="aspect-ratio"
+            v-model="photo.aspectRatio"
+            class="custom-select"
+            name=""
+            @change="updatePhotoRatio(photo.aspectRatio)"
           >
-            <span v-if="isPhotoTaken" class="mdi mdi-reload mdi-36px" />
-            <span v-else class="mdi mdi-camera mdi-36px" />
+            <option
+              v-for="(ratio, index) in photo.availableRatios"
+              :key="index"
+              :value="ratio"
+            >
+              {{ ratio.name }}
+            </option>
+          </select>
+        </div>
+
+        <transition name="slide-up">
+          <img
+            v-if="photo.source"
+            :src="photo.source"
+            alt="image-preview"
+            class="screenshot-image"
+          />
+        </transition>
+
+        <div class="controls">
+          <button v-ripple class="muted-outlined-btn">
+            <i class="mdi mdi-image-multiple mdi-36px" />
+          </button>
+
+          <button v-ripple class="vibrant-outlined-btn">
+            <i class="mdi mdi-camera mdi-36px" />
+          </button>
+
+          <button v-ripple class="muted-outlined-btn">
+            <i class="mdi mdi-dots-horizontal mdi-36px" />
           </button>
         </div>
-
-        <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
-          <a
-            id="downloadPhoto"
-            class="button"
-            download="my-photo.jpg"
-            role="button"
-            @click="downloadImage"
-          >
-            Download
-          </a>
-        </div>
       </section>
+
       <section v-if="activeTab === 2" class="audio-recording-container">
-        <p>This is <span class="mdi mdi-headphones" /> Recording Division</p>
+        <div class="px-4 text-center pt-4">
+          <p>Record the Audio Story!</p>
+
+          <i v-ripple class="mdi mdi-headphones mdi-48px headphone-icon" />
+
+          <h4 class="timer">{{ audio.audioRecordingDuration }} seconds</h4>
+
+          <button
+            v-if="!audio.recordingStarted"
+            v-ripple
+            class="primary-outlined-btn"
+            @click="startRecording"
+          >
+            Start Recording
+          </button>
+
+          <button
+            v-else
+            v-ripple
+            class="danger-outlined-btn"
+            @click="stopRecording"
+          >
+            Stop Recording
+          </button>
+
+          <button
+            v-if="audio.recordingDone"
+            v-ripple
+            class="vibrant-outlined-btn"
+          >
+            Post
+          </button>
+        </div>
+        <transition name="slide-up">
+          <audio
+            v-if="audio.source"
+            class="my-6 px-4"
+            controls
+            style="width: 100%"
+          >
+            <source :src="audio.source" />
+          </audio>
+        </transition>
       </section>
     </template>
   </AppFeel>
