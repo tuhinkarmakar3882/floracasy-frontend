@@ -1,0 +1,41 @@
+@import "all-variables";
+
+.dropdown {
+  .vs__search::placeholder,
+  .vs__dropdown-toggle,
+  .vs__dropdown-menu {
+    background: $segment-background;
+    border: none;
+    color: $white;
+    font-variant: small-caps;
+    height: 2 * $x-large-unit;
+  }
+
+  .vs__search {
+    border: none;
+  }
+
+  .vs__dropdown-menu {
+    height: 3 * $xxx-large-unit;
+
+    .vs__dropdown-option {
+      color: $secondary;
+      padding-top: $nano-unit;
+      padding-bottom: $nano-unit;
+
+      &.vs__dropdown-option--highlight {
+        background: lighten($card-background, 2 * $lighten-percentage);
+        border-radius: $milli-unit;
+      }
+    }
+  }
+
+  .vs__selected {
+    color: $white;
+  }
+
+  .vs__clear,
+  .vs__open-indicator {
+    fill: $secondary;
+  }
+}
