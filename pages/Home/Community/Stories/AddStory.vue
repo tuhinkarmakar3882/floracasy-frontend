@@ -32,62 +32,6 @@
 
         <canvas style="display: none" />
 
-        <client-only>
-          <div class="px-4 photo-options">
-            <v-select
-              v-model="photo.currentDevice"
-              :clearable="false"
-              :options="photo.availableDevices"
-              autocomplete="off"
-              class="my-4 dropdown"
-              placeholder="Choose a Camera"
-            >
-              <template #header>
-                <div class="my-2" style="opacity: 0.8">Currently Using</div>
-              </template>
-
-              <template #selected-option="{ label }">
-                <small>{{ label.split('(')[0] }}</small>
-              </template>
-
-              <template v-slot:option="{ label }">
-                <small> {{ label.split('(')[0] }}</small>
-              </template>
-
-              <template #no-options="{ search, searching, loading }">
-                No Such Camera Device Found
-              </template>
-            </v-select>
-
-            <v-select
-              v-model="photo.aspectRatio"
-              :clearable="false"
-              :options="photo.availableRatios"
-              autocomplete="off"
-              label="name"
-              class="my-4 dropdown"
-              placeholder="Choose a Aspect Ratio"
-              @input="updatePhotoRatio"
-            >
-              <template #header>
-                <div class="my-2" style="opacity: 0.8">Aspect Ratio</div>
-              </template>
-
-              <template #selected-option="{ name }">
-                <small>{{ name }}</small>
-              </template>
-
-              <template v-slot:option="option">
-                <small> {{ option.name }}</small>
-              </template>
-
-              <template #no-options="{ search, searching, loading }">
-                Invalid Aspect Ratio
-              </template>
-            </v-select>
-          </div>
-        </client-only>
-
         <transition name="slide-up">
           <img
             v-if="photo.source"
@@ -98,17 +42,85 @@
         </transition>
 
         <div class="controls">
-          <button v-ripple class="muted-outlined-btn">
-            <i class="mdi mdi-image-multiple mdi-36px" />
-          </button>
+          <transition name="slide-up">
+            <section v-show="photo.showMoreOptions" class="more-options">
+              <client-only>
+                <div class="px-4 photo-options">
+                  <v-select
+                    v-model="photo.currentDevice"
+                    :clearable="false"
+                    :options="photo.availableDevices"
+                    autocomplete="off"
+                    class="my-4 dropdown"
+                    placeholder="Choose a Camera"
+                  >
+                    <template #header>
+                      <div class="my-2" style="opacity: 0.8">
+                        Currently Using
+                      </div>
+                    </template>
 
-          <button v-ripple class="vibrant-outlined-btn">
-            <i class="mdi mdi-camera mdi-36px" />
-          </button>
+                    <template #selected-option="{ label }">
+                      <small>{{ label.split('(')[0] }}</small>
+                    </template>
 
-          <button v-ripple class="muted-outlined-btn">
-            <i class="mdi mdi-dots-horizontal mdi-36px" />
-          </button>
+                    <template v-slot:option="{ label }">
+                      <small> {{ label.split('(')[0] }}</small>
+                    </template>
+
+                    <template #no-options="{ search, searching, loading }">
+                      No Such Camera Device Found
+                    </template>
+                  </v-select>
+
+                  <v-select
+                    v-model="photo.aspectRatio"
+                    :clearable="false"
+                    :options="photo.availableRatios"
+                    autocomplete="off"
+                    class="my-4 dropdown"
+                    label="name"
+                    placeholder="Choose a Aspect Ratio"
+                    @input="updatePhotoRatio"
+                  >
+                    <template #header>
+                      <div class="my-2" style="opacity: 0.8">Aspect Ratio</div>
+                    </template>
+
+                    <template #selected-option="{ name }">
+                      <small>{{ name }}</small>
+                    </template>
+
+                    <template v-slot:option="option">
+                      <small> {{ option.name }}</small>
+                    </template>
+
+                    <template #no-options="{ search, searching, loading }">
+                      Invalid Aspect Ratio
+                    </template>
+                  </v-select>
+                </div>
+              </client-only>
+            </section>
+          </transition>
+
+          <section class="actions">
+            <button v-ripple class="muted-outlined-btn">
+              <i class="mdi mdi-image-multiple mdi-36px" />
+            </button>
+
+            <button v-ripple class="vibrant-outlined-btn">
+              <i class="mdi mdi-camera mdi-36px" />
+            </button>
+
+            <button
+              v-ripple
+              class="muted-outlined-btn"
+              @click="photo.showMoreOptions = !photo.showMoreOptions"
+            >
+              <i class="mdi mdi-dots-horizontal mdi-36px" />
+            </button>
+          </section>
         </div>
       </section>
 
@@ -209,12 +221,13 @@ export default {
           {
             name: 'Portrait (4:3)',
             height: 1280,
-            width: 548,
+            width: 538,
           },
         ],
         aspectRatio: null,
         availableDevices: [],
         currentDevice: null,
+        showMoreOptions: false,
       },
 
       audio: {
@@ -547,27 +560,39 @@ export default {
     video {
       width: 100%;
       background: $card-background;
+      transform: scaleX(-1);
+      height: calc(100vh - 114px);
     }
 
     .controls {
-      display: grid;
-      grid-column-gap: 16px;
-      grid-auto-flow: column;
-      place-items: center;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      padding: 20px 0;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      background: rgba(black, 0.4);
 
-      button {
-        padding: 0;
-        width: 2 * $xx-large-unit;
-        height: 2 * $xx-large-unit;
-        text-align: center;
-        border-radius: 100%;
+      .photo-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $standard-unit;
       }
-    }
 
-    .photo-options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: $standard-unit;
+      .actions {
+        display: grid;
+        grid-column-gap: 16px;
+        grid-auto-flow: column;
+        place-items: center;
+
+        button {
+          padding: 0;
+          width: 2 * $xx-large-unit;
+          height: 2 * $xx-large-unit;
+          text-align: center;
+          border-radius: 100%;
+        }
+      }
     }
   }
 
