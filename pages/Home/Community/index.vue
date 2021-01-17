@@ -213,7 +213,7 @@ export default {
           height: 24px;
           width: 24px;
           font-size: 14px;
-          z-index: 1;
+          z-index: 0;
         }
       }
     }
