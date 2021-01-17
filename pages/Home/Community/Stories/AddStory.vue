@@ -37,6 +37,21 @@
           class="compression-progress-bar"
         />
 
+        <transition name="gray-shift">
+          <section v-show="photo.isPhotoTaken" class="overlay">
+            <button
+              v-ripple
+              class="danger-outlined-btn mx-4"
+              @click="recapture"
+            >
+              <span class="mdi mdi-reload mdi-36px" />
+            </button>
+            <button v-ripple class="vibrant-outlined-btn mx-4">
+              <span class="mdi mdi-send mdi-36px" />
+            </button>
+          </section>
+        </transition>
+
         <LoadingIcon v-show="photo.isLoading" class="text-center my-6" />
         <canvas ref="canvasPreview" style="display: none" />
         <transition name="slide-left">
@@ -125,7 +140,20 @@
               <i class="mdi mdi-image-multiple mdi-36px" />
             </button>
 
-            <button v-ripple class="vibrant-outlined-btn" @click="takePhoto">
+            <button
+              v-if="photo.isPhotoTaken"
+              v-ripple
+              class="success-outlined-btn mx-4"
+            >
+              <span class="mdi mdi-check mdi-36px" />
+            </button>
+
+            <button
+              v-else
+              v-ripple
+              class="vibrant-outlined-btn"
+              @click="takePhoto"
+            >
               <i class="mdi mdi-camera mdi-36px" />
             </button>
 
@@ -410,8 +438,8 @@ export default {
 
       canvas.getContext('2d').drawImage(video, 0, 0)
 
-      this.photo.source = canvas.toDataURL()
-      this.photo.isPhotoTaken = true
+      // this.photo.source = canvas.toDataURL()
+      // this.photo.isPhotoTaken = true
 
       this.showUITip('Optimizing Image For Faster Upload Speeds')
 
@@ -431,6 +459,7 @@ export default {
 
       this.photo.source = URL.createObjectURL(blobImage)
 
+      this.photo.isPhotoTaken = true
       this.photo.compressionProgress = null
       this.photo.showProgress = false
 
@@ -476,6 +505,11 @@ export default {
           throw e
         })
       await this.updateVuexPhotoURL(photoURL)
+    },
+
+    recapture() {
+      this.photo.isPhotoTaken = false
+      this.photo.output = undefined
     },
 
     //  Audio Methods Start ---------------------------------------
@@ -698,6 +732,14 @@ export default {
   .camera-recording-container {
     position: relative;
 
+    button {
+      padding: 0;
+      width: 2 * $xx-large-unit;
+      height: 2 * $xx-large-unit;
+      text-align: center;
+      border-radius: 100%;
+    }
+
     .compression-progress-bar {
       height: $nano-unit;
       background: $active-gradient;
@@ -708,6 +750,18 @@ export default {
       transition: all 150ms ease-in-out;
       border-radius: 0 0 16px 16px;
       box-shadow: $down-only-box-shadow;
+    }
+
+    .overlay {
+      width: 100%;
+      height: calc(100vh - 114px);
+      position: absolute;
+      top: 0;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      display: grid;
+      grid-auto-flow: column;
+      place-items: center;
     }
 
     video,
@@ -753,14 +807,6 @@ export default {
         grid-column-gap: 16px;
         grid-auto-flow: column;
         place-items: center;
-
-        button {
-          padding: 0;
-          width: 2 * $xx-large-unit;
-          height: 2 * $xx-large-unit;
-          text-align: center;
-          border-radius: 100%;
-        }
       }
     }
   }
