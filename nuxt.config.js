@@ -124,8 +124,7 @@ export default {
 
     http2: {
       push: true,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      pushAssets: (req, res, publicPath, preloadFiles) =>
+      pushAssets: (_, __, publicPath, preloadFiles) =>
         preloadFiles
           .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
           .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
