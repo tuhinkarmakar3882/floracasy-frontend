@@ -27,18 +27,34 @@
       </section>
 
       <section v-if="activeTab === 1" class="camera-recording-container">
-        <LoadingIcon v-show="photo.isLoading" class="text-center my-6" />
-        <video v-show="!photo.isLoading" ref="videoPreview" autoplay />
+        <div
+          v-show="photo.showProgress"
+          :style="{
+            width: photo.compressionProgress
+              ? `${photo.compressionProgress}%`
+              : 0,
+          }"
+          class="compression-progress-bar"
+        />
 
-        <canvas style="display: none" />
+        <LoadingIcon v-show="photo.isLoading" class="text-center my-6" />
+        <canvas ref="canvasPreview" style="display: none" />
+        <transition name="slide-left">
+          <video
+            v-show="!photo.isLoading && !photo.isPhotoTaken"
+            ref="videoPreview"
+            autoplay
+          />
+        </transition>
 
         <transition name="slide-up">
-          <img
-            v-if="photo.source"
-            :src="photo.source"
-            alt="image-preview"
-            class="screenshot-image"
-          />
+          <div class="preview-img-container">
+            <img
+              v-show="photo.isPhotoTaken"
+              :src="photo.source"
+              alt="image-preview"
+            />
+          </div>
         </transition>
 
         <div class="controls">
@@ -109,7 +125,7 @@
               <i class="mdi mdi-image-multiple mdi-36px" />
             </button>
 
-            <button v-ripple class="vibrant-outlined-btn">
+            <button v-ripple class="vibrant-outlined-btn" @click="takePhoto">
               <i class="mdi mdi-camera mdi-36px" />
             </button>
 
@@ -180,9 +196,11 @@
 </template>
 
 <script>
+import imageCompression from 'browser-image-compression'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'AddStory',
@@ -205,9 +223,9 @@ export default {
           height: 720,
           width: 1280,
         },
-        isCameraOpen: false,
+        // isCameraOpen: false,
+        // isShotPhoto: false,
         isPhotoTaken: false,
-        isShotPhoto: false,
         isLoading: false,
         link: '#',
         stream: null,
@@ -218,22 +236,28 @@ export default {
             name: 'Wide (16:9)',
             height: 720,
             width: 1280,
+            ratio: 1.778,
           },
           {
             name: 'Square (1:1)',
             height: 720,
             width: 720,
+            ratio: 1,
           },
           {
             name: 'Portrait (4:3)',
             height: 1280,
             width: 538,
+            ratio: 1.33,
           },
         ],
         aspectRatio: null,
         availableDevices: [],
         currentDevice: null,
         showMoreOptions: false,
+        output: null,
+        showProgress: false,
+        compressionProgress: null,
       },
 
       audio: {
@@ -313,6 +337,14 @@ export default {
   },
 
   methods: {
+    async showUITip(message, type) {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message,
+        notificationType: type || 'info',
+        dismissible: true,
+      })
+    },
+
     async prepareCameraRecordingInitialSetup(constraint) {
       this.photo.isLoading = true
 
@@ -359,11 +391,91 @@ export default {
         this.photo.stream && this.destroySetup(this.photo.stream)
         this.prepareCameraRecordingInitialSetup({
           video: {
-            width: { ideal: this.photo.aspectRatio.width },
-            height: { ideal: this.photo.aspectRatio.height },
+            aspectRatio: { ideal: this.photo.aspectRatio.ratio },
+            // width: { max: this.photo.aspectRatio.width },
+            // height: { ideal: this.photo.aspectRatio.height },
           },
         })
       }
+    },
+
+    takePhoto() {
+      this.photo.isPhotoTaken = false
+      this.showUITip('Say Cheese!')
+
+      const canvas = this.$refs.canvasPreview
+      const video = this.$refs.videoPreview
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+
+      canvas.getContext('2d').drawImage(video, 0, 0)
+
+      this.photo.source = canvas.toDataURL()
+      this.photo.isPhotoTaken = true
+
+      this.showUITip('Optimizing Image For Faster Upload Speeds')
+
+      canvas.toBlob(this.compressImage, 'image/webp', 0.7)
+    },
+
+    async compressImage(blobImage) {
+      const useWebWorker = true
+      this.photo.showProgress = true
+      const options = {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 1280,
+        useWebWorker,
+        onProgress: this.updateProgressBar,
+      }
+      this.photo.output = await imageCompression(blobImage, options)
+
+      this.photo.source = URL.createObjectURL(blobImage)
+
+      this.photo.compressionProgress = null
+      this.photo.showProgress = false
+
+      await this.showUITip('Photo Captured!', 'success')
+    },
+
+    updateProgressBar(compressProgress) {
+      this.photo.compressionProgress = compressProgress
+    },
+
+    async uploadProfileDataToBackendServer() {
+      this.updateProfileDataLoading = true
+      try {
+        await this.$axios.$post(endpoints.profile_statistics.profileData, {
+          designation: this.designation,
+          about: this.about,
+        })
+
+        if (this.output) {
+          await this.uploadImage()
+        }
+
+        await this.updateVuexUserData()
+
+        await this.$router.replace(
+          navigationRoutes.Home.MoreOptions.Preferences.index
+        )
+      } catch (e) {
+        await this.showErrorMessage()
+      } finally {
+        this.updateProfileDataLoading = false
+      }
+    },
+
+    async uploadImage() {
+      const formData = new FormData()
+      formData.append('image', this.output, this.output.name)
+      const { photoURL } = await this.$axios
+        .$post(endpoints.upload_handler_system.process_image, formData, {
+          onUploadProgress: this.showUITip,
+        })
+        .catch((e) => {
+          throw e
+        })
+      await this.updateVuexPhotoURL(photoURL)
     },
 
     //  Audio Methods Start ---------------------------------------
@@ -512,7 +624,6 @@ export default {
       })
     },
   },
-
   head() {
     return {
       title: this.pageTitle,
@@ -563,6 +674,7 @@ export default {
       display: block;
       position: relative;
     }
+
     .audio-controls {
       display: flex;
       width: 100%;
@@ -586,20 +698,39 @@ export default {
   .camera-recording-container {
     position: relative;
 
-    .screenshot-image {
-      width: 100%;
-      height: 250px;
-      border-radius: 4px;
-      border: 2px solid whitesmoke;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
-      background: white;
+    .compression-progress-bar {
+      height: $nano-unit;
+      background: $active-gradient;
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      transition: all 150ms ease-in-out;
+      border-radius: 0 0 16px 16px;
+      box-shadow: $down-only-box-shadow;
     }
 
-    video {
+    video,
+    .preview-img-container {
       width: 100%;
       background: $card-background;
       transform: scaleX(-1);
       height: calc(100vh - 114px);
+    }
+
+    .preview-img-container {
+      display: grid;
+      place-items: center;
+      transform: unset;
+
+      img {
+        width: 100%;
+        height: 230px;
+        border-radius: 4px;
+        border: 2px solid whitesmoke;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+        background: white;
+      }
     }
 
     .controls {
