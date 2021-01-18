@@ -53,7 +53,9 @@
         </transition>
 
         <LoadingIcon v-show="photo.isLoading" class="text-center my-6" />
+
         <canvas ref="canvasPreview" style="display: none" />
+
         <transition name="slide-left">
           <video
             v-show="!photo.isLoading && !photo.isPhotoTaken"
@@ -136,6 +138,7 @@
           </transition>
 
           <section class="actions">
+            <!--  Gallery Button  -->
             <button v-ripple class="muted-outlined-btn">
               <i class="mdi mdi-image-multiple mdi-36px" />
             </button>

@@ -15,8 +15,8 @@
 
       <main v-else class="px-6 my-8">
         <input
+          v-show="false"
           ref="imageUpload"
-          style="width: 0; height: 0; display: none"
           type="file"
           accept="image/jpeg, image/png"
           @change="compressImage"
@@ -127,17 +127,20 @@ export default {
 
     async compressImage(event) {
       const file = event.target.files[0]
-      const useWebWorker = false
+      const useWebWorker = true
+
       const options = {
         maxSizeMB: 0.15,
         maxWidthOrHeight: 750,
         useWebWorker,
-        onProgress(compressProgress) {
-          this.imageCompressProgress = compressProgress
-        },
+        onProgress: this.updateImageCompressProgress,
       }
       this.output = await imageCompression(file, options)
       this.outputPreview = URL.createObjectURL(file)
+    },
+
+    updateImageCompressProgress(compressProgress) {
+      this.imageCompressProgress = compressProgress
     },
 
     async uploadProfileDataToBackendServer() {
