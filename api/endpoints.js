@@ -76,6 +76,8 @@ const endpoints = {
   },
   upload_handler_system: {
     process_image: uploadServerBase + '/upload/process_image/',
+    upload_image: uploadServerBase + '/upload/image/',
+    upload_audio: uploadServerBase + '/upload/audio/',
   },
 
   health_check: {
