@@ -11,7 +11,6 @@ export default function cspModule() {
         'https://www.google-analytics.com/analytics.js',
         'https://www.googletagmanager.com/gtag/js',
         'blob:',
-        'self',
       ],
       'object-src': ["'none'"],
       'base-uri': ["'none'"],
