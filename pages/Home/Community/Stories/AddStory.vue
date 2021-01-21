@@ -500,14 +500,17 @@ export default {
     async uploadImage() {
       const formData = new FormData()
       formData.append('image', this.output, this.output.name)
-      const { photoURL } = await this.$axios
-        .$post(endpoints.upload_handler_system.process_image, formData, {
-          onUploadProgress: this.showUITip,
-        })
-        .catch((e) => {
-          throw e
-        })
-      await this.updateVuexPhotoURL(photoURL)
+      try {
+        await this.$axios.$post(
+          endpoints.upload_handler_system.upload_image,
+          formData,
+          {
+            onUploadProgress: this.showUITip,
+          }
+        )
+      } catch (e) {
+        console.error(e)
+      }
     },
 
     recapture() {
@@ -538,19 +541,7 @@ export default {
         this.audio.audioClip.push(event.data)
 
         this.audio.source = URL.createObjectURL(event.data)
-
-        this.download()
       }
-    },
-
-    download() {
-      // const blob = new Blob(this.audio.audioClip, {
-      //   type: 'audio/webm',
-      // })
-      //
-      // const url = URL.createObjectURL(blob)
-      // this.$refs.audioElement.src = url
-      // window.URL.revokeObjectURL(url)
     },
 
     stopRecording() {
@@ -661,6 +652,7 @@ export default {
       })
     },
   },
+
   head() {
     return {
       title: this.pageTitle,
