@@ -38,7 +38,7 @@
             <small v-if="user.designation">{{ user.designation }} </small>
           </section>
           <section class="ml-auto">
-            <span class="mdi vibrant mdi-36px" :class="moodIcon" />
+            <span :class="moodIcon" class="mdi vibrant mdi-36px" />
           </section>
         </div>
 
@@ -121,11 +121,11 @@ import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
-import Dropdown from '~/components/global/Dropdown'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'AddPost',
-  components: { Dropdown, LoadingIcon, AppFeel },
+  components: { LoadingIcon, AppFeel },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
@@ -145,42 +145,102 @@ export default {
         {
           background: 'linear-gradient(to right, #CC2B5E, #753A88)',
           color: 'white',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'orange',
           color: 'black',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'green',
           color: 'white',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'yellow',
           color: 'black',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'cyan',
           color: 'black',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'greenyellow',
           color: 'black',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'crimson',
           color: 'white',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'saddlebrown',
           color: 'white',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'aqua',
           color: 'black',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
         {
           background: 'aliceblue',
           color: 'black',
+          minHeight: '100px',
+          borderRadius: '0 12px',
+          padding: '12px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         },
       ],
     }
@@ -212,16 +272,19 @@ export default {
         await this.$store.dispatch('UserManagement/fetchData')
       }
     },
-    async updateText() {
+    updateText() {
       this.postBody = document.getElementById('post-body').textContent
     },
-    createPost() {
+    async createPost() {
       const payload = {
         body: this.postBody,
-        styles: this.customStyle,
+        style: this.customStyle,
         mood: this.moodIcon,
       }
-      console.log(payload)
+      await this.$axios.$post(endpoints.community_service.posts, payload)
+      await this.$router.replace(navigationRoutes.Home.Community.index)
+
+      // await this.showUITip('Post Added!', 'success')
     },
   },
 
