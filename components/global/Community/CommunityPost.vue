@@ -1,5 +1,6 @@
 <template>
   <div class="community-post-component">
+    <!--    <pre>{{ post }}</pre>-->
     <section class="post-header px-4">
       <img
         :alt="post.user.displayName"
@@ -17,7 +18,7 @@
     </section>
 
     <section v-ripple class="post-body pt-5 pb-3 px-4">
-      <p>
+      <p :style="post.style">
         {{ post.body }}
       </p>
 
