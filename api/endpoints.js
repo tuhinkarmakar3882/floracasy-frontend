@@ -34,6 +34,10 @@ const endpoints = {
     createCommentForBlogId:
       '/allow_authenticated/comment_system/createCommentForBlogId/',
   },
+  community_service: {
+    stories: '/allow_authenticated/community_service/stories/',
+    posts: '/allow_authenticated/community_service/posts/',
+  },
   chat_system: {
     initializeChatThread:
       '/allow_authenticated/message_system/initializeChatThread/',
