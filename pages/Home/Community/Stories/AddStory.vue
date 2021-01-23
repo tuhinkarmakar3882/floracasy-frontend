@@ -51,7 +51,7 @@
             <button
               v-ripple
               class="vibrant-outlined-btn mx-4"
-              @click="uploadStory('photo')"
+              @click="uploadPhotoStory"
             >
               <span class="mdi mdi-send mdi-36px" />
             </button>
@@ -476,10 +476,12 @@ export default {
       this.photo.compressionProgress = compressProgress
     },
 
-    async uploadStory(storyType) {
+    async uploadPhotoStory() {
       try {
         const formData = new FormData()
+
         formData.append('image', this.photo.output, this.photo.output.name)
+
         const res = await this.$axios.$post(
           endpoints.upload_handler_system.upload_image,
           formData,
@@ -487,13 +489,17 @@ export default {
             onUploadProgress: this.showUITip,
           }
         )
+
         await this.$axios.$post(endpoints.community_service.stories, {
-          storyType,
-          photo: res.path,
+          storyType: 'photo',
+          photo: res?.path,
         })
+
         await this.$router.replace(navigationRoutes.Home.Community.index)
+
+        await this.showUITip('Story Posted!', 'success')
       } catch (e) {
-        console.error(e)
+        await this.showUITip('Error Posting story', 'error')
       }
     },
 
