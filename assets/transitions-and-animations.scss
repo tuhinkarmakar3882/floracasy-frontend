@@ -27,21 +27,48 @@ $animation-duration: 300ms;
 .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-up-enter-active,
-.slide-up-leave-active {
+.slide-up-leave-active,
+.slide-down-enter-active,
+.slide-down-leave-active,
+.scale-up-enter-active,
+.scale-up-leave-active,
+.scale-down-enter-active,
+.scale-down-leave-active,
+{
   transition: all $animation-duration ease-in-out;
+}
+
+.slide-left-enter, .slide-left-leave-active,
+.slide-right-enter, .slide-right-leave-active,
+.slide-up-enter, .slide-up-leave-active,
+.slide-down-enter, .slide-down-leave-active,
+.scale-up-enter, .scale-up-leave-active,
+.scale-down-enter, .scale-down-leave-active {
+  opacity: 0;
 }
 
 .slide-left-enter, .slide-left-leave-active {
   transform: translateX(100px);
-  opacity: 0;
+
 }
 
 .slide-right-enter, .slide-right-leave-active {
   transform: translateX(-100px);
-  opacity: 0;
 }
 
 .slide-up-enter, .slide-up-leave-active {
   transform: translateY(100px);
+}
+
+.slide-down-enter, .slide-down-leave-active {
+  transform: translateY(-100px);
   opacity: 0;
+}
+
+.scale-up-enter, .scale-up-leave-active {
+  transform: scale(.95);
+}
+
+.scale-down-enter, .scale-down-leave-active {
+  transform: scale(1.05);
 }
