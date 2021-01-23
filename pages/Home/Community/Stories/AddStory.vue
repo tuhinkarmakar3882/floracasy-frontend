@@ -101,15 +101,7 @@
                       </div>
                     </template>
 
-                    <template #selected-option="{ label }">
-                      <small>{{ label.split('(')[0] }}</small>
-                    </template>
-
-                    <template v-slot:option="{ label }">
-                      <small> {{ label.split('(')[0] }}</small>
-                    </template>
-
-                    <template #no-options="{ search, searching, loading }">
+                    <template #no-options>
                       No Such Camera Device Found
                     </template>
                   </v-select>
@@ -136,9 +128,7 @@
                       <small> {{ option.name }}</small>
                     </template>
 
-                    <template #no-options="{ search, searching, loading }">
-                      Invalid Aspect Ratio
-                    </template>
+                    <template #no-option> Invalid Aspect Ratio </template>
                   </v-select>
                 </div>
               </client-only>
@@ -291,7 +281,11 @@ export default {
           },
         ],
         aspectRatio: null,
-        availableDevices: [],
+        availableDevices: [
+          {
+            label: 'nope',
+          },
+        ],
         currentDevice: null,
         showMoreOptions: false,
         output: null,
@@ -359,12 +353,13 @@ export default {
 
     const availableDevices = await navigator.mediaDevices.enumerateDevices()
 
-    this.photo.availableDevices = availableDevices.filter(
-      (device) => device.kind === 'videoinput'
-    )
-    this.audio.availableDevices = availableDevices.filter(
-      (device) => device.kind === 'audioinput'
-    )
+    this.photo.availableDevices = availableDevices
+      .filter((device) => device.kind === 'videoinput')
+      .map((item) => item.label.split('(')[0])
+
+    this.audio.availableDevices = availableDevices
+      .filter((device) => device.kind === 'audioinput')
+      .map((item) => item.label.split('(')[0])
 
     this.photo.currentDevice = this.photo.availableDevices[0]
     this.photo.aspectRatio = this.photo.availableRatios[0]
