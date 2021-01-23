@@ -27,6 +27,7 @@
       </section>
 
       <section v-if="activeTab === 1" class="camera-recording-container">
+        <!--  Progress Bar  -->
         <div
           v-show="photo.showProgress"
           :style="{
@@ -37,6 +38,7 @@
           class="compression-progress-bar"
         />
 
+        <!--  Overlay controls  -->
         <transition name="gray-shift">
           <section v-show="photo.isPhotoTaken" class="overlay">
             <button
@@ -46,7 +48,11 @@
             >
               <span class="mdi mdi-reload mdi-36px" />
             </button>
-            <button v-ripple class="vibrant-outlined-btn mx-4">
+            <button
+              v-ripple
+              class="vibrant-outlined-btn mx-4"
+              @click="uploadStory('photo')"
+            >
               <span class="mdi mdi-send mdi-36px" />
             </button>
           </section>
@@ -56,6 +62,7 @@
 
         <canvas ref="canvasPreview" style="display: none" />
 
+        <!--  Video  -->
         <transition name="slide-left">
           <video
             v-show="!photo.isLoading && !photo.isPhotoTaken"
@@ -64,6 +71,7 @@
           />
         </transition>
 
+        <!--  Preview Image  -->
         <transition name="slide-up">
           <div class="preview-img-container">
             <img
@@ -146,7 +154,7 @@
             <button
               v-if="photo.isPhotoTaken"
               v-ripple
-              class="success-outlined-btn mx-4"
+              class="disabled-outlined-btn mx-4"
             >
               <span class="mdi mdi-check mdi-36px" />
             </button>
@@ -473,41 +481,22 @@ export default {
       this.photo.compressionProgress = compressProgress
     },
 
-    async uploadProfileDataToBackendServer() {
-      this.updateProfileDataLoading = true
+    async uploadStory(storyType) {
       try {
-        await this.$axios.$post(endpoints.profile_statistics.profileData, {
-          designation: this.designation,
-          about: this.about,
-        })
-
-        if (this.output) {
-          await this.uploadImage()
-        }
-
-        await this.updateVuexUserData()
-
-        await this.$router.replace(
-          navigationRoutes.Home.MoreOptions.Preferences.index
-        )
-      } catch (e) {
-        await this.showErrorMessage()
-      } finally {
-        this.updateProfileDataLoading = false
-      }
-    },
-
-    async uploadImage() {
-      const formData = new FormData()
-      formData.append('image', this.output, this.output.name)
-      try {
-        await this.$axios.$post(
+        const formData = new FormData()
+        formData.append('image', this.photo.output, this.photo.output.name)
+        const res = await this.$axios.$post(
           endpoints.upload_handler_system.upload_image,
           formData,
           {
             onUploadProgress: this.showUITip,
           }
         )
+        await this.$axios.$post(endpoints.community_service.stories, {
+          storyType,
+          photo: res.path,
+        })
+        await this.$router.replace(navigationRoutes.Home.Community.index)
       } catch (e) {
         console.error(e)
       }
