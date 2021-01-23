@@ -4,18 +4,24 @@
       <span class="mdi mdi-plus-circle primary-light" />
       Create new Post
     </p>
-    <div class="header mb-6">
-      <img
-        alt="display-image"
-        height="52"
-        src="https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        width="52"
-      />
 
-      <section class="user-details ml-4">
-        <p class="secondary">Swagata</p>
-        <small>Beauty Blogger</small>
-      </section>
+    <div class="header mb-6">
+      <transition name="scale-down">
+        <img
+          v-if="isReady"
+          alt="display-image"
+          height="52"
+          :src="user.photoURL"
+          width="52"
+        />
+      </transition>
+
+      <transition name="scale-down">
+        <section v-if="isReady" class="user-details ml-4">
+          <p class="secondary">{{ user.displayName }}</p>
+          <small v-if="user.designation">{{ user.designation }} </small>
+        </section>
+      </transition>
 
       <button v-ripple class="vibrant-outlined-btn">New Post</button>
     </div>
@@ -40,8 +46,36 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'AddPostPreview',
+
+  data() {
+    return {
+      isReady: false,
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+  async mounted() {
+    await this.setupUser()
+    this.isReady = true
+  },
+
+  methods: {
+    async setupUser() {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        this.loadingProfile = true
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
+    },
+  },
 }
 </script>
 
