@@ -21,23 +21,28 @@
           class="add-a-story py-2 text-center"
           @click="$router.push(navigationRoutes.Home.Community.Story.add)"
         >
-          <img
-            alt="image"
-            class="mb-4"
-            height="72"
-            src="https://picsum.photos/100"
-            width="72"
-          />
+          <transition name="scale-up">
+            <img
+              v-if="isReady"
+              :src="user.photoURL"
+              alt="image"
+              class="mb-4"
+              height="72"
+              width="72"
+            />
+          </transition>
           <span class="mdi mdi-plus" />
           <small class="vibrant">Add New Story</small>
         </div>
 
-        <Story
-          v-for="(story, index) in stories"
-          :key="index"
-          :story="story"
-          class="px-4 py-2"
-        />
+        <transition-group name="scale-up" style="display: flex">
+          <Story
+            v-for="story in stories"
+            :key="story.identifier"
+            :story="story"
+            class="px-4 py-2"
+          />
+        </transition-group>
       </section>
     </div>
 
@@ -58,8 +63,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AddPostPreview from '~/components/global/Community/AddPostPreview'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Community',
@@ -76,59 +83,16 @@ export default {
 
   data() {
     return {
+      isReady: false,
       navigationRoutes,
       pageTitle: 'Community',
-      stories: [
-        {
-          user: {
-            photoURL: 'https://picsum.photos/101',
-            displayName: 'Swagata Biswas',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/102',
-            displayName: 'Dipti Mondal',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/103',
-            displayName: 'Somlata Dey',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/104',
-            displayName: 'Mosa Kamrachhe',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/105',
-            displayName: 'Tistua Bekar',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/106',
-            displayName: 'Thennarasu WandaVision',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/107',
-            displayName: 'Harry Potter',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/108',
-            displayName: 'Tuhin Karmakar',
-          },
-        },
-      ],
+      stories: [],
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   async mounted() {
@@ -138,6 +102,26 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+
+    await this.setupUser()
+    this.isReady = true
+    await this.fetchStories()
+  },
+
+  methods: {
+    async setupUser() {
+      const currentUser = await this.$store.getters['UserManagement/getUser']
+      if (!currentUser) {
+        this.loadingProfile = true
+        await this.$store.dispatch('UserManagement/fetchData')
+      }
+    },
+    async fetchStories() {
+      const { results } = await this.$axios.$get(
+        endpoints.community_service.stories
+      )
+      this.stories.push(...results)
+    },
   },
 
   head() {
@@ -196,7 +180,10 @@ export default {
 
         img {
           size: 74px;
+          height: 74px;
           border-radius: 50%;
+          width: 74px;
+          object-fit: cover;
         }
 
         span {
