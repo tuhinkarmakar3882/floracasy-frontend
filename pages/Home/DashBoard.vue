@@ -12,6 +12,7 @@
         :class="tabNumber === 0 ? 'active-tab' : ''"
         @click="changeTab(0)"
       >
+        <span class="mdi mdi-all-inclusive" />
         All Blogs
       </p>
       <p
@@ -19,6 +20,7 @@
         :class="tabNumber === 1 ? 'active-tab' : ''"
         @click="changeTab(1)"
       >
+        <span class="mdi mdi-fire" />
         Trending
       </p>
       <p
@@ -26,6 +28,7 @@
         :class="tabNumber === 2 ? 'active-tab' : ''"
         @click="changeTab(2)"
       >
+        <span class="mdi mdi-shape" />
         Categories
       </p>
     </section>
