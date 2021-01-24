@@ -1,12 +1,10 @@
 <template>
   <div class="fetch-community-posts-component">
-    <CommunityPost
-      v-for="post in posts"
-      :key="post.identifier"
-      :post="post"
-      class="community-post py-8"
-    />
-    <FollowSuggestions />
+    <article v-for="(post, index) in posts" :key="post.identifier">
+      <CommunityPost :post="post" class="community-post py-8" />
+
+      <FollowSuggestions v-if="index === 7" />
+    </article>
 
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
