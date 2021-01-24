@@ -7,6 +7,21 @@
       class="community-post py-8"
     />
     <FollowSuggestions />
+
+    <client-only>
+      <infinite-loading @infinite="infiniteHandler">
+        <template slot="spinner">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p class="text-center">Getting Latest Posts...</p>
+        </template>
+        <template slot="error">
+          <p class="danger-light my-6">Network Error</p>
+        </template>
+        <template slot="no-more">
+          <p class="success my-6">That's all for now :)</p>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
@@ -14,27 +29,40 @@
 import FollowSuggestions from '~/components/global/Community/FollowSuggestions'
 import CommunityPost from '~/components/global/Community/CommunityPost'
 import endpoints from '~/api/endpoints'
+import LoadingIcon from '~/components/global/LoadingIcon'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'FetchCommunityPosts',
-  components: { CommunityPost, FollowSuggestions },
+  components: { LoadingIcon, CommunityPost, FollowSuggestions },
+
   data() {
     return {
       posts: [],
+      fetchPostEndpoint: endpoints.community_service.posts.index,
     }
   },
-  async mounted() {
-    await this.fetchCommunityPosts()
-  },
+
+  mounted() {},
+
   methods: {
-    async fetchCommunityPosts() {
+    async infiniteHandler($state) {
+      if (!this.fetchPostEndpoint) {
+        $state.complete()
+        return
+      }
+
       try {
-        const { results } = await this.$axios.$get(
-          endpoints.community_service.posts.index
-        )
-        this.posts.push(...results)
+        const { results, next } = await this.$axios.$get(this.fetchPostEndpoint)
+        if (results.length) {
+          this.fetchPostEndpoint = processLink(next)
+          this.posts.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
       } catch (e) {
-        console.error(e)
+        $state.complete()
       }
     },
   },
