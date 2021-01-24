@@ -36,7 +36,11 @@ const endpoints = {
   },
   community_service: {
     stories: '/allow_authenticated/community_service/stories/',
-    posts: '/allow_authenticated/community_service/posts/',
+    posts: {
+      index: '/allow_authenticated/community_service/posts/',
+      like: '/allow_authenticated/community_service/posts/like/',
+      share: '/allow_authenticated/community_service/posts/share/',
+    },
   },
   chat_system: {
     initializeChatThread:
