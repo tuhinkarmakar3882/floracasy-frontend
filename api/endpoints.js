@@ -37,6 +37,8 @@ const endpoints = {
   community_service: {
     stories: '/allow_authenticated/community_service/stories/',
     posts: {
+      detail:
+        '/allow_authenticated/community_service/posts/detail/{identifier}/',
       index: '/allow_authenticated/community_service/posts/',
       like: '/allow_authenticated/community_service/posts/like/',
       share: '/allow_authenticated/community_service/posts/share/',
