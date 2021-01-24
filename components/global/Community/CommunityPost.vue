@@ -1,6 +1,6 @@
 <template>
   <div class="community-post-component">
-    <pre>{{ post }}</pre>
+    <!--    <pre>{{ post }}</pre>-->
 
     <section class="post-header px-4">
       <img
@@ -24,8 +24,11 @@
           </nuxt-link>
         </p>
         <small>
-          {{ getRelativeTime(post.createdAt) }}
-          <span :class="post.mood" class="mdi secondary-highlight" />
+          <em>
+            {{ getRelativeTime(post.createdAt) }}
+          </em>
+          <span v-if="isEdited" class="dot ml-2 mr-1" />
+          <span v-if="isEdited" class="mdi muted">Edited </span>
         </small>
       </div>
       <i
@@ -85,6 +88,11 @@ export default {
     return {
       navigationRoutes,
     }
+  },
+  computed: {
+    isEdited() {
+      return new Date(this.post.updatedAt) - new Date(this.post.createdAt)
+    },
   },
   methods: {
     shorten,
@@ -195,9 +203,18 @@ export default {
       }
 
       small {
+        display: flex;
+        align-items: center;
         font-size: 0.8rem;
-        font-style: italic;
         line-height: 16px;
+
+        .dot {
+          display: inline-block;
+          height: $nano-unit;
+          width: $nano-unit;
+          background: $muted;
+          border-radius: 50%;
+        }
       }
     }
 
