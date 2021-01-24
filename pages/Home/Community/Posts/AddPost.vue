@@ -281,7 +281,7 @@ export default {
         style: this.customStyle,
         mood: this.moodIcon,
       }
-      await this.$axios.$post(endpoints.community_service.posts, payload)
+      await this.$axios.$post(endpoints.community_service.posts.index, payload)
       await this.$router.replace(navigationRoutes.Home.Community.index)
 
       // await this.showUITip('Post Added!', 'success')
