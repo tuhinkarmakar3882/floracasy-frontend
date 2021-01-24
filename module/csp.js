@@ -10,6 +10,7 @@ export default function cspModule() {
         'apis.google.com',
         'https://www.google-analytics.com/analytics.js',
         'https://www.googletagmanager.com/gtag/js',
+        'http://www.googletagmanager.com/gtag/js',
         'blob:',
       ],
       'object-src': ["'none'"],
