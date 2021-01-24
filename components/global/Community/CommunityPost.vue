@@ -1,6 +1,6 @@
 <template>
   <div class="community-post-component">
-    <!--    <pre>{{ post }}</pre>-->
+    <pre>{{ post }}</pre>
     <section class="post-header px-4">
       <img
         :alt="post.user.displayName"
@@ -30,18 +30,7 @@
       />
     </section>
 
-    <section
-      v-ripple
-      class="post-body pt-5 pb-3 px-4"
-      @click="
-        $router.push(
-          navigationRoutes.Home.Community.Posts.detail.replace(
-            '{postIdentifier}',
-            post.identifier
-          )
-        )
-      "
-    >
+    <section v-ripple class="post-body pt-5 pb-3 px-4" @click="viewPostDetail">
       <p :style="post.style">
         {{ post.body }}
       </p>
@@ -98,6 +87,16 @@ export default {
   methods: {
     shorten,
     getRelativeTime,
+
+    async viewPostDetails() {
+      await this.$router.push(
+        navigationRoutes.Home.Community.Posts.detail.replace(
+          '{postIdentifier}',
+          this.post.identifier
+        )
+      )
+    },
+
     async like() {
       try {
         const action = await this.$axios
@@ -122,8 +121,8 @@ export default {
           await navigator.share({
             title: this.post.title + '- Floracasy',
             text: this.post.subtitle,
-            url: navigationRoutes.Home.Blogs.Details.replace(
-              '{id}',
+            url: navigationRoutes.Home.Community.Posts.detail.replace(
+              '{postIdentifier}',
               this.post.identifier
             ),
           })
