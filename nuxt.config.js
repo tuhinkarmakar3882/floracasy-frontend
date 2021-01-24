@@ -1,8 +1,6 @@
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentalVariables'
 import * as packageJson from './package.json'
-const PRIMARY_HOSTS = [`http://localhost:3001`]
-const BACKEND_SERVICES = [`http://localhost:8000`, `http://localhost:8005`]
 
 export default {
   ssr: true,
@@ -39,10 +37,10 @@ export default {
     },
   ],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: process.env.NODE_ENV === 'production',
+    server: process.env.NODE_ENV === 'production',
+  },
 
   modules: [
     'nuxt-helmet',
@@ -124,13 +122,18 @@ export default {
       reportOnly: false,
       hashAlgorithm: 'sha256',
       policies: {
-        'default-src': ["'self'", ...PRIMARY_HOSTS],
+        'default-src': ["'self'", ...secrets.PRIMARY_HOSTS],
+        'frame-src': [
+          "'self'",
+          ...secrets.PRIMARY_HOSTS,
+          ...secrets.FIREBASE_SERVICES,
+        ],
         'img-src': ['https:', 'http:', `blob:`],
-        'worker-src': ["'self'", `blob:`, ...PRIMARY_HOSTS],
+        'worker-src': ["'self'", `blob:`, ...secrets.PRIMARY_HOSTS],
         'style-src': [
           "'self'",
           "'unsafe-inline'",
-          ...PRIMARY_HOSTS,
+          ...secrets.PRIMARY_HOSTS,
           'https://fonts.googleapis.com/',
           'https://fonts.gstatic.com/',
           'https://cdn.materialdesignicons.com/',
@@ -138,7 +141,7 @@ export default {
         'script-src': [
           "'self'",
           // "'unsafe-inline'",
-          ...PRIMARY_HOSTS,
+          ...secrets.PRIMARY_HOSTS,
           'apis.google.com',
           'https://www.google-analytics.com/analytics.js',
           '*.googletagmanager.com',
@@ -146,15 +149,15 @@ export default {
         ],
         'font-src': [
           "'self'",
-          PRIMARY_HOSTS,
+          secrets.PRIMARY_HOSTS,
           'https://fonts.googleapis.com/',
           'https://fonts.gstatic.com/',
           'https://cdn.materialdesignicons.com/',
         ],
         'require-trusted-types-for': ["'style'"],
         'connect-src': [
-          ...PRIMARY_HOSTS,
-          ...BACKEND_SERVICES,
+          ...secrets.PRIMARY_HOSTS,
+          ...secrets.BACKEND_SERVICES,
           'ws:',
           'wss:',
           '*.google-analytics.com',
@@ -163,7 +166,7 @@ export default {
         'form-action': ["'self'"],
         'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
-        'base-uri': [PRIMARY_HOSTS],
+        'base-uri': [secrets.PRIMARY_HOSTS],
       },
     },
 
@@ -283,6 +286,8 @@ export default {
         layers: ['base', 'components', 'utilities'],
         enabled: process.env.NODE_ENV === 'production',
         content: [
+          'assets/**/*.scss',
+          'styles/**/*.scss',
           'components/**/*.vue',
           'layouts/**/*.vue',
           'pages/**/*.vue',
