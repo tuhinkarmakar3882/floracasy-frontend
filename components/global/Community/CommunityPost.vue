@@ -30,7 +30,18 @@
       />
     </section>
 
-    <section v-ripple class="post-body pt-5 pb-3 px-4">
+    <section
+      v-ripple
+      class="post-body pt-5 pb-3 px-4"
+      @click="
+        $router.push(
+          navigationRoutes.Home.Community.Posts.detail.replace(
+            '{postIdentifier}',
+            post.identifier
+          )
+        )
+      "
+    >
       <p :style="post.style">
         {{ post.body }}
       </p>
