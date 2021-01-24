@@ -8,7 +8,20 @@
         class="mr-3"
       />
       <div class="details">
-        <p v-ripple class="secondary">{{ post.user.displayName }}</p>
+        <p v-ripple class="secondary">
+          <nuxt-link
+            v-ripple=""
+            :to="
+              navigationRoutes.Home.Account.Overview.replace(
+                '{userUID}',
+                post.user.uid
+              )
+            "
+            class="no-underline"
+          >
+            {{ post.user.displayName }}
+          </nuxt-link>
+        </p>
         <small>{{ getRelativeTime(post.createdAt) }}</small>
       </div>
       <i
