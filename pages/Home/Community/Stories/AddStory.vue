@@ -214,6 +214,7 @@
               v-if="audio.recordingDone"
               v-ripple
               class="vibrant-outlined-btn mx-4"
+              @click="uploadAudioStory"
             >
               <span class="mdi mdi-send mdi-36px" />
             </button>
@@ -528,7 +529,7 @@ export default {
 
     handleDataAvailable(event) {
       if (event.data.size > 0) {
-        this.audio.audioClip.push(event.data)
+        this.audio.audioClip = event.data
 
         this.audio.source = URL.createObjectURL(event.data)
       }
@@ -540,6 +541,39 @@ export default {
       this.audio.audioRecordingDuration = 100
       this.audio.recordingStarted = false
       this.audio.recordingDone = true
+    },
+
+    async uploadAudioStory() {
+      console.log(this.audio.audioClip)
+      try {
+        const formData = new FormData()
+
+        formData.append(
+          'audio',
+          this.audio.audioClip,
+          this.audio.audioClip.name
+        )
+
+        const res = await this.$axios.$post(
+          endpoints.upload_handler_system.upload_audio,
+          formData,
+          {
+            onUploadProgress: this.showUITip,
+          }
+        )
+
+        // await this.$axios.$post(endpoints.community_service.stories, {
+        //   storyType: 'audio',
+        //   audio: res?.path,
+        // })
+
+        // await this.$router.replace(navigationRoutes.Home.Community.index)
+
+        await this.showUITip('Story Posted!', 'success')
+      } catch (e) {
+        console.log(e)
+        await this.showUITip('Error Posting story', 'error')
+      }
     },
 
     custom() {
