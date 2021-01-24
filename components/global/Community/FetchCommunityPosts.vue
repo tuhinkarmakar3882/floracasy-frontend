@@ -30,7 +30,7 @@ export default {
     async fetchCommunityPosts() {
       try {
         const { results } = await this.$axios.$get(
-          endpoints.community_service.posts
+          endpoints.community_service.posts.index
         )
         this.posts.push(...results)
       } catch (e) {
