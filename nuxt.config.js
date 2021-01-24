@@ -1,6 +1,8 @@
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentalVariables'
 import * as packageJson from './package.json'
+const PRIMARY_HOSTS = [`http://localhost:3001`]
+const BACKEND_SERVICES = [`http://localhost:8000`, `http://localhost:8005`]
 
 export default {
   ssr: true,
@@ -45,11 +47,11 @@ export default {
   modules: [
     'nuxt-helmet',
     'nuxt-vue-select',
-    '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
+    // '~/module/csp.js',
   ],
 
   buildModules: [
@@ -114,12 +116,55 @@ export default {
   },
 
   render: {
-    asyncScripts: true,
     injectScripts: true,
     resourceHints: true,
+    asyncScripts: true,
 
     csp: {
-      addMeta: process.env.NODE_ENV === 'production',
+      reportOnly: false,
+      hashAlgorithm: 'sha256',
+      policies: {
+        'default-src': ["'self'", ...PRIMARY_HOSTS],
+        'img-src': ['https:', 'http:', `blob:`],
+        'worker-src': ["'self'", `blob:`, ...PRIMARY_HOSTS],
+        'style-src': [
+          "'self'",
+          "'unsafe-inline'",
+          ...PRIMARY_HOSTS,
+          'https://fonts.googleapis.com/',
+          'https://fonts.gstatic.com/',
+          'https://cdn.materialdesignicons.com/',
+        ],
+        'script-src': [
+          "'self'",
+          // "'unsafe-inline'",
+          ...PRIMARY_HOSTS,
+          'apis.google.com',
+          'https://www.google-analytics.com/analytics.js',
+          '*.googletagmanager.com',
+          'blob:',
+        ],
+        'font-src': [
+          "'self'",
+          PRIMARY_HOSTS,
+          'https://fonts.googleapis.com/',
+          'https://fonts.gstatic.com/',
+          'https://cdn.materialdesignicons.com/',
+        ],
+        'require-trusted-types-for': ["'style'"],
+        'connect-src': [
+          ...PRIMARY_HOSTS,
+          ...BACKEND_SERVICES,
+          'ws:',
+          'wss:',
+          '*.google-analytics.com',
+          '*.googleapis.com',
+        ],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'none'"],
+        'object-src': ["'none'"],
+        'base-uri': [PRIMARY_HOSTS],
+      },
     },
 
     http2: {
@@ -163,7 +208,6 @@ export default {
         type: 'image/x-icon',
         href: '/favicon.ico',
       },
-      // TODO MAKE CSS LOAD ASYNCHRONOUSLY
 
       //  Google Fonts
       {
@@ -181,6 +225,9 @@ export default {
         type: 'text/css',
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&family=Raleway:wght@300;400&display=swap',
+        // media: 'print',
+        // onload: "this.media = 'all'",
+        // nonce: '1234567890',
       },
 
       //  Material Design Icons
@@ -199,6 +246,9 @@ export default {
         type: 'text/css',
         href:
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+        // media: 'print',
+        // onload: "this.media = 'all'",
+        // nonce: '1234567890',
       },
     ],
   },
