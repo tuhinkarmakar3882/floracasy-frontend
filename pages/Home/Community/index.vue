@@ -46,13 +46,12 @@
       </section>
     </div>
 
-    <hr class="faded-divider mt-6 mb-0" />
+    <hr class="faded-divider my-6" />
 
-    <section @click="$router.push(navigationRoutes.Home.Community.Posts.add)">
-      <AddPostPreview v-ripple />
-    </section>
-
-    <hr class="faded-divider my-4" />
+    <!--    <section @click="$router.push(navigationRoutes.Home.Community.Posts.add)">-->
+    <!--      <AddPostPreview v-ripple />-->
+    <!--    </section>-->
+    <!--    <hr class="faded-divider my-4" />-->
 
     <p class="px-4" style="font-size: 14px">
       <span class="mdi mdi-earth primary-light" />
