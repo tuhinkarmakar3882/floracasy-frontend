@@ -91,7 +91,9 @@ export default {
   },
   computed: {
     isEdited() {
-      return new Date(this.post.updatedAt) - new Date(this.post.createdAt)
+      return (
+        new Date(this.post.updatedAt) - new Date(this.post.createdAt) > 5000
+      )
     },
   },
   methods: {
