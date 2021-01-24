@@ -56,6 +56,7 @@
 <script>
 import { getRelativeTime, shorten } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'CommunityPost',
@@ -73,9 +74,55 @@ export default {
   methods: {
     shorten,
     getRelativeTime,
-    like() {},
-    comment() {},
-    share() {},
+    async like() {
+      try {
+        const action = await this.$axios
+          .$post(endpoints.community_service.posts.like, {
+            identifier: this.post.identifier,
+          })
+          .then(({ action }) => action)
+        action === 'like-post' ? this.post.totalLikes++ : this.post.totalLikes--
+        this.post.isLiked = !this.post.isLiked
+      } catch (e) {
+        console.error(e)
+      }
+    },
+
+    comment() {
+      console.log('open comment - page')
+    },
+
+    async share() {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: this.post.title + '- Floracasy',
+            text: this.post.subtitle,
+            url: navigationRoutes.Home.Blogs.Details.replace(
+              '{id}',
+              this.post.identifier
+            ),
+          })
+          try {
+            await this.$axios
+              .$post(endpoints.post.share, {
+                identifier: this.post.identifier,
+              })
+              .then(() => {
+                this.post.totalShares++
+              })
+          } catch (e) {
+            this.post?.totalShares && this.post.totalShares--
+          }
+        } catch (error) {
+          console.log('Error sharing:', error)
+        }
+      } else {
+        console.log(
+          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
+        )
+      }
+    },
   },
 }
 </script>
