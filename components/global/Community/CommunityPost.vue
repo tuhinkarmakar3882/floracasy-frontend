@@ -1,6 +1,7 @@
 <template>
   <div class="community-post-component">
     <pre>{{ post }}</pre>
+
     <section class="post-header px-4">
       <img
         :alt="post.user.displayName"
@@ -22,7 +23,10 @@
             {{ post.user.displayName }}
           </nuxt-link>
         </p>
-        <small>{{ getRelativeTime(post.createdAt) }}</small>
+        <small>
+          {{ getRelativeTime(post.createdAt) }}
+          <span :class="post.mood" class="mdi secondary-highlight" />
+        </small>
       </div>
       <i
         v-ripple="'#4f4f4f5F'"
@@ -30,18 +34,16 @@
       />
     </section>
 
-    <section v-ripple class="post-body pt-5 pb-3 px-4" @click="viewPostDetail">
-      <p :style="post.style">
-        {{ post.body }}
-      </p>
+    <section v-ripple class="post-body pt-5 pb-3 px-4" @click="viewPostDetails">
+      <p :style="post.style">{{ post.body }}</p>
 
-      <img v-if="post.images" class="my-4" :src="post.images[0]" alt="image" />
+      <img v-if="post.image" :src="post.image" alt="image" class="my-4" />
     </section>
 
     <hr class="faded-divider my-2 px-4" />
 
     <section class="post-actions px-4">
-      <div v-ripple class="like" @click="like()">
+      <div v-ripple class="like" @click="like">
         <i
           :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
           class="mdi mr-2 inline-block align-middle"
@@ -50,13 +52,13 @@
           {{ shorten(post.totalLikes) }}
         </span>
       </div>
-      <div v-ripple class="comment" @click="comment()">
+      <div v-ripple class="comment" @click="viewPostDetails">
         <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(post.totalComments) }}
         </span>
       </div>
-      <div v-ripple class="share" @click="share()">
+      <div v-ripple class="share" @click="share">
         <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(post.totalShares) }}
