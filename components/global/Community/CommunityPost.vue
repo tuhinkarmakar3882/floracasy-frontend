@@ -1,8 +1,6 @@
 <template>
   <div class="community-post-component">
-    <!--    <pre>{{ post }}</pre>-->
-
-    <section class="post-header px-4">
+    <section class="post-header px-4 mb-2">
       <img
         :alt="post.user.displayName"
         :src="post.user.photoURL"
@@ -37,13 +35,13 @@
       />
     </section>
 
-    <section v-ripple class="post-body pt-5 pb-3 px-4" @click="viewPostDetails">
-      <p :style="post.style">{{ post.body }}</p>
+    <section v-ripple class="post-body py-4 px-4" @click="viewPostDetails">
+      <p v-if="post.body" :style="post.style">{{ post.body.substr(0, 100) }}</p>
 
-      <img v-if="post.image" :src="post.image" alt="image" class="my-4" />
+      <img v-if="post.image" :src="post.image" alt="image" class="mt-4" />
     </section>
 
-    <hr class="faded-divider my-2 px-4" />
+    <hr class="faded-divider mt-2 mb-0" />
 
     <section class="post-actions px-4">
       <div v-ripple class="like" @click="like">
@@ -68,6 +66,8 @@
         </span>
       </div>
     </section>
+
+    <hr class="reversed-faded-divider mt-0 mb-2" />
   </div>
 </template>
 
@@ -184,7 +184,7 @@ export default {
     display: flex;
     position: relative;
 
-    $image-size: 3.4rem;
+    $image-size: 3.1rem;
 
     img {
       min-width: $image-size;
@@ -198,7 +198,6 @@ export default {
 
     .details {
       p {
-        font-size: 1.1rem;
         font-weight: 500;
         line-height: 23px;
         margin-bottom: 0.5rem;
@@ -225,7 +224,7 @@ export default {
       right: -8px;
       top: 0;
       height: 100%;
-      font-size: $xxx-large-unit;
+      font-size: $x-large-unit;
       width: 2 * $large-unit;
       display: flex;
       justify-content: center;
