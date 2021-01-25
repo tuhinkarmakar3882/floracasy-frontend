@@ -34,8 +34,9 @@
     <template slot="main">
       <div v-if="blog" class="my-6 blog">
         <section class="px-4">
-          <p class="mb-2" style="display: flex !important">
+          <p class="mb-1" style="display: flex !important">
             <nuxt-link
+              v-ripple
               :to="
                 navigationRoutes.Home.Account.Overview.replace(
                   '{userUID}',
@@ -48,6 +49,7 @@
             </nuxt-link>
             <strong class="mx-1">IN</strong>
             <nuxt-link
+              v-ripple
               :to="
                 navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
                   '{name}',
@@ -66,6 +68,12 @@
             <span class="mdi mdi-clock-time-nine-outline" />
             {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
           </small>
+          <div class="view-count mt-4">
+            <i class="mdi mdi-eye mdi-18px mr-2" />
+            <small>{{ blog.totalViews }}</small>
+          </div>
+
+          <!--          <hr class="faded-divider" />-->
 
           <img
             v-if="blog.coverImage"
@@ -74,10 +82,11 @@
             :alt="blog.title"
             style="width: 100%; object-fit: cover; max-height: 250px"
           />
-          <p class="my-4">
+          <p v-if="blog.subtitle" class="my-4">
             {{ blog.subtitle }}
           </p>
         </section>
+        <hr v-if="!blog.subtitle" class="faded-divider mx-4" />
         <section class="blog-body px-4 pb-8">
           <article v-html="noXSS(blog.content, sanitizationConfig)" />
         </section>
@@ -286,6 +295,15 @@ export default {
 
     .blog-intro-image {
       box-shadow: $down-only-box-shadow;
+      border-radius: 4px;
+    }
+
+    .view-count {
+      display: flex;
+      align-items: center;
+      * {
+        display: block;
+      }
     }
   }
 
