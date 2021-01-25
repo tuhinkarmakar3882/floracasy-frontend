@@ -187,3 +187,7 @@ body {
 .faded-divider {
   background: linear-gradient(to right, $card-background, $body-background);
 }
+
+.reversed-faded-divider {
+  background: linear-gradient(to left, $card-background, $body-background);
+}
