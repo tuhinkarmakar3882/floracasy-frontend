@@ -426,6 +426,7 @@
             {{ getRelativeTime(new Date()) }}
           </small>
           <img
+            v-if="coverImageUrl"
             :alt="blogTitle"
             :src="coverImageUrl"
             class="mt-5 blog-intro-image"
