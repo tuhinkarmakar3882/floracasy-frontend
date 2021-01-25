@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    custom-header
+    :on-back="navigationRoutes.Home.DashBoard"
     auto-hide
     class="blog-details-page"
-    :on-back="navigationRoutes.Home.DashBoard"
+    custom-header
   >
     <template slot="app-bar-custom-header">
       <h5
@@ -15,8 +15,8 @@
       <h6 v-ripple="">
         <nuxt-link
           class="brand-name no-underline"
-          to="/"
           style="color: white !important"
+          :to="navigationRoutes.index"
         >
           Floracasy
         </nuxt-link>
@@ -68,44 +68,48 @@
             <span class="mdi mdi-clock-time-nine-outline" />
             {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
           </small>
+
           <div class="view-count mt-4">
-            <i class="mdi mdi-eye mdi-18px mr-2" />
-            <small>{{ blog.totalViews }}</small>
+            <section>
+              <i class="mdi mdi-eye mdi-18px mr-2" />
+              <small>{{ blog.totalViews }}</small>
+            </section>
+            <!--            <section class="ml-4 pl-4">-->
+            <!--              <i class="mdi mdi-clock mdi-18px mr-2" />-->
+            <!--              <small>5 min</small>-->
+            <!--            </section>-->
           </div>
 
-          <!--          <hr class="faded-divider" />-->
+          <hr v-if="!blog.coverImage" class="faded-divider" />
 
           <img
             v-if="blog.coverImage"
-            class="mt-5 blog-intro-image"
-            :src="blog.coverImage"
             :alt="blog.title"
+            :src="blog.coverImage"
+            class="mt-5 blog-intro-image"
             style="width: 100%; object-fit: cover; max-height: 250px"
           />
           <p v-if="blog.subtitle" class="my-4">
             {{ blog.subtitle }}
           </p>
         </section>
-        <hr v-if="!blog.subtitle" class="faded-divider mx-4" />
+
         <section class="blog-body px-4 pb-8">
           <article v-html="noXSS(blog.content, sanitizationConfig)" />
         </section>
       </div>
-      <div
-        v-else
-        class="text-center"
-        style="display: grid; place-items: center; height: calc(100vh - 120px)"
-      >
+
+      <aside v-else class="loading-container">
         <LoadingIcon />
-      </div>
+      </aside>
     </template>
 
     <template slot="footer">
       <section v-if="blog" class="actions">
         <div v-ripple class="like" @click="like">
           <i
-            class="mdi"
             :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+            class="mdi"
           />
         </div>
         <div v-ripple="" class="comment" @click="comment">
@@ -113,10 +117,10 @@
         </div>
         <div v-ripple="" class="save" @click="addOrRemoveToSaveBlogs">
           <i
-            class="mdi"
             :class="
               blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
             "
+            class="mdi"
           />
         </div>
         <div v-ripple="" class="share" @click="share">
@@ -314,9 +318,18 @@ export default {
 
     .view-count {
       display: flex;
-      align-items: center;
+
       * {
         display: block;
+      }
+
+      section {
+        display: flex;
+        align-items: center;
+
+        &:nth-child(2) {
+          border-left: 1px solid $primary;
+        }
       }
     }
   }
@@ -344,6 +357,13 @@ export default {
       height: 2 * $large-unit;
       width: 100%;
     }
+  }
+
+  .loading-container {
+    text-align: center;
+    display: grid;
+    place-items: center;
+    height: calc(100vh - 120px);
   }
 }
 </style>
