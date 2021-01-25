@@ -91,18 +91,23 @@
           )
         "
       >
-        <h5>
-          {{ blog.title }}
-        </h5>
+        <h5>{{ blog.title }}</h5>
 
         <small class="timestamp mt-3">
           <span class="mdi mdi-clock-time-nine-outline" />
           {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
         </small>
 
-        <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
-        <p>
-          {{ blog.subtitle }}...
+        <img
+          v-if="blog.coverImage"
+          class="my-5"
+          :src="blog.coverImage"
+          :alt="blog.title"
+        />
+        <p :class="!blog.coverImage && 'my-5'">
+          <span v-if="blog.subtitle">
+            {{ blog.subtitle.substr(0, 100) }}...
+          </span>
           <span class="secondary"> Read More </span>
         </p>
       </div>
