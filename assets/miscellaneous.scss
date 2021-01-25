@@ -18,6 +18,7 @@ html {
   transition: all .5s ease-in-out;
   font-family: $Nunito;
   letter-spacing: 1px;
+  line-height: 1.5;
   overflow-x: hidden;
 
   &::-webkit-scrollbar {
@@ -74,7 +75,7 @@ html {
       font-weight: 300;
       font-family: $monospace;
       background: #131111;
-      color:  #8cb53d;
+      color: #8cb53d;
       padding: 1rem;
       margin: 1rem 0;
       border-radius: $nano-unit;
@@ -213,7 +214,6 @@ html {
     h6 {
       position: relative;
       margin: $medium-unit 0;
-      line-height: 1.5;
     }
 
     .material-form-field {
@@ -243,6 +243,7 @@ html {
         pointer-events: none;
         cursor: text;
       }
+
       input {
         padding: $material-textInputPaddingTopBottom 0 $material-textInputPaddingTopBottom 0;
         display: block;
