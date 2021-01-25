@@ -178,16 +178,19 @@ export default {
     shorten,
 
     async incrementViewCount() {
-      await this.$axios.$post(
-        endpoints.blog.updateViewCount.replace(
-          '{identifier}',
-          this.$route.params.id
-        ),
-        {},
-        {
-          withCredentials: true,
-        }
-      )
+      const user = await this.$store.getters['UserManagement/getUser']
+      if (user) {
+        await this.$axios.$post(
+          endpoints.blog.updateViewCount.replace(
+            '{identifier}',
+            this.$route.params.id
+          ),
+          {},
+          {
+            withCredentials: true,
+          }
+        )
+      }
     },
 
     navigateTo(path) {
