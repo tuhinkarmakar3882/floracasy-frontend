@@ -7,14 +7,14 @@
       </div>
     </main>
     <main v-else>
-      <section class="user-profile">
+      <section class="user-profile px-1">
         <div class="basic-data">
           <img
+            :src="user.photoURL"
             alt="profile-picture"
             class="picture"
-            :src="user.photoURL"
-            width="100"
             height="100"
+            width="100"
           />
           <div class="basic-details">
             <p class="name">{{ user.displayName }}</p>
@@ -84,7 +84,7 @@
           v-for="activity in recentActivities"
           :key="activity.id"
           v-ripple
-          class="content py-3 px-1"
+          class="content py-6 px-2"
           @click="
             $router.push(
               navigationRoutes.Home.Blogs.Details.replace(
@@ -94,13 +94,21 @@
             )
           "
         >
-          <img :alt="activity.title" :src="activity.coverImage" />
+          <img
+            :alt="activity.title"
+            :src="activity.coverImage || '/images/default_backup.svg'"
+            height="64"
+            width="64"
+          />
           <div class="data text-left">
-            <h6>{{ activity.title }}</h6>
-            <p>{{ activity.subtitle.substr(0, 30) }}...</p>
-            <small style="font-size: 13px">
-              {{ getRelativeTime(activity.createdAt) }}</small
-            >
+            <h6 class="mt-0 mb-1">{{ activity.title }}</h6>
+
+            <section>
+              <i class="mdi mdi-clock mr-2" />
+              <small style="font-size: 13px">
+                {{ getRelativeTime(activity.createdAt) }}
+              </small>
+            </section>
           </div>
         </article>
 
@@ -239,7 +247,8 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  padding: 2rem 0.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 
   button {
     min-width: auto;
@@ -327,14 +336,31 @@ export default {
 
     .content {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+
+      $size: 64px;
 
       img {
-        height: 84px;
-        width: 84px;
+        height: $size;
+        min-height: $size;
+        width: $size;
+        min-width: $size;
+        size: $size;
         object-fit: cover;
         border-radius: 50%;
         margin-right: $large-unit;
+      }
+
+      .data {
+        section {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      &:nth-child(even) {
+        background: $nav-bar-bg;
+        box-shadow: $default-box-shadow;
       }
     }
   }
