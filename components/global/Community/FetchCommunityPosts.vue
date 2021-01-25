@@ -1,8 +1,11 @@
 <template>
   <div class="fetch-community-posts-component">
-    <article v-for="(post, index) in posts" :key="post.identifier">
-      <CommunityPost :post="post" class="community-post py-8" />
-
+    <article
+      v-for="(post, index) in posts"
+      :key="post.identifier"
+      class="community-post"
+    >
+      <CommunityPost :post="post" class="py-6" />
       <FollowSuggestions v-if="index === 7" />
     </article>
 
