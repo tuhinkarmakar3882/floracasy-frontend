@@ -34,17 +34,15 @@
     </section>
     <div ref="tabNavigation"></div>
 
-    <section v-if="tabNumber === 0">
-      <!--      <h3 class="heading-title">All Blogs</h3>-->
-      <InfiniteScrollingBlogLists />
-    </section>
+    <InfiniteScrollingBlogLists v-if="tabNumber === 0" :key="tabNumber" />
 
-    <section v-if="tabNumber === 1">
-      <!--      <h3 class="heading-title">Trending Blogs</h3>-->
-      <InfiniteScrollingBlogLists />
-    </section>
+    <InfiniteScrollingBlogLists
+      v-else-if="tabNumber === 1"
+      :key="tabNumber"
+      trending-mode
+    />
 
-    <div v-if="tabNumber === 2" style="min-height: calc(100vh - 180px)">
+    <div v-else style="min-height: calc(100vh - 180px)">
       <CategoriesLineUp />
     </div>
   </div>
@@ -130,6 +128,7 @@ export default {
     },
 
     changeTab(newTabNumber) {
+      window.scrollTo(0, 0)
       this.tabNumber = newTabNumber
       this.$nextTick(() => {
         this.$refs.tabNavigation.scrollTop = 0
