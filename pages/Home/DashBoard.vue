@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-page">
     <Carousel
-      :visible="tabNumber !== 2"
       :carousel-items="carouselItems"
+      :visible="tabNumber !== 2"
       style="overflow: hidden; transition: all 0.3s ease-in-out"
     />
 
@@ -34,17 +34,20 @@
     </section>
     <div ref="tabNavigation"></div>
 
-    <InfiniteScrollingBlogLists v-if="tabNumber === 0" :key="tabNumber" />
+    <InfiniteScrollingBlogLists
+      v-if="tabNumber === 0"
+      :key="tabNumber"
+      class="consume-full-height"
+    />
 
     <InfiniteScrollingBlogLists
       v-else-if="tabNumber === 1"
       :key="tabNumber"
+      class="consume-full-height"
       trending-mode
     />
 
-    <div v-else style="min-height: calc(100vh - 180px)">
-      <CategoriesLineUp />
-    </div>
+    <CategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
   </div>
 </template>
 
@@ -75,7 +78,7 @@ export default {
           name: 'Listen on the Go',
           body:
             'Now you can continue to listen to your favourite articles whenever you want to',
-          image: '/images/image1.png',
+          image: 'https://picsum.photos/501',
           buttonText: 'Avail Premium',
           route: navigationRoutes.Home.MoreOptions.Payments.index,
         },
@@ -175,6 +178,10 @@ $blog-border-radius: 20px;
       background: $card-background;
       transition: all 100ms ease-in-out;
     }
+  }
+
+  .consume-full-height {
+    min-height: calc(100vh - 250px);
   }
 }
 </style>
