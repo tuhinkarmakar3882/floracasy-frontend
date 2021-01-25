@@ -166,11 +166,25 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+    await this.incrementViewCount()
   },
 
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
+
+    async incrementViewCount() {
+      await this.$axios.$post(
+        endpoints.blog.updateViewCount.replace(
+          '{identifier}',
+          this.$route.params.id
+        ),
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+    },
 
     navigateTo(path) {
       this.$router.push(path)

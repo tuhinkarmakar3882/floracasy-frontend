@@ -38,8 +38,8 @@ export default {
   ],
 
   modern: {
-    client: process.env.NODE_ENV === 'production',
-    server: process.env.NODE_ENV === 'production',
+    client: true,
+    server: true,
   },
 
   modules: [
