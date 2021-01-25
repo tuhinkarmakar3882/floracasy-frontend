@@ -36,7 +36,15 @@
     </section>
 
     <section v-ripple class="post-body py-4 px-4" @click="viewPostDetails">
-      <p v-if="post.body" :style="post.style">{{ post.body.substr(0, 100) }}</p>
+      <p v-if="post.body" :style="post.style">
+        {{
+          expanded
+            ? post.body
+            : `${post.body.substr(0, 100)} ${
+                post.body.length > 99 ? '...' : ''
+              }`
+        }}
+      </p>
 
       <img v-if="post.image" :src="post.image" alt="image" class="mt-4" />
     </section>
@@ -44,7 +52,7 @@
     <hr class="faded-divider mt-2 mb-0" />
 
     <section class="post-actions px-4">
-      <div v-ripple class="like" @click="like">
+      <div v-if="showLikeOption" v-ripple class="like" @click="like">
         <i
           :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
           class="mdi mr-2 inline-block align-middle"
@@ -53,13 +61,20 @@
           {{ shorten(post.totalLikes) }}
         </span>
       </div>
-      <div v-ripple class="comment" @click="viewPostDetails">
+
+      <div
+        v-if="showCommentOption"
+        v-ripple
+        class="comment"
+        @click="viewPostDetails"
+      >
         <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(post.totalComments) }}
         </span>
       </div>
-      <div v-ripple class="share" @click="share">
+
+      <div v-if="showShareOption" v-ripple class="share" @click="share">
         <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(post.totalShares) }}
@@ -78,17 +93,36 @@ import endpoints from '~/api/endpoints'
 
 export default {
   name: 'CommunityPost',
+
   props: {
     post: {
       type: Object,
       required: true,
     },
+    showCommentOption: {
+      type: Boolean,
+      default: true,
+    },
+    showLikeOption: {
+      type: Boolean,
+      default: true,
+    },
+    showShareOption: {
+      type: Boolean,
+      default: true,
+    },
+    expanded: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   data() {
     return {
       navigationRoutes,
     }
   },
+
   computed: {
     isEdited() {
       return (
@@ -96,6 +130,7 @@ export default {
       )
     },
   },
+
   methods: {
     shorten,
     getRelativeTime,
@@ -167,10 +202,6 @@ export default {
 
 .community-post-component {
   .post-body {
-    p {
-      font-size: 15px;
-    }
-
     img {
       border-radius: 0 20px;
       height: 250px;
