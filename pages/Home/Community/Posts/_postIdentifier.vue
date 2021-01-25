@@ -11,8 +11,8 @@
       <main v-if="isReady">
         <CommunityPost
           :post="post"
-          class="py-6"
           :show-comment-option="false"
+          class="py-6"
           expanded
         />
 
@@ -27,16 +27,18 @@
 </template>
 
 <script>
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-import endpoints from '~/api/endpoints'
-import AppFeel from '~/components/global/Layout/AppFeel'
-import LoadingIcon from '~/components/global/LoadingIcon'
-import CommunityPost from '~/components/global/Community/CommunityPost'
-import CommunityPostComments from '~/components/global/Community/CommunityPostComments'
+import {navigationRoutes} from '@/navigation/navigationRoutes'
+import endpoints from '@/api/endpoints'
 
 export default {
   name: 'PostDetails',
-  components: { CommunityPostComments, CommunityPost, LoadingIcon, AppFeel },
+  components: {
+    CommunityPost: () => import('@/components/global/Community/CommunityPost'),
+    LoadingIcon: () => import('@/components/global/LoadingIcon'),
+    AppFeel: () => import('@/components/global/Layout/AppFeel'),
+    CommunityPostComments: () =>
+      import('@/components/global/Community/CommunityPostComments'),
+  },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: prevURL }) {
