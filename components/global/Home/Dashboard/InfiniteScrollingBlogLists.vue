@@ -2,7 +2,7 @@
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="blog in blogs" :key="blog.id">
-        <BlogPost class="pb-0 pt-8" :blog="blog" />
+        <BlogPost :blog="blog" class="pb-0 pt-8" />
       </article>
     </section>
 
@@ -26,46 +26,33 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import ClientOnly from 'vue-client-only'
-import LoadingIcon from '@/components/global/LoadingIcon'
-import BlogPost from '@/components/global/BlogPost'
 import { processLink } from '~/utils/utility'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
+
   components: {
-    BlogPost,
-    LoadingIcon,
-    ClientOnly,
+    BlogPost: () => import('@/components/global/BlogPost'),
+    LoadingIcon: () => import('@/components/global/LoadingIcon'),
   },
+
   props: {
     category: {
       type: String,
       default: null,
     },
+    trendingMode: {
+      type: Boolean,
+      default: null,
+    },
   },
+
   data() {
     return {
       blogs: [],
       blogFetchCursorEndpoint: endpoints.blog.fetch,
     }
   },
-
-  computed: {},
-
-  watch: {
-    mode: {
-      handler() {
-        this.dataLoading = true
-        setTimeout(() => {
-          this.dataLoading = false
-        }, 1500)
-      },
-      deep: true,
-    },
-  },
-
-  mounted() {},
 
   methods: {
     async infiniteHandler($state) {
@@ -77,7 +64,12 @@ export default {
       try {
         const { results, next } = await this.$axios.$get(
           this.blogFetchCursorEndpoint,
-          { params: { category_name: this.category } }
+          {
+            params: {
+              category_name: this.category,
+              trendingMode: this.trendingMode,
+            },
+          }
         )
         if (results.length) {
           this.blogFetchCursorEndpoint = processLink(next)
