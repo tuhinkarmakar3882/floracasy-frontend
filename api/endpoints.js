@@ -13,6 +13,8 @@ const endpoints = {
     fetch: '/allow_authenticated/blog/fetch/',
     info: '/allow_authenticated/blog/info/',
 
+    updateViewCount: '/allow_authenticated/blog/updateViewCount/{identifier}/',
+
     create: '/allow_authenticated/blog/create/',
     detail: '/allow_any/blog/detail/',
 
