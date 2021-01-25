@@ -112,11 +112,7 @@
     </main>
 
     <section class="mobile-app-layout">
-      <header
-        :style="{
-          top: showTopBar ? '0 !important' : '-56px !important',
-        }"
-      >
+      <header>
         <nuxt-link v-ripple="" :to="navigationRoutes.index">
           <h6>Floracasy</h6>
         </nuxt-link>
@@ -299,14 +295,12 @@ export default {
       }
       next()
     })
-    document.addEventListener('scroll', this.autoHideOnScroll)
   },
 
   beforeDestroy() {
     this.$router.beforeEach((__, _, next) => {
       next()
     })
-    document.removeEventListener('scroll', this.autoHideOnScroll)
   },
 
   methods: {
@@ -318,20 +312,6 @@ export default {
 
     openCreateFragment() {
       this.showFragment = !this.showFragment
-    },
-
-    autoHideOnScroll() {
-      if (this.activeLink === 0) {
-        this.showTopBar = true
-      } else {
-        const currentScrollPos = window.pageYOffset
-
-        if (currentScrollPos > 200)
-          this.showTopBar = this.prevScrollPos > currentScrollPos
-        else this.showTopBar = true
-
-        this.prevScrollPos = currentScrollPos
-      }
     },
   },
 }
