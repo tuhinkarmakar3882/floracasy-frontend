@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {navigationRoutes} from '@/navigation/navigationRoutes'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 
 export default {
@@ -92,12 +92,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-//
-//.community-post-detail-page {
-//  .post {
-//  }
-//}
-</style>
