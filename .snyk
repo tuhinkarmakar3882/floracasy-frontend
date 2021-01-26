@@ -1,9 +1,4 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.14.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
-ignore:
-  SNYK-JS-CACHEBASE-1054631:
-    - nuxt > @nuxt/webpack > webpack > watchpack > watchpack-chokidar2 > chokidar > readdirp > micromatch > braces > snapdragon > base > cache-base:
-        reason: None given
-        expires: '2021-01-31T11:00:06.483Z'
 patch: {}

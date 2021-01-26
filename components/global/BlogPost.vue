@@ -161,11 +161,6 @@ export default {
       navigationRoutes,
       dropdownOptionItems: [
         {
-          text: 'Not Interested',
-          icon: 'mdi-cancel',
-          color: '#f5a049',
-        },
-        {
           text: 'Report Blog',
           icon: 'mdi-alert-octagon',
           color: '#ff8282',

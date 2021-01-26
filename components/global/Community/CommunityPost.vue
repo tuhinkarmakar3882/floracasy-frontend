@@ -32,8 +32,41 @@
       <i
         v-ripple="'#4f4f4f5F'"
         class="mdi mdi-dots-vertical mr-2 inline-block align-middle ml-auto"
+        @click="showOptions = !showOptions"
       />
     </section>
+
+    <transition name="gray-shift">
+      <div v-if="showOptions" class="options">
+        <ul>
+          <li
+            v-for="(optionItem, index) in dropdownOptionItems"
+            :key="index"
+            v-ripple="`${optionItem.color}5F`"
+            class="py-2 px-6"
+          >
+            <span
+              :class="optionItem.icon"
+              :style="{ color: optionItem.color }"
+              class="icon mdi"
+            />
+            {{ optionItem.text }}
+          </li>
+          <li class="my-0 py-2 px-4" style="display: block">
+            <hr class="my-0" style="background-color: #464646" />
+          </li>
+          <li v-ripple="`#ff82815f`" class="py-2 px-4">
+            <p
+              class="danger-light text-center my-0"
+              style="width: 100%"
+              @click="showOptions = false"
+            >
+              Close
+            </p>
+          </li>
+        </ul>
+      </div>
+    </transition>
 
     <section v-ripple class="post-body py-4 px-4" @click="viewPostDetails">
       <p v-if="post.body" :style="post.style">
@@ -120,6 +153,14 @@ export default {
   data() {
     return {
       navigationRoutes,
+      showOptions: false,
+      dropdownOptionItems: [
+        {
+          text: 'Report Post',
+          icon: 'mdi-alert-octagon',
+          color: '#ff8282',
+        },
+      ],
     }
   },
 
@@ -195,6 +236,8 @@ export default {
 @import 'assets/all-variables';
 
 .community-post-component {
+  position: relative;
+
   .post-body {
     img {
       border-radius: 0 20px;
@@ -256,6 +299,37 @@ export default {
       align-items: flex-start;
       color: $muted;
       border-radius: $nano-unit;
+    }
+  }
+
+  .options {
+    position: absolute;
+    background: $card-background;
+    border-radius: $nano-unit;
+    right: $large-unit;
+    top: 3 * $medium-unit;
+    box-shadow: $down-only-box-shadow;
+    max-width: 300px;
+    min-width: 232px;
+    z-index: $bring-to-front - 100;
+    transition: all 150ms ease-in-out;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: $micro-unit 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        color: #dadada;
+        margin: 0;
+      }
+    }
+
+    .icon {
+      font-size: $large-unit;
+      margin-right: $micro-unit;
     }
   }
 
