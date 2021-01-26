@@ -145,8 +145,7 @@ export default {
   }
 
   .main-content {
-    background-color: $body-background;
-    max-width: $max-width;
+    background-color: $body-background; //max-width: $max-width;
     margin-left: auto;
     margin-right: auto;
     min-height: calc(100vh - 200px);
