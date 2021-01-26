@@ -51,6 +51,19 @@ export const shorten = (value) => {
   return `${value}${suffix}`
 }
 
+export const showUITip = async (
+  store,
+  message = '',
+  type = 'info',
+  dismissible = true
+) => {
+  await store.dispatch('SocketHandler/updateSocketMessage', {
+    message,
+    notificationType: type || 'info',
+    dismissible,
+  })
+}
+
 export const parseTimeUsingStandardLibrary = (timeString) => {
   return new Date(timeString)
 }
