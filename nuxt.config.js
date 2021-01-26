@@ -44,12 +44,11 @@ export default {
 
   modules: [
     'nuxt-helmet',
-    'nuxt-vue-select',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
-    // '~/module/csp.js',
+    'nuxt-vue-select',
   ],
 
   buildModules: [
@@ -172,10 +171,10 @@ export default {
 
     http2: {
       push: true,
-      pushAssets: (_, __, publicPath, preloadFiles) =>
-        preloadFiles
-          .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
-          .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
+      // pushAssets: (_, __, publicPath, preloadFiles) =>
+      //   preloadFiles
+      //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
+      //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
     },
   },
 
@@ -284,17 +283,17 @@ export default {
       },
       purge: {
         layers: ['base', 'components', 'utilities'],
-        enabled: process.env.NODE_ENV === 'production',
+        enabled: true,
         content: [
-          'assets/**/*.scss',
-          'styles/**/*.scss',
           'components/**/*.vue',
           'layouts/**/*.vue',
           'pages/**/*.vue',
           'plugins/**/*.js',
-          'nuxt.config.js',
           'plugins/**/*.ts',
+          'nuxt.config.js',
           'nuxt.config.ts',
+          'assets/**/*.scss',
+          'styles/**/*.scss',
         ],
       },
     },
@@ -335,5 +334,5 @@ export default {
   //   },
   // },
 
-  watch: ['~/module/csp.js'],
+  // watch: ['~/module/csp.js'],
 }
