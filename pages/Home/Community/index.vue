@@ -9,7 +9,7 @@
         </p>
         <p
           v-ripple
-          class="vibrant py-2 px-4"
+          class="vibrant py-2 px-4 font-size-14px"
           @click="$router.push(navigationRoutes.Home.Community.Story.index)"
         >
           <span class="mdi mdi-play" />
@@ -17,7 +17,7 @@
         </p>
       </section>
 
-      <section class="stories">
+      <section class="stories mt-3">
         <div
           v-ripple
           class="add-a-story py-2 text-center pl-4"
@@ -50,12 +50,17 @@
       </section>
     </div>
 
-    <hr class="reversed-faded-divider mt-0" />
+    <hr class="reversed-faded-divider mt-1" />
 
-    <!--    <section @click="$router.push(navigationRoutes.Home.Community.Posts.add)">-->
-    <!--      <AddPostPreview v-ripple />-->
-    <!--    </section>-->
-    <!--    <hr class="faded-divider my-4" />-->
+    <section
+      class="add-post-preview px-4 py-6 white"
+      @click="$router.push(navigationRoutes.Home.Community.Posts.add)"
+    >
+      <span class="mdi mdi-pencil-box-multiple-outline mdi-24px mr-3" />
+      <p>Share your thoughts or photos or voice</p>
+    </section>
+
+    <hr class="faded-divider my-4" />
 
     <p class="px-4 font-size-14px">
       <span class="mdi mdi-earth primary-light" />
@@ -139,6 +144,13 @@ export default {
 @import 'assets/all-variables';
 
 .community-page {
+  .add-post-preview {
+    display: flex;
+    background: $segment-background;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
   .story-updates-container {
     .top-line {
       display: flex;
