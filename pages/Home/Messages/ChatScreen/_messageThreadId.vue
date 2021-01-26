@@ -216,7 +216,7 @@ export default {
             thread_id: this.$route.params.messageThreadId,
           },
         })
-        console.log(results)
+        // console.log(results)
         if (results.length) {
           this.fetchMessages = processLink(next)
           this.chatMessages.push(...results)

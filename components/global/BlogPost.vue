@@ -140,7 +140,11 @@
 </template>
 
 <script>
-import { parseTimeUsingStandardLibrary, shorten } from '~/utils/utility'
+import {
+  parseTimeUsingStandardLibrary,
+  shorten,
+  showUITip,
+} from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -173,13 +177,6 @@ export default {
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
-    async showUITip(message, type) {
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message,
-        notificationType: type || 'info',
-        dismissible: true,
-      })
-    },
 
     navigateTo(path) {
       this.$router.push(path)
@@ -195,7 +192,7 @@ export default {
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
-        await this.showUITip('Network Error', 'error')
+        await showUITip(this.$store, 'Network Error', 'error')
       }
     },
 
@@ -231,23 +228,22 @@ export default {
               this.blog.totalShares--
             })
         } catch (error) {
-          await this.showUITip('Network Error', 'error')
+          await showUITip(this.$store, 'Network Error', 'error')
         }
       } else {
-        await this.showUITip('Feature Not Supported', 'warning')
+        await showUITip(this.$store, 'Feature Not Supported', 'warning')
       }
     },
 
     async addOrRemoveToSaveBlogs() {
+      this.showOptions = false
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
           identifier: this.blog.identifier,
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
-        await this.showUITip('Network Error', 'error')
-      } finally {
-        this.showOptions = false
+        await showUITip(this.$store, 'Network Error', 'error')
       }
     },
   },

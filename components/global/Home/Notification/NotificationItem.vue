@@ -122,7 +122,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.$router.beforeEach((to, _, next) => {
+    this.$router.beforeEach((_, __, next) => {
       next()
     })
   },
@@ -146,7 +146,6 @@ export default {
           break
 
         case 'open_ticket_detail':
-          console.log(actionName, actionInfo)
           await this.$router.push(
             navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index
           )

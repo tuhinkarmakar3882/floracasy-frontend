@@ -68,13 +68,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import AddPostPreview from '~/components/global/Community/AddPostPreview'
 import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Community',
   components: {
-    AddPostPreview,
     FetchCommunityPosts: () =>
       import('@/components/global/Community/FetchCommunityPosts'),
     TopActionBar: () => import('@/components/global/Community/TopActionBar'),

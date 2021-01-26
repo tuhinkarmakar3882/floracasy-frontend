@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { getRelativeTime, shorten } from '@/utils/utility'
+import { getRelativeTime, shorten, showUITip } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 
@@ -134,13 +134,6 @@ export default {
   methods: {
     shorten,
     getRelativeTime,
-    async showUITip(message, type) {
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message,
-        notificationType: type || 'info',
-        dismissible: true,
-      })
-    },
 
     async viewPostDetails() {
       await this.$router.push(
@@ -161,12 +154,8 @@ export default {
         action === 'like-post' ? this.post.totalLikes++ : this.post.totalLikes--
         this.post.isLiked = !this.post.isLiked
       } catch (e) {
-        await this.showUITip('Unable to Like Post')
+        await showUITip(this.$store, 'Unable to Like Post', 'warning')
       }
-    },
-
-    comment() {
-      console.log('open comment - page')
     },
 
     async share() {
@@ -192,12 +181,10 @@ export default {
             this.post?.totalShares && this.post.totalShares--
           }
         } catch (error) {
-          console.log('Error sharing:', error)
+          await showUITip(this.$store, 'Network Error', 'error')
         }
       } else {
-        console.log(
-          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
-        )
+        await showUITip(this.$store, 'Feature Not Supported', 'warning')
       }
     },
   },

@@ -545,7 +545,6 @@ export default {
     blogCategory(newContent) {
       localStorage.setItem('blogCategory', newContent)
       this.hasBlogCategory = !!newContent
-      console.log(this.blogCategory)
     },
     blogSubtitle(newContent) {
       localStorage.setItem('blogSubtitle', newContent)

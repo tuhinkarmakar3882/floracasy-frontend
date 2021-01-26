@@ -158,7 +158,7 @@ import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink } from '~/utils/utility'
+import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
 
 export default {
   name: 'Details',
@@ -203,8 +203,8 @@ export default {
         params: { uid: this.user.uid },
       })
       .then(({ statistics }) => statistics)
-      .catch((error) => {
-        console.error(error)
+      .catch(async () => {
+        await showUITip(this.$store, 'Unable to Retrieve Information', 'error')
       })
   },
 

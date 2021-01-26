@@ -45,6 +45,7 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import * as secrets from '@/environmentalVariables'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'SignInToContinue',
@@ -118,8 +119,8 @@ export default {
             this.updateInfo('Logging you in...')
             await this.login(frontendPayload, response)
           })
-          .catch(async (e) => {
-            console.error(e)
+          .catch(async () => {
+            await showUITip(this.$store, 'Login Error', 'error')
             await this.abort()
           })
       } else {

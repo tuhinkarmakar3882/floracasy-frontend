@@ -24,7 +24,7 @@ export default function cspModule() {
     context.nuxt.state.nonce = nonce
   })
 
-  this.nuxt.hook('render:route', (url, { cspScriptSrcHashes }, context) => {
+  this.nuxt.hook('render:route', (_, { cspScriptSrcHashes }, context) => {
     const nonce = context.nuxt.state.nonce
     cspScriptSrcHashes.push(`'nonce-${nonce}'`)
   })
