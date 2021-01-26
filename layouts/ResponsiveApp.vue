@@ -203,6 +203,9 @@
       <transition name="slide-up">
         <aside v-if="showFragment">
           <CustomListView>
+            <template slot="heading">
+              <h6 class="heading-title mb-0">What do you want to do?</h6>
+            </template>
             <template slot="list-items">
               <li
                 v-for="(option, index) in fragmentOptions"
@@ -218,7 +221,10 @@
                     class="icon"
                   />
                   <span class="option-name">{{ option.name }}</span>
-                  <span class="mdi mdi-chevron-right arrow-go" />
+                  <span
+                    class="mdi mdi-chevron-right arrow-go"
+                    :style="{ color: `${option.color}7F` }"
+                  />
                 </p>
               </li>
             </template>
@@ -247,20 +253,20 @@ export default {
       showTopBar: true,
       fragmentOptions: [
         {
-          name: 'Add New Post',
-          icon: 'mdi mdi-tooltip-plus',
+          name: 'Create New Blog',
+          icon: 'mdi mdi-newspaper-variant',
           color: '#8FF2E1',
-          route: navigationRoutes.Home.Community.Posts.add,
-        },
-        {
-          name: 'Write New Blog',
-          icon: 'mdi mdi-pencil-circle',
-          color: '#f8e102',
           route: navigationRoutes.Home.Blogs.Create.New,
         },
         {
-          name: 'Add New Story',
-          icon: 'mdi mdi-plus-box',
+          name: 'Create New Post',
+          icon: 'mdi mdi-pencil-box-multiple-outline',
+          color: '#f8e102',
+          route: navigationRoutes.Home.Community.Posts.add,
+        },
+        {
+          name: 'Create New Story',
+          icon: 'mdi mdi-thought-bubble-outline',
           color: '#5dd75d',
           route: navigationRoutes.Home.Community.Story.add,
         },

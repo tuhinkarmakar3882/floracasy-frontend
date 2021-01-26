@@ -5,7 +5,7 @@
     <div class="story-updates-container">
       <section class="top-line pl-4">
         <p class="py-2 font-size-14px">
-          <span class="mdi mdi-party-popper primary-light" /> Stories
+          <span class="mdi mdi-thought-bubble-outline primary-light" /> Stories
         </p>
         <p
           v-ripple
