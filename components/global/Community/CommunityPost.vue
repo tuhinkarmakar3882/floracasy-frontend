@@ -134,6 +134,13 @@ export default {
   methods: {
     shorten,
     getRelativeTime,
+    async showUITip(message, type) {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message,
+        notificationType: type || 'info',
+        dismissible: true,
+      })
+    },
 
     async viewPostDetails() {
       await this.$router.push(
@@ -154,7 +161,7 @@ export default {
         action === 'like-post' ? this.post.totalLikes++ : this.post.totalLikes--
         this.post.isLiked = !this.post.isLiked
       } catch (e) {
-        console.error(e)
+        await this.showUITip('Unable to Like Post')
       }
     },
 
