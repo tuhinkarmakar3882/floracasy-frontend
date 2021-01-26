@@ -12,11 +12,11 @@
         <CommunityPost
           :post="post"
           :show-comment-option="false"
-          class="py-6"
+          class="pt-6"
           expanded
         />
 
-        <CommunityPostComments :post="post" />
+        <CommunityPostComments :post="post" class="pb-8 mb-6" />
       </main>
 
       <aside v-else>
