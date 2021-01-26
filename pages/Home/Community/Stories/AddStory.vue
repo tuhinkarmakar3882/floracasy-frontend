@@ -19,11 +19,64 @@
           {{ tab }}
         </p>
       </nav>
-
       <div ref="tabNavigation" />
 
       <section v-if="activeTab === 0" class="writing-container">
-        <p>This is <span class="mdi mdi-pen" /> Writing Division</p>
+        <h6 class="px-2 text-center mb-0">Share your thoughts</h6>
+        <hr class="reversed-faded-divider" />
+        <small class="px-4 text-right pb-4 muted" style="display: block">
+          {{ text.contentSize }} / 500
+        </small>
+
+        <section class="main px-2">
+          <div
+            id="text-body"
+            :style="[
+              text.customStyle && {
+                background: text.customStyle.background,
+                color: text.customStyle.color,
+                display: 'grid',
+                placeItems: 'center',
+              },
+            ]"
+            class="px-4 py-4"
+            contenteditable="true"
+            @keyup="updateText"
+          />
+        </section>
+
+        <section class="background-selection mt-4">
+          <p class="mb-8 px-2">Try with a background</p>
+          <div class="choices">
+            <section
+              v-ripple
+              class="option mx-1 mdi mdi-cancel mdi-24px"
+              style="
+                background: transparent;
+                display: grid;
+                place-items: center;
+              "
+              @click="text.customStyle = null"
+            />
+            <section
+              v-for="(style, index) in text.customStyleOptions"
+              :key="index"
+              v-ripple
+              :style="{ background: style.background }"
+              class="option mx-1"
+              @click="text.customStyle = style"
+            />
+          </div>
+        </section>
+
+        <button
+          v-ripple
+          :class="text.canSend ? 'primary-btn' : 'disabled-btn'"
+          class="floating-action-button"
+          :disabled="!text.canSend"
+        >
+          <span class="mdi mdi-send mdi-24px" />
+        </button>
       </section>
 
       <section v-if="activeTab === 1" class="camera-recording-container">
@@ -128,7 +181,7 @@
                       <small> {{ option.name }}</small>
                     </template>
 
-                    <template #no-option> Invalid Aspect Ratio </template>
+                    <template #no-option> Invalid Aspect Ratio</template>
                   </v-select>
                 </div>
               </client-only>
@@ -247,6 +300,115 @@ export default {
       pageTitle: 'Add New Story',
       activeTab: 0,
       tabs: ['Write', 'Photo', 'Audio'],
+
+      text: {
+        customStyle: null,
+        customStyleOptions: [
+          {
+            background: 'linear-gradient(to right, #CC2B5E, #753A88)',
+            color: 'white',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'orange',
+            color: 'black',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'green',
+            color: 'white',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'yellow',
+            color: 'black',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'cyan',
+            color: 'black',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'greenyellow',
+            color: 'black',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'crimson',
+            color: 'white',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'saddlebrown',
+            color: 'white',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'aqua',
+            color: 'black',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          {
+            background: 'aliceblue',
+            color: 'black',
+            minHeight: '100px',
+            borderRadius: '0 12px',
+            padding: '12px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        ],
+        body: null,
+        canSend: false,
+        contentSize: 0,
+      },
 
       photo: {
         imageSize: {
@@ -372,6 +534,13 @@ export default {
   },
 
   methods: {
+    updateText() {
+      this.text.body = document.getElementById('text-body').textContent
+      const bodyLength = this.text.body?.trim().length
+      this.text.canSend = bodyLength > 0 && bodyLength < 500
+      this.text.contentSize = bodyLength ?? 0
+    },
+
     async showUITip(message, type) {
       await this.$store.dispatch('SocketHandler/updateSocketMessage', {
         message,
@@ -711,6 +880,53 @@ export default {
       font-weight: 400;
       background: $card-background;
       transition: all 100ms ease-in-out;
+    }
+  }
+
+  .writing-container {
+    .background-selection {
+      p {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          height: 1px;
+          width: 36px;
+          background: $primary-light;
+          bottom: -8px;
+          left: 8px;
+        }
+      }
+
+      .choices {
+        display: flex;
+        overflow: auto;
+        max-width: 100%;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .option {
+          border-radius: 12px;
+          min-height: 2 * $x-large-unit;
+          height: 2 * $x-large-unit;
+          min-width: 2 * $x-large-unit;
+          width: 2 * $x-large-unit;
+        }
+      }
+    }
+
+    #text-body {
+      border: 1px solid #3a3a3a;
+      border-radius: 0 $standard-unit;
+      min-height: 200px;
+      outline: 0 none;
+
+      &:focus {
+        border: 1px solid $secondary;
+      }
     }
   }
 
