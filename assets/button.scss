@@ -20,6 +20,18 @@ button {
   }
 }
 
+.floating-action-button {
+  position: fixed;
+  height: 64px;
+  width: 64px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 10px;
+  right: 10px;
+}
+
 .primary-outlined-btn {
   background-color: transparent;
   color: lighten($primary-light, $darken-percentage);
