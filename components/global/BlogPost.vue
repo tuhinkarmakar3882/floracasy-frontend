@@ -114,7 +114,7 @@
     </section>
 
     <section class="blog-actions px-4 pb-8">
-      <div v-ripple class="like" @click="like()">
+      <div v-ripple class="like" @click="like">
         <i
           class="mdi mr-2 inline-block align-middle"
           :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
@@ -123,13 +123,13 @@
           {{ shorten(blog.totalLikes) }}
         </span>
       </div>
-      <div v-ripple class="comment" @click="comment()">
+      <div v-ripple class="comment" @click="comment">
         <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(blog.totalComments) }}
         </span>
       </div>
-      <div v-ripple class="share" @click="share()">
+      <div v-ripple class="share" @click="share">
         <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(blog.totalShares) }}
