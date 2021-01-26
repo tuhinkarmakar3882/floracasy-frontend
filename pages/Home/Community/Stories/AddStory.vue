@@ -72,8 +72,9 @@
         <button
           v-ripple
           :class="text.canSend ? 'primary-btn' : 'disabled-btn'"
+          :disabled="!text.canSend || text.isSending"
           class="floating-action-button"
-          :disabled="!text.canSend"
+          @click="uploadTextStory"
         >
           <span class="mdi mdi-send mdi-24px" />
         </button>
@@ -407,6 +408,7 @@ export default {
         ],
         body: null,
         canSend: false,
+        isSending: false,
         contentSize: 0,
       },
 
@@ -534,13 +536,13 @@ export default {
   },
 
   methods: {
-    updateText() {
-      this.text.body = document.getElementById('text-body').textContent
-      const bodyLength = this.text.body?.trim().length
-      this.text.canSend = bodyLength > 0 && bodyLength < 500
-      this.text.contentSize = bodyLength ?? 0
+    //  --------------------- Generic Methods ---------------------
+    setActiveTabTo(newTabNumber) {
+      this.activeTab = newTabNumber
+      this.$nextTick(() => {
+        this.$refs.tabNavigation.scrollTop = 0
+      })
     },
-
     async showUITip(message, type) {
       await this.$store.dispatch('SocketHandler/updateSocketMessage', {
         message,
@@ -548,7 +550,6 @@ export default {
         dismissible: true,
       })
     },
-
     async prepareCameraRecordingInitialSetup(constraint) {
       this.photo.isLoading = true
 
@@ -573,7 +574,6 @@ export default {
       this.$refs.videoPreview.srcObject = this.photo.stream
       this.photo.isLoading = false
     },
-
     async prepareAudioRecordingInitialSetup() {
       const constraints = {
         audio: true,
@@ -582,7 +582,6 @@ export default {
       this.audio.mediaRecorder = new MediaRecorder(this.audio.stream)
       this.audio.mediaRecorder.ondataavailable = this.handleDataAvailable
     },
-
     destroySetup(stream) {
       const tracks = stream.getTracks()
       tracks.forEach(function (track) {
@@ -590,6 +589,36 @@ export default {
       })
     },
 
+    //  --------------------- Text Methods ---------------------
+    updateText() {
+      this.text.body = document.getElementById('text-body').textContent
+      const bodyLength = this.text.body?.trim().length
+      this.text.canSend = bodyLength > 0 && bodyLength < 501
+      this.text.contentSize = bodyLength ?? 0
+    },
+    async uploadTextStory() {
+      if (this.text.canSend) {
+        this.text.isSending = true
+
+        try {
+          await this.$axios.$post(endpoints.community_service.stories, {
+            storyType: 'text',
+            body: this.text.body,
+            style: this.text.customStyle,
+          })
+
+          await this.$router.replace(navigationRoutes.Home.Community.index)
+
+          await this.showUITip('Story Posted!', 'success')
+        } catch (e) {
+          await this.showUITip('Error Posting story', 'error')
+        } finally {
+          this.text.isSending = false
+        }
+      }
+    },
+
+    // --------------------- Photo Methods ---------------------
     updatePhotoRatio() {
       if (this.photo.aspectRatio) {
         this.photo.stream && this.destroySetup(this.photo.stream)
@@ -602,7 +631,6 @@ export default {
         })
       }
     },
-
     takePhoto() {
       this.photo.isPhotoTaken = false
       this.showUITip('Say Cheese!')
@@ -621,7 +649,6 @@ export default {
 
       canvas.toBlob(this.compressImage, 'image/webp', 0.7)
     },
-
     async compressImage(blobImage) {
       const useWebWorker = true
       this.photo.showProgress = true
@@ -641,11 +668,9 @@ export default {
 
       await this.showUITip('Photo Captured!', 'success')
     },
-
     updateProgressBar(compressProgress) {
       this.photo.compressionProgress = compressProgress
     },
-
     async uploadPhotoStory() {
       try {
         const formData = new FormData()
@@ -672,13 +697,12 @@ export default {
         await this.showUITip('Error Posting story', 'error')
       }
     },
-
     recapture() {
       this.photo.isPhotoTaken = false
       this.photo.output = undefined
     },
 
-    //  Audio Methods Start ---------------------------------------
+    // --------------------- Audio Methods ---------------------
     startRecording() {
       this.audio.audioClip = []
       this.audio.source = null
@@ -687,7 +711,6 @@ export default {
       this.audio.recordingDone = false
       this.startTimer()
     },
-
     startTimer() {
       this.audio.audioRecordingInterval = setInterval(() => {
         this.audio.audioRecordingDuration <= 0
@@ -695,7 +718,6 @@ export default {
           : this.audio.audioRecordingDuration--
       }, 1000)
     },
-
     handleDataAvailable(event) {
       if (event.data.size > 0) {
         this.audio.audioClip = event.data
@@ -703,7 +725,6 @@ export default {
         this.audio.source = URL.createObjectURL(event.data)
       }
     },
-
     stopRecording() {
       clearInterval(this.audio.audioRecordingInterval)
       this.audio.mediaRecorder.stop()
@@ -711,7 +732,6 @@ export default {
       this.audio.recordingStarted = false
       this.audio.recordingDone = true
     },
-
     async uploadAudioStory() {
       try {
         const formData = new FormData()
@@ -739,109 +759,8 @@ export default {
 
         await this.showUITip('Story Posted!', 'success')
       } catch (e) {
-        console.log(e)
         await this.showUITip('Error Posting story', 'error')
       }
-    },
-
-    custom() {
-      const controls = document.querySelector('.controls')
-      const cameraOptions = document.querySelector('.video-options>select')
-      const video = document.querySelector('video')
-      const canvas = document.querySelector('canvas')
-      const screenshotImage = document.querySelector('img')
-      const buttons = [...controls.querySelectorAll('button')]
-      const streamStarted = false
-
-      const [play, screenshot] = buttons
-
-      const constraints = {
-        video: {
-          width: {
-            min: 1280,
-            ideal: 1920,
-            max: 2560,
-          },
-          height: {
-            min: 720,
-            ideal: 1080,
-            max: 1440,
-          },
-        },
-      }
-
-      cameraOptions.onchange = () => {
-        const updatedConstraints = {
-          ...constraints,
-          deviceId: {
-            exact: cameraOptions.value,
-          },
-        }
-
-        startStream(updatedConstraints)
-      }
-
-      play.onclick = () => {
-        if (streamStarted) {
-          video.play()
-          play.classList.add('')
-          return
-        }
-        if (
-          'mediaDevices' in navigator &&
-          navigator.mediaDevices.getUserMedia
-        ) {
-          const updatedConstraints = {
-            ...constraints,
-            deviceId: {
-              exact: cameraOptions.value,
-            },
-          }
-          startStream(updatedConstraints)
-        }
-      }
-
-      screenshot.onclick = () => {
-        canvas.width = video.videoWidth
-        canvas.height = video.videoHeight
-        canvas.getContext('2d').drawImage(video, 0, 0)
-        screenshotImage.src = canvas.toDataURL('image/webp')
-        screenshotImage.classList.remove('')
-      }
-
-      const startStream = async (constraints) => {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints)
-        handleStream(stream)
-      }
-
-      const handleStream = (stream) => {
-        video.srcObject = stream
-      }
-
-      const getCameraSelection = async () => {
-        const devices = await navigator.mediaDevices.enumerateDevices()
-        const videoDevices = devices.filter(
-          (device) => device.kind === 'videoinput'
-        )
-        const options = videoDevices.map((videoDevice) => {
-          return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`
-        })
-        cameraOptions.innerHTML = options.join('')
-      }
-
-      getCameraSelection()
-    },
-
-    playAudio() {
-      const audio = new Audio('/audio/shutter.mp3')
-      audio.play()
-    },
-
-    setActiveTabTo(newTabNumber) {
-      this.activeTab = newTabNumber
-      this.$nextTick(() => {
-        this.$refs.tabNavigation.scrollTop = 0
-      })
     },
   },
 
