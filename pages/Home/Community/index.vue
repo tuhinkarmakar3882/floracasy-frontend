@@ -4,7 +4,9 @@
 
     <div class="story-updates-container">
       <section class="top-line pl-4">
-        <p class="py-2">Stories</p>
+        <p class="py-2 font-size-14px">
+          <span class="mdi mdi-party-popper primary-light" /> Stories
+        </p>
         <p
           v-ripple
           class="vibrant py-2 px-4"
@@ -18,7 +20,7 @@
       <section class="stories">
         <div
           v-ripple
-          class="add-a-story py-2 text-center"
+          class="add-a-story py-2 text-center pl-4"
           @click="$router.push(navigationRoutes.Home.Community.Story.add)"
         >
           <transition name="scale-up">
@@ -48,14 +50,14 @@
       </section>
     </div>
 
-    <hr class="faded-divider my-6" />
+    <hr class="reversed-faded-divider mt-0" />
 
     <!--    <section @click="$router.push(navigationRoutes.Home.Community.Posts.add)">-->
     <!--      <AddPostPreview v-ripple />-->
     <!--    </section>-->
     <!--    <hr class="faded-divider my-4" />-->
 
-    <p class="px-4" style="font-size: 14px">
+    <p class="px-4 font-size-14px">
       <span class="mdi mdi-earth primary-light" />
       Across The World
     </p>
@@ -144,25 +146,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      h6 {
-        margin: 0;
-        position: relative;
-
-        &::after {
-          content: '';
-          height: 2px;
-          width: 24px;
-          background: $primary-light;
-          bottom: 4px;
-          left: 0;
-          position: absolute;
-        }
-      }
-
-      p {
-        font-size: 14px;
-      }
     }
 
     .stories {
@@ -225,6 +208,10 @@ export default {
         }
       }
     }
+  }
+
+  .font-size-14px {
+    font-size: 14px;
   }
 }
 </style>
