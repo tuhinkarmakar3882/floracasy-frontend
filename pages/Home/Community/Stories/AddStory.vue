@@ -544,7 +544,6 @@ export default {
     },
 
     async uploadAudioStory() {
-      console.log(this.audio.audioClip)
       try {
         const formData = new FormData()
 
@@ -562,12 +561,12 @@ export default {
           }
         )
 
-        // await this.$axios.$post(endpoints.community_service.stories, {
-        //   storyType: 'audio',
-        //   audio: res?.path,
-        // })
+        await this.$axios.$post(endpoints.community_service.stories, {
+          storyType: 'audio',
+          audio: res?.path,
+        })
 
-        // await this.$router.replace(navigationRoutes.Home.Community.index)
+        await this.$router.replace(navigationRoutes.Home.Community.index)
 
         await this.showUITip('Story Posted!', 'success')
       } catch (e) {
