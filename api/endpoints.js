@@ -33,6 +33,7 @@ const endpoints = {
   },
   comment_system: {
     fetchByBlogId: '/allow_authenticated/comment_system/fetchByBlogId/',
+    detail: '/allow_authenticated/comment_system/detail/{identifier}/',
     createCommentForBlogId:
       '/allow_authenticated/comment_system/createCommentForBlogId/',
   },
