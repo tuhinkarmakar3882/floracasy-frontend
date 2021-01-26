@@ -21,7 +21,7 @@ button {
 }
 
 .floating-action-button {
-  position: fixed;
+  position: fixed !important;
   height: 64px;
   width: 64px;
   border-radius: 100%;
