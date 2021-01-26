@@ -1,5 +1,5 @@
 <template>
-  <AppFeel custom-header class="blog-comment-page" on-back="/">
+  <AppFeel class="blog-comment-page" custom-header on-back="/">
     <template slot="app-bar-custom-header">
       <h5
         v-ripple
@@ -108,15 +108,15 @@
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
         <input
           v-model="commentMessage"
-          type="text"
-          placeholder="Add a comment..."
           :disabled="isSendingComment"
+          placeholder="Add a comment..."
+          type="text"
           @keyup.enter="addComment"
         />
         <RippleButton
-          :on-click="addComment"
           :disabled="!canSendComment"
           :loading="isSendingComment"
+          :on-click="addComment"
           style="background: transparent !important"
         >
           <span class="mdi mdi-send" />
@@ -276,7 +276,7 @@ export default {
 
   head() {
     return {
-      title: this.pageTitle,
+      title: this.blog?.title || this.pageTitle,
     }
   },
 }
@@ -324,9 +324,13 @@ export default {
     background-color: $nav-bar-bg;
     box-shadow: $up-only-box-shadow;
 
+    $size: 2 * $medium-unit;
+
     img {
-      width: 2 * $medium-unit;
-      height: 2 * $medium-unit;
+      width: $size;
+      min-width: $size;
+      height: $size;
+      min-height: $size;
       object-position: center;
       object-fit: cover;
       border-radius: 50%;
