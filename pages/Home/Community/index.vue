@@ -32,7 +32,9 @@
             />
           </transition>
           <span class="mdi mdi-plus" />
-          <small class="vibrant">Add New Story</small>
+          <aside>
+            <p class="vibrant">Add New Story</p>
+          </aside>
         </div>
 
         <transition-group name="scale-up" style="display: flex">
@@ -116,10 +118,12 @@ export default {
       }
     },
     async fetchStories() {
-      const { results } = await this.$axios.$get(
-        endpoints.community_service.stories
-      )
-      this.stories.push(...results)
+      try {
+        const { results } = await this.$axios.$get(
+          endpoints.community_service.stories
+        )
+        this.stories.push(...results)
+      } catch (e) {}
     },
   },
 
@@ -177,12 +181,16 @@ export default {
         position: relative;
         border-radius: 8px;
 
+        $image-size: 74px;
+
         img {
-          size: 74px;
-          height: 74px;
-          border-radius: 50%;
-          width: 74px;
+          min-height: $image-size;
+          height: $image-size;
+          min-width: $image-size;
+          width: $image-size;
           object-fit: cover;
+          box-shadow: $default-box-shadow;
+          border-radius: 50%;
         }
 
         span {
@@ -194,12 +202,26 @@ export default {
           border-radius: 50%;
           background: $vibrant;
           right: 12px;
-          bottom: 64px;
+          bottom: 60px;
           color: #000;
           height: 24px;
           width: 24px;
           font-size: 14px;
           z-index: 0;
+        }
+
+        aside {
+          align-self: flex-start;
+          width: 100%;
+          height: 4ch;
+          overflow: hidden;
+
+          p {
+            font-weight: 300;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.48;
+          }
         }
       }
     }
