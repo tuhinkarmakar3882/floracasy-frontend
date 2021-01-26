@@ -34,12 +34,8 @@
 
         <template slot="body">
           <section v-if="notification.onclickAction === 'open_comment_page'">
-            <blockquote>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
-              debitis doloribus, eum excepturi facilis fugiat, inventore ipsum
-              itaque magni modi natus numquam porro rem, saepe sapiente sed
-              similique temporibus veritatis!
-            </blockquote>
+            <blockquote v-if="message">{{ message }}</blockquote>
+            <LoadingIcon v-else />
           </section>
         </template>
 
@@ -90,10 +86,11 @@ import { getRelativeTime } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import Modal from '~/components/global/Modal'
+import LoadingIcon from '~/components/global/LoadingIcon'
 
 export default {
   name: 'NotificationItem',
-  components: { Modal },
+  components: { LoadingIcon, Modal },
   props: {
     notification: {
       type: Object,
@@ -103,6 +100,7 @@ export default {
   data() {
     return {
       showModal: false,
+      message: undefined,
     }
   },
 
@@ -180,8 +178,10 @@ export default {
     },
 
     async openModal() {
+      this.message = undefined
       await this.$router.push('#detail')
       this.showModal = true
+      await this.getCommentMessage(this.notification.onclickActionInfo)
     },
 
     async openProfilePage(keyName) {
@@ -208,6 +208,15 @@ export default {
           this.notification.onclickActionInfo[keyName]
         )
       )
+    },
+    async getCommentMessage({ commentIdentifier }) {
+      const { message } = await this.$axios.$get(
+        endpoints.comment_system.detail.replace(
+          '{identifier}',
+          commentIdentifier
+        )
+      )
+      this.message = message
     },
   },
 }
