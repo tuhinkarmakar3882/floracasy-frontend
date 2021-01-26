@@ -1,5 +1,6 @@
 <template>
   <div class="custom-list-view">
+    <slot name="heading"></slot>
     <ul>
       <slot name="list-items"></slot>
       <slot name="last-item"></slot>
