@@ -122,6 +122,13 @@ export default {
       hashAlgorithm: 'sha256',
       policies: {
         'default-src': ["'self'", ...secrets.PRIMARY_HOSTS],
+        'media-src': [
+          "'self'",
+          'https:',
+          `blob:`,
+          ...secrets.PRIMARY_HOSTS,
+          ...secrets.BACKEND_SERVICES,
+        ],
         'frame-src': [
           "'self'",
           ...secrets.PRIMARY_HOSTS,
