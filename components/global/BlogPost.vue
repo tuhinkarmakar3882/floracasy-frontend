@@ -173,6 +173,13 @@ export default {
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
+    async showUITip(message, type) {
+      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
+        message,
+        notificationType: type || 'info',
+        dismissible: true,
+      })
+    },
 
     navigateTo(path) {
       this.$router.push(path)
@@ -188,7 +195,7 @@ export default {
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
-        console.error(e)
+        await this.showUITip('Network Error', 'error')
       }
     },
 
@@ -212,24 +219,22 @@ export default {
               this.blog.identifier
             ),
           })
-          try {
-            await this.$axios
-              .$post(endpoints.blog.share, {
-                identifier: this.blog.identifier,
-              })
-              .then(() => {
-                this.blog.totalShares++
-              })
-          } catch (e) {
-            this.blog.totalShares--
-          }
+
+          await this.$axios
+            .$post(endpoints.blog.share, {
+              identifier: this.blog.identifier,
+            })
+            .then(() => {
+              this.blog.totalShares++
+            })
+            .catch(() => {
+              this.blog.totalShares--
+            })
         } catch (error) {
-          console.log('Error sharing:', error)
+          await this.showUITip('Network Error', 'error')
         }
       } else {
-        console.log(
-          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
-        )
+        await this.showUITip('Feature Not Supported', 'warning')
       }
     },
 
@@ -240,11 +245,9 @@ export default {
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await this.showUITip('Network Error', 'error')
+      } finally {
+        this.showOptions = false
       }
     },
   },
