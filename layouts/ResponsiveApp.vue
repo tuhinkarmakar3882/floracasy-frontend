@@ -14,7 +14,16 @@
             :aria-label="option.text"
             :to="option.route"
           >
+            <img
+              v-if="index === 1 && user"
+              :src="user.photoURL"
+              alt=""
+              class="profile-image"
+              height="56"
+              width="56"
+            />
             <h5
+              v-else
               :class="
                 index === topNavActiveLink
                   ? [option.activeIcon, 'secondary']
@@ -125,7 +134,16 @@
             :aria-label="option.text"
             :to="option.route"
           >
+            <img
+              v-if="index === 1 && user"
+              :src="user.photoURL"
+              alt=""
+              class="profile-image"
+              height="56"
+              width="56"
+            />
             <h5
+              v-else
               :class="
                 index === topNavActiveLink
                   ? [option.activeIcon, 'secondary']
@@ -281,6 +299,7 @@ export default {
       bottomNavMenuOptions: 'NavigationState/getBottomNavMenuOptions',
       topNavMenuOptions: 'NavigationState/getTopNavMenuOptions',
       newContentAvailable: 'NavigationState/getNewContentAvailableInfo',
+      user: 'UserManagement/getUser',
     }),
 
     color() {
@@ -589,6 +608,21 @@ export default {
       margin-left: auto;
       margin-right: auto;
     }
+  }
+
+  $size: 36px;
+
+  .profile-image {
+    min-width: $size;
+    width: $size;
+    max-width: $size;
+    min-height: $size;
+    height: $size;
+    max-height: $size;
+    size: $size;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: $default-box-shadow;
   }
 }
 </style>
