@@ -137,7 +137,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$image-size: 84px;
+$image-size: 40px;
 
 .message-page {
   .message-thread {
@@ -159,7 +159,6 @@ $image-size: 84px;
     .name {
       color: #ededed;
       font-family: $Prata;
-      font-size: $medium-unit;
     }
 
     .message-body {
