@@ -65,6 +65,8 @@ export const navigationRoutes = {
           '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
         Tickets: {
           index: '/Home/MoreOptions/HelpAndSupport/Tickets',
+          Details:
+            '/Home/MoreOptions/HelpAndSupport/Tickets/Details/{identifier}',
         },
       },
       Payments: {
