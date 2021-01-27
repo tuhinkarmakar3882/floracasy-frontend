@@ -1,33 +1,67 @@
 <template>
   <section class="top-action-bar">
-    <!--      <div v-ripple class="add-post-btn px-4">-->
-    <!--        <span class="mdi mdi-plus-box mdi-36px secondary" />-->
-    <!--      </div>-->
-
     <div class="search-box">
       <input
         id="search-box"
-        type="text"
+        ref="search"
+        v-model="query"
         autocomplete="off"
         placeholder="Type here to search"
+        type="text"
+        @blur="showFallback = false"
+        @focusin="showFallback = true"
+        @focusout="showFallback = false"
+        @keyup.enter="performSearch"
       />
       <label
-        for="search-box"
-        class="mdi mdi-magnify px-4 mdi-24px"
         aria-label="Type Here to Search for People"
+        class="mdi mdi-magnify px-4 mdi-24px"
+        for="search-box"
       />
       <span
         v-ripple
-        class="mdi mdi-check mdi-24px px-4"
         aria-label="Click here to search"
+        class="mdi mdi-check mdi-24px px-4"
       />
     </div>
+
+    <transition name="scale-down">
+      <aside v-if="showFallback" class="backdrop" />
+    </transition>
   </section>
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+
 export default {
   name: 'TopActionBar',
+  props: {
+    text: {
+      type: String,
+      default: '',
+      required: false,
+    },
+  },
+  data() {
+    return {
+      showFallback: false,
+      query: this.text || '',
+    }
+  },
+  methods: {
+    async performSearch() {
+      if (this.query.trim().length) {
+        await this.$router.push({
+          path: navigationRoutes.Home.Community.Search,
+          query: {
+            query: this.query,
+          },
+        })
+        this.$refs.search.blur()
+      }
+    },
+  },
 }
 </script>
 
@@ -37,10 +71,12 @@ export default {
 .top-action-bar {
   display: flex;
   align-items: center;
+  position: relative;
 
   .search-box {
     position: relative;
     width: 100%;
+    z-index: $bring-to-front - 1;
 
     $custom-muted: #777;
     $custom-input-border: #333;
@@ -112,6 +148,19 @@ export default {
         }
       }
     }
+  }
+
+  .backdrop {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba($nav-bar-bg, 0.8);
+    backdrop-filter: blur(1px);
+    z-index: $bring-to-front - 10;
   }
 }
 </style>
