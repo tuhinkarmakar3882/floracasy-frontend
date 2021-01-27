@@ -1,6 +1,9 @@
 <template>
   <div class="community-page">
-    <LazyTopActionBar class="px-4 mt-5 mb-4" />
+    <LazySearchBar
+      class="px-4 mt-5 mb-4"
+      :detail-screen="navigationRoutes.Home.Community.Search"
+    />
 
     <div class="story-updates-container">
       <section class="top-line pl-4">

@@ -6,7 +6,12 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <LazyTopActionBar class="px-4 mt-5 mb-4" :text="$route.query.query" />
+      <LazySearchBar
+        class="px-4 mt-5 mb-4"
+        :text="$route.query.query"
+        :detail-screen="navigationRoutes.Home.Community.Search"
+        use-replace-navigation
+      />
       <pre>{{ $route.query.query }}</pre>
     </template>
   </AppFeel>
