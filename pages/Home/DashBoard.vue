@@ -40,7 +40,7 @@
       class="consume-full-height"
     />
 
-    <InfiniteScrollingBlogLists
+    <LazyInfiniteScrollingBlogLists
       v-else-if="tabNumber === 1"
       :key="tabNumber"
       class="consume-full-height"
@@ -52,19 +52,11 @@
 </template>
 
 <script>
-import CategoriesLineUp from '@/components/global/Home/Dashboard/CategoriesLineUp'
-import InfiniteScrollingBlogLists from '@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'
-import Carousel from '@/components/global/Home/Dashboard/Carousel'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'DashBoard',
-  components: {
-    CategoriesLineUp,
-    InfiniteScrollingBlogLists,
-    Carousel,
-  },
   middleware: 'isAuthenticated',
 
   layout: 'ResponsiveApp',
