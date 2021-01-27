@@ -1,6 +1,6 @@
 <template>
   <div class="community-page">
-    <TopActionBar class="px-4 mt-5 mb-4" />
+    <LazyTopActionBar class="px-4 mt-5 mb-4" />
 
     <div class="story-updates-container">
       <section class="top-line pl-4">
@@ -40,7 +40,7 @@
         </div>
 
         <transition-group name="scale-up" style="display: flex">
-          <Story
+          <LazyStory
             v-for="story in stories"
             :key="story.identifier"
             :story="story"
@@ -66,7 +66,7 @@
       <span class="mdi mdi-earth primary-light" />
       Across The World
     </p>
-    <FetchCommunityPosts />
+    <LazyFetchCommunityPosts />
   </div>
 </template>
 
@@ -77,12 +77,6 @@ import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Community',
-  components: {
-    FetchCommunityPosts: () =>
-      import('@/components/global/Community/FetchCommunityPosts'),
-    TopActionBar: () => import('@/components/global/Community/TopActionBar'),
-    Story: () => import('@/components/global/Community/Story'),
-  },
 
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
