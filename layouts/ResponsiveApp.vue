@@ -85,7 +85,7 @@
         </div>
       </footer>
       <transition name="slide-right">
-        <aside v-if="showFragment">
+        <aside v-if="showFragment" tabindex="0" @click="showFragment = false">
           <CustomListView>
             <template slot="list-items">
               <li
@@ -335,8 +335,11 @@ export default {
       this.showTopBar = true
     },
 
-    openCreateFragment() {
+    async openCreateFragment() {
       this.showFragment = !this.showFragment
+      if (this.showFragment) {
+        await this.$router.push('#createNew')
+      } else await this.$router.back()
     },
   },
 }
