@@ -1,12 +1,12 @@
 <template>
-  <section class="top-action-bar">
+  <section class="search-box-container">
     <div class="search-box">
       <input
         id="search-box"
         ref="search"
         v-model="query"
         autocomplete="off"
-        placeholder="Type here to search"
+        :placeholder="inputPlaceholder"
         type="text"
         @blur="showFallback = false"
         @focusin="showFallback = true"
@@ -14,14 +14,16 @@
         @keyup.enter="performSearch"
       />
       <label
-        aria-label="Type Here to Search for People"
-        class="mdi mdi-magnify px-4 mdi-24px"
+        :aria-label="inputPlaceholder"
+        class="mdi px-4 mdi-24px"
+        :class="prependIcon"
         for="search-box"
       />
       <span
         v-ripple
-        aria-label="Click here to search"
-        class="mdi mdi-check mdi-24px px-4"
+        aria-label="Click here to start searching"
+        class="mdi mdi-24px px-4"
+        :class="searchIcon"
       />
     </div>
 
@@ -32,32 +34,55 @@
 </template>
 
 <script>
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-
 export default {
-  name: 'TopActionBar',
+  name: 'SearchBar',
+
   props: {
+    detailScreen: {
+      type: String,
+      required: true,
+    },
     text: {
       type: String,
       default: '',
-      required: false,
+    },
+    inputPlaceholder: {
+      type: String,
+      default: 'Type here to search',
+    },
+    prependIcon: {
+      type: String,
+      default: 'mdi-magnify',
+    },
+    searchIcon: {
+      type: String,
+      default: 'mdi-check',
+    },
+    useReplaceNavigation: {
+      type: Boolean,
+      default: false,
     },
   },
+
   data() {
     return {
       showFallback: false,
       query: this.text || '',
     }
   },
+
   methods: {
     async performSearch() {
+      const location = {
+        path: this.detailScreen,
+        query: { query: this.query },
+      }
+
       if (this.query.trim().length) {
-        await this.$router.push({
-          path: navigationRoutes.Home.Community.Search,
-          query: {
-            query: this.query,
-          },
-        })
+        this.useReplaceNavigation
+          ? await this.$router.replace(location)
+          : await this.$router.push(location)
+
         this.$refs.search.blur()
       }
     },
@@ -68,7 +93,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.top-action-bar {
+.search-box-container {
   display: flex;
   align-items: center;
   position: relative;
