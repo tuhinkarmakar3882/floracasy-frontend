@@ -222,8 +222,8 @@
                   />
                   <span class="option-name">{{ option.name }}</span>
                   <span
-                    class="mdi mdi-chevron-right arrow-go"
                     :style="{ color: `${option.color}7F` }"
+                    class="mdi mdi-chevron-right arrow-go"
                   />
                 </p>
               </li>
