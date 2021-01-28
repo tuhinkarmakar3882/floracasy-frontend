@@ -101,7 +101,7 @@ export default {
   .search-box {
     position: relative;
     width: 100%;
-    z-index: $bring-to-front - 1;
+    z-index: $bring-to-front - 11;
 
     $custom-muted: #777;
     $custom-input-border: #333;
@@ -185,7 +185,7 @@ export default {
     right: 0;
     background: rgba($nav-bar-bg, 0.8);
     backdrop-filter: blur(1px);
-    z-index: $bring-to-front - 10;
+    z-index: $bring-to-front - 15;
   }
 }
 </style>
