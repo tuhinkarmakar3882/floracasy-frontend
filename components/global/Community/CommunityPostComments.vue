@@ -3,32 +3,34 @@
     <h4 class="px-4">Comments</h4>
 
     <main class="px-4">
-      <section
-        v-for="comment in comments"
-        :key="comment.id"
-        class="comment my-6"
-      >
-        <img :src="comment.user.photoURL" alt="profile-image" />
-        <div class="comment-message-container">
-          <p class="top-line">
-            <span class="username secondary">{{
-              getInitials(comment.user.displayName)
-            }}</span>
-            <span class="timestamp">
-              <span class="mdi mdi-clock-time-nine-outline" />
-              {{ getRelativeTime(comment.createdAt) }}
-            </span>
-          </p>
-          <p class="message-body">{{ comment.message }}</p>
-        </div>
-      </section>
+      <transition-group name="scale-down">
+        <section
+          v-for="comment in comments"
+          :key="comment.id"
+          class="comment my-6"
+        >
+          <img :src="comment.user.photoURL" alt="profile-image" />
+          <div class="comment-message-container">
+            <p class="top-line">
+              <span class="username secondary">{{
+                getInitials(comment.user.displayName)
+              }}</span>
+              <span class="timestamp">
+                <span class="mdi mdi-clock-time-nine-outline" />
+                {{ getRelativeTime(comment.createdAt) }}
+              </span>
+            </p>
+            <p class="message-body">{{ comment.message }}</p>
+          </div>
+        </section>
+      </transition-group>
     </main>
 
     <client-only>
       <div class="pb-8 mb-8">
         <infinite-loading @infinite="infiniteHandler">
           <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />
+            <LoadingIcon class="mt-4 mb-6" />k
             <p class="text-center">Fetching Comments...</p>
           </template>
           <template slot="error">
@@ -49,25 +51,37 @@
         v-if="user"
         :src="user.photoURL"
         alt="profile-image"
-        width="40"
         height="40"
+        width="40"
       />
-      <input
-        v-model="commentMessage"
-        type="text"
-        placeholder="Add a comment..."
-        :disabled="isSendingComment"
+      <div
+        ref="textBox"
+        class="text-box"
+        contenteditable
+        @focusin="showPlaceholder = false"
+        @focusout="showPlaceholder = true"
+        @keyup="updateText"
         @keyup.enter="addComment"
-      />
+      >
+        <transition name="scale-up">
+          <label
+            v-if="commentMessage.length === 0 && showPlaceholder"
+            class="muted"
+          >
+            Type your comment here...
+          </label>
+        </transition>
+      </div>
       <RippleButton
-        :on-click="addComment"
         :disabled="!canSendComment"
         :loading="isSendingComment"
+        :on-click="addComment"
         style="background: transparent !important"
       >
-        <span class="mdi mdi-send" />
+        <span class="mdi mdi-send mdi-36px" />
       </RippleButton>
     </aside>
+
     <pre class="my-4">{{ post }}</pre>
   </div>
 </template>
@@ -97,6 +111,7 @@ export default {
       commentMessage: '',
       isSendingComment: false,
       canSendComment: false,
+      showPlaceholder: true,
     }
   },
 
@@ -108,6 +123,13 @@ export default {
       return (
         new Date(this.post.updatedAt) - new Date(this.post.createdAt) > 5000
       )
+    },
+  },
+
+  watch: {
+    commentMessage(newValue, _) {
+      this.canSendComment = newValue.trim().length > 0
+      console.log(this.canSendComment)
     },
   },
 
@@ -165,6 +187,7 @@ export default {
 
     async addComment() {
       if (this.canSendComment) {
+        console.log('coment sned')
         this.canSendComment = false
         this.isSendingComment = true
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
@@ -172,14 +195,17 @@ export default {
           notificationType: 'info',
           dismissible: true,
         })
+        setTimeout(() => {
+          this.isSendingComment = false
+        }, 2000)
         try {
-          await this.$axios.$post(
-            endpoints.comment_system.createCommentForBlogId,
-            {
-              blogIdentifier: this.$route.params.blogId,
-              message: this.commentMessage,
-            }
-          )
+          // await this.$axios.$post(
+          //   endpoints.comment_system.createCommentForBlogId,
+          //   {
+          //     blogIdentifier: this.$route.params.blogId,
+          //     message: this.commentMessage,
+          //   }
+          // )
           const newComment = {
             id: Date.now(),
             user: {
@@ -210,6 +236,10 @@ export default {
         }
       }
     },
+
+    updateText() {
+      this.commentMessage = this.$refs.textBox.textContent
+    },
   },
 }
 </script>
@@ -218,48 +248,104 @@ export default {
 @import 'assets/all-variables';
 
 .community-post-comments-component {
-  .bottom-area {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 2 * $xx-large-unit;
+  .comment {
     display: flex;
-    align-items: center;
-    background-color: $nav-bar-bg;
-    box-shadow: $up-only-box-shadow;
 
     img {
       width: 2 * $medium-unit;
+      min-width: 2 * $medium-unit;
       height: 2 * $medium-unit;
+      min-height: 2 * $medium-unit;
       object-position: center;
       object-fit: cover;
       border-radius: 50%;
       box-shadow: $default-box-shadow;
     }
 
-    input {
+    .comment-message-container {
+      width: 100%;
+      margin-left: $standard-unit;
+      background-color: darken(#232340, $darken-percentage);
+      padding: $nano-unit $standard-unit $standard-unit;
+      border-radius: $micro-unit;
+      box-shadow: $default-box-shadow;
+
+      .top-line {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $micro-unit;
+
+        .username {
+          font-size: 18px;
+        }
+
+        .timestamp {
+          font-family: $Nunito-Sans;
+          font-size: 14px;
+          color: $muted;
+        }
+      }
+
+      .message-body {
+        font-size: 15px;
+      }
+    }
+  }
+
+  .bottom-area {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-height: 4 * $xxx-large-unit;
+    padding: $micro-unit 0;
+    display: flex;
+    align-items: center;
+    background-color: $nav-bar-bg;
+    box-shadow: $up-only-box-shadow;
+
+    $image-size: 2 * $medium-unit;
+
+    img {
+      min-width: $image-size;
+      width: $image-size;
+      min-height: $image-size;
+      height: $image-size;
+      object-position: center;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: $default-box-shadow;
+      aspect-ratio: 1;
+    }
+
+    .text-box {
       border: 1px solid #4a4a4a;
       background-color: $segment-background;
       width: 100%;
+      word-break: break-all;
       margin: 0 $micro-unit;
-      height: 2 * $medium-unit;
-      padding: 0 $micro-unit;
+      min-height: 2 * $x-large-unit;
+      max-height: 3 * $xxx-large-unit;
+      padding: $micro-unit $milli-unit;
       border-radius: $micro-unit;
+      overflow: scroll;
+      outline: 0 none;
+      display: flex;
+      align-items: center;
 
-      &::placeholder {
-        color: darken($muted, $darken-percentage);
-      }
-
-      &:not(:placeholder-shown) {
+      &:focus(:placeholder-shown) {
         color: $secondary-matte;
         border: 1px solid $secondary-matte;
       }
     }
 
     button {
-      font-size: 26px;
       padding: 0;
       color: $secondary-matte;
+      width: 64px;
+      min-height: 2 * $x-large-unit;
+      height: auto;
     }
   }
 }
