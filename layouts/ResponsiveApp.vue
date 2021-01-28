@@ -492,7 +492,7 @@ export default {
       left: 2 * $xxx-large-unit;
       top: 2 * $x-large-unit;
       bottom: 0;
-      z-index: 1;
+      z-index: $bring-to-front - 10;
       border-top-right-radius: 36px;
       border-bottom-right-radius: 36px;
       background: $segment-background;
@@ -599,7 +599,7 @@ export default {
       position: fixed;
       bottom: 56px;
       left: 0;
-      z-index: 1;
+      z-index: $bring-to-front - 10;
       border-top-left-radius: 36px;
       border-top-right-radius: 36px;
       background: $segment-background;
