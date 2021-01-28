@@ -12,7 +12,7 @@ export default async ({ store, $cookies }) => {
       'NotificationChannel/getNotificationChannelId'
     ]
     // eslint-disable-next-line
-    const endpoint = `${secrets.websocketBaseUrl}notification_socket/${notificationChannelId}/?access=${$cookies.get('access')}`
+    const endpoint = `${secrets.notificationWebsocketBase}notification_socket/${notificationChannelId}/?access=${$cookies.get('access')}`
 
     const connectionOptions = {
       maxReconnectionDelay: 10000,
