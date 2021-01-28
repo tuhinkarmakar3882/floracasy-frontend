@@ -56,8 +56,7 @@ const endpoints = {
     send: '/allow_authenticated/message_system/send/',
     threadDetail: '/allow_authenticated/message_system/threadDetail/',
 
-    markAsRead:
-      '/allow_authenticated/message_system/updateNotificationSeenStatus/',
+    markAsRead: '/allow_authenticated/message_system/markAsRead/',
     getMailBoxId: '/allow_authenticated/message_system/getMailBoxId/',
   },
   feedback_collection: {
