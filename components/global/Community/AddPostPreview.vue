@@ -1,47 +1,7 @@
 <template>
-  <section class="add-a-post-preview px-4">
-    <p class="py-6" style="font-size: 14px">
-      <span class="mdi mdi-plus-circle primary-light" />
-      Create new Post
-    </p>
-
-    <div class="header mb-6">
-      <transition name="scale-down">
-        <img
-          v-if="isReady"
-          alt="display-image"
-          height="52"
-          :src="user.photoURL"
-          width="52"
-        />
-      </transition>
-
-      <transition name="scale-down">
-        <section v-if="isReady" class="user-details ml-4">
-          <p class="secondary">{{ user.displayName }}</p>
-          <small v-if="user.designation">{{ user.designation }} </small>
-        </section>
-      </transition>
-
-      <button v-ripple class="vibrant-outlined-btn">New Post</button>
-    </div>
-
-    <p class="body py-5 text-center">What's on your mind?</p>
-
-    <div class="actions mt-4">
-      <p>
-        <span class="mdi mdi-image mdi-24px secondary mr-2" />
-        Photos
-      </p>
-      <p>
-        <span class="mdi mdi-headphones mdi-24px secondary mr-2" />
-        Audio
-      </p>
-      <p>
-        <span class="mdi mdi-emoticon mdi-24px secondary mr-2" />
-        Mood
-      </p>
-    </div>
+  <section class="add-post-preview px-4 py-6 white">
+    <span class="mdi mdi-pencil-box-multiple-outline mdi-24px mr-3" />
+    <p>Share your thoughts or photos or voice</p>
   </section>
 </template>
 
