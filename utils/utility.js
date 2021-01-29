@@ -21,6 +21,8 @@
 //   },
 // })
 
+import error from '~/layouts/error'
+
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -57,11 +59,21 @@ export const showUITip = async (
   type = 'info',
   dismissible = true
 ) => {
+  if (store === undefined) throw new Error('No State Found')
   await store.dispatch('SocketHandler/updateSocketMessage', {
     message,
     notificationType: type || 'info',
     dismissible,
   })
+}
+
+export const setupUser = async (store) => {
+  if (store === undefined) throw new Error('No State Found')
+
+  const currentUser = await store.getters['UserManagement/getUser']
+  if (!currentUser) {
+    await store.dispatch('UserManagement/fetchData')
+  }
 }
 
 export const parseTimeUsingStandardLibrary = (timeString) => {
