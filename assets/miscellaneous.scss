@@ -21,21 +21,21 @@ html {
   line-height: 1.5;
   overflow-x: hidden;
 
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: lighten($card-background, 10%);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: darken($secondary-matte, 20%);
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: $secondary-matte;
-  }
+  //&::-webkit-scrollbar {
+  //  width: 6px;
+  //}
+  //
+  //&::-webkit-scrollbar-track {
+  //  background: lighten($card-background, 10%);
+  //}
+  //
+  //&::-webkit-scrollbar-thumb {
+  //  background: darken($secondary-matte, 20%);
+  //}
+  //
+  //&::-webkit-scrollbar-thumb:hover {
+  //  background: $secondary-matte;
+  //}
 
   body {
     background: $body-background;
