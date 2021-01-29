@@ -25,8 +25,8 @@
           <em>
             {{ getRelativeTime(post.createdAt) }}
           </em>
-          <span v-if="isEdited" class="dot ml-2 mr-1" />
-          <span v-if="isEdited" class="mdi muted">Edited </span>
+          <!--          <span v-if="isEdited" class="dot ml-2 mr-1" />-->
+          <!--          <span v-if="isEdited" class="mdi muted">Edited </span>-->
         </small>
       </div>
       <i
