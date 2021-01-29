@@ -82,8 +82,6 @@
         <span class="mdi mdi-send mdi-36px" />
       </RippleButton>
     </aside>
-
-    <pre class="my-4">{{ post }}</pre>
   </div>
 </template>
 
