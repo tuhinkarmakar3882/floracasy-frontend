@@ -3,6 +3,7 @@
     <h4 class="px-4">Comments</h4>
 
     <main class="px-4">
+      <span ref="commentStart" />
       <transition-group name="scale-down">
         <section
           v-for="comment in comments"
@@ -28,7 +29,7 @@
 
     <client-only>
       <div class="pb-8 mb-8">
-        <infinite-loading @infinite="infiniteHandler">
+        <infinite-loading @infinite="fetchComments">
           <template slot="spinner">
             <LoadingIcon class="mt-4 mb-6" />k
             <p class="text-center">Fetching Comments...</p>
@@ -87,7 +88,13 @@
 </template>
 
 <script>
-import { getRelativeTime, processLink, shorten } from '@/utils/utility'
+import {
+  getRelativeTime,
+  processLink,
+  setupUser,
+  shorten,
+  showUITip,
+} from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
@@ -107,7 +114,7 @@ export default {
     return {
       navigationRoutes,
       comments: [],
-      fetchCommentsEndpoint: endpoints.comment_system.fetchByBlogId,
+      fetchCommentsEndpoint: endpoints.comment_system.post.fetch,
       commentMessage: '',
       isSendingComment: false,
       canSendComment: false,
@@ -129,37 +136,18 @@ export default {
   watch: {
     commentMessage(newValue, _) {
       this.canSendComment = newValue.trim().length > 0
-      console.log(this.canSendComment)
     },
   },
 
   async mounted() {
-    await this.setupUser()
+    await setupUser(this.$store)
   },
 
   methods: {
     shorten,
     getRelativeTime,
 
-    async viewPostDetails() {
-      await this.$router.push(
-        navigationRoutes.Home.Community.Posts.detail.replace(
-          '{postIdentifier}',
-          this.post.identifier
-        )
-      )
-    },
-
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-
-    async infiniteHandler($state) {
-      await this.setupUser()
+    async fetchComments($state) {
       if (!this.fetchCommentsEndpoint) {
         $state.complete()
         return
@@ -167,7 +155,7 @@ export default {
       try {
         const { results, next } = await this.$axios.$get(
           this.fetchCommentsEndpoint,
-          { params: { blogIdentifier: this.$route.params.blogId } }
+          { params: { postIdentifier: this.post.identifier } }
         )
         if (results.length) {
           this.fetchCommentsEndpoint = processLink(next)
@@ -185,56 +173,48 @@ export default {
       return name.split(' ')[0]
     },
 
+    async sendComment() {
+      try {
+        await this.$axios.$post(endpoints.comment_system.post.create, {
+          postIdentifier: this.post.identifier,
+          message: this.commentMessage,
+        })
+
+        const newComment = {
+          id: Date.now(),
+          user: {
+            photoURL: this.user.photoURL,
+            displayName: this.user.displayName,
+          },
+          createdAt: Date.now(),
+          message: this.commentMessage,
+        }
+        this.comments.unshift(newComment)
+
+        this.clearCommentInput()
+        this.$refs.commentStart.scrollIntoView()
+
+        await showUITip(this.$store, 'Comment Added', 'success')
+      } catch (e) {
+        await showUITip(this.$store, 'Network Error', 'error')
+      } finally {
+        this.isSendingComment = false
+      }
+    },
+
     async addComment() {
       if (this.canSendComment) {
-        console.log('coment sned')
         this.canSendComment = false
         this.isSendingComment = true
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Adding Comment...',
-          notificationType: 'info',
-          dismissible: true,
-        })
-        setTimeout(() => {
-          this.isSendingComment = false
-        }, 2000)
-        try {
-          // await this.$axios.$post(
-          //   endpoints.comment_system.createCommentForBlogId,
-          //   {
-          //     blogIdentifier: this.$route.params.blogId,
-          //     message: this.commentMessage,
-          //   }
-          // )
-          const newComment = {
-            id: Date.now(),
-            user: {
-              photoURL: this.user.photoURL,
-              displayName: this.user.displayName,
-            },
-            createdAt: Date.now(),
-            message: this.commentMessage,
-          }
 
-          this.comments.unshift(newComment)
-          this.commentMessage = ''
-          this.isSendingComment = false
+        await showUITip(this.$store, 'Adding Comment...', 'info')
 
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Comment Added',
-            notificationType: 'success',
-            dismissible: true,
-          })
-          this.$refs.commentStart.scrollIntoView()
-        } catch (e) {
-          this.isSendingComment = false
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Failed to Add Comment. Please Retry',
-            notificationType: 'error',
-            dismissible: true,
-          })
-        }
+        await this.sendComment()
       }
+    },
+
+    clearCommentInput() {
+      this.commentMessage = ''
     },
 
     updateText() {
