@@ -160,7 +160,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { setupUser, showUITip } from '~/utils/utility'
 
 const commonStyles = {
   minHeight: '100px',
@@ -203,11 +203,6 @@ export default {
 
       moodIconOptions: ['mdi-party-popper', 'mdi-emoticon-cool'],
       customStyleOptions: [
-        {
-          ...commonStyles,
-          background: 'linear-gradient(to right, #CC2B5E, #753A88)',
-          color: 'white',
-        },
         {
           ...commonStyles,
           background: 'linear-gradient(to right, #D9A7C7, #FFFCDC)',
@@ -306,19 +301,12 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await this.setupUser()
+    await setupUser(this.$store)
 
     this.isReady = true
   },
 
   methods: {
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
     updateText() {
       this.postBody = document.getElementById('post-body').textContent
     },

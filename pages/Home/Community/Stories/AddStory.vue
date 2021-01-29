@@ -317,11 +317,6 @@ export default {
         customStyleOptions: [
           {
             ...commonStyles,
-            background: 'linear-gradient(to right, #CC2B5E, #753A88)',
-            color: 'white',
-          },
-          {
-            ...commonStyles,
             background: 'linear-gradient(to right, #D9A7C7, #FFFCDC)',
           },
           {
@@ -781,10 +776,10 @@ export default {
     }
 
     .active-tab {
-      color: $secondary;
-      font-weight: 400;
-      background: $card-background;
-      transition: all 100ms ease-in-out;
+      color: $white;
+      font-weight: 500;
+      background: $active-gradient;
+      transition: all 0.1s ease-in-out;
     }
   }
 

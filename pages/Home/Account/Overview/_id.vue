@@ -129,7 +129,7 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink } from '~/utils/utility'
+import { getRelativeTime, processLink, setupUser } from '~/utils/utility'
 import RippleButton from '~/components/global/RippleButton'
 
 export default {
@@ -168,7 +168,7 @@ export default {
       linkPosition: -1,
     })
 
-    await this.setupUser()
+    await setupUser(this.$store)
 
     if (this.$route.params.id === this.user.uid) {
       await this.$router.replace(navigationRoutes.Home.Account.Details)
@@ -196,14 +196,6 @@ export default {
 
   methods: {
     getRelativeTime,
-
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
 
     async infiniteHandler($state) {
       if (!this.userBlogEndpoint) {

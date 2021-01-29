@@ -77,6 +77,7 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
+import { setupUser } from '~/utils/utility'
 
 export default {
   name: 'Community',
@@ -106,19 +107,12 @@ export default {
       linkPosition: -1,
     })
 
-    await this.setupUser()
+    await setupUser(this.$store)
     this.isReady = true
     await this.fetchStories()
   },
 
   methods: {
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
     async fetchStories() {
       try {
         const { results } = await this.$axios.$get(

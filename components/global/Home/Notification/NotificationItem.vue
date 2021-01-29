@@ -33,15 +33,19 @@
         </template>
 
         <template slot="body">
-          <section v-if="notification.onclickAction === 'open_comment_page'">
-            <blockquote v-if="message">{{ message }}</blockquote>
+          <section
+            v-if="notification.onclickAction === 'open_blog_comment_page'"
+          >
+            <blockquote v-if="message">&ldquo;{{ message }}&rdquo;</blockquote>
             <LoadingIcon v-else />
           </section>
         </template>
 
         <template slot="actions">
           <!--          Comment Notification Actions-->
-          <section v-if="notification.onclickAction === 'open_comment_page'">
+          <section
+            v-if="notification.onclickAction === 'open_blog_comment_page'"
+          >
             <button
               v-ripple=""
               class="primary-outlined-btn my-4 mx-2"
@@ -153,7 +157,7 @@ export default {
           await this.openProfilePage('followerUID')
           break
 
-        case 'open_comment_page':
+        case 'open_blog_comment_page':
           await this.openModal()
           break
 
@@ -211,7 +215,7 @@ export default {
     },
     async getCommentMessage({ commentIdentifier }) {
       const { message } = await this.$axios.$get(
-        endpoints.comment_system.detail.replace(
+        endpoints.comment_system.blog.detail.replace(
           '{identifier}',
           commentIdentifier
         )

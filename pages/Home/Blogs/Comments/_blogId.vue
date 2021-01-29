@@ -132,7 +132,7 @@ import endpoints from '@/api/endpoints'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import { getRelativeTime, processLink } from '@/utils/utility'
+import { getRelativeTime, processLink, setupUser } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/global/RippleButton'
 
@@ -155,7 +155,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Comments',
       comments: [],
-      fetchCommentsEndpoint: endpoints.comment_system.fetchByBlogId,
+      fetchCommentsEndpoint: endpoints.comment_system.blog.fetch,
       commentMessage: '',
       isSendingComment: false,
       canSendComment: false,
@@ -174,10 +174,6 @@ export default {
     },
   },
 
-  async created() {
-    await this.setupUser()
-  },
-
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: -1,
@@ -185,21 +181,13 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await this.setupUser()
+    await setupUser(this.$store)
   },
 
   methods: {
     getRelativeTime,
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
 
     async infiniteHandler($state) {
-      await this.setupUser()
       if (!this.fetchCommentsEndpoint) {
         $state.complete()
         return
@@ -235,13 +223,10 @@ export default {
           dismissible: true,
         })
         try {
-          await this.$axios.$post(
-            endpoints.comment_system.createCommentForBlogId,
-            {
-              blogIdentifier: this.$route.params.blogId,
-              message: this.commentMessage,
-            }
-          )
+          await this.$axios.$post(endpoints.comment_system.blog.create, {
+            blogIdentifier: this.$route.params.blogId,
+            message: this.commentMessage,
+          })
           const newComment = {
             id: Date.now(),
             user: {

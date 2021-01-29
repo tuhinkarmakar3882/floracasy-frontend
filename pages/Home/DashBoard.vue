@@ -54,6 +54,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { setupUser } from '~/utils/utility'
 
 export default {
   name: 'DashBoard',
@@ -111,17 +112,9 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await this.setupUser()
+    await setupUser(this.$store)
   },
   methods: {
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-
     changeTab(newTabNumber) {
       window.scrollTo(0, 0)
       this.tabNumber = newTabNumber
@@ -165,10 +158,10 @@ $blog-border-radius: 20px;
     }
 
     .active-tab {
-      color: $secondary;
-      font-weight: 400;
-      background: $card-background;
-      transition: all 100ms ease-in-out;
+      color: $white;
+      font-weight: 500;
+      background: $active-gradient;
+      transition: all 0.1s ease-in-out;
     }
   }
 

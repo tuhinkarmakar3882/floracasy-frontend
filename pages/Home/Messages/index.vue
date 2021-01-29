@@ -95,17 +95,7 @@ export default {
       return countValue > 99 ? `${countValue.toString()}+` : countValue
     },
 
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-
     async infiniteHandler($state) {
-      await this.setupUser()
-
       if (!this.fetchThreads) {
         $state.complete()
         return

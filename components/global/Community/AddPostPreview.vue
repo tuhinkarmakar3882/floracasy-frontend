@@ -7,6 +7,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { setupUser } from '~/utils/utility'
 
 export default {
   name: 'AddPostPreview',
@@ -23,19 +24,11 @@ export default {
     }),
   },
   async mounted() {
-    await this.setupUser()
+    await setupUser(this.$store)
     this.isReady = true
   },
 
-  methods: {
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-  },
+  methods: {},
 }
 </script>
 
