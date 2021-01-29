@@ -1,6 +1,6 @@
 <template>
-  <AppFeel custom-header class="chat-screen-page" on-back="/">
-    <template slot="app-bar-custom-header">
+  <AppFeel class="chat-screen-page" custom-header on-back="/">
+    <template v-slot:app-bar-custom-header>
       <h5
         v-ripple
         class="px-5 mdi mdi-arrow-left"
@@ -14,41 +14,23 @@
       <p>{{ threadDetail ? threadDetail.name : pageTitle }}</p>
     </template>
 
-    <template slot="main">
-      <main class="px-4 pb-8 mb-8">
-        <MessageItem
-          v-for="chatMessage in chatMessages"
-          :key="chatMessage.id"
-          class="chatMessage my-6"
-          :chat-message="chatMessage"
-          :message-type="chatMessage.messageType"
-        />
-      </main>
-
-      <section class="bottom-area px-4">
-        <img v-if="user" :src="user.photoURL" alt="profile-image" />
-        <input
-          ref="textMessageInput"
-          v-model="textMessage"
-          type="text"
-          placeholder="Type your message here"
-          :disabled="isSendingMessage"
-          autocomplete="off"
-          autofocus
-          @keyup.enter="sendMessage"
-        />
-        <RippleButton
-          :on-click="sendMessage"
-          :disabled="!canSendMessage"
-          :loading="isSendingMessage"
-          style="background: transparent !important"
-        >
-          <span class="mdi mdi-send" />
-        </RippleButton>
-      </section>
-
+    <template v-slot:main>
       <client-only>
-        <infinite-loading @infinite="infiniteHandler">
+        <!-- add a special attribute for the real scroll wrapper -->
+        <!--        <div infinite-wrapper>-->
+        <!--           set force-use-infinite-wrapper -->
+        <!--          <infinite-loading force-use-infinite-wrapper />-->
+        <!--        </div>-->
+        <!--        <div class="infinite-wrapper">-->
+        <!-- set force-use-infinite-wrapper as css selector of the real scroll wrapper -->
+        <!--          <infinite-loading force-use-infinite-wrapper=".infinite-wrapper" />-->
+        <!--        </div>-->
+
+        <infinite-loading
+          direction="top"
+          force-use-infinite-wrapper=".infinite-wrapper"
+          @infinite="infiniteHandler"
+        >
           <template slot="spinner">
             <LoadingIcon class="mt-4 mb-6" />
             <p class="text-center">Loading Messages...</p>
@@ -64,6 +46,40 @@
           </template>
         </infinite-loading>
       </client-only>
+
+      <main class="px-4 pb-8 mb-8 in">
+        <MessageItem
+          v-for="chatMessage in chatMessages"
+          :key="chatMessage.id"
+          :chat-message="chatMessage"
+          :message-type="chatMessage.messageType"
+          class="chatMessage my-6 infinite-wrapper"
+        />
+      </main>
+    </template>
+
+    <template v-slot:footer>
+      <section class="bottom-area px-4">
+        <img v-if="user" :src="user.photoURL" alt="profile-image" />
+        <input
+          ref="textMessageInput"
+          v-model="textMessage"
+          :disabled="isSendingMessage"
+          autocomplete="off"
+          autofocus
+          placeholder="Type your message here"
+          type="text"
+          @keyup.enter="sendMessage"
+        />
+        <RippleButton
+          :disabled="!canSendMessage"
+          :loading="isSendingMessage"
+          :on-click="sendMessage"
+          style="background: transparent !important"
+        >
+          <span class="mdi mdi-send" />
+        </RippleButton>
+      </section>
     </template>
   </AppFeel>
 </template>
@@ -78,7 +94,7 @@ import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import MessageItem from '@/components/global/MessageItem.vue'
 import endpoints from '~/api/endpoints'
-import { processLink } from '~/utils/utility'
+import { processLink, setupUser } from '~/utils/utility'
 
 export default {
   scrollToTop: false,
@@ -117,10 +133,6 @@ export default {
     },
   },
 
-  async created() {
-    await this.setupUser()
-  },
-
   async mounted() {
     window.scrollTo(0, document.body.scrollHeight)
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
@@ -129,7 +141,8 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await this.setupUser()
+
+    await setupUser(this.$store)
 
     this.threadDetail = await this.$axios.$get(
       endpoints.chat_system.threadDetail,
@@ -142,7 +155,7 @@ export default {
     )
 
     // eslint-disable-next-line
-    const chatSocketUrl = `${secrets.websocketBaseUrl}chat_system_socket/${mailBoxId}/?access=${this.$cookies.get('access')}`
+    const chatSocketUrl = `${secrets.messageWebsocketBase}chat_system_socket/${mailBoxId}/?access=${this.$cookies.get('access')}`
 
     const connectionOptions = {
       maxReconnectionDelay: 10000,
@@ -151,6 +164,7 @@ export default {
       minUptime: 5000,
       connectionTimeout: 4000,
       maxEnqueuedMessages: 50,
+      maxRetries: 0,
     }
 
     this.chatSocket = new ReconnectingWebSocket(
@@ -159,9 +173,12 @@ export default {
       connectionOptions
     )
 
-    this.chatSocket.onopen = () => {}
+    this.chatSocket.onopen = () => {
+      console.log('socket ready')
+    }
 
     this.chatSocket.onmessage = async (e) => {
+      console.log(e)
       const data = JSON.parse(e.data)
       const newMessage = {
         user: {
@@ -186,26 +203,23 @@ export default {
   },
 
   beforeDestroy() {
-    this.chatSocket.close()
+    // this.chatSocket.close()
   },
 
   methods: {
     async resetUnreadCount() {
-      await this.$axios.$post(endpoints.chat_system.markAsRead, {
-        thread_id: this.$route.params.messageThreadId,
-      })
-    },
-
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
+      await this.$axios.$post(
+        endpoints.chat_system.markAsRead,
+        {
+          thread_id: this.$route.params.messageThreadId,
+        },
+        {
+          withCredentials: true,
+        }
+      )
     },
 
     async infiniteHandler($state) {
-      await this.setupUser()
       if (!this.fetchMessages) {
         $state.complete()
         return
@@ -216,16 +230,18 @@ export default {
             thread_id: this.$route.params.messageThreadId,
           },
         })
-        // console.log(results)
+        console.log(results)
         if (results.length) {
           this.fetchMessages = processLink(next)
-          this.chatMessages.push(...results)
+          this.chatMessages.unshift(...results)
           $state.loaded()
         } else {
           $state.complete()
         }
       } catch (e) {
         $state.complete()
+      } finally {
+        window.scrollTo(0, 56)
       }
     },
 
