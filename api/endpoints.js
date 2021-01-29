@@ -12,19 +12,17 @@ const endpoints = {
   blog: {
     fetch: '/allow_authenticated/blog/fetch/',
     info: '/allow_authenticated/blog/info/',
-
-    updateViewCount: '/allow_authenticated/blog/updateViewCount/{identifier}/',
+    detail: '/allow_any/blog/detail/',
 
     create: '/allow_authenticated/blog/create/',
-    detail: '/allow_any/blog/detail/',
 
     like: '/allow_authenticated/blog/like/',
     share: '/allow_authenticated/blog/share/',
 
-    getBlogsByUid: '/allow_authenticated/blog/get_blogs_by_uid/',
+    getBlogsByUid: '/allow_authenticated/blog/fetch/by_uid/',
+    getSavedBlogs: '/allow_authenticated/blog/saved/fetch/',
 
-    getSavedBlogs: '/allow_authenticated/blog/get_saved_blogs/',
-
+    updateViewCount: '/allow_authenticated/blog/updateViewCount/{identifier}/',
     addOrRemoveToSaveBlogs:
       '/allow_authenticated/blog/add_or_remove_to_save_blogs/',
   },
@@ -32,10 +30,16 @@ const endpoints = {
     fetch: '/allow_any/categories/fetch/',
   },
   comment_system: {
-    fetchByBlogId: '/allow_authenticated/comment_system/fetchByBlogId/',
-    detail: '/allow_authenticated/comment_system/detail/{identifier}/',
-    createCommentForBlogId:
-      '/allow_authenticated/comment_system/createCommentForBlogId/',
+    blog: {
+      fetch: '/allow_authenticated/comment_system/blog/fetch/',
+      create: '/allow_authenticated/comment_system/blog/create/',
+      detail: '/allow_authenticated/comment_system/detail/Blog/{identifier}/',
+    },
+    post: {
+      fetch: '/allow_authenticated/comment_system/post/fetch/',
+      create: '/allow_authenticated/comment_system/post/create/',
+      detail: '/allow_authenticated/comment_system/detail/Post/{identifier}/',
+    },
   },
   community_service: {
     stories: '/allow_authenticated/community_service/stories/',
