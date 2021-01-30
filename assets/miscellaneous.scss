@@ -16,7 +16,7 @@ $material-textInputPaddingTopBottom: $milli-unit;
 html {
   scroll-behavior: smooth;
   transition: all .5s ease-in-out;
-  font-family: $Nunito;
+  font-family: $Nunito-Sans;
   letter-spacing: 1px;
   line-height: 1.5;
   overflow-x: hidden;
@@ -217,7 +217,7 @@ html {
     }
 
     .material-form-field {
-      font-family: $Roboto;
+      font-family: $Nunito-Sans;
       font-size: $standard-unit;
       position: relative;
       display: block;
