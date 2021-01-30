@@ -4,12 +4,12 @@
 >  - Add ticket Details Page
 
 > ### Community:
->   - Add Post Details Page
+>   - ~~Add Post Details Page~~
 >   - Add Story Details Page
 >   - Add View All Story Page
 >   - Add Story Like Feature
 >   - Add Post Share Feature
->   - Post Comments
+>   - ~~Post Comments~~
 >   - Story Preview
 
 > ### Follow System:
@@ -21,7 +21,7 @@
 
 > ### Message System
 >   - Add Chat Message Screen
->   - Add Realtime Delivery
+>   - ~~Add Realtime Delivery~~
 
 > ### Miscellaneous
 >   - Frontend Polish
