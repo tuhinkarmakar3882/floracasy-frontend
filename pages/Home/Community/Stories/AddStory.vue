@@ -777,7 +777,7 @@ export default {
 
     .active-tab {
       color: $white;
-      font-weight: 500;
+      font-weight: 400;
       background: $active-gradient;
       transition: all 0.1s ease-in-out;
     }

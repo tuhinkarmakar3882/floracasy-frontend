@@ -300,7 +300,7 @@ export default {
       grid-template-columns: repeat(3, 1fr);
       justify-content: space-around;
       align-items: center;
-      font-family: $Nunito;
+      font-family: $Nunito-Sans;
 
       .item {
         p {

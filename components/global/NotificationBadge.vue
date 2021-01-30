@@ -115,8 +115,9 @@ export default {
   align-items: center;
 
   p {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px !important;
+    font-family: $Nunito-Sans;
   }
 
   span {

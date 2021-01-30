@@ -167,7 +167,7 @@ export default {
           font-size: $medium-unit;
 
           .amount {
-            font-weight: 500;
+            font-weight: 400;
             filter: drop-shadow($right-only-box-shadow);
           }
         }

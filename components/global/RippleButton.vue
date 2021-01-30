@@ -47,13 +47,6 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-button {
-  min-height: auto;
-  height: auto;
-  width: auto;
-  min-width: auto;
-}
-
 .loading-animation {
   margin-left: auto;
   margin-right: auto;
