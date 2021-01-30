@@ -64,7 +64,7 @@ export default {
   .user-details {
     p {
       font-size: 1.2rem;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     small {

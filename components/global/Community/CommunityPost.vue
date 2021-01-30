@@ -22,11 +22,10 @@
           </nuxt-link>
         </p>
         <small>
-          <em>
-            {{ getRelativeTime(post.createdAt) }}
-          </em>
-          <!--          <span v-if="isEdited" class="dot ml-2 mr-1" />-->
+          <span class="mdi mdi-clock-outline mr-1" />
+          <em>{{ getRelativeTime(post.createdAt) }}</em>
           <!--          <span v-if="isEdited" class="mdi muted">Edited </span>-->
+          <!--          <span v-if="isEdited" class="dot ml-2 mr-1" />-->
         </small>
       </div>
       <i
@@ -39,18 +38,9 @@
     <transition name="gray-shift">
       <div v-if="showOptions" class="options">
         <ul>
-          <li
-            v-for="(optionItem, index) in dropdownOptionItems"
-            :key="index"
-            v-ripple="`${optionItem.color}5F`"
-            class="py-2 px-6"
-          >
-            <span
-              :class="optionItem.icon"
-              :style="{ color: optionItem.color }"
-              class="icon mdi"
-            />
-            {{ optionItem.text }}
+          <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportPost">
+            <span class="icon mdi mdi-alert-octagon danger-light" />
+            Report Post
           </li>
           <li class="my-0 py-2 px-4" style="display: block">
             <hr class="my-0" style="background-color: #464646" />
@@ -80,6 +70,10 @@
       </p>
 
       <img v-if="post.image" :src="post.image" alt="image" class="mt-4" />
+
+      <audio v-if="post.audio" :src="post.audio" class="mt-4 mx-auto" controls>
+        <source :src="post.audio" type="audio/mp3" />
+      </audio>
     </section>
 
     <hr class="faded-divider mt-2 mb-0" />
@@ -154,22 +148,7 @@ export default {
     return {
       navigationRoutes,
       showOptions: false,
-      dropdownOptionItems: [
-        {
-          text: 'Report Post',
-          icon: 'mdi-alert-octagon',
-          color: '#ff8282',
-        },
-      ],
     }
-  },
-
-  computed: {
-    isEdited() {
-      return (
-        new Date(this.post.updatedAt) - new Date(this.post.createdAt) > 5000
-      )
-    },
   },
 
   methods: {
@@ -228,6 +207,16 @@ export default {
         await showUITip(this.$store, 'Feature Not Supported', 'warning')
       }
     },
+
+    async reportPost() {
+      await this.$router.push({
+        path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
+        query: {
+          type: 'Post',
+          identifier: this.post.identifier,
+        },
+      })
+    },
   },
 }
 </script>
@@ -266,7 +255,7 @@ export default {
 
     .details {
       p {
-        font-weight: 500;
+        font-weight: 400;
         line-height: 23px;
         margin-bottom: 0.5rem;
       }
