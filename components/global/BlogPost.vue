@@ -53,18 +53,9 @@
               />
               {{ !blog.isSavedForLater ? 'Save for later' : 'Saved' }}
             </li>
-            <li
-              v-for="(optionItem, index) in dropdownOptionItems"
-              :key="index"
-              v-ripple="`${optionItem.color}5F`"
-              class="py-2 px-6"
-            >
-              <span
-                class="icon mdi"
-                :class="optionItem.icon"
-                :style="{ color: optionItem.color }"
-              />
-              {{ optionItem.text }}
+            <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportBlog">
+              <span class="icon mdi mdi-alert-octagon danger-light" />
+              Report Blog
             </li>
             <li class="my-0 py-2 px-4" style="display: block">
               <hr style="background-color: #464646" class="my-0" />
@@ -159,13 +150,6 @@ export default {
   data() {
     return {
       navigationRoutes,
-      dropdownOptionItems: [
-        {
-          text: 'Report Blog',
-          icon: 'mdi-alert-octagon',
-          color: '#ff8282',
-        },
-      ],
       showOptions: false,
     }
   },
@@ -240,6 +224,16 @@ export default {
       } catch (e) {
         await showUITip(this.$store, 'Network Error', 'error')
       }
+    },
+
+    async reportBlog() {
+      await this.$router.push({
+        path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
+        query: {
+          type: 'Blog',
+          identifier: this.blog.identifier,
+        },
+      })
     },
   },
 }
