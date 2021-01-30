@@ -2,6 +2,7 @@
 
 > ### Help & Support:
 >  - Add ticket Details Page
+>  - Add Dynamic Contact Support Page
 
 > ### Community:
 >   - ~~Add Post Details Page~~

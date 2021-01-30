@@ -46,6 +46,7 @@
           <LazyStory
             v-for="story in stories"
             :key="story.identifier"
+            v-ripple
             :story="story"
             class="px-4 py-2"
           />

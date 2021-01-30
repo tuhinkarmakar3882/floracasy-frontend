@@ -1,6 +1,6 @@
 <template>
   <div class="story-component">
-    <main v-ripple class="story">
+    <main class="story">
       <section class="wrapper mb-4">
         <img
           :alt="story.user.photoURL"
