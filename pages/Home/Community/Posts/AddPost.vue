@@ -10,9 +10,11 @@
       <button
         v-ripple
         :class="
-          postBody.trim().length > 10 ? 'vibrant-outlined-btn' : 'disabled-btn'
+          hasText || hasImage || hasAudio
+            ? 'vibrant-outlined-btn'
+            : 'disabled-btn'
         "
-        :disabled="!hasText || !hasImage || !hasAudio"
+        :disabled="!hasText && !hasImage && !hasAudio"
         style="min-width: auto"
         @click="createPost"
       >
@@ -310,40 +312,60 @@ export default {
     updateText() {
       this.postBody = document.getElementById('post-body').textContent
     },
-    generatePayload() {
-      const payload = new FormData()
-      payload.append('body', this.postBody)
-      payload.append('style', this.customStyle)
-      payload.append('mood', this.moodIcon)
+    loadAudioPreview(event) {
+      this.hasAudio = false
+      const file = event.target.files[0]
 
-      this.postImage.source &&
-        payload.append(
-          'image',
-          this.postImage.output,
-          this.postImage.output?.name
-        )
+      this.postAudio.output = file
+      this.postAudio.source = URL.createObjectURL(file)
+      this.hasAudio = true
+    },
 
-      this.postAudio.source &&
-        payload.append(
-          'audio',
-          this.postAudio.output,
-          this.postAudio.output?.name
-        )
+    async generatePayload() {
+      const payload = {
+        body: this.postBody,
+        style: this.customStyle,
+        mood: this.moodIcon,
+      }
+
+      if (this.postImage.source) {
+        await showUITip(this.$store, 'Uploading Image')
+        const data = new FormData()
+        data.append('image', this.postImage.output, this.postImage.output?.name)
+
+        payload.imageID = await this.$axios
+          .$post(endpoints.upload_handler_system.upload_image, data)
+          .then((response) => response.identifier)
+          .catch(async () => {
+            await showUITip(this.$store, 'Image Upload Failed', 'error')
+          })
+      }
+
+      if (this.postAudio.source) {
+        await showUITip(this.$store, 'Uploading Audio')
+        const data = new FormData()
+        data.append('audio', this.postAudio.output, this.postAudio.output?.name)
+
+        payload.audioID = await this.$axios
+          .$post(endpoints.upload_handler_system.upload_audio, data)
+          .then((response) => response.identifier)
+          .catch(async () => {
+            await showUITip(this.$store, 'Audio Upload Failed', 'error')
+          })
+      }
       return payload
     },
 
     async createPost() {
-      const payload = this.generatePayload()
+      const payload = await this.generatePayload()
       try {
         await this.$axios.$post(
           endpoints.community_service.posts.index,
           payload
         )
         await this.$router.replace(navigationRoutes.Home.Community.index)
-
         await showUITip(this.$store, 'Post Added!', 'success')
       } catch (e) {
-        console.error(e)
         await showUITip(this.$store, 'Something Went Wrong', 'error')
       }
     },
@@ -362,15 +384,6 @@ export default {
       this.postImage.output = await imageCompression(file, options)
       this.postImage.source = URL.createObjectURL(file)
       this.hasImage = true
-    },
-
-    loadAudioPreview(event) {
-      this.hasAudio = false
-      const file = event.target.files[0]
-
-      this.postAudio.output = file
-      this.postAudio.source = URL.createObjectURL(file)
-      this.hasAudio = true
     },
 
     openPhotoPicker() {
@@ -486,7 +499,7 @@ export default {
     .user-details {
       p {
         font-size: 1.2rem;
-        font-weight: 500;
+        font-weight: 400;
       }
 
       small {
