@@ -6,9 +6,34 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <section class="px-4 my-4">
+      <section v-if="$route.query.type === 'Post'" class="px-4 my-4">
         <h5 class="heading-title">Tell us more about it</h5>
+        <blockquote>Show Post Preview Here</blockquote>
+        <pre>{{ $route.query.identifier }}</pre>
+      </section>
+      <section v-else-if="$route.query.type === 'Blog'" class="px-4 my-4">
+        <h5 class="heading-title">Tell us more about it</h5>
+        <blockquote>Show Blog Preview Here</blockquote>
+        <pre>{{ $route.query.identifier }}</pre>
+      </section>
 
+      <section v-else class="px-4 my-4">
+        <h5 class="heading-title">We're here to help!</h5>
+        <p class="mb-6">
+          We're sorry to hear that you had any issues while using this platform.
+          Tell us more about it & we'll try out best to get it resolved in the
+          best possible manner as per our guidelines.
+        </p>
+      </section>
+
+      <section class="px-4">
+        <client-only>
+          <v-select
+            autocomplete="off"
+            class="my-4 dropdown"
+            placeholder="Choose a Blog Category"
+          />
+        </client-only>
         <div class="material-form-field">
           <input
             id="issue-title"
@@ -118,6 +143,7 @@ export default {
   name: 'ContactSupport',
   components: { RippleButton, AppFeel },
   middleware: 'isAuthenticated',
+
   data() {
     return {
       navigationRoutes,
