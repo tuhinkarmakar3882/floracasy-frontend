@@ -124,11 +124,6 @@ export default {
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
-    isEdited() {
-      return (
-        new Date(this.post.updatedAt) - new Date(this.post.createdAt) > 5000
-      )
-    },
   },
 
   watch: {
@@ -213,6 +208,7 @@ export default {
 
     clearCommentInput() {
       this.commentMessage = ''
+      this.$refs.textBox.textContent = ''
     },
 
     updateText() {
