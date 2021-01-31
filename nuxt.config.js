@@ -155,7 +155,7 @@ export default {
         ],
         'font-src': [
           "'self'",
-          secrets.PRIMARY_HOSTS,
+          ...secrets.PRIMARY_HOSTS,
           'https://fonts.googleapis.com/',
           'https://fonts.gstatic.com/',
           'https://cdn.materialdesignicons.com/',
@@ -172,7 +172,7 @@ export default {
         'form-action': ["'self'"],
         'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
-        'base-uri': [secrets.PRIMARY_HOSTS],
+        'base-uri': [...secrets.PRIMARY_HOSTS],
       },
     },
 
