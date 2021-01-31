@@ -34,14 +34,14 @@ export const actions = {
       { withCredentials: true }
     )
 
-    if (data.authState) {
+    if (data?.authState) {
       const cookieSavingConfig = {
         path: '/',
         maxAge: secrets.cookieMaxAge,
       }
 
-      await this.$cookies.set('access', data.access, cookieSavingConfig)
-      await this.$cookies.set('refresh', data.refresh, cookieSavingConfig)
+      await this.$cookies.set('access', data?.access, cookieSavingConfig)
+      await this.$cookies.set('refresh', data?.refresh, cookieSavingConfig)
       await this.$axios.setToken(data.access, 'Bearer')
     } else {
       await this.$cookies.remove('access')

@@ -17,7 +17,7 @@ export default async function ({ $axios, $cookies, store }) {
     if (!error) {
       console.log('Having Trouble to connect')
     }
-    if (error.status === 401) {
+    if (error?.status === 401) {
       switch (error.data.detail) {
         case errorMessages.credentialsWereNotProvided:
           // console.warn('No Credentials were Provided')
