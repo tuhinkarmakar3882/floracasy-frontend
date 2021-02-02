@@ -17,7 +17,7 @@ html {
   scroll-behavior: smooth;
   transition: all .5s ease-in-out;
   font-family: $Nunito-Sans;
-  letter-spacing: 1px;
+  letter-spacing: $single-unit;
   line-height: 1.5;
   overflow-x: hidden;
 
@@ -41,11 +41,11 @@ html {
     background: $body-background;
     color: $body-text-default;
     transition: all .5s ease-in-out;
-    letter-spacing: 1px;
+    letter-spacing: $single-unit;
 
     hr {
       border: none;
-      height: 1px;
+      height: $single-unit;
       background: $card-background;
     }
 
@@ -184,7 +184,7 @@ html {
       height: 3.125rem;
       border-radius: 4px;
       padding: 0.75rem;
-      letter-spacing: 1px;
+      letter-spacing: $single-unit;
       font-size: 1rem;
       border: $single-unit solid #138371;
 

@@ -49,7 +49,7 @@ body {
   p {
     color: #bababa;
     font-family: $Raleway;
-    letter-spacing: 1px;
+    letter-spacing: $single-unit;
     font-weight: 300;
     font-size: 1rem;
     line-height: 1.85;
@@ -100,7 +100,7 @@ body {
   &::after {
     content: '';
     position: absolute;
-    height: 1px;
+    height: $single-unit;
     width: 84px;
     bottom: (-$milli-unit);
     left: calc(50% - 42px);

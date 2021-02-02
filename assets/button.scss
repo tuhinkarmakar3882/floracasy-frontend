@@ -9,12 +9,12 @@ button {
   height: 2.5rem;
   font-size: 1rem;
   font-weight: 400;
-  border-radius: 50px;
+  border-radius: 2 * $x-large-unit;
   outline: none 0;
   transition: all .2s ease-in-out;
 
   &:hover, &:focus, &:focus-visible, &:active, &:focus-within {
-    border-radius: 50px;
+    border-radius: 2 * $x-large-unit;
     outline: none 0;
     box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
   }
