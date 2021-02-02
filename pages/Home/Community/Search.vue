@@ -42,13 +42,16 @@
         </transition>
       </section>
 
-      <pre>{{ searchQuery }}</pre>
+      <pre>You're searching for: {{ searchQuery }}</pre>
+      <pre>{{ searchResults }}</pre>
     </template>
   </AppFeel>
 </template>
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'Search',
@@ -60,6 +63,7 @@ export default {
       pageTitle: 'Search',
       searchQuery: '',
       showFallback: false,
+      searchResults: [],
     }
   },
 
@@ -74,8 +78,15 @@ export default {
   },
 
   methods: {
-    searchForPeople() {
-      console.log("You're searching with", this.searchQuery)
+    async searchForPeople() {
+      await showUITip(this.$store, 'Searching...')
+
+      this.searchResults = await this.$axios
+        .$get(endpoints.follow_system.search, {
+          params: { searchQuery: this.searchQuery },
+        })
+        .catch((e) => console.log(e))
+      this.$refs.search.blur()
     },
   },
 
@@ -145,7 +156,7 @@ export default {
 
       &:focus,
       &:not(:placeholder-shown) {
-        border: 1px solid $secondary-highlight;
+        border: 1px solid $vibrant;
 
         & ~ label {
           color: $secondary;
