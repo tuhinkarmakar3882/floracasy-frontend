@@ -1,10 +1,33 @@
 <template>
   <div class="community-page">
-    <LazySearchBar
-      class="px-4 mt-5 mb-4"
-      :detail-screen="navigationRoutes.Home.Community.Search"
-    />
+    <!--  Search Box  -->
+    <section
+      class="search-box-container px-4 mt-5 mb-4"
+      @click="$router.push(navigationRoutes.Home.Community.Search)"
+    >
+      <div class="search-box">
+        <input
+          id="search-box"
+          ref="search"
+          autocomplete="off"
+          placeholder="Type here to search"
+          readonly
+          type="text"
+        />
+        <label
+          aria-label="Type here to search"
+          class="mdi px-4 mdi-24px mdi-magnify"
+          for="search-box"
+        />
+        <span
+          v-ripple
+          aria-label="Click here to start searching"
+          class="mdi mdi-check mdi-24px px-4"
+        />
+      </div>
+    </section>
 
+    <!--  Story Updates  -->
     <div class="story-updates-container">
       <section class="top-line pl-4">
         <p class="py-2 font-size-14px">
@@ -56,6 +79,7 @@
 
     <hr class="reversed-faded-divider mt-1" />
 
+    <!--  Add Post Option  -->
     <section
       class="add-post-preview px-4 py-6 white"
       @click="$router.push(navigationRoutes.Home.Community.Posts.add)"
@@ -143,6 +167,140 @@ export default {
     justify-content: flex-start;
   }
 
+  .add-a-story {
+    display: grid;
+    min-width: 100px;
+    place-items: center;
+    position: relative;
+    border-radius: 8px;
+
+    $image-size: 74px;
+
+    img {
+      min-height: $image-size;
+      height: $image-size;
+      min-width: $image-size;
+      width: $image-size;
+      object-fit: cover;
+      box-shadow: $default-box-shadow;
+      border-radius: 50%;
+    }
+
+    span {
+      position: absolute;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+      border-radius: 50%;
+      background: $vibrant;
+      right: 12px;
+      bottom: 60px;
+      color: #000;
+      height: 24px;
+      width: 24px;
+      font-size: 14px;
+      z-index: 0;
+    }
+
+    aside {
+      align-self: flex-start;
+      width: 100%;
+      height: 4ch;
+      overflow: hidden;
+
+      p {
+        font-weight: 300;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.48;
+      }
+    }
+  }
+
+  .search-box-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .search-box {
+      position: relative;
+      width: 100%;
+      z-index: $bring-to-front - 11;
+
+      $custom-muted: #777;
+      $custom-input-border: #333;
+
+      span,
+      label {
+        height: 48px;
+        position: absolute !important;
+        top: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 2 * $x-large-unit;
+        transition: all 0.2s ease-in-out;
+      }
+
+      span {
+        right: 0;
+        opacity: 0;
+        transform: scale(0);
+        color: $secondary;
+      }
+
+      label {
+        left: 0;
+        color: $custom-muted;
+      }
+
+      input {
+        transition: all 0.2s ease-in-out;
+        border: 1px solid $custom-input-border;
+        border-radius: 2 * $x-large-unit;
+        height: 48px;
+        padding: 0 48px;
+        color: $custom-muted;
+        font-weight: 300;
+        font-family: $Raleway;
+        letter-spacing: $single-unit;
+        font-size: 1rem;
+
+        &::placeholder {
+          color: $custom-muted;
+          font-weight: 300;
+        }
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          border: 1px solid $secondary-highlight;
+
+          & ~ label {
+            color: $secondary;
+          }
+        }
+
+        &:not(:placeholder-shown) {
+          color: $secondary;
+          padding-left: 20px;
+
+          & ~ span {
+            transform: scale(1);
+            opacity: 1;
+          }
+
+          & ~ label {
+            width: 0;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
   .story-updates-container {
     .top-line {
       display: flex;
@@ -157,57 +315,6 @@ export default {
 
       &::-webkit-scrollbar {
         display: none;
-      }
-
-      .add-a-story {
-        display: grid;
-        min-width: 100px;
-        place-items: center;
-        position: relative;
-        border-radius: 8px;
-
-        $image-size: 74px;
-
-        img {
-          min-height: $image-size;
-          height: $image-size;
-          min-width: $image-size;
-          width: $image-size;
-          object-fit: cover;
-          box-shadow: $default-box-shadow;
-          border-radius: 50%;
-        }
-
-        span {
-          position: absolute;
-          display: grid;
-          align-items: center;
-          justify-items: center;
-          place-items: center;
-          border-radius: 50%;
-          background: $vibrant;
-          right: 12px;
-          bottom: 60px;
-          color: #000;
-          height: 24px;
-          width: 24px;
-          font-size: 14px;
-          z-index: 0;
-        }
-
-        aside {
-          align-self: flex-start;
-          width: 100%;
-          height: 4ch;
-          overflow: hidden;
-
-          p {
-            font-weight: 300;
-            text-align: center;
-            font-size: 14px;
-            line-height: 1.48;
-          }
-        }
       }
     }
   }
