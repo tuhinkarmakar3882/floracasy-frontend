@@ -428,7 +428,7 @@ export default {
       &::after {
         content: '';
         position: absolute;
-        height: 1px;
+        height: $single-unit;
         width: 36px;
         background: $primary-light;
         bottom: -8px;

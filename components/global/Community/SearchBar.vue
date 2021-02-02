@@ -1,29 +1,32 @@
 <template>
-  <section class="search-box-container">
+  <section
+    class="search-box-container"
+    @click="useOnlyNavigationFeature && $router.push(navigateTo)"
+  >
     <div class="search-box">
       <input
         id="search-box"
         ref="search"
         v-model="query"
-        autocomplete="off"
         :placeholder="inputPlaceholder"
+        autocomplete="off"
         type="text"
         @blur="showFallback = false"
         @focusin="showFallback = true"
         @focusout="showFallback = false"
-        @keyup.enter="performSearch"
+        @keyup.enter="searchFunction"
       />
       <label
         :aria-label="inputPlaceholder"
-        class="mdi px-4 mdi-24px"
         :class="prependIcon"
+        class="mdi px-4 mdi-24px"
         for="search-box"
       />
       <span
         v-ripple
+        :class="searchIcon"
         aria-label="Click here to start searching"
         class="mdi mdi-24px px-4"
-        :class="searchIcon"
       />
     </div>
 
@@ -34,13 +37,16 @@
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+
 export default {
   name: 'SearchBar',
 
   props: {
-    detailScreen: {
+    navigateTo: {
       type: String,
-      required: true,
+      required: false,
+      default: navigationRoutes.Home.Community.Search,
     },
     text: {
       type: String,
@@ -58,9 +64,14 @@ export default {
       type: String,
       default: 'mdi-check',
     },
-    useReplaceNavigation: {
+    useOnlyNavigationFeature: {
       type: Boolean,
       default: false,
+    },
+    searchFunction: {
+      type: Function,
+      required: false,
+      default: () => {},
     },
   },
 
@@ -71,22 +82,7 @@ export default {
     }
   },
 
-  methods: {
-    async performSearch() {
-      const location = {
-        path: this.detailScreen,
-        query: { query: this.query },
-      }
-
-      if (this.query.trim().length) {
-        this.useReplaceNavigation
-          ? await this.$router.replace(location)
-          : await this.$router.push(location)
-
-        this.$refs.search.blur()
-      }
-    },
-  },
+  methods: {},
 }
 </script>
 
@@ -113,7 +109,7 @@ export default {
       top: 0;
       display: grid;
       place-items: center;
-      border-radius: 50px;
+      border-radius: 2 * $x-large-unit;
       transition: all 0.2s ease-in-out;
     }
 
@@ -132,13 +128,13 @@ export default {
     input {
       transition: all 0.2s ease-in-out;
       border: 1px solid $custom-input-border;
-      border-radius: 50px;
+      border-radius: 2 * $x-large-unit;
       height: 48px;
       padding: 0 48px;
       color: $custom-muted;
       font-weight: 300;
       font-family: $Raleway;
-      letter-spacing: 1px;
+      letter-spacing: $single-unit;
       font-size: 1rem;
 
       &::placeholder {

@@ -176,7 +176,7 @@ $image-size: 40px;
       display: grid;
       place-items: center;
       font-family: $Nunito-Sans;
-      border-radius: 50px;
+      border-radius: 2 * $x-large-unit;
       font-size: 13px;
     }
   }

@@ -289,7 +289,7 @@ export default {
         &::after {
           content: '';
           position: absolute;
-          height: 1px;
+          height: $single-unit;
           width: 84px;
           bottom: 0;
           left: calc(50% - 42px);

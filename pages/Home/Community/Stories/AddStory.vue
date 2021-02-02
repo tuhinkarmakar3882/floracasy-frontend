@@ -791,7 +791,7 @@ export default {
         &::after {
           content: '';
           position: absolute;
-          height: 1px;
+          height: $single-unit;
           width: 36px;
           background: $primary-light;
           bottom: -8px;
@@ -834,7 +834,7 @@ export default {
     .timer {
       padding: 8px 24px;
       border: 1px solid $vibrant;
-      border-radius: 50px;
+      border-radius: 2 * $x-large-unit;
       color: $vibrant;
     }
 
