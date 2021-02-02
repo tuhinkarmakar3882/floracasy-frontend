@@ -29,11 +29,16 @@
       <section class="px-4">
         <client-only>
           <v-select
+            v-model="issueTitle"
+            :options="issueCategories"
             autocomplete="off"
+            :reduce="(category) => category.id"
             class="my-4 dropdown"
+            label="name"
             placeholder="Choose a Blog Category"
           />
         </client-only>
+
         <div class="material-form-field">
           <input
             id="issue-title"
