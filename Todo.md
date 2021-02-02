@@ -1,5 +1,8 @@
 # Pending Tasks:
 
+> ### Utils:
+>  - Add Carousel
+
 > ### Help & Support:
 >  - Add ticket Details Page
 >  - Add Dynamic Contact Support Page
@@ -28,3 +31,11 @@
 >   - Frontend Polish
 >   - Firebase Cloud Message Notifications
 >   - Add Desktop Layout
+
+> ### Landing Pages
+>   - Implement HeroContent
+>   - Implement CategoriesShowcase
+>   - Implement HearTheExperiences
+>   - Implement EarnWithUs
+>   - Implement ProZone
+>   - Implement CommunityShowcase 
