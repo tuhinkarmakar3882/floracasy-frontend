@@ -1,11 +1,7 @@
 <template>
   <div class="top-header">
-    <p class="topic">
-      {{ topic }}
-    </p>
-    <h2 class="mt-0 mb-6 pb-4">
-      {{ title }}
-    </h2>
+    <p class="topic">{{ topic }}</p>
+    <h2 class="my-4 pb-4">{{ title }}</h2>
     <p>{{ leadingParagraph }}</p>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="earn-with-us">
+  <div class="pro-zone-container">
     <pre>ProZone</pre>
   </div>
 </template>
