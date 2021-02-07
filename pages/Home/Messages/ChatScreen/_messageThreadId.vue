@@ -177,9 +177,8 @@ export default {
       console.log('socket ready')
     }
 
-    this.chatSocket.onmessage = async (e) => {
-      console.log(e)
-      const data = JSON.parse(e.data)
+    this.chatSocket.onmessage = async (incomingMessage) => {
+      const data = JSON.parse(incomingMessage.data)
       const newMessage = {
         user: {
           photoURL: this.user.photoURL,
@@ -197,8 +196,7 @@ export default {
       }
 
       this.chatMessages.push(newMessage)
-      await this.resetUnreadCount()
-      window.scrollTo(0, document.body.scrollHeight)
+      this.resetUnreadCount()
     }
   },
 
@@ -230,18 +228,15 @@ export default {
             thread_id: this.$route.params.messageThreadId,
           },
         })
-        console.log(results)
         if (results.length) {
           this.fetchMessages = processLink(next)
-          this.chatMessages.push(...results)
+          this.chatMessages.unshift(...results.reverse())
           $state.loaded()
         } else {
           $state.complete()
         }
       } catch (e) {
         $state.complete()
-      } finally {
-        window.scrollTo(0, 56)
       }
     },
 
