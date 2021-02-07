@@ -1,13 +1,13 @@
 $zero-unit: 0;
-$single-unit: 0.0625rem;
-$double-unit: 0.125rem;
-$nano-unit: 0.25rem;
-$micro-unit: 0.5rem;
-$milli-unit: 0.75rem;
-$standard-unit: 1rem;
-$medium-unit: 1.25rem;
-$large-unit: 1.5rem;
-$x-large-unit: 1.75rem;
-$xx-large-unit: 2rem;
-$xxx-large-unit: 2.25rem;
+$single-unit: 0.0625rem; // 1px
+$double-unit: 0.125rem; // 2px
+$nano-unit: 0.25rem; // 4px
+$micro-unit: 0.5rem; // 8px
+$milli-unit: 0.75rem; // 12px
+$standard-unit: 1rem; // 16px
+$medium-unit: 1.25rem; // 20px
+$large-unit: 1.5rem; // 24px
+$x-large-unit: 1.75rem; // 28px
+$xx-large-unit: 2rem; // 32px
+$xxx-large-unit: 2.25rem; // 36px
 $max-width: 64rem;
