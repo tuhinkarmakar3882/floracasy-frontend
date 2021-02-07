@@ -1,20 +1,22 @@
 <template>
   <div class="index-page">
-    <HeroContent class="px-4" />
+    <LazyHeroContent class="px-4" />
 
-    <LazyCategoriesShowcase />
+    <LazyCategoriesShowcase class="px-4" />
 
-    <LazyHearTheExperiences />
+    <LazyHearTheExperiences class="px-4" />
 
-    <LazyEarnWithUs />
+    <LazyEarnWithUs class="px-4" />
 
-    <LazyProZone />
+    <LazyProZone class="px-4" />
 
-    <LazyCommunityShowcase />
+    <LazyCommunityShowcase class="px-4" />
   </div>
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
