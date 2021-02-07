@@ -29,7 +29,7 @@
         <infinite-loading
           direction="top"
           force-use-infinite-wrapper=".infinite-wrapper"
-          @infinite="infiniteHandler"
+          @infinite="loadMessagesWhenYouReachTheTop"
         >
           <template slot="spinner">
             <LoadingIcon class="mt-4 mb-6" />
@@ -219,7 +219,7 @@ export default {
       )
     },
 
-    async infiniteHandler($state) {
+    async loadMessagesWhenYouReachTheTop($state) {
       if (!this.fetchMessages) {
         $state.complete()
         return
@@ -233,7 +233,7 @@ export default {
         console.log(results)
         if (results.length) {
           this.fetchMessages = processLink(next)
-          this.chatMessages.unshift(...results)
+          this.chatMessages.push(...results)
           $state.loaded()
         } else {
           $state.complete()
