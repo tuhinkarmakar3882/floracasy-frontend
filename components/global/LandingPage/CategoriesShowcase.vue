@@ -1,72 +1,62 @@
 <template>
   <div class="showcase my-4 py-6 text-center">
-    <div>
-      <SegmentTitle
-        leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
+    <LazySegmentTitle
+      leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
-        title="Explore a Wide Range of Categories"
-        topic="Categories"
-      />
-      <div class="grid-container py-12">
-        <div v-for="item in items" :key="item.name" class="grid-col">
-          <img :alt="item.name" :src="item.photo_url" />
-          <p class="my-4">
-            {{ item.name }}
-          </p>
-        </div>
-
-        <div class="grid-col">
-          <img
-            alt="item.name"
-            src="https://picsum.photos/151?random"
-            style="width: 100%; object-fit: cover; border-radius: 50%"
-          />
-          <p class="my-4">More</p>
-        </div>
+      title="Explore a Wide Range of Categories"
+      topic="Categories"
+    />
+    <div v-if="items" class="grid-container py-12">
+      <div v-for="item in items" :key="item.id" class="grid-col">
+        <img :src="item.photo_url" alt="item.name" />
+        <p class="my-4">
+          {{ item.name }}
+        </p>
       </div>
 
-      <nuxt-link to="/Authentication/SignInToContinue">
-        <RippleButton
-          :loading="categoriesButtonLoading"
-          class="my-6 btn"
-          to="/Authentication/SignInToContinue"
-          :on-click="changeIt"
-        >
-          Start Reading
-        </RippleButton>
-      </nuxt-link>
+      <div class="grid-col">
+        <span class="mdi mdi-dots-horizontal mdi-48px" />
+        <p class="my-4">More</p>
+      </div>
     </div>
+
+    <nuxt-link :to="navigationRoutes.Authentication.SignInToContinue">
+      <LazyRippleButton
+        :loading="categoriesButtonLoading"
+        :on-click="changeIt"
+        class="my-6 btn"
+      >
+        Start Reading
+      </LazyRippleButton>
+    </nuxt-link>
   </div>
 </template>
 
 <script>
-import RippleButton from '@/components/global/RippleButton'
 import endpoints from '@/api/endpoints'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'CategoriesShowcase',
-  components: {
-    RippleButton,
-    SegmentTitle: () => import('@/components/global/LandingPage/SegmentTitle'),
-  },
 
   data() {
     return {
+      navigationRoutes,
       categoriesButtonLoading: false,
-      items: [],
+      items: false,
     }
   },
 
   async mounted() {
-    const response = await this.$axios.$get(endpoints.categories.fetch)
-    this.items = response.data
+    const { data } = await this.$axios.$get(endpoints.categories.fetch)
+    this.items = data
   },
   methods: {
     changeIt() {
       this.categoriesButtonLoading = true
       setTimeout(() => {
         this.categoriesButtonLoading = false
-      }, 2000)
+      }, 5000)
     },
   },
 }
@@ -82,9 +72,8 @@ export default {
     display: grid;
     justify-content: center;
     place-items: center;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: $standard-unit;
-    grid-row-gap: $standard-unit;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $standard-unit;
 
     @media only screen and (min-width: $small) {
       grid-template-columns: repeat(3, 1fr);
@@ -102,18 +91,19 @@ export default {
       grid-row-gap: 36px;
     }
 
-    font-size: 20px;
-    text-align: center;
+    img {
+      width: 64px;
+      min-width: 64px;
+      height: 64px;
+      min-height: 64px;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
     .grid-col {
-      width: clamp(100px, 40vw, 150px);
-
-      img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
+      display: grid;
+      place-items: center;
     }
   }
 
