@@ -1,19 +1,22 @@
 <template>
   <div
+    v-touch:swipe.left="nextSlide"
+    v-touch:swipe.right="previousSlide"
     class="carousel-component"
+    :style="showNavigationDots && { paddingBottom: '1.25rem' }"
     @mouseenter="showControls = true"
     @mouseleave="showControls = false"
   >
-    <section class="carousel-items-container">
+    <section v-if="quoteCarousel" class="carousel-items-container">
       <blockquote
         v-for="item in carouselItems"
-        v-show="item.id === activeItem"
         :key="item.id"
         class="carousel-item"
       >
         <img :src="item.photoURL" alt="" height="84" width="84" />
         <h6 class="mb-0">{{ item.name }}</h6>
         <p class="vibrant">{{ item.designation }}</p>
+
         <section class="quote">
           <span class="mdi mdi-format-quote-open mdi-48px text-left my-0" />
           <p class="my-0 text-left px-1">
@@ -26,7 +29,20 @@
       </blockquote>
     </section>
 
-    <aside class="carousel-controls">
+    <section v-else-if="imageCarousel" class="carousel-items-container">
+      <img
+        v-for="item in carouselItems"
+        v-show="item.id === activeItem"
+        :key="item.id"
+        class="carousel-item"
+        :src="item.image"
+        :alt="item.image"
+        height="250"
+        style="object-fit: cover; width: 100%; min-height: 250px; height: 250px"
+      />
+    </section>
+
+    <aside v-if="showNavigationArrows" class="carousel-controls">
       <transition name="scale-down">
         <button
           v-if="showControls"
@@ -52,14 +68,13 @@
       </transition>
     </aside>
 
-    <aside class="carousel-navigation">
+    <aside v-if="showNavigationDots" class="carousel-navigation">
       <span
         v-for="i in totalSlides + 1"
         :key="i - 1"
         v-ripple
         :class="i - 1 === activeItem && 'active'"
         class="dot"
-        @click="activeItem = i - 1"
       >
       </span>
     </aside>
@@ -74,6 +89,31 @@ export default {
       type: Array,
       required: true,
     },
+    imageCarousel: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    quoteCarousel: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showNavigationArrows: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    showNavigationDots: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    useLoop: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data() {
@@ -81,18 +121,36 @@ export default {
       activeItem: 0,
       showControls: false,
       totalSlides: 0,
+      scroller: undefined,
     }
+  },
+  watch: {
+    activeItem(newValue, oldValue) {
+      let scrollAmount = window.innerWidth
+      if (newValue < oldValue) scrollAmount *= -1
+      this.scroller?.scrollBy({
+        left: scrollAmount,
+        top: 0,
+        behavior: 'smooth',
+      })
+    },
   },
   mounted() {
     this.totalSlides = this.carouselItems.length - 1
+    this.scroller = document.querySelector('.carousel-items-container')
   },
-
   methods: {
     previousSlide() {
-      this.activeItem -= this.activeItem === 0 ? 0 : 1
+      if (this.useLoop) {
+        this.activeItem =
+          --this.activeItem < 0 ? this.totalSlides : this.activeItem--
+      } else this.activeItem -= this.activeItem === 0 ? 0 : 1
     },
     nextSlide() {
-      this.activeItem += this.activeItem === this.totalSlides ? 0 : 1
+      if (this.useLoop) {
+        this.activeItem =
+          ++this.activeItem > this.totalSlides ? 0 : this.activeItem++
+      } else this.activeItem += this.activeItem === this.totalSlides ? 0 : 1
     },
   },
 }
@@ -103,7 +161,6 @@ export default {
 
 .carousel-component {
   position: relative;
-  padding-bottom: $medium-unit;
 
   * {
     transition: all 0.3s ease-in-out;
