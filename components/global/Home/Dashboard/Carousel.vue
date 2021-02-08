@@ -1,19 +1,69 @@
 <template>
-  <section class="carousel">
-    <article
-      v-for="(item, index) in carouselItems"
-      :key="index"
-      class="item"
-      :style="{
-        background: 'url(' + item.image + ') no-repeat center',
-        backgroundSize: 'cover',
-        color: 'white',
-        paddingTop: visible ? '56.25%' : 0,
-      }"
-      style="transition: all 0.3s ease-in-out"
-      @click="$router.push(item.route)"
-    />
-  </section>
+  <div
+    class="carousel-component"
+    @mouseenter="showControls = true"
+    @mouseleave="showControls = false"
+  >
+    <section class="carousel-items-container">
+      <blockquote
+        v-for="item in carouselItems"
+        v-show="item.id === activeItem"
+        :key="item.id"
+        class="carousel-item"
+      >
+        <img :src="item.photoURL" alt="" height="84" width="84" />
+        <h6 class="mb-0">{{ item.name }}</h6>
+        <p class="vibrant">{{ item.designation }}</p>
+        <section class="quote">
+          <span class="mdi mdi-format-quote-open mdi-48px text-left my-0" />
+          <p class="my-0 text-left px-1">
+            <em>
+              {{ item.quote }}
+            </em>
+          </p>
+          <span class="mdi mdi-format-quote-close mdi-48px text-right my-0" />
+        </section>
+      </blockquote>
+    </section>
+
+    <aside class="carousel-controls">
+      <transition name="scale-down">
+        <button
+          v-if="showControls"
+          v-ripple
+          aria-label="Previous Item"
+          class="left-arrow"
+          @click="previousSlide"
+        >
+          <span class="mdi mdi-arrow-left mdi-18px" />
+        </button>
+      </transition>
+
+      <transition name="scale-down">
+        <button
+          v-if="showControls"
+          v-ripple
+          aria-label="Next Item"
+          class="right-arrow"
+          @click="nextSlide"
+        >
+          <span class="mdi mdi-arrow-right mdi-18px" />
+        </button>
+      </transition>
+    </aside>
+
+    <aside class="carousel-navigation">
+      <span
+        v-for="i in totalSlides + 1"
+        :key="i - 1"
+        v-ripple
+        :class="i - 1 === activeItem && 'active'"
+        class="dot"
+        @click="activeItem = i - 1"
+      >
+      </span>
+    </aside>
+  </div>
 </template>
 
 <script>
@@ -24,42 +74,141 @@ export default {
       type: Array,
       required: true,
     },
-    visible: {
-      type: Boolean,
-      required: true,
-    },
   },
+
+  data() {
+    return {
+      activeItem: 0,
+      showControls: false,
+      totalSlides: 0,
+    }
+  },
+  mounted() {
+    this.totalSlides = this.carouselItems.length - 1
+  },
+
   methods: {
-    sendNotification() {},
+    previousSlide() {
+      this.activeItem -= this.activeItem === 0 ? 0 : 1
+    },
+    nextSlide() {
+      this.activeItem += this.activeItem === this.totalSlides ? 0 : 1
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.carousel {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  overflow: auto !important;
-  scroll-snap-type: x mandatory;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+@import 'assets/all-variables';
 
-  article {
+.carousel-component {
+  position: relative;
+  padding-bottom: $medium-unit;
+
+  * {
+    transition: all 0.3s ease-in-out;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-items-container {
+    display: flex;
+    align-items: center;
+    gap: $standard-unit;
+    text-align: center;
+    overflow: auto !important;
+    scroll-snap-type: x mandatory;
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    flex-shrink: 0;
-    width: 100%;
-    transform-origin: center center;
-    position: relative;
+
+    blockquote {
+      border: none;
+      border-radius: $xx-large-unit;
+      width: 80vw;
+
+      img {
+        border-radius: 50%;
+        box-shadow: $default-box-shadow;
+        height: 2 * $xxx-large-unit;
+        min-height: 2 * $xxx-large-unit;
+        width: 2 * $xxx-large-unit;
+        min-width: 2 * $xxx-large-unit;
+        aspect-ratio: 1;
+        object-fit: cover;
+        margin: auto;
+      }
+
+      span {
+        margin: -$standard-unit;
+      }
+
+      * {
+        display: block;
+      }
+    }
+
+    .carousel-item {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      flex-shrink: 0;
+      width: 100%;
+      transform-origin: center center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .carousel-controls {
+    button {
+      display: grid;
+      place-items: center;
+      position: absolute !important;
+      top: 0;
+      padding: 0;
+      height: 100%;
+      width: $xxx-large-unit;
+      min-height: auto;
+      min-width: auto;
+      z-index: 1;
+      box-shadow: none;
+
+      &.left-arrow {
+        left: 0;
+      }
+
+      &.right-arrow {
+        right: 0;
+      }
+    }
+  }
+
+  .carousel-navigation {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 100px;
+    gap: $micro-unit;
+    position: absolute;
+    bottom: 0;
+    height: $medium-unit;
+    width: 100%;
 
-    * {
-      z-index: 1;
+    .dot {
+      display: block;
+      height: $micro-unit;
+      width: $micro-unit;
+      border-radius: 50%;
+      background: $muted;
+
+      &.active {
+        width: $milli-unit;
+        height: $milli-unit;
+        background: $vibrant;
+      }
     }
   }
 }
