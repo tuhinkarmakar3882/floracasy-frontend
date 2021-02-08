@@ -1,9 +1,13 @@
 <template>
   <div class="dashboard-page">
-    <Carousel
+    <LazyCarousel
       :carousel-items="carouselItems"
-      :visible="tabNumber !== 2"
+      image-carousel
       style="overflow: hidden; transition: all 0.3s ease-in-out"
+      :style="{
+        height: tabNumber === 2 ? 0 : '250px',
+      }"
+      show-navigation-arrows
     />
 
     <section class="tab-bar">
@@ -68,6 +72,7 @@ export default {
       tabNumber: parseInt(this.$route.query.tabNumber) || 0,
       carouselItems: [
         {
+          id: 0,
           name: 'Listen on the Go',
           body:
             'Now you can continue to listen to your favourite articles whenever you want to',
@@ -76,21 +81,25 @@ export default {
           route: navigationRoutes.Home.MoreOptions.Payments.index,
         },
         {
+          id: 1,
           name: 'Second Item in the carousel',
           body: 'This is a body Text',
           image: 'https://picsum.photos/502',
         },
         {
+          id: 2,
           name: 'Third Item in the carousel',
           body: 'This is a body Text',
           image: 'https://picsum.photos/503',
         },
         {
+          id: 3,
           name: 'Fourth Item in the carousel',
           body: 'This is a body Text',
           image: 'https://picsum.photos/504',
         },
         {
+          id: 4,
           name: 'Fifth Item in the carousel',
           body: 'This is a body Text',
           image: 'https://picsum.photos/505',
