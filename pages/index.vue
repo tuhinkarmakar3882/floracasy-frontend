@@ -15,11 +15,10 @@
 </template>
 
 <script>
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
+
   middleware: 'isNotAuthenticated',
   data() {
     return {
