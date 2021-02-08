@@ -8,16 +8,11 @@ $animation-duration: 300ms;
   transition: all $animation-duration cubic-bezier(.55, 0, .1, 1);
 }
 
-.page-enter, .page-leave-active {
-  opacity: 0;
-}
-
 .gray-shift-enter-active, .gray-shift-leave-active {
   transition: all .3s cubic-bezier(.55, 0, .1, 1);
 }
 
 .gray-shift-enter, .gray-shift-leave-active {
-  opacity: 0;
   transform: scale(.99);
   filter: grayscale(100%);
 }
@@ -35,9 +30,11 @@ $animation-duration: 300ms;
 .scale-down-enter-active,
 .scale-down-leave-active,
 {
-  transition: all $animation-duration ease-in-out;
+  transition: all $animation-duration cubic-bezier(.55, 0, .1, 1);
 }
 
+.page-enter, .page-leave-active,
+.gray-shift-enter, .gray-shift-leave-active,
 .slide-left-enter, .slide-left-leave-active,
 .slide-right-enter, .slide-right-leave-active,
 .slide-up-enter, .slide-up-leave-active,
@@ -49,7 +46,6 @@ $animation-duration: 300ms;
 
 .slide-left-enter, .slide-left-leave-active {
   transform: translateX(100px);
-
 }
 
 .slide-right-enter, .slide-right-leave-active {
@@ -62,7 +58,6 @@ $animation-duration: 300ms;
 
 .slide-down-enter, .slide-down-leave-active {
   transform: translateY(-100px);
-  opacity: 0;
 }
 
 .scale-up-enter, .scale-up-leave-active {
