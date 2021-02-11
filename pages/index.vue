@@ -1,16 +1,16 @@
 <template>
   <div class="index-page">
-    <LazyHeroContent class="px-4" />
+    <LazyHeroContent class="segment" />
 
-    <LazyCategoriesShowcase class="px-4" />
+    <LazyCategoriesPreview class="segment" />
 
-    <LazyHearTheExperiences class="px-4" />
+    <LazyHearTheExperiences class="segment" />
 
-    <LazyEarnWithUs class="px-4" />
+    <LazyEarnWithUs class="segment" />
 
-    <LazyProZone class="px-4" />
+    <LazyProZone class="segment" />
 
-    <LazyCommunityShowcase class="px-4" />
+    <LazyCommunityPreview class="segment" />
   </div>
 </template>
 
@@ -18,8 +18,8 @@
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
-
   middleware: 'isNotAuthenticated',
+
   data() {
     return {
       pageTitle: 'Welcome to Floracasy',
@@ -28,8 +28,6 @@ export default {
 
   mounted() {},
 
-  methods: {},
-
   head() {
     return {
       title: this.pageTitle,
@@ -37,3 +35,15 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.segment {
+  padding: $large-unit $standard-unit;
+
+  &:nth-child(even) {
+    background-color: $segment-background;
+  }
+}
+</style>

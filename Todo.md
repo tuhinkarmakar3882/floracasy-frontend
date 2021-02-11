@@ -34,8 +34,8 @@
 
 > ### Landing Pages
 >   - Implement HeroContent
->   - Implement CategoriesShowcase
+>   - Implement CategoriesPreview
 >   - Implement HearTheExperiences
 >   - Implement EarnWithUs
 >   - Implement ProZone
->   - Implement CommunityShowcase 
+>   - Implement CommunityPreview 
