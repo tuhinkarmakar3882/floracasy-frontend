@@ -1,7 +1,7 @@
 <template>
   <div class="top-header">
     <p v-if="topic" class="topic">{{ topic }}</p>
-    <h2 v-if="title" class="my-4 pb-4">{{ title }}</h2>
+    <h2 v-if="title" class="my-4">{{ title }}</h2>
     <p v-if="leadingParagraph">{{ leadingParagraph }}</p>
   </div>
 </template>
