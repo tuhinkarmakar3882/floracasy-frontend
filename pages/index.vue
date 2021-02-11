@@ -40,7 +40,7 @@ export default {
 @import 'assets/all-variables';
 
 .segment {
-  padding: $large-unit $standard-unit;
+  padding: $xx-large-unit $standard-unit;
 
   &:nth-child(even) {
     background-color: $segment-background;
