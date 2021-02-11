@@ -22,10 +22,7 @@
     </section>
 
     <aside class="text-center">
-      <button
-        class="primary-btn mb-6"
-        @click="$router.push(navigationRoutes.Authentication.SignInToContinue)"
-      >
+      <button class="primary-btn mb-6" @click="openSignInPage">
         Start Reading
       </button>
     </aside>
@@ -49,6 +46,12 @@ export default {
   async mounted() {
     const { data } = await this.$axios.$get(endpoints.categories.fetch)
     this.items = data
+  },
+
+  methods: {
+    async openSignInPage() {
+      await this.$router.push(navigationRoutes.Authentication.SignInToContinue)
+    },
   },
 }
 </script>

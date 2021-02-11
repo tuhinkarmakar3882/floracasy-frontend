@@ -1,7 +1,7 @@
 <template>
   <div class="top-header">
     <p v-if="topic" class="topic">{{ topic }}</p>
-    <h2 v-if="title" class="my-4">{{ title }}</h2>
+    <h3 v-if="title" class="my-4">{{ title }}</h3>
     <p v-if="leadingParagraph">{{ leadingParagraph }}</p>
   </div>
 </template>
@@ -12,15 +12,18 @@ export default {
   props: {
     topic: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     title: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     leadingParagraph: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
   },
 }
@@ -33,18 +36,6 @@ export default {
   .topic {
     color: $secondary-highlight;
     font-weight: 700;
-  }
-
-  h2 {
-    font-family: $Prata;
-    font-weight: 400;
-    font-size: $segment-title-font-size;
-    color: $white;
-  }
-
-  p {
-    font-weight: 300;
-    line-height: 1.84;
   }
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <div class="earn-with-us">
-    <pre>CommunityShowcase</pre>
+    <pre>CommunityPreview</pre>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CommunityShowcase',
+  name: 'CommunityPreview',
 }
 </script>
