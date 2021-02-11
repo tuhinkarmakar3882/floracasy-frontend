@@ -1,12 +1,13 @@
 <template>
-  <div class="showcase my-4 py-6 text-center">
+  <div class="categories-preview-component">
     <LazySegmentTitle
       leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
       title="Explore a Wide Range of Categories"
       topic="Categories"
     />
-    <div v-if="items" class="grid-container py-12">
+
+    <section v-if="items" class="grid-container py-8">
       <div v-for="item in items" :key="item.id" class="grid-col">
         <img :src="item.photo_url" alt="item.name" />
         <p class="my-4">
@@ -18,17 +19,16 @@
         <span class="mdi mdi-dots-horizontal mdi-48px" />
         <p class="my-4">More</p>
       </div>
-    </div>
+    </section>
 
-    <nuxt-link :to="navigationRoutes.Authentication.SignInToContinue">
-      <LazyRippleButton
-        :loading="categoriesButtonLoading"
-        :on-click="changeIt"
-        class="my-6 btn"
+    <aside class="text-center">
+      <button
+        class="primary-btn mb-6"
+        @click="$router.push(navigationRoutes.Authentication.SignInToContinue)"
       >
         Start Reading
-      </LazyRippleButton>
-    </nuxt-link>
+      </button>
+    </aside>
   </div>
 </template>
 
@@ -37,13 +37,12 @@ import endpoints from '@/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
-  name: 'CategoriesShowcase',
+  name: 'CategoriesPreview',
 
   data() {
     return {
       navigationRoutes,
-      categoriesButtonLoading: false,
-      items: false,
+      items: null,
     }
   },
 
@@ -51,23 +50,13 @@ export default {
     const { data } = await this.$axios.$get(endpoints.categories.fetch)
     this.items = data
   },
-  methods: {
-    changeIt() {
-      this.categoriesButtonLoading = true
-      setTimeout(() => {
-        this.categoriesButtonLoading = false
-      }, 5000)
-    },
-  },
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.showcase {
-  background-color: $segment-background;
-
+.categories-preview-component {
   .grid-container {
     display: grid;
     justify-content: center;
