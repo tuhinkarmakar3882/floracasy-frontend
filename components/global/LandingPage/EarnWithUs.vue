@@ -1,5 +1,5 @@
 <template>
-  <div class="earn-with-us-container text-center">
+  <div class="earn-with-us-container">
     <LazySegmentTitle
       leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
           custom integrations with our open source developer SDK"
@@ -7,12 +7,12 @@
       topic="Earning"
     />
 
-    <nuxt-link
-      :to="navigationRoutes.Authentication.SignInToContinue"
-      class="my-6"
+    <button
+      class="primary-btn my-6"
+      @click="$router.push(navigationRoutes.Authentication.SignInToContinue)"
     >
       Start Earning
-    </nuxt-link>
+    </button>
   </div>
 </template>
 

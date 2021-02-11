@@ -1,5 +1,5 @@
 <template>
-  <div class="hear-the-experiences-component my-4 py-6">
+  <div class="hear-the-experiences-component">
     <LazySegmentTitle
       leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own custom integrations with our open source developer SDK"
       title="Hear From the Community"
@@ -50,11 +50,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-.hear-the-experiences-component {
-  text-align: center;
-}
-</style>

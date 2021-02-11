@@ -1,5 +1,5 @@
 <template>
-  <div class="my-4 pb-6 hero-container">
+  <div class="hero-container">
     <section class="hero-image">
       <img
         class="mx-auto"
