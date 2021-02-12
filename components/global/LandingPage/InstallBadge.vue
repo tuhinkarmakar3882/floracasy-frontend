@@ -25,31 +25,45 @@
 <script>
 export default {
   name: 'InstallBadge',
+
   props: {
     showCloseButton: {
       type: Boolean,
       default: false,
     },
   },
+
   data() {
     return {
       showInstallBadge: false,
     }
   },
+
   mounted() {
     const displayMode = this.getPWADisplayMode()
-    console.log(displayMode)
 
-    displayMode === 'browser' &&
+    if (displayMode === 'browser') {
+      this.addBeforeInstallPromptListener()
+      this.addAppInstalledListener()
+    }
+  },
+
+  methods: {
+    addBeforeInstallPromptListener() {
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault()
-
         this.showInstallBadge = true
         window.deferredPrompt = e
         // Todo - Send analytics event that PWA install promo was shown.
       })
-  },
-  methods: {
+    },
+    addAppInstalledListener() {
+      window.addEventListener('appinstalled', () => {
+        this.hideInstallBadge()
+        // Todo - Send analytics event that PWA was installed.
+      })
+    },
+
     installPWA() {
       const promptEvent = window.deferredPrompt
       if (!promptEvent) return
@@ -61,30 +75,27 @@ export default {
       })
     },
 
-    postInstallationSteps() {
-      window.addEventListener('appinstalled', () => {
-        window.deferredPrompt = null
-        this.hideInstallBadge()
-        // Todo - Send analytics event that PWA was installed.
-      })
-    },
-
     getPWADisplayMode() {
       const isStandalone = window.matchMedia('(display-mode: standalone)')
         .matches
-      if (document.referrer.startsWith('android-app://')) {
+      const isTrustedWebActivity = document.referrer.startsWith(
+        'android-app://'
+      )
+
+      if (isTrustedWebActivity) {
         return 'twa'
-      } else if (navigator.standalone || isStandalone) {
+      }
+
+      if (navigator.standalone || isStandalone) {
         return 'standalone'
       }
+
       return 'browser'
     },
 
     hideInstallBadge() {
       this.showInstallBadge = false
-      setTimeout(() => {
-        this.showInstallBadge = true
-      }, 2000)
+      window.deferredPrompt = null
     },
   },
 }
@@ -119,6 +130,7 @@ export default {
       font-family: $Prata;
       font-weight: 500;
     }
+
     span {
       font-size: 0.7rem;
       line-height: 1;
