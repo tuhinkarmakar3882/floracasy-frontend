@@ -5,6 +5,7 @@
           custom integrations with our open source developer SDK"
       title="Get Rewarded for Your Knowledge"
       topic="Earning"
+      leading-icon="mdi mdi-currency-usd"
     />
 
     <button class="primary-btn my-6" @click="openSignInPage">

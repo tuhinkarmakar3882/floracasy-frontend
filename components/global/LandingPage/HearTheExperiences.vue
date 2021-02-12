@@ -4,6 +4,7 @@
       leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own custom integrations with our open source developer SDK"
       title="Hear From the Community"
       topic="Experiences"
+      leading-icon="mdi mdi-handshake"
     />
 
     <LazyCarousel

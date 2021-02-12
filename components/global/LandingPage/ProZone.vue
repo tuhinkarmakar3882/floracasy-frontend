@@ -2,7 +2,9 @@
   <div class="pro-zone-container">
     <LazySegmentTitle
       title="Buy Premium for Unlimited Access"
+      leading-icon="mdi mdi-crown"
       topic="Pro Zone"
+      :highlight-color="tickColor"
     />
 
     <section class="mt-4">
@@ -10,13 +12,15 @@
         v-for="(point, index) in points"
         :key="index"
         :tick-size="24"
-        class="my-0 my-lg-4"
+        class="my-2"
         :point="point"
-        tick-color="#6DD0BF"
+        :tick-color="tickColor"
       />
     </section>
 
-    <button class="my-6" @click="openSignInPage">Explore Now</button>
+    <button class="my-6 premium-outlined-btn" @click="openSignInPage">
+      Buy Premium
+    </button>
   </div>
 </template>
 
@@ -38,6 +42,7 @@ export default {
         'Direct Messaging',
         '24x7 Priority Support',
       ],
+      tickColor: '#FFC34D',
     }
   },
   methods: {
