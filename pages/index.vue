@@ -13,8 +13,6 @@
 
       <LazyProZone class="segment" />
     </main>
-
-    <LazyInstallBadge class="install-badge" show-close-button />
   </div>
 </template>
 
@@ -54,14 +52,6 @@ export default {
         background-color: $segment-background;
       }
     }
-  }
-
-  .install-badge {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
   }
 }
 </style>
