@@ -1,16 +1,20 @@
 <template>
   <div class="index-page">
-    <LazyHeroContent class="segment" />
+    <main>
+      <LazyHeroContent class="segment" />
 
-    <LazyCategoriesPreview class="segment" />
+      <LazyCategoriesPreview class="segment" />
 
-    <LazyHearTheExperiences class="segment" />
+      <LazyCommunityPreview class="segment" />
 
-    <LazyEarnWithUs class="segment" />
+      <LazyEarnWithUs class="segment" />
 
-    <LazyProZone class="segment" />
+      <LazyHearTheExperiences class="segment" />
 
-    <LazyCommunityPreview class="segment" />
+      <LazyProZone class="segment" />
+    </main>
+
+    <LazyInstallBadge class="install-badge" show-close-button />
   </div>
 </template>
 
@@ -28,6 +32,8 @@ export default {
 
   mounted() {},
 
+  methods: {},
+
   head() {
     return {
       title: this.pageTitle,
@@ -39,11 +45,23 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.segment {
-  padding: $xx-large-unit $standard-unit;
+.index-page {
+  main {
+    .segment {
+      padding: $xx-large-unit $standard-unit;
 
-  &:nth-child(even) {
-    background-color: $segment-background;
+      &:nth-child(even) {
+        background-color: $segment-background;
+      }
+    }
+  }
+
+  .install-badge {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
   }
 }
 </style>
