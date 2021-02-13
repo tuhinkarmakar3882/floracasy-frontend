@@ -19,7 +19,7 @@ export default {
       mode: 'client',
     },
     {
-      src: '~/middleware/spa-analytics.js',
+      src: '~/middleware/spa-analytics-and-setup-user.js',
       mode: 'client',
     },
     {

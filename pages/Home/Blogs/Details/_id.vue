@@ -183,7 +183,6 @@ export default {
       linkPosition: -1,
     })
     await this.incrementViewCount()
-    await setupUser(this.$store)
   },
 
   methods: {
@@ -299,7 +298,7 @@ export default {
       if (this.prevURL) {
         await this.$router.back()
       } else {
-        await this.$router.replace(navigationRoutes.Home.DashBoard)
+        await this.$router.replace(navigationRoutes.index)
       }
     },
   },

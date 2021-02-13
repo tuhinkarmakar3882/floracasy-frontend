@@ -168,8 +168,6 @@ export default {
       linkPosition: -1,
     })
 
-    await setupUser(this.$store)
-
     if (this.$route.params.id === this.user.uid) {
       await this.$router.replace(navigationRoutes.Home.Account.Details)
     } else {

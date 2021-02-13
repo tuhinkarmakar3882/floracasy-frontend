@@ -132,7 +132,6 @@ export default {
       linkPosition: -1,
     })
 
-    await setupUser(this.$store)
     this.isReady = true
     await this.fetchStories()
   },

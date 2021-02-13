@@ -142,8 +142,6 @@ export default {
       linkPosition: -1,
     })
 
-    await setupUser(this.$store)
-
     this.threadDetail = await this.$axios.$get(
       endpoints.chat_system.threadDetail,
       { params: { thread_id: this.$route.params.messageThreadId } }

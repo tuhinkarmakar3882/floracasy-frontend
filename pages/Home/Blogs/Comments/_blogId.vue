@@ -181,7 +181,6 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await setupUser(this.$store)
   },
 
   methods: {
