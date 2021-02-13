@@ -1,21 +1,13 @@
 <template>
   <div class="promotional-blogs-component">
-    <!--    <LazySegmentTitle-->
-    <!--      class="px-4"-->
-    <!--      leading-icon="mdi mdi-fire"-->
-    <!--      topic="Top 3 Trending Articles"-->
-    <!--      center-topic-->
-    <!--      highlight-color="#fff"-->
-    <!--      active-background-->
-    <!--    />-->
-    <p style="color: #fff" class="text-center active-background py-6">
-      <i class="mdi mdi-fire" />
-      <strong style="font-family: 'Nunito Sans', sans-serif">
-        Top 3 Trending Articles
-      </strong>
-    </p>
+    <LazySegmentTitle
+      class="px-4 py-6"
+      leading-icon="mdi mdi-fire"
+      topic="Trending Articles"
+      center-topic
+    />
 
-    <hr class="faded-divider my-0 pb-0" />
+    <hr class="reversed-faded-divider mt-0 mb-3" />
 
     <section v-if="blogsData">
       <LazyBlogPost
@@ -24,6 +16,7 @@
         :blog="blog"
         class="blog-post pt-4"
         hide-blog-actions
+        hide-more-options-button
       />
     </section>
   </div>
