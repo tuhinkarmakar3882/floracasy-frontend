@@ -262,7 +262,7 @@ html {
         &:focus {
           & ~ .material-form-field-label {
             top: $material-labelOffset -
-              ($material-textInputPaddingTopBottom + 5);
+              ($material-textInputPaddingTopBottom + $nano-unit);
             font-size: 14px;
           }
         }
