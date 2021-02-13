@@ -57,13 +57,15 @@ export const showUITip = async (
   store,
   message = '',
   type = 'info',
-  dismissible = true
+  dismissible = true,
+  timeout = 2500
 ) => {
   if (store === undefined) throw new Error('No State Found')
   await store.dispatch('SocketHandler/updateSocketMessage', {
     message,
     notificationType: type || 'info',
     dismissible,
+    timeout,
   })
 }
 

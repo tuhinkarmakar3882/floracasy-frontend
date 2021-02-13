@@ -10,7 +10,7 @@ export default async function ({ $axios, $cookies, store }) {
   $axios.defaults.xsrfCookieName = 'csrftoken'
   $axios.setToken($cookies.get('access'), 'Bearer')
 
-  if (store.state.authState)
+  if (store.state.isUserAuthenticated)
     await store.dispatch('NotificationChannel/fetchNotificationChannelId')
 
   $axios.onError(({ response: error }) => {

@@ -4,19 +4,19 @@ import { auth } from '@/plugins/firebase.js'
 
 export const state = () => {
   return {
-    authState: null,
+    isUserAuthenticated: null,
   }
 }
 
 export const getters = {
-  getAuthState(state) {
-    return state.authState
+  getIsUserAuthenticated(state) {
+    return state.isUserAuthenticated
   },
 }
 
 export const mutations = {
-  SET_AUTH_STATE(state, authState) {
-    state.authState = authState
+  SET_IS_USER_AUTHENTICATED(state, isUserAuthenticated) {
+    state.isUserAuthenticated = isUserAuthenticated
   },
 }
 
@@ -48,11 +48,11 @@ export const actions = {
       await this.$cookies.remove('refresh')
     }
 
-    commit('SET_AUTH_STATE', data.authState)
+    commit('SET_IS_USER_AUTHENTICATED', data?.authState)
   },
 
   login({ commit }) {
-    commit('SET_AUTH_STATE', true)
+    commit('SET_IS_USER_AUTHENTICATED', true)
   },
 
   updateTokens({ commit }, { tokens }) {
@@ -63,7 +63,7 @@ export const actions = {
     process.client && localStorage.removeItem('is_auth')
     this.$cookies.remove('access')
     this.$cookies.remove('refresh')
-    commit('SET_AUTH_STATE', false)
+    commit('SET_IS_USER_AUTHENTICATED', false)
     return auth.signOut()
   },
 }
