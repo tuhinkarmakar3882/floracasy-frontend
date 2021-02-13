@@ -1,22 +1,26 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { FeatureToggleMessageService } from '~/environmentalVariables'
 
-const messageOption = {
-  id: 0,
-  text: 'Messages',
-  icon: 'mdi-message-text-outline',
-  activeIcon: 'mdi-message-text',
-  color: '#6360f8',
-  route: navigationRoutes.Home.Messages.index,
-}
-const profileOption = {
-  id: 1,
-  text: 'Profile',
-  icon: 'mdi-account-outline',
-  activeIcon: 'mdi-account',
-  color: '#6360f8',
-  route: navigationRoutes.Home.Account.Details,
-}
+const messageOption = [
+  {
+    id: 0,
+    text: 'Messages',
+    icon: 'mdi-message-text-outline',
+    activeIcon: 'mdi-message-text',
+    color: '#6360f8',
+    route: navigationRoutes.Home.Messages.index,
+  },
+]
+const profileOption = [
+  {
+    id: 1,
+    text: 'Profile',
+    icon: 'mdi-account-outline',
+    activeIcon: 'mdi-account',
+    color: '#6360f8',
+    route: navigationRoutes.Home.Account.Details,
+  },
+]
 
 export const state = () => ({
   bottomNavMenuOptions: [
@@ -64,7 +68,7 @@ export const state = () => ({
 
   topNavOptions: [
     ...(FeatureToggleMessageService ? messageOption : []),
-    profileOption,
+    ...profileOption,
   ],
 
   newContentAvailable: [false, false, false, false, false],
