@@ -26,6 +26,10 @@
 > ### Message System
 >   - Add Chat Message Screen
 >   - ~~Add Realtime Delivery~~
+>   - Add feature toggle
+>   - Fix security bug
+>   - Add a check before showing the message on the message chat
+>   - Improve UI/UX
 
 > ### Miscellaneous
 >   - Frontend Polish
