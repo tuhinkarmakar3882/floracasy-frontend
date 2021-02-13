@@ -10,6 +10,8 @@ const endpoints = {
     whoAmI: '/auth/safe_detail/',
   },
   blog: {
+    sampleBlogs: '/allow_any/blog/fetch/sample_blogs/',
+
     fetch: '/allow_authenticated/blog/fetch/',
     info: '/allow_authenticated/blog/info/',
     detail: '/allow_any/blog/detail/',
