@@ -9,14 +9,20 @@
     />
 
     <section v-if="items" class="grid-container py-8">
-      <div v-for="item in items" :key="item.id" class="grid-col">
+      <div
+        v-for="item in items"
+        :key="item.id"
+        v-ripple
+        class="grid-col"
+        @click="openSignInPage"
+      >
         <img :src="item.photo_url" alt="item.name" />
         <p class="my-4">
           {{ item.name }}
         </p>
       </div>
 
-      <div class="grid-col">
+      <div v-ripple class="grid-col" @click="openSignInPage">
         <span class="mdi mdi-dots-horizontal mdi-48px" />
         <p class="my-4">More</p>
       </div>
