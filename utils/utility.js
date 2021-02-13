@@ -74,7 +74,7 @@ export const setupUser = async (store) => {
 
   const currentUser = await store.getters['UserManagement/getUser']
   if (!currentUser) {
-    await store.dispatch('UserManagement/fetchData')
+    await store.dispatch('UserManagement/fetchData').catch(() => {})
   }
 }
 
