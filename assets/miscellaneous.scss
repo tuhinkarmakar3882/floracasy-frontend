@@ -79,8 +79,7 @@ html {
       padding: 1rem;
       margin: 1rem 0;
       border-radius: $nano-unit;
-      word-break: break-all;
-      white-space: pre;
+      word-break: break-all; // white-space: pre;
       line-height: 1.8;
       overflow: auto;
     }
