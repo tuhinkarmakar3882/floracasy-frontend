@@ -132,9 +132,7 @@ export default {
     },
   },
 
-  async mounted() {
-    await setupUser(this.$store)
-  },
+  mounted() {},
 
   methods: {
     shorten,

@@ -7,28 +7,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { setupUser } from '~/utils/utility'
 
 export default {
   name: 'AddPostPreview',
-
-  data() {
-    return {
-      isReady: false,
-    }
-  },
 
   computed: {
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
   },
-  async mounted() {
-    await setupUser(this.$store)
-    this.isReady = true
-  },
-
-  methods: {},
+  mounted() {},
 }
 </script>
 
