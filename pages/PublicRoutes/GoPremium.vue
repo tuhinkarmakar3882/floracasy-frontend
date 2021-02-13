@@ -1,7 +1,9 @@
 <template>
   <div class="go-premium-page">
-    <span> mdi-crown </span>
+    <i class="mdi mdi-crown mdi-48px" />
+
     <h1 class="my-4">This is my super duper Go Premium Page</h1>
+
     <p class="my-4">And I love it</p>
   </div>
 </template>

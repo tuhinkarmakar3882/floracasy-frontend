@@ -1,6 +1,6 @@
 <template>
   <div class="write-and-earn-page">
-    <span> mdi-heart </span>
+    <i class="mdi mdi-heart mdi-48px" />
 
     <h1 class="my-4">This is my super duper Write and Earn Page</h1>
 

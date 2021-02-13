@@ -136,7 +136,11 @@ import sanitizeHtml from 'sanitize-html'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import { parseTimeUsingStandardLibrary, shorten } from '@/utils/utility'
+import {
+  parseTimeUsingStandardLibrary,
+  shorten,
+  showUITip,
+} from '@/utils/utility'
 import 'highlight.js/styles/monokai.css'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
@@ -196,6 +200,7 @@ export default {
     navigateTo(path) {
       this.$router.push(path)
     },
+
     async like() {
       try {
         const action = await this.$axios
@@ -206,11 +211,7 @@ export default {
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await showUITip(this.$store, 'Network Error', 'error', true)
       }
     },
 
@@ -221,11 +222,7 @@ export default {
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await showUITip(this.$store, 'Network Error', 'error', true)
       }
     },
 
@@ -261,18 +258,15 @@ export default {
             this.blog.totalShares--
           }
         } catch (error) {
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Unable to share',
-            notificationType: 'error',
-            dismissible: true,
-          })
+          await showUITip(this.$store, 'Unable to share', 'error')
         }
       } else {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Not Yet Supported on this Browser',
-          notificationType: 'warning',
-          dismissible: true,
-        })
+        await showUITip(
+          this.$store,
+          'Not Yet Supported on this Browser',
+          'warning',
+          true
+        )
       }
     },
 
