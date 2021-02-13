@@ -11,7 +11,6 @@
       :carousel-items="quotes"
       quote-carousel
       show-navigation-dots
-      show-navigation-arrows
     />
   </div>
 </template>

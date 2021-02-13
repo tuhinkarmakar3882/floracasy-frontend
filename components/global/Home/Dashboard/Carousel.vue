@@ -32,7 +32,6 @@
     <section v-else-if="imageCarousel" class="carousel-items-container">
       <img
         v-for="item in carouselItems"
-        v-show="item.id === activeItem"
         :key="item.id"
         class="carousel-item"
         :src="item.image"
@@ -175,7 +174,7 @@ export default {
     align-items: center;
     gap: $standard-unit;
     text-align: center;
-    overflow: auto !important;
+    overflow: hidden !important;
     scroll-snap-type: x mandatory;
     scroll-snap-align: start;
     scroll-snap-stop: always;
