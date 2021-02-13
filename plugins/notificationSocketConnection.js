@@ -1,16 +1,15 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import * as secrets from '~/environmentalVariables'
+import { showUITip } from '~/utils/utility'
 
 export default async ({ store, $cookies }) => {
-  if (process.client && store.state.authState) {
-    await store.dispatch('SocketHandler/updateSocketMessage', {
-      message: 'Connecting to Server...',
-      notificationType: 'info',
-      dismissible: false,
-    })
+  if (process.client && store.state.isUserAuthenticated) {
+    await showUITip(store, 'Connecting to Server...', 'info', false)
+
     const notificationChannelId = await store.getters[
       'NotificationChannel/getNotificationChannelId'
     ]
+
     // eslint-disable-next-line
     const endpoint = `${secrets.notificationWebsocketBase}notification_socket/${notificationChannelId}/?access=${$cookies.get('access')}`
 
@@ -23,41 +22,35 @@ export default async ({ store, $cookies }) => {
       maxEnqueuedMessages: 50,
     }
 
-    const reconnectingSocket = new ReconnectingWebSocket(
+    const notificationSocket = new ReconnectingWebSocket(
       endpoint,
       [],
       connectionOptions
     )
 
-    reconnectingSocket.onopen = async () => {
-      await store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Connected',
-        notificationType: 'success',
-        dismissible: true,
-      })
+    notificationSocket.onopen = async () => {
+      await showUITip(store, 'Connected', 'success', true)
     }
 
-    reconnectingSocket.onmessage = async (e) => {
-      const data = JSON.parse(e.data)
+    notificationSocket.onmessage = async (e) => {
+      const { message, action: notificationType, timeout } = JSON.parse(e.data)
+
       await store.dispatch('NavigationState/updateNewContent', {
         position: 3,
         value: true,
         dismissible: true,
       })
-      await store.dispatch('SocketHandler/updateSocketMessage', {
-        message: data.message,
-        notificationType: data.action,
-        dismissible: true,
-        timeout: data.timeout || 2500,
-      })
+
+      await showUITip(store, message, notificationType, true, timeout || 2500)
     }
 
-    reconnectingSocket.onclose = async () => {
-      await store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Connection Lost. Reconnecting...',
-        notificationType: 'reconnecting',
-        dismissible: false,
-      })
+    notificationSocket.onclose = async () => {
+      await showUITip(
+        store,
+        'Connection Lost. Reconnecting...',
+        'reconnecting',
+        true
+      )
     }
   }
 }
