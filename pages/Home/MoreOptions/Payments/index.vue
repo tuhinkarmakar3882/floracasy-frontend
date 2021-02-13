@@ -59,15 +59,11 @@
             </ul>
           </div>
           <div class="text-center mt-6">
-            <button
-              v-ripple=""
-              class="premium-btn mx-2 my-4"
-              style="width: 150px"
-            >
+            <button v-ripple class="premium-btn mx-2 my-4" style="width: 150px">
               Buy Premium
             </button>
             <button
-              v-ripple=""
+              v-ripple
               class="premium-outlined-btn mx-2 my-4"
               style="width: 150px"
               @click="$router.push(navigationRoutes.Home.MoreOptions.GoPremium)"

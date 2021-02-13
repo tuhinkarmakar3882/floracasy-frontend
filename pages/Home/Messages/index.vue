@@ -4,7 +4,7 @@
       <div
         v-for="messageThread in messageThreads"
         :key="messageThread.id"
-        v-ripple=""
+        v-ripple
         class="message-thread px-4 py-4"
         @click="
           $router.push(

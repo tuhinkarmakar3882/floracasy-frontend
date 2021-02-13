@@ -47,14 +47,14 @@
             v-if="notification.onclickAction === 'open_blog_comment_page'"
           >
             <button
-              v-ripple=""
+              v-ripple
               class="primary-outlined-btn my-4 mx-2"
               @click="openCommentDetailsPage"
             >
               Send Reply
             </button>
             <button
-              v-ripple=""
+              v-ripple
               class="secondary-outlined-btn my-4 mx-2"
               @click="openProfilePage('commentedBy')"
             >
@@ -65,14 +65,14 @@
           <!--          Blog Like Notification Actions-->
           <section v-else-if="notification.onclickAction === 'like_blog'">
             <button
-              v-ripple=""
+              v-ripple
               class="primary-outlined-btn my-4 mx-2"
               @click="openBlogDetailsPage('identifier')"
             >
               View Blog
             </button>
             <button
-              v-ripple=""
+              v-ripple
               class="secondary-outlined-btn my-4 mx-2"
               @click="openProfilePage('liked_by')"
             >

@@ -12,7 +12,7 @@
         style="height: 56px; display: flex; align-items: center"
         @click="handleBackButtonPress"
       />
-      <h6 v-ripple="">
+      <h6 v-ripple>
         <nuxt-link
           :to="navigationRoutes.index"
           class="brand-name no-underline"
@@ -22,7 +22,7 @@
         </nuxt-link>
       </h6>
       <nuxt-link
-        v-ripple=""
+        v-ripple
         :to="navigationRoutes.Home.Messages.index"
         class="ml-auto px-6"
         style="height: 56px; display: flex; align-items: center"
@@ -112,10 +112,10 @@
             class="mdi"
           />
         </div>
-        <div v-ripple="" class="comment" @click="openCommentPage">
+        <div v-ripple class="comment" @click="openCommentPage">
           <i class="mdi mdi-message-text" />
         </div>
-        <div v-ripple="" class="save" @click="updateSavedBlogPreference">
+        <div v-ripple class="save" @click="updateSavedBlogPreference">
           <i
             :class="
               blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
@@ -123,7 +123,7 @@
             class="mdi"
           />
         </div>
-        <div v-ripple="" class="share" @click="share">
+        <div v-ripple class="share" @click="share">
           <i class="mdi mdi-share-variant" />
         </div>
       </section>

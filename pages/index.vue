@@ -3,7 +3,7 @@
     <main>
       <LazyHeroContent class="segment" />
 
-      <LazyPromotionalBlogs class="py-4" />
+      <LazyPromotionalBlogs />
 
       <LazyCategoriesPreview class="segment" />
 
@@ -46,6 +46,10 @@ export default {
 @import 'assets/all-variables';
 
 .index-page {
+  * {
+    transition: all 300ms ease-in-out;
+  }
+
   main {
     .segment {
       padding: $xx-large-unit $standard-unit;

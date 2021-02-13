@@ -2,7 +2,7 @@
   <div class="modal-component" :style="{ color: color }">
     <header>
       <span
-        v-ripple=""
+        v-ripple
         class="mdi mdi-arrow-left px-4 py-2 my-0 danger-light"
         @click="toggle"
       />
@@ -22,7 +22,7 @@
       <slot name="actions" />
 
       <button
-        v-ripple=""
+        v-ripple
         class="danger-outlined-btn my-5 mx-2 px-8"
         @click="toggle"
       >

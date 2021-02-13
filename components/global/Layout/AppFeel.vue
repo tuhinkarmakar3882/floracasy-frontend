@@ -22,7 +22,7 @@
     >
       <h5
         v-if="showBackButton"
-        v-ripple=""
+        v-ripple
         :class="{ 'px-5': showBackButton }"
         class="mdi mdi-arrow-left"
         style="height: 56px; display: flex; align-items: center"

@@ -9,7 +9,7 @@
         <li
           v-for="category in categories"
           :key="category.id"
-          v-ripple=""
+          v-ripple
           class="px-4 py-3"
           @click="
             $router.push(

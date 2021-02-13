@@ -3,7 +3,7 @@
     <section class="content">
       <p class="px-4 mb-2 top-line">
         <nuxt-link
-          v-ripple=""
+          v-ripple
           :to="
             navigationRoutes.Home.Account.Overview.replace(
               '{userUID}',
@@ -16,7 +16,7 @@
         </nuxt-link>
         <strong class="mx-1">IN</strong>
         <nuxt-link
-          v-ripple=""
+          v-ripple
           :to="
             navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
               '{name}',
@@ -28,6 +28,7 @@
           {{ blog.category.name }}
         </nuxt-link>
         <i
+          v-if="!hideMoreOptionsButton"
           v-ripple="'#4f4f4f5F'"
           class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
           @click="showOptions = !showOptions"
@@ -43,12 +44,12 @@
               @click="addOrRemoveToSaveBlogs"
             >
               <span
-                class="icon mdi"
                 :class="
                   blog.isSavedForLater
                     ? 'mdi-bookmark-check'
                     : 'mdi-bookmark-outline'
                 "
+                class="icon mdi"
                 style="color: #6dd0bf"
               />
               {{ !blog.isSavedForLater ? 'Save for later' : 'Saved' }}
@@ -58,7 +59,7 @@
               Report Blog
             </li>
             <li class="my-0 py-2 px-4" style="display: block">
-              <hr style="background-color: #464646" class="my-0" />
+              <hr class="my-0" style="background-color: #464646" />
             </li>
             <li v-ripple="`#ff82815f`" class="py-2 px-4">
               <p
@@ -73,15 +74,7 @@
         </div>
       </transition>
 
-      <div
-        v-ripple=""
-        class="px-4 pb-6"
-        @click="
-          navigateTo(
-            navigationRoutes.Home.Blogs.Details.replace('{id}', blog.identifier)
-          )
-        "
-      >
+      <div v-ripple class="px-4 pb-6" @click="openBlogDetails">
         <h5>{{ blog.title }}</h5>
 
         <small class="timestamp mt-3">
@@ -91,9 +84,9 @@
 
         <img
           v-if="blog.coverImage"
-          class="my-5"
-          :src="blog.coverImage"
           :alt="blog.title"
+          :src="blog.coverImage"
+          class="my-5"
         />
         <p :class="!blog.coverImage && 'my-5'">
           <span v-if="blog.subtitle">
@@ -104,11 +97,11 @@
       </div>
     </section>
 
-    <section class="blog-actions px-4 pb-8">
+    <section v-if="!hideBlogActions" class="blog-actions px-4 pb-8">
       <div v-ripple class="like" @click="like">
         <i
-          class="mdi mr-2 inline-block align-middle"
           :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          class="mdi mr-2 inline-block align-middle"
         />
         <span class="value inline-block align-middle">
           {{ shorten(blog.totalLikes) }}
@@ -146,6 +139,14 @@ export default {
       type: Object,
       required: true,
     },
+    hideBlogActions: {
+      type: Boolean,
+      default: false,
+    },
+    hideMoreOptionsButton: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -156,10 +157,6 @@ export default {
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
-
-    navigateTo(path) {
-      this.$router.push(path)
-    },
 
     async like() {
       try {
@@ -234,6 +231,15 @@ export default {
           identifier: this.blog.identifier,
         },
       })
+    },
+
+    async openBlogDetails() {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Details.replace(
+          '{id}',
+          this.blog.identifier
+        )
+      )
     },
   },
 }

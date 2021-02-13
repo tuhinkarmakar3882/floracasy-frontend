@@ -9,7 +9,7 @@
       <div class="details">
         <p v-ripple class="secondary">
           <nuxt-link
-            v-ripple=""
+            v-ripple
             :to="
               navigationRoutes.Home.Account.Overview.replace(
                 '{userUID}',

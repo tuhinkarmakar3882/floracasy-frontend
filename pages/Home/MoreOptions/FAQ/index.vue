@@ -13,7 +13,7 @@
       />
       <p>{{ pageTitle }}</p>
       <span
-        v-ripple=""
+        v-ripple
         class="mdi mdi-menu ml-auto px-5"
         style="
           height: 56px;
@@ -58,7 +58,7 @@
           <li
             v-for="(question, index) in questions"
             :key="index"
-            v-ripple=""
+            v-ripple
             class="py-4 px-4"
             @click="drawerIsOpened = false"
           >

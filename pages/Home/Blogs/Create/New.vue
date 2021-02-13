@@ -12,11 +12,11 @@
         style="height: 56px; display: flex; align-items: center"
         @click="handleBackButtonPress"
       />
-      <p v-ripple="" style="font-size: 1.1rem">{{ pageTitle }}</p>
+      <p v-ripple style="font-size: 1.1rem">{{ pageTitle }}</p>
       <div class="ml-auto">
         <button
           v-if="step === 1"
-          v-ripple=""
+          v-ripple
           :class="
             !(hasTitle && hasBlogCategory) ? 'disabled-btn' : 'secondary-btn'
           "
@@ -29,7 +29,7 @@
 
         <button
           v-if="step === 2"
-          v-ripple=""
+          v-ripple
           class="secondary-btn px-7"
           @click="goToNextStep"
         >
@@ -38,7 +38,7 @@
 
         <button
           v-if="step === 3"
-          v-ripple=""
+          v-ripple
           class="secondary-btn px-7"
           @click="publish"
         >

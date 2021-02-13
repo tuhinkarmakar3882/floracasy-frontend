@@ -32,7 +32,7 @@
 
           <div class="feedback-options">
             <button
-              v-ripple=""
+              v-ripple
               class="secondary-outlined-btn"
               @click="recordPositiveResponse"
             >
@@ -41,7 +41,7 @@
             </button>
 
             <button
-              v-ripple=""
+              v-ripple
               class="danger-outlined-btn"
               @click="recordNegativeResponse"
             >

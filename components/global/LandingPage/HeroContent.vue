@@ -120,7 +120,6 @@ export default {
 
     h1 {
       font-family: $Prata;
-      font-size: $headline-title-font-size;
       font-weight: 400;
       color: $white;
     }

@@ -55,7 +55,7 @@
 
         <section class="actions">
           <button
-            v-ripple=""
+            v-ripple
             class="primary-btn px-6"
             @click="
               $router.push(navigationRoutes.Home.MoreOptions.Payments.index)
@@ -64,7 +64,7 @@
             Payments
           </button>
           <button
-            v-ripple=""
+            v-ripple
             class="primary-outlined-btn px-6"
             @click="
               $router.push(

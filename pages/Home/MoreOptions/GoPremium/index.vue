@@ -35,7 +35,7 @@
         </ul>
 
         <div class="text-center my-4">
-          <button v-ripple="" class="premium-btn">Continue to Buy</button>
+          <button v-ripple class="premium-btn">Continue to Buy</button>
         </div>
       </section>
     </template>
