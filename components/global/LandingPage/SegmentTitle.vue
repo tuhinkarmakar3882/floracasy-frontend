@@ -1,8 +1,17 @@
 <template>
   <div class="top-header">
-    <p v-if="topic" :style="{ color: highlightColor }">
+    <p
+      v-if="topic"
+      :style="{ color: highlightColor }"
+      :class="[
+        centerTopic && 'text-center',
+        activeBackground && 'active-background',
+      ]"
+    >
       <i v-if="leadingIcon" :class="leadingIcon" />
-      <strong>{{ topic }}</strong>
+      <strong style="font-family: 'Nunito Sans', sans-serif">{{
+        topic
+      }}</strong>
     </p>
     <h3 v-if="title" class="my-4">{{ title }}</h3>
     <p v-if="leadingParagraph">{{ leadingParagraph }}</p>
@@ -22,6 +31,16 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    centerTopic: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    activeBackground: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     title: {
       type: String,
