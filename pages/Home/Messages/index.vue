@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!featureToggleMessageService" class="message-page mb-6">
+  <div v-if="FeatureToggleMessageService" class="message-page mb-6">
     <section class="message-thread-list">
       <div
         v-for="messageThread in messageThreads"
@@ -64,7 +64,7 @@ import {navigationRoutes} from '@/navigation/navigationRoutes'
 import {getRelativeTime, processLink} from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import {featureToggleMessageService} from "~/environmentalVariables";
+import {FeatureToggleMessageService} from "~/environmentalVariables";
 
 export default {
   name: 'Messages',
@@ -74,7 +74,7 @@ export default {
 
   data() {
     return {
-      featureToggleMessageService,
+      FeatureToggleMessageService,
       pageTitle: 'Messages',
       messageThreads: [],
       fetchThreads: endpoints.chat_system.fetchThreads,

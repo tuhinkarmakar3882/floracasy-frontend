@@ -1,5 +1,5 @@
 <template>
-  <AppFeel v-if="!featureToggleMessageService" class="chat-screen-page" custom-header on-back="/">
+  <AppFeel v-if="FeatureToggleMessageService" class="chat-screen-page" custom-header on-back="/">
     <template v-slot:app-bar-custom-header>
       <h5
         v-ripple
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import {featureToggleMessageService} from "~/environmentalVariables";
+import {FeatureToggleMessageService} from "~/environmentalVariables";
 import {mapGetters} from 'vuex'
 import {navigationRoutes} from '@/navigation/navigationRoutes'
 import AppFeel from '@/components/global/Layout/AppFeel'
@@ -109,7 +109,7 @@ export default {
 
   data() {
     return {
-      featureToggleMessageService,
+      FeatureToggleMessageService,
       threadDetail: null,
       chatSocket: null,
       prevURL: null,

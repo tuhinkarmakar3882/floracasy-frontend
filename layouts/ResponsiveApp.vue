@@ -23,7 +23,7 @@
               width="56"
             />
             <h5
-              v-if="!featureToggleMessageService"
+              v-if="FeatureToggleMessageService"
               v-else
               :class="
                 index === topNavActiveLink
@@ -143,7 +143,7 @@
               height="56"
               width="56"
             />
-            <h5 v-if="!featureToggleMessageService"
+            <h5 v-if="FeatureToggleMessageService"
               v-else
               :class="
                 index === topNavActiveLink
@@ -237,7 +237,7 @@
 </template>
 
 <script>
-import {featureToggleMessageService} from "~/environmentalVariables";
+import {FeatureToggleMessageService} from "~/environmentalVariables";
 import {mapGetters} from 'vuex'
 import {navigationRoutes} from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
@@ -250,7 +250,7 @@ export default {
 
   data() {
     return {
-      featureToggleMessageService,
+      FeatureToggleMessageService,
       navigationRoutes,
       showFragment: false,
       showTopBar: true,
