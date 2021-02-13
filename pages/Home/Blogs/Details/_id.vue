@@ -14,9 +14,9 @@
       />
       <h6 v-ripple="">
         <nuxt-link
+          :to="navigationRoutes.index"
           class="brand-name no-underline"
           style="color: white !important"
-          :to="navigationRoutes.index"
         >
           Floracasy
         </nuxt-link>
@@ -112,10 +112,10 @@
             class="mdi"
           />
         </div>
-        <div v-ripple="" class="comment" @click="comment">
+        <div v-ripple="" class="comment" @click="openCommentPage">
           <i class="mdi mdi-message-text" />
         </div>
-        <div v-ripple="" class="save" @click="addOrRemoveToSaveBlogs">
+        <div v-ripple="" class="save" @click="updateSavedBlogPreference">
           <i
             :class="
               blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
@@ -138,12 +138,14 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import {
   parseTimeUsingStandardLibrary,
+  setupUser,
   shorten,
   showUITip,
 } from '@/utils/utility'
 import 'highlight.js/styles/monokai.css'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'BlogDetails',
@@ -167,6 +169,12 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: -1,
@@ -175,6 +183,7 @@ export default {
       linkPosition: -1,
     })
     await this.incrementViewCount()
+    await setupUser(this.$store)
   },
 
   methods: {
@@ -182,8 +191,7 @@ export default {
     shorten,
 
     async incrementViewCount() {
-      const user = await this.$store.getters['UserManagement/getUser']
-      if (user) {
+      if (this.user) {
         await this.$axios.$post(
           endpoints.blog.updateViewCount.replace(
             '{identifier}',
@@ -197,25 +205,26 @@ export default {
       }
     },
 
-    navigateTo(path) {
-      this.$router.push(path)
+    async navigateTo(path) {
+      await this.$router.push(path)
     },
 
-    async like() {
+    async sendLikeRequest() {
       try {
         const action = await this.$axios
           .$post(endpoints.blog.like, {
             identifier: this.blog.identifier,
           })
           .then(({ action }) => action)
+
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
+
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
         await showUITip(this.$store, 'Network Error', 'error', true)
       }
     },
-
-    async addOrRemoveToSaveBlogs() {
+    async sendUpdateSavedBlogRequest() {
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
           identifier: this.blog.identifier,
@@ -226,7 +235,23 @@ export default {
       }
     },
 
-    async comment() {
+    async like() {
+      if (this.user) {
+        await this.sendLikeRequest()
+      } else {
+        await this.navigateTo(navigationRoutes.Authentication.SignInToContinue)
+      }
+    },
+
+    async updateSavedBlogPreference() {
+      if (this.user) {
+        await this.sendUpdateSavedBlogRequest()
+      } else {
+        await this.navigateTo(navigationRoutes.Authentication.SignInToContinue)
+      }
+    },
+
+    async openCommentPage() {
       await this.$router.push(
         navigationRoutes.Home.Blogs.Comments.BlogId.replace(
           '{BlogId}',
@@ -274,15 +299,11 @@ export default {
       if (this.prevURL) {
         await this.$router.back()
       } else {
-        await this.$router.replace({
-          path: navigationRoutes.Home.DashBoard,
-          query: {
-            tabNumber: 2,
-          },
-        })
+        await this.$router.replace(navigationRoutes.Home.DashBoard)
       }
     },
   },
+
   head() {
     return {
       title: this.blog.title,
