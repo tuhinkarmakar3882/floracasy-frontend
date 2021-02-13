@@ -1,5 +1,5 @@
 <template>
-  <div v-if="FeatureToggleMessageService" class="message-page mb-6">
+  <div class="message-page mb-6">
     <section class="message-thread-list">
       <div
         v-for="messageThread in messageThreads"
@@ -60,21 +60,20 @@
 </template>
 
 <script>
-import {navigationRoutes} from '@/navigation/navigationRoutes'
-import {getRelativeTime, processLink} from '@/utils/utility'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import {FeatureToggleMessageService} from "~/environmentalVariables";
+import { FeatureToggleMessageService } from '~/environmentalVariables'
 
 export default {
   name: 'Messages',
-  components: {LoadingIcon},
-  middleware: 'isNotAuthenticated',
+  components: { LoadingIcon },
+  middleware: FeatureToggleMessageService ? 'isAuthenticated' : 'hidden',
   layout: 'ResponsiveApp',
 
   data() {
     return {
-      FeatureToggleMessageService,
       pageTitle: 'Messages',
       messageThreads: [],
       fetchThreads: endpoints.chat_system.fetchThreads,
@@ -104,7 +103,7 @@ export default {
       }
 
       try {
-        const {results, next} = await this.$axios.$get(this.fetchThreads)
+        const { results, next } = await this.$axios.$get(this.fetchThreads)
         if (results.length) {
           this.fetchThreads = processLink(next)
           this.messageThreads.push(...results)

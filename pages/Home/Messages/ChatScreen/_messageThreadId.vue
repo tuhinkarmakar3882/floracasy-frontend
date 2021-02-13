@@ -1,5 +1,5 @@
 <template>
-  <AppFeel v-if="FeatureToggleMessageService" class="chat-screen-page" custom-header on-back="/">
+  <AppFeel class="chat-screen-page" custom-header on-back="/">
     <template v-slot:app-bar-custom-header>
       <h5
         v-ripple
@@ -85,22 +85,22 @@
 </template>
 
 <script>
-import {FeatureToggleMessageService} from "~/environmentalVariables";
-import {mapGetters} from 'vuex'
-import {navigationRoutes} from '@/navigation/navigationRoutes'
+import { mapGetters } from 'vuex'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import RippleButton from '@/components/global/RippleButton'
 import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import MessageItem from '@/components/global/MessageItem.vue'
+import { FeatureToggleMessageService } from '~/environmentalVariables'
 import endpoints from '~/api/endpoints'
-import {processLink} from '~/utils/utility'
+import { processLink } from '~/utils/utility'
 
 export default {
   scrollToTop: false,
   name: 'MessageThreadId',
-  middleware: 'isNotAuthenticated',
+  middleware: FeatureToggleMessageService ? 'isAuthenticated' : 'hidden',
   components: { MessageItem, RippleButton, LoadingIcon, AppFeel },
 
   asyncData({ from: prevURL }) {
@@ -109,7 +109,6 @@ export default {
 
   data() {
     return {
-      FeatureToggleMessageService,
       threadDetail: null,
       chatSocket: null,
       prevURL: null,
