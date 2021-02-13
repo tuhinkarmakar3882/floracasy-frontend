@@ -3,6 +3,8 @@
     <main>
       <LazyHeroContent class="segment" />
 
+      <LazyPromotionalBlogs class="py-4" />
+
       <LazyCategoriesPreview class="segment" />
 
       <LazyCommunityPreview class="segment" />
@@ -48,7 +50,7 @@ export default {
     .segment {
       padding: $xx-large-unit $standard-unit;
 
-      &:nth-child(even) {
+      &:nth-child(odd) {
         background-color: $segment-background;
       }
     }
