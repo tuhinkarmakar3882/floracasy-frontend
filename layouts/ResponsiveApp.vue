@@ -15,7 +15,7 @@
             :to="option.route"
           >
             <img
-              v-if="index === 1 && user"
+              v-if="option.isProfileIcon && user"
               :src="user.photoURL"
               alt=""
               class="profile-image"
@@ -135,7 +135,7 @@
             :to="option.route"
           >
             <img
-              v-if="index === 1 && user"
+              v-if="option.isProfileIcon && user"
               :src="user.photoURL"
               alt=""
               class="profile-image"

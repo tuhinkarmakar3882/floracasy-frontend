@@ -19,6 +19,7 @@ const profileOption = [
     activeIcon: 'mdi-account',
     color: '#6360f8',
     route: navigationRoutes.Home.Account.Details,
+    isProfileIcon: true,
   },
 ]
 
