@@ -8,6 +8,7 @@
     <template slot="main">
       <section class="px-4 my-4">
         <h3>How to use floracasy ?</h3>
+        <hr class="faded-divider" />
 
         <p>
           Floracasy give equality to both readers &amp; writes. Readers can get
@@ -17,7 +18,7 @@
           you can directly come into our home . By using our bottom navigation
           bar one can navigate easily. 1st option of our<strong>
             &quot;home&quot; </strong
-          >,here you can exprole unlimited blogs. 2nd option in our bottom nav
+          >,here you can explore unlimited blogs. 2nd option in our bottom nav
           bar is<strong> &quot;profile&quot; </strong>, here you can easily
           explore his/ her profile &amp; many more into this. 3rd option is
           <strong>create blogs </strong>, here you can easily create your blogs,
@@ -30,36 +31,39 @@
         </p>
 
         <h3>How to block user</h3>
+        <hr class="faded-divider" />
 
-        <h5>
+        <p>
           If you have some genuine problem with any user you can block his /her
           profile . To block an user from your profile you need to rise a help
           ticket( more option-&gt; help &amp; support -&gt; contact support ) by
           sharing your problem &amp; floracasy team will Consider a fair trial.
-        </h5>
+        </p>
 
         <h3>Managing payments</h3>
+        <hr class="faded-divider" />
 
-        <h5>
+        <p>
           As you can know payment is a very secure service. so we keet it very
           confidential. You can clam your payment once your earning reaches to
           100 dollars. To clam you payment you can just click below button &amp;
           after varification you can easily receive your payment.
-        </h5>
+        </p>
 
         <button>claim payment</button>
         <button>overview</button>
 
-        <h5>
+        <p>
           one can also see thier each blog&#39;s view count , total view , total
           like &amp; many more but for this you just need to join our premium
           pack . not only this you will get may other exciting features in our
           premium pack.
-        </h5>
+        </p>
 
         <button>join premium</button>
 
         <h3>Account &amp; Notification privacy</h3>
+        <hr class="faded-divider" />
 
         <p>
           To change any details of your profile you can easily go into
