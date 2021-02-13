@@ -1,18 +1,29 @@
 <template>
   <div class="promotional-blogs-component">
-    <LazySegmentTitle
-      title="The Trending Titles @ Your Finger Tips"
-      leading-icon="mdi mdi-fire"
-      topic="Trending"
-      class="px-4"
-    />
-    <hr class="faded-divider" />
+    <!--    <LazySegmentTitle-->
+    <!--      class="px-4"-->
+    <!--      leading-icon="mdi mdi-fire"-->
+    <!--      topic="Top 3 Trending Articles"-->
+    <!--      center-topic-->
+    <!--      highlight-color="#fff"-->
+    <!--      active-background-->
+    <!--    />-->
+    <p style="color: #fff" class="text-center active-background py-6">
+      <i class="mdi mdi-fire" />
+      <strong style="font-family: 'Nunito Sans', sans-serif">
+        Top 3 Trending Articles
+      </strong>
+    </p>
+
+    <hr class="faded-divider my-0 pb-0" />
 
     <section v-if="blogsData">
       <LazyBlogPost
         v-for="blog in blogsData"
         :key="blog.identifier"
         :blog="blog"
+        class="blog-post pt-4"
+        hide-blog-actions
       />
     </section>
   </div>
@@ -41,3 +52,15 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.promotional-blogs-component {
+  .blog-post {
+    &:nth-child(even) {
+      background: $card-background;
+    }
+  }
+}
+</style>
