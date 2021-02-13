@@ -23,6 +23,7 @@
               width="56"
             />
             <h5
+              v-if="!featureToggleMessageService"
               v-else
               :class="
                 index === topNavActiveLink
@@ -142,7 +143,7 @@
               height="56"
               width="56"
             />
-            <h5
+            <h5 v-if="!featureToggleMessageService"
               v-else
               :class="
                 index === topNavActiveLink
@@ -236,8 +237,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { navigationRoutes } from '@/navigation/navigationRoutes'
+import {featureToggleMessageService} from "~/environmentalVariables";
+import {mapGetters} from 'vuex'
+import {navigationRoutes} from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
 import CustomListView from '~/components/global/Layout/CustomListView'
 import Logo from '~/components/global/Logo'
@@ -248,6 +250,7 @@ export default {
 
   data() {
     return {
+      featureToggleMessageService,
       navigationRoutes,
       showFragment: false,
       showTopBar: true,
