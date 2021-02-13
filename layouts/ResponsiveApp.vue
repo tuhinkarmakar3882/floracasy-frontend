@@ -23,7 +23,6 @@
               width="56"
             />
             <h5
-              v-if="FeatureToggleMessageService"
               v-else
               :class="
                 index === topNavActiveLink
@@ -131,7 +130,7 @@
           <nuxt-link
             v-for="(option, index) in topNavMenuOptions"
             :key="option.id"
-            v-ripple="'rgba(255, 255, 255, .2)'"
+            v-ripple
             :aria-label="option.text"
             :to="option.route"
           >
@@ -143,7 +142,7 @@
               height="56"
               width="56"
             />
-            <h5 v-if="FeatureToggleMessageService"
+            <h5
               v-else
               :class="
                 index === topNavActiveLink
@@ -237,10 +236,10 @@
 </template>
 
 <script>
-import {FeatureToggleMessageService} from "~/environmentalVariables";
-import {mapGetters} from 'vuex'
-import {navigationRoutes} from '@/navigation/navigationRoutes'
+import { mapGetters } from 'vuex'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
+import { FeatureToggleMessageService } from '~/environmentalVariables'
 import CustomListView from '~/components/global/Layout/CustomListView'
 import Logo from '~/components/global/Logo'
 
