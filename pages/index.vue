@@ -7,18 +7,20 @@
 
       <LazyCategoriesPreview class="segment" />
 
-      <LazyCommunityPreview class="segment" />
+      <LazyCommunityPreview class="segment text-center" />
 
       <LazyEarnWithUs class="segment" />
 
       <LazyHearTheExperiences class="segment" />
 
-      <LazyProZone class="segment" />
+      <LazyProZone v-if="FeatureTogglePremiumService" class="segment" />
     </main>
   </div>
 </template>
 
 <script>
+import { FeatureTogglePremiumService } from '~/environmentalVariables'
+
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
@@ -27,6 +29,7 @@ export default {
   data() {
     return {
       pageTitle: 'Welcome to Floracasy',
+      FeatureTogglePremiumService,
     }
   },
 
@@ -52,6 +55,7 @@ export default {
 
   main {
     .segment {
+      position: relative;
       padding: $xx-large-unit $standard-unit;
 
       &:nth-child(odd) {

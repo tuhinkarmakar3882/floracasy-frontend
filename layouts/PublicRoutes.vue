@@ -25,6 +25,7 @@ export default {}
   left: 0;
   width: 100%;
   z-index: 2;
+  border-radius: $micro-unit $micro-unit 0 0;
 }
 
 .main-router-content {

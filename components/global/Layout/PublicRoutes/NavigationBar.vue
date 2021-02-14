@@ -10,7 +10,6 @@
     <button
       v-ripple
       class="secondary-outlined-btn ml-auto"
-      style="min-width: auto"
       @click="$router.push('/Authentication/SignInToContinue')"
     >
       Get Started
@@ -18,45 +17,12 @@
 
     <div
       class="nav-drawer"
-      :style="
-        drawerIsOpened
-          ? {
-              width: '70vw',
-              transform: 'translateX(0)',
-              overflow: 'scroll',
-            }
-          : {
-              width: 0,
-              transform: 'translateX(-100%)',
-              overflow: 'hidden',
-            }
-      "
+      :style="drawerIsOpened ? visibleStyles : hiddenStyles"
     >
       <ul class="nav-drawer-options py-4">
-        <li class="my-2">
-          <button
-            v-ripple
-            class="secondary-btn"
-            @click="navigateTo('/PublicRoutes/GoPremium')"
-          >
-            Go Premium
-          </button>
-        </li>
-        <li class="my-2">
-          <button
-            v-ripple
-            class="secondary-btn"
-            @click="navigateTo('/PublicRoutes/WriteAndEarn')"
-          >
-            Write &amp; Earn
-          </button>
-        </li>
-        <li class="my-2">
-          <button v-ripple class="danger-outlined-btn" @click="exitApp">
-            Exit app
-          </button>
-        </li>
+        Add your Options
       </ul>
+      <LazyInstallBadge class="mt-auto" />
     </div>
   </header>
 </template>
@@ -68,13 +34,17 @@ export default {
   data() {
     return {
       drawerIsOpened: false,
+      visibleStyles: {
+        width: '70vw',
+        transform: 'translateX(0)',
+        overflow: 'scroll',
+      },
+      hiddenStyles: {
+        width: 0,
+        transform: 'translateX(-100%)',
+        overflow: 'hidden',
+      },
       menuOptions: [
-        {
-          title: 'Go Premium',
-          icon: 'mdi-crown',
-          color: 'gold-tone',
-          route: '/GoPremium',
-        },
         {
           title: 'Write & Earn',
           icon: 'mdi-cash-usd',
@@ -105,6 +75,10 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
+button {
+  min-width: auto;
+}
 
 .navigation-bar-page {
   position: sticky;
