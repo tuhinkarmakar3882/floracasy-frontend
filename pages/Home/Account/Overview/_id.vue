@@ -10,11 +10,11 @@
       <section v-if="otherUser" class="text-center user-profile px-1">
         <div class="basic-data">
           <img
+            :src="otherUser.photoURL"
             alt="profile-picture"
             class="picture"
-            :src="otherUser.photoURL"
-            width="100"
             height="100"
+            width="100"
           />
           <div class="basic-details">
             <p class="name">{{ otherUser.displayName }}</p>
@@ -58,26 +58,29 @@
         <section class="actions">
           <div @click="followOrUnfollow(otherUser)">
             <RippleButton
-              class="px-6"
-              :loading="followOrUnfollowLoading"
-              :disabled="followOrUnfollowWorking"
               :class-list="
                 statisticsItem.isFollowing
                   ? 'danger-outlined-btn'
                   : 'primary-btn'
               "
+              :disabled="followOrUnfollowWorking"
+              :loading="followOrUnfollowLoading"
+              class="px-6"
               style="width: 120px"
             >
               {{ statisticsItem.isFollowing ? 'Unfollow' : 'Follow' }}
             </RippleButton>
           </div>
-          <div @click="initializeChatThread(otherUser)">
+          <div
+            v-if="FeatureToggleMessageService"
+            @click="initializeChatThread(otherUser)"
+          >
             <RippleButton
-              style="width: 120px"
+              :disabled="messageWorking"
+              :loading="messageLoading"
               class="px-6"
               class-list="primary-outlined-btn"
-              :loading="messageLoading"
-              :disabled="messageWorking"
+              style="width: 120px"
             >
               Messages
             </RippleButton>
@@ -93,8 +96,8 @@
         <BlogPost
           v-for="activity in recentActivities"
           :key="activity.identifier"
-          class="activity pt-4"
           :blog="activity"
+          class="activity pt-4"
         />
       </section>
     </main>
@@ -129,17 +132,18 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink, setupUser } from '~/utils/utility'
+import { getRelativeTime, processLink } from '~/utils/utility'
 import RippleButton from '~/components/global/RippleButton'
+import { FeatureToggleMessageService } from '~/environmentalVariables'
 
 export default {
   name: 'Overview',
   components: { RippleButton, BlogPost, LoadingIcon, ClientOnly },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
-
   data() {
     return {
+      FeatureToggleMessageService,
       navigationRoutes,
       pageTitle: 'Profile Details',
       loadingProfile: true,
@@ -339,12 +343,12 @@ export default {
     }
 
     .actions {
-      display: grid;
+      display: flex;
       margin: 1.2rem 0;
-      place-items: center;
+      justify-content: space-around;
+      align-items: center;
       padding: 1rem;
-      grid-template-columns: repeat(2, 1fr);
-      grid-column-gap: 1rem;
+      gap: 1rem;
     }
 
     .other-info {
