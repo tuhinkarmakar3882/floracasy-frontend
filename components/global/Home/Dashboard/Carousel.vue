@@ -2,8 +2,8 @@
   <div
     v-touch:swipe.left="nextSlide"
     v-touch:swipe.right="previousSlide"
-    class="carousel-component"
     :style="showNavigationDots && { paddingBottom: '1.25rem' }"
+    class="carousel-component"
     @mouseenter="showControls = true"
     @mouseleave="showControls = false"
   >
@@ -33,11 +33,22 @@
       <img
         v-for="item in carouselItems"
         :key="item.id"
-        class="carousel-item"
-        :src="item.image"
         :alt="item.image"
+        :src="item.image"
+        class="carousel-item"
         height="250"
         style="object-fit: cover; width: 100%; min-height: 250px; height: 250px"
+      />
+    </section>
+
+    <section v-else-if="blogCarousel" class="carousel-items-container">
+      <LazyBlogPost
+        v-for="blog in carouselItems"
+        :key="blog.identifier"
+        :blog="blog"
+        class="blog-item text-left pt-4"
+        hide-blog-actions
+        hide-more-options-button
       />
     </section>
 
@@ -87,6 +98,11 @@ export default {
     carouselItems: {
       type: Array,
       required: true,
+    },
+    blogCarousel: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     imageCarousel: {
       type: Boolean,
@@ -171,7 +187,6 @@ export default {
 
   .carousel-items-container {
     display: flex;
-    align-items: center;
     gap: $standard-unit;
     text-align: center;
     overflow: hidden !important;
@@ -205,7 +220,8 @@ export default {
       }
     }
 
-    .carousel-item {
+    .carousel-item,
+    .blog-item {
       scroll-snap-align: start;
       scroll-snap-stop: always;
       flex-shrink: 0;
@@ -216,6 +232,10 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+
+    .blog-item {
+      justify-content: flex-start;
     }
   }
 
