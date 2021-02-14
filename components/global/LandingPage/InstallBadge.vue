@@ -109,7 +109,6 @@ export default {
   display: flex;
   align-items: center;
   background: $active-gradient;
-  border-radius: $micro-unit $micro-unit 0 0;
   box-shadow: $up-only-box-shadow;
 
   * {
