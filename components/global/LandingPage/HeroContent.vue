@@ -1,29 +1,22 @@
 <template>
   <div class="hero-container">
     <img
+      alt="banner_illustration_logo"
       class="hero-image"
       src="/images/banner_illustration_logo.svg"
-      alt="banner_illustration_logo"
     />
 
-    <section class="hero-content my-4">
-      <h1>Reading Redefined.</h1>
-
-      <p class="my-6">
-        One good line, Which is really good,
-        <br />
-        followed by some other line, and this
-        <br />
-        line has more lines.
-      </p>
+    <section class="hero-content">
+      <LazyCaptionText class="caption-svg" />
 
       <LazyKeyPoint
         v-for="(point, index) in points"
         :key="index"
-        :tick-size="24"
-        class="my-0 my-lg-4"
         :point="point"
-        tick-color="#6DD0BF"
+        :tick-size="24"
+        class="my-1"
+        text-color="#cacaca"
+        tick-color="#6dc363"
       />
 
       <nuxt-link :to="navigationRoutes.Authentication.SignInToContinue">
@@ -58,7 +51,12 @@ export default {
     return {
       navigationRoutes,
       heroButtonLoading: false,
-      points: ['First Point', 'Second Point', 'Third Point', 'And Much More'],
+      points: [
+        'Explore enriching articles',
+        'Discover people around the world',
+        'Get rewarded for your knowledge',
+        'And a lot more!',
+      ],
     }
   },
   methods: {
@@ -105,14 +103,8 @@ export default {
       order: 0;
     }
 
-    h1 {
-      font-family: $Prata;
-      font-weight: 400;
-      color: $white;
-
-      @media only screen and (max-width: 362px) {
-        font-size: $xx-large-unit;
-      }
+    .caption-svg {
+      margin: $xxx-large-unit auto;
     }
 
     .optional-log-in-text {
