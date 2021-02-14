@@ -14,6 +14,7 @@
       }}</strong>
     </p>
     <h3 v-if="title" class="my-4">{{ title }}</h3>
+    <hr v-if="useDivider" class="faded-divider" />
     <p v-if="leadingParagraph">{{ leadingParagraph }}</p>
   </div>
 </template>
@@ -33,6 +34,11 @@ export default {
       default: '',
     },
     centerTopic: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    useDivider: {
       type: Boolean,
       required: false,
       default: false,

@@ -1,5 +1,6 @@
 <template>
   <div class="promotional-blogs-component">
+    <hr class="faded-divider my-0" />
     <LazySegmentTitle
       class="px-4 py-6"
       leading-icon="mdi mdi-fire"
@@ -11,7 +12,7 @@
 
     <section v-if="dataIsAvailable">
       <LazyCarousel
-        class="text-left"
+        class="text-left mb-4"
         show-navigation-dots
         :carousel-items="blogsData"
         blog-carousel

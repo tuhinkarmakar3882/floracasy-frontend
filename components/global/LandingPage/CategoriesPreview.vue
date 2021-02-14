@@ -1,10 +1,10 @@
 <template>
   <div class="categories-preview-component">
     <LazySegmentTitle
-      leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
-          custom integrations with our open source developer SDK"
-      title="Explore a Wide Range of Categories"
       leading-icon="mdi mdi-shape"
+      leading-paragraph="We want to be versatile, starting with you. Our collections are growing each day with more enriching content, Along with an ever growing list of categories"
+      title="Let the Knowledge be Omnidirectional"
+      use-divider
       topic="Categories"
     />
 

@@ -58,7 +58,7 @@ export default {
       position: relative;
       padding: $xx-large-unit $standard-unit;
 
-      &:nth-child(odd) {
+      &:nth-child(odd):not(:first-child) {
         background-color: $segment-background;
       }
     }
