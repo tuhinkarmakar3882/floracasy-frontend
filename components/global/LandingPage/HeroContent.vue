@@ -1,17 +1,15 @@
 <template>
   <div class="hero-container">
-    <section class="hero-image">
-      <img
-        class="mx-auto"
-        src="/images/banner_illustration_logo.svg"
-        alt="banner_illustration_logo"
-      />
-    </section>
+    <img
+      class="hero-image"
+      src="/images/banner_illustration_logo.svg"
+      alt="banner_illustration_logo"
+    />
 
     <section class="hero-content my-4">
       <h1>Reading Redefined.</h1>
 
-      <p class="py-4">
+      <p class="my-6">
         One good line, Which is really good,
         <br />
         followed by some other line, and this
@@ -19,36 +17,24 @@
         line has more lines.
       </p>
 
-      <section>
-        <KeyPoint
-          :tick-size="24"
-          class="my-0 my-lg-4"
-          point="Over 1000+ Articles"
-          tick-color="#6DD0BF"
-        />
-        <KeyPoint
-          :tick-size="24"
-          class="my-0 my-lg-4"
-          point="Build Your Community Faster"
-          tick-color="#6DD0BF"
-        />
-        <KeyPoint
-          :tick-size="24"
-          class="my-0"
-          point="Great Tip of the Day"
-          tick-color="#6DD0BF"
-        />
-      </section>
+      <LazyKeyPoint
+        v-for="(point, index) in points"
+        :key="index"
+        :tick-size="24"
+        class="my-0 my-lg-4"
+        :point="point"
+        tick-color="#6DD0BF"
+      />
 
-      <nuxt-link to="/Authentication/SignInToContinue">
-        <RippleButton
+      <nuxt-link :to="navigationRoutes.Authentication.SignInToContinue">
+        <LazyRippleButton
           :loading="heroButtonLoading"
           :on-click="changeIt"
           class="my-6"
           class-list="primary-btn"
         >
           Explore Now
-        </RippleButton>
+        </LazyRippleButton>
       </nuxt-link>
 
       <p class="optional-log-in-text mb-6">
@@ -64,15 +50,15 @@
 </template>
 
 <script>
-import KeyPoint from '@/components/global/KeyPoint'
-import RippleButton from '@/components/global/RippleButton'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'HeroContent',
-  components: { RippleButton, KeyPoint },
   data() {
     return {
+      navigationRoutes,
       heroButtonLoading: false,
+      points: ['First Point', 'Second Point', 'Third Point', 'And Much More'],
     }
   },
   methods: {
@@ -100,6 +86,7 @@ export default {
   }
 
   .hero-image {
+    width: 50vw;
     order: 0;
     margin: auto;
 
@@ -122,6 +109,10 @@ export default {
       font-family: $Prata;
       font-weight: 400;
       color: $white;
+
+      @media only screen and (max-width: 362px) {
+        font-size: $xx-large-unit;
+      }
     }
 
     .optional-log-in-text {
