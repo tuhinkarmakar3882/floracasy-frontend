@@ -9,16 +9,19 @@
 
     <hr class="reversed-faded-divider mt-0 mb-3" />
 
-    <section v-if="blogsData">
-      <LazyBlogPost
-        v-for="blog in blogsData"
-        :key="blog.identifier"
-        :blog="blog"
-        class="blog-post pt-4"
-        hide-blog-actions
-        hide-more-options-button
+    <section v-if="dataIsAvailable">
+      <LazyCarousel
+        class="text-left"
+        show-navigation-dots
+        :carousel-items="blogsData"
+        blog-carousel
       />
     </section>
+
+    <aside v-else class="text-center">
+      <LazyLoadingIcon class="my-6" />
+      <p class="my-6">Fetching Articles</p>
+    </aside>
   </div>
 </template>
 
@@ -30,10 +33,12 @@ export default {
   data() {
     return {
       blogsData: null,
+      dataIsAvailable: false,
     }
   },
   async mounted() {
     await this.fetchTrendingBlogs()
+    this.dataIsAvailable = true
   },
   methods: {
     async fetchTrendingBlogs() {
