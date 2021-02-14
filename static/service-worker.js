@@ -1,18 +1,45 @@
-self.addEventListener('install', function (e) {
-  self.skipWaiting()
+const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
+const filesToCache = []
+
+// Cache on install
+self.addEventListener('install', (event) => {
+  this.skipWaiting()
+  event.waitUntil(
+    caches.open(staticCacheName).then((cache) => {
+      return cache.addAll(filesToCache)
+    })
+  )
 })
 
-self.addEventListener('activate', function (e) {
-  self.registration
-    .unregister()
-    .then(function () {
-      return self.clients.matchAll()
+// Clear cache on activate
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName.startsWith('django-pwa-'))
+          .filter((cacheName) => cacheName !== staticCacheName)
+          .map((cacheName) => caches.delete(cacheName))
+      )
     })
-    .then(function (clients) {
-      clients.forEach((client) => client.navigate(client.url))
-    })
+  )
 })
 
+// Serve from Cache
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then((response) => {
+        return response || fetch(event.request)
+      })
+      .catch(() => {
+        return caches.match('/offline/')
+      })
+  )
+})
+
+//  Workbox
 // const revision = Date.now()
 // const options = {
 //   workboxURL:
