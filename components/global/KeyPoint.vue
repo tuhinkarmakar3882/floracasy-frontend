@@ -1,5 +1,5 @@
 <template>
-  <section class="keypoint">
+  <section class="keypoint text-left">
     <span
       :style="{
         color: tickColor,
@@ -7,9 +7,7 @@
       }"
       class="mdi mdi-checkbox-marked-circle-outline mr-3"
     />
-    <span>
-      {{ point }}
-    </span>
+    <span :style="{ color: textColor }">{{ point }}</span>
   </section>
 </template>
 
@@ -21,6 +19,11 @@ export default {
     tickColor: {
       type: String,
       required: true,
+    },
+    textColor: {
+      type: String,
+      required: false,
+      default: '#9a9a9a',
     },
     tickSize: {
       type: Number,
@@ -37,11 +40,10 @@ export default {
 <style lang="scss" scoped>
 .keypoint {
   color: #9a9a9a;
-  text-align: left;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 300;
 }
 </style>
