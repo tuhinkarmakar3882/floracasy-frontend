@@ -15,7 +15,7 @@
             :to="option.route"
           >
             <img
-              v-if="index === 1 && user"
+              v-if="option.isProfileIcon && user"
               :src="user.photoURL"
               alt=""
               class="profile-image"
@@ -130,12 +130,12 @@
           <nuxt-link
             v-for="(option, index) in topNavMenuOptions"
             :key="option.id"
-            v-ripple="'rgba(255, 255, 255, .2)'"
+            v-ripple
             :aria-label="option.text"
             :to="option.route"
           >
             <img
-              v-if="index === 1 && user"
+              v-if="option.isProfileIcon && user"
               :src="user.photoURL"
               alt=""
               class="profile-image"
@@ -239,6 +239,7 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
+import { FeatureToggleMessageService } from '~/environmentalVariables'
 import CustomListView from '~/components/global/Layout/CustomListView'
 import Logo from '~/components/global/Logo'
 
@@ -248,6 +249,7 @@ export default {
 
   data() {
     return {
+      FeatureToggleMessageService,
       navigationRoutes,
       showFragment: false,
       showTopBar: true,

@@ -93,13 +93,14 @@ import RippleButton from '@/components/global/RippleButton'
 import * as secrets from '@/environmentalVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import MessageItem from '@/components/global/MessageItem.vue'
+import { FeatureToggleMessageService } from '~/environmentalVariables'
 import endpoints from '~/api/endpoints'
-import { processLink, setupUser } from '~/utils/utility'
+import { processLink } from '~/utils/utility'
 
 export default {
   scrollToTop: false,
   name: 'MessageThreadId',
-  middleware: 'isAuthenticated',
+  middleware: FeatureToggleMessageService ? 'isAuthenticated' : 'hidden',
   components: { MessageItem, RippleButton, LoadingIcon, AppFeel },
 
   asyncData({ from: prevURL }) {
