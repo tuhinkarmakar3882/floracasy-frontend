@@ -1,11 +1,11 @@
 <template>
   <div class="community-preview-component">
     <LazySegmentTitle
-      leading-paragraph="Explore hundreds of integrations for Ghost to speed up your workflow, or build your own
-          custom integrations with our open source developer SDK"
-      title="The more, The merrier"
-      topic="Community"
       leading-icon="mdi mdi-earth"
+      topic="Community"
+      title="The more, The merrier"
+      leading-paragraph="A platform where people can socialize, share ideas, grow & create impact
+      together."
     />
 
     <button class="secondary-btn my-6" @click="openSignInPage">
