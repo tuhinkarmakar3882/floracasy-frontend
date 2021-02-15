@@ -138,11 +138,15 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 
-import {parseTimeUsingStandardLibrary, shorten, showUITip,} from '@/utils/utility'
+import {
+  parseTimeUsingStandardLibrary,
+  shorten,
+  showUITip,
+} from '@/utils/utility'
 import 'highlight.js/styles/monokai.css'
-import {navigationRoutes} from '@/navigation/navigationRoutes'
-import {sanitizationConfig} from '@/config/sanitizationConfig'
-import {mapGetters} from 'vuex'
+import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { sanitizationConfig } from '@/config/sanitizationConfig'
+import { mapGetters } from 'vuex'
 
 const { FeatureToggleMessageService } = require('~/environmentalVariables')
 

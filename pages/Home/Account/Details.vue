@@ -155,12 +155,12 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import Logo from '@/components/global/Logo'
-import {navigationRoutes} from '~/navigation/navigationRoutes'
-import {getRelativeTime, processLink, showUITip} from '~/utils/utility'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
 
 export default {
   name: 'Details',
