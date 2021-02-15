@@ -22,6 +22,7 @@
         </nuxt-link>
       </h6>
       <nuxt-link
+        v-if="FeatureToggleMessageService"
         v-ripple
         :to="navigationRoutes.Home.Messages.index"
         class="ml-auto px-6"
@@ -136,16 +137,14 @@ import sanitizeHtml from 'sanitize-html'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import {
-  parseTimeUsingStandardLibrary,
-  setupUser,
-  shorten,
-  showUITip,
-} from '@/utils/utility'
+
+import {parseTimeUsingStandardLibrary, shorten, showUITip,} from '@/utils/utility'
 import 'highlight.js/styles/monokai.css'
-import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { sanitizationConfig } from '@/config/sanitizationConfig'
-import { mapGetters } from 'vuex'
+import {navigationRoutes} from '@/navigation/navigationRoutes'
+import {sanitizationConfig} from '@/config/sanitizationConfig'
+import {mapGetters} from 'vuex'
+
+const { FeatureToggleMessageService } = require('~/environmentalVariables')
 
 export default {
   name: 'BlogDetails',
@@ -161,6 +160,7 @@ export default {
   data() {
     return {
       pageTitle: this.$route.params.name,
+      FeatureToggleMessageService,
       prevURL: null,
       navigationRoutes,
       noXSS: sanitizeHtml,
