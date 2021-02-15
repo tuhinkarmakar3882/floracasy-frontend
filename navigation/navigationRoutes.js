@@ -88,9 +88,4 @@ export const navigationRoutes = {
 
     DashBoard: '/Home/DashBoard',
   },
-
-  PublicRoutes: {
-    GoPremium: '/PublicRoutes/GoPremium',
-    WriteAndEarn: '/PublicRoutes/WriteAndEarn',
-  },
 }
