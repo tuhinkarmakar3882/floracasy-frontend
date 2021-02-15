@@ -2,10 +2,20 @@
   <header class="navigation-bar-page">
     <span
       v-ripple
-      class="mdi mdi-menu icon"
+      :class="drawerIsOpened ? 'mdi-close danger-light' : 'mdi-menu'"
+      class="mdi icon"
       @click="drawerIsOpened = !drawerIsOpened"
     />
-    <h6 v-ripple class="brand" @click="navigateTo('/')">Floracasy</h6>
+    <!--    <h6 v-ripple class="brand" @click="navigateTo('/')">Floracasy</h6>-->
+    <transition name="gray-shift">
+      <img
+        v-if="!drawerIsOpened"
+        alt=""
+        src="/icons/FloracasyLogoExpanded.svg"
+        style="position: absolute; height: 28px; left: 52px; top: 15px"
+        @click="navigateTo('/')"
+      />
+    </transition>
 
     <button
       v-ripple
@@ -16,13 +26,41 @@
     </button>
 
     <div
-      class="nav-drawer"
       :style="drawerIsOpened ? visibleStyles : hiddenStyles"
+      class="nav-drawer"
     >
-      <ul class="nav-drawer-options py-4">
-        Add your Options
+      <section class="text-center px-2 py-6">
+        <img
+          alt=""
+          class="mx-auto"
+          src="/icons/FloracasyLogoExpanded.svg"
+          @click="navigateTo('/')"
+        />
+        <p class="mt-4 mb-0 muted">Where Knowledge Gets Socialized</p>
+      </section>
+
+      <ul>
+        <li
+          v-for="(option, index) in listOptions"
+          :key="index"
+          v-ripple="`${option.color}5F`"
+          class="py-3"
+        >
+          <p>
+            <span :class="option.icon" :style="{ color: option.color }" />
+            <span class="option-name">{{ option.name }}</span>
+            <span class="mdi mdi-chevron-right arrow-go" />
+          </p>
+          <hr
+            class="my-4"
+            :class="
+              index % 2 === 0 ? 'faded-divider' : 'reversed-faded-divider'
+            "
+          />
+        </li>
       </ul>
-      <LazyInstallBadge class="mt-auto" />
+
+      <LazyInstallBadge key="nav-install-badge" class="pl-4 mt-auto" />
     </div>
   </header>
 </template>
@@ -30,26 +68,32 @@
 <script>
 export default {
   name: 'NavigationBar',
-  components: {},
   data() {
     return {
       drawerIsOpened: false,
       visibleStyles: {
-        width: '70vw',
         transform: 'translateX(0)',
         overflow: 'scroll',
       },
       hiddenStyles: {
-        width: 0,
         transform: 'translateX(-100%)',
         overflow: 'hidden',
       },
-      menuOptions: [
+      listOptions: [
         {
-          title: 'Write & Earn',
-          icon: 'mdi-cash-usd',
-          color: 'eco-tick',
-          route: '/WriteAndEarn',
+          name: 'New Feature',
+          icon: 'mdi mdi-crown',
+          color: '#8FF2E1',
+        },
+        {
+          name: 'Write & Earn',
+          icon: 'mdi mdi-currency-usd',
+          color: '#f5a049',
+        },
+        {
+          name: 'About Us',
+          icon: 'mdi mdi-information',
+          color: '#8c70fd',
         },
       ],
     }
@@ -92,20 +136,22 @@ button {
   margin: 0;
   box-shadow: $down-only-box-shadow;
 
-  h6,
+  .brand,
   .icon {
+    position: absolute !important;
     display: flex;
     align-items: center;
     height: 2 * $x-large-unit;
     margin: 0;
-    color: white;
   }
 
-  h6 {
+  .brand {
+    color: white;
     padding: 0 0.3rem;
   }
 
   .icon {
+    left: 0;
     font-size: $large-unit;
     padding: 0 0.9rem 0 1rem;
   }
@@ -120,33 +166,57 @@ button {
     padding-right: 32px;
   }
 
-  ul {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 1rem;
-    grid-row-gap: 1rem;
-
-    li {
-      font-family: $Nunito-Sans;
-    }
-  }
-
   .nav-drawer {
     position: absolute;
-    top: 2 * $x-large-unit;
+    min-height: calc(100vh - 56px);
     left: 0;
-    min-height: 100vh;
+    top: 2 * $x-large-unit;
     background-color: $nav-bar-bg;
     box-shadow: $right-only-box-shadow;
     z-index: $bring-to-zero-level;
-    transition: all 300ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    width: clamp(280px, 70vw, 400px);
+    transition: all 300ms cubic-bezier(0.55, 0.29, 0.31, 0.76);
 
-    .nav-drawer-options {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    section {
+      background: $footer-background;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        hr.faded-divider {
+          background: linear-gradient(
+            270deg,
+            #5b5757 -10.22%,
+            rgba(255, 255, 255, 0) 100%
+          );
+        }
+
+        hr.reversed-faded-divider {
+          background: linear-gradient(
+            90deg,
+            #5b5757 -10.22%,
+            rgba(255, 255, 255, 0) 100%
+          );
+        }
+
+        p {
+          display: flex;
+          align-items: center;
+        }
+      }
     }
   }
 }
