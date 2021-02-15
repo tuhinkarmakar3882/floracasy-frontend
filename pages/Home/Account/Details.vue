@@ -96,7 +96,9 @@
         >
           <img
             :alt="activity.title"
-            :src="activity.coverImage || '/images/default_backup.svg'"
+            :src="
+              activity.coverImage || '/images/fc_alternate_default_logo.svg'
+            "
             height="64"
             width="64"
           />
@@ -153,12 +155,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import Logo from '@/components/global/Logo'
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
+import {navigationRoutes} from '~/navigation/navigationRoutes'
+import {getRelativeTime, processLink, showUITip} from '~/utils/utility'
 
 export default {
   name: 'Details',
