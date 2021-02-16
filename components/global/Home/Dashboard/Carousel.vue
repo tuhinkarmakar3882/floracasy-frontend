@@ -1,11 +1,7 @@
 <template>
   <div
-    v-touch:swipe.left="nextSlide"
-    v-touch:swipe.right="previousSlide"
     :style="showNavigationDots && { paddingBottom: '1.25rem' }"
     class="carousel-component"
-    @mouseenter="showControls = true"
-    @mouseleave="showControls = false"
   >
     <section v-if="quoteCarousel" class="carousel-items-container">
       <blockquote
@@ -189,7 +185,7 @@ export default {
     display: flex;
     gap: $standard-unit;
     text-align: center;
-    overflow: hidden !important;
+    overflow: scroll !important;
     scroll-snap-type: x mandatory;
     scroll-snap-align: start;
     scroll-snap-stop: always;
