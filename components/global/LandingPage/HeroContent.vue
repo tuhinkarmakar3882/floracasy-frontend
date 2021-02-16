@@ -7,7 +7,11 @@
     />
 
     <section class="hero-content">
-      <LazyCaptionText class="caption-svg" />
+      <img
+        src="/images/CaptionText.png"
+        alt="Where Knowledge Gets Socialized"
+        class="caption-image"
+      />
 
       <LazyKeyPoint
         v-for="(point, index) in points"
@@ -103,7 +107,8 @@ export default {
       order: 0;
     }
 
-    .caption-svg {
+    .caption-image {
+      height: 90px;
       margin: $xxx-large-unit auto;
     }
 

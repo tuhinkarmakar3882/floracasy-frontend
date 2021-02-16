@@ -11,7 +11,7 @@
       <img
         v-if="!drawerIsOpened"
         alt=""
-        src="/icons/FloracasyLogoExpanded.svg"
+        src="/icons/fc-logo-full.svg"
         style="position: absolute; height: 28px; left: 52px; top: 15px"
         @click="navigateTo('/')"
       />
@@ -33,7 +33,7 @@
         <img
           alt=""
           class="mx-auto"
-          src="/icons/FloracasyLogoExpanded.svg"
+          src="/icons/fc-logo-full.svg"
           @click="navigateTo('/')"
         />
         <p class="mt-4 mb-0 muted">Where Knowledge Gets Socialized</p>
