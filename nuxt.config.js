@@ -50,15 +50,15 @@ export default {
       mode: 'client',
     },
 
-    ...(useRealtimeNotifications ? notificationSocketPlugin : []),
-    ...(useSentryLogging ? sentryLoggingPlugin : []),
-    ...(useTouchEvents ? touchEventsPlugin : []),
+    ...(useRealtimeNotifications ? [notificationSocketPlugin] : []),
+    ...(useSentryLogging ? [sentryLoggingPlugin] : []),
+    ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: true,
+    server: true,
+  },
 
   modules: [
     'nuxt-helmet',
