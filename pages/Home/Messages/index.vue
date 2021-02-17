@@ -64,12 +64,12 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import { FeatureToggleMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentalVariables'
 
 export default {
   name: 'Messages',
   components: { LoadingIcon },
-  middleware: FeatureToggleMessageService ? 'isAuthenticated' : 'hidden',
+  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
   layout: 'ResponsiveApp',
 
   data() {

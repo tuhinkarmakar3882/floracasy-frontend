@@ -5,7 +5,7 @@ import {
   useRealtimeNotifications,
   useSentryLogging,
   useTouchEvents,
-} from '~/environmentalVariables'
+} from './environmentalVariables'
 
 const sentryLoggingPlugin = {
   src: '~/plugins/sentry.js',

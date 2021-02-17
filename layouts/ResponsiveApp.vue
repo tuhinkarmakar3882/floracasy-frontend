@@ -239,7 +239,7 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
-import { FeatureToggleMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentalVariables'
 import CustomListView from '~/components/global/Layout/CustomListView'
 import Logo from '~/components/global/Logo'
 
@@ -249,7 +249,7 @@ export default {
 
   data() {
     return {
-      FeatureToggleMessageService,
+      useMessageService,
       navigationRoutes,
       showFragment: false,
       showTopBar: true,

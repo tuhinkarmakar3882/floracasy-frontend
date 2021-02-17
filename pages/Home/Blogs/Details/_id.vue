@@ -22,7 +22,7 @@
         </nuxt-link>
       </h6>
       <nuxt-link
-        v-if="FeatureToggleMessageService"
+        v-if="useMessageService"
         v-ripple
         :to="navigationRoutes.Home.Messages.index"
         class="ml-auto px-6"
@@ -148,7 +148,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
 import { mapGetters } from 'vuex'
 
-const { FeatureToggleMessageService } = require('~/environmentalVariables')
+const { useMessageService } = require('~/environmentalVariables')
 
 export default {
   name: 'BlogDetails',
@@ -168,7 +168,7 @@ export default {
   data() {
     return {
       pageTitle: this.$route.params.name,
-      FeatureToggleMessageService,
+      useMessageService,
       prevURL: null,
       navigationRoutes,
       noXSS: sanitizeHtml,

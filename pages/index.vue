@@ -13,13 +13,13 @@
 
       <LazyHearTheExperiences class="segment" />
 
-      <LazyProZone v-if="FeatureTogglePremiumService" class="segment" />
+      <LazyProZone v-if="usePremiumServices" class="segment" />
     </main>
   </div>
 </template>
 
 <script>
-import { FeatureTogglePremiumService } from '~/environmentalVariables'
+import { usePremiumServices } from '~/environmentalVariables'
 
 export default {
   name: 'LandingPage',
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       pageTitle: 'Welcome to Floracasy',
-      FeatureTogglePremiumService,
+      usePremiumServices,
     }
   },
 

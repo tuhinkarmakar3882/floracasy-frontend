@@ -1,5 +1,5 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { FeatureToggleMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentalVariables'
 
 const messageOption = [
   {
@@ -68,7 +68,7 @@ export const state = () => ({
   ],
 
   topNavOptions: [
-    ...(FeatureToggleMessageService ? messageOption : []),
+    ...(useMessageService ? messageOption : []),
     ...profileOption,
   ],
 

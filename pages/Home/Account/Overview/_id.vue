@@ -72,7 +72,7 @@
             </RippleButton>
           </div>
           <div
-            v-if="FeatureToggleMessageService"
+            v-if="useMessageService"
             @click="initializeChatThread(otherUser)"
           >
             <RippleButton
@@ -134,7 +134,7 @@ import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { getRelativeTime, processLink } from '~/utils/utility'
 import RippleButton from '~/components/global/RippleButton'
-import { FeatureToggleMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentalVariables'
 
 export default {
   name: 'Overview',
@@ -143,7 +143,7 @@ export default {
   middleware: 'isAuthenticated',
   data() {
     return {
-      FeatureToggleMessageService,
+      useMessageService,
       navigationRoutes,
       pageTitle: 'Profile Details',
       loadingProfile: true,

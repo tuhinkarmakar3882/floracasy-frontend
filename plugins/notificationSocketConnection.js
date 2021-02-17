@@ -1,14 +1,9 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import * as secrets from '~/environmentalVariables'
 import { showUITip } from '~/utils/utility'
-import { RealtimeNotification } from '~/environmentalVariables'
 
 export default async ({ store, $cookies }) => {
-  if (
-    process.client &&
-    store.state.isUserAuthenticated &&
-    RealtimeNotification
-  ) {
+  if (process.client && store.state.isUserAuthenticated) {
     await showUITip(store, 'Connecting to Server...', 'info', false)
 
     const notificationChannelId = await store.getters[
