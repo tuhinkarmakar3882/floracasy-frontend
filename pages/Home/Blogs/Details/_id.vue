@@ -154,11 +154,15 @@ export default {
   name: 'BlogDetails',
   components: { AppFeel, LoadingIcon },
 
-  async asyncData({ $axios, params, from: prevURL }) {
-    const response = await $axios.$get(endpoints.blog.detail, {
-      params: { identifier: params.id },
-    })
-    return { blog: response, prevURL }
+  async asyncData({ $axios, redirect, params, from: prevURL }) {
+    try {
+      const response = await $axios.$get(endpoints.blog.detail, {
+        params: { identifier: params.id },
+      })
+      return { blog: response, prevURL }
+    } catch (e) {
+      redirect('/error')
+    }
   },
 
   data() {
