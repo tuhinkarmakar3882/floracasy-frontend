@@ -50,9 +50,9 @@ export default {
       mode: 'client',
     },
 
-    ...(useRealtimeNotifications ? notificationSocketPlugin : []),
-    ...(useSentryLogging ? sentryLoggingPlugin : []),
-    ...(useTouchEvents ? touchEventsPlugin : []),
+    ...(useRealtimeNotifications ? [notificationSocketPlugin] : []),
+    ...(useSentryLogging ? [sentryLoggingPlugin] : []),
+    ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
   // modern: {
