@@ -1,6 +1,24 @@
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentalVariables'
 import * as packageJson from './package.json'
+import {
+  useRealtimeNotifications,
+  useSentryLogging,
+  useTouchEvents,
+} from '~/environmentalVariables'
+
+const sentryLoggingPlugin = {
+  src: '~/plugins/sentry.js',
+  mode: 'client',
+}
+const notificationSocketPlugin = {
+  src: '~/plugins/notificationSocketConnection.js',
+  mode: 'client',
+}
+const touchEventsPlugin = {
+  src: '~/plugins/vue-touch-events.js',
+  mode: 'client',
+}
 
 export default {
   ssr: true,
@@ -28,23 +46,19 @@ export default {
     },
     '~/plugins/axios.js',
     {
-      src: '~/plugins/notificationSocketConnection.js',
-      mode: 'client',
-    },
-    {
       src: '~/plugins/vue-infinite-loading.js',
       mode: 'client',
     },
-    // {
-    //   src: '~/plugins/vue-touch-events.js',
-    //   mode: 'client',
-    // },
+
+    ...(useRealtimeNotifications ? notificationSocketPlugin : []),
+    ...(useSentryLogging ? sentryLoggingPlugin : []),
+    ...(useTouchEvents ? touchEventsPlugin : []),
   ],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   modules: [
     'nuxt-helmet',
@@ -172,6 +186,7 @@ export default {
           'wss:',
           '*.google-analytics.com',
           '*.googleapis.com',
+          '*.sentry.io',
         ],
         'form-action': ["'self'"],
         'frame-ancestors': ["'none'"],
