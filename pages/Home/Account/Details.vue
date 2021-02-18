@@ -6,6 +6,7 @@
         Fetching data from server
       </div>
     </main>
+
     <main v-else>
       <section class="user-profile px-1">
         <div class="basic-data">
@@ -18,7 +19,7 @@
           />
           <div class="basic-details">
             <p class="name">{{ user.displayName }}</p>
-            <p class="designation">
+            <p v-ripple class="designation" @click="editContent">
               <em>{{ user.designation || 'Designation Not Set' }}</em>
             </p>
           </div>
@@ -50,7 +51,9 @@
         </div>
 
         <section class="other-info">
-          <p class="about text-center">{{ user.about || 'About Not Set' }}</p>
+          <p v-ripple class="about text-center" @click="editContent">
+            {{ user.about || 'About Not Set' }}
+          </p>
         </section>
 
         <section class="actions">
@@ -234,6 +237,12 @@ export default {
       } catch (e) {
         $state.complete()
       }
+    },
+
+    async editContent() {
+      await this.$router.push(
+        navigationRoutes.Home.MoreOptions.Preferences.EditProfile
+      )
     },
   },
 
