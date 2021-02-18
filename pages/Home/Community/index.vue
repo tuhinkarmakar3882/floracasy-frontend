@@ -102,7 +102,6 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import { setupUser } from '~/utils/utility'
 
 export default {
   name: 'Community',
