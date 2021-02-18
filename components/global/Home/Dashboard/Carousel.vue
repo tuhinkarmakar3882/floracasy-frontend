@@ -47,43 +47,6 @@
         hide-more-options-button
       />
     </section>
-
-    <aside v-if="showNavigationArrows" class="carousel-controls">
-      <transition name="scale-down">
-        <button
-          v-if="showControls"
-          v-ripple
-          aria-label="Previous Item"
-          class="left-arrow"
-          @click="previousSlide"
-        >
-          <span class="mdi mdi-arrow-left mdi-18px" />
-        </button>
-      </transition>
-
-      <transition name="scale-down">
-        <button
-          v-if="showControls"
-          v-ripple
-          aria-label="Next Item"
-          class="right-arrow"
-          @click="nextSlide"
-        >
-          <span class="mdi mdi-arrow-right mdi-18px" />
-        </button>
-      </transition>
-    </aside>
-
-    <aside v-if="showNavigationDots" class="carousel-navigation">
-      <span
-        v-for="i in totalSlides + 1"
-        :key="i - 1"
-        v-ripple
-        :class="i - 1 === activeItem && 'active'"
-        class="dot"
-      >
-      </span>
-    </aside>
   </div>
 </template>
 
