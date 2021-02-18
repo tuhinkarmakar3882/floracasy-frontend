@@ -162,7 +162,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
-import { setupUser, showUITip } from '~/utils/utility'
+import { showUITip } from '~/utils/utility'
 
 const commonStyles = {
   minHeight: '100px',
