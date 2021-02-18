@@ -69,7 +69,7 @@ export default {
   name: 'NavigationBar',
   data() {
     return {
-      drawerIsOpened: true,
+      drawerIsOpened: false,
       visibleStyles: {
         transform: 'translateX(0)',
         overflow: 'scroll',

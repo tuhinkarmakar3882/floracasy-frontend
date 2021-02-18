@@ -8,7 +8,6 @@
         tabNumber === 2 && { padding: 0 },
         { height: tabNumber === 2 ? 0 : '250px' },
       ]"
-      show-navigation-dots
     />
 
     <section class="tab-bar">
