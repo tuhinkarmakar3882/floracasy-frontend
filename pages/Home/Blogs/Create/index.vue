@@ -37,19 +37,25 @@ export default {
   middleware: 'isAuthenticated',
   data() {
     return {
-      pageTitle: 'Blog Creation',
+      pageTitle: 'Create Something New!',
       options: [
         {
           name: 'Create New Blog',
-          icon: 'mdi mdi-plus',
-          color: '#4fca4f',
+          icon: 'mdi mdi-newspaper-variant',
+          color: '#8FF2E1',
           route: navigationRoutes.Home.Blogs.Create.New,
         },
         {
-          name: 'Start from Drafts',
-          icon: 'mdi mdi-file',
-          color: '#b377bd',
-          route: navigationRoutes.Home.Blogs.Create.Drafts,
+          name: 'Create New Post',
+          icon: 'mdi mdi-pencil-box-multiple-outline',
+          color: '#f8e102',
+          route: navigationRoutes.Home.Community.Posts.add,
+        },
+        {
+          name: 'Create New Story',
+          icon: 'mdi mdi-thought-bubble-outline',
+          color: '#5dd75d',
+          route: navigationRoutes.Home.Community.Story.add,
         },
       ],
     }
