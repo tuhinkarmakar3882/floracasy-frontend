@@ -4,6 +4,7 @@
       :carousel-items="carouselItems"
       image-carousel
       style="overflow: hidden; transition: all 0.3s ease-in-out"
+      auto-scroll
       :style="[
         tabNumber === 2 && { padding: 0 },
         { height: tabNumber === 2 ? 0 : '250px' },

@@ -13,9 +13,9 @@
     <section v-if="dataIsAvailable">
       <LazyCarousel
         class="text-left mb-4"
-        show-navigation-dots
         :carousel-items="blogsData"
         blog-carousel
+        auto-scroll
       />
     </section>
 
