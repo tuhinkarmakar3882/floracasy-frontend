@@ -21,7 +21,7 @@
     </section>
 
     <transition name="gray-shift">
-      <Modal
+      <LazyModal
         v-if="showModal"
         class="modal"
         :toggle="hideModal"
@@ -80,7 +80,7 @@
             </button>
           </section>
         </template>
-      </Modal>
+      </LazyModal>
     </transition>
   </div>
 </template>
