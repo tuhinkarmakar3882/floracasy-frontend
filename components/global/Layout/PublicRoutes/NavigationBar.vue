@@ -40,22 +40,21 @@
       </section>
 
       <ul>
-        <li
-          v-for="(option, index) in listOptions"
-          :key="index"
-          v-ripple="`${option.color}5F`"
-          class="py-3"
-        >
-          <p>
-            <span :class="option.icon" :style="{ color: option.color }" />
-            <span class="option-name">{{ option.name }}</span>
-            <span class="mdi mdi-chevron-right arrow-go" />
+        <li v-for="(option, index) in listOptions" :key="index">
+          <p v-ripple="`${option.color}5F`" class="py-4 px-2">
+            <span
+              :class="option.icon"
+              class="mdi-24px"
+              :style="{ color: option.color }"
+            />
+            <span class="option-name ml-2">{{ option.name }}</span>
+            <span class="mdi mdi-chevron-right mdi-24px ml-auto" />
           </p>
           <hr
-            class="my-4"
             :class="
               index % 2 === 0 ? 'faded-divider' : 'reversed-faded-divider'
             "
+            class="my-0"
           />
         </li>
       </ul>
@@ -70,7 +69,7 @@ export default {
   name: 'NavigationBar',
   data() {
     return {
-      drawerIsOpened: false,
+      drawerIsOpened: true,
       visibleStyles: {
         transform: 'translateX(0)',
         overflow: 'scroll',
@@ -196,20 +195,27 @@ button {
         justify-content: center;
         flex-direction: column;
 
-        hr.faded-divider {
-          background: linear-gradient(
-            270deg,
-            #5b5757 -10.22%,
-            rgba(255, 255, 255, 0) 100%
-          );
-        }
+        hr {
+          &.faded-divider,
+          &.reversed-faded-divider {
+            background: $muted;
+          }
 
-        hr.reversed-faded-divider {
-          background: linear-gradient(
-            90deg,
-            #5b5757 -10.22%,
-            rgba(255, 255, 255, 0) 100%
-          );
+          &.faded-divider {
+            background: linear-gradient(
+              270deg,
+              #5b5757 -10.22%,
+              rgba(255, 255, 255, 0) 100%
+            );
+          }
+
+          &.reversed-faded-divider {
+            background: linear-gradient(
+              90deg,
+              #5b5757 -10.22%,
+              rgba(255, 255, 255, 0) 100%
+            );
+          }
         }
 
         p {
