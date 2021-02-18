@@ -86,33 +86,29 @@ export default {
     return {
       totalSlides: 0,
       scroller: undefined,
+      autoScrollInterval: undefined,
     }
   },
   mounted() {
     this.totalSlides = this.carouselItems.length - 1
     this.scroller = document.querySelector('.carousel-items-container')
+    window.qwertyuiop = this.scroller
     if (this.autoScroll) {
-      setInterval(() => {
+      this.autoUpdateCarouselSlide()
+    }
+  },
+  beforeDestroy() {
+    this.autoScrollInterval && clearInterval(this.autoScrollInterval)
+  },
+  methods: {
+    autoUpdateCarouselSlide() {
+      this.autoScrollInterval = setInterval(() => {
         this.scroller?.scrollBy({
           left: 100,
           top: 0,
           behavior: 'smooth',
         })
-      }, 5000)
-    }
-  },
-  methods: {
-    previousSlide() {
-      if (this.useLoop) {
-        this.activeItem =
-          --this.activeItem < 0 ? this.totalSlides : this.activeItem--
-      } else this.activeItem -= this.activeItem === 0 ? 0 : 1
-    },
-    nextSlide() {
-      if (this.useLoop) {
-        this.activeItem =
-          ++this.activeItem > this.totalSlides ? 0 : this.activeItem++
-      } else this.activeItem += this.activeItem === this.totalSlides ? 0 : 1
+      }, 6000)
     },
   },
 }
