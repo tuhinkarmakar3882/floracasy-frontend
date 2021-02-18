@@ -1,8 +1,5 @@
 <template>
-  <div
-    :style="showNavigationDots && { paddingBottom: '1.25rem' }"
-    class="carousel-component"
-  >
+  <div class="carousel-component">
     <section v-if="quoteCarousel" class="carousel-items-container">
       <blockquote
         v-for="item in carouselItems"
@@ -73,12 +70,7 @@ export default {
       required: false,
       default: false,
     },
-    showNavigationArrows: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    showNavigationDots: {
+    autoScroll: {
       type: Boolean,
       required: false,
       default: false,
@@ -92,26 +84,22 @@ export default {
 
   data() {
     return {
-      activeItem: 0,
-      showControls: false,
       totalSlides: 0,
       scroller: undefined,
     }
   },
-  watch: {
-    activeItem(newValue, oldValue) {
-      let scrollAmount = window.innerWidth
-      if (newValue < oldValue) scrollAmount *= -1
-      this.scroller?.scrollBy({
-        left: scrollAmount,
-        top: 0,
-        behavior: 'smooth',
-      })
-    },
-  },
   mounted() {
     this.totalSlides = this.carouselItems.length - 1
     this.scroller = document.querySelector('.carousel-items-container')
+    if (this.autoScroll) {
+      setInterval(() => {
+        this.scroller?.scrollBy({
+          left: 100,
+          top: 0,
+          behavior: 'smooth',
+        })
+      }, 5000)
+    }
   },
   methods: {
     previousSlide() {
