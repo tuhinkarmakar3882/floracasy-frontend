@@ -1,6 +1,6 @@
 <template>
   <transition name="scale-down">
-    <div v-if="showInstallBadge" class="install-badge-component">
+    <div v-if="showInstallPrompt" class="install-badge-component">
       <i
         v-if="showCloseButton"
         v-ripple
@@ -8,7 +8,7 @@
         @click="hideInstallBadge"
       />
 
-      <section>
+      <section @click="installPWA">
         <p>Floracasy</p>
         <span>Get our free app. It won't take up space in your phone!</span>
       </section>
@@ -35,7 +35,7 @@ export default {
 
   data() {
     return {
-      showInstallBadge: false,
+      showInstallPrompt: false,
     }
   },
 
@@ -46,13 +46,14 @@ export default {
       this.addBeforeInstallPromptListener()
       this.addAppInstalledListener()
     }
+    window.deferredPrompt && (this.showInstallPrompt = true)
   },
 
   methods: {
     addBeforeInstallPromptListener() {
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault()
-        this.showInstallBadge = true
+        this.showInstallPrompt = true
         window.deferredPrompt = e
         // Todo - Send analytics event that PWA install promo was shown.
       })
@@ -94,7 +95,7 @@ export default {
     },
 
     hideInstallBadge() {
-      this.showInstallBadge = false
+      this.showInstallPrompt = false
       window.deferredPrompt = null
     },
   },
