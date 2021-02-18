@@ -114,18 +114,23 @@
         </section>
 
         <section>
-          <p ref="blogCategory">Category</p>
-          <client-only>
-            <v-select
-              v-model="blogCategory"
-              :options="categories"
-              autocomplete="off"
-              :reduce="(category) => category.id"
-              class="my-4 dropdown"
-              label="name"
-              placeholder="Choose a Blog Category"
-            />
-          </client-only>
+          <label ref="blogCategory" for="category-selector">Category </label>
+          <select
+            id="category-selector"
+            v-model="blogCategory"
+            autocomplete="off"
+            class="my-4 dropdown"
+            name="Select category"
+          >
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+
           <small style="display: block; font-size: 11px" class="mt-2 hint-text">
             *Required
           </small>
@@ -625,7 +630,9 @@ export default {
       if (this.step === 1) {
         this.prevURL
           ? await this.$router.back()
-          : await this.$router.replace(navigationRoutes.Home.Blogs.Create.index)
+          : await this.$router.replace(
+              this.prevURL || navigationRoutes.Home.Blogs.Create.index
+            )
       } else {
         this.step--
       }
