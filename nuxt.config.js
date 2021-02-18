@@ -40,10 +40,6 @@ export default {
       src: '~/middleware/spa-analytics-and-setup-user.js',
       mode: 'client',
     },
-    {
-      src: '~/plugins/firebase-authentication.js',
-      mode: 'client',
-    },
     '~/plugins/axios.js',
     {
       src: '~/plugins/vue-infinite-loading.js',
@@ -66,7 +62,6 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
-    'nuxt-vue-select',
   ],
 
   buildModules: [
