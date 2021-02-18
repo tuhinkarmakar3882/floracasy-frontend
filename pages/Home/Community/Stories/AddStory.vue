@@ -139,53 +139,42 @@
         <div class="controls">
           <transition name="slide-up">
             <section v-show="photo.showMoreOptions" class="more-options">
-              <client-only>
-                <div class="px-4 photo-options">
-                  <v-select
-                    v-model="photo.currentDevice"
-                    :clearable="false"
-                    :options="photo.availableDevices"
-                    autocomplete="off"
-                    class="my-4 dropdown"
-                    placeholder="Choose a Camera"
+              <div class="px-4 photo-options">
+                <label for="current-camera-device-select">
+                  Currently Using
+                </label>
+                <select
+                  id="current-camera-device-select"
+                  v-model="photo.currentDevice"
+                  autocomplete="off"
+                  class="my-4 dropdown"
+                >
+                  <option
+                    v-for="(option, index) in photo.availableDevices"
+                    :key="`${option}-${index}`"
+                    :value="option"
                   >
-                    <template #header>
-                      <div class="my-2" style="opacity: 0.8">
-                        Currently Using
-                      </div>
-                    </template>
+                    {{ option }}
+                  </option>
+                </select>
 
-                    <template #no-options>
-                      No Such Camera Device Found
-                    </template>
-                  </v-select>
-
-                  <v-select
-                    v-model="photo.aspectRatio"
-                    :clearable="false"
-                    :options="photo.availableRatios"
-                    autocomplete="off"
-                    class="my-4 dropdown"
-                    label="name"
-                    placeholder="Choose a Aspect Ratio"
-                    @input="updatePhotoRatio"
+                <label for="aspect-ratio-select">Aspect Ratio</label>
+                <select
+                  id="aspect-ratio-select"
+                  v-model="photo.aspectRatio"
+                  autocomplete="off"
+                  class="my-4 dropdown"
+                  @change="updatePhotoRatio"
+                >
+                  <option
+                    v-for="(option, index) in photo.availableRatios"
+                    :key="`${option}-${index}`"
+                    :value="option"
                   >
-                    <template #header>
-                      <div class="my-2" style="opacity: 0.8">Aspect Ratio</div>
-                    </template>
-
-                    <template #selected-option="{ name }">
-                      <small>{{ name }}</small>
-                    </template>
-
-                    <template v-slot:option="option">
-                      <small> {{ option.name }}</small>
-                    </template>
-
-                    <template #no-option> Invalid Aspect Ratio</template>
-                  </v-select>
-                </div>
-              </client-only>
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
             </section>
           </transition>
 
@@ -601,6 +590,7 @@ export default {
 
     // --------------------- Photo Methods ---------------------
     updatePhotoRatio() {
+      console.log(this.photo.aspectRatio)
       if (this.photo.aspectRatio) {
         this.photo.stream && this.destroySetup(this.photo.stream)
         this.prepareCameraRecordingInitialSetup({
@@ -889,8 +879,8 @@ export default {
     .overlay {
       width: 100%;
       height: calc(100vh - 114px);
-      position: absolute;
-      top: 0;
+      position: fixed;
+      top: 108px;
       z-index: 2;
       background: rgba(0, 0, 0, 0.6);
       display: grid;
@@ -902,6 +892,7 @@ export default {
     .preview-img-container {
       width: 100%;
       background: $card-background;
+      object-fit: contain;
       transform: scaleX(-1);
       height: calc(100vh - 114px);
     }
@@ -912,11 +903,9 @@ export default {
       transform: unset;
 
       img {
-        width: 100%;
-        height: 230px;
-        border-radius: 4px;
-        border: 2px solid whitesmoke;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+        max-height: calc(100vh - 114px);
+        border-radius: $nano-unit;
+        box-shadow: $default-box-shadow;
         background: white;
       }
     }
@@ -928,12 +917,13 @@ export default {
       padding: 20px 0;
       border-top-left-radius: 36px;
       border-top-right-radius: 36px;
-      background: rgba(black, 0.4);
+      background: rgba(black, 0.6);
 
       .photo-options {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: $standard-unit;
+        align-items: center;
       }
 
       .actions {
