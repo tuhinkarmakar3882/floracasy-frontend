@@ -33,14 +33,14 @@
           />
         </div>
 
-        <transition name="scale-down">
-          <aside v-if="showFallback" class="backdrop">
-            <section class="content px-4 text-center">
-              <h6>The more, The merrier</h6>
-              <p>Search for people across the world to connect</p>
-            </section>
-          </aside>
-        </transition>
+        <!--        <transition name="scale-down">-->
+        <!--          <aside v-if="showFallback" class="backdrop">-->
+        <!--            <section class="content px-4 text-center">-->
+        <!--              <h6>The more, The merrier</h6>-->
+        <!--              <p>Search for people across the world to connect</p>-->
+        <!--            </section>-->
+        <!--          </aside>-->
+        <!--        </transition>-->
       </section>
 
       <pre>You're searching for: {{ searchQuery }}</pre>
@@ -184,20 +184,20 @@ export default {
     }
   }
 
-  .backdrop {
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba($nav-bar-bg, 0.9);
-    z-index: $bring-to-front - 15;
-
-    .content {
-      margin-top: 4.2 * $xxx-large-unit;
-    }
-  }
+  //.backdrop {
+  //  position: fixed;
+  //  height: 100vh;
+  //  width: 100vw;
+  //  top: 0;
+  //  left: 0;
+  //  bottom: 0;
+  //  right: 0;
+  //  background: rgba($nav-bar-bg, 0.9);
+  //  z-index: $bring-to-front - 15;
+  //
+  //  .content {
+  //    margin-top: 4.2 * $xxx-large-unit;
+  //  }
+  //}
 }
 </style>
