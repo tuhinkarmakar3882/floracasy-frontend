@@ -8,6 +8,12 @@
       together."
     />
 
+    <img
+      src="/images/community_banner.png"
+      alt="community banner"
+      class="my-6 mx-auto"
+    />
+
     <button class="secondary-btn my-6" @click="openSignInPage">
       Connect Easily
     </button>
