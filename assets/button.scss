@@ -213,7 +213,7 @@ button {
   background-color: darken($info, $darken-percentage);
 
   &:focus, &:hover, &:active {
-    background-color: lighten($info, $lighten-percentage);
+    background-color: $info;
   }
 }
 
