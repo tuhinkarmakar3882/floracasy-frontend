@@ -16,8 +16,9 @@
             placeholder="Type here to search"
             type="text"
             @blur="showFallback = false"
-            @focusin="showFallback = true"
+            @focusin="showFallback = false"
             @focusout="showFallback = false"
+            @keyup="searchForPeople"
             @keyup.enter="searchForPeople"
           />
           <label
@@ -86,7 +87,7 @@ export default {
           params: { searchQuery: this.searchQuery },
         })
         .catch((e) => console.log(e))
-      this.$refs.search.blur()
+      // this.$refs.search.blur()
     },
   },
 
