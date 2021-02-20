@@ -13,8 +13,7 @@
               autocomplete="off"
               placeholder="Type here to search"
               type="text"
-              @keyup="updateMatchingCategories"
-              @keyup.enter="hideSearchBar"
+              @keyup.esc="hideSearchBar"
             />
             <label
               aria-label="Type here to search for category"
@@ -36,7 +35,7 @@
         </template>
         <template v-slot:list-items>
           <li
-            v-for="category in updateMatchingCategories()"
+            v-for="category in matchCategories"
             :key="category.id"
             v-ripple
             class="px-4 py-3"
@@ -109,15 +108,19 @@ export default {
       contentIsLoading: true,
       searchQuery: '',
       showSearchBar: false,
+      matchCategories: [],
     }
   },
   computed: {
     ...mapGetters({
       categories: 'CategoriesManagement/getCategories',
     }),
-    matchCategories() {
-      return this.categories.filter(({ name }) =>
-        name.toLowerCase().match(this.searchQuery.trim().toLowerCase())
+  },
+
+  watch: {
+    searchQuery(newValue) {
+      this.matchCategories = this.categories.filter(({ name }) =>
+        name.toLowerCase().match(newValue.trim().toLowerCase())
       )
     },
   },
@@ -125,6 +128,7 @@ export default {
   async mounted() {
     !this.categories &&
       (await this.$store.dispatch('CategoriesManagement/fetchCategories'))
+    this.matchCategories = this.categories
     this.contentIsLoading = false
   },
 
@@ -135,11 +139,6 @@ export default {
           '{name}',
           categoryName
         )
-      )
-    },
-    updateMatchingCategories() {
-      return this.categories.filter(({ name }) =>
-        name.toLowerCase().match(this.searchQuery.trim().toLowerCase())
       )
     },
     toggleSearchBar() {
