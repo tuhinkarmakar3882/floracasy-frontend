@@ -13,6 +13,7 @@
               autocomplete="off"
               placeholder="Type here to search"
               type="text"
+              @keyup="updateMatchingCategories"
               @keyup.enter="hideSearchBar"
             />
             <label
@@ -35,18 +36,11 @@
         </template>
         <template v-slot:list-items>
           <li
-            v-for="category in matchCategories"
+            v-for="category in updateMatchingCategories()"
             :key="category.id"
             v-ripple
             class="px-4 py-3"
-            @click="
-              $router.push(
-                navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
-                  '{name}',
-                  category.name
-                )
-              )
-            "
+            @click="openCategoryWisePage(category.name)"
           >
             <p>
               <img
@@ -135,6 +129,19 @@ export default {
   },
 
   methods: {
+    async openCategoryWisePage(categoryName) {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+          '{name}',
+          categoryName
+        )
+      )
+    },
+    updateMatchingCategories() {
+      return this.categories.filter(({ name }) =>
+        name.toLowerCase().match(this.searchQuery.trim().toLowerCase())
+      )
+    },
     toggleSearchBar() {
       this.showSearchBar = !this.showSearchBar
       !this.showSearchBar && this.hideSearchBar()
