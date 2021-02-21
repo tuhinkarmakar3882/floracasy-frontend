@@ -6,48 +6,27 @@
 
     <div v-else>
       <transition name="scale-up">
-        <InputBox v-show="showSearchBar">
-          <template v-slot:prepend-icon>
-            <i class="mdi mdi-magnify prepend-icon" />
-          </template>
-
-          <template v-slot:search-box>
+        <div v-show="showSearchBar" class="px-2 py-4 search-box-container">
+          <section class="search-box">
             <div
               ref="search"
-              class="search-input-box"
+              class="input-box"
               contenteditable
               @keyup="updateSearchQuery"
+              @focusin="clearPlaceholderText"
+              @focusout="putPlaceholderText"
+            >
+              Type here to search
+            </div>
+            <i class="mdi mdi-magnify prepend-icon" />
+
+            <i
+              v-ripple
+              class="mdi mdi-close append-icon"
+              @click="clearSearchContent"
             />
-          </template>
-
-          <template v-slot:append-icon>
-            <i v-ripple class="mdi mdi-close append-icon" />
-          </template>
-        </InputBox>
-
-        <!--        <section v-show="showSearchBar" class="px-2 py-4 search-box-container">-->
-        <!--          <div class="search-box">-->
-        <!--            <textarea-->
-        <!--              id="search-box"-->
-        <!--              v-model="searchQuery"-->
-        <!--              autocomplete="off"-->
-        <!--              placeholder="Type here to search"-->
-        <!--              rows="1"-->
-        <!--              @keyup.esc="hideSearchBar"-->
-        <!--            />-->
-        <!--            <label-->
-        <!--              aria-label="Type here to search for category"-->
-        <!--              class="mdi px-4 mdi-24px mdi-magnify"-->
-        <!--              for="search-box"-->
-        <!--            />-->
-        <!--            <span-->
-        <!--              v-ripple-->
-        <!--              aria-label="Click here to clear the search"-->
-        <!--              class="mdi mdi-close mdi-24px px-4"-->
-        <!--              @click="searchQuery = ''"-->
-        <!--            />-->
-        <!--          </div>-->
-        <!--        </section>-->
+          </section>
+        </div>
       </transition>
 
       <LazyCustomListView>
@@ -133,6 +112,10 @@ export default {
 
   watch: {
     searchQuery(newQuery) {
+      if (newQuery === '') {
+        this.matchCategories = this.categories
+        return
+      }
       this.matchCategories = this.categories.filter(({ name }) =>
         name.toLowerCase().match(newQuery.toLowerCase())
       )
@@ -154,16 +137,29 @@ export default {
         )
       )
     },
+
     updateSearchQuery() {
       this.searchQuery = this.$refs.search.textContent.trim()
     },
+
+    clearSearchContent() {
+      this.searchQuery = ''
+      this.$refs.search.textContent = 'Type here to search'
+    },
+
     toggleSearchBar() {
       this.showSearchBar = !this.showSearchBar
-      !this.showSearchBar && this.hideSearchBar()
+      !this.showSearchBar && this.clearSearchContent()
     },
-    hideSearchBar() {
-      this.showSearchBar = false
-      this.searchQuery = ''
+
+    clearPlaceholderText() {
+      if (this.$refs.search.textContent.trim() === 'Type here to search')
+        this.$refs.search.textContent = ''
+      this.$refs.search.focus()
+    },
+    putPlaceholderText() {
+      if (this.$refs.search.textContent.trim() === '')
+        this.$refs.search.textContent = 'Type here to search'
     },
   },
 }
@@ -213,40 +209,43 @@ $image-dimension: 64px;
       $custom-muted: #777;
       $custom-input-border: #333;
 
-      span,
-      label {
+      .append-icon,
+      .prepend-icon {
         height: 2 * $large-unit;
         position: absolute !important;
         top: 0;
+        font-size: 24px;
+        padding-left: 16px;
+        padding-right: 16px;
         display: grid;
         place-items: center;
         border-radius: 2 * $x-large-unit;
         transition: all 0.2s ease-in-out;
       }
 
-      span {
+      .append-icon {
         right: 0;
-        opacity: 0;
-        transform: scale(0);
-        color: $secondary;
+        color: rgba($danger-light, 0.7);
       }
 
-      label {
+      .prepend-icon {
         left: 0;
         color: $custom-muted;
       }
 
-      textarea {
+      .input-box {
+        overflow: scroll;
+        outline: none 0;
         transition: all 0.2s ease-in-out;
         border: 1px solid $custom-input-border;
         border-radius: 2 * $x-large-unit;
         height: 48px;
+        font-family: $Nunito-Sans;
         line-height: 1;
         padding: 15px 48px;
         resize: none;
         color: $custom-muted;
         font-weight: 300;
-        font-family: $Raleway;
         letter-spacing: $single-unit;
         font-size: 1rem;
 
@@ -254,35 +253,16 @@ $image-dimension: 64px;
           display: none;
         }
 
-        &::placeholder {
-          color: $custom-muted;
-          font-weight: 300;
-        }
+        &:focus {
+          color: $vibrant;
+          border: 1px solid $secondary-matte;
 
-        &:focus,
-        &:not(:placeholder-shown) {
-          border: 1px solid $vibrant;
-
-          & ~ label {
-            color: $secondary;
-          }
-        }
-
-        &:not(:placeholder-shown) {
-          color: $secondary;
-          padding-left: 20px;
-
-          & ~ span {
-            transform: scale(1);
-            opacity: 1;
+          & ~ .prepend-icon {
+            color: $secondary-matte;
           }
 
-          & ~ label {
-            width: 0;
-            margin: 0;
-            padding: 0;
-            opacity: 0;
-            overflow: hidden;
+          & ~ .append-icon {
+            color: $danger-light;
           }
         }
       }

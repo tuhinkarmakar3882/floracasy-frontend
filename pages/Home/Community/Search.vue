@@ -8,12 +8,14 @@
     <template slot="main">
       <section class="search-box-container px-4 mt-5 mb-4">
         <div class="search-box">
-          <textarea
+          <input
             id="search-box"
             ref="search"
             v-model="searchQuery"
             autocomplete="off"
             placeholder="Type here to search"
+            @keyup.enter="searchForPeople"
+            @keyup.esc="$refs.search.blur()"
           />
           <label
             aria-label="Type here to search"
@@ -22,8 +24,8 @@
           />
           <span
             v-ripple
-            aria-label="Click here to clear the text content"
-            class="mdi mdi-close mdi-24px px-4"
+            aria-label="Click here to start the search"
+            class="mdi mdi-check mdi-24px px-4"
             @click="searchQuery = ''"
           />
         </div>
@@ -63,11 +65,6 @@ export default {
       searchResults: [],
     }
   },
-  watch: {
-    searchQuery(newQuery) {
-      this.searchForPeople(newQuery)
-    },
-  },
 
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
@@ -81,7 +78,7 @@ export default {
 
   methods: {
     async searchForPeople() {
-      if (this.searchQuery.trim().length > 2) {
+      if (this.searchQuery.trim().length) {
         this.showFallback = true
         await showUITip(this.$store, 'Searching...')
 
@@ -148,14 +145,13 @@ export default {
       color: $custom-muted;
     }
 
-    textarea {
+    input {
       transition: all 0.2s ease-in-out;
       border: 1px solid $custom-input-border;
       border-radius: 2 * $x-large-unit;
       height: 48px;
       line-height: 1;
       padding: 15px 48px;
-      resize: none;
       color: $custom-muted;
       font-weight: 300;
       font-family: $Raleway;
@@ -196,6 +192,7 @@ export default {
         & ~ label {
           color: $secondary-matte;
         }
+
         & ~ span {
           color: $danger-light;
         }
