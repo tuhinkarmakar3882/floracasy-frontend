@@ -131,6 +131,13 @@ export default {
     }),
   },
 
+  watch: {
+    searchQuery(newQuery) {
+      this.matchCategories = this.categories.filter(({ name }) =>
+        name.toLowerCase().match(newQuery.toLowerCase())
+      )
+    },
+  },
   async mounted() {
     !this.categories &&
       (await this.$store.dispatch('CategoriesManagement/fetchCategories'))
@@ -149,9 +156,6 @@ export default {
     },
     updateSearchQuery() {
       this.searchQuery = this.$refs.search.textContent.trim()
-      this.matchCategories = this.categories.filter(({ name }) =>
-        name.toLowerCase().match(this.searchQuery.toLowerCase())
-      )
     },
     toggleSearchBar() {
       this.showSearchBar = !this.showSearchBar
