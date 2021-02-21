@@ -8,18 +8,16 @@
     <template slot="main">
       <section class="search-box-container px-4 mt-5 mb-4">
         <div class="search-box">
-          <input
+          <textarea
             id="search-box"
             ref="search"
             v-model="searchQuery"
             autocomplete="off"
             placeholder="Type here to search"
-            type="text"
             @blur="showFallback = false"
             @focusin="showFallback = false"
             @focusout="showFallback = false"
             @keyup="searchForPeople"
-            @keyup.enter="searchForPeople"
           />
           <label
             aria-label="Type here to search"
@@ -28,8 +26,9 @@
           />
           <span
             v-ripple
-            aria-label="Click here to start searching"
-            class="mdi mdi-check mdi-24px px-4"
+            aria-label="Click here to clear the text content"
+            class="mdi mdi-close mdi-24px px-4"
+            @click="searchQuery = ''"
           />
         </div>
 
@@ -80,14 +79,15 @@ export default {
 
   methods: {
     async searchForPeople() {
-      await showUITip(this.$store, 'Searching...')
+      if (this.searchQuery.trim().length > 2) {
+        await showUITip(this.$store, 'Searching...')
 
-      this.searchResults = await this.$axios
-        .$get(endpoints.follow_system.search, {
-          params: { searchQuery: this.searchQuery },
-        })
-        .catch((e) => console.log(e))
-      // this.$refs.search.blur()
+        this.searchResults = await this.$axios
+          .$get(endpoints.follow_system.search, {
+            params: { searchQuery: this.searchQuery },
+          })
+          .catch((e) => console.log(e))
+      }
     },
   },
 
@@ -130,7 +130,7 @@ export default {
       right: 0;
       opacity: 0;
       transform: scale(0);
-      color: $secondary;
+      color: rgba($danger-light, 0.7);
     }
 
     label {
@@ -138,34 +138,31 @@ export default {
       color: $custom-muted;
     }
 
-    input {
+    textarea {
       transition: all 0.2s ease-in-out;
       border: 1px solid $custom-input-border;
       border-radius: 2 * $x-large-unit;
       height: 48px;
-      padding: 0 48px;
+      line-height: 1;
+      padding: 15px 48px;
+      resize: none;
       color: $custom-muted;
       font-weight: 300;
       font-family: $Raleway;
       letter-spacing: $single-unit;
       font-size: 1rem;
 
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
       &::placeholder {
         color: $custom-muted;
         font-weight: 300;
       }
 
-      &:focus,
       &:not(:placeholder-shown) {
-        border: 1px solid $vibrant;
-
-        & ~ label {
-          color: $secondary;
-        }
-      }
-
-      &:not(:placeholder-shown) {
-        color: $secondary;
+        color: $secondary-matte;
         padding-left: 20px;
 
         & ~ span {
@@ -179,6 +176,18 @@ export default {
           padding: 0;
           opacity: 0;
           overflow: hidden;
+        }
+      }
+
+      &:focus {
+        color: $vibrant;
+        border: 1px solid $secondary-matte;
+
+        & ~ label {
+          color: $secondary-matte;
+        }
+        & ~ span {
+          color: $danger-light;
         }
       }
     }
