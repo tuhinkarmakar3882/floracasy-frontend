@@ -6,29 +6,48 @@
 
     <div v-else>
       <transition name="scale-up">
-        <section v-show="showSearchBar" class="px-2 py-4 search-box-container">
-          <div class="search-box">
-            <textarea
-              id="search-box"
-              v-model="searchQuery"
-              autocomplete="off"
-              placeholder="Type here to search"
-              rows="1"
-              @keyup.esc="hideSearchBar"
+        <InputBox v-show="showSearchBar">
+          <template v-slot:prepend-icon>
+            <i class="mdi mdi-magnify prepend-icon" />
+          </template>
+
+          <template v-slot:search-box>
+            <div
+              ref="search"
+              class="search-input-box"
+              contenteditable
+              @keyup="updateSearchQuery"
             />
-            <label
-              aria-label="Type here to search for category"
-              class="mdi px-4 mdi-24px mdi-magnify"
-              for="search-box"
-            />
-            <span
-              v-ripple
-              aria-label="Click here to clear the search"
-              class="mdi mdi-close mdi-24px px-4"
-              @click="searchQuery = ''"
-            />
-          </div>
-        </section>
+          </template>
+
+          <template v-slot:append-icon>
+            <i v-ripple class="mdi mdi-close append-icon" />
+          </template>
+        </InputBox>
+
+        <!--        <section v-show="showSearchBar" class="px-2 py-4 search-box-container">-->
+        <!--          <div class="search-box">-->
+        <!--            <textarea-->
+        <!--              id="search-box"-->
+        <!--              v-model="searchQuery"-->
+        <!--              autocomplete="off"-->
+        <!--              placeholder="Type here to search"-->
+        <!--              rows="1"-->
+        <!--              @keyup.esc="hideSearchBar"-->
+        <!--            />-->
+        <!--            <label-->
+        <!--              aria-label="Type here to search for category"-->
+        <!--              class="mdi px-4 mdi-24px mdi-magnify"-->
+        <!--              for="search-box"-->
+        <!--            />-->
+        <!--            <span-->
+        <!--              v-ripple-->
+        <!--              aria-label="Click here to clear the search"-->
+        <!--              class="mdi mdi-close mdi-24px px-4"-->
+        <!--              @click="searchQuery = ''"-->
+        <!--            />-->
+        <!--          </div>-->
+        <!--        </section>-->
       </transition>
 
       <LazyCustomListView>
@@ -112,14 +131,6 @@ export default {
     }),
   },
 
-  watch: {
-    searchQuery(newValue) {
-      this.matchCategories = this.categories.filter(({ name }) =>
-        name.toLowerCase().match(newValue.trim().toLowerCase())
-      )
-    },
-  },
-
   async mounted() {
     !this.categories &&
       (await this.$store.dispatch('CategoriesManagement/fetchCategories'))
@@ -134,6 +145,12 @@ export default {
           '{name}',
           categoryName
         )
+      )
+    },
+    updateSearchQuery() {
+      this.searchQuery = this.$refs.search.textContent.trim()
+      this.matchCategories = this.categories.filter(({ name }) =>
+        name.toLowerCase().match(this.searchQuery.toLowerCase())
       )
     },
     toggleSearchBar() {
