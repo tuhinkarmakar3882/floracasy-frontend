@@ -1,18 +1,11 @@
 <template>
   <AppFeel
-    custom-header
     class="about-page"
     :on-back="navigationRoutes.Home.DashBoard"
+    dynamic-back
+    :prev-url-path="prevURL"
   >
-    <template slot="app-bar-custom-header">
-      <h5
-        v-ripple
-        class="px-5 mdi mdi-arrow-left"
-        style="height: 56px; display: flex; align-items: center"
-        @click="handleBackButtonPress"
-      />
-      <p>{{ pageTitle }}</p>
-    </template>
+    <template v-slot:app-bar-title>{{ pageTitle }}</template>
     <template slot="main">
       <h4 class="heading-title">{{ $route.params.name }}</h4>
       <InfiniteScrollingBlogLists :category="$route.params.name" />
@@ -45,21 +38,6 @@ export default {
   },
 
   mounted() {},
-
-  methods: {
-    async handleBackButtonPress() {
-      if (this.prevURL) {
-        await this.$router.back()
-      } else {
-        await this.$router.replace({
-          path: navigationRoutes.Home.DashBoard,
-          query: {
-            tabNumber: 2,
-          },
-        })
-      }
-    },
-  },
 
   head() {
     return {
