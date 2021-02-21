@@ -14,10 +14,6 @@
             v-model="searchQuery"
             autocomplete="off"
             placeholder="Type here to search"
-            @blur="showFallback = false"
-            @focusin="showFallback = false"
-            @focusout="showFallback = false"
-            @keyup="searchForPeople"
           />
           <label
             aria-label="Type here to search"
@@ -32,14 +28,15 @@
           />
         </div>
 
-        <!--        <transition name="scale-down">-->
-        <!--          <aside v-if="showFallback" class="backdrop">-->
-        <!--            <section class="content px-4 text-center">-->
-        <!--              <h6>The more, The merrier</h6>-->
-        <!--              <p>Search for people across the world to connect</p>-->
-        <!--            </section>-->
-        <!--          </aside>-->
-        <!--        </transition>-->
+        <transition name="scale-down">
+          <aside v-if="showFallback" class="backdrop">
+            <section class="content px-4 text-center">
+              <LazyLoadingIcon class="mx-auto my-4" />
+              <h6>Sometimes it' worth waiting.</h6>
+              <p>Hold on, While we search for the awesome person!</p>
+            </section>
+          </aside>
+        </transition>
       </section>
 
       <pre>You're searching for: {{ searchQuery }}</pre>
@@ -66,6 +63,11 @@ export default {
       searchResults: [],
     }
   },
+  watch: {
+    searchQuery(newQuery) {
+      this.searchForPeople(newQuery)
+    },
+  },
 
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
@@ -80,13 +82,21 @@ export default {
   methods: {
     async searchForPeople() {
       if (this.searchQuery.trim().length > 2) {
+        this.showFallback = true
         await showUITip(this.$store, 'Searching...')
 
-        this.searchResults = await this.$axios
-          .$get(endpoints.follow_system.search, {
-            params: { searchQuery: this.searchQuery },
-          })
-          .catch((e) => console.log(e))
+        try {
+          this.searchResults = await this.$axios.$get(
+            endpoints.follow_system.search,
+            {
+              params: { searchQuery: this.searchQuery },
+            }
+          )
+        } catch (e) {
+          console.log(e)
+        } finally {
+          this.showFallback = false
+        }
       }
     },
   },
@@ -193,20 +203,20 @@ export default {
     }
   }
 
-  //.backdrop {
-  //  position: fixed;
-  //  height: 100vh;
-  //  width: 100vw;
-  //  top: 0;
-  //  left: 0;
-  //  bottom: 0;
-  //  right: 0;
-  //  background: rgba($nav-bar-bg, 0.9);
-  //  z-index: $bring-to-front - 15;
-  //
-  //  .content {
-  //    margin-top: 4.2 * $xxx-large-unit;
-  //  }
-  //}
+  .backdrop {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba($nav-bar-bg, 0.9);
+    z-index: $bring-to-front - 15;
+
+    .content {
+      margin-top: 4.2 * $xxx-large-unit;
+    }
+  }
 }
 </style>
