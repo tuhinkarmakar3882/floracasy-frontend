@@ -31,7 +31,7 @@
       <div class="pb-8 mb-8">
         <infinite-loading @infinite="fetchComments">
           <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />k
+            <LoadingIcon class="mt-4 mb-6" />
             <p class="text-center">Fetching Comments...</p>
           </template>
           <template slot="error">
@@ -89,7 +89,6 @@
 import {
   getRelativeTime,
   processLink,
-  setupUser,
   shorten,
   showUITip,
 } from '@/utils/utility'
