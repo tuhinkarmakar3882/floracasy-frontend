@@ -220,12 +220,18 @@ $image-dimension: 64px;
         border: 1px solid $custom-input-border;
         border-radius: 2 * $x-large-unit;
         height: 48px;
-        padding: 12px 48px;
+        line-height: 1;
+        padding: 15px 48px;
+        resize: none;
         color: $custom-muted;
         font-weight: 300;
         font-family: $Raleway;
         letter-spacing: $single-unit;
         font-size: 1rem;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         &::placeholder {
           color: $custom-muted;
