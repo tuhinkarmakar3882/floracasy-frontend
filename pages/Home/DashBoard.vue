@@ -158,7 +158,7 @@ $blog-border-radius: 20px;
     text-align: center;
     grid-template-columns: repeat(3, 1fr);
     position: sticky;
-    top: (2 * $x-large-unit) - $double-unit;
+    top: 56px;
     background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;
     z-index: 1;

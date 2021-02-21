@@ -13,18 +13,22 @@
               class="input-box"
               contenteditable
               @keyup="updateSearchQuery"
+              @keyup.esc="toggleSearchBar"
               @focusin="clearPlaceholderText"
               @focusout="putPlaceholderText"
             >
-              Type here to search
+              {{ placeholderText }}
             </div>
             <i class="mdi mdi-magnify prepend-icon" />
 
-            <i
-              v-ripple
-              class="mdi mdi-close append-icon"
-              @click="clearSearchContent"
-            />
+            <transition name="scale-up">
+              <i
+                v-show="!!searchQuery"
+                v-ripple
+                class="mdi mdi-close append-icon"
+                @click="clearSearchContent"
+              />
+            </transition>
           </section>
         </div>
       </transition>
@@ -100,6 +104,7 @@ export default {
       contentIsLoading: true,
       searchQuery: '',
       showSearchBar: false,
+      placeholderText: 'Type here to search',
       matchCategories: [],
     }
   },
@@ -144,7 +149,7 @@ export default {
 
     clearSearchContent() {
       this.searchQuery = ''
-      this.$refs.search.textContent = 'Type here to search'
+      this.$refs.search.textContent = this.placeholderText
     },
 
     toggleSearchBar() {
@@ -153,13 +158,13 @@ export default {
     },
 
     clearPlaceholderText() {
-      if (this.$refs.search.textContent.trim() === 'Type here to search')
+      if (this.$refs.search.textContent.trim() === this.placeholderText)
         this.$refs.search.textContent = ''
       this.$refs.search.focus()
     },
     putPlaceholderText() {
       if (this.$refs.search.textContent.trim() === '')
-        this.$refs.search.textContent = 'Type here to search'
+        this.$refs.search.textContent = this.placeholderText
     },
   },
 }
@@ -191,9 +196,9 @@ $image-dimension: 64px;
 
   .search-box-container {
     position: fixed;
-    top: 104px;
+    top: 56px;
     right: 0;
-    z-index: 1;
+    z-index: 2;
     background: $body-background;
     box-shadow: $down-only-box-shadow;
     left: 0;
