@@ -1,18 +1,19 @@
 <template>
-  <section :class="classList" class="categories">
+  <section class="categories">
     <div v-if="contentIsLoading" class="my-6">
       <LoadingIcon />
     </div>
+
     <div v-else>
       <transition name="scale-up">
         <section v-show="showSearchBar" class="px-2 py-4 search-box-container">
           <div class="search-box">
-            <input
+            <textarea
               id="search-box"
               v-model="searchQuery"
               autocomplete="off"
               placeholder="Type here to search"
-              type="text"
+              rows="1"
               @keyup.esc="hideSearchBar"
             />
             <label
@@ -29,7 +30,8 @@
           </div>
         </section>
       </transition>
-      <CustomListView>
+
+      <LazyCustomListView>
         <template v-slot:heading>
           <h4 class="heading-title">Explore Categories</h4>
         </template>
@@ -55,7 +57,7 @@
             </p>
           </li>
         </template>
-      </CustomListView>
+      </LazyCustomListView>
 
       <transition name="scale-up">
         <section
@@ -88,20 +90,12 @@
 </template>
 
 <script>
-import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import LoadingIcon from '@/components/global/LoadingIcon'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'CategoriesLineUp',
-  components: { LoadingIcon, CustomListView },
-  props: {
-    classList: {
-      type: String,
-      default: '',
-    },
-  },
+
   data() {
     return {
       navigationRoutes,
@@ -111,6 +105,7 @@ export default {
       matchCategories: [],
     }
   },
+
   computed: {
     ...mapGetters({
       categories: 'CategoriesManagement/getCategories',
@@ -220,12 +215,12 @@ $image-dimension: 64px;
         color: $custom-muted;
       }
 
-      input {
+      textarea {
         transition: all 0.2s ease-in-out;
         border: 1px solid $custom-input-border;
         border-radius: 2 * $x-large-unit;
         height: 48px;
-        padding: 0 48px;
+        padding: 12px 48px;
         color: $custom-muted;
         font-weight: 300;
         font-family: $Raleway;
