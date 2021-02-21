@@ -52,7 +52,7 @@
       trending-mode
     />
 
-    <CategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
+    <LazyCategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
   </div>
 </template>
 
@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       pageTitle: 'Dashboard',
-      tabNumber: parseInt(this.$route.query.tabNumber) || 0,
+      tabNumber: parseInt(this.$route.hash.substr(1, 1)) || 0,
       carouselItems: [
         {
           id: 0,
@@ -129,11 +129,9 @@ export default {
   },
   methods: {
     changeTab(newTabNumber) {
-      window.scrollTo(0, 0)
       this.tabNumber = newTabNumber
-      this.$nextTick(() => {
-        this.$refs.tabNavigation.scrollTop = 0
-      })
+      this.$refs.tabNavigation.scrollTop = 0
+      this.$router.push('#' + newTabNumber)
     },
   },
 
