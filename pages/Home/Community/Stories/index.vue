@@ -2,18 +2,17 @@
   <AppFeel
     :on-back="navigationRoutes.Home.Community.index"
     :prev-url-path="prevURL"
-    class="community-post-detail-page"
+    class="all-stories-overview-page"
     dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <pre>{{ stories }}</pre>
-      <!--      <section v-if="stories">-->
-      <!--        <article v-for="story in stories" :key="story.identifier">-->
-      <!--          <BlogPost :blog="story" class="pb-0 pt-8" />-->
-      <!--        </article>-->
-      <!--      </section>-->
+      <section v-if="stories" class="story-wrapper px-6 py-4">
+        <article v-for="story in stories" :key="story.identifier">
+          <LazyStoryPost :story="story" class="pb-0 pt-8" />
+        </article>
+      </section>
 
       <client-only>
         <infinite-loading @infinite="fetchStories">
@@ -24,12 +23,16 @@
           <template slot="error">
             <p class="danger-light my-6">Network Error</p>
           </template>
-          <template slot="no-more">
-            <p class="success my-6">That's all for now :)</p>
-          </template>
-          <!--        <template slot="no-results">No results message</template>-->
+          <template slot="no-more"><p></p></template>
+          <template slot="no-results"><p></p></template>
         </infinite-loading>
       </client-only>
+    </template>
+
+    <template v-slot:footer>
+      <aside class="floating-action-button primary-btn">
+        <i class="mdi mdi-plus mdi-24px" />
+      </aside>
     </template>
   </AppFeel>
 </template>
@@ -98,3 +101,19 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.all-stories-overview-page {
+  .story-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 24px;
+  }
+
+  .floating-action-button {
+    z-index: 3;
+    width: 56px;
+    height: 56px;
+  }
+}
+</style>
