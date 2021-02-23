@@ -4,6 +4,8 @@ import { analyticsID } from '~/environmentalVariables'
 export default async ({ app, store }) => {
   app.router.afterEach(async (to, _) => {
     process.client && window.gtag('config', analyticsID, { page_path: to })
-    await setupUser(store)
+    if (store.state.isUserAuthenticated) {
+      await setupUser(store)
+    }
   })
 }
