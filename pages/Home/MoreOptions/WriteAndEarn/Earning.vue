@@ -87,7 +87,7 @@ import KeyPoint from '@/components/global/KeyPoint'
 export default {
   name: 'Earning',
   components: { KeyPoint, AppFeel },
-  middleware: 'isAuthenticated',
+  // middleware: 'isAuthenticated',
   data() {
     return {
       navigationRoutes,

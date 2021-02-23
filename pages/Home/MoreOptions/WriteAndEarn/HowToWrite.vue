@@ -207,7 +207,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 export default {
   name: 'HowToWrite',
   components: { AppFeel },
-  middleware: 'isAuthenticated',
+  // middleware: 'isAuthenticated',
   data() {
     return {
       navigationRoutes,
