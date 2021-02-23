@@ -2,6 +2,8 @@
   <AppFeel
     class="about-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    dynamic-back
+    :prev-url-path="prevURL"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -72,8 +74,14 @@ export default {
   name: 'About',
   components: { Footer, Logo, AppFeel },
   // middleware: 'isAuthenticated',
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
+      prevURL: null,
       activeTab: 1,
       pageTitle: 'About us',
       navigationRoutes,
