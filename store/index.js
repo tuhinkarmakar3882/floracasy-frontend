@@ -28,27 +28,31 @@ export const actions = {
   async checkTokenValidity({ commit }) {
     await this.$axios.setToken('', 'Bearer')
 
-    const { data } = await this.$axios.post(
-      endpoints.auth.checkToken,
-      {},
-      { withCredentials: true }
-    )
+    try {
+      const { data } = await this.$axios.post(
+        endpoints.auth.checkToken,
+        {},
+        { withCredentials: true }
+      )
 
-    if (data?.authState) {
-      const cookieSavingConfig = {
-        path: '/',
-        maxAge: secrets.cookieMaxAge,
+      if (data?.authState) {
+        const cookieSavingConfig = {
+          path: '/',
+          maxAge: secrets.cookieMaxAge,
+        }
+
+        await this.$cookies.set('access', data?.access, cookieSavingConfig)
+        await this.$cookies.set('refresh', data?.refresh, cookieSavingConfig)
+        await this.$axios.setToken(data.access, 'Bearer')
+      } else {
+        await this.$cookies.remove('access')
+        await this.$cookies.remove('refresh')
       }
 
-      await this.$cookies.set('access', data?.access, cookieSavingConfig)
-      await this.$cookies.set('refresh', data?.refresh, cookieSavingConfig)
-      await this.$axios.setToken(data.access, 'Bearer')
-    } else {
-      await this.$cookies.remove('access')
-      await this.$cookies.remove('refresh')
+      commit('SET_IS_USER_AUTHENTICATED', data?.authState)
+    } catch (e) {
+      commit('SET_IS_USER_AUTHENTICATED', false)
     }
-
-    commit('SET_IS_USER_AUTHENTICATED', data?.authState)
   },
 
   login({ commit }) {

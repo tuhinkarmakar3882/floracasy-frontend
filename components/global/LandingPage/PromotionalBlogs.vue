@@ -10,7 +10,7 @@
 
     <hr class="reversed-faded-divider mt-0 mb-3" />
 
-    <section v-if="dataIsAvailable">
+    <section v-if="blogsData">
       <LazyCarousel
         class="text-left mb-4"
         :carousel-items="blogsData"
@@ -34,12 +34,10 @@ export default {
   data() {
     return {
       blogsData: null,
-      dataIsAvailable: false,
     }
   },
   async mounted() {
     await this.fetchTrendingBlogs()
-    this.dataIsAvailable = true
   },
   methods: {
     async fetchTrendingBlogs() {

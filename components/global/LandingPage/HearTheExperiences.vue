@@ -11,6 +11,7 @@
       :carousel-items="quotes"
       quote-carousel
       show-navigation-dots
+      auto-scroll
     />
   </div>
 </template>

@@ -50,9 +50,10 @@ export default {
     }
   },
 
-  async mounted() {
-    const { data } = await this.$axios.$get(endpoints.categories.fetch)
-    this.items = data
+  mounted() {
+    this.$axios.$get(endpoints.categories.fetch).then(({ data }) => {
+      this.items = data
+    })
   },
 
   methods: {
