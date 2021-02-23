@@ -13,7 +13,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'PublicRoutes',
+}
 </script>
 
 <style lang="scss" scoped>
