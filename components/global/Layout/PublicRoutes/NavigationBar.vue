@@ -40,7 +40,11 @@
       </section>
 
       <ul>
-        <li v-for="(option, index) in listOptions" :key="index">
+        <li
+          v-for="(option, index) in listOptions"
+          :key="index"
+          @click="$router.push(option.route)"
+        >
           <p v-ripple="`${option.color}5F`" class="py-4 px-2">
             <span
               :class="option.icon"
@@ -65,6 +69,8 @@
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+
 export default {
   name: 'NavigationBar',
   data() {
@@ -83,16 +89,19 @@ export default {
           name: 'New Feature',
           icon: 'mdi mdi-crown',
           color: '#8FF2E1',
+          route: '/',
         },
         {
           name: 'Write & Earn',
           icon: 'mdi mdi-currency-usd',
           color: '#f5a049',
+          route: navigationRoutes.Home.MoreOptions.WriteAndEarn,
         },
         {
           name: 'About Us',
           icon: 'mdi mdi-information',
           color: '#8c70fd',
+          route: navigationRoutes.Home.MoreOptions.About,
         },
       ],
     }
