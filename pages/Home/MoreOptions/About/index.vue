@@ -10,7 +10,7 @@
     <template slot="main">
       <main class="my-4">
         <section class="banner">
-          <Logo class="mr-4" />
+          <LazyLogo class="mr-4" />
           <h4>Floracasy</h4>
         </section>
 
@@ -59,7 +59,7 @@
         </div>
       </main>
 
-      <Footer class="px-4 my-0 py-6" />
+      <LazyFooter class="px-4 my-0 py-6" />
     </template>
   </AppFeel>
 </template>
@@ -72,8 +72,6 @@ import Footer from '~/components/global/Layout/PublicRoutes/Footer'
 
 export default {
   name: 'About',
-  components: { Footer, Logo, AppFeel },
-  // middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -188,9 +186,9 @@ $blog-border-radius: 20px;
       }
 
       .active-tab {
-        color: $secondary;
+        color: $white;
         font-weight: 400;
-        background: $card-background;
+        background: $active-gradient;
         transition: all 100ms ease-in-out;
       }
     }
