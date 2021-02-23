@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
 
 .custom-list-view {
@@ -24,6 +24,11 @@ export default {
     li {
       margin: 0;
 
+      a {
+        text-decoration: none;
+      }
+
+      a,
       p {
         display: flex;
         width: 100%;
