@@ -4,8 +4,8 @@
       leading-icon="mdi mdi-shape"
       leading-paragraph="We want to be versatile, starting with you. Our collections are growing each day with more enriching content, Along with an ever growing list of categories"
       title="Let the Knowledge be Omnidirectional"
-      use-divider
       topic="Categories"
+      use-divider
     />
 
     <section v-if="items" class="grid-container py-8">
@@ -70,10 +70,10 @@ export default {
 .categories-preview-component {
   .grid-container {
     display: grid;
-    justify-content: center;
+    text-align: center;
     place-items: center;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: $standard-unit;
+    grid-gap: $milli-unit;
 
     @media only screen and (min-width: $small) {
       grid-template-columns: repeat(3, 1fr);
@@ -104,13 +104,14 @@ export default {
     .grid-col {
       display: grid;
       place-items: center;
+      text-align: center;
     }
-  }
 
-  .show-reel {
-    p {
-      font-weight: 400;
-      color: $muted;
+    .show-reel {
+      p {
+        font-weight: 400;
+        color: $muted;
+      }
     }
   }
 }
