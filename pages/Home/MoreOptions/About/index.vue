@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    class="about-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
-    dynamic-back
     :prev-url-path="prevURL"
+    class="about-page"
+    dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -65,10 +65,7 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
-import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import Footer from '~/components/global/Layout/PublicRoutes/Footer'
 
 export default {
   name: 'About',

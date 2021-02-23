@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="how-to-write-page"
     :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn"
+    class="how-to-write-page"
   >
     <template slot="app-bar-title">
       {{ pageTitle }}
@@ -13,8 +13,8 @@
           <p>{{ guideline.description }}</p>
           <img
             v-if="guideline.image"
-            :src="guideline.image"
             :alt="guideline.title"
+            :src="guideline.image"
           />
         </section>
 
@@ -28,8 +28,8 @@
             below illustration.
           </p>
           <img
-            src="http://img_screenshort"
             alt="gify to demostrate add sub title"
+            src="http://img_screenshort"
           />
         </div>
 
@@ -105,7 +105,7 @@
 
           <h3>Alignments</h3>
 
-          <img src="#0.1_" alt=" screenshort or gify" />
+          <img alt=" screenshort or gify" src="#0.1_" />
 
           <p>
             You can easily change your alignment by using these tools. These are
@@ -137,7 +137,7 @@
             which you can add below
           </p>
 
-          <img src="#0.1_" alt="screen recording" />
+          <img alt="screen recording" src="#0.1_" />
 
           <ul>
             <li>
@@ -165,7 +165,7 @@
 
           <h3>How to set position</h3>
 
-          <img src="#0.1_" alt="screenshorts" />
+          <img alt="screenshorts" src="#0.1_" />
 
           <p>
             You can simply set your position by using this particular element
@@ -182,7 +182,7 @@
             .
           </p>
 
-          <img src="#0.1_" alt=" screenshort" />
+          <img alt=" screenshort" src="#0.1_" />
 
           <h3>link (icon)</h3>
 

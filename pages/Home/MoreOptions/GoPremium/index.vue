@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="go-premium-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    class="go-premium-page"
     custom-header
   >
     <template slot="app-bar-custom-header">
@@ -30,7 +30,7 @@
         <h6>Features at a Glance:</h6>
         <ul>
           <li v-for="(point, index) in points" :key="index">
-            <KeyPoint tick-color="#EFB33D" :tick-size="24" :point="point" />
+            <KeyPoint :point="point" :tick-size="24" tick-color="#EFB33D" />
           </li>
         </ul>
 

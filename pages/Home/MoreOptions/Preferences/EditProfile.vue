@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="edit-profile-page"
     :on-back="navigationRoutes.Home.MoreOptions.Preferences.index"
+    class="edit-profile-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -17,8 +17,8 @@
         <input
           v-show="false"
           ref="imageUpload"
-          type="file"
           accept="image/jpeg, image/png"
+          type="file"
           @change="compressImage"
         />
         <section class="display-picture" @click="changeImage">
@@ -38,10 +38,10 @@
             <input
               id="designation"
               v-model="designation"
-              type="text"
-              required
-              name="text"
               autocomplete="off"
+              name="text"
+              required
+              type="text"
             />
             <label class="material-form-field-label" for="designation">
               Designation
@@ -51,20 +51,20 @@
             <input
               id="about"
               v-model="about"
-              type="text"
-              required
-              name="text"
               autocomplete="off"
+              name="text"
+              required
+              type="text"
             />
             <label class="material-form-field-label" for="about"> About</label>
           </div>
         </section>
         <div class="text-center mt-8">
           <RippleButton
+            :loading="updateProfileDataLoading"
+            :on-click="uploadProfileDataToBackendServer"
             class="px-8 mt-2"
             class-list="primary-btn"
-            :on-click="uploadProfileDataToBackendServer"
-            :loading="updateProfileDataLoading"
           >
             Save
           </RippleButton>

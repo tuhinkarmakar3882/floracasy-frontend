@@ -16,8 +16,8 @@
         "
       >
         <img
-          :src="messageThread.receiver.photoURL"
           :alt="messageThread.receiver.displayName"
+          :src="messageThread.receiver.photoURL"
         />
 
         <section>

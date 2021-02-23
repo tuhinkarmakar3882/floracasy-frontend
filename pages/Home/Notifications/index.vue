@@ -1,6 +1,6 @@
 <template>
   <div class="notification-page mb-6">
-    <RequestPermissionDialog />
+    <LazyRequestPermissionDialog />
 
     <section class="notifications">
       <button

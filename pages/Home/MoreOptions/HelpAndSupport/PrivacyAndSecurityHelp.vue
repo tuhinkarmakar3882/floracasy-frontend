@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="privacy-and-security-help-page"
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
+    class="privacy-and-security-help-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 

@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="help-and-support-page"
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
+    class="help-and-support-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -32,33 +32,33 @@
             id="issue-title"
             ref="issueTitle"
             v-model="issueTitle"
-            type="text"
-            required
-            name="text"
             autocomplete="off"
+            name="text"
+            required
+            type="text"
           />
           <label class="material-form-field-label" for="issue-title">
             Issue Title
           </label>
           <small
             v-if="issueTitle.trim().length < 10"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 hint-text"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             (Hint: At least {{ 10 - issueTitle.trim().length }} more characters
             are required)
           </small>
           <small
             v-if="issueTitle.trim().length >= 10 && !issueTitleError"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 secondary-matte"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
           </small>
           <small
             v-if="issueTitleError"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 danger-light"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             <i class="mdi mdi-alert-circle-outline" />
             Exceed 300 character limit
@@ -70,33 +70,33 @@
             id="issue-details"
             ref="issueDetails"
             v-model="issueDetails"
-            type="text"
-            required
-            name="text"
             autocomplete="off"
+            name="text"
+            required
+            type="text"
           />
           <label class="material-form-field-label" for="issue-details">
             Issue Details
           </label>
           <small
             v-if="issueDetails.trim().length < 60"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 hint-text"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             (Hint: At least {{ 60 - issueDetails.trim().length }} more
             characters are required)
           </small>
           <small
             v-if="issueDetails.trim().length >= 60 && !issueDetailsError"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 secondary-matte"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
           </small>
           <small
             v-if="issueDetailsError"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 danger-light"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             <i class="mdi mdi-alert-circle-outline" />
             Exceed 1500 character limit
@@ -105,10 +105,6 @@
 
         <div class="text-center mt-8">
           <RippleButton
-            class="my-6"
-            class-list="primary-btn"
-            :on-click="raiseTicket"
-            :loading="raiseTicketLoading"
             :disabled="
               !(
                 isValidIssueTitle &&
@@ -117,6 +113,10 @@
                 !issueTitleError
               )
             "
+            :loading="raiseTicketLoading"
+            :on-click="raiseTicket"
+            class="my-6"
+            class-list="primary-btn"
             style="width: 212px"
           >
             Raise Support Ticket
@@ -132,6 +132,7 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import RippleButton from '~/components/global/RippleButton'
 import endpoints from '~/api/endpoints'
+
 export default {
   name: 'ContactSupport',
   components: { RippleButton, AppFeel },

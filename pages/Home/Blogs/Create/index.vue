@@ -13,9 +13,9 @@
         >
           <p>
             <span
-              class="icon"
               :class="option.icon"
               :style="{ color: option.color }"
+              class="icon"
             />
             <span class="option-name">{{ option.name }}</span>
             <span class="mdi mdi-chevron-right arrow-go" />
@@ -83,6 +83,7 @@ export default {
 
 .create-new-index-page {
   min-height: calc(100vh - 250px);
+
   button {
     min-width: auto;
     height: auto;

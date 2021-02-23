@@ -1,9 +1,9 @@
 <template>
   <AppFeel
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    :prev-url-path="prevURL"
     class="write-and-earn-page"
     dynamic-back
-    :prev-url-path="prevURL"
   >
     <template slot="app-bar-title">
       {{ pageTitle }}

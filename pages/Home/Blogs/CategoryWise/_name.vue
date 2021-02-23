@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    class="about-page"
     :on-back="navigationRoutes.Home.DashBoard"
-    dynamic-back
     :prev-url-path="prevURL"
+    class="about-page"
+    dynamic-back
   >
     <template v-slot:app-bar-title>{{ pageTitle }}</template>
     <template slot="main">

@@ -132,7 +132,7 @@ import endpoints from '@/api/endpoints'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import ClientOnly from 'vue-client-only'
 import LoadingIcon from '@/components/global/LoadingIcon'
-import { getRelativeTime, processLink, setupUser } from '@/utils/utility'
+import { getRelativeTime, processLink } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import RippleButton from '@/components/global/RippleButton'
 

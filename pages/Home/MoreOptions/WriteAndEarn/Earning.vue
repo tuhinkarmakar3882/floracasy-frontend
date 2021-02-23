@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="earning-page"
     :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn"
+    class="earning-page"
   >
     <template slot="app-bar-title">
       {{ pageTitle }}
@@ -13,23 +13,23 @@
 
           <section>
             <KeyPoint
+              :tick-size="20"
               class="my-4"
               point="You can easily earn by writing blogs. You can earn a good amount
               of money by being consistent as a writer."
               tick-color="#6DD0BF"
-              :tick-size="20"
             />
             <KeyPoint
+              :tick-size="20"
               class="my-4"
               point="Your earnings will be depend on your Blog engagement"
               tick-color="#6DD0BF"
-              :tick-size="20"
             />
             <KeyPoint
+              :tick-size="20"
               class="my-4"
               point="Consistency is the main policy to be a famous blogger"
               tick-color="#6DD0BF"
-              :tick-size="20"
             />
           </section>
 

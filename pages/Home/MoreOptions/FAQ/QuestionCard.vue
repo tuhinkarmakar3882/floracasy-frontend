@@ -12,10 +12,10 @@
         <section v-if="feedback" class="feedback-response">
           <p :class="requestFeedback ? 'danger-light' : 'secondary'">
             <span
-              class="mdi"
               :class="
                 requestFeedback ? 'mdi-emoticon-cry' : 'mdi-emoticon-cool'
               "
+              class="mdi"
             />
             {{ feedback }}
           </p>

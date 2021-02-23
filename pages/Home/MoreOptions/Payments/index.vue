@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    class="payments-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
-    dynamic-back
     :prev-url-path="prevURL"
+    class="payments-page"
+    dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -54,7 +54,7 @@
             </p>
             <ul>
               <li v-for="(point, index) in points" :key="index">
-                <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
+                <KeyPoint :point="point" :tick-size="24" tick-color="#d8ff00" />
               </li>
             </ul>
           </div>

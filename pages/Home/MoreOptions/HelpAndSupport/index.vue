@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="help-and-support-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    class="help-and-support-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -17,9 +17,9 @@
           >
             <p>
               <span
-                class="icon"
                 :class="option.icon"
                 :style="{ color: option.color }"
+                class="icon"
               />
               <span class="option-name">{{ option.name }}</span>
               <span class="mdi mdi-chevron-right arrow-go" />

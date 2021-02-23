@@ -12,9 +12,9 @@
         >
           <p>
             <span
-              class="icon"
               :class="option.icon"
               :style="{ color: option.color }"
+              class="icon"
             />
             <span class="option-name">{{ option.name }}</span>
             <span class="mdi mdi-chevron-right arrow-go" />

@@ -70,8 +70,8 @@
             Title
           </label>
           <small
-            style="display: block; font-size: 0.6rem"
             class="mt-2 hint-text"
+            style="display: block; font-size: 0.6rem"
           >
             *Required
           </small>
@@ -131,7 +131,7 @@
             </option>
           </select>
 
-          <small style="display: block; font-size: 11px" class="mt-2 hint-text">
+          <small class="mt-2 hint-text" style="display: block; font-size: 11px">
             *Required
           </small>
         </section>

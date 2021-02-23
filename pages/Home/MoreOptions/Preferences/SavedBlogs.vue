@@ -1,9 +1,9 @@
 <template>
   <AppFeel
     :on-back="navigationRoutes.Home.MoreOptions.Preferences.index"
+    :prev-url-path="prevURL"
     class="saved-blogs-page"
     dynamic-back
-    :prev-url-path="prevURL"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
     <template slot="main">
