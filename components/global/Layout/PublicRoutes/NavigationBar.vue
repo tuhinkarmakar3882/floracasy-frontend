@@ -45,21 +45,23 @@
           :key="index"
           @click="$router.push(option.route)"
         >
-          <p v-ripple="`${option.color}5F`" class="py-4 px-2">
-            <span
-              :class="option.icon"
-              class="mdi-24px"
-              :style="{ color: option.color }"
+          <nuxt-link :to="option.route">
+            <p v-ripple="`${option.color}5F`" class="py-4 px-2">
+              <span
+                :class="option.icon"
+                class="mdi-24px"
+                :style="{ color: option.color }"
+              />
+              <span class="option-name ml-2">{{ option.name }}</span>
+              <span class="mdi mdi-chevron-right mdi-24px ml-auto" />
+            </p>
+            <hr
+              :class="
+                index % 2 === 0 ? 'faded-divider' : 'reversed-faded-divider'
+              "
+              class="my-0"
             />
-            <span class="option-name ml-2">{{ option.name }}</span>
-            <span class="mdi mdi-chevron-right mdi-24px ml-auto" />
-          </p>
-          <hr
-            :class="
-              index % 2 === 0 ? 'faded-divider' : 'reversed-faded-divider'
-            "
-            class="my-0"
-          />
+          </nuxt-link>
         </li>
       </ul>
 
@@ -203,6 +205,10 @@ button {
         display: flex;
         justify-content: center;
         flex-direction: column;
+
+        a {
+          all: unset;
+        }
 
         hr {
           &.faded-divider,
