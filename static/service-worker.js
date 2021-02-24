@@ -1,9 +1,14 @@
 const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
-const filesToCache = []
+const filesToCache = [
+  'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+  'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+  '/offline',
+]
 
 // Cache on install
 self.addEventListener('install', (event) => {
   this.skipWaiting()
+  console.log('sw install')
   event.waitUntil(
     caches.open(staticCacheName).then((cache) => {
       return cache.addAll(filesToCache)
@@ -13,11 +18,12 @@ self.addEventListener('install', (event) => {
 
 // Clear cache on activate
 self.addEventListener('activate', (event) => {
+  console.log('sw activate')
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter((cacheName) => cacheName.startsWith('django-pwa-'))
+          .filter((cacheName) => cacheName.startsWith('nuxt-pwa-v'))
           .filter((cacheName) => cacheName !== staticCacheName)
           .map((cacheName) => caches.delete(cacheName))
       )
@@ -27,15 +33,21 @@ self.addEventListener('activate', (event) => {
 
 // Serve from Cache
 self.addEventListener('fetch', (event) => {
+  console.log('fetch call')
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((response) => {
-        return response || fetch(event.request)
-      })
-      .catch(() => {
-        return caches.match('/offline/')
-      })
+    caches.open('nuxt-pwa-v').then((cache) => {
+      return fetch(event.request)
+        .then((response) => {
+          console.log(event.request.method)
+          event.request.method === 'GET' &&
+            cache.put(event.request, response.clone())
+          return response
+        })
+        .catch(() => {
+          console.log('NO INTERNET, Looking for cache files')
+          return cache.match(event.request) || cache.match('/offline')
+        })
+    })
   )
 })
 
