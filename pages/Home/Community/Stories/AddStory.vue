@@ -274,6 +274,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
 
 const commonStyles = {
   minHeight: '100px',
@@ -704,30 +705,18 @@ export default {
       this.audio.recordingDone = true
     },
     async uploadAudioStory() {
+      await showUITip(this.$store, 'Uploading Audio')
+      const data = new FormData()
+      data.append('audio', this.audio.audioClip, this.audio.audioClip?.name)
       try {
-        const formData = new FormData()
-
-        formData.append(
-          'audio',
-          this.audio.audioClip,
-          this.audio.audioClip.name
-        )
-
-        const res = await this.$axios.$post(
-          endpoints.upload_handler_system.upload_audio,
-          formData,
-          {
-            onUploadProgress: this.showUITip,
-          }
-        )
-
+        const audioID = await this.$axios
+          .$post(endpoints.upload_handler_system.upload_audio, data)
+          .then((response) => response.identifier)
         await this.$axios.$post(endpoints.community_service.stories, {
           storyType: 'audio',
-          audio: res?.path,
+          audioID,
         })
-
         await this.$router.replace(navigationRoutes.Home.Community.index)
-
         await this.showUITip('Story Posted!', 'success')
       } catch (e) {
         await this.showUITip('Error Posting story', 'error')
