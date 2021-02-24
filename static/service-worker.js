@@ -7,7 +7,6 @@ const filesToCache = [
 // Cache on install
 self.addEventListener('install', (event) => {
   this.skipWaiting()
-  console.log('sw install')
   event.waitUntil(
     caches.open(staticCacheName).then((cache) => {
       return cache.addAll(filesToCache)
@@ -17,7 +16,6 @@ self.addEventListener('install', (event) => {
 
 // Clear cache on activate
 self.addEventListener('activate', (event) => {
-  console.log('sw activate')
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -33,8 +31,20 @@ self.addEventListener('activate', (event) => {
 // Serve from Cache
 self.addEventListener('fetch', function (event) {
   event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return response || fetch(event.request)
+    caches.open(staticCacheName).then(function (cache) {
+      return cache.match(event.request).then(function (response) {
+        return (
+          response ||
+          fetch(event.request).then((response) => {
+            event.request.method === 'GET' &&
+              (event.request.destination === 'style' ||
+                event.request.destination === 'font' ||
+                event.request.destination === 'script') &&
+              cache.put(event.request, response.clone())
+            return response
+          })
+        )
+      })
     })
   )
 })
