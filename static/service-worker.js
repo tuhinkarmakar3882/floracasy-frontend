@@ -2,7 +2,6 @@ const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
 const filesToCache = [
   'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
   'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-  '/offline',
 ]
 
 // Cache on install
@@ -32,21 +31,10 @@ self.addEventListener('activate', (event) => {
 })
 
 // Serve from Cache
-self.addEventListener('fetch', (event) => {
-  console.log('fetch call')
+self.addEventListener('fetch', function (event) {
   event.respondWith(
-    caches.open('nuxt-pwa-v').then((cache) => {
-      return fetch(event.request)
-        .then((response) => {
-          console.log(event.request.method)
-          event.request.method === 'GET' &&
-            cache.put(event.request, response.clone())
-          return response
-        })
-        .catch(() => {
-          console.log('NO INTERNET, Looking for cache files')
-          return cache.match(event.request) || cache.match('/offline')
-        })
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request)
     })
   )
 })
