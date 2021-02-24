@@ -37,8 +37,7 @@ self.addEventListener('fetch', function (event) {
           response ||
           fetch(event.request).then((response) => {
             event.request.method === 'GET' &&
-              (event.request.destination === 'style' ||
-                event.request.destination === 'font') &&
+              event.request.destination === 'font' &&
               cache.put(event.request, response.clone())
             return response
           })

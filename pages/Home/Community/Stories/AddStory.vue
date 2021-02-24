@@ -591,7 +591,6 @@ export default {
 
     // --------------------- Photo Methods ---------------------
     updatePhotoRatio() {
-      console.log(this.photo.aspectRatio)
       if (this.photo.aspectRatio) {
         this.photo.stream && this.destroySetup(this.photo.stream)
         this.prepareCameraRecordingInitialSetup({
@@ -644,26 +643,20 @@ export default {
       this.photo.compressionProgress = compressProgress
     },
     async uploadPhotoStory() {
+      await this.showUITip('Uploading Photo Story!', 'success')
       try {
-        const formData = new FormData()
+        const data = new FormData()
+        data.append('image', this.photo.output, this.photo.output.name)
 
-        formData.append('image', this.photo.output, this.photo.output.name)
-
-        const res = await this.$axios.$post(
-          endpoints.upload_handler_system.upload_image,
-          formData,
-          {
-            onUploadProgress: this.showUITip,
-          }
-        )
+        const imageID = await this.$axios
+          .$post(endpoints.upload_handler_system.upload_image, data)
+          .then((response) => response.identifier)
 
         await this.$axios.$post(endpoints.community_service.stories, {
           storyType: 'photo',
-          photo: res?.path,
+          imageID,
         })
-
         await this.$router.replace(navigationRoutes.Home.Community.index)
-
         await this.showUITip('Story Posted!', 'success')
       } catch (e) {
         await this.showUITip('Error Posting story', 'error')

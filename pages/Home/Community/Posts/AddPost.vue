@@ -308,18 +308,6 @@ export default {
   },
 
   methods: {
-    updateText() {
-      this.postBody = document.getElementById('post-body').textContent
-    },
-    loadAudioPreview(event) {
-      this.hasAudio = false
-      const file = event.target.files[0]
-
-      this.postAudio.output = file
-      this.postAudio.source = URL.createObjectURL(file)
-      this.hasAudio = true
-    },
-
     async generatePayload() {
       const payload = {
         body: this.postBody,
@@ -367,6 +355,18 @@ export default {
       } catch (e) {
         await showUITip(this.$store, 'Something Went Wrong', 'error')
       }
+    },
+
+    updateText() {
+      this.postBody = document.getElementById('post-body').textContent
+    },
+    loadAudioPreview(event) {
+      this.hasAudio = false
+      const file = event.target.files[0]
+
+      this.postAudio.output = file
+      this.postAudio.source = URL.createObjectURL(file)
+      this.hasAudio = true
     },
 
     async compressImage(event) {
