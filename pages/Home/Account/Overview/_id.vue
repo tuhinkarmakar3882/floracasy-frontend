@@ -167,7 +167,6 @@ export default {
         this.loadingError = true
       } finally {
         this.loadingProfile = false
-        this.loadingError = true
       }
     },
 
