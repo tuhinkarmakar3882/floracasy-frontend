@@ -90,7 +90,7 @@
               v-for="post in recentPosts"
               :key="post.identifier"
               :post="post"
-              class="pt-6"
+              class="activity py-8"
             />
           </section>
         </main>
@@ -109,7 +109,9 @@
             <p class="danger-light my-6">Network Error</p>
           </template>
 
-          <template slot="no-more"><div /></template>
+          <template slot="no-more">
+            <div />
+          </template>
 
           <template slot="no-results">
             <p class="my-5">It's Lonely Here...</p>
@@ -126,7 +128,9 @@
             <p class="danger-light my-6">Network Error</p>
           </template>
 
-          <template slot="no-more"><div /></template>
+          <template slot="no-more">
+            <div />
+          </template>
 
           <template slot="no-results">
             <p class="my-5">It's Lonely Here...</p>
@@ -381,10 +385,10 @@ export default {
     }
   }
 
-  .no-activity {
-    color: $muted;
-    display: grid;
-    place-items: center;
+  .activity {
+    &:nth-child(even) {
+      background: $segment-background;
+    }
   }
 }
 </style>
