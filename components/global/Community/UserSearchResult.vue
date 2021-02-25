@@ -1,5 +1,9 @@
 <template>
-  <div v-ripple class="user-search-result-component">
+  <div
+    v-ripple
+    class="user-search-result-component"
+    @click="openProfileDetails"
+  >
     <img :src="photoURL" alt="user-image" height="64" width="64" />
     <section class="user-data ml-4">
       <h6 class="mt-0 mb-1">{{ userdata.username }}</h6>
