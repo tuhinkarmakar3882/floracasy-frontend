@@ -87,7 +87,6 @@
       <transition name="slide-right">
         <aside
           v-if="showFragment"
-          tabindex="0"
           class="fragment"
           @click="showFragment = false"
         >
@@ -429,20 +428,6 @@ export default {
           }
         }
       }
-
-      //&:hover {
-      //  width: 18.5ch;
-      //  border-radius: 0 36px 36px 0;
-      //
-      //  section,
-      //  div {
-      //    width: 15ch;
-      //  }
-      //  .menu-option-text {
-      //    opacity: 1;
-      //    margin-left: 12px;
-      //  }
-      //}
 
       #active-nav-link {
         color: $white;
