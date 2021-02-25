@@ -92,6 +92,8 @@ const endpoints = {
   profile_statistics: {
     detail: '/allow_authenticated/profile_statistics/detail/',
     profileData: '/allow_authenticated/profile_statistics/profile_data/',
+    getProfileImage:
+      '/allow_authenticated/profile_statistics/get_profile_image/',
   },
   upload_handler_system: {
     process_image: uploadServerBase + '/upload/process_image/',
