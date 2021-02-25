@@ -51,6 +51,8 @@ const endpoints = {
       index: '/allow_authenticated/community_service/posts/',
       like: '/allow_authenticated/community_service/posts/like/',
       share: '/allow_authenticated/community_service/posts/share/',
+      getByUserUID:
+        '/allow_authenticated/community_service/posts/fetch/by_user_uid/',
     },
   },
   chat_system: {

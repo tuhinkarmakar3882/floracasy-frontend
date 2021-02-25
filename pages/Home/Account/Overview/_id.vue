@@ -86,7 +86,12 @@
           </section>
 
           <section v-if="tabNumber === 1">
-            <pre>Community Posts</pre>
+            <CommunityPost
+              v-for="post in recentPosts"
+              :key="post.identifier"
+              :post="post"
+              class="pt-6"
+            />
           </section>
         </main>
       </section>
@@ -94,23 +99,37 @@
 
     <footer v-if="!loadingError">
       <client-only>
-        <infinite-loading @infinite="infiniteHandler">
+        <infinite-loading key="infinite-blog-fetch" @infinite="loadBlogs">
           <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p>Loading Recent Activities Data...</p>
+            <LoadingIcon class="mt-4 mb-8" />
+            <p>Getting your blogs...</p>
           </template>
+
           <template slot="error">
             <p class="danger-light my-6">Network Error</p>
           </template>
-          <template slot="no-more">
-            <div class="no-activity">
-              <p class="my-5">That's all :)</p>
-            </div>
-          </template>
+
+          <template slot="no-more"><div /></template>
+
           <template slot="no-results">
-            <div class="no-activity">
-              <p class="my-5">It's Lonely Here...</p>
-            </div>
+            <p class="my-5">It's Lonely Here...</p>
+          </template>
+        </infinite-loading>
+
+        <infinite-loading key="infinite-posts-fetch" @infinite="loadPosts">
+          <template slot="spinner">
+            <LoadingIcon class="mt-4 mb-8" />
+            <p>Getting your posts...</p>
+          </template>
+
+          <template slot="error">
+            <p class="danger-light my-6">Network Error</p>
+          </template>
+
+          <template slot="no-more"><div /></template>
+
+          <template slot="no-results">
+            <p class="my-5">It's Lonely Here...</p>
           </template>
         </infinite-loading>
       </client-only>
@@ -138,11 +157,13 @@ export default {
       pageTitle: 'Profile Details',
 
       statisticsItem: null,
-      recentBlogs: [],
-
       otherUser: null,
 
-      userBlogEndpoint: endpoints.blog.getBlogsByUid,
+      getBlogsByUserUIDEndpoint: endpoints.blog.getBlogsByUid,
+      recentBlogs: [],
+
+      getPostsByUserUIDEndpoint: endpoints.community_service.posts.getByUserUID,
+      recentPosts: [],
 
       followOrUnfollowLoading: false,
       followOrUnfollowWorking: false,
@@ -201,19 +222,41 @@ export default {
       }
     },
 
-    async infiniteHandler($state) {
-      if (!this.userBlogEndpoint) {
+    async loadBlogs($state) {
+      if (!this.getBlogsByUserUIDEndpoint) {
         $state.complete()
         return
       }
       try {
         const { results, next } = await this.$axios.$get(
-          this.userBlogEndpoint,
+          this.getBlogsByUserUIDEndpoint,
           { params: { uid: this.$route.params.id } }
         )
         if (results.length) {
-          this.userBlogEndpoint = processLink(next)
+          this.getBlogsByUserUIDEndpoint = processLink(next)
           this.recentBlogs.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      } catch (e) {
+        $state.complete()
+      }
+    },
+
+    async loadPosts($state) {
+      if (!this.getPostsByUserUIDEndpoint) {
+        $state.complete()
+        return
+      }
+      try {
+        const { results, next } = await this.$axios.$get(
+          this.getPostsByUserUIDEndpoint,
+          { params: { uid: this.$route.params.id } }
+        )
+        if (results.length) {
+          this.getPostsByUserUIDEndpoint = processLink(next)
+          this.recentPosts.push(...results)
           $state.loaded()
         } else {
           $state.complete()
