@@ -10,9 +10,10 @@
     <transition name="gray-shift">
       <img
         v-if="!drawerIsOpened"
-        alt=""
+        alt="Floracasy"
+        height="28"
         src="/icons/fc-logo-full.svg"
-        style="position: absolute; height: 28px; left: 52px; top: 15px"
+        class="logo-img"
         @click="navigateTo('/')"
       />
     </transition>
@@ -145,6 +146,13 @@ button {
   height: 2 * $x-large-unit;
   margin: 0;
   box-shadow: $down-only-box-shadow;
+
+  .logo-img {
+    position: absolute;
+    height: 28px;
+    left: 52px;
+    top: 15px;
+  }
 
   .brand,
   .icon {
