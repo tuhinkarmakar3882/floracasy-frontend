@@ -3,107 +3,95 @@
     :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn"
     class="earning-page"
   >
-    <template slot="app-bar-title">
+    <template v-slot:app-bar-title>
       {{ pageTitle }}
     </template>
-    <template slot="main">
-      <main class="px-4 my-4">
-        <div>
-          <h4 class="heading-title">How to earn by writing</h4>
+    <template v-slot:main>
+      <main>
+        <h4 class="heading-title my-6 px-4">Tips to Improve Your Earnings</h4>
 
-          <section>
-            <KeyPoint
-              :tick-size="20"
-              class="my-4"
-              point="You can easily earn by writing blogs. You can earn a good amount
-              of money by being consistent as a writer."
-              tick-color="#6DD0BF"
-            />
-            <KeyPoint
-              :tick-size="20"
-              class="my-4"
-              point="Your earnings will be depend on your Blog engagement"
-              tick-color="#6DD0BF"
-            />
-            <KeyPoint
-              :tick-size="20"
-              class="my-4"
-              point="Consistency is the main policy to be a famous blogger"
-              tick-color="#6DD0BF"
-            />
-          </section>
+        <section class="py-4 px-4">
+          <LazyKeyPoint
+            v-for="(point, index) in points"
+            :key="index"
+            :point="point"
+            :tick-size="20"
+            class="my-4"
+            tick-color="#6DD0BF"
+          />
+        </section>
 
-          <section class="my-4">
-            <h4 class="heading-title">Earn As Much as You Can!</h4>
-            <p class="text-justify">
-              One can earn $100 to $1000 in a month. we don&#39;t promise that
-              every writer can earn that much but yes some of our use can if
-              they give their best performance in a consistent way. So don&#39;t
-              further a do , start writing now &amp; earn independently. If you
-              already been a writer then wish a best of luck so that you can
-              continue your writing &amp; earning.
-            </p>
-          </section>
-
-          <section class="my-4">
-            <h4 class="heading-title">Earn Independently</h4>
-            <p class="text-justify">
-              we create an amazing hassle free environment so that you can write
-              freely &amp; earn easily. You don&#39;t need to do any complex
-              things . Just earn write freely &amp; earn easily.
-            </p>
-          </section>
-
-          <section class="my-4">
-            <h4 class="heading-title">Claim Your Earning</h4>
-            <p class="text-justify">
-              To get payment all you need to do is . First verify your mobile
-              number &amp; add your a/c details where your earned money will be
-              transferred. But first you need to earn $100 essentially otherwise
-              you can&#39;t claim your money.
-            </p>
-          </section>
-
-          <section class="my-4">
-            <h4 class="heading-title">Don't Misuse your Power</h4>
-            <p class="text-justify">
-              You can&#39;t write any sexual or bad content . otherwise you will
-              be blocked by floracasy team. If you will do any violence then you
-              can also get blocked. If you broke our role then your account will
-              be blocked by floracasy team.
-            </p>
-          </section>
-        </div>
+        <section
+          v-for="(segment, index) in segments"
+          :key="index"
+          class="py-8 px-4 segment"
+        >
+          <h4>{{ segment.title }}</h4>
+          <hr class="faded-divider" />
+          <p
+            v-for="(paragraph, paragraphIndex) in segment.body"
+            :key="`${segment.title}-${paragraphIndex}`"
+            class="my-4"
+          >
+            {{ paragraph }}
+          </p>
+        </section>
       </main>
     </template>
   </AppFeel>
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import KeyPoint from '@/components/global/KeyPoint'
 
 export default {
   name: 'Earning',
-  components: { KeyPoint, AppFeel },
-  // middleware: 'isAuthenticated',
   data() {
     return {
       navigationRoutes,
       pageTitle: 'Earn By Writing',
-      options: [
+      points: [
+        'Try to be a Consistent Blog Writer on the Platform',
+        'Great content, keeps your readers engaged',
+        'Try engaging with your community via our Social Section',
+        'Remember, Consistency is the key to be Successful',
+      ],
+      segments: [
         {
-          name: 'How to Write',
-          icon: 'mdi mdi-pencil',
-          color: '#f5a049',
-          route: '/Home/MoreOptions/WriteAndEarn/HowToWrite',
+          title: 'Get Paid for Your Knowledge 💰💰💰',
+          body: [
+            `One can earn easily at least $100/month with a decent amount of content.
+            Though, it can take sometime to build your own community, We surely believe that,
+            your knowledge is worth of that reward.`,
+            `So without a further do, start writing now & create an impact out of your passion.`,
+          ],
         },
         {
-          name: 'Earn By Writing',
-          icon: 'mdi mdi-currency-usd',
-          color: '#4fca4f',
-          route: '/Home/MoreOptions/WriteAndEarn',
+          title: 'Claim Your Earning 🥳',
+          body: [
+            `Once you reach the minimum threshold, you can claim the money that your have earned.
+             So, Just keep on engaging with your community now.`,
+            `Rest assured, We'll keep you informed & make sure that your reward reaches to you
+            without any hassle.`,
+          ],
+        },
+        {
+          title: 'Socialize the Knowledge Around You 🧑‍🤝‍🧑👭👬👫',
+          body: [
+            `The world is full of awesome people. And we all have some knowledge in us.
+             Lets talk about our valuable knowledge and create awesome Impact around the world!`,
+          ],
+        },
+        {
+          title: `Great Power Comes with Great Responsibility`,
+          body: [
+            `Though, the community is open-minded, We hope & appreciate that you will not misuse the power &
+            will refrain from posting & creating anything that is not community-friendly.`,
+            `We expect you to follow our community guidelines to keep this place safe for you & others around
+            the world. In case of posting or creating any harmful or disrespectful or any form of abusive
+            content, your a/c may be strictly banned & necessary steps will be taken to protect the wellness of
+            the community.`,
+          ],
         },
       ],
     }
@@ -116,3 +104,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.segment {
+  &:nth-child(odd) {
+    background: $segment-background;
+  }
+}
+</style>
