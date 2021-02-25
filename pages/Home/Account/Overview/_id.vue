@@ -16,7 +16,7 @@
 
         <p v-if="otherUser.about" class="">{{ otherUser.about }}</p>
 
-        <section class="actions">
+        <section class="actions my-4">
           <div @click="followOrUnfollow(otherUser)">
             <RippleButton
               :class-list="
@@ -49,17 +49,46 @@
         </section>
       </section>
 
-      <section class="recent-activity">
-        <h4 class="heading-title" style="margin-bottom: 2rem !important">
-          Recent Activities
-        </h4>
+      <hr class="faded-divider" />
 
-        <LazyBlogPost
-          v-for="activity in recentActivities"
-          :key="activity.identifier"
-          :blog="activity"
-          class="activity pt-4"
-        />
+      <section class="timeline-wrapper">
+        <h4 class="heading-title mt-0 mb-8 pb-4">The Timeline</h4>
+
+        <div ref="tabNavigation"></div>
+
+        <nav class="tab-bar">
+          <p
+            v-ripple
+            :class="tabNumber === 0 && 'active-tab'"
+            @click="changeTab(0)"
+          >
+            <span class="mdi mdi-newspaper" />
+            Blogs
+          </p>
+          <p
+            v-ripple
+            :class="tabNumber === 1 && 'active-tab'"
+            @click="changeTab(1)"
+          >
+            <span class="mdi mdi-earth" />
+            Posts
+          </p>
+        </nav>
+
+        <main class="timeline pt-4">
+          <section v-if="tabNumber === 0">
+            <LazyBlogPost
+              v-for="blog in recentBlogs"
+              :key="blog.identifier"
+              :blog="blog"
+              class="activity pt-4"
+            />
+          </section>
+
+          <section v-if="tabNumber === 1">
+            <pre>Community Posts</pre>
+          </section>
+        </main>
       </section>
     </main>
 
@@ -102,12 +131,14 @@ export default {
   middleware: 'isAuthenticated',
   data() {
     return {
+      tabNumber: 0,
+
       useMessageService,
       navigationRoutes,
       pageTitle: 'Profile Details',
 
       statisticsItem: null,
-      recentActivities: [],
+      recentBlogs: [],
 
       otherUser: null,
 
@@ -182,7 +213,7 @@ export default {
         )
         if (results.length) {
           this.userBlogEndpoint = processLink(next)
-          this.recentActivities.push(...results)
+          this.recentBlogs.push(...results)
           $state.loaded()
         } else {
           $state.complete()
@@ -238,6 +269,11 @@ export default {
       this.followOrUnfollowLoading = false
       this.followOrUnfollowWorking = false
     },
+
+    changeTab(newTabNumber) {
+      this.tabNumber = newTabNumber
+      this.$refs.tabNavigation.scrollIntoView()
+    },
   },
 
   head() {
@@ -270,7 +306,6 @@ export default {
 
     .actions {
       display: flex;
-      margin: 1.2rem 0;
       justify-content: space-around;
       align-items: center;
       padding: 1rem;
@@ -278,29 +313,28 @@ export default {
     }
   }
 
-  .recent-activity {
-    .heading {
-      text-align: left;
-      font-weight: 400;
-      color: #fff;
-      font-size: 20px;
-      margin-top: 2rem;
-      font-family: $Prata;
-      margin-bottom: 1rem;
+  .tab-bar {
+    display: grid;
+    text-align: center;
+    grid-template-columns: repeat(2, 1fr);
+    position: sticky;
+    top: 56px;
+    background-color: $nav-bar-bg;
+    box-shadow: $down-only-box-shadow;
+    z-index: 1;
+    transition: all 0.3s ease-in-out;
+
+    * {
+      padding: 0.7rem 0;
+      font-size: 1rem;
+      font-weight: 300;
     }
 
-    .content {
-      display: grid;
-      grid-template-columns: 84px calc(95vw - 84px);
-      grid-column-gap: 1rem;
-      align-items: center;
-
-      img {
-        height: 84px;
-        width: 84px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
+    .active-tab {
+      color: $white;
+      font-weight: 400;
+      background: $active-gradient;
+      transition: all 0.1s ease-in-out;
     }
   }
 
