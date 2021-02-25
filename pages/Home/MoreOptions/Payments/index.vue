@@ -58,7 +58,7 @@
               </li>
             </ul>
           </div>
-          <div class="text-center mt-6">
+          <div v-if="usePremiumServices" class="text-center mt-6">
             <button v-ripple class="premium-btn mx-2 my-4" style="width: 150px">
               Buy Premium
             </button>
@@ -71,6 +71,11 @@
               Learn More
             </button>
           </div>
+          <aside v-else class="text-center mt-6">
+            <button v-ripple class="premium-btn mx-2 my-4">
+              Be the first to get Notified
+            </button>
+          </aside>
         </section>
       </div>
     </template>
@@ -81,6 +86,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import KeyPoint from '@/components/global/KeyPoint'
+import { usePremiumServices } from '~/environmentalVariables'
 
 export default {
   name: 'Payments',
@@ -93,7 +99,9 @@ export default {
 
   data() {
     return {
+      usePremiumServices,
       navigationRoutes,
+      prevURL: null,
       pageTitle: 'Payments',
       points: [
         'Get Detailed Insights',
