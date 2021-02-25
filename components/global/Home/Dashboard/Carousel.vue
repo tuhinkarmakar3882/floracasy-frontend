@@ -108,7 +108,7 @@ export default {
           top: 0,
           behavior: 'smooth',
         })
-      }, 6000)
+      }, 8000)
     },
   },
 }

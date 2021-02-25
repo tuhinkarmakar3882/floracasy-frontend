@@ -21,7 +21,7 @@
          
 
 > ### Follow System:
->   - Add Support for Searching People
+>   - Improve UX
 
 
 > ### Certificate Verification Portal:
