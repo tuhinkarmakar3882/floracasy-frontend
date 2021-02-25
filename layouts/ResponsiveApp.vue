@@ -85,9 +85,14 @@
         </div>
       </footer>
       <transition name="slide-right">
-        <aside v-if="showFragment" tabindex="0" @click="showFragment = false">
+        <aside
+          v-if="showFragment"
+          tabindex="0"
+          class="fragment"
+          @click="showFragment = false"
+        >
           <CustomListView>
-            <template slot="list-items">
+            <template v-slot:list-items>
               <li
                 v-for="(option, index) in fragmentOptions"
                 :key="index"
@@ -201,12 +206,12 @@
         </div>
       </footer>
       <transition name="slide-up">
-        <aside v-if="showFragment">
+        <aside v-if="showFragment" class="fragment">
           <CustomListView>
-            <template slot="heading">
+            <template v-slot:heading>
               <h6 class="heading-title mb-0">What do you want to do?</h6>
             </template>
-            <template slot="list-items">
+            <template v-slot:list-items>
               <li
                 v-for="(option, index) in fragmentOptions"
                 :key="index"
@@ -634,6 +639,12 @@ export default {
     object-fit: cover;
     border-radius: 50%;
     box-shadow: $default-box-shadow;
+  }
+
+  .fragment {
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>
