@@ -1,59 +1,20 @@
 <template>
   <div class="py-6 details-page">
-    <main v-if="loadingProfile" class="text-center">
-      <div class="pageLoading">
-        <LoadingIcon />
-        Fetching data from server
-      </div>
-    </main>
+    <FallBackLoader v-if="loadingProfile" class="text-center" />
+
+    <LoadingError
+      v-else-if="loadingError"
+      class="px-4"
+      error-section="Profile Details"
+    />
+
     <main v-else>
-      <section v-if="otherUser" class="text-center user-profile px-1">
-        <div class="basic-data">
-          <img
-            :src="otherUser.photoURL"
-            alt="profile-picture"
-            class="picture"
-            height="100"
-            width="100"
-          />
-          <div class="basic-details">
-            <p class="name">{{ otherUser.displayName }}</p>
-            <p v-if="otherUser.designation" class="designation">
-              <em>{{ otherUser.designation }}</em>
-            </p>
-          </div>
-        </div>
+      <section v-if="otherUser" class="user-profile px-1">
+        <LazyBasicUserData :user="otherUser" />
 
-        <div>
-          <section v-if="statisticsItem" class="stats">
-            <div class="item">
-              <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
-              <p class="type">Blogs</p>
-            </div>
-            <div class="item">
-              <span class="number">{{
-                statisticsItem['peopleSharedMyBlogs'] +
-                statisticsItem['peopleLikedMyBlogs']
-              }}</span>
-              <p class="type">Engagements</p>
-            </div>
-            <div class="item">
-              <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
-              <p class="type">Followers</p>
-            </div>
-          </section>
+        <LazyUserStatistics :statistics-item="statisticsItem" />
 
-          <section v-else class="text-center my-8">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p>Loading Profile Data...</p>
-          </section>
-        </div>
-
-        <section class="other-info">
-          <p v-if="otherUser.about" class="about text-center">
-            {{ otherUser.about }}
-          </p>
-        </section>
+        <p v-if="otherUser.about" class="">{{ otherUser.about }}</p>
 
         <section class="actions">
           <div @click="followOrUnfollow(otherUser)">
@@ -93,7 +54,7 @@
           Recent Activities
         </h4>
 
-        <BlogPost
+        <LazyBlogPost
           v-for="activity in recentActivities"
           :key="activity.identifier"
           :blog="activity"
@@ -101,44 +62,42 @@
         />
       </section>
     </main>
-    <client-only>
-      <infinite-loading @infinite="infiniteHandler">
-        <template slot="spinner">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Recent Activities Data...</p>
-        </template>
-        <template slot="error">
-          <p class="danger-light my-6">Network Error</p>
-        </template>
-        <template slot="no-more">
-          <div class="no-activity">
-            <p class="my-5">That's all :)</p>
-          </div>
-        </template>
-        <template slot="no-results">
-          <div class="no-activity">
-            <p class="my-5">It's Lonely Here...</p>
-          </div>
-        </template>
-      </infinite-loading>
-    </client-only>
+
+    <footer v-if="!loadingError">
+      <client-only>
+        <infinite-loading @infinite="infiniteHandler">
+          <template slot="spinner">
+            <LoadingIcon class="mt-4 mb-6" />
+            <p>Loading Recent Activities Data...</p>
+          </template>
+          <template slot="error">
+            <p class="danger-light my-6">Network Error</p>
+          </template>
+          <template slot="no-more">
+            <div class="no-activity">
+              <p class="my-5">That's all :)</p>
+            </div>
+          </template>
+          <template slot="no-results">
+            <div class="no-activity">
+              <p class="my-5">It's Lonely Here...</p>
+            </div>
+          </template>
+        </infinite-loading>
+      </client-only>
+    </footer>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import ClientOnly from 'vue-client-only'
-import LoadingIcon from '@/components/global/LoadingIcon'
-import BlogPost from '@/components/global/BlogPost'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink } from '~/utils/utility'
-import RippleButton from '~/components/global/RippleButton'
+import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
 import { useMessageService } from '~/environmentalVariables'
 
 export default {
   name: 'Overview',
-  components: { RippleButton, BlogPost, LoadingIcon, ClientOnly },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
   data() {
@@ -146,15 +105,22 @@ export default {
       useMessageService,
       navigationRoutes,
       pageTitle: 'Profile Details',
-      loadingProfile: true,
+
       statisticsItem: null,
       recentActivities: [],
+
       otherUser: null,
+
       userBlogEndpoint: endpoints.blog.getBlogsByUid,
+
       followOrUnfollowLoading: false,
       followOrUnfollowWorking: false,
+
       messageLoading: false,
       messageWorking: false,
+
+      loadingProfile: true,
+      loadingError: false,
     }
   },
 
@@ -172,32 +138,38 @@ export default {
       linkPosition: -1,
     })
 
-    if (this.$route.params.id === this.user.uid) {
+    if (this.$route.params.id === this.user.uid)
       await this.$router.replace(navigationRoutes.Home.Account.Details)
-    } else {
-      this.loadingProfile = false
-
-      try {
-        const data = await this.$axios.$get(
-          endpoints.profile_statistics.detail,
-          { params: { uid: this.$route.params.id } }
-        )
-        this.statisticsItem = data.statistics
-        this.otherUser = this.statisticsItem.user
-        this.otherUser.about = data.userData.about
-        this.otherUser.designation = data.userData.designation
-      } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Error while Fetching Data. Please Refresh',
-          notificationType: 'alert',
-          dismissible: true,
-        })
-      }
-    }
+    else await this.loadProfile()
   },
 
   methods: {
     getRelativeTime,
+
+    async loadProfile() {
+      this.loadingError = false
+      try {
+        const { statistics, userData } = await this.$axios.$get(
+          endpoints.profile_statistics.detail,
+          { params: { uid: this.$route.params.id } }
+        )
+        this.statisticsItem = statistics
+
+        this.otherUser = this.statisticsItem.user
+        this.otherUser.about = userData.about
+        this.otherUser.designation = userData.designation
+      } catch (e) {
+        await showUITip(
+          this.$store,
+          'Error while Fetching Data. Try Again',
+          'error'
+        )
+        this.loadingError = true
+      } finally {
+        this.loadingProfile = false
+        this.loadingError = true
+      }
+    },
 
     async infiniteHandler($state) {
       if (!this.userBlogEndpoint) {
@@ -295,52 +267,7 @@ export default {
   }
 
   .user-profile {
-    .basic-data {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      place-items: center;
-      position: relative;
-      z-index: 2;
-
-      .picture {
-        max-width: 100px;
-        max-height: 100px;
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-      }
-
-      .basic-details {
-        .name {
-          font-size: 24px;
-          font-family: $Prata;
-          color: white;
-          margin-bottom: 12px;
-          margin-top: 0;
-        }
-
-        .designation {
-          margin: 0 0 9px;
-          color: #00bcd4;
-        }
-      }
-    }
-
-    .stats {
-      margin: 2rem 0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      justify-content: space-around;
-      align-items: center;
-      font-family: $Nunito-Sans;
-
-      .item {
-        p {
-          margin: 0;
-        }
-      }
-    }
+    text-align: center;
 
     .actions {
       display: flex;
@@ -349,10 +276,6 @@ export default {
       align-items: center;
       padding: 1rem;
       gap: 1rem;
-    }
-
-    .other-info {
-      text-align: left;
     }
   }
 
