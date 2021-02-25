@@ -24,8 +24,6 @@
         <small>
           <span class="mdi mdi-clock-outline mr-1" />
           <em>{{ getRelativeTime(post.createdAt) }}</em>
-          <!--          <span v-if="isEdited" class="mdi muted">Edited </span>-->
-          <!--          <span v-if="isEdited" class="dot ml-2 mr-1" />-->
         </small>
       </div>
       <i
@@ -232,7 +230,7 @@ export default {
       border-radius: 0 20px;
       height: 250px;
       width: 100%;
-      object-fit: cover;
+      object-fit: scale-down;
       box-shadow: $default-box-shadow;
     }
   }

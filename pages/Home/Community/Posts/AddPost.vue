@@ -521,7 +521,7 @@ export default {
           height: 250px;
           width: 100%;
           min-width: 100%;
-          object-fit: cover;
+          object-fit: contain;
           border-radius: 0 $standard-unit;
         }
 
