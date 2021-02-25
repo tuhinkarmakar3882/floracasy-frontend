@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.Community.index"
     class="community-search-page"
   >
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
+    <template v-slot:app-bar-title> {{ pageTitle }}</template>
 
-    <template slot="main">
+    <template v-slot:main>
       <section class="search-box-container px-4 mt-5 mb-4">
         <div class="search-box">
           <input
@@ -34,15 +34,21 @@
           <aside v-if="showFallback" class="backdrop">
             <section class="content px-4 text-center">
               <LazyLoadingIcon class="mx-auto my-4" />
-              <h6>Sometimes it' worth waiting.</h6>
+              <h6>Sometimes it's worth waiting.</h6>
               <p>Hold on, While we search for the awesome person!</p>
             </section>
           </aside>
         </transition>
       </section>
 
-      <pre>You're searching for: {{ searchQuery }}</pre>
-      <pre>{{ searchResults }}</pre>
+      <section class="search-results-container">
+        <UserSearchResult
+          v-for="result in searchResults.results"
+          :key="result.userUID"
+          :userdata="result"
+          class="px-4 py-4 search-result"
+        />
+      </section>
     </template>
   </AppFeel>
 </template>
@@ -80,6 +86,7 @@ export default {
     async searchForPeople() {
       if (this.searchQuery.trim().length) {
         this.showFallback = true
+        this.searchResults = []
         await showUITip(this.$store, 'Searching...')
 
         try {
@@ -109,110 +116,120 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.search-box-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  .search-box {
+.community-search-page {
+  .search-box-container {
+    display: flex;
+    align-items: center;
     position: relative;
-    width: 100%;
-    z-index: $bring-to-front - 11;
 
-    $custom-muted: #777;
-    $custom-input-border: #333;
+    .search-box {
+      position: relative;
+      width: 100%;
+      z-index: $bring-to-front - 11;
 
-    span,
-    label {
-      height: 2 * $large-unit;
-      position: absolute !important;
-      top: 0;
-      display: grid;
-      place-items: center;
-      border-radius: 2 * $x-large-unit;
-      transition: all 0.2s ease-in-out;
-    }
+      $custom-muted: #777;
+      $custom-input-border: #333;
 
-    span {
-      right: 0;
-      opacity: 0;
-      transform: scale(0);
-      color: rgba($danger-light, 0.7);
-    }
-
-    label {
-      left: 0;
-      color: $custom-muted;
-    }
-
-    input {
-      transition: all 0.2s ease-in-out;
-      border: 1px solid $custom-input-border;
-      border-radius: 2 * $x-large-unit;
-      height: 48px;
-      line-height: 1;
-      padding: 15px 48px;
-      color: $custom-muted;
-      font-weight: 300;
-      font-family: $Raleway;
-      letter-spacing: $single-unit;
-      font-size: 1rem;
-
-      &::-webkit-scrollbar {
-        display: none;
+      span,
+      label {
+        height: 2 * $large-unit;
+        position: absolute !important;
+        top: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 2 * $x-large-unit;
+        transition: all 0.2s ease-in-out;
       }
 
-      &::placeholder {
+      span {
+        right: 0;
+        opacity: 0;
+        transform: scale(0);
+        color: rgba($secondary-highlight, 0.7);
+      }
+
+      label {
+        left: 0;
+        color: $custom-muted;
+      }
+
+      input {
+        transition: all 0.2s ease-in-out;
+        border: 1px solid $custom-input-border;
+        border-radius: 2 * $x-large-unit;
+        height: 48px;
+        line-height: 1;
+        padding: 15px 48px;
         color: $custom-muted;
         font-weight: 300;
-      }
+        font-family: $Raleway;
+        letter-spacing: $single-unit;
+        font-size: 1rem;
 
-      &:not(:placeholder-shown) {
-        color: $secondary-matte;
-        padding-left: 20px;
-
-        & ~ span {
-          transform: scale(1);
-          opacity: 1;
+        &::-webkit-scrollbar {
+          display: none;
         }
 
-        & ~ label {
-          width: 0;
-          margin: 0;
-          padding: 0;
-          opacity: 0;
-          overflow: hidden;
+        &::placeholder {
+          color: $custom-muted;
+          font-weight: 300;
         }
-      }
 
-      &:focus {
-        color: $vibrant;
-        border: 1px solid $secondary-matte;
-
-        & ~ label {
+        &:not(:placeholder-shown) {
           color: $secondary-matte;
+          padding-left: 20px;
+
+          & ~ span {
+            transform: scale(1);
+            opacity: 1;
+          }
+
+          & ~ label {
+            width: 0;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            overflow: hidden;
+          }
         }
 
-        & ~ span {
-          color: $danger-light;
+        &:focus {
+          color: $vibrant;
+          border: 1px solid $secondary-matte;
+
+          & ~ label {
+            color: $secondary-matte;
+          }
+
+          & ~ span {
+            color: $secondary-highlight;
+          }
         }
+      }
+    }
+
+    .backdrop {
+      position: fixed;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba($nav-bar-bg, 0.9);
+      z-index: $bring-to-front - 15;
+
+      .content {
+        margin-top: 4.2 * $xxx-large-unit;
       }
     }
   }
 
-  .backdrop {
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba($nav-bar-bg, 0.9);
-    z-index: $bring-to-front - 15;
-
-    .content {
-      margin-top: 4.2 * $xxx-large-unit;
+  .search-results-container {
+    .search-result {
+      &:nth-child(even) {
+        background: $segment-background;
+      }
     }
   }
 }
