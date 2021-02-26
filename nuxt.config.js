@@ -62,6 +62,7 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
+    '~/module/csp.js',
   ],
 
   buildModules: [
@@ -159,12 +160,13 @@ export default {
         ],
         'script-src': [
           "'self'",
-          // "'unsafe-inline'",
-          ...secrets.PRIMARY_HOSTS,
+          "'strict-dynamic'",
+          "'unsafe-inline'",
           'apis.google.com',
           'https://www.google-analytics.com/analytics.js',
           '*.googletagmanager.com',
           'blob:',
+          ...secrets.PRIMARY_HOSTS,
         ],
         'font-src': [
           "'self'",
@@ -173,7 +175,7 @@ export default {
           'https://fonts.gstatic.com/',
           'https://cdn.materialdesignicons.com/',
         ],
-        'require-trusted-types-for': ["'style'"],
+        'require-trusted-types-for': ["'style'", "'script'"],
         'connect-src': [
           ...secrets.PRIMARY_HOSTS,
           ...secrets.BACKEND_SERVICES,
@@ -355,5 +357,5 @@ export default {
   //   },
   // },
 
-  // watch: ['~/module/csp.js'],
+  watch: ['~/module/csp.js'],
 }
