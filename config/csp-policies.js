@@ -26,7 +26,7 @@ export const policies = {
   ],
   'script-src': [
     "'self'",
-    "'strict-dynamic'",
+    // "'strict-dynamic'",
     "'unsafe-inline'",
     'apis.google.com',
     'https://www.google-analytics.com/analytics.js',
@@ -41,7 +41,7 @@ export const policies = {
     'https://fonts.gstatic.com/',
     'https://cdn.materialdesignicons.com/',
   ],
-  'require-trusted-types-for': ["'style'", "'script'"],
+  // 'require-trusted-types-for': ["'script'"],
   'connect-src': [
     ...secrets.PRIMARY_HOSTS,
     ...secrets.BACKEND_SERVICES,
