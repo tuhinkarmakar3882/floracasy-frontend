@@ -63,7 +63,7 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
-    // '~/module/csp.js',
+    '~/module/csp.js',
   ],
 
   buildModules: [
@@ -132,11 +132,11 @@ export default {
     resourceHints: true,
     asyncScripts: true,
 
-    // csp: {
-    //   reportOnly: false,
-    //   hashAlgorithm: 'sha256',
-    //   policies,
-    // },
+    csp: {
+      reportOnly: true,
+      hashAlgorithm: 'sha256',
+      policies,
+    },
 
     http2: {
       push: true,
@@ -310,5 +310,5 @@ export default {
   //   },
   // },
 
-  // watch: ['~/module/csp.js'],
+  watch: ['~/module/csp.js'],
 }

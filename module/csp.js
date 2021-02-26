@@ -3,7 +3,7 @@ import { policies } from '../config/csp-policies'
 
 export default function cspModule() {
   this.options.render.csp = {
-    // reportOnly: true,
+    reportOnly: true,
     hashAlgorithm: 'sha256',
     policies,
   }
