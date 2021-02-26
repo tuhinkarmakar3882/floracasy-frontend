@@ -1,11 +1,11 @@
 import { randomBytes } from 'crypto'
-import { policies } from '../config/csp-policies'
+import { ADSENSE_CSP } from '../config/csp-policies'
 
 export default function cspModule() {
   this.options.render.csp = {
     reportOnly: true,
     hashAlgorithm: 'sha256',
-    policies,
+    policies: ADSENSE_CSP,
   }
 
   this.nuxt.hook('vue-renderer:ssr:context', (context) => {

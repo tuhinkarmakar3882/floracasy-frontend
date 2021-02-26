@@ -58,7 +58,7 @@ export const policies = {
 }
 
 export const ADSENSE_CSP = {
-  'default-src': ['https:', ...secrets.PRIMARY_HOSTS],
+  'default-src': ["'self'", 'https:', ...secrets.PRIMARY_HOSTS],
   'media-src': [
     "'self'",
     'https:',

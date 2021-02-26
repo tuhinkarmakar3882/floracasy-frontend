@@ -225,12 +225,6 @@ export default {
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
       {
-        rel: 'preload',
-        as: 'font',
-        href:
-          'https://cdn.materialdesignicons.com/5.4.55/fonts/materialdesignicons-webfont.woff2?v=5.4.55',
-      },
-      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
