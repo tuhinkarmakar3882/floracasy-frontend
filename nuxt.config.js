@@ -62,7 +62,6 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
-    // '~/module/csp.js',
   ],
 
   buildModules: [
@@ -130,13 +129,6 @@ export default {
     injectScripts: true,
     resourceHints: true,
     asyncScripts: true,
-
-    // csp: {
-    //   reportOnly: true,
-    //   hashAlgorithm: 'sha256',
-    //   policies,
-    // },
-
     http2: {
       push: true,
       // pushAssets: (_, __, publicPath, preloadFiles) =>
@@ -144,6 +136,11 @@ export default {
       //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
       //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
     },
+    // csp: {
+    //   reportOnly: true,
+    //   hashAlgorithm: 'sha256',
+    //   policies,
+    // },
   },
 
   axios: {
@@ -191,6 +188,12 @@ export default {
         href: 'https://fonts.gstatic.com/',
       },
       {
+        rel: 'preload',
+        as: 'style',
+        href:
+          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+      },
+      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
@@ -209,6 +212,12 @@ export default {
         rel: 'preconnect',
         crossorigin: true,
         href: 'https://cdn.materialdesignicons.com/',
+      },
+      {
+        rel: 'preload',
+        as: 'style',
+        href:
+          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
       {
         rel: 'stylesheet',
