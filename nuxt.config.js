@@ -190,7 +190,6 @@ export default {
         'object-src': ["'none'"],
         'base-uri': [...secrets.PRIMARY_HOSTS],
       },
-      addMeta: true,
     },
 
     http2: {
