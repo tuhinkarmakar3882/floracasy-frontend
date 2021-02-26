@@ -6,7 +6,6 @@ import {
   useTouchEvents,
 } from './environmentalVariables'
 import * as packageJson from './package.json'
-import { policies } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
   src: '~/plugins/sentry.js',
@@ -52,10 +51,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: true,
+    server: true,
+  },
 
   modules: [
     'nuxt-helmet',
@@ -63,7 +62,7 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
-    '~/module/csp.js',
+    // '~/module/csp.js',
   ],
 
   buildModules: [
@@ -132,11 +131,11 @@ export default {
     resourceHints: true,
     asyncScripts: true,
 
-    csp: {
-      reportOnly: true,
-      hashAlgorithm: 'sha256',
-      policies,
-    },
+    // csp: {
+    //   reportOnly: true,
+    //   hashAlgorithm: 'sha256',
+    //   policies,
+    // },
 
     http2: {
       push: true,
@@ -196,9 +195,8 @@ export default {
         type: 'text/css',
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-        // media: 'print',
-        // onload: "this.media = 'all'",
-        // nonce: '1234567890',
+        media: 'print',
+        onload: "this.media = 'all'",
       },
 
       //  Material Design Icons
@@ -217,62 +215,10 @@ export default {
         type: 'text/css',
         href:
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-        // media: 'print',
-        // onload: "this.media = 'all'",
-        // nonce: '1234567890',
+        media: 'print',
+        onload: "this.media = 'all'",
       },
     ],
-    script: [
-      {
-        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
-        async: true,
-        'data-ad-client': 'ca-pub-9863542606738743',
-      },
-    ],
-  },
-
-  loadingIndicator: {
-    name: 'rectangle-bounce',
-    color: '#C5C2FF',
-    background: '#050514',
-  },
-
-  loading: { color: '#C5C2FF' },
-
-  layoutTransition: {
-    name: 'gray-shift',
-    mode: 'out-in',
-  },
-
-  pageTransition: {
-    name: 'page',
-    mode: 'out-in',
-  },
-
-  tailwindcss: {
-    config: {
-      future: {
-        standardFontWeights: true,
-        defaultLineHeights: true,
-        purgeLayersByDefault: true,
-        removeDeprecatedGapUtilities: true,
-      },
-      purge: {
-        layers: ['base', 'components', 'utilities'],
-        enabled: true,
-        content: [
-          'components/**/*.vue',
-          'layouts/**/*.vue',
-          'pages/**/*.vue',
-          'plugins/**/*.js',
-          'plugins/**/*.ts',
-          'nuxt.config.js',
-          'nuxt.config.ts',
-          'assets/**/*.scss',
-          'styles/**/*.scss',
-        ],
-      },
-    },
   },
 
   pwa: {
@@ -302,13 +248,49 @@ export default {
 
   telemetry: false,
 
-  // typescript: {
-  //   typeCheck: {
-  //     eslint: {
-  //       files: './**/*.{ts,js,vue}',
-  //     },
-  //   },
-  // },
+  // watch: ['~/module/csp.js'],
 
-  watch: ['~/module/csp.js'],
+  tailwindcss: {
+    config: {
+      future: {
+        standardFontWeights: true,
+        defaultLineHeights: true,
+        purgeLayersByDefault: true,
+        removeDeprecatedGapUtilities: true,
+      },
+      purge: {
+        layers: ['base', 'components', 'utilities'],
+        enabled: true,
+        content: [
+          'components/**/*.vue',
+          'layouts/**/*.vue',
+          'pages/**/*.vue',
+          'plugins/**/*.js',
+          'plugins/**/*.ts',
+          'nuxt.config.js',
+          'nuxt.config.ts',
+          'assets/**/*.scss',
+          'styles/**/*.scss',
+        ],
+      },
+    },
+  },
+
+  loading: { color: '#C5C2FF' },
+
+  loadingIndicator: {
+    name: 'rectangle-bounce',
+    color: '#C5C2FF',
+    background: '#050514',
+  },
+
+  layoutTransition: {
+    name: 'gray-shift',
+    mode: 'out-in',
+  },
+
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+  },
 }
