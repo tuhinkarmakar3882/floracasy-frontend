@@ -6,6 +6,7 @@ import {
   useTouchEvents,
 } from './environmentalVariables'
 import * as packageJson from './package.json'
+import { ADSENSE_CSP } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
   src: '~/plugins/sentry.js',
@@ -62,6 +63,7 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
+    // '~/module/csp.js'
   ],
 
   buildModules: [
@@ -136,11 +138,11 @@ export default {
       //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
       //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
     },
-    // csp: {
-    //   reportOnly: true,
-    //   hashAlgorithm: 'sha256',
-    //   policies,
-    // },
+    csp: {
+      reportOnly: false,
+      hashAlgorithm: 'sha256',
+      policies: ADSENSE_CSP,
+    },
   },
 
   axios: {
@@ -175,6 +177,11 @@ export default {
         type: 'image/x-icon',
         href: '/favicon.ico',
       },
+      {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: secrets.baseUrl,
+      },
 
       //  Google Fonts
       {
@@ -198,8 +205,6 @@ export default {
         type: 'text/css',
         href:
           'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-        media: 'print',
-        onload: "this.media = 'all'",
       },
 
       //  Material Design Icons
@@ -220,12 +225,16 @@ export default {
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
       {
+        rel: 'preload',
+        as: 'font',
+        href:
+          'https://cdn.materialdesignicons.com/5.4.55/fonts/materialdesignicons-webfont.woff2?v=5.4.55',
+      },
+      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-        media: 'print',
-        onload: "this.media = 'all'",
       },
     ],
   },
