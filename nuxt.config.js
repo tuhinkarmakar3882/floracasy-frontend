@@ -51,10 +51,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   modules: [
     'nuxt-helmet',
@@ -190,6 +190,7 @@ export default {
         'object-src': ["'none'"],
         'base-uri': [...secrets.PRIMARY_HOSTS],
       },
+      addMeta: true,
     },
 
     http2: {
