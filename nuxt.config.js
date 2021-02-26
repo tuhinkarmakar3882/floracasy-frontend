@@ -1,11 +1,12 @@
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentalVariables'
-import * as packageJson from './package.json'
 import {
   useRealtimeNotifications,
   useSentryLogging,
   useTouchEvents,
 } from './environmentalVariables'
+import * as packageJson from './package.json'
+import { policies } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
   src: '~/plugins/sentry.js',
@@ -134,62 +135,7 @@ export default {
     csp: {
       reportOnly: false,
       hashAlgorithm: 'sha256',
-      policies: {
-        'default-src': ["'self'", ...secrets.PRIMARY_HOSTS],
-        'media-src': [
-          "'self'",
-          'https:',
-          `blob:`,
-          ...secrets.PRIMARY_HOSTS,
-          ...secrets.BACKEND_SERVICES,
-        ],
-        'frame-src': [
-          "'self'",
-          ...secrets.PRIMARY_HOSTS,
-          ...secrets.FIREBASE_SERVICES,
-        ],
-        'img-src': ['https:', 'http:', `blob:`],
-        'worker-src': ["'self'", `blob:`, ...secrets.PRIMARY_HOSTS],
-        'style-src': [
-          "'self'",
-          "'unsafe-inline'",
-          ...secrets.PRIMARY_HOSTS,
-          'https://fonts.googleapis.com/',
-          'https://fonts.gstatic.com/',
-          'https://cdn.materialdesignicons.com/',
-        ],
-        'script-src': [
-          "'self'",
-          "'strict-dynamic'",
-          "'unsafe-inline'",
-          'apis.google.com',
-          'https://www.google-analytics.com/analytics.js',
-          '*.googletagmanager.com',
-          'blob:',
-          ...secrets.PRIMARY_HOSTS,
-        ],
-        'font-src': [
-          "'self'",
-          ...secrets.PRIMARY_HOSTS,
-          'https://fonts.googleapis.com/',
-          'https://fonts.gstatic.com/',
-          'https://cdn.materialdesignicons.com/',
-        ],
-        'require-trusted-types-for': ["'style'", "'script'"],
-        'connect-src': [
-          ...secrets.PRIMARY_HOSTS,
-          ...secrets.BACKEND_SERVICES,
-          'ws:',
-          'wss:',
-          '*.google-analytics.com',
-          '*.googleapis.com',
-          '*.sentry.io',
-        ],
-        'form-action': ["'self'"],
-        'frame-ancestors': ["'none'"],
-        'object-src': ["'none'"],
-        'base-uri': [...secrets.PRIMARY_HOSTS],
-      },
+      policies,
     },
 
     http2: {

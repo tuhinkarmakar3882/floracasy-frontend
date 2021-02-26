@@ -1,22 +1,11 @@
 import { randomBytes } from 'crypto'
+import { policies } from '../config/csp-policies'
 
 export default function cspModule() {
   this.options.render.csp = {
     // reportOnly: true,
     hashAlgorithm: 'sha256',
-    policies: {
-      'script-src': [
-        'self',
-        'apis.google.com',
-        'https://www.google-analytics.com/analytics.js',
-        'https://www.googletagmanager.com/gtag/js',
-        'http://www.googletagmanager.com/gtag/js',
-        'blob:',
-      ],
-      'object-src': ["'none'"],
-      'base-uri': ["'none'"],
-      'require-trusted-types-for': ["'style'"],
-    },
+    policies,
   }
 
   this.nuxt.hook('vue-renderer:ssr:context', (context) => {
