@@ -2,6 +2,7 @@ const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
 const filesToCache = [
   'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
   'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+  'https://cdn.materialdesignicons.com/5.4.55/fonts/materialdesignicons-webfont.woff2?v=5.4.55',
 ]
 
 // Cache on install
@@ -29,21 +30,30 @@ self.addEventListener('activate', (event) => {
 })
 
 // Serve from Cache
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', (event) => {
+  console.log('Fetch event for ', event.request.url)
   event.respondWith(
-    caches.open(staticCacheName).then(function (cache) {
-      return cache.match(event.request).then(function (response) {
-        return (
-          response ||
-          fetch(event.request).then((response) => {
+    caches
+      .match(event.request)
+      .then((response) => {
+        if (response) {
+          console.log('Found ', event.request.url, ' in cache')
+          return response
+        }
+        console.log('Network request for ', event.request.url)
+        return fetch(event.request).then((response) => {
+          // TODO 5 - Respond with custom 404 page
+          return caches.open(staticCacheName).then((cache) => {
             event.request.method === 'GET' &&
-              event.request.destination === 'font' &&
-              cache.put(event.request, response.clone())
+              event.request.destination !== 'image' &&
+              cache.put(event.request.url, response.clone())
             return response
           })
-        )
+        })
       })
-    })
+      .catch(() => {
+        // TODO 6 - Respond with custom offline page
+      })
   )
 })
 
