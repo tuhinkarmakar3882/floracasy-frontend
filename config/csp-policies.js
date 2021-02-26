@@ -79,7 +79,7 @@ export const ADSENSE_CSP = {
   'script-src': [
     "'self'",
     'https:',
-    "'unsafe-inline'",
+    // "'unsafe-inline'",
     'apis.google.com',
     'https://www.google-analytics.com/analytics.js',
     '*.googletagmanager.com',
@@ -104,4 +104,8 @@ export const ADSENSE_CSP = {
     '*.googleapis.com',
     '*.sentry.io',
   ],
+  'form-action': ["'self'"],
+  'frame-ancestors': ["'none'"],
+  'object-src': ["'none'"],
+  'base-uri': [...secrets.PRIMARY_HOSTS],
 }
