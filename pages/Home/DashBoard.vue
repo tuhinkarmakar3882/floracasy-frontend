@@ -76,8 +76,7 @@ export default {
           name: 'Listen on the Go',
           body:
             'Now you can continue to listen to your favourite articles whenever you want to',
-          image:
-            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8aGVhZHBob25lc3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+          image: '/images/Frame_0.png',
           buttonText: 'Avail Premium',
           route: navigationRoutes.Home.MoreOptions.Payments.index,
         },
@@ -85,29 +84,25 @@ export default {
           id: 1,
           name: 'Second Item in the carousel',
           body: 'This is a body Text',
-          image:
-            'https://images.unsplash.com/photo-1484704849700-f032a568e944?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+          image: '/images/Frame_1.png',
         },
         {
           id: 2,
           name: 'Third Item in the carousel',
           body: 'This is a body Text',
-          image:
-            'https://images.unsplash.com/photo-1526662092594-e98c1e356d6a?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=80',
+          image: '/images/Frame_2.png',
         },
         {
           id: 3,
           name: 'Fourth Item in the carousel',
           body: 'This is a body Text',
-          image:
-            'https://images.unsplash.com/photo-1562184242-2b39bde0ab6f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+          image: '/images/Frame_3.png',
         },
         {
           id: 4,
           name: 'Fifth Item in the carousel',
           body: 'This is a body Text',
-          image:
-            'https://images.unsplash.com/photo-1527283646354-d874f249ea2b?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=500&q=80',
+          image: '/images/Frame_4.png',
         },
       ],
     }
