@@ -7,9 +7,9 @@
   >
     <h6 class="name my-0">{{ ticket.title }}</h6>
     <p class="mt-2 mb-3" :style="{ color: ticket.color, fontWeight: 500 }">
-      {{ ticket.status }}
+      {{ ticket.issueTopic }} | {{ ticket.status }}
     </p>
-    <p class="body">{{ ticket.issue.substr(0, 50) }}...</p>
+    <p class="body">{{ ticket.issueDetails.substr(0, 50) }}...</p>
     <section class="text-right">
       <small>{{ getRelativeTime(ticket.updatedAt) }}</small>
     </section>
