@@ -79,7 +79,7 @@ export const ADSENSE_CSP = {
   'script-src': [
     "'self'",
     'https:',
-    // "'unsafe-inline'",
+    "'unsafe-inline'",
     'apis.google.com',
     'https://www.google-analytics.com/analytics.js',
     '*.googletagmanager.com',
