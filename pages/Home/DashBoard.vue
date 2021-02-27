@@ -6,7 +6,6 @@
         tabNumber === 2 && { padding: 0 },
         { height: tabNumber === 2 ? 0 : '250px' },
       ]"
-      auto-scroll
       image-carousel
       style="overflow: hidden; transition: all 0.3s ease-in-out"
     />
