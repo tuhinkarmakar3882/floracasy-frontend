@@ -27,6 +27,7 @@
         </small>
       </div>
       <i
+        v-if="showMoreOption"
         v-ripple="'#4f4f4f5F'"
         class="mdi mdi-dots-vertical mr-2 inline-block align-middle ml-auto"
         @click="showOptions = !showOptions"
@@ -133,6 +134,10 @@ export default {
       default: true,
     },
     showShareOption: {
+      type: Boolean,
+      default: true,
+    },
+    showMoreOption: {
       type: Boolean,
       default: true,
     },
