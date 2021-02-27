@@ -21,27 +21,31 @@ html {
   line-height: 1.5;
   overflow-x: hidden;
 
-  //&::-webkit-scrollbar {
-  //  width: 6px;
-  //}
-  //
-  //&::-webkit-scrollbar-track {
-  //  background: lighten($card-background, 10%);
-  //}
-  //
-  //&::-webkit-scrollbar-thumb {
-  //  background: darken($secondary-matte, 20%);
-  //}
-  //
-  //&::-webkit-scrollbar-thumb:hover {
-  //  background: $secondary-matte;
-  //}
+
+  &::-webkit-scrollbar {
+    width: $nano-unit;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: lighten($card-background, 10%);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: darken($secondary-matte, 20%);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $secondary-matte;
+  }
 
   body {
     background: $body-background;
     color: $body-text-default;
-    transition: all .5s ease-in-out;
     letter-spacing: $single-unit;
+
+    * {
+      transition: all 150ms ease-in-out;
+    }
 
     hr {
       border: none;
@@ -79,7 +83,7 @@ html {
       padding: 1rem;
       margin: 1rem 0;
       border-radius: $nano-unit;
-      word-break: break-all; // white-space: pre;
+      word-break: break-all;
       line-height: 1.8;
       overflow: auto;
     }
@@ -177,21 +181,22 @@ html {
     }
 
     select {
-      color: white;
-      background: $card-background;
+      color: $muted;
+      background: $segment-background;
       width: 100%;
       height: 3.125rem;
       border-radius: 4px;
       padding: 0.75rem;
       letter-spacing: $single-unit;
       font-size: 1rem;
-      border: $single-unit solid #138371;
+      border: $single-unit solid $segment-background;
 
       &:hover,
       &:focus,
       &:focus-visible,
       &:active,
       &:focus-within {
+        color: $white;
         border: $double-unit solid $secondary-matte;
         outline: unset;
         box-shadow: unset;
