@@ -66,8 +66,7 @@ export default {
       }
       try {
         const { results, next } = await this.$axios.$get(
-          this.ticketFetchEndpoint,
-          { params: { category_name: this.category } }
+          this.ticketFetchEndpoint
         )
         if (results.length) {
           this.ticketFetchEndpoint = processLink(next)
