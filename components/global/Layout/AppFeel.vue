@@ -151,10 +151,9 @@ export default {
   }
 
   main.main-content {
-    background-color: $body-background; //max-width: $max-width;
+    background-color: $body-background;
     margin-left: auto;
     margin-right: auto;
-    min-height: calc(100vh - 200px);
 
     button {
       min-width: auto;
