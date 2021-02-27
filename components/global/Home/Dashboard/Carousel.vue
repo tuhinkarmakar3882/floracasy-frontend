@@ -150,7 +150,7 @@ export default {
         width: 2 * $xxx-large-unit;
         min-width: 2 * $xxx-large-unit;
         aspect-ratio: 1;
-        object-fit: scale-down;
+        object-fit: contain;
         margin: auto;
       }
 
