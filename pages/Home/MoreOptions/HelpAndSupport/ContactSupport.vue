@@ -8,14 +8,15 @@
     <template v-slot:app-bar-action-button>
       <button
         v-ripple
-        class="my-6"
         :class="validForm ? 'primary-btn' : 'disabled-btn'"
         :disabled="!validForm"
+        class="my-6"
         @click="raiseTicket"
       >
         Send
       </button>
-    </template>k
+    </template>
+    k
 
     <template v-slot:main>
       <section class="px-4 my-4">
@@ -36,11 +37,25 @@
         <section>
           <label for="issue-topic">Choose a Issue Topic</label>
           <select id="issue-topic" v-model="issueTopic" class="my-4" name="">
-            <option value="">test option</option>
+            <option
+              v-for="(topic, index) in topics"
+              :key="index"
+              :value="topic"
+            >
+              {{ topic }}
+            </option>
           </select>
+          <aside class="form-hints">
+            <small v-if="!issueTopic.trim().length" class="hint-text">
+              (Required: Choose a Issue Category)
+            </small>
+            <small v-else class="secondary-matte">
+              <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
+            </small>
+          </aside>
         </section>
 
-        <section>
+        <section class="mt-4">
           <label for="issue-details"> Issue Details </label>
 
           <textarea
@@ -132,6 +147,19 @@ export default {
       pageTitle: 'Contact Support',
       raisingTicking: false,
 
+      topics: [
+        'Bug Report',
+        'Feature Request',
+        'Hacked',
+        'Nudity',
+        'Payment Issue',
+        'Scam Post',
+        'Sexual Content',
+        'Violence',
+        'Threatening',
+        'Other - None of the Above',
+      ],
+
       issueTopic: '',
       issueDetails: '',
 
@@ -221,6 +249,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
 .contact-support-page {
   button {
     min-width: auto;
