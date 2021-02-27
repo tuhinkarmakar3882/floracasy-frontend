@@ -16,7 +16,6 @@
         Send
       </button>
     </template>
-    k
 
     <template v-slot:main>
       <section class="px-4 my-4">
@@ -136,6 +135,7 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'ContactSupport',
@@ -221,18 +221,16 @@ export default {
       this.raisingTicking = true
       try {
         await this.$axios.$post(endpoints.help_and_support.create, {
-          topic: this.issueTopic,
-          issue: this.issueDetails,
+          issueTopic: this.issueTopic,
+          contentType: this.$route.query.type,
+          uniqueID: this.$route.query.identifier,
+          issueDetails: this.issueDetails,
         })
         await this.$router.replace(
           navigationRoutes.Home.MoreOptions.HelpAndSupport.index
         )
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error, Please Retry.',
-          notificationType: 'alert',
-          dismissible: true,
-        })
+        await showUITip(this.$store, 'Network Error, Please Retry.', 'error')
       } finally {
         this.raisingTicking = false
       }
