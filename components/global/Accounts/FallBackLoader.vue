@@ -6,14 +6,7 @@
 </template>
 
 <script>
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-
 export default {
   name: 'FallBackLoader',
-  data() {
-    return {
-      feedbackPage: navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback,
-    }
-  },
 }
 </script>
