@@ -1,8 +1,10 @@
 <template>
   <div class="app">
     <NotificationBadge />
+
     <header
       v-if="customHeader"
+      class="app-header"
       :style="[
         autoHide && {
           top: showTopBar ? '0 !important' : '-56px !important',
@@ -11,8 +13,10 @@
     >
       <slot name="app-bar-custom-header" />
     </header>
+
     <header
       v-else
+      class="app-header"
       :style="[
         centerAligned && { justifyContent: 'center' },
         autoHide && {
@@ -125,7 +129,9 @@ export default {
 @import 'assets/all-variables';
 
 .app {
-  header {
+  position: relative;
+
+  header.app-header {
     position: sticky;
     top: -$single-unit;
     left: 0;
@@ -144,7 +150,7 @@ export default {
     }
   }
 
-  .main-content {
+  main.main-content {
     background-color: $body-background; //max-width: $max-width;
     margin-left: auto;
     margin-right: auto;
