@@ -3,10 +3,14 @@
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index"
     class="ticket-details-page"
   >
-    <template slot="app-bar-title">{{ pageTitle }}</template>
+    <template v-slot:app-bar-title>{{ pageTitle }}</template>
 
-    <template slot="main">
-      <pre>{{ $route.params }}</pre>
+    <template v-slot:main>
+      <pre>{{ ticketDetails }}</pre>
+    </template>
+
+    <template v-slot:footer>
+      <LoadingError error-section="Ticket Details" class="px-4" />
     </template>
   </AppFeel>
 </template>
@@ -24,13 +28,29 @@ export default {
     return {
       navigationRoutes,
       pageTitle: 'Ticket Detail',
-      tickets: [],
+      ticketDetails: undefined,
+      unableToLoadTicketDetails: false,
       ticketFetchEndpoint: endpoints.help_and_support.fetch,
     }
   },
-  mounted() {},
+  async mounted() {
+    try {
+      await this.fetchTicketDetails()
+    } catch (e) {
+      this.unableToLoadTicketDetails = true
+    }
+  },
 
-  methods: {},
+  methods: {
+    async fetchTicketDetails() {
+      this.ticketDetails = await this.$axios.$get(
+        endpoints.help_and_support.detail.replace(
+          '{ticketID}',
+          this.$route.params.identifier
+        )
+      )
+    },
+  },
 
   head() {
     return {
