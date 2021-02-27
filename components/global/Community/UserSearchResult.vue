@@ -6,12 +6,20 @@
   >
     <img :src="photoURL" alt="user-image" height="64" width="64" />
     <section class="user-data ml-4">
-      <h6 class="mt-0 mb-1">{{ userdata.username }}</h6>
-      <small v-if="designation" class="vibrant">{{ designation }}</small>
-      <p v-if="about">{{ about }}</p>
-      <!--      <button v-if="!userdata.isFollowing" class="secondary-outlined-btn mt-2">-->
-      <!--        Follow-->
-      <!--      </button>-->
+      <div class="top-line">
+        <h6 class="mt-0 mb-1 secondary mr-auto">{{ userdata.username }}</h6>
+
+        <p v-if="userdata.isFollowing"><span class="dot mr-2" /> Following</p>
+
+        <p v-else-if="userdata.isFollowed">
+          <span class="dot mr-2" /> Follows You
+        </p>
+      </div>
+
+      <aside>
+        <small v-if="designation">{{ designation }}</small>
+        <p v-if="about">{{ about }}</p>
+      </aside>
     </section>
   </div>
 </template>
@@ -67,7 +75,7 @@ export default {
         }
       )
       this.designation = details.designation || 'No Designation'
-      this.about = details.about
+      this.about = details.about || 'No About'
     },
   },
 }
@@ -100,19 +108,48 @@ export default {
     box-shadow: $default-box-shadow;
   }
 
-  h6 {
-    text-transform: capitalize;
-    font-size: 16px;
-    margin: 0 0 4px;
-  }
+  .user-data {
+    width: 100%;
+    small {
+      display: block;
+      font-weight: 300;
+      color: #c9c8ff;
+    }
 
-  small {
-    display: block;
-  }
+    p {
+      font-size: 14px;
+      margin: 4px 0 8px;
+    }
 
-  p {
-    font-size: 14px;
-    margin: 4px 0 8px;
+    .top-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h6 {
+        text-transform: capitalize;
+        font-size: 18px;
+        font-weight: 300;
+        margin: 0 auto 4px 0;
+        font-family: $Raleway;
+      }
+
+      p {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        line-height: 1;
+
+        span.dot {
+          width: $nano-unit;
+          height: $nano-unit;
+          border-radius: 50%;
+          box-shadow: $default-box-shadow;
+          background: #cacaca;
+          display: block;
+        }
+      }
+    }
   }
 }
 </style>
