@@ -79,6 +79,10 @@ const endpoints = {
     fetch: '/allow_authenticated/help_and_support/fetch/',
     create: '/allow_authenticated/help_and_support/create/',
     detail: '/allow_authenticated/help_and_support/detail/{ticketID}/',
+    conversation: {
+      detail:
+        '/allow_authenticated/help_and_support/conversation/detail/{ticketID}/',
+    },
   },
   leaderboard: {
     test: 'leaderboard/',
