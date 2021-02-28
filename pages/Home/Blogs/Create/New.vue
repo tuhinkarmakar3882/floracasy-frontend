@@ -13,7 +13,7 @@
         @click="handleBackButtonPress"
       />
       <p v-ripple style="font-size: 1.1rem">{{ pageTitle }}</p>
-      <div class="ml-auto">
+      <div class="ml-auto mr-2">
         <button
           v-if="step === 1"
           v-ripple
