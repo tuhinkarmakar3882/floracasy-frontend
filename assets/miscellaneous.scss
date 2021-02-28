@@ -83,9 +83,10 @@ html {
       padding: 1rem;
       margin: 1rem 0;
       border-radius: $nano-unit;
+      overflow-x: scroll;
+      white-space: break-spaces;
       word-break: break-all;
       line-height: 1.8;
-      overflow: auto;
     }
 
     code {
