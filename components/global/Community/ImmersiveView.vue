@@ -13,7 +13,11 @@
     </header>
 
     <nav>
-      <i v-ripple class="mdi mdi-arrow-left mdi-24px icon" />
+      <i
+        v-ripple
+        class="mdi mdi-arrow-left mdi-24px icon"
+        @click="onClickFunction"
+      />
       <img
         alt="profile-image"
         class="mr-2 profile-image"
@@ -32,7 +36,6 @@
 
     <main>
       <pre>{{ story }}</pre>
-      <slot name="close-button"></slot>
     </main>
 
     <footer>
@@ -58,6 +61,10 @@ export default {
   props: {
     story: {
       type: Object,
+      required: true,
+    },
+    onClickFunction: {
+      type: Function,
       required: true,
     },
   },
@@ -111,7 +118,7 @@ export default {
   left: 0;
   right: 0;
   background: black;
-  z-index: $bring-to-front;
+  z-index: 2 * $bring-to-front;
 
   header {
     display: grid;

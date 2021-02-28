@@ -22,13 +22,11 @@
     </aside>
 
     <transition name="scale-up">
-      <ImmersiveView v-if="immersiveMode" :story="story">
-        <template v-slot:close-button>
-          <button class="danger-outlined-btn" @click="closeImmersiveView">
-            Close
-          </button>
-        </template>
-      </ImmersiveView>
+      <ImmersiveView
+        v-if="immersiveMode"
+        :story="story"
+        :on-click-function="closeImmersiveView"
+      />
     </transition>
   </div>
 </template>
