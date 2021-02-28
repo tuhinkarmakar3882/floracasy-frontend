@@ -1,30 +1,37 @@
 <template>
   <div class="immersive-view-component">
-    <header>
-      <span class="line active" />
-      <span class="line" />
-      <span class="line" />
-      <span class="line" />
+    <header
+      :style="{
+        gridTemplateColumns: `repeat(${story.story_count}, 1fr)`,
+      }"
+    >
+      <span
+        v-for="item in story.story_count"
+        :key="`line-${item}`"
+        class="line"
+      />
     </header>
 
-    <nav class="py-2">
+    <nav>
       <i v-ripple class="mdi mdi-arrow-left mdi-24px icon" />
       <img
         alt="profile-image"
-        class="mx-2"
+        class="mr-2 profile-image"
         height="52"
-        src="https://picsum.photos/250"
+        :src="story.user.photoURL"
         width="52"
       />
       <section class="name-and-time">
-        <p class="my-0">Tuhin</p>
-        <small>2h ago</small>
+        <p class="my-0 secondary-highlight">
+          {{ username }}
+        </p>
+        <small>{{ getRelativeTime(story.updatedAt) }}</small>
       </section>
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon" />
     </nav>
 
     <main>
-      <h1>Hello ImmersiveView</h1>
+      <pre>{{ story }}</pre>
       <slot name="close-button"></slot>
     </main>
 
@@ -44,8 +51,16 @@
 </template>
 
 <script>
+import { getRelativeTime } from '~/utils/utility'
+
 export default {
   name: 'ImmersiveView',
+  props: {
+    story: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       showOptions: false,
@@ -73,6 +88,16 @@ export default {
       ],
     }
   },
+  computed: {
+    username() {
+      return this.story.user.displayName.length > 23
+        ? this.story.user.displayName.substr(0, 22) + '...'
+        : this.story.user.displayName
+    },
+  },
+  methods: {
+    getRelativeTime,
+  },
 }
 </script>
 
@@ -90,18 +115,17 @@ export default {
 
   header {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: $nano-unit;
 
     .line {
       display: block;
-      height: $nano-unit;
+      height: $double-unit;
       width: 100%;
-      background: $muted;
+      background: darken($muted, $darken-percentage);
       border-radius: $xxx-large-unit;
 
       &.active {
-        background: $secondary-highlight;
+        background: $white;
       }
     }
   }
@@ -109,6 +133,7 @@ export default {
   nav {
     background: $nav-bar-bg;
     display: flex;
+    height: 72px;
     align-items: center;
     box-shadow: $down-only-box-shadow;
 
@@ -123,13 +148,21 @@ export default {
       max-height: $image-size;
       box-shadow: $default-box-shadow;
       border-radius: 50%;
+      object-fit: cover;
     }
 
     .icon {
       display: grid;
       place-items: center;
       width: 56px;
-      height: 56px;
+      height: 72px;
+    }
+
+    .name-and-time {
+      p {
+        font-size: 18px;
+        font-weight: 400;
+      }
     }
   }
 
