@@ -44,7 +44,7 @@
 
         <hr class="faded-divider my-6" />
 
-        <h6 class="mb-8 mx-4">Conversation</h6>
+        <h6 class="mb-8 mx-4">Conversation with Support Team</h6>
 
         <section class="conversation-container description-box">
           <aside v-if="conversationHistory">
