@@ -52,13 +52,13 @@
               v-for="message in conversationHistory"
               :key="message.identifier"
               :chat-message="message"
-              class="my-4"
               :message-type="message.messageType"
+              class="my-4"
             />
           </aside>
 
           <client-only>
-            <infinite-loading @infinite="infiniteHandler">
+            <infinite-loading @infinite="fetchConversation">
               <template slot="spinner">
                 <LoadingIcon class="mt-4 mb-6" />
                 <p class="text-center">Loading More Conversation...</p>
@@ -96,24 +96,28 @@
           contenteditable
           @focusin="showPlaceholder = false"
           @focusout="showPlaceholder = true"
+          @keyup="updateText"
+          @keyup.enter="addSupportMessage"
         >
           <transition name="scale-up">
             <label
-              v-if="commentMessage.length === 0 && showPlaceholder"
+              v-if="supportMessage.length === 0 && showPlaceholder"
               class="muted"
             >
-              Type your comment here...
+              Type your message here...
             </label>
           </transition>
         </div>
         <RippleButton
-          :disabled="!canSendComment"
-          :loading="isSendingComment"
+          :disabled="supportMessage.trim().length === 0"
+          :loading="isSendingSupportMessage"
+          :on-click="addSupportMessage"
           style="background: transparent !important"
         >
           <span class="mdi mdi-send mdi-36px" />
         </RippleButton>
       </aside>
+      <span ref="conversation" />
     </template>
   </AppFeel>
 </template>
@@ -123,7 +127,7 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import { mapGetters } from 'vuex'
-import { processLink } from '~/utils/utility'
+import { processLink, showUITip } from '~/utils/utility'
 
 export default {
   name: 'TicketDetail',
@@ -140,9 +144,9 @@ export default {
       ticketFetchEndpoint: endpoints.help_and_support.fetch,
       conversationFetchEndpoint: endpoints.help_and_support.conversation.detail,
 
-      commentMessage: '',
-      isSendingComment: false,
-      canSendComment: false,
+      supportMessage: '',
+      isSendingSupportMessage: false,
+      canSendSupportMessage: false,
       showPlaceholder: true,
     }
   },
@@ -173,7 +177,7 @@ export default {
       )
     },
 
-    async infiniteHandler($state) {
+    async fetchConversation($state) {
       if (!this.conversationFetchEndpoint) {
         $state.complete()
         return
@@ -188,7 +192,6 @@ export default {
             },
           }
         )
-        console.log(results)
         if (results.length) {
           this.conversationFetchEndpoint = processLink(next)
           this.conversationHistory.push(...results)
@@ -199,6 +202,61 @@ export default {
       } catch (e) {
         $state.complete()
       }
+    },
+
+    async sendToServer() {
+      await this.$axios.$post(endpoints.help_and_support.conversation.create, {
+        ticketID: this.$route.params.identifier,
+        message: this.supportMessage,
+      })
+
+      this.conversationHistory.push({
+        id: Date.now(),
+        user: {
+          photoURL: this.user.photoURL,
+          displayName: this.user.displayName,
+        },
+        messageType: 'SENT',
+        createdAt: Date.now(),
+        message: this.supportMessage,
+      })
+
+      this.clearSupportMessageInput()
+
+      setTimeout(() => {
+        this.$refs.conversation.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+          inline: 'nearest',
+        })
+      }, 150)
+    },
+
+    async addSupportMessage() {
+      if (this.supportMessage.trim().length > 0) {
+        this.canSendSupportMessage = false
+        this.isSendingSupportMessage = true
+
+        await showUITip(this.$store, 'Sending Support Message...', 'info')
+
+        try {
+          await this.sendToServer()
+          await showUITip(this.$store, 'Message Added', 'success')
+        } catch (e) {
+          await showUITip(this.$store, 'Network Error', 'error')
+        } finally {
+          this.isSendingSupportMessage = false
+        }
+      }
+    },
+
+    clearSupportMessageInput() {
+      this.supportMessage = ''
+      this.$refs.textBox.textContent = ''
+    },
+
+    updateText() {
+      this.supportMessage = this.$refs.textBox.textContent
     },
   },
 
@@ -216,6 +274,7 @@ export default {
 .ticket-details-page {
   max-width: $large;
   margin: auto;
+
   .main-body {
     .info-card {
       background: #1a1a1a;
