@@ -14,7 +14,7 @@
       <p>{{ pageTitle }}</p>
       <span
         v-ripple
-        class="mdi mdi-menu ml-auto px-5"
+        class="mdi mdi-segment ml-auto px-5"
         style="
           height: 56px;
           display: flex;
