@@ -80,8 +80,7 @@ const endpoints = {
     create: '/allow_authenticated/help_and_support/create/',
     detail: '/allow_authenticated/help_and_support/detail/{ticketID}/',
     conversation: {
-      detail:
-        '/allow_authenticated/help_and_support/conversation/detail/{ticketID}/',
+      detail: '/allow_authenticated/help_and_support/conversation/detail/',
     },
   },
   leaderboard: {
