@@ -33,19 +33,17 @@
         v-for="(reaction, index) in reactions"
         :key="index"
         v-ripple="`${reaction.color}5F`"
-        class="px-4"
         :class="reaction.icon"
         :style="{
           color: reaction.color,
         }"
+        class="px-4"
       />
     </footer>
   </div>
 </template>
 
 <script>
-import { navigationRoutes } from '~/navigation/navigationRoutes'
-
 export default {
   name: 'ImmersiveView',
   data() {
