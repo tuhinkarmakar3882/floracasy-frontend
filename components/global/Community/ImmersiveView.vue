@@ -8,7 +8,7 @@
     </header>
 
     <nav class="py-2">
-      <i class="mdi mdi-arrow-left mdi-24px pl-4" />
+      <i v-ripple class="mdi mdi-arrow-left mdi-24px icon" />
       <img
         alt="profile-image"
         class="mx-2"
@@ -20,7 +20,7 @@
         <p class="my-0">Tuhin</p>
         <small>2h ago</small>
       </section>
-      <i class="mdi mdi-dots-vertical mdi-24px ml-auto" />
+      <i v-ripple class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon" />
     </nav>
 
     <main>
@@ -29,20 +29,52 @@
     </main>
 
     <footer>
-      <i class="mdi mdi-heart" />
-      <i class="mdi mdi-emoticon-lol" />
-      <i class="mdi mdi-emoticon-cool" />
-      <i class="mdi mdi-emoticon-confused" />
-      <i class="mdi mdi-emoticon-cry" />
-      <i class="mdi mdi-emoticon-frown" />
-      <i class="mdi mdi-emoticon-angry" />
+      <i
+        v-for="(reaction, index) in reactions"
+        :key="index"
+        v-ripple="`${reaction.color}5F`"
+        class="px-4"
+        :class="reaction.icon"
+        :style="{
+          color: reaction.color,
+        }"
+      />
     </footer>
   </div>
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+
 export default {
   name: 'ImmersiveView',
+  data() {
+    return {
+      showOptions: false,
+      reactions: [
+        {
+          icon: 'mdi mdi-heart',
+          color: '#80ff71',
+        },
+        {
+          icon: 'mdi mdi-fire',
+          color: '#ffd646',
+        },
+        {
+          icon: 'mdi mdi-emoticon-lol',
+          color: '#b4a7ff',
+        },
+        {
+          icon: 'mdi mdi-emoticon-cry',
+          color: '#32e9be',
+        },
+        {
+          icon: 'mdi mdi-emoticon-angry',
+          color: '#ff4d84',
+        },
+      ],
+    }
+  },
 }
 </script>
 
@@ -77,9 +109,10 @@ export default {
   }
 
   nav {
-    background: $card-background;
+    background: $nav-bar-bg;
     display: flex;
     align-items: center;
+    box-shadow: $down-only-box-shadow;
 
     $image-size: 48px;
 
@@ -93,10 +126,18 @@ export default {
       box-shadow: $default-box-shadow;
       border-radius: 50%;
     }
+
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+    }
   }
 
   main {
-    height: calc(100vh - 138px);
+    height: calc(100vh - 180px);
+    margin-top: 16px;
     overflow: scroll;
     display: flex;
     flex-direction: column;
@@ -107,14 +148,16 @@ export default {
 
   footer {
     position: fixed;
+    overflow: scroll;
     left: 0;
     bottom: 0;
     display: grid;
     place-items: center;
-    grid-template-columns: repeat(7, 1fr);
-    font-size: 48px;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 40px;
     width: 100%;
-    background: $card-background;
+    background: $nav-bar-bg;
+    box-shadow: $up-only-box-shadow;
   }
 }
 </style>
