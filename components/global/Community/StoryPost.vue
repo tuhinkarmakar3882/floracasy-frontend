@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="story-post px-4 py-4">
+    <section v-ripple class="story-post px-4 py-4" @click="openImmersiveView">
       <span class="total-stories">{{ storyCount || '--' }}</span>
 
       <section class="user-details">
@@ -20,6 +20,16 @@
         {{ getRelativeTime(story.updatedAt) }}
       </small>
     </aside>
+
+    <transition name="scale-up">
+      <ImmersiveView v-if="immersiveMode">
+        <template v-slot:close-button>
+          <button class="danger-outlined-btn" @click="closeImmersiveView">
+            Close
+          </button>
+        </template>
+      </ImmersiveView>
+    </transition>
   </div>
 </template>
 
@@ -34,6 +44,13 @@ export default {
       required: true,
     },
   },
+
+  data() {
+    return {
+      immersiveMode: false,
+    }
+  },
+
   computed: {
     storyCount() {
       return this.story?.story_count?.length > 9
@@ -43,6 +60,15 @@ export default {
   },
   methods: {
     getRelativeTime,
+
+    async openImmersiveView() {
+      this.immersiveMode = true
+      await this.$router.push('#immersive')
+    },
+    async closeImmersiveView() {
+      this.immersiveMode = false
+      await this.$router.back()
+    },
   },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="story-component">
-    <main class="story">
+  <div v-ripple class="story-component">
+    <main class="story" @click="openImmersiveView">
       <section class="wrapper mb-4">
         <img
           :alt="story.user.photoURL"
@@ -20,6 +20,16 @@
         </p>
       </aside>
     </main>
+
+    <transition name="scale-down">
+      <ImmersiveView v-if="immersiveMode">
+        <template v-slot:close-button>
+          <button class="danger-outlined-btn" @click="closeImmersiveView">
+            Close
+          </button>
+        </template>
+      </ImmersiveView>
+    </transition>
   </div>
 </template>
 
@@ -30,6 +40,23 @@ export default {
     story: {
       type: Object,
       required: true,
+    },
+  },
+
+  data() {
+    return {
+      immersiveMode: false,
+    }
+  },
+
+  methods: {
+    async openImmersiveView() {
+      this.immersiveMode = true
+      await this.$router.push('#immersive')
+    },
+    async closeImmersiveView() {
+      this.immersiveMode = false
+      await this.$router.back()
     },
   },
 }
