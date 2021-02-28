@@ -30,7 +30,6 @@
         :src="item.image"
         class="carousel-item"
         height="250"
-        style="object-fit: cover; width: 100%; min-height: 250px; height: 250px"
       />
     </section>
 
@@ -137,7 +136,7 @@ export default {
     scroll-snap-align: start;
     scroll-snap-stop: always;
 
-    blockquote {
+    blockquote.carousel-item {
       border: none;
       border-radius: $xx-large-unit;
       width: 80vw;
@@ -150,7 +149,7 @@ export default {
         width: 2 * $xxx-large-unit;
         min-width: 2 * $xxx-large-unit;
         aspect-ratio: 1;
-        object-fit: contain;
+        object-fit: cover;
         margin: auto;
       }
 

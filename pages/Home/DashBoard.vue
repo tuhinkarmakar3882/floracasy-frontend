@@ -1,14 +1,17 @@
 <template>
   <div class="dashboard-page">
-    <LazyCarousel
-      :carousel-items="carouselItems"
-      :style="[
-        tabNumber === 2 && { padding: 0 },
-        { height: tabNumber === 2 ? 0 : '250px' },
-      ]"
-      image-carousel
-      style="overflow: hidden; transition: all 0.3s ease-in-out"
-    />
+    <section class="image-carousel">
+      <article
+        v-for="item in carouselItems"
+        :key="item.id + 1000"
+        class="carousel-item"
+        :style="{
+          background: `url('${item.image}') no-repeat`,
+          backgroundSize: `contain`,
+          paddingTop: tabNumber === 2 ? '0' : '56.67%',
+        }"
+      />
+    </section>
 
     <section class="tab-bar">
       <p
@@ -143,7 +146,32 @@ export default {
 $blog-border-radius: 20px;
 
 .dashboard-page {
-  transition: all 0.5s ease-in-out;
+  * {
+    transition: all 300ms ease-in-out;
+  }
+
+  .image-carousel {
+    display: flex;
+    gap: $standard-unit;
+    text-align: center;
+    overflow: scroll !important;
+    scroll-snap-type: x mandatory;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    .carousel-item {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      flex-shrink: 0;
+      width: 100%;
+      transform-origin: center center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
   .tab-bar {
     display: grid;
