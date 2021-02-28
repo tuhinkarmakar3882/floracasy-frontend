@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="story-post px-4 py-4">
-      <span class="total-stories">9+</span>
+      <span class="total-stories">{{ storyCount || '--' }}</span>
 
       <section class="user-details">
         <img
@@ -32,6 +32,13 @@ export default {
     story: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    storyCount() {
+      return this.story?.story_count?.length > 9
+        ? '9+'
+        : this.story?.story_count
     },
   },
   methods: {
