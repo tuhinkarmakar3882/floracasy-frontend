@@ -1,8 +1,7 @@
 # Pending Tasks:
 
 > ### Utils:
->  - Add Carousel
->  - FCM
+>  - Add Carousel Indicator ??
 
 
 > ### Help & Support:
@@ -15,24 +14,12 @@
 > 
 >   - **[ Optional ]** Add Story Like Feature 
 >   - **[ Optional ]** Add Post Share Feature 
-         
-
-> ### Certificate Verification Portal:
->   - Add Support for Verifying Certificate Numbers & Details
 
 
 > ### Payments:
 >   - Add Payments Detail Page
 >   - Handle Payments
-      
 
-> ### Message System:
->   - Add feature toggle 
->   - Fix security bug
->   - Fix Chat Message Screen CSS
->   - Add a check before showing the message on the message chat
->   - Improve UI/UX
- 
 
 > ### Miscellaneous
 >   - Firebase Cloud Message Notifications
@@ -45,11 +32,12 @@
 
 
 > ### Go To Market Activity
->   - Perform Proof Reading
+>   - Fix About Us 
 
 
-> ### Data Seeding
->   - Add content for blogs
+> ### Certificate Verification Portal:
+>   - Add Support for Verifying Certificate Numbers & Details
+
 
 > ### Functionality
 >   - Add Backend Metrics to Calculate each page revenue
@@ -61,5 +49,14 @@
 >   - **[ Optional ]** Add Payment Gateway
 >   - **[ Optional ]** Add Draft Page
 
+
 > ### CSS + Front End Only
 >   - **[ Optional ]** Payment Page
+
+
+> ### Message System:
+>   - Add feature toggle
+>   - Fix security bug
+>   - Fix Chat Message Screen CSS
+>   - Add a check before showing the message on the message chat
+>   - Improve UI/UX
