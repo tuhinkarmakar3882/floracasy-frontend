@@ -30,7 +30,11 @@
     </template>
 
     <template v-slot:footer>
-      <aside class="floating-action-button primary-btn">
+      <aside
+        v-ripple
+        class="floating-action-button primary-btn"
+        @click="openAddStoryPage"
+      >
         <i class="mdi mdi-plus mdi-24px" />
       </aside>
     </template>
@@ -70,6 +74,10 @@ export default {
   },
 
   methods: {
+    async openAddStoryPage() {
+      await this.$router.push(navigationRoutes.Home.Community.Story.add)
+    },
+
     async fetchStories($state) {
       if (!this.storyFetchCursorEndpoint) {
         $state.complete()
