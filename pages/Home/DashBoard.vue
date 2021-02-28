@@ -78,7 +78,7 @@ export default {
           name: 'Listen on the Go',
           body:
             'Now you can continue to listen to your favourite articles whenever you want to',
-          image: '/images/Frame_0.png',
+          image: '/images/Frame_0.jpg',
           buttonText: 'Avail Premium',
           route: navigationRoutes.Home.MoreOptions.Payments.index,
         },
@@ -86,25 +86,25 @@ export default {
           id: 1,
           name: 'Second Item in the carousel',
           body: 'This is a body Text',
-          image: '/images/Frame_1.png',
+          image: '/images/Frame_1.jpg',
         },
         {
           id: 2,
           name: 'Third Item in the carousel',
           body: 'This is a body Text',
-          image: '/images/Frame_2.png',
+          image: '/images/Frame_2.jpg',
         },
         {
           id: 3,
           name: 'Fourth Item in the carousel',
           body: 'This is a body Text',
-          image: '/images/Frame_3.png',
+          image: '/images/Frame_3.jpg',
         },
         {
           id: 4,
           name: 'Fifth Item in the carousel',
           body: 'This is a body Text',
-          image: '/images/Frame_4.png',
+          image: '/images/Frame_4.jpg',
         },
       ],
     }
