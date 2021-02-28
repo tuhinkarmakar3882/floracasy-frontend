@@ -6,7 +6,7 @@
     <template v-slot:app-bar-title>{{ pageTitle }}</template>
 
     <template v-slot:main>
-      <main v-if="ticketDetails" class="pb-4 main-body">
+      <main v-if="ticketDetails" class="main-body">
         <section class="info-card py-6 px-4 active-background">
           <aside class="top-section mb-4">
             <p class="secondary-highlight">
@@ -30,15 +30,32 @@
           </p>
         </section>
 
-        <section class="details px-4">
+        <section class="px-4">
           <h6 class="my-8">Ticket Topic</h6>
           <p class="description-box">{{ ticketDetails.issueTopic }}</p>
+        </section>
 
-          <h6 class="my-8">Ticket Details</h6>
+        <hr class="reversed-faded-divider my-6" />
+
+        <section class="px-4">
+          <h6 class="mb-8">Ticket Details</h6>
           <p class="description-box">{{ ticketDetails.issueDetails }}</p>
+        </section>
 
-          <h6 class="my-8">Conversation</h6>
-          <p class="description-box">Preview Will Come</p>
+        <hr class="faded-divider my-6" />
+
+        <h6 class="mb-8 mx-4">Conversation</h6>
+
+        <section class="conversation-container description-box">
+          <aside v-if="conversationHistory">
+            <MessageItem
+              v-for="message in conversationHistory.results"
+              :key="message.identifier"
+              :chat-message="message"
+              class="my-4"
+              :message-type="message.messageType"
+            />
+          </aside>
         </section>
       </main>
     </template>
@@ -67,6 +84,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Ticket Detail',
       ticketDetails: undefined,
+      conversationHistory: undefined,
       unableToLoadTicketDetails: false,
       ticketFetchEndpoint: endpoints.help_and_support.fetch,
     }
@@ -80,6 +98,7 @@ export default {
   async mounted() {
     try {
       await this.fetchTicketDetails()
+      await this.fetchConversation()
     } catch (e) {
       this.unableToLoadTicketDetails = true
     }
@@ -89,6 +108,15 @@ export default {
     async fetchTicketDetails() {
       this.ticketDetails = await this.$axios.$get(
         endpoints.help_and_support.detail.replace(
+          '{ticketID}',
+          this.$route.params.identifier
+        )
+      )
+    },
+
+    async fetchConversation() {
+      this.conversationHistory = await this.$axios.$get(
+        endpoints.help_and_support.conversation.detail.replace(
           '{ticketID}',
           this.$route.params.identifier
         )
@@ -129,8 +157,8 @@ export default {
       &::after {
         content: '';
         position: absolute;
-        height: $single-unit;
-        width: 84px;
+        height: $double-unit;
+        width: 2 * $xxx-large-unit;
         bottom: (-$milli-unit);
         left: 0;
         background: lighten($primary, $lighten-percentage);
