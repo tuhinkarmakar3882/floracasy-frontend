@@ -21,7 +21,7 @@
       </aside>
     </main>
 
-    <transition name="scale-down">
+    <transition name="scale-up">
       <ImmersiveView v-if="immersiveMode">
         <template v-slot:close-button>
           <button class="danger-outlined-btn" @click="closeImmersiveView">
