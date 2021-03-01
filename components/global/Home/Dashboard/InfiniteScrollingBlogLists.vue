@@ -2,7 +2,7 @@
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
       <article v-for="blog in blogs" :key="blog.id">
-        <LazyBlogPost :blog="blog" class="pb-0 pt-8" />
+        <BlogPost :blog="blog" class="pb-0 pt-8" />
       </article>
     </section>
 
