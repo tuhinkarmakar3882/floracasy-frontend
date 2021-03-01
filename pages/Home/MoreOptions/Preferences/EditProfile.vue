@@ -235,11 +235,18 @@ export default {
     .display-picture {
       position: relative;
 
-      img {
+      $image-size: 150px;
+
+      img,
+      .image-placeholder {
         margin-left: auto;
         margin-right: auto;
-        width: 150px;
-        height: 150px;
+        width: $image-size;
+        min-width: $image-size;
+        max-width: $image-size;
+        height: $image-size;
+        min-height: $image-size;
+        max-height: $image-size;
         object-fit: cover;
         border-radius: 50%;
         position: relative;
