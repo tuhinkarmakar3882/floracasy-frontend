@@ -3,6 +3,7 @@ const filesToCache = [
   'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
   'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
   'https://cdn.materialdesignicons.com/5.4.55/fonts/materialdesignicons-webfont.woff2?v=5.4.55',
+  '/offline',
 ]
 
 // Cache on install
@@ -26,6 +27,24 @@ self.addEventListener('activate', (event) => {
           .map((cacheName) => caches.delete(cacheName))
       )
     })
+  )
+})
+
+// Serve from Cache
+self.addEventListener('fetch', (event) => {
+  console.log('Fetch event for ', event.request.url)
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then((response) => {
+        if (response) {
+          return response
+        }
+        return fetch(event.request)
+      })
+      .catch(() => {
+        return caches.match('/offline')
+      })
   )
 })
 
