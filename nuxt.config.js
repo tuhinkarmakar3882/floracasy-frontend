@@ -149,10 +149,7 @@ export default {
     baseURL: secrets.baseUrl,
   },
 
-  css: [
-    '~/styles/main.scss',
-    // '@mdi/font/css/materialdesignicons.min.css',
-  ],
+  css: ['~/styles/main.scss'],
 
   head: {
     titleTemplate: '%s - Floracasy',
