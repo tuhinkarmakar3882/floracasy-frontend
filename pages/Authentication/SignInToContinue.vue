@@ -45,6 +45,7 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import * as secrets from '@/environmentalVariables'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'SignInToContinue',
@@ -71,14 +72,11 @@ export default {
 
   methods: {
     async signInWithPopup() {
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: '',
-        notificationType: '',
-        dismissible: true,
-      })
-      this.showLoader()
-      this.updateInfo('Loading OAuth Provider')
+      await showUITip(this.$store, '', '', true)
 
+      this.showLoaderAnimation = true
+
+      this.updateInfo('Loading OAuth Provider')
       const provider = new firebase.auth.GoogleAuthProvider()
 
       this.updateInfo('Waiting for you to complete the login')
@@ -91,37 +89,36 @@ export default {
       if (user && user !== {}) {
         this.updateInfo('Fetching Certificates...')
         const jsonUser = user.toJSON()
-        const commonPayload = {
-          uid: jsonUser.uid,
-          displayName: jsonUser.displayName,
-          phoneNumber: jsonUser.phoneNumber,
-          email: jsonUser.email,
-          photoURL: jsonUser.photoURL,
-          createdAt: jsonUser.createdAt,
-          lastLoginAt: jsonUser.lastLoginAt,
+        const frontendPayload = {
+          uid: jsonUser?.uid,
+          displayName: jsonUser?.displayName,
+          phoneNumber: jsonUser?.phoneNumber,
+          email: jsonUser?.email,
+          photoURL: jsonUser?.photoURL,
+          createdAt: jsonUser?.createdAt,
+          lastLoginAt: jsonUser?.lastLoginAt,
         }
         const backendPayload = {
-          ...commonPayload,
-          emailVerified: jsonUser.emailVerified,
-          authDomain: jsonUser.authDomain,
-          providerId: jsonUser.providerData[0].uid,
-          updatedAt: jsonUser.lastLoginAt,
-          accessToken: jsonUser.stsTokenManager.accessToken,
+          ...frontendPayload,
+          emailVerified: jsonUser?.emailVerified,
+          authDomain: jsonUser?.authDomain,
+          providerId: jsonUser?.providerData[0]?.uid,
+          updatedAt: jsonUser?.lastLoginAt,
+          accessToken: jsonUser?.stsTokenManager?.accessToken,
         }
+
         this.updateInfo('Validating Credentials...')
-        await this.$axios
-          .$post(endpoints.auth.authenticate, backendPayload)
-          .then(async (response) => {
-            const frontendPayload = {
-              ...commonPayload,
-            }
-            this.updateInfo('Logging you in...')
-            await this.login(frontendPayload, response)
-          })
-          .catch(async (e) => {
-            console.error(e)
-            await this.abort()
-          })
+        try {
+          const response = await this.$axios.$post(
+            endpoints.auth.authenticate,
+            backendPayload
+          )
+
+          this.updateInfo('Logging you in...')
+          await this.login(frontendPayload, response)
+        } catch (e) {
+          await this.abort()
+        }
       } else {
         await this.abort()
       }
@@ -135,22 +132,23 @@ export default {
       await this.updateVuexStates(payload)
 
       this.updateInfo('Welcome')
-
       window.location = navigationRoutes.Home.DashBoard
     },
 
     async abort() {
       this.updateInfo('Error, While Logging you in.')
-
       await this.$store.dispatch('logout')
-      this.hideLoader()
+
+      this.showLoaderAnimation = false
       this.updateInfo('Checking...')
       localStorage.clear()
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Unable to Login. Please Refresh',
-        notificationType: 'error',
-        dismissible: false,
-      })
+
+      await showUITip(
+        this.$store,
+        'Unable to Login. Please Refresh',
+        'error',
+        false
+      )
     },
 
     async saveAndApplyTokens(tokens) {
@@ -175,14 +173,6 @@ export default {
       await this.$store.dispatch(
         'NotificationChannel/fetchNotificationChannelId'
       )
-    },
-
-    showLoader() {
-      this.showLoaderAnimation = true
-    },
-
-    hideLoader() {
-      this.showLoaderAnimation = false
     },
 
     updateInfo(message) {

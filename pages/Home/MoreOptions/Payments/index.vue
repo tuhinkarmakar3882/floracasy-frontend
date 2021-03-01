@@ -1,7 +1,9 @@
 <template>
   <AppFeel
-    class="payments-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    :prev-url-path="prevURL"
+    class="payments-page"
+    dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -52,20 +54,16 @@
             </p>
             <ul>
               <li v-for="(point, index) in points" :key="index">
-                <KeyPoint tick-color="#d8ff00" :tick-size="24" :point="point" />
+                <KeyPoint :point="point" :tick-size="24" tick-color="#d8ff00" />
               </li>
             </ul>
           </div>
-          <div class="text-center mt-6">
-            <button
-              v-ripple=""
-              class="premium-btn mx-2 my-4"
-              style="width: 150px"
-            >
+          <div v-if="usePremiumServices" class="text-center mt-6">
+            <button v-ripple class="premium-btn mx-2 my-4" style="width: 150px">
               Buy Premium
             </button>
             <button
-              v-ripple=""
+              v-ripple
               class="premium-outlined-btn mx-2 my-4"
               style="width: 150px"
               @click="$router.push(navigationRoutes.Home.MoreOptions.GoPremium)"
@@ -73,6 +71,11 @@
               Learn More
             </button>
           </div>
+          <aside v-else class="text-center mt-6">
+            <button v-ripple class="premium-btn mx-2 my-4">
+              Be the first to get Notified
+            </button>
+          </aside>
         </section>
       </div>
     </template>
@@ -83,14 +86,22 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import KeyPoint from '@/components/global/KeyPoint'
+import { usePremiumServices } from '~/environmentalVariables'
 
 export default {
   name: 'Payments',
   middleware: 'isAuthenticated',
   components: { KeyPoint, AppFeel },
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
+      usePremiumServices,
       navigationRoutes,
+      prevURL: null,
       pageTitle: 'Payments',
       points: [
         'Get Detailed Insights',
@@ -160,7 +171,7 @@ export default {
           font-size: $medium-unit;
 
           .amount {
-            font-weight: 500;
+            font-weight: 400;
             filter: drop-shadow($right-only-box-shadow);
           }
         }
@@ -215,7 +226,7 @@ export default {
             &::after {
               content: '';
               position: absolute;
-              height: 1px;
+              height: $single-unit;
               width: 84px;
               bottom: 0;
               left: calc(50% - 42px);

@@ -1,5 +1,6 @@
 <template>
   <div class="custom-list-view">
+    <slot name="heading"></slot>
     <ul>
       <slot name="list-items"></slot>
       <slot name="last-item"></slot>
@@ -13,7 +14,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
 
 .custom-list-view {
@@ -23,6 +24,11 @@ export default {
     li {
       margin: 0;
 
+      a {
+        text-decoration: none;
+      }
+
+      a,
       p {
         display: flex;
         width: 100%;

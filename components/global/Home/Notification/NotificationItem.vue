@@ -21,7 +21,7 @@
     </section>
 
     <transition name="gray-shift">
-      <Modal
+      <LazyModal
         v-if="showModal"
         class="modal"
         :toggle="hideModal"
@@ -33,28 +33,28 @@
         </template>
 
         <template slot="body">
-          <section v-if="notification.onclickAction === 'open_comment_page'">
-            <blockquote>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
-              debitis doloribus, eum excepturi facilis fugiat, inventore ipsum
-              itaque magni modi natus numquam porro rem, saepe sapiente sed
-              similique temporibus veritatis!
-            </blockquote>
+          <section
+            v-if="notification.onclickAction === 'open_blog_comment_page'"
+          >
+            <blockquote v-if="message">&ldquo;{{ message }}&rdquo;</blockquote>
+            <LoadingIcon v-else />
           </section>
         </template>
 
         <template slot="actions">
           <!--          Comment Notification Actions-->
-          <section v-if="notification.onclickAction === 'open_comment_page'">
+          <section
+            v-if="notification.onclickAction === 'open_blog_comment_page'"
+          >
             <button
-              v-ripple=""
+              v-ripple
               class="primary-outlined-btn my-4 mx-2"
               @click="openCommentDetailsPage"
             >
               Send Reply
             </button>
             <button
-              v-ripple=""
+              v-ripple
               class="secondary-outlined-btn my-4 mx-2"
               @click="openProfilePage('commentedBy')"
             >
@@ -65,14 +65,14 @@
           <!--          Blog Like Notification Actions-->
           <section v-else-if="notification.onclickAction === 'like_blog'">
             <button
-              v-ripple=""
+              v-ripple
               class="primary-outlined-btn my-4 mx-2"
               @click="openBlogDetailsPage('identifier')"
             >
               View Blog
             </button>
             <button
-              v-ripple=""
+              v-ripple
               class="secondary-outlined-btn my-4 mx-2"
               @click="openProfilePage('liked_by')"
             >
@@ -80,7 +80,7 @@
             </button>
           </section>
         </template>
-      </Modal>
+      </LazyModal>
     </transition>
   </div>
 </template>
@@ -90,10 +90,11 @@ import { getRelativeTime } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import Modal from '~/components/global/Modal'
+import LoadingIcon from '~/components/global/LoadingIcon'
 
 export default {
   name: 'NotificationItem',
-  components: { Modal },
+  components: { LoadingIcon, Modal },
   props: {
     notification: {
       type: Object,
@@ -103,6 +104,7 @@ export default {
   data() {
     return {
       showModal: false,
+      message: undefined,
     }
   },
 
@@ -122,7 +124,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.$router.beforeEach((to, _, next) => {
+    this.$router.beforeEach((_, __, next) => {
       next()
     })
   },
@@ -146,7 +148,6 @@ export default {
           break
 
         case 'open_ticket_detail':
-          console.log(actionName, actionInfo)
           await this.$router.push(
             navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index
           )
@@ -156,7 +157,7 @@ export default {
           await this.openProfilePage('followerUID')
           break
 
-        case 'open_comment_page':
+        case 'open_blog_comment_page':
           await this.openModal()
           break
 
@@ -181,8 +182,10 @@ export default {
     },
 
     async openModal() {
+      this.message = undefined
       await this.$router.push('#detail')
       this.showModal = true
+      await this.getCommentMessage(this.notification.onclickActionInfo)
     },
 
     async openProfilePage(keyName) {
@@ -209,6 +212,15 @@ export default {
           this.notification.onclickActionInfo[keyName]
         )
       )
+    },
+    async getCommentMessage({ commentIdentifier }) {
+      const { message } = await this.$axios.$get(
+        endpoints.comment_system.blog.detail.replace(
+          '{identifier}',
+          commentIdentifier
+        )
+      )
+      this.message = message
     },
   },
 }

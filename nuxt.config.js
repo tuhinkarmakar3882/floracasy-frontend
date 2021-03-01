@@ -1,6 +1,25 @@
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentalVariables'
+import {
+  useRealtimeNotifications,
+  useSentryLogging,
+  useTouchEvents,
+} from './environmentalVariables'
 import * as packageJson from './package.json'
+import { ADSENSE_CSP } from './config/csp-policies'
+
+const sentryLoggingPlugin = {
+  src: '~/plugins/sentry.js',
+  mode: 'client',
+}
+const notificationSocketPlugin = {
+  src: '~/plugins/notificationSocketConnection.js',
+  mode: 'client',
+}
+const touchEventsPlugin = {
+  src: '~/plugins/vue-touch-events.js',
+  mode: 'client',
+}
 
 export default {
   ssr: true,
@@ -19,22 +38,18 @@ export default {
       mode: 'client',
     },
     {
-      src: '~/middleware/spa-analytics.js',
-      mode: 'client',
-    },
-    {
-      src: '~/plugins/firebase-authentication.js',
+      src: '~/middleware/spa-analytics-and-setup-user.js',
       mode: 'client',
     },
     '~/plugins/axios.js',
     {
-      src: '~/plugins/notificationSocketConnection.js',
-      mode: 'client',
-    },
-    {
       src: '~/plugins/vue-infinite-loading.js',
       mode: 'client',
     },
+
+    ...(useRealtimeNotifications ? [notificationSocketPlugin] : []),
+    ...(useSentryLogging ? [sentryLoggingPlugin] : []),
+    ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
   modern: {
@@ -44,11 +59,11 @@ export default {
 
   modules: [
     'nuxt-helmet',
-    '~/module/csp.js',
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
+    // '~/module/csp.js'
   ],
 
   buildModules: [
@@ -113,21 +128,20 @@ export default {
   },
 
   render: {
-    asyncScripts: true,
     injectScripts: true,
     resourceHints: true,
-
-    csp: {
-      addMeta: process.env.NODE_ENV === 'production',
-    },
-
+    asyncScripts: true,
     http2: {
       push: true,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      pushAssets: (req, res, publicPath, preloadFiles) =>
-        preloadFiles
-          .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
-          .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
+      // pushAssets: (_, __, publicPath, preloadFiles) =>
+      //   preloadFiles
+      //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
+      //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
+    },
+    csp: {
+      reportOnly: false,
+      hashAlgorithm: 'sha256',
+      policies: ADSENSE_CSP,
     },
   },
 
@@ -163,22 +177,52 @@ export default {
         type: 'image/x-icon',
         href: '/favicon.ico',
       },
-      // TODO MAKE CSS LOAD ASYNCHRONOUSLY
+      {
+        rel: 'preconnect',
+        crossorigin: true,
+        href: secrets.baseUrl,
+      },
+
+      //  Google Fonts
+      {
+        rel: 'dns-prefetch',
+        crossorigin: true,
+        href: 'https://fonts.gstatic.com/',
+      },
       {
         rel: 'preconnect',
         crossorigin: true,
         href: 'https://fonts.gstatic.com/',
       },
       {
+        rel: 'preload',
+        as: 'style',
+        href:
+          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+      },
+      {
         rel: 'stylesheet',
         type: 'text/css',
         href:
-          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;1,300;1,400&family=Prata&family=Roboto:wght@300;400&family=Raleway:wght@300;400&display=swap',
+          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+      },
+
+      //  Material Design Icons
+      {
+        rel: 'dns-prefetch',
+        crossorigin: true,
+        href: 'https://cdn.materialdesignicons.com/',
       },
       {
         rel: 'preconnect',
         crossorigin: true,
         href: 'https://cdn.materialdesignicons.com/',
+      },
+      {
+        rel: 'preload',
+        as: 'style',
+        href:
+          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
       {
         rel: 'stylesheet',
@@ -187,48 +231,6 @@ export default {
           'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
       },
     ],
-  },
-
-  loadingIndicator: {
-    name: 'rectangle-bounce',
-    color: '#C5C2FF',
-    background: '#050514',
-  },
-
-  loading: { color: '#C5C2FF' },
-
-  layoutTransition: {
-    name: 'gray-shift',
-    mode: 'out-in',
-  },
-
-  pageTransition: {
-    name: 'page',
-    mode: 'out-in',
-  },
-
-  tailwindcss: {
-    config: {
-      future: {
-        standardFontWeights: true,
-        defaultLineHeights: true,
-        purgeLayersByDefault: true,
-        removeDeprecatedGapUtilities: true,
-      },
-      purge: {
-        layers: ['base', 'components', 'utilities'],
-        enabled: process.env.NODE_ENV === 'production',
-        content: [
-          'components/**/*.vue',
-          'layouts/**/*.vue',
-          'pages/**/*.vue',
-          'plugins/**/*.js',
-          'nuxt.config.js',
-          'plugins/**/*.ts',
-          'nuxt.config.ts',
-        ],
-      },
-    },
   },
 
   pwa: {
@@ -252,19 +254,57 @@ export default {
       display: 'standalone',
       start_url: '/',
       scope: '/',
+      orientation: 'portrait',
+      dir: 'ltr',
     },
     workbox: false,
   },
 
   telemetry: false,
 
-  // typescript: {
-  //   typeCheck: {
-  //     eslint: {
-  //       files: './**/*.{ts,js,vue}',
-  //     },
-  //   },
-  // },
+  // watch: ['~/module/csp.js'],
 
-  watch: ['~/module/csp.js'],
+  tailwindcss: {
+    config: {
+      future: {
+        standardFontWeights: true,
+        defaultLineHeights: true,
+        purgeLayersByDefault: true,
+        removeDeprecatedGapUtilities: true,
+      },
+      purge: {
+        layers: ['base', 'components', 'utilities'],
+        enabled: true,
+        content: [
+          'components/**/*.vue',
+          'layouts/**/*.vue',
+          'pages/**/*.vue',
+          'plugins/**/*.js',
+          'plugins/**/*.ts',
+          'nuxt.config.js',
+          'nuxt.config.ts',
+          'assets/**/*.scss',
+          'styles/**/*.scss',
+        ],
+      },
+    },
+  },
+
+  loading: { color: '#C5C2FF' },
+
+  loadingIndicator: {
+    name: 'rectangle-bounce',
+    color: '#C5C2FF',
+    background: '#050514',
+  },
+
+  layoutTransition: {
+    name: 'gray-shift',
+    mode: 'out-in',
+  },
+
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+  },
 }

@@ -1,7 +1,6 @@
 <template>
   <button
     v-ripple="'rgba(255, 255, 255, 0.2)'"
-    :type="buttonType"
     :class="
       disabled || loading
         ? this.$props.classList + ' disabled-btn'
@@ -9,6 +8,7 @@
     "
     :disabled="disabled || loading"
     :loading="loading"
+    :type="buttonType"
     @click="onClick"
   >
     <span v-if="loading" class="loading-animation" />

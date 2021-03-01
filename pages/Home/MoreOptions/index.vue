@@ -12,9 +12,9 @@
         >
           <p>
             <span
-              class="icon"
               :class="option.icon"
               :style="{ color: option.color }"
+              class="icon"
             />
             <span class="option-name">{{ option.name }}</span>
             <span class="mdi mdi-chevron-right arrow-go" />
@@ -42,7 +42,7 @@ export default {
   name: 'MoreOptions',
   components: { CustomListView },
   middleware: 'isAuthenticated',
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   data() {
     return {
       navigationRoutes,
@@ -54,12 +54,12 @@ export default {
           color: '#8FF2E1',
           route: '/Home/MoreOptions/Preferences',
         },
-        {
-          name: 'Go Premium',
-          icon: 'mdi mdi-crown',
-          color: '#f8e102',
-          route: '/Home/MoreOptions/GoPremium',
-        },
+        // {
+        //   name: 'Go Premium',
+        //   icon: 'mdi mdi-crown',
+        //   color: '#f8e102',
+        //   route: '/Home/MoreOptions/GoPremium',
+        // },
         {
           name: 'Payments',
           icon: 'mdi mdi-wallet',
@@ -72,12 +72,12 @@ export default {
           color: '#f5a049',
           route: '/Home/MoreOptions/WriteAndEarn',
         },
-        {
-          name: 'Refer & Earn',
-          icon: 'mdi mdi-account-multiple-plus',
-          color: '#00B4B4',
-          route: '/Home/MoreOptions',
-        },
+        // {
+        //   name: 'Refer & Earn',
+        //   icon: 'mdi mdi-account-multiple-plus',
+        //   color: '#00B4B4',
+        //   route: '/Home/MoreOptions',
+        // },
         {
           name: 'About Us',
           icon: 'mdi mdi-information',

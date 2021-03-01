@@ -29,6 +29,15 @@ export const navigationRoutes = {
 
     Community: {
       index: '/Home/Community',
+      Search: '/Home/Community/Search',
+      Posts: {
+        detail: '/Home/Community/Posts/{postIdentifier}',
+        add: '/Home/Community/Posts/AddPost',
+      },
+      Story: {
+        index: '/Home/Community/Stories',
+        add: '/Home/Community/Stories/AddStory',
+      },
     },
 
     Messages: {
@@ -56,6 +65,8 @@ export const navigationRoutes = {
           '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
         Tickets: {
           index: '/Home/MoreOptions/HelpAndSupport/Tickets',
+          Details:
+            '/Home/MoreOptions/HelpAndSupport/Tickets/Details/{identifier}',
         },
       },
       Payments: {
@@ -76,10 +87,5 @@ export const navigationRoutes = {
     },
 
     DashBoard: '/Home/DashBoard',
-  },
-
-  PublicRoutes: {
-    GoPremium: '/PublicRoutes/GoPremium',
-    WriteAndEarn: '/PublicRoutes/WriteAndEarn',
   },
 }

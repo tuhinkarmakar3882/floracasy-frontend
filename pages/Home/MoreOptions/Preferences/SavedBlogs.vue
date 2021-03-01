@@ -1,7 +1,9 @@
 <template>
   <AppFeel
-    class="saved-blogs-page"
     :on-back="navigationRoutes.Home.MoreOptions.Preferences.index"
+    :prev-url-path="prevURL"
+    class="saved-blogs-page"
+    dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
     <template slot="main">
@@ -9,7 +11,7 @@
       <client-only>
         <section v-if="blogs">
           <article v-for="{ blog } in blogs" :key="blog.id">
-            <BlogPost class="pt-8 pb-0" :blog="blog" />
+            <BlogPost :blog="blog" class="pt-8 pb-0" />
           </article>
         </section>
 
@@ -46,6 +48,11 @@ export default {
     AppFeel,
   },
   middleware: 'isAuthenticated',
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
       navigationRoutes,

@@ -4,7 +4,7 @@
       <div
         v-for="messageThread in messageThreads"
         :key="messageThread.id"
-        v-ripple=""
+        v-ripple
         class="message-thread px-4 py-4"
         @click="
           $router.push(
@@ -16,8 +16,8 @@
         "
       >
         <img
-          :src="messageThread.receiver.photoURL"
           :alt="messageThread.receiver.displayName"
+          :src="messageThread.receiver.photoURL"
         />
 
         <section>
@@ -64,12 +64,13 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
+import { useMessageService } from '~/environmentalVariables'
 
 export default {
   name: 'Messages',
   components: { LoadingIcon },
-  middleware: 'isAuthenticated',
-  layout: 'MobileApp',
+  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+  layout: 'ResponsiveApp',
 
   data() {
     return {
@@ -95,17 +96,7 @@ export default {
       return countValue > 99 ? `${countValue.toString()}+` : countValue
     },
 
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-
     async infiniteHandler($state) {
-      await this.setupUser()
-
       if (!this.fetchThreads) {
         $state.complete()
         return
@@ -137,7 +128,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$image-size: 84px;
+$image-size: 40px;
 
 .message-page {
   .message-thread {
@@ -159,7 +150,6 @@ $image-size: 84px;
     .name {
       color: #ededed;
       font-family: $Prata;
-      font-size: $medium-unit;
     }
 
     .message-body {
@@ -187,7 +177,7 @@ $image-size: 84px;
       display: grid;
       place-items: center;
       font-family: $Nunito-Sans;
-      border-radius: 50px;
+      border-radius: 2 * $x-large-unit;
       font-size: 13px;
     }
   }

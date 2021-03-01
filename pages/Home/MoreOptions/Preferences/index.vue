@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="preferences-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    class="preferences-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -17,9 +17,9 @@
           >
             <p>
               <span
-                class="icon"
                 :class="option.icon"
                 :style="{ color: option.color }"
+                class="icon"
               />
               <span class="option-name">{{ option.name }}</span>
               <span class="mdi mdi-chevron-right arrow-go" />
@@ -52,6 +52,7 @@
 <script>
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'Preferences',
@@ -82,7 +83,7 @@ export default {
       ],
     }
   },
-  async mounted() {
+  mounted() {
     this.switchState = Notification.permission === 'granted'
   },
   methods: {
@@ -112,7 +113,11 @@ export default {
           })
         }
       } catch (e) {
-        console.log(e)
+        await showUITip(
+          this.$store,
+          'Notifications are not Supported',
+          'warning'
+        )
       }
     },
   },

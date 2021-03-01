@@ -1,5 +1,5 @@
 <template>
-  <AppFeel custom-header class="blog-comment-page" on-back="/">
+  <AppFeel class="blog-comment-page" custom-header on-back="/">
     <template slot="app-bar-custom-header">
       <h5
         v-ripple
@@ -108,15 +108,15 @@
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
         <input
           v-model="commentMessage"
-          type="text"
-          placeholder="Add a comment..."
           :disabled="isSendingComment"
+          placeholder="Add a comment..."
+          type="text"
           @keyup.enter="addComment"
         />
         <RippleButton
-          :on-click="addComment"
           :disabled="!canSendComment"
           :loading="isSendingComment"
+          :on-click="addComment"
           style="background: transparent !important"
         >
           <span class="mdi mdi-send" />
@@ -155,7 +155,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Comments',
       comments: [],
-      fetchCommentsEndpoint: endpoints.comment_system.fetchByBlogId,
+      fetchCommentsEndpoint: endpoints.comment_system.blog.fetch,
       commentMessage: '',
       isSendingComment: false,
       canSendComment: false,
@@ -174,10 +174,6 @@ export default {
     },
   },
 
-  async created() {
-    await this.setupUser()
-  },
-
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: -1,
@@ -185,21 +181,12 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await this.setupUser()
   },
 
   methods: {
     getRelativeTime,
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
 
     async infiniteHandler($state) {
-      await this.setupUser()
       if (!this.fetchCommentsEndpoint) {
         $state.complete()
         return
@@ -235,13 +222,10 @@ export default {
           dismissible: true,
         })
         try {
-          await this.$axios.$post(
-            endpoints.comment_system.createCommentForBlogId,
-            {
-              blogIdentifier: this.$route.params.blogId,
-              message: this.commentMessage,
-            }
-          )
+          await this.$axios.$post(endpoints.comment_system.blog.create, {
+            blogIdentifier: this.$route.params.blogId,
+            message: this.commentMessage,
+          })
           const newComment = {
             id: Date.now(),
             user: {
@@ -276,7 +260,7 @@ export default {
 
   head() {
     return {
-      title: this.pageTitle,
+      title: this.blog?.title || this.pageTitle,
     }
   },
 }
@@ -304,7 +288,7 @@ export default {
         &::after {
           content: '';
           position: absolute;
-          height: 1px;
+          height: $single-unit;
           width: 84px;
           bottom: 0;
           left: calc(50% - 42px);
@@ -324,9 +308,13 @@ export default {
     background-color: $nav-bar-bg;
     box-shadow: $up-only-box-shadow;
 
+    $size: 2 * $medium-unit;
+
     img {
-      width: 2 * $medium-unit;
-      height: 2 * $medium-unit;
+      width: $size;
+      min-width: $size;
+      height: $size;
+      min-height: $size;
       object-position: center;
       object-fit: cover;
       border-radius: 50%;

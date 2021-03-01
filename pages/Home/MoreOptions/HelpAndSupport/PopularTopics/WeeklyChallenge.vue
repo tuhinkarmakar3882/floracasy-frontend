@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    class="weekly-challenge-topic-page"
     :on-back="
       navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics.index
     "
+    class="weekly-challenge-topic-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -21,8 +21,8 @@
             exciting prizes.
           </p>
           <img
-            src="https://picsum.photos/156"
             alt="showing some photos of challenges"
+            src="https://picsum.photos/156"
           />
         </article>
 

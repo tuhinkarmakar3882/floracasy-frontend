@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    class="audio-blogs-topic-page"
     :on-back="
       navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics.index
     "
+    class="audio-blogs-topic-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 

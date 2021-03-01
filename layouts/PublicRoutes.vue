@@ -1,23 +1,38 @@
 <template>
   <div>
-    <NavigationBar />
+    <LazyNavigationBar />
 
-    <main class="py-4">
+    <main class="main-router-content">
       <nuxt />
     </main>
 
-    <Footer />
+    <LazyFooter />
+
+    <LazyInstallBadge class="install-badge" show-close-button />
   </div>
 </template>
 
 <script>
-import NavigationBar from '@/components/global/Layout/PublicRoutes/NavigationBar'
-import Footer from '@/components/global/Layout/PublicRoutes/Footer'
-
 export default {
-  components: { Footer, NavigationBar },
-  data: () => {
-    return {}
-  },
+  name: 'PublicRoutes',
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.install-badge {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  border-radius: $micro-unit $micro-unit 0 0;
+}
+
+.main-router-content {
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

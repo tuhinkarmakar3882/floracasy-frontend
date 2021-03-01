@@ -4,19 +4,19 @@ import { auth } from '@/plugins/firebase.js'
 
 export const state = () => {
   return {
-    authState: null,
+    isUserAuthenticated: null,
   }
 }
 
 export const getters = {
-  getAuthState(state) {
-    return state.authState
+  getIsUserAuthenticated(state) {
+    return state.isUserAuthenticated
   },
 }
 
 export const mutations = {
-  SET_AUTH_STATE(state, authState) {
-    state.authState = authState
+  SET_IS_USER_AUTHENTICATED(state, isUserAuthenticated) {
+    state.isUserAuthenticated = isUserAuthenticated
   },
 }
 
@@ -28,31 +28,35 @@ export const actions = {
   async checkTokenValidity({ commit }) {
     await this.$axios.setToken('', 'Bearer')
 
-    const { data } = await this.$axios.post(
-      endpoints.auth.checkToken,
-      {},
-      { withCredentials: true }
-    )
+    try {
+      const { data } = await this.$axios.post(
+        endpoints.auth.checkToken,
+        {},
+        { withCredentials: true }
+      )
 
-    if (data.authState) {
-      const cookieSavingConfig = {
-        path: '/',
-        maxAge: secrets.cookieMaxAge,
+      if (data?.authState) {
+        const cookieSavingConfig = {
+          path: '/',
+          maxAge: secrets.cookieMaxAge,
+        }
+
+        await this.$cookies.set('access', data?.access, cookieSavingConfig)
+        await this.$cookies.set('refresh', data?.refresh, cookieSavingConfig)
+        await this.$axios.setToken(data.access, 'Bearer')
+      } else {
+        await this.$cookies.remove('access')
+        await this.$cookies.remove('refresh')
       }
 
-      await this.$cookies.set('access', data.access, cookieSavingConfig)
-      await this.$cookies.set('refresh', data.refresh, cookieSavingConfig)
-      await this.$axios.setToken(data.access, 'Bearer')
-    } else {
-      await this.$cookies.remove('access')
-      await this.$cookies.remove('refresh')
+      commit('SET_IS_USER_AUTHENTICATED', data?.authState)
+    } catch (e) {
+      commit('SET_IS_USER_AUTHENTICATED', false)
     }
-
-    commit('SET_AUTH_STATE', data.authState)
   },
 
   login({ commit }) {
-    commit('SET_AUTH_STATE', true)
+    commit('SET_IS_USER_AUTHENTICATED', true)
   },
 
   updateTokens({ commit }, { tokens }) {
@@ -63,7 +67,7 @@ export const actions = {
     process.client && localStorage.removeItem('is_auth')
     this.$cookies.remove('access')
     this.$cookies.remove('refresh')
-    commit('SET_AUTH_STATE', false)
+    commit('SET_IS_USER_AUTHENTICATED', false)
     return auth.signOut()
   },
 }

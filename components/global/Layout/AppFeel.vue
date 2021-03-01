@@ -1,8 +1,10 @@
 <template>
   <div class="app">
     <NotificationBadge />
+
     <header
       v-if="customHeader"
+      class="app-header"
       :style="[
         autoHide && {
           top: showTopBar ? '0 !important' : '-56px !important',
@@ -11,8 +13,10 @@
     >
       <slot name="app-bar-custom-header" />
     </header>
+
     <header
       v-else
+      class="app-header"
       :style="[
         centerAligned && { justifyContent: 'center' },
         autoHide && {
@@ -22,15 +26,18 @@
     >
       <h5
         v-if="showBackButton"
-        v-ripple=""
-        class="mdi mdi-arrow-left"
+        v-ripple
         :class="{ 'px-5': showBackButton }"
+        class="mdi mdi-arrow-left"
         style="height: 56px; display: flex; align-items: center"
-        @click="navigateTo(onBack)"
+        @click="dynamicBack ? useDynamicNavigation() : navigateTo(onBack)"
       />
       <p>
         <slot name="app-bar-title" />
       </p>
+      <div class="ml-auto pr-4">
+        <slot name="app-bar-action-button" />
+      </div>
     </header>
 
     <main class="main-content">
@@ -50,6 +57,15 @@ export default {
   name: 'AppFeel',
   components: { NotificationBadge },
   props: {
+    dynamicBack: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    prevUrlPath: {
+      type: Object,
+      required: false,
+    },
     onBack: {
       type: String,
       required: true,
@@ -74,6 +90,7 @@ export default {
 
   data() {
     return {
+      prevURL: undefined,
       showTopBar: true,
       prevScrollPos: 0,
     }
@@ -98,6 +115,12 @@ export default {
       this.showTopBar = this.prevScrollPos > currentScrollPos
       this.prevScrollPos = currentScrollPos
     },
+
+    async useDynamicNavigation() {
+      this.prevUrlPath
+        ? await this.$router.back()
+        : await this.navigateTo(this.onBack)
+    },
   },
 }
 </script>
@@ -106,7 +129,9 @@ export default {
 @import 'assets/all-variables';
 
 .app {
-  header {
+  position: relative;
+
+  header.app-header {
     position: sticky;
     top: -$single-unit;
     left: 0;
@@ -125,12 +150,10 @@ export default {
     }
   }
 
-  .main-content {
+  main.main-content {
     background-color: $body-background;
-    max-width: $max-width;
     margin-left: auto;
     margin-right: auto;
-    min-height: 90vh;
 
     button {
       min-width: auto;

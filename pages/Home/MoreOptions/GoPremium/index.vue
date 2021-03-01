@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="go-premium-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    class="go-premium-page"
     custom-header
   >
     <template slot="app-bar-custom-header">
@@ -30,12 +30,12 @@
         <h6>Features at a Glance:</h6>
         <ul>
           <li v-for="(point, index) in points" :key="index">
-            <KeyPoint tick-color="#EFB33D" :tick-size="24" :point="point" />
+            <KeyPoint :point="point" :tick-size="24" tick-color="#EFB33D" />
           </li>
         </ul>
 
         <div class="text-center my-4">
-          <button v-ripple="" class="premium-btn">Continue to Buy</button>
+          <button v-ripple class="premium-btn">Continue to Buy</button>
         </div>
       </section>
     </template>
@@ -47,10 +47,11 @@ import AppFeel from '@/components/global/Layout/AppFeel'
 import KeyPoint from '@/components/global/KeyPoint'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import PremiumCrownLogo from '~/components/global/Icons/PremiumCrownLogo'
+import { usePremiumServices } from '~/environmentalVariables'
 
 export default {
   name: 'GoPremium',
-  middleware: 'isAuthenticated',
+  middleware: usePremiumServices ? 'isAuthenticated' : 'hidden',
   components: { PremiumCrownLogo, KeyPoint, AppFeel },
 
   asyncData({ from: prevURL }) {

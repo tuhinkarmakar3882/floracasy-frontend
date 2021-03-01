@@ -1,47 +1,22 @@
 <template>
-  <section class="add-a-post-preview px-4 pb-8">
-    <p class="py-6" style="font-size: 14px">
-      <span class="mdi mdi-plus-circle primary-light" />
-      Create new Post
-    </p>
-    <div class="header mb-6">
-      <img
-        alt="display-image"
-        height="52"
-        src="https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-        width="52"
-      />
-
-      <section class="user-details ml-4">
-        <p class="secondary">Swagata</p>
-        <small>Beauty Blogger</small>
-      </section>
-
-      <button v-ripple class="vibrant-outlined-btn">New Post</button>
-    </div>
-
-    <p class="body py-5 text-center">What's on your mind?</p>
-
-    <div class="actions mt-4">
-      <p>
-        <span class="mdi mdi-image mdi-24px secondary mr-2" />
-        Photos
-      </p>
-      <p>
-        <span class="mdi mdi-headphones mdi-24px secondary mr-2" />
-        Audio
-      </p>
-      <p>
-        <span class="mdi mdi-emoticon mdi-24px secondary mr-2" />
-        Mood
-      </p>
-    </div>
+  <section class="add-post-preview px-4 py-6 white">
+    <span class="mdi mdi-pencil-box-multiple-outline mdi-24px mr-3" />
+    <p>Share your thoughts or photos or voice</p>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'AddPostPreview',
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+  mounted() {},
 }
 </script>
 
@@ -77,7 +52,7 @@ export default {
   .user-details {
     p {
       font-size: 1.2rem;
-      font-weight: 500;
+      font-weight: 400;
     }
 
     small {
@@ -114,11 +89,11 @@ export default {
       justify-content: center;
       align-items: center;
       color: $muted;
-    }
 
-    &:nth-child(2) {
-      border-left: 1px solid yellow;
-      border-right: 1px solid yellow;
+      &:nth-child(2) {
+        border-left: 1px solid $card-background;
+        border-right: 1px solid $card-background;
+      }
     }
   }
 }

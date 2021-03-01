@@ -1,51 +1,54 @@
 <template>
   <AppFeel
-    class="write-and-earn-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    :prev-url-path="prevURL"
+    class="write-and-earn-page"
+    dynamic-back
   >
     <template slot="app-bar-title">
       {{ pageTitle }}
     </template>
 
     <template slot="main">
-      <CustomListView>
+      <LazyCustomListView>
         <template slot="list-items">
           <li
             v-for="(option, index) in options"
             :key="index"
             v-ripple="`${option.color}5F`"
             class="px-4 py-3"
-            @click="$router.push(option.route)"
           >
-            <p>
-              <span
-                class="icon"
-                :class="option.icon"
-                :style="{ color: option.color }"
-              />
-              <span class="option-name">{{ option.name }}</span>
-              <span class="mdi mdi-chevron-right arrow-go" />
-            </p>
+            <nuxt-link :to="option.route">
+              <p>
+                <span
+                  :class="option.icon"
+                  :style="{ color: option.color }"
+                  class="icon"
+                />
+                <span class="option-name">{{ option.name }}</span>
+                <span class="mdi mdi-chevron-right arrow-go" />
+              </p>
+            </nuxt-link>
           </li>
         </template>
-      </CustomListView>
+      </LazyCustomListView>
     </template>
   </AppFeel>
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'WriteAndEarn',
-  components: {
-    CustomListView: () => import('@/components/global/Layout/CustomListView'),
-    AppFeel,
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
   },
-  middleware: 'isAuthenticated',
+
   data() {
     return {
+      prevURL: null,
       navigationRoutes,
       pageTitle: 'Write And Earn',
       options: [

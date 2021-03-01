@@ -29,22 +29,21 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$size: 28px;
 main {
   .switch-container {
     position: relative;
-    height: $size;
-    width: 2 * $size;
-    border-radius: 50px;
+    height: $x-large-unit;
+    width: 2 * $x-large-unit;
+    border-radius: 2 * $x-large-unit;
     background-color: #33404e;
     box-shadow: $default-box-shadow;
 
     .switch-button {
       position: absolute;
       top: $nano-unit;
-      height: $size - $micro-unit;
-      width: $size - $micro-unit;
-      border-radius: 50px;
+      height: $x-large-unit - $micro-unit;
+      width: $x-large-unit - $micro-unit;
+      border-radius: 2 * $x-large-unit;
       box-shadow: $default-box-shadow;
       transition: all 250ms ease-in-out;
     }

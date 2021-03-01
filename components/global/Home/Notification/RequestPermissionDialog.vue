@@ -21,14 +21,14 @@
       <h5 class="my-4">Would you like to receive notifications?</h5>
       <div class="actions my-3">
         <button
-          v-ripple=""
+          v-ripple
           class="secondary-btn mb-4 mx-2"
           @click="requestPermission"
         >
           Yes
         </button>
         <button
-          v-ripple=""
+          v-ripple
           class="secondary-outlined-btn mb-4 mx-2"
           @click="showMaybeAndCollapse"
         >

@@ -1,7 +1,7 @@
-@import "assets/variables/fonts-variables";
-@import "assets/variables/spacing-variables";
-@import "assets/variables/theme-color-variables";
-@import "assets/variables/service-pack-colors-variables";
+@import "variables/fonts-variables";
+@import "variables/spacing-variables";
+@import "variables/theme-color-variables";
+@import "variables/service-pack-colors-variables";
 
 //  Accessibility Colors
 $card-background: #191928;
@@ -17,12 +17,6 @@ $small: 576px;
 $medium: 768px;
 $large: 992px;
 $extra-large: 1200px;
-
-//  Typography Specific
-$headline-title-font-size: clamp(36px, 4vw, 52px);
-$segment-title-font-size: clamp(24px, 4vw, 40px);
-$footer-title-font-size: clamp(28px, 3vw, 32px);
-
 
 $lighten-percentage: 8%;
 $darken-percentage: 5%;

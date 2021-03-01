@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="help-and-support-page"
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
+    class="help-and-support-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -17,9 +17,9 @@
           >
             <p>
               <span
-                class="icon"
                 :class="topic.icon"
                 :style="{ color: topic.color }"
+                class="icon"
               />
               <span class="option-name">{{ topic.name }}</span>
               <span class="mdi mdi-chevron-right arrow-go" />
@@ -35,6 +35,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import CustomListView from '~/components/global/Layout/CustomListView'
+
 export default {
   name: 'PopularTopics',
   components: { CustomListView, AppFeel },

@@ -1,10 +1,17 @@
 <template>
   <div class="dashboard-page">
-    <Carousel
-      :visible="tabNumber !== 2"
-      :carousel-items="carouselItems"
-      style="overflow: hidden; transition: all 0.3s ease-in-out"
-    />
+    <section class="image-carousel">
+      <article
+        v-for="item in carouselItems"
+        :key="item.id + 1000"
+        class="carousel-item"
+        :style="{
+          background: `url('${item.image}') no-repeat`,
+          backgroundSize: `contain`,
+          paddingTop: tabNumber === 2 ? '0' : '56.67%',
+        }"
+      />
+    </section>
 
     <section class="tab-bar">
       <p
@@ -12,6 +19,7 @@
         :class="tabNumber === 0 ? 'active-tab' : ''"
         @click="changeTab(0)"
       >
+        <span class="mdi mdi-all-inclusive" />
         All Blogs
       </p>
       <p
@@ -19,6 +27,7 @@
         :class="tabNumber === 1 ? 'active-tab' : ''"
         @click="changeTab(1)"
       >
+        <span class="mdi mdi-fire" />
         Trending
       </p>
       <p
@@ -26,76 +35,76 @@
         :class="tabNumber === 2 ? 'active-tab' : ''"
         @click="changeTab(2)"
       >
+        <span class="mdi mdi-shape" />
         Categories
       </p>
     </section>
     <div ref="tabNavigation"></div>
 
-    <section v-if="tabNumber === 0">
-      <h3 class="heading-title">All Blogs</h3>
-      <InfiniteScrollingBlogLists />
-    </section>
+    <InfiniteScrollingBlogLists
+      v-if="tabNumber === 0"
+      :key="tabNumber"
+      class="consume-full-height"
+    />
 
-    <section v-if="tabNumber === 1">
-      <h3 class="heading-title">Trending Blogs</h3>
-      <InfiniteScrollingBlogLists />
-    </section>
+    <LazyInfiniteScrollingBlogLists
+      v-else-if="tabNumber === 1"
+      :key="tabNumber"
+      class="consume-full-height"
+      trending-mode
+    />
 
-    <div v-if="tabNumber === 2" style="min-height: calc(100vh - 180px)">
-      <CategoriesLineUp />
-    </div>
+    <LazyCategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
   </div>
 </template>
 
 <script>
-import CategoriesLineUp from '@/components/global/Home/Dashboard/CategoriesLineUp'
-import InfiniteScrollingBlogLists from '@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'
-import Carousel from '@/components/global/Home/Dashboard/Carousel'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'DashBoard',
-  components: {
-    CategoriesLineUp,
-    InfiniteScrollingBlogLists,
-    Carousel,
-  },
   middleware: 'isAuthenticated',
-  layout: 'MobileApp',
+
+  layout: 'ResponsiveApp',
 
   data() {
     return {
       pageTitle: 'Dashboard',
-      tabNumber: parseInt(this.$route.query.tabNumber) || 0,
+      tabNumber: parseInt(this.$route.hash.substr(1, 1)) || 0,
       carouselItems: [
         {
+          id: 0,
           name: 'Listen on the Go',
           body:
             'Now you can continue to listen to your favourite articles whenever you want to',
-          image: '/images/image1.png',
+          image: '/images/Frame_0.jpg',
           buttonText: 'Avail Premium',
           route: navigationRoutes.Home.MoreOptions.Payments.index,
         },
         {
+          id: 1,
           name: 'Second Item in the carousel',
           body: 'This is a body Text',
-          image: 'https://picsum.photos/502',
+          image: '/images/Frame_1.jpg',
         },
         {
+          id: 2,
           name: 'Third Item in the carousel',
           body: 'This is a body Text',
-          image: 'https://picsum.photos/503',
+          image: '/images/Frame_2.jpg',
         },
         {
+          id: 3,
           name: 'Fourth Item in the carousel',
           body: 'This is a body Text',
-          image: 'https://picsum.photos/504',
+          image: '/images/Frame_3.jpg',
         },
         {
+          id: 4,
           name: 'Fifth Item in the carousel',
           body: 'This is a body Text',
-          image: 'https://picsum.photos/505',
+          image: '/images/Frame_4.jpg',
         },
       ],
     }
@@ -114,22 +123,12 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    await this.setupUser()
   },
   methods: {
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-
     changeTab(newTabNumber) {
       this.tabNumber = newTabNumber
-      this.$nextTick(() => {
-        this.$refs.tabNavigation.scrollTop = 0
-      })
+      this.$refs.tabNavigation.scrollTop = 0
+      this.$router.push('#' + newTabNumber)
     },
   },
 
@@ -147,14 +146,39 @@ export default {
 $blog-border-radius: 20px;
 
 .dashboard-page {
-  transition: all 0.5s ease-in-out;
+  * {
+    transition: all 300ms ease-in-out;
+  }
+
+  .image-carousel {
+    display: flex;
+    gap: $standard-unit;
+    text-align: center;
+    overflow: scroll !important;
+    scroll-snap-type: x mandatory;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    .carousel-item {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      flex-shrink: 0;
+      width: 100%;
+      transform-origin: center center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
   .tab-bar {
     display: grid;
     text-align: center;
     grid-template-columns: repeat(3, 1fr);
     position: sticky;
-    top: (2 * $x-large-unit) - $double-unit;
+    top: 56px;
     background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;
     z-index: 1;
@@ -167,11 +191,15 @@ $blog-border-radius: 20px;
     }
 
     .active-tab {
-      color: $secondary;
+      color: $white;
       font-weight: 400;
-      background: $card-background;
-      transition: all 100ms ease-in-out;
+      background: $active-gradient;
+      transition: all 0.1s ease-in-out;
     }
+  }
+
+  .consume-full-height {
+    min-height: calc(100vh - 250px);
   }
 }
 </style>

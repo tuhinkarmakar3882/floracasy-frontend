@@ -1,124 +1,126 @@
 <template>
   <div class="community-page">
-    <TopActionBar class="px-4 mt-5 mb-4" />
+    <!--  Search Box  -->
+    <section
+      class="search-box-container px-4 mt-5 mb-4"
+      @click="$router.push(navigationRoutes.Home.Community.Search)"
+    >
+      <div class="search-box">
+        <input
+          id="search-box"
+          ref="search"
+          autocomplete="off"
+          placeholder="Type here to search"
+          readonly
+          type="text"
+        />
+        <label
+          aria-label="Type here to search"
+          class="mdi px-4 mdi-24px mdi-magnify"
+          for="search-box"
+        />
+        <span
+          v-ripple
+          aria-label="Click here to start searching"
+          class="mdi mdi-check mdi-24px px-4"
+        />
+      </div>
+    </section>
 
+    <!--  Story Updates  -->
     <div class="story-updates-container">
       <section class="top-line pl-4">
-        <p class="py-2">
-          <span class="mdi mdi-party-popper primary-light" />
-          Stories
+        <p class="py-2 font-size-14px">
+          <span class="mdi mdi-thought-bubble-outline primary-light" /> Stories
         </p>
-        <p v-ripple class="vibrant py-2 px-4">View All</p>
+        <p
+          v-ripple
+          class="vibrant py-2 px-4 font-size-14px"
+          @click="$router.push(navigationRoutes.Home.Community.Story.index)"
+        >
+          <span class="mdi mdi-play" />
+          View All
+        </p>
       </section>
 
-      <section class="stories">
-        <div v-ripple class="add-a-story py-2 text-center">
-          <img
-            alt="image"
-            class="mb-4"
-            height="72"
-            src="https://picsum.photos/100"
-            width="72"
-          />
+      <section class="stories mt-3">
+        <div
+          v-ripple
+          class="add-a-story py-2 text-center pl-4"
+          @click="$router.push(navigationRoutes.Home.Community.Story.add)"
+        >
+          <transition name="scale-up">
+            <img
+              v-if="isReady"
+              :src="user.photoURL"
+              alt="image"
+              class="mb-4"
+              height="72"
+              width="72"
+            />
+          </transition>
           <span class="mdi mdi-plus" />
-          <small class="vibrant">Add New Story</small>
+          <aside>
+            <p class="vibrant">Add New Story</p>
+          </aside>
         </div>
 
-        <Story
-          v-for="(story, index) in stories"
-          :key="index"
-          :story="story"
-          class="px-4 py-2"
-        />
+        <transition-group name="scale-up" style="display: flex">
+          <LazyStory
+            v-for="story in stories"
+            :key="story.identifier"
+            v-ripple
+            :story="story"
+            class="px-4 py-2"
+          />
+        </transition-group>
       </section>
     </div>
 
-    <hr class="faded-divider mt-6 mb-0" />
+    <hr class="reversed-faded-divider mt-1" />
 
-    <AddPostPreview v-ripple />
+    <!--  Add Post Option  -->
+    <section
+      class="add-post-preview px-4 py-6 white"
+      @click="$router.push(navigationRoutes.Home.Community.Posts.add)"
+    >
+      <span class="mdi mdi-pencil-box-multiple-outline mdi-24px mr-3" />
+      <p>Share your thoughts or photos or voice</p>
+    </section>
 
-    <hr class="faded-divider mt-0 mb-6" />
+    <hr class="faded-divider my-4" />
 
-    <p class="px-4" style="font-size: 14px">
+    <p class="px-4 font-size-14px">
       <span class="mdi mdi-earth primary-light" />
       Across The World
     </p>
-    <FetchCommunityPosts />
+    <LazyFetchCommunityPosts />
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Community',
-  components: {
-    AddPostPreview: () =>
-      import('@/components/global/Community/AddPostPreview'),
-    FetchCommunityPosts: () =>
-      import('@/components/global/Community/FetchCommunityPosts'),
-    TopActionBar: () => import('@/components/global/Community/TopActionBar'),
-    Story: () => import('@/components/global/Community/Story'),
-  },
 
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {
     return {
+      isReady: false,
       navigationRoutes,
       pageTitle: 'Community',
-      stories: [
-        {
-          user: {
-            photoURL: 'https://picsum.photos/101',
-            displayName: 'Swagata Biswas',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/102',
-            displayName: 'Dipti Mondal',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/103',
-            displayName: 'Somlata Dey',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/104',
-            displayName: 'Mosa Kamrachhe',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/105',
-            displayName: 'Tistua Bekar',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/106',
-            displayName: 'Thennarasu WandaVision',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/107',
-            displayName: 'Harry Potter',
-          },
-        },
-        {
-          user: {
-            photoURL: 'https://picsum.photos/108',
-            displayName: 'Tuhin Karmakar',
-          },
-        },
-      ],
+      stories: [],
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   async mounted() {
@@ -128,6 +130,20 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+
+    this.isReady = true
+    await this.fetchStories()
+  },
+
+  methods: {
+    async fetchStories() {
+      try {
+        const { results } = await this.$axios.$get(
+          endpoints.community_service.stories
+        )
+        this.stories.push(...results)
+      } catch (e) {}
+    },
   },
 
   head() {
@@ -142,30 +158,152 @@ export default {
 @import 'assets/all-variables';
 
 .community-page {
+  .add-post-preview {
+    display: flex;
+    background: $segment-background;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .add-a-story {
+    display: grid;
+    min-width: 100px;
+    place-items: center;
+    position: relative;
+    border-radius: 8px;
+
+    $image-size: 74px;
+
+    img {
+      min-height: $image-size;
+      height: $image-size;
+      min-width: $image-size;
+      width: $image-size;
+      object-fit: cover;
+      box-shadow: $default-box-shadow;
+      border-radius: 50%;
+    }
+
+    span {
+      position: absolute;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      place-items: center;
+      border-radius: 50%;
+      background: $vibrant;
+      right: 12px;
+      bottom: 60px;
+      color: #000;
+      height: 24px;
+      width: 24px;
+      font-size: 14px;
+      z-index: 0;
+    }
+
+    aside {
+      align-self: flex-start;
+      width: 100%;
+      height: 4ch;
+      overflow: hidden;
+
+      p {
+        font-weight: 300;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.48;
+      }
+    }
+  }
+
+  .search-box-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .search-box {
+      position: relative;
+      width: 100%;
+      z-index: $bring-to-front - 11;
+
+      $custom-muted: #777;
+      $custom-input-border: #333;
+
+      span,
+      label {
+        height: 48px;
+        position: absolute !important;
+        top: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 2 * $x-large-unit;
+        transition: all 0.2s ease-in-out;
+      }
+
+      span {
+        right: 0;
+        opacity: 0;
+        transform: scale(0);
+        color: $secondary;
+      }
+
+      label {
+        left: 0;
+        color: $custom-muted;
+      }
+
+      input {
+        transition: all 0.2s ease-in-out;
+        border: 1px solid $custom-input-border;
+        border-radius: 2 * $x-large-unit;
+        height: 48px;
+        padding: 0 48px;
+        color: $custom-muted;
+        font-weight: 300;
+        font-family: $Raleway;
+        letter-spacing: $single-unit;
+        font-size: 1rem;
+
+        &::placeholder {
+          color: $custom-muted;
+          font-weight: 300;
+        }
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          border: 1px solid $secondary-highlight;
+
+          & ~ label {
+            color: $secondary;
+          }
+        }
+
+        &:not(:placeholder-shown) {
+          color: $secondary;
+          padding-left: 20px;
+
+          & ~ span {
+            transform: scale(1);
+            opacity: 1;
+          }
+
+          & ~ label {
+            width: 0;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
   .story-updates-container {
     .top-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      h6 {
-        margin: 0;
-        position: relative;
-
-        &::after {
-          content: '';
-          height: 2px;
-          width: 24px;
-          background: $primary-light;
-          bottom: 4px;
-          left: 0;
-          position: absolute;
-        }
-      }
-
-      p {
-        font-size: 14px;
-      }
     }
 
     .stories {
@@ -176,37 +314,11 @@ export default {
       &::-webkit-scrollbar {
         display: none;
       }
-
-      .add-a-story {
-        display: grid;
-        min-width: 100px;
-        place-items: center;
-        position: relative;
-        border-radius: 8px;
-
-        img {
-          size: 74px;
-          border-radius: 50%;
-        }
-
-        span {
-          position: absolute;
-          display: grid;
-          align-items: center;
-          justify-items: center;
-          place-items: center;
-          border-radius: 50%;
-          background: $vibrant;
-          right: 12px;
-          bottom: 64px;
-          color: #000;
-          height: 24px;
-          width: 24px;
-          font-size: 14px;
-          z-index: 1;
-        }
-      }
     }
+  }
+
+  .font-size-14px {
+    font-size: 14px;
   }
 }
 </style>

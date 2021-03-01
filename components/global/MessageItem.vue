@@ -3,25 +3,15 @@
     <section
       class="message-container"
       :style="[
-        messageType === 'RECEIVED'
-          ? {
-              marginRight: 'auto',
-              backgroundColor: '#1e1e50',
-              borderTopLeftRadius: 0,
-            }
-          : {
-              marginLeft: 'auto',
-              backgroundColor: '#00293c',
-              borderBottomRightRadius: 0,
-            },
+        messageType === 'RECEIVED' ? receivedMessageStyles : sentMessageStyles,
       ]"
     >
       <p class="message-body" style="overflow-wrap: break-word">
         {{ chatMessage.message }}
       </p>
-      <p class="timestamp">
-        <span class="mdi mdi-clock-time-nine-outline" />
-        {{ parseStandardTimeUsingMoment(chatMessage.createdAt) }}
+      <p class="timestamp my-2">
+        <span class="mdi mdi-check mr-2" />
+        {{ getStandardTime(chatMessage.createdAt) }}
       </p>
     </section>
   </div>
@@ -44,8 +34,27 @@ export default {
     },
   },
 
+  data() {
+    return {
+      receivedMessageStyles: {
+        marginRight: 'auto',
+        backgroundColor: '#1c2d34',
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: '12px',
+        borderBottomRightRadius: '12px',
+      },
+      sentMessageStyles: {
+        marginLeft: 'auto',
+        backgroundColor: '#003366',
+        borderBottomRightRadius: 0,
+        borderTopLeftRadius: '12px',
+        borderBottomLeftRadius: '12px',
+      },
+    }
+  },
+
   methods: {
-    parseStandardTimeUsingMoment: getStandardTime,
+    getStandardTime,
     getInitials(name) {
       return name.split(' ')[0]
     },
@@ -72,14 +81,17 @@ export default {
     width: clamp(250px, 100%, 75vw);
     max-width: 700px;
     padding: $micro-unit $standard-unit;
-    border-radius: $micro-unit;
+    border-radius: $medium-unit;
     box-shadow: $default-box-shadow;
 
     .timestamp {
       font-family: $Nunito-Sans;
       font-size: 13px;
       color: $muted;
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      line-height: 1;
     }
   }
 

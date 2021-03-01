@@ -10,19 +10,21 @@ const endpoints = {
     whoAmI: '/auth/safe_detail/',
   },
   blog: {
+    sampleBlogs: '/allow_any/blog/fetch/sample_blogs/',
+
     fetch: '/allow_authenticated/blog/fetch/',
     info: '/allow_authenticated/blog/info/',
+    detail: '/allow_any/blog/detail/',
 
     create: '/allow_authenticated/blog/create/',
-    detail: '/allow_any/blog/detail/',
 
     like: '/allow_authenticated/blog/like/',
     share: '/allow_authenticated/blog/share/',
 
-    getBlogsByUid: '/allow_authenticated/blog/get_blogs_by_uid/',
+    getBlogsByUid: '/allow_authenticated/blog/fetch/by_uid/',
+    getSavedBlogs: '/allow_authenticated/blog/saved/fetch/',
 
-    getSavedBlogs: '/allow_authenticated/blog/get_saved_blogs/',
-
+    updateViewCount: '/allow_authenticated/blog/updateViewCount/{identifier}/',
     addOrRemoveToSaveBlogs:
       '/allow_authenticated/blog/add_or_remove_to_save_blogs/',
   },
@@ -30,9 +32,28 @@ const endpoints = {
     fetch: '/allow_any/categories/fetch/',
   },
   comment_system: {
-    fetchByBlogId: '/allow_authenticated/comment_system/fetchByBlogId/',
-    createCommentForBlogId:
-      '/allow_authenticated/comment_system/createCommentForBlogId/',
+    blog: {
+      fetch: '/allow_authenticated/comment_system/blog/fetch/',
+      create: '/allow_authenticated/comment_system/blog/create/',
+      detail: '/allow_authenticated/comment_system/detail/Blog/{identifier}/',
+    },
+    post: {
+      fetch: '/allow_authenticated/comment_system/post/fetch/',
+      create: '/allow_authenticated/comment_system/post/create/',
+      detail: '/allow_authenticated/comment_system/detail/Post/{identifier}/',
+    },
+  },
+  community_service: {
+    stories: '/allow_authenticated/community_service/stories/',
+    posts: {
+      detail:
+        '/allow_authenticated/community_service/posts/detail/{identifier}/',
+      index: '/allow_authenticated/community_service/posts/',
+      like: '/allow_authenticated/community_service/posts/like/',
+      share: '/allow_authenticated/community_service/posts/share/',
+      getByUserUID:
+        '/allow_authenticated/community_service/posts/fetch/by_user_uid/',
+    },
   },
   chat_system: {
     initializeChatThread:
@@ -43,8 +64,7 @@ const endpoints = {
     send: '/allow_authenticated/message_system/send/',
     threadDetail: '/allow_authenticated/message_system/threadDetail/',
 
-    markAsRead:
-      '/allow_authenticated/message_system/updateNotificationSeenStatus/',
+    markAsRead: '/allow_authenticated/message_system/markAsRead/',
     getMailBoxId: '/allow_authenticated/message_system/getMailBoxId/',
   },
   feedback_collection: {
@@ -53,11 +73,16 @@ const endpoints = {
   follow_system: {
     follow_or_unfollow:
       '/allow_authenticated/follow_system/follow_or_unfollow/',
+    search: '/allow_authenticated/follow_system/search/',
   },
   help_and_support: {
     fetch: '/allow_authenticated/help_and_support/fetch/',
     create: '/allow_authenticated/help_and_support/create/',
-    detail: '/allow_authenticated/help_and_support/detail/',
+    detail: '/allow_authenticated/help_and_support/detail/{ticketID}/',
+    conversation: {
+      detail: '/allow_authenticated/help_and_support/conversation/detail/',
+      create: '/allow_authenticated/help_and_support/conversation/create/',
+    },
   },
   leaderboard: {
     test: 'leaderboard/',
@@ -73,9 +98,13 @@ const endpoints = {
   profile_statistics: {
     detail: '/allow_authenticated/profile_statistics/detail/',
     profileData: '/allow_authenticated/profile_statistics/profile_data/',
+    getProfileImage:
+      '/allow_authenticated/profile_statistics/get_profile_image/',
   },
   upload_handler_system: {
     process_image: uploadServerBase + '/upload/process_image/',
+    upload_image: uploadServerBase + '/upload/image/',
+    upload_audio: uploadServerBase + '/upload/audio/',
   },
 
   health_check: {

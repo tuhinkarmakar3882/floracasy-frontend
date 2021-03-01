@@ -6,19 +6,20 @@
         Fetching data from server
       </div>
     </main>
+
     <main v-else>
-      <section class="user-profile">
+      <section class="user-profile px-1">
         <div class="basic-data">
           <img
+            :src="user.photoURL"
             alt="profile-picture"
             class="picture"
-            :src="user.photoURL"
-            width="100"
             height="100"
+            width="100"
           />
           <div class="basic-details">
             <p class="name">{{ user.displayName }}</p>
-            <p class="designation">
+            <p v-ripple class="designation" @click="editContent">
               <em>{{ user.designation || 'Designation Not Set' }}</em>
             </p>
           </div>
@@ -50,12 +51,14 @@
         </div>
 
         <section class="other-info">
-          <p class="about text-center">{{ user.about || 'About Not Set' }}</p>
+          <p v-ripple class="about text-center" @click="editContent">
+            {{ user.about || 'About Not Set' }}
+          </p>
         </section>
 
         <section class="actions">
           <button
-            v-ripple=""
+            v-ripple
             class="primary-btn px-6"
             @click="
               $router.push(navigationRoutes.Home.MoreOptions.Payments.index)
@@ -64,7 +67,7 @@
             Payments
           </button>
           <button
-            v-ripple=""
+            v-ripple
             class="primary-outlined-btn px-6"
             @click="
               $router.push(
@@ -84,7 +87,7 @@
           v-for="activity in recentActivities"
           :key="activity.id"
           v-ripple
-          class="content py-3 px-1"
+          class="content py-6 px-2"
           @click="
             $router.push(
               navigationRoutes.Home.Blogs.Details.replace(
@@ -94,13 +97,23 @@
             )
           "
         >
-          <img :alt="activity.title" :src="activity.coverImage" />
+          <img
+            :alt="activity.title"
+            :src="
+              activity.coverImage || '/images/fc_alternate_default_logo.svg'
+            "
+            height="64"
+            width="64"
+          />
           <div class="data text-left">
-            <h6>{{ activity.title }}</h6>
-            <p>{{ activity.subtitle.substr(0, 30) }}...</p>
-            <small style="font-size: 13px">
-              {{ getRelativeTime(activity.createdAt) }}</small
-            >
+            <h6 class="mt-0 mb-1">{{ activity.title }}</h6>
+
+            <section>
+              <i class="mdi mdi-clock mr-2" />
+              <small style="font-size: 13px">
+                {{ getRelativeTime(activity.createdAt) }}
+              </small>
+            </section>
           </div>
         </article>
 
@@ -150,12 +163,12 @@ import endpoints from '@/api/endpoints'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink } from '~/utils/utility'
+import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
 
 export default {
   name: 'Details',
   components: { Logo, LoadingIcon },
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {
@@ -195,8 +208,8 @@ export default {
         params: { uid: this.user.uid },
       })
       .then(({ statistics }) => statistics)
-      .catch((error) => {
-        console.error(error)
+      .catch(async () => {
+        await showUITip(this.$store, 'Unable to Retrieve Information', 'error')
       })
   },
 
@@ -225,6 +238,12 @@ export default {
         $state.complete()
       }
     },
+
+    async editContent() {
+      await this.$router.push(
+        navigationRoutes.Home.MoreOptions.Preferences.EditProfile
+      )
+    },
   },
 
   head() {
@@ -239,7 +258,8 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  padding: 2rem 0.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 
   button {
     min-width: auto;
@@ -291,7 +311,7 @@ export default {
       grid-template-columns: repeat(3, 1fr);
       justify-content: space-around;
       align-items: center;
-      font-family: $Nunito;
+      font-family: $Nunito-Sans;
 
       .item {
         p {
@@ -327,14 +347,31 @@ export default {
 
     .content {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+
+      $size: 64px;
 
       img {
-        height: 84px;
-        width: 84px;
+        height: $size;
+        min-height: $size;
+        width: $size;
+        min-width: $size;
+        size: $size;
         object-fit: cover;
         border-radius: 50%;
         margin-right: $large-unit;
+      }
+
+      .data {
+        section {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      &:nth-child(even) {
+        background: $nav-bar-bg;
+        box-shadow: $default-box-shadow;
       }
     }
   }

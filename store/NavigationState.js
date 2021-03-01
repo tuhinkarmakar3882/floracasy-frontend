@@ -1,4 +1,27 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { useMessageService } from '~/environmentalVariables'
+
+const messageOption = [
+  {
+    id: 0,
+    text: 'Messages',
+    icon: 'mdi-message-text-outline',
+    activeIcon: 'mdi-message-text',
+    color: '#6360f8',
+    route: navigationRoutes.Home.Messages.index,
+  },
+]
+const profileOption = [
+  {
+    id: 1,
+    text: 'Profile',
+    icon: 'mdi-account-outline',
+    activeIcon: 'mdi-account',
+    color: '#6360f8',
+    route: navigationRoutes.Home.Account.Details,
+    isProfileIcon: true,
+  },
+]
 
 export const state = () => ({
   bottomNavMenuOptions: [
@@ -45,22 +68,8 @@ export const state = () => ({
   ],
 
   topNavOptions: [
-    {
-      id: 0,
-      text: 'Messages',
-      icon: 'mdi-message-text-outline',
-      activeIcon: 'mdi-message-text',
-      color: '#6360f8',
-      route: navigationRoutes.Home.Messages.index,
-    },
-    {
-      id: 1,
-      text: 'Profile',
-      icon: 'mdi-account-outline',
-      activeIcon: 'mdi-account',
-      color: '#6360f8',
-      route: navigationRoutes.Home.Account.Details,
-    },
+    ...(useMessageService ? messageOption : []),
+    ...profileOption,
   ],
 
   newContentAvailable: [false, false, false, false, false],

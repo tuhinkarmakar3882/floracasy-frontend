@@ -1,10 +1,11 @@
 <template>
   <div class="notification-page mb-6">
-    <RequestPermissionDialog />
+    <LazyRequestPermissionDialog />
 
     <section class="notifications">
       <button
         v-ripple="'#65db655f'"
+        :disabled="processingRequest || processingRequestDone"
         class="success my-4 px-4 ml-auto"
         style="
           display: flex;
@@ -12,7 +13,6 @@
           justify-items: center;
           box-shadow: none;
         "
-        :disabled="processingRequest || processingRequestDone"
         @click="markAllAsUnread"
       >
         <span
@@ -28,13 +28,13 @@
       <NotificationItem
         v-for="notification in notifications"
         :key="notification.id"
-        class="notification-item py-4"
         :notification="notification"
+        class="notification-item py-4"
       />
     </section>
 
     <client-only>
-      <infinite-loading @infinite="infiniteHandler">
+      <infinite-loading @infinite="fetchNotifications">
         <template slot="spinner">
           <LoadingIcon class="mt-4 mb-6" />
           <p>Loading Notifications...</p>
@@ -68,7 +68,7 @@ export default {
     NotificationItem,
     LoadingIcon: () => import('@/components/global/LoadingIcon'),
   },
-  layout: 'MobileApp',
+  layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
   data() {
@@ -89,14 +89,11 @@ export default {
     }),
   },
 
-  async created() {
+  async mounted() {
     await this.$store.dispatch('NavigationState/updateNewContent', {
       position: 3,
       value: false,
     })
-  },
-
-  async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: 3,
     })
@@ -106,17 +103,7 @@ export default {
   },
 
   methods: {
-    async setupUser() {
-      const currentUser = await this.$store.getters['UserManagement/getUser']
-      if (!currentUser) {
-        this.loadingProfile = true
-        await this.$store.dispatch('UserManagement/fetchData')
-      }
-    },
-
-    async infiniteHandler($state) {
-      await this.setupUser()
-
+    async fetchNotifications($state) {
       if (!this.notificationEndpoint) {
         $state.complete()
         return

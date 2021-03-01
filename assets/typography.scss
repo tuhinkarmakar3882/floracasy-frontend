@@ -1,4 +1,4 @@
-@import "assets/all-variables";
+@import "all-variables";
 
 body {
   font-family: $Raleway;
@@ -13,7 +13,7 @@ body {
     font-weight: 400;
     font-style: normal;
     font-family: $Prata;
-    line-height: 1.8;
+    line-height: 1.6;
     letter-spacing: $single-unit;
     word-break: break-word;
 
@@ -49,7 +49,7 @@ body {
   p {
     color: #bababa;
     font-family: $Raleway;
-    letter-spacing: 1px;
+    letter-spacing: $single-unit;
     font-weight: 300;
     font-size: 1rem;
     line-height: 1.85;
@@ -84,7 +84,7 @@ body {
 
   ul, ol {
     li {
-      font-family: $Nunito;
+      font-family: $Nunito-Sans;
       font-weight: 300;
       font-size: 1rem;
     }
@@ -94,13 +94,12 @@ body {
 .heading-title {
   text-align: center;
   position: relative;
-  margin: 2rem 0 2.5rem;
   font-weight: 300;
 
   &::after {
     content: '';
     position: absolute;
-    height: 1px;
+    height: $single-unit;
     width: 84px;
     bottom: (-$milli-unit);
     left: calc(50% - 42px);
@@ -186,4 +185,12 @@ body {
 
 .faded-divider {
   background: linear-gradient(to right, $card-background, $body-background);
+}
+
+.reversed-faded-divider {
+  background: linear-gradient(to left, $card-background, $body-background);
+}
+
+.active-background {
+  background: $active-gradient;
 }

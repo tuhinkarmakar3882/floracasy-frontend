@@ -3,7 +3,7 @@
     <section class="content">
       <p class="px-4 mb-2 top-line">
         <nuxt-link
-          v-ripple=""
+          v-ripple
           :to="
             navigationRoutes.Home.Account.Overview.replace(
               '{userUID}',
@@ -16,7 +16,7 @@
         </nuxt-link>
         <strong class="mx-1">IN</strong>
         <nuxt-link
-          v-ripple=""
+          v-ripple
           :to="
             navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
               '{name}',
@@ -28,6 +28,7 @@
           {{ blog.category.name }}
         </nuxt-link>
         <i
+          v-if="!hideMoreOptionsButton"
           v-ripple="'#4f4f4f5F'"
           class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
           @click="showOptions = !showOptions"
@@ -43,31 +44,22 @@
               @click="addOrRemoveToSaveBlogs"
             >
               <span
-                class="icon mdi"
                 :class="
                   blog.isSavedForLater
                     ? 'mdi-bookmark-check'
                     : 'mdi-bookmark-outline'
                 "
+                class="icon mdi"
                 style="color: #6dd0bf"
               />
               {{ !blog.isSavedForLater ? 'Save for later' : 'Saved' }}
             </li>
-            <li
-              v-for="(optionItem, index) in dropdownOptionItems"
-              :key="index"
-              v-ripple="`${optionItem.color}5F`"
-              class="py-2 px-6"
-            >
-              <span
-                class="icon mdi"
-                :class="optionItem.icon"
-                :style="{ color: optionItem.color }"
-              />
-              {{ optionItem.text }}
+            <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportBlog">
+              <span class="icon mdi mdi-alert-octagon danger-light" />
+              Report Blog
             </li>
             <li class="my-0 py-2 px-4" style="display: block">
-              <hr style="background-color: #464646" class="my-0" />
+              <hr class="my-0" style="background-color: #464646" />
             </li>
             <li v-ripple="`#ff82815f`" class="py-2 px-4">
               <p
@@ -82,49 +74,46 @@
         </div>
       </transition>
 
-      <div
-        v-ripple=""
-        class="px-4 pb-6"
-        @click="
-          navigateTo(
-            navigationRoutes.Home.Blogs.Details.replace('{id}', blog.identifier)
-          )
-        "
-      >
-        <h5>
-          {{ blog.title }}
-        </h5>
+      <div v-ripple class="px-4 pb-6" @click="openBlogDetails">
+        <h5>{{ blog.title }}</h5>
 
         <small class="timestamp mt-3">
           <span class="mdi mdi-clock-time-nine-outline" />
           {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
         </small>
 
-        <img class="my-5" :src="blog.coverImage" :alt="blog.title" />
-        <p>
-          {{ blog.subtitle }}...
+        <img
+          v-if="blog.coverImage"
+          :alt="blog.title"
+          :src="blog.coverImage"
+          class="my-5"
+        />
+        <p :class="!blog.coverImage && 'my-5'">
+          <span v-if="blog.subtitle">
+            {{ blog.subtitle.substr(0, 100) }}...
+          </span>
           <span class="secondary"> Read More </span>
         </p>
       </div>
     </section>
 
-    <section class="blog-actions px-4 pb-8">
-      <div v-ripple class="like" @click="like()">
+    <section v-if="!hideBlogActions" class="blog-actions px-4 pb-8">
+      <div v-ripple class="like" @click="like">
         <i
-          class="mdi mr-2 inline-block align-middle"
           :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+          class="mdi mr-2 inline-block align-middle"
         />
         <span class="value inline-block align-middle">
           {{ shorten(blog.totalLikes) }}
         </span>
       </div>
-      <div v-ripple class="comment" @click="comment()">
+      <div v-ripple class="comment" @click="comment">
         <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(blog.totalComments) }}
         </span>
       </div>
-      <div v-ripple class="share" @click="share()">
+      <div v-ripple class="share" @click="share">
         <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
         <span class="value inline-block align-middle">
           {{ shorten(blog.totalShares) }}
@@ -135,7 +124,11 @@
 </template>
 
 <script>
-import { parseTimeUsingStandardLibrary, shorten } from '~/utils/utility'
+import {
+  parseTimeUsingStandardLibrary,
+  shorten,
+  showUITip,
+} from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -146,32 +139,24 @@ export default {
       type: Object,
       required: true,
     },
+    hideBlogActions: {
+      type: Boolean,
+      default: false,
+    },
+    hideMoreOptionsButton: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       navigationRoutes,
-      dropdownOptionItems: [
-        {
-          text: 'Not Interested',
-          icon: 'mdi-cancel',
-          color: '#f5a049',
-        },
-        {
-          text: 'Report Blog',
-          icon: 'mdi-alert-octagon',
-          color: '#ff8282',
-        },
-      ],
       showOptions: false,
     }
   },
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
-
-    navigateTo(path) {
-      this.$router.push(path)
-    },
 
     async like() {
       try {
@@ -183,7 +168,7 @@ export default {
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
-        console.error(e)
+        await showUITip(this.$store, 'Network Error', 'error')
       }
     },
 
@@ -207,40 +192,54 @@ export default {
               this.blog.identifier
             ),
           })
-          try {
-            await this.$axios
-              .$post(endpoints.blog.share, {
-                identifier: this.blog.identifier,
-              })
-              .then(() => {
-                this.blog.totalShares++
-              })
-          } catch (e) {
-            this.blog.totalShares--
-          }
+
+          await this.$axios
+            .$post(endpoints.blog.share, {
+              identifier: this.blog.identifier,
+            })
+            .then(() => {
+              this.blog.totalShares++
+            })
+            .catch(() => {
+              this.blog.totalShares--
+            })
         } catch (error) {
-          console.log('Error sharing:', error)
+          await showUITip(this.$store, 'Network Error', 'error')
         }
       } else {
-        console.log(
-          'Unable to Share. We Only support Chrome for Android as of now. Talk to the Dev'
-        )
+        await showUITip(this.$store, 'Feature Not Supported', 'warning')
       }
     },
 
     async addOrRemoveToSaveBlogs() {
+      this.showOptions = false
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
           identifier: this.blog.identifier,
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await showUITip(this.$store, 'Network Error', 'error')
       }
+    },
+
+    async reportBlog() {
+      await this.$router.push({
+        path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
+        query: {
+          type: 'Blog',
+          identifier: this.blog.identifier,
+        },
+      })
+    },
+
+    async openBlogDetails() {
+      await this.$router.push(
+        navigationRoutes.Home.Blogs.Details.replace(
+          '{id}',
+          this.blog.identifier
+        )
+      )
     },
   },
 }

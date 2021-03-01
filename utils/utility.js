@@ -51,6 +51,31 @@ export const shorten = (value) => {
   return `${value}${suffix}`
 }
 
+export const showUITip = async (
+  store,
+  message = '',
+  type = 'info',
+  dismissible = true,
+  timeout = 2500
+) => {
+  if (store === undefined) throw new Error('No State Found')
+  await store.dispatch('SocketHandler/updateSocketMessage', {
+    message,
+    notificationType: type || 'info',
+    dismissible,
+    timeout,
+  })
+}
+
+export const setupUser = async (store) => {
+  if (store === undefined) throw new Error('No State Found')
+
+  const currentUser = await store.getters['UserManagement/getUser']
+  if (!currentUser) {
+    await store.dispatch('UserManagement/fetchData').catch(() => {})
+  }
+}
+
 export const parseTimeUsingStandardLibrary = (timeString) => {
   return new Date(timeString)
 }

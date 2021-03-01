@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="edit-profile-page"
     :on-back="navigationRoutes.Home.MoreOptions.Preferences.index"
+    class="edit-profile-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -15,10 +15,10 @@
 
       <main v-else class="px-6 my-8">
         <input
+          v-show="false"
           ref="imageUpload"
-          style="width: 0; height: 0; display: none"
-          type="file"
           accept="image/jpeg, image/png"
+          type="file"
           @change="compressImage"
         />
         <section class="display-picture" @click="changeImage">
@@ -38,10 +38,10 @@
             <input
               id="designation"
               v-model="designation"
-              type="text"
-              required
-              name="text"
               autocomplete="off"
+              name="text"
+              required
+              type="text"
             />
             <label class="material-form-field-label" for="designation">
               Designation
@@ -51,20 +51,20 @@
             <input
               id="about"
               v-model="about"
-              type="text"
-              required
-              name="text"
               autocomplete="off"
+              name="text"
+              required
+              type="text"
             />
             <label class="material-form-field-label" for="about"> About</label>
           </div>
         </section>
         <div class="text-center mt-8">
           <RippleButton
+            :loading="updateProfileDataLoading"
+            :on-click="uploadProfileDataToBackendServer"
             class="px-8 mt-2"
             class-list="primary-btn"
-            :on-click="uploadProfileDataToBackendServer"
-            :loading="updateProfileDataLoading"
           >
             Save
           </RippleButton>
@@ -127,17 +127,20 @@ export default {
 
     async compressImage(event) {
       const file = event.target.files[0]
-      const useWebWorker = false
+      const useWebWorker = true
+
       const options = {
         maxSizeMB: 0.15,
         maxWidthOrHeight: 750,
         useWebWorker,
-        onProgress(compressProgress) {
-          this.imageCompressProgress = compressProgress
-        },
+        onProgress: this.updateImageCompressProgress,
       }
       this.output = await imageCompression(file, options)
       this.outputPreview = URL.createObjectURL(file)
+    },
+
+    updateImageCompressProgress(compressProgress) {
+      this.imageCompressProgress = compressProgress
     },
 
     async uploadProfileDataToBackendServer() {

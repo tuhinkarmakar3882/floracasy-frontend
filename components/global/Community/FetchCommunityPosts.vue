@@ -1,99 +1,71 @@
 <template>
   <div class="fetch-community-posts-component">
-    <CommunityPost
+    <article
       v-for="(post, index) in posts"
-      :key="index"
-      :post="post"
-      class="community-post px-4 py-8"
-    />
-    <FollowSuggestions />
+      :key="post.identifier"
+      class="community-post"
+    >
+      <CommunityPost :post="post" class="py-6" />
+      <FollowSuggestions v-if="index === 7" />
+    </article>
+
+    <client-only>
+      <infinite-loading @infinite="infiniteHandler">
+        <template slot="spinner">
+          <LoadingIcon class="mt-4 mb-6" />
+          <p class="text-center">Getting Latest Posts...</p>
+        </template>
+        <template slot="error">
+          <p class="danger-light my-6">Network Error</p>
+        </template>
+        <template slot="no-more">
+          <p class="success my-6">That's all for now :)</p>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
 <script>
 import FollowSuggestions from '~/components/global/Community/FollowSuggestions'
 import CommunityPost from '~/components/global/Community/CommunityPost'
+import endpoints from '~/api/endpoints'
+import LoadingIcon from '~/components/global/LoadingIcon'
+import { processLink } from '~/utils/utility'
 
 export default {
   name: 'FetchCommunityPosts',
-  components: { CommunityPost, FollowSuggestions },
+  components: { LoadingIcon, CommunityPost, FollowSuggestions },
+
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          user: {
-            displayName: 'Tuhin Karmakar',
-            photoURL:
-              'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=550&q=80',
-          },
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
-          isLiked: true,
-          totalLikes: 35,
-          totalShares: 428,
-          totalComments: 48,
-          createdAt: 1609867645646,
-        },
-        {
-          id: 2,
-          user: {
-            displayName: 'Swagata Biswas',
-            photoURL:
-              'https://images.unsplash.com/photo-1557296387-5358ad7997bb?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
-          },
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
-          isLiked: false,
-          totalLikes: 345,
-          totalShares: 42821,
-          totalComments: 681,
-          createdAt: 1609877848646,
-        },
-        {
-          id: 3,
-          user: {
-            displayName: 'Tracy Parker',
-            photoURL: 'https://picsum.photos/561',
-          },
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
-          isLiked: true,
-          totalLikes: 245,
-          totalShares: 428,
-          totalComments: 48,
-          createdAt: 1609867645646,
-        },
-        {
-          id: 4,
-          user: {
-            displayName: 'Tony Stark',
-            photoURL: 'https://picsum.photos/562',
-          },
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
-          isLiked: true,
-          totalLikes: 12345,
-          totalShares: 428,
-          totalComments: 48,
-          createdAt: 1609867645646,
-        },
-        {
-          id: 5,
-          user: {
-            displayName: 'Steve Rodgers',
-            photoURL: 'https://picsum.photos/563',
-          },
-          body:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores atque consectetur eos facere hic in ipsa, ipsum laborum!',
-          isLiked: true,
-          totalLikes: 278,
-          totalShares: 428,
-          totalComments: 48,
-          createdAt: 1609867645646,
-        },
-      ],
+      posts: [],
+      fetchPostEndpoint: endpoints.community_service.posts.index,
     }
+  },
+
+  mounted() {},
+
+  methods: {
+    async infiniteHandler($state) {
+      if (!this.fetchPostEndpoint) {
+        $state.complete()
+        return
+      }
+
+      try {
+        const { results, next } = await this.$axios.$get(this.fetchPostEndpoint)
+        if (results.length) {
+          this.fetchPostEndpoint = processLink(next)
+          this.posts.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+      } catch (e) {
+        $state.complete()
+      }
+    },
   },
 }
 </script>

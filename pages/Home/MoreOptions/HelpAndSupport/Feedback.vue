@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="help-and-support-page"
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
+    class="help-and-support-page"
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
@@ -18,33 +18,33 @@
             id="feedback-form"
             ref="feedbackTitle"
             v-model="feedbackText"
-            type="text"
-            required
-            name="text"
             autocomplete="off"
+            name="text"
+            required
+            type="text"
           />
           <label class="material-form-field-label" for="feedback-form">
             Type your feedback here
           </label>
           <small
             v-if="feedbackText.trim().length < 30"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 hint-text"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             (Hint: At least {{ 30 - feedbackText.trim().length }} more
             characters are required)
           </small>
           <small
             v-if="feedbackText.trim().length >= 30 && !feedbackTextError"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 secondary-matte"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
           </small>
           <small
             v-if="feedbackTextError"
-            style="display: block; font-weight: 400; font-size: 13px"
             class="mt-3 danger-light"
+            style="display: block; font-weight: 400; font-size: 13px"
           >
             <i class="mdi mdi-alert-circle-outline" />
             Exceed 300 character limit
@@ -53,11 +53,11 @@
 
         <div class="text-center mt-7 pt-4">
           <RippleButton
+            :disabled="!(isValidFeedbackText && !feedbackTextError)"
+            :loading="sendFeedbackLoading"
+            :on-click="sendFeedback"
             class="my-6"
             class-list="primary-btn"
-            :on-click="sendFeedback"
-            :loading="sendFeedbackLoading"
-            :disabled="!(isValidFeedbackText && !feedbackTextError)"
             style="width: 212px"
           >
             Send Feedback

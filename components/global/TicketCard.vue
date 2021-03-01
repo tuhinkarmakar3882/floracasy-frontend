@@ -3,12 +3,13 @@
     v-ripple="`${ticket.color}5F`"
     class="px-3 py-3"
     :style="{ borderLeftColor: ticket.color }"
+    @click="openTicketDetails"
   >
     <h6 class="name my-0">{{ ticket.title }}</h6>
     <p class="mt-2 mb-3" :style="{ color: ticket.color, fontWeight: 500 }">
-      {{ ticket.status }}
+      {{ ticket.issueTopic }} | {{ ticket.status }}
     </p>
-    <p class="body">{{ ticket.issue.substr(0, 50) }}...</p>
+    <p class="body">{{ ticket.issueDetails.substr(0, 50) }}...</p>
     <section class="text-right">
       <small>{{ getRelativeTime(ticket.updatedAt) }}</small>
     </section>
@@ -17,6 +18,7 @@
 
 <script>
 import { getRelativeTime } from '@/utils/utility'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'TicketCard',
@@ -28,6 +30,14 @@ export default {
   },
   methods: {
     getRelativeTime,
+    async openTicketDetails() {
+      await this.$router.push(
+        navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.Details.replace(
+          '{identifier}',
+          this.ticket.identifier
+        )
+      )
+    },
   },
 }
 </script>

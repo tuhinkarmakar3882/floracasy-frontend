@@ -1,3 +1,82 @@
+const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
+const filesToCache = [
+  'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+  'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+  'https://cdn.materialdesignicons.com/5.4.55/fonts/materialdesignicons-webfont.woff2?v=5.4.55',
+  '/offline',
+]
+
+// Cache on install
+self.addEventListener('install', (event) => {
+  this.skipWaiting()
+  event.waitUntil(
+    caches.open(staticCacheName).then((cache) => {
+      return cache.addAll(filesToCache)
+    })
+  )
+})
+
+// Clear cache on activate
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName.startsWith('nuxt-pwa-v'))
+          .filter((cacheName) => cacheName !== staticCacheName)
+          .map((cacheName) => caches.delete(cacheName))
+      )
+    })
+  )
+})
+
+// Serve from Cache
+self.addEventListener('fetch', (event) => {
+  console.log('Fetch event for ', event.request.url)
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then((response) => {
+        if (response) {
+          return response
+        }
+        return fetch(event.request)
+      })
+      .catch(() => {
+        return caches.match('/offline')
+      })
+  )
+})
+
+// Serve from Cache
+// self.addEventListener('fetch', (event) => {
+//   console.log('Fetch event for ', event.request.url)
+//   event.respondWith(
+//     caches
+//       .match(event.request)
+//       .then((response) => {
+//         if (response) {
+//           console.log('Found ', event.request.url, ' in cache')
+//           return response
+//         }
+//         console.log('Network request for ', event.request.url)
+//         return fetch(event.request).then((response) => {
+//           // TODO 5 - Respond with custom 404 page
+//           return caches.open(staticCacheName).then((cache) => {
+//             event.request.method === 'GET' &&
+//               event.request.destination !== 'image' &&
+//               cache.put(event.request.url, response.clone())
+//             return response
+//           })
+//         })
+//       })
+//       .catch(() => {
+//         // TODO 6 - Respond with custom offline page
+//       })
+//   )
+// })
+
+//  Workbox
 // const revision = Date.now()
 // const options = {
 //   workboxURL:

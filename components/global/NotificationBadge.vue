@@ -107,6 +107,7 @@ export default {
   transition: all 300ms ease-in-out;
   height: 2 * $x-large-unit;
   width: 100%;
+  right: 0;
   z-index: 9999999;
   top: 0;
   display: flex;
@@ -114,8 +115,9 @@ export default {
   align-items: center;
 
   p {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 13px !important;
+    font-family: $Nunito-Sans;
   }
 
   span {

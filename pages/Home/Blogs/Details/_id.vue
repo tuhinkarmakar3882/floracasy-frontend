@@ -1,9 +1,9 @@
 <template>
   <AppFeel
-    custom-header
+    :on-back="navigationRoutes.Home.DashBoard"
     auto-hide
     class="blog-details-page"
-    :on-back="navigationRoutes.Home.DashBoard"
+    custom-header
   >
     <template slot="app-bar-custom-header">
       <h5
@@ -12,17 +12,18 @@
         style="height: 56px; display: flex; align-items: center"
         @click="handleBackButtonPress"
       />
-      <h6 v-ripple="">
+      <h6 v-ripple>
         <nuxt-link
+          :to="navigationRoutes.index"
           class="brand-name no-underline"
-          to="/"
           style="color: white !important"
         >
           Floracasy
         </nuxt-link>
       </h6>
       <nuxt-link
-        v-ripple=""
+        v-if="useMessageService"
+        v-ripple
         :to="navigationRoutes.Home.Messages.index"
         class="ml-auto px-6"
         style="height: 56px; display: flex; align-items: center"
@@ -34,8 +35,9 @@
     <template slot="main">
       <div v-if="blog" class="my-6 blog">
         <section class="px-4">
-          <p class="mb-2" style="display: flex !important">
+          <p class="mb-1" style="display: flex !important">
             <nuxt-link
+              v-ripple
               :to="
                 navigationRoutes.Home.Account.Overview.replace(
                   '{userUID}',
@@ -48,6 +50,7 @@
             </nuxt-link>
             <strong class="mx-1">IN</strong>
             <nuxt-link
+              v-ripple
               :to="
                 navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
                   '{name}',
@@ -67,50 +70,61 @@
             {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
           </small>
 
+          <div class="view-count mt-4">
+            <section>
+              <i class="mdi mdi-eye mdi-18px mr-2" />
+              <small>{{ blog.totalViews }}</small>
+            </section>
+            <!--            <section class="ml-4 pl-4">-->
+            <!--              <i class="mdi mdi-clock mdi-18px mr-2" />-->
+            <!--              <small>5 min</small>-->
+            <!--            </section>-->
+          </div>
+
+          <hr v-if="!blog.coverImage" class="faded-divider" />
+
           <img
             v-if="blog.coverImage"
-            class="mt-5 blog-intro-image"
-            :src="blog.coverImage"
             :alt="blog.title"
+            :src="blog.coverImage"
+            class="mt-5 blog-intro-image"
             style="width: 100%; object-fit: cover; max-height: 250px"
           />
-          <p class="my-4">
+          <p v-if="blog.subtitle" class="my-4">
             {{ blog.subtitle }}
           </p>
         </section>
+
         <section class="blog-body px-4 pb-8">
           <article v-html="noXSS(blog.content, sanitizationConfig)" />
         </section>
       </div>
-      <div
-        v-else
-        class="text-center"
-        style="display: grid; place-items: center; height: calc(100vh - 120px)"
-      >
+
+      <aside v-else class="loading-container">
         <LoadingIcon />
-      </div>
+      </aside>
     </template>
 
     <template slot="footer">
       <section v-if="blog" class="actions">
         <div v-ripple class="like" @click="like">
           <i
-            class="mdi"
             :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+            class="mdi"
           />
         </div>
-        <div v-ripple="" class="comment" @click="comment">
+        <div v-ripple class="comment" @click="openCommentPage">
           <i class="mdi mdi-message-text" />
         </div>
-        <div v-ripple="" class="save" @click="addOrRemoveToSaveBlogs">
+        <div v-ripple class="save" @click="updateSavedBlogPreference">
           <i
-            class="mdi"
             :class="
               blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
             "
+            class="mdi"
           />
         </div>
-        <div v-ripple="" class="share" @click="share">
+        <div v-ripple class="share" @click="share">
           <i class="mdi mdi-share-variant" />
         </div>
       </section>
@@ -123,31 +137,50 @@ import sanitizeHtml from 'sanitize-html'
 import AppFeel from '@/components/global/Layout/AppFeel'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import { parseTimeUsingStandardLibrary, shorten } from '@/utils/utility'
+
+import {
+  parseTimeUsingStandardLibrary,
+  shorten,
+  showUITip,
+} from '@/utils/utility'
 import 'highlight.js/styles/monokai.css'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
+import { mapGetters } from 'vuex'
+
+const { useMessageService } = require('~/environmentalVariables')
 
 export default {
   name: 'BlogDetails',
   components: { AppFeel, LoadingIcon },
 
-  async asyncData({ $axios, params, from: prevURL }) {
-    const response = await $axios.$get(endpoints.blog.detail, {
-      params: { identifier: params.id },
-    })
-    return { blog: response, prevURL }
+  async asyncData({ $axios, redirect, params, from: prevURL }) {
+    try {
+      const response = await $axios.$get(endpoints.blog.detail, {
+        params: { identifier: params.id },
+      })
+      return { blog: response, prevURL }
+    } catch (e) {
+      redirect('/error')
+    }
   },
 
   data() {
     return {
       pageTitle: this.$route.params.name,
+      useMessageService,
       prevURL: null,
       navigationRoutes,
       noXSS: sanitizeHtml,
       blog: null,
       sanitizationConfig,
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   async mounted() {
@@ -157,49 +190,75 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+    await this.incrementViewCount()
   },
 
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
 
-    navigateTo(path) {
-      this.$router.push(path)
+    async incrementViewCount() {
+      if (this.user) {
+        await this.$axios.$post(
+          endpoints.blog.updateViewCount.replace(
+            '{identifier}',
+            this.$route.params.id
+          ),
+          {},
+          {
+            withCredentials: true,
+          }
+        )
+      }
     },
-    async like() {
+
+    async navigateTo(path) {
+      await this.$router.push(path)
+    },
+
+    async sendLikeRequest() {
       try {
         const action = await this.$axios
           .$post(endpoints.blog.like, {
             identifier: this.blog.identifier,
           })
           .then(({ action }) => action)
+
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
+
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await showUITip(this.$store, 'Network Error', 'error', true)
       }
     },
-
-    async addOrRemoveToSaveBlogs() {
+    async sendUpdateSavedBlogRequest() {
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
           identifier: this.blog.identifier,
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Network Error',
-          notificationType: 'error',
-          dismissible: true,
-        })
+        await showUITip(this.$store, 'Network Error', 'error', true)
       }
     },
 
-    async comment() {
+    async like() {
+      if (this.user) {
+        await this.sendLikeRequest()
+      } else {
+        await this.navigateTo(navigationRoutes.Authentication.SignInToContinue)
+      }
+    },
+
+    async updateSavedBlogPreference() {
+      if (this.user) {
+        await this.sendUpdateSavedBlogRequest()
+      } else {
+        await this.navigateTo(navigationRoutes.Authentication.SignInToContinue)
+      }
+    },
+
+    async openCommentPage() {
       await this.$router.push(
         navigationRoutes.Home.Blogs.Comments.BlogId.replace(
           '{BlogId}',
@@ -231,18 +290,15 @@ export default {
             this.blog.totalShares--
           }
         } catch (error) {
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Unable to share',
-            notificationType: 'error',
-            dismissible: true,
-          })
+          await showUITip(this.$store, 'Unable to share', 'error')
         }
       } else {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Not Yet Supported on this Browser',
-          notificationType: 'warning',
-          dismissible: true,
-        })
+        await showUITip(
+          this.$store,
+          'Not Yet Supported on this Browser',
+          'warning',
+          true
+        )
       }
     },
 
@@ -250,15 +306,11 @@ export default {
       if (this.prevURL) {
         await this.$router.back()
       } else {
-        await this.$router.replace({
-          path: navigationRoutes.Home.DashBoard,
-          query: {
-            tabNumber: 2,
-          },
-        })
+        await this.$router.replace(navigationRoutes.index)
       }
     },
   },
+
   head() {
     return {
       title: this.blog.title,
@@ -286,6 +338,24 @@ export default {
 
     .blog-intro-image {
       box-shadow: $down-only-box-shadow;
+      border-radius: 4px;
+    }
+
+    .view-count {
+      display: flex;
+
+      * {
+        display: block;
+      }
+
+      section {
+        display: flex;
+        align-items: center;
+
+        &:nth-child(2) {
+          border-left: 1px solid $primary;
+        }
+      }
     }
   }
 
@@ -312,6 +382,13 @@ export default {
       height: 2 * $large-unit;
       width: 100%;
     }
+  }
+
+  .loading-container {
+    text-align: center;
+    display: grid;
+    place-items: center;
+    height: calc(100vh - 120px);
   }
 }
 </style>

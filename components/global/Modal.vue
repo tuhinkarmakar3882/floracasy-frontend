@@ -1,8 +1,8 @@
 <template>
-  <div class="modal-component" :style="{ color: color }">
+  <div :style="{ color: color }" class="modal-component">
     <header>
       <span
-        v-ripple=""
+        v-ripple
         class="mdi mdi-arrow-left px-4 py-2 my-0 danger-light"
         @click="toggle"
       />
@@ -22,7 +22,7 @@
       <slot name="actions" />
 
       <button
-        v-ripple=""
+        v-ripple
         class="danger-outlined-btn my-5 mx-2 px-8"
         @click="toggle"
       >
@@ -66,9 +66,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/all-variables';
+
 .modal-component {
   position: fixed;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba($primary-matte, 0.99);
   width: 100%;
   height: calc(100% - 56px);
   top: 0;
@@ -109,13 +111,6 @@ export default {
   footer {
     padding-top: 20px;
     text-align: center;
-  }
-
-  @supports (
-    (-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))
-  ) {
-    backdrop-filter: blur(8px);
-    background: transparent;
   }
 }
 </style>

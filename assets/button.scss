@@ -1,4 +1,4 @@
-@import "assets/all-variables";
+@import "all-variables";
 
 button {
   position: relative;
@@ -8,16 +8,28 @@ button {
   padding: 0 1.5rem;
   height: 2.5rem;
   font-size: 1rem;
-  font-weight: 500;
-  border-radius: 50px;
+  font-weight: 400;
+  border-radius: 2 * $x-large-unit;
   outline: none 0;
   transition: all .2s ease-in-out;
 
   &:hover, &:focus, &:focus-visible, &:active, &:focus-within {
-    border-radius: 50px;
+    border-radius: 2 * $x-large-unit;
     outline: none 0;
     box-shadow: 0 0 $double-unit $single-unit darken($white, $darken-percentage);
   }
+}
+
+.floating-action-button {
+  position: fixed !important;
+  height: 64px;
+  width: 64px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 10px;
+  right: 10px;
 }
 
 .primary-outlined-btn {
@@ -201,7 +213,7 @@ button {
   background-color: darken($info, $darken-percentage);
 
   &:focus, &:hover, &:active {
-    background-color: lighten($info, $lighten-percentage);
+    background-color: $info;
   }
 }
 

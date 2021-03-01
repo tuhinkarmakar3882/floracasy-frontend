@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="faq-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    class="faq-page"
     custom-header
   >
     <template slot="app-bar-custom-header">
@@ -13,8 +13,8 @@
       />
       <p>{{ pageTitle }}</p>
       <span
-        v-ripple=""
-        class="mdi mdi-menu ml-auto px-5"
+        v-ripple
+        class="mdi mdi-segment ml-auto px-5"
         style="
           height: 56px;
           display: flex;
@@ -30,16 +30,15 @@
         v-for="question in questions"
         :id="question.statement"
         :key="question.id"
-        class="px-4"
         :content="question"
         :show-default-feedback="true"
         border-shade="#364075"
+        class="px-4"
       />
     </template>
 
     <template slot="footer">
       <CustomListView
-        class="nav-drawer"
         :style="
           drawerIsOpened
             ? {
@@ -53,12 +52,13 @@
                 overflow: 'hidden',
               }
         "
+        class="nav-drawer"
       >
         <template slot="list-items">
           <li
             v-for="(question, index) in questions"
             :key="index"
-            v-ripple=""
+            v-ripple
             class="py-4 px-4"
             @click="drawerIsOpened = false"
           >

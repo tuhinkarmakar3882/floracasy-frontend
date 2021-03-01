@@ -1,14 +1,16 @@
 <template>
   <AppFeel
-    class="about-page"
     :on-back="navigationRoutes.Home.MoreOptions.index"
+    :prev-url-path="prevURL"
+    class="about-page"
+    dynamic-back
   >
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
       <main class="my-4">
         <section class="banner">
-          <Logo class="mr-4" />
+          <LazyLogo class="mr-4" />
           <h4>Floracasy</h4>
         </section>
 
@@ -57,23 +59,24 @@
         </div>
       </main>
 
-      <Footer class="px-4 my-0 py-6" />
+      <LazyFooter class="px-4 my-0 py-6" />
     </template>
   </AppFeel>
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
-import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import Footer from '~/components/global/Layout/PublicRoutes/Footer'
 
 export default {
   name: 'About',
-  components: { Footer, Logo, AppFeel },
-  // middleware: 'isAuthenticated',
+
+  asyncData({ from: prevURL }) {
+    return { prevURL }
+  },
+
   data() {
     return {
+      prevURL: null,
       activeTab: 1,
       pageTitle: 'About us',
       navigationRoutes,
@@ -180,9 +183,9 @@ $blog-border-radius: 20px;
       }
 
       .active-tab {
-        color: $secondary;
+        color: $white;
         font-weight: 400;
-        background: $card-background;
+        background: $active-gradient;
         transition: all 100ms ease-in-out;
       }
     }

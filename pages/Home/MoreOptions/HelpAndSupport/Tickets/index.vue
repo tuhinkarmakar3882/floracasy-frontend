@@ -1,7 +1,7 @@
 <template>
   <AppFeel
-    class="tickets-index-page"
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
+    class="tickets-index-page"
   >
     <template slot="app-bar-title">{{ pageTitle }}</template>
 
@@ -9,8 +9,8 @@
       <TicketCard
         v-for="(ticket, index) in tickets"
         :key="index"
-        class="mx-4 my-6"
         :ticket="ticket"
+        class="mx-4 my-6"
       />
     </template>
 
@@ -66,8 +66,7 @@ export default {
       }
       try {
         const { results, next } = await this.$axios.$get(
-          this.ticketFetchEndpoint,
-          { params: { category_name: this.category } }
+          this.ticketFetchEndpoint
         )
         if (results.length) {
           this.ticketFetchEndpoint = processLink(next)

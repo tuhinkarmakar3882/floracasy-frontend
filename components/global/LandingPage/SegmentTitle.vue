@@ -1,12 +1,21 @@
 <template>
   <div class="top-header">
-    <p class="topic">
-      {{ topic }}
+    <p
+      v-if="topic"
+      :style="{ color: highlightColor }"
+      :class="[
+        centerTopic && 'text-center',
+        activeBackground && 'active-background',
+      ]"
+    >
+      <i v-if="leadingIcon" :class="leadingIcon" />
+      <strong style="font-family: 'Nunito Sans', sans-serif">{{
+        topic
+      }}</strong>
     </p>
-    <h2 class="mt-0 mb-6 pb-4">
-      {{ title }}
-    </h2>
-    <p>{{ leadingParagraph }}</p>
+    <h3 v-if="title" class="my-4">{{ title }}</h3>
+    <hr v-if="useDivider" class="faded-divider" />
+    <p v-if="leadingParagraph">{{ leadingParagraph }}</p>
   </div>
 </template>
 
@@ -14,41 +23,46 @@
 export default {
   name: 'SegmentTitle',
   props: {
+    leadingIcon: {
+      type: String,
+      required: false,
+      default: '',
+    },
     topic: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
+    },
+    centerTopic: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    useDivider: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    activeBackground: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     title: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
     },
     leadingParagraph: {
       type: String,
-      required: true,
+      required: false,
+      default: '',
+    },
+    highlightColor: {
+      type: String,
+      required: false,
+      default: '#8FF2E1',
     },
   },
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'assets/all-variables';
-
-.top-header {
-  .topic {
-    color: $secondary-highlight;
-    font-weight: 700;
-  }
-
-  h2 {
-    font-family: $Prata;
-    font-weight: 400;
-    font-size: $segment-title-font-size;
-    color: $white;
-  }
-
-  p {
-    font-weight: 300;
-    line-height: 1.84;
-  }
-}
-</style>

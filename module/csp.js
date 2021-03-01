@@ -1,20 +1,11 @@
 import { randomBytes } from 'crypto'
+import { ADSENSE_CSP } from '../config/csp-policies'
 
 export default function cspModule() {
   this.options.render.csp = {
-    // reportOnly: true,
+    reportOnly: true,
     hashAlgorithm: 'sha256',
-    policies: {
-      'script-src': [
-        'self',
-        'apis.google.com',
-        'https://www.google-analytics.com/analytics.js',
-        'https://www.googletagmanager.com/gtag/js',
-      ],
-      'object-src': ["'none'"],
-      'base-uri': ["'none'"],
-      'require-trusted-types-for': ["'style'"],
-    },
+    policies: ADSENSE_CSP,
   }
 
   this.nuxt.hook('vue-renderer:ssr:context', (context) => {
@@ -22,7 +13,7 @@ export default function cspModule() {
     context.nuxt.state.nonce = nonce
   })
 
-  this.nuxt.hook('render:route', (url, { cspScriptSrcHashes }, context) => {
+  this.nuxt.hook('render:route', (_, { cspScriptSrcHashes }, context) => {
     const nonce = context.nuxt.state.nonce
     cspScriptSrcHashes.push(`'nonce-${nonce}'`)
   })

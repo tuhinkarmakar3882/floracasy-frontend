@@ -1,30 +1,35 @@
 <template>
   <div class="index-page">
-    <HeroContent />
+    <main>
+      <LazyHeroContent class="segment" />
 
-    <CategoriesShowcase />
+      <LazyPromotionalBlogs />
 
-    <HearTheExperiences />
+      <LazyCategoriesPreview class="segment" />
+
+      <LazyCommunityPreview class="segment text-center" />
+
+      <LazyEarnWithUs class="segment" />
+
+      <LazyHearTheExperiences class="segment" />
+
+      <LazyProZone v-if="usePremiumServices" class="segment" />
+    </main>
   </div>
 </template>
 
 <script>
-import HeroContent from '@/components/global/LandingPage/HeroContent'
-import CategoriesShowcase from '@/components/global/LandingPage/CategoriesShowcase'
-import HearTheExperiences from '@/components/global/LandingPage/HearTheExperiences'
+import { usePremiumServices } from '~/environmentalVariables'
 
 export default {
   name: 'LandingPage',
   layout: 'PublicRoutes',
   middleware: 'isNotAuthenticated',
-  components: {
-    HeroContent,
-    CategoriesShowcase,
-    HearTheExperiences,
-  },
+
   data() {
     return {
       pageTitle: 'Welcome to Floracasy',
+      usePremiumServices,
     }
   },
 
@@ -39,3 +44,24 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.index-page {
+  * {
+    transition: all 300ms ease-in-out;
+  }
+
+  main {
+    .segment {
+      position: relative;
+      padding: $xx-large-unit $standard-unit;
+
+      &:nth-child(odd):not(:first-child) {
+        background-color: $segment-background;
+      }
+    }
+  }
+}
+</style>

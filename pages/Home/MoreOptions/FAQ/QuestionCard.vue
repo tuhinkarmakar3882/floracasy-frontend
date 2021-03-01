@@ -12,10 +12,10 @@
         <section v-if="feedback" class="feedback-response">
           <p :class="requestFeedback ? 'danger-light' : 'secondary'">
             <span
-              class="mdi"
               :class="
                 requestFeedback ? 'mdi-emoticon-cry' : 'mdi-emoticon-cool'
               "
+              class="mdi"
             />
             {{ feedback }}
           </p>
@@ -32,7 +32,7 @@
 
           <div class="feedback-options">
             <button
-              v-ripple=""
+              v-ripple
               class="secondary-outlined-btn"
               @click="recordPositiveResponse"
             >
@@ -41,7 +41,7 @@
             </button>
 
             <button
-              v-ripple=""
+              v-ripple
               class="danger-outlined-btn"
               @click="recordNegativeResponse"
             >
