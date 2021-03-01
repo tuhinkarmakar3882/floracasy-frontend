@@ -254,6 +254,8 @@ export default {
       display: 'standalone',
       start_url: '/',
       scope: '/',
+      orientation: 'portrait',
+      dir: 'ltr',
     },
     workbox: false,
   },
