@@ -108,7 +108,6 @@ export default {
       plugins: {
         'postcss-import': {},
         'postcss-url': {},
-        'postcss-preset-env': this.preset,
         cssnano: {
           preset: [
             'default',
