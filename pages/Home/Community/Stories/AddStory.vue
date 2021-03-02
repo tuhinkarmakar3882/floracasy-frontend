@@ -727,7 +727,6 @@ export default {
 
 <style lang="scss">
 @import 'assets/all-variables';
-@import 'assets/dropdown';
 
 .add-new-story-page {
   .tab-bar {

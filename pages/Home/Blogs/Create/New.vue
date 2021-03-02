@@ -677,7 +677,6 @@ export default {
 
 <style lang="scss">
 @import 'assets/all-variables';
-@import 'assets/dropdown';
 
 $inactive-background: #e8f8f5;
 $inactive-color: #7a7a7a;
