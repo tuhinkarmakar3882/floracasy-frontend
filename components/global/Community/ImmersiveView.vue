@@ -373,6 +373,8 @@ export default {
       }
     }
 
+    $border-radius: 36px;
+
     .reactions {
       position: fixed;
       right: 16px;
@@ -382,8 +384,8 @@ export default {
       font-size: 23px;
       place-items: center;
       background: #2a2a2a;
-      border-top-left-radius: 36px;
-      border-top-right-radius: 36px;
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
       box-shadow: $up-only-box-shadow;
 
       * {
@@ -391,6 +393,11 @@ export default {
         place-items: center;
         width: 56px;
         height: 64px;
+      }
+
+      i:first-child {
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
       }
     }
   }
