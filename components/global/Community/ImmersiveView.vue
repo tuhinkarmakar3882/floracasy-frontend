@@ -115,19 +115,36 @@
     </main>
 
     <footer>
-      <aside v-ripple class="floating-action-button">
-        <i class="mdi mdi-emoticon-outline" />
-      </aside>
-      <!--      <i-->
-      <!--        v-for="(reaction, index) in reactions"-->
-      <!--        :key="index"-->
-      <!--        v-ripple="`${reaction.color}5F`"-->
-      <!--        :class="reaction.icon"-->
-      <!--        :style="{-->
-      <!--          color: reaction.color,-->
-      <!--        }"-->
-      <!--        class="px-4"-->
-      <!--      />-->
+      <section
+        v-ripple
+        :class="showReactionOptions && 'active'"
+        class="floating-action-button"
+        @click="showReactionOptions = !showReactionOptions"
+      >
+        <i
+          :class="
+            showReactionOptions
+              ? 'mdi-close danger-light'
+              : 'mdi-emoticon-outline'
+          "
+          class="mdi"
+        />
+      </section>
+
+      <transition name="slide-left">
+        <aside v-if="showReactionOptions" class="reactions">
+          <i
+            v-for="(reaction, index) in reactions"
+            :key="index"
+            v-ripple="`${reaction.color}5F`"
+            :class="reaction.icon"
+            :style="{
+              color: reaction.color,
+            }"
+            class="px-4"
+          />
+        </aside>
+      </transition>
     </footer>
   </div>
 </template>
@@ -153,6 +170,7 @@ export default {
     return {
       navigationRoutes,
 
+      showReactionOptions: false,
       showOptions: false,
       reactions: [
         {
@@ -337,6 +355,46 @@ export default {
     }
   }
 
+  footer {
+    .floating-action-button {
+      height: 56px;
+      width: 56px;
+      bottom: 32px;
+      right: 16px;
+      background: #2a2a2a;
+      color: #a3a3ff;
+      font-size: 29px;
+      box-shadow: $default-box-shadow;
+      transition: all 300ms ease-in-out;
+
+      &.active {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
+
+    .reactions {
+      position: fixed;
+      right: 16px;
+      bottom: 87px;
+      display: grid;
+      grid-template-rows: repeat(5, 64px);
+      font-size: 23px;
+      place-items: center;
+      background: #2a2a2a;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      box-shadow: $up-only-box-shadow;
+
+      * {
+        display: grid;
+        place-items: center;
+        width: 56px;
+        height: 64px;
+      }
+    }
+  }
+
   main.story-display-container {
     height: calc(100vh);
     border-radius: 0;
@@ -383,18 +441,6 @@ export default {
         text-align: center;
         line-height: 1.75;
       }
-    }
-  }
-
-  footer {
-    .floating-action-button {
-      height: 56px;
-      width: 56px;
-      bottom: 32px;
-      right: 16px;
-      background: #2a2a2a;
-      color: #a3a3ff;
-      font-size: 29px;
     }
   }
 }
