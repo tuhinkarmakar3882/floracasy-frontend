@@ -54,7 +54,7 @@
       trending-mode
     />
 
-    <LazyCategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
+    <CategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
   </div>
 </template>
 
