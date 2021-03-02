@@ -95,7 +95,7 @@
         :style="item.style"
         class="scroll-list"
       >
-        <div v-if="item.storyType === 'text'">
+        <div v-if="item.storyType === 'text'" class="px-4">
           {{ item.body }}
         </div>
 
