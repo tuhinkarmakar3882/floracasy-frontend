@@ -103,8 +103,7 @@ export default {
 
     .grid-col {
       display: grid;
-      justify-content: center;
-      align-items: flex-start;
+      place-items: center;
       text-align: center;
     }
 

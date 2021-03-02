@@ -138,7 +138,7 @@
       </div>
 
       <div v-else-if="step === 2">
-        <h5 class="heading-title mb-8">Write the Blog below</h5>
+        <h5 class="heading-title mt-4 mb-8">Write the Blog below</h5>
         <client-only>
           <div class="editor">
             <editor-menu-bar
@@ -400,6 +400,7 @@
             <editor-content
               :editor="editor"
               class="editor__content px-4 pt-4"
+              style="min-height: calc(100vh - 150px)"
             />
           </div>
         </client-only>
@@ -762,6 +763,10 @@ $active-color: $white;
 
     .editor__content {
       background: $nav-bar-bg;
+
+      * {
+        outline: none 0 !important;
+      }
 
       .ProseMirror {
         min-height: calc(100vh - 132px);
