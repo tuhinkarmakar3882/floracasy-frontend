@@ -47,6 +47,21 @@ export default {
     }
   },
 
+  mounted() {
+    this.$router.beforeEach((to, _, next) => {
+      if (to.hash === '') {
+        this.immersiveMode = false
+      }
+      next()
+    })
+  },
+
+  beforeDestroy() {
+    this.$router.beforeEach((__, _, next) => {
+      next()
+    })
+  },
+
   methods: {
     async openImmersiveView() {
       this.immersiveMode = true
