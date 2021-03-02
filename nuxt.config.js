@@ -247,7 +247,7 @@ export default {
       background_color: packageJson.themeColor,
       theme_color: packageJson.themeColor,
       status_bar: packageJson.themeColor,
-      display: 'fullscreen',
+      display: 'standalone',
       start_url: '/',
       scope: '/',
       orientation: 'portrait',
