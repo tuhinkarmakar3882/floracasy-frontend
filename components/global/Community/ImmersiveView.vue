@@ -56,8 +56,35 @@
         <small>{{ getRelativeTime(story.updatedAt) }}</small>
       </section>
 
-      <i v-ripple class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon" />
+      <i
+        v-ripple
+        class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon"
+        @click="showOptions = !showOptions"
+      />
     </nav>
+
+    <transition name="gray-shift">
+      <div v-if="showOptions" class="options">
+        <ul>
+          <li v-ripple="`#ff82825F`" class="py-2 px-6">
+            <span class="icon mdi mdi-alert-octagon danger-light" />
+            Report Story
+          </li>
+          <li class="my-0 py-2 px-4" style="display: block">
+            <hr class="my-0" style="background-color: #464646" />
+          </li>
+          <li v-ripple="`#ff82815f`" class="py-2 px-4">
+            <p
+              class="danger-light text-center my-0"
+              style="width: 100%"
+              @click="showOptions = false"
+            >
+              Close
+            </p>
+          </li>
+        </ul>
+      </div>
+    </transition>
 
     <main class="story-display-container" @scroll="calculateActiveElement">
       <FallBackLoader v-if="loadingStories" class="my-4" />
@@ -77,9 +104,7 @@
         </div>
 
         <div v-if="item.storyType === 'audio'">
-          <audio controls>
-            <source :src="item.audio" />
-          </audio>
+          <audio controls :src="item.audio" />
         </div>
       </section>
 
@@ -187,6 +212,16 @@ export default {
     calculateActiveElement({ target }) {
       this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
     },
+
+    async reportBlog() {
+      await this.$router.push({
+        path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
+        query: {
+          type: 'Story',
+          identifier: this.allStories[this.activeElement].identifier,
+        },
+      })
+    },
   },
 }
 </script>
@@ -216,7 +251,7 @@ export default {
       transition: all 200ms ease-in-out;
 
       &.active {
-        background: $primary-light;
+        background: $vibrant;
       }
     }
   }
@@ -266,8 +301,38 @@ export default {
     }
   }
 
+  .options {
+    position: absolute;
+    background: $segment-background;
+    border-radius: $nano-unit;
+    right: $medium-unit;
+    box-shadow: $down-only-box-shadow;
+    max-width: 300px;
+    min-width: 232px;
+    z-index: (2 * $bring-to-front) + 1;
+    transition: all 150ms ease-in-out;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: $micro-unit 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        color: #dadada;
+        margin: 0;
+      }
+    }
+
+    .icon {
+      font-size: $large-unit;
+      margin-right: $micro-unit;
+    }
+  }
+
   main.story-display-container {
-    height: calc(100vh - 180px);
+    height: calc(100vh - 150px);
     margin-top: 16px;
     overflow: scroll;
     display: grid;
@@ -314,7 +379,7 @@ export default {
     display: grid;
     place-items: center;
     grid-template-columns: repeat(5, 1fr);
-    font-size: 40px;
+    font-size: 36px;
     width: 100%;
     background: $nav-bar-bg;
     box-shadow: $up-only-box-shadow;
