@@ -131,20 +131,18 @@
         />
       </section>
 
-      <transition name="slide-left">
-        <aside v-if="showReactionOptions" class="reactions">
-          <i
-            v-for="(reaction, index) in reactions"
-            :key="index"
-            v-ripple="`${reaction.color}5F`"
-            :class="reaction.icon"
-            :style="{
-              color: reaction.color,
-            }"
-            class="px-4"
-          />
-        </aside>
-      </transition>
+      <aside class="reactions hidden" :class="showReactionOptions && 'open'">
+        <i
+          v-for="(reaction, index) in reactions"
+          :key="index"
+          v-ripple="`${reaction.color}5F`"
+          :class="reaction.icon"
+          :style="{
+            color: reaction.color,
+          }"
+          class="px-4"
+        />
+      </aside>
     </footer>
   </div>
 </template>
@@ -259,6 +257,10 @@ export default {
   background: $body-background;
   z-index: 2 * $bring-to-front;
 
+  * {
+    transition: all 250ms ease-in-out;
+  }
+
   header {
     display: grid;
     gap: $nano-unit;
@@ -365,7 +367,6 @@ export default {
       color: #a3a3ff;
       font-size: 29px;
       box-shadow: $default-box-shadow;
-      transition: all 300ms ease-in-out;
 
       &.active {
         border-top-right-radius: 0;
@@ -387,6 +388,14 @@ export default {
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
       box-shadow: $up-only-box-shadow;
+      overflow: hidden;
+
+      &.hidden {
+        height: 0;
+      }
+      &.open {
+        height: 320px;
+      }
 
       * {
         display: grid;
