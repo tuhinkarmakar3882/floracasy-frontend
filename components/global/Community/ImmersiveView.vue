@@ -115,8 +115,8 @@
     </main>
 
     <footer>
-      <aside v-ripple class="floating-action-button primary-btn">
-        <i class="mdi mdi-reply mdi-24px" />
+      <aside v-ripple class="floating-action-button">
+        <i class="mdi mdi-emoticon-outline" />
       </aside>
       <!--      <i-->
       <!--        v-for="(reaction, index) in reactions"-->
@@ -383,8 +383,13 @@ export default {
   }
 
   .floating-action-button {
+    height: 52px;
+    width: 52px;
     bottom: 32px;
     right: 16px;
+    background: #2a2a2a;
+    color: #a3a3ff;
+    font-size: 28px;
   }
 
   //footer {
