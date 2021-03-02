@@ -705,15 +705,16 @@ $active-color: $white;
     box-shadow: 0 -2px 4px #050515;
   }
 
-  .editor {
-    p.is-editor-empty:first-child::before {
-      content: attr(data-empty-text);
-      color: #555;
-      pointer-events: none;
-      height: 0;
-      font-style: italic;
-    }
+  p.is-editor-empty:first-child::before {
+    content: attr(data-empty-text);
+    position: absolute;
+    color: #555;
+    pointer-events: none;
+    height: 1234567890px;
+    font-style: italic;
+  }
 
+  .editor {
     .menubar {
       text-align: center;
       background: $inactive-background;
