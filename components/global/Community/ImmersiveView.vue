@@ -260,10 +260,13 @@ export default {
   }
 
   nav {
-    background: $nav-bar-bg;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
+    position: fixed;
     height: 56px;
     align-items: center;
+    width: 100%;
+    top: -6px;
     box-shadow: $down-only-box-shadow;
 
     $image-size: 36px;
@@ -308,12 +311,13 @@ export default {
     position: absolute;
     background: $segment-background;
     border-radius: $nano-unit;
-    right: $medium-unit;
     box-shadow: $down-only-box-shadow;
     max-width: 300px;
     min-width: 232px;
     z-index: (2 * $bring-to-front) + 1;
     transition: all 150ms ease-in-out;
+    right: $nano-unit;
+    top: 59px;
 
     ul {
       list-style: none;
@@ -335,8 +339,8 @@ export default {
   }
 
   main.story-display-container {
-    height: calc(100vh - 150px);
-    margin-top: 16px;
+    height: calc(100vh);
+    border-radius: 0;
     overflow: scroll;
     display: grid;
     grid-auto-flow: column;
@@ -370,6 +374,10 @@ export default {
       img {
         width: 99vw;
         object-fit: scale-down;
+      }
+
+      * {
+        border-radius: 0 !important;
       }
     }
   }

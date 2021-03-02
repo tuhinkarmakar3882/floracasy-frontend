@@ -278,7 +278,7 @@ import { showUITip } from '~/utils/utility'
 
 const commonStyles = {
   minHeight: '100px',
-  borderRadius: '0 12px',
+  borderRadius: '0',
   padding: '12px',
   display: 'flex',
   justifyContent: 'center',
