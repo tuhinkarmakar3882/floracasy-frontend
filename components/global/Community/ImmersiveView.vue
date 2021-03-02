@@ -104,7 +104,7 @@
         </div>
 
         <div v-if="item.storyType === 'audio'">
-          <audio controls :src="item.audio" />
+          <audio :src="item.audio" controls />
         </div>
       </section>
 
@@ -115,16 +115,19 @@
     </main>
 
     <footer>
-      <i
-        v-for="(reaction, index) in reactions"
-        :key="index"
-        v-ripple="`${reaction.color}5F`"
-        :class="reaction.icon"
-        :style="{
-          color: reaction.color,
-        }"
-        class="px-4"
-      />
+      <button class="floating-action-button primary-btn">
+        <i class="mdi mdi-reply mdi-24px" />
+      </button>
+      <!--      <i-->
+      <!--        v-for="(reaction, index) in reactions"-->
+      <!--        :key="index"-->
+      <!--        v-ripple="`${reaction.color}5F`"-->
+      <!--        :class="reaction.icon"-->
+      <!--        :style="{-->
+      <!--          color: reaction.color,-->
+      <!--        }"-->
+      <!--        class="px-4"-->
+      <!--      />-->
     </footer>
   </div>
 </template>
@@ -246,12 +249,12 @@ export default {
       display: block;
       height: $double-unit;
       width: 100%;
-      background: darken($muted, $darken-percentage);
+      background: #8d8d8d;
       border-radius: $xxx-large-unit;
       transition: all 200ms ease-in-out;
 
       &.active {
-        background: $vibrant;
+        background: $white;
       }
     }
   }
@@ -371,18 +374,23 @@ export default {
     }
   }
 
-  footer {
-    position: fixed;
-    overflow: scroll;
-    left: 0;
-    bottom: 0;
-    display: grid;
-    place-items: center;
-    grid-template-columns: repeat(5, 1fr);
-    font-size: 36px;
-    width: 100%;
-    background: $nav-bar-bg;
-    box-shadow: $up-only-box-shadow;
+  .floating-action-button {
+    bottom: 32px;
+    right: 16px;
   }
+
+  //footer {
+  //  position: fixed;
+  //  overflow: scroll;
+  //  left: 0;
+  //  bottom: 0;
+  //  display: grid;
+  //  place-items: center;
+  //  grid-template-columns: repeat(5, 1fr);
+  //  font-size: 36px;
+  //  width: 100%;
+  //  background: $nav-bar-bg;
+  //  box-shadow: $up-only-box-shadow;
+  //}
 }
 </style>
