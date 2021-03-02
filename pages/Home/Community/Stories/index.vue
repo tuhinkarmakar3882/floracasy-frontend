@@ -60,7 +60,7 @@ export default {
       pageTitle: 'All Stories',
       prevURL: null,
       stories: [],
-      storyFetchCursorEndpoint: endpoints.community_service.stories,
+      storyFetchCursorEndpoint: endpoints.community_service.stories.fetch,
     }
   },
 

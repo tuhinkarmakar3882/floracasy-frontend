@@ -139,7 +139,7 @@ export default {
     async fetchStories() {
       try {
         const { results } = await this.$axios.$get(
-          endpoints.community_service.stories
+          endpoints.community_service.stories.fetch
         )
         this.stories.push(...results)
       } catch (e) {}

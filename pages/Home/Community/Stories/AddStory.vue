@@ -572,7 +572,7 @@ export default {
         this.text.isSending = true
 
         try {
-          await this.$axios.$post(endpoints.community_service.stories, {
+          await this.$axios.$post(endpoints.community_service.stories.fetch, {
             storyType: 'text',
             body: this.text.body,
             style: this.text.customStyle,
@@ -652,7 +652,7 @@ export default {
           .$post(endpoints.upload_handler_system.upload_image, data)
           .then((response) => response.identifier)
 
-        await this.$axios.$post(endpoints.community_service.stories, {
+        await this.$axios.$post(endpoints.community_service.stories.fetch, {
           storyType: 'photo',
           imageID,
         })
@@ -705,7 +705,7 @@ export default {
         const audioID = await this.$axios
           .$post(endpoints.upload_handler_system.upload_audio, data)
           .then((response) => response.identifier)
-        await this.$axios.$post(endpoints.community_service.stories, {
+        await this.$axios.$post(endpoints.community_service.stories.fetch, {
           storyType: 'audio',
           audioID,
         })
