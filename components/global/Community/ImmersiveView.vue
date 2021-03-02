@@ -115,9 +115,9 @@
     </main>
 
     <footer>
-      <button class="floating-action-button primary-btn">
+      <aside v-ripple class="floating-action-button primary-btn">
         <i class="mdi mdi-reply mdi-24px" />
-      </button>
+      </aside>
       <!--      <i-->
       <!--        v-for="(reaction, index) in reactions"-->
       <!--        :key="index"-->
