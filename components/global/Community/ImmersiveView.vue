@@ -66,7 +66,7 @@
     <transition name="gray-shift">
       <div v-if="showOptions" class="options">
         <ul>
-          <li v-ripple="`#ff82825F`" class="py-2 px-6">
+          <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportStory">
             <span class="icon mdi mdi-alert-octagon danger-light" />
             Report Story
           </li>
@@ -232,7 +232,7 @@ export default {
       this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
     },
 
-    async reportBlog() {
+    async reportStory() {
       await this.$router.push({
         path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
         query: {
