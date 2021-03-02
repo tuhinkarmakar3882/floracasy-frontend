@@ -1,0 +1,89 @@
+@import "all-variables";
+
+.primary {
+  color: $primary;
+}
+
+.secondary {
+  color: $secondary;
+}
+
+.success {
+  color: $success;
+}
+
+.danger {
+  color: $danger;
+}
+
+.danger-light {
+  color: $danger-light;
+}
+
+.info {
+  color: $info;
+}
+
+.muted {
+  color: $muted;
+}
+
+.disabled {
+  color: $disabled;
+}
+
+.black {
+  color: $black;
+}
+
+.white {
+  color: $white;
+}
+
+.primary-matte {
+  color: $primary-matte;
+}
+
+.primary-light {
+  color: $primary-light;
+}
+
+.hint-text {
+  color: #c3c300;
+}
+
+.secondary-matte {
+  color: $secondary-matte;
+}
+
+.secondary-highlight {
+  color: $secondary-highlight;
+}
+
+.arrow {
+  color: $arrow;
+}
+
+.quote {
+  color: $quote;
+}
+
+.premium {
+  color: $premium;
+}
+
+.vibrant {
+  color: $vibrant;
+}
+
+.faded-divider {
+  background: linear-gradient(to right, $card-background, $body-background);
+}
+
+.reversed-faded-divider {
+  background: linear-gradient(to left, $card-background, $body-background);
+}
+
+.active-background {
+  background: $active-gradient;
+}
