@@ -564,7 +564,7 @@ export default {
     updateText() {
       this.text.body = document.getElementById('text-body').textContent
       const bodyLength = this.text.body?.trim().length
-      this.text.canSend = bodyLength > 0 && bodyLength < 501
+      this.text.canSend = bodyLength >= 5 && bodyLength < 501
       this.text.contentSize = bodyLength ?? 0
     },
     async uploadTextStory() {
