@@ -31,13 +31,15 @@
       class="carousel-items-container"
       @scroll="calculateActiveElement"
     >
-      <img
+      <article
         v-for="item in carouselItems"
         :key="item.id"
-        :alt="item.image"
-        :src="item.image"
         class="carousel-item"
-        height="250"
+        :style="{
+          background: `url('${item.image}') no-repeat`,
+          backgroundSize: `contain`,
+          paddingTop: '56.67%',
+        }"
       />
     </section>
 
@@ -56,7 +58,10 @@
       />
     </section>
 
-    <aside class="carousel-navigation">
+    <aside
+      :class="useFloatingCarousel && 'floating-carousel'"
+      class="carousel-navigation"
+    >
       <span
         v-for="(item, index) in carouselItems.length"
         :key="`dot-${item}`"
@@ -76,6 +81,11 @@ export default {
       required: true,
     },
     blogCarousel: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    useFloatingCarousel: {
       type: Boolean,
       required: false,
       default: false,
@@ -192,6 +202,30 @@ export default {
       }
     }
 
+    $image-height: clamp(250px, 50vh, 400px);
+    $image-width: 100vw;
+
+    img.carousel-item {
+      box-shadow: $default-box-shadow;
+      height: $image-height;
+      max-height: $image-height;
+      min-height: $image-height;
+      width: $image-width;
+      min-width: $image-width;
+      max-width: $image-width;
+      aspect-ratio: 1.77;
+      object-fit: scale-down;
+      margin: auto;
+
+      span {
+        margin: -$standard-unit;
+      }
+
+      * {
+        display: block;
+      }
+    }
+
     .carousel-item,
     .blog-item {
       scroll-snap-align: start;
@@ -257,6 +291,11 @@ export default {
         height: $milli-unit;
         background: $vibrant;
       }
+    }
+
+    &.floating-carousel {
+      position: absolute;
+      bottom: $standard-unit;
     }
   }
 }
