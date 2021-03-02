@@ -44,7 +44,11 @@ const endpoints = {
     },
   },
   community_service: {
-    stories: '/allow_authenticated/community_service/stories/',
+    stories: {
+      fetch: '/allow_authenticated/community_service/stories/',
+      detail:
+        '/allow_authenticated/community_service/stories/detail/{identifier}/',
+    },
     posts: {
       detail:
         '/allow_authenticated/community_service/posts/detail/{identifier}/',
