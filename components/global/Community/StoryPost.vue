@@ -51,9 +51,7 @@ export default {
 
   computed: {
     storyCount() {
-      return this.story?.story_count?.length > 9
-        ? '9+'
-        : this.story?.story_count
+      return this.story?.story_count > 9 ? '9+' : this.story?.story_count
     },
   },
 
