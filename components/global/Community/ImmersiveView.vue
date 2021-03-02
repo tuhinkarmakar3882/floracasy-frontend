@@ -8,30 +8,54 @@
       <span
         v-for="(item, index) in story.story_count"
         :key="`line-${item}`"
-        class="line"
         :class="[index === activeElement && 'active']"
+        class="line"
       />
     </header>
 
-    <nav>
+    <nav class="mt-2">
       <i
         v-ripple
         class="mdi mdi-arrow-left mdi-24px icon"
         @click="onClickFunction"
       />
-      <img
-        alt="profile-image"
-        class="mr-2 profile-image"
-        height="52"
-        :src="story.user.photoURL"
-        width="52"
-      />
+
+      <nuxt-link
+        :to="
+          navigationRoutes.Home.Account.Overview.replace(
+            '{userUID}',
+            story.userUID
+          )
+        "
+        class="no-underline"
+      >
+        <img
+          :src="story.user.photoURL"
+          alt="profile-image"
+          class="mr-4 profile-image"
+          height="52"
+          width="52"
+        />
+      </nuxt-link>
+
       <section class="name-and-time">
-        <p class="my-0 secondary-highlight">
-          {{ username }}
+        <p v-ripple class="my-0 secondary-highlight">
+          <nuxt-link
+            :to="
+              navigationRoutes.Home.Account.Overview.replace(
+                '{userUID}',
+                story.userUID
+              )
+            "
+            class="no-underline"
+          >
+            {{ username }}
+          </nuxt-link>
         </p>
+
         <small>{{ getRelativeTime(story.updatedAt) }}</small>
       </section>
+
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon" />
     </nav>
 
@@ -41,9 +65,22 @@
       <section
         v-for="item in allStories"
         :key="item.identifier"
+        :style="item.style"
         class="scroll-list"
       >
-        <pre>{{ item }}</pre>
+        <div v-if="item.storyType === 'text'">
+          {{ item.body }}
+        </div>
+
+        <div v-if="item.storyType === 'photo'">
+          <img :src="item.photo" alt="story-photo" />
+        </div>
+
+        <div v-if="item.storyType === 'audio'">
+          <audio controls>
+            <source :src="item.audio" />
+          </audio>
+        </div>
       </section>
 
       <LoadingError
@@ -70,6 +107,7 @@
 <script>
 import { getRelativeTime } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'ImmersiveView',
@@ -85,6 +123,8 @@ export default {
   },
   data() {
     return {
+      navigationRoutes,
+
       showOptions: false,
       reactions: [
         {
@@ -160,7 +200,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: black;
+  background: $body-background;
   z-index: 2 * $bring-to-front;
 
   header {
@@ -173,9 +213,10 @@ export default {
       width: 100%;
       background: darken($muted, $darken-percentage);
       border-radius: $xxx-large-unit;
+      transition: all 200ms ease-in-out;
 
       &.active {
-        background: $vibrant;
+        background: $primary-light;
       }
     }
   }
@@ -183,11 +224,11 @@ export default {
   nav {
     background: $nav-bar-bg;
     display: flex;
-    height: 72px;
+    height: 56px;
     align-items: center;
     box-shadow: $down-only-box-shadow;
 
-    $image-size: 48px;
+    $image-size: 36px;
 
     img {
       min-width: $image-size;
@@ -205,13 +246,22 @@ export default {
       display: grid;
       place-items: center;
       width: 56px;
-      height: 72px;
+      height: 56px;
     }
 
     .name-and-time {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
       p {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 400;
+        line-height: 1.5;
+      }
+
+      small {
+        font-size: 12px;
       }
     }
   }
@@ -244,6 +294,15 @@ export default {
       flex-shrink: 0;
       width: 100vw;
       transform-origin: center center;
+
+      audio {
+        width: 80vw;
+      }
+
+      img {
+        width: 99vw;
+        object-fit: scale-down;
+      }
     }
   }
 
