@@ -1,6 +1,10 @@
 <template>
   <div class="carousel-component">
-    <section v-if="quoteCarousel" class="carousel-items-container">
+    <section
+      v-if="quoteCarousel"
+      class="carousel-items-container"
+      @scroll="calculateActiveElement"
+    >
       <blockquote
         v-for="item in carouselItems"
         :key="item.id"
@@ -22,7 +26,11 @@
       </blockquote>
     </section>
 
-    <section v-else-if="imageCarousel" class="carousel-items-container">
+    <section
+      v-else-if="imageCarousel"
+      class="carousel-items-container"
+      @scroll="calculateActiveElement"
+    >
       <img
         v-for="item in carouselItems"
         :key="item.id"
@@ -33,7 +41,11 @@
       />
     </section>
 
-    <section v-else-if="blogCarousel" class="carousel-items-container">
+    <section
+      v-else-if="blogCarousel"
+      class="carousel-items-container"
+      @scroll="calculateActiveElement"
+    >
       <LazyBlogPost
         v-for="blog in carouselItems"
         :key="blog.identifier"
@@ -43,6 +55,15 @@
         hide-more-options-button
       />
     </section>
+
+    <aside class="carousel-navigation">
+      <span
+        v-for="(item, index) in carouselItems.length"
+        :key="`dot-${item}`"
+        :class="[index === activeElement && 'active']"
+        class="dot"
+      />
+    </aside>
   </div>
 </template>
 
@@ -86,12 +107,12 @@ export default {
       totalSlides: 0,
       scroller: undefined,
       autoScrollInterval: undefined,
+      activeElement: 0,
     }
   },
   mounted() {
     this.totalSlides = this.carouselItems.length - 1
     this.scroller = document.querySelector('.carousel-items-container')
-    window.qwertyuiop = this.scroller
     if (this.autoScroll) {
       this.autoUpdateCarouselSlide()
     }
@@ -108,6 +129,10 @@ export default {
           behavior: 'smooth',
         })
       }, 8000)
+    },
+
+    calculateActiveElement({ target }) {
+      this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
     },
   },
 }
@@ -128,13 +153,18 @@ export default {
   }
 
   .carousel-items-container {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: flex-start;
     gap: $standard-unit;
-    text-align: center;
     overflow: scroll !important;
     scroll-snap-type: x mandatory;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     blockquote.carousel-item {
       border: none;
@@ -167,7 +197,7 @@ export default {
       scroll-snap-align: start;
       scroll-snap-stop: always;
       flex-shrink: 0;
-      width: 100%;
+      width: 100vw;
       transform-origin: center center;
       position: relative;
       display: flex;
