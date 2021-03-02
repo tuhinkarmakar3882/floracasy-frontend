@@ -34,8 +34,21 @@
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon" />
     </nav>
 
-    <main>
-      <pre>{{ story }}</pre>
+    <main class="story-display-container dbx">
+      <FallBackLoader v-if="loadingStories" class="my-4" />
+
+      <section
+        v-for="item in allStories"
+        :key="item.identifier"
+        class="scroll-list"
+      >
+        <pre>{{ item }}</pre>
+      </section>
+
+      <LoadingError
+        v-if="errorWhileFetchingStory"
+        error-section="Story Details"
+      />
     </main>
 
     <footer>
@@ -55,6 +68,7 @@
 
 <script>
 import { getRelativeTime } from '~/utils/utility'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'ImmersiveView',
@@ -93,6 +107,10 @@ export default {
           color: '#ff4d84',
         },
       ],
+      allStories: [],
+
+      errorWhileFetchingStory: false,
+      loadingStories: true,
     }
   },
   computed: {
@@ -102,8 +120,27 @@ export default {
         : this.story.user.displayName
     },
   },
+
+  async mounted() {
+    try {
+      await this.getAllStories()
+    } catch (e) {
+      this.errorWhileFetchingStory = true
+    } finally {
+      this.loadingStories = false
+    }
+  },
+
   methods: {
     getRelativeTime,
+    async getAllStories() {
+      this.allStories = await this.$axios.$get(
+        endpoints.community_service.stories.detail.replace(
+          '{identifier}',
+          this.story.identifier
+        )
+      )
+    },
   },
 }
 </script>
@@ -173,15 +210,31 @@ export default {
     }
   }
 
-  main {
+  main.story-display-container {
     height: calc(100vh - 180px);
     margin-top: 16px;
     overflow: scroll;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-auto-flow: column;
     align-items: center;
-    background: $primary-matte;
+    scroll-snap-type: x mandatory;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    .scroll-list {
+      margin: 0;
+      height: 100%;
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      flex-shrink: 0;
+      width: 100vw;
+      transform-origin: center center;
+    }
   }
 
   footer {
