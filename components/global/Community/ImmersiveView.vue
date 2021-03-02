@@ -6,9 +6,10 @@
       }"
     >
       <span
-        v-for="item in story.story_count"
+        v-for="(item, index) in story.story_count"
         :key="`line-${item}`"
         class="line"
+        :class="[index === activeElement && 'active']"
       />
     </header>
 
@@ -34,7 +35,7 @@
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px ml-auto px-4 icon" />
     </nav>
 
-    <main class="story-display-container dbx">
+    <main class="story-display-container" @scroll="calculateActiveElement">
       <FallBackLoader v-if="loadingStories" class="my-4" />
 
       <section
@@ -111,6 +112,7 @@ export default {
 
       errorWhileFetchingStory: false,
       loadingStories: true,
+      activeElement: 0,
     }
   },
   computed: {
@@ -141,6 +143,10 @@ export default {
         )
       )
     },
+
+    calculateActiveElement({ target }) {
+      this.activeElement = target.scrollLeft / window.innerWidth
+    },
   },
 }
 </script>
@@ -169,7 +175,7 @@ export default {
       border-radius: $xxx-large-unit;
 
       &.active {
-        background: $white;
+        background: $vibrant;
       }
     }
   }
@@ -220,6 +226,10 @@ export default {
     scroll-snap-type: x mandatory;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .scroll-list {
       margin: 0;
