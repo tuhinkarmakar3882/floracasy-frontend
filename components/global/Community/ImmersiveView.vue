@@ -95,7 +95,7 @@
         :style="item.style"
         class="scroll-list"
       >
-        <div v-if="item.storyType === 'text'" class="px-4 text-center">
+        <div v-if="item.storyType === 'text'" class="px-4 text-story">
           {{ item.body }}
         </div>
 
@@ -267,7 +267,6 @@ export default {
     align-items: center;
     width: 100%;
     top: -6px;
-    box-shadow: $down-only-box-shadow;
 
     $image-size: 36px;
 
@@ -379,31 +378,24 @@ export default {
       * {
         border-radius: 0 !important;
       }
+
+      .text-story {
+        text-align: center;
+        line-height: 1.75;
+      }
     }
   }
 
-  .floating-action-button {
-    height: 52px;
-    width: 52px;
-    bottom: 32px;
-    right: 16px;
-    background: #2a2a2a;
-    color: #a3a3ff;
-    font-size: 28px;
+  footer {
+    .floating-action-button {
+      height: 56px;
+      width: 56px;
+      bottom: 32px;
+      right: 16px;
+      background: #2a2a2a;
+      color: #a3a3ff;
+      font-size: 29px;
+    }
   }
-
-  //footer {
-  //  position: fixed;
-  //  overflow: scroll;
-  //  left: 0;
-  //  bottom: 0;
-  //  display: grid;
-  //  place-items: center;
-  //  grid-template-columns: repeat(5, 1fr);
-  //  font-size: 36px;
-  //  width: 100%;
-  //  background: $nav-bar-bg;
-  //  box-shadow: $up-only-box-shadow;
-  //}
 }
 </style>
