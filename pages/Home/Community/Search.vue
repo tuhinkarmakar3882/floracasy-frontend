@@ -26,7 +26,7 @@
             v-ripple
             aria-label="Click here to start the search"
             class="mdi mdi-check mdi-24px px-4"
-            @click="searchQuery = ''"
+            @click="searchForPeople"
           />
         </div>
 
