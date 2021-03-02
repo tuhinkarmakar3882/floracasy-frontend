@@ -10,7 +10,7 @@
 
     <section v-if="items" class="grid-container py-8">
       <div
-        v-for="item in items"
+        v-for="item in items.slice(0, 18)"
         :key="item.id"
         v-ripple
         class="grid-col"
@@ -103,7 +103,8 @@ export default {
 
     .grid-col {
       display: grid;
-      place-items: center;
+      justify-content: center;
+      align-items: flex-start;
       text-align: center;
     }
 
