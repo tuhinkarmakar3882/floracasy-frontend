@@ -1,17 +1,10 @@
 <template>
   <div class="dashboard-page">
-    <section class="image-carousel">
-      <article
-        v-for="item in carouselItems"
-        :key="item.id + 1000"
-        class="carousel-item"
-        :style="{
-          background: `url('${item.image}') no-repeat`,
-          backgroundSize: `contain`,
-          paddingTop: tabNumber === 2 ? '0' : '56.67%',
-        }"
-      />
-    </section>
+    <LazyCarousel
+      :carousel-items="carouselItems"
+      image-carousel
+      use-floating-carousel
+    />
 
     <section class="tab-bar">
       <p
@@ -39,7 +32,7 @@
         Categories
       </p>
     </section>
-    <div ref="tabNavigation"></div>
+    <div id="abc" ref="tabNavigation"></div>
 
     <InfiniteScrollingBlogLists
       v-if="tabNumber === 0"
