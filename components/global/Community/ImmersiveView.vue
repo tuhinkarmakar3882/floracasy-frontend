@@ -145,7 +145,7 @@ export default {
     },
 
     calculateActiveElement({ target }) {
-      this.activeElement = target.scrollLeft / window.innerWidth
+      this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
     },
   },
 }
