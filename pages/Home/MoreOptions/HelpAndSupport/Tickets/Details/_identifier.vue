@@ -153,7 +153,7 @@ export default {
   computed: {
     createdAt() {
       const date = new Date(this.ticketDetails.createdAt)
-      return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+      return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
     },
     ...mapGetters({
       user: 'UserManagement/getUser',
