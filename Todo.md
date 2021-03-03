@@ -1,7 +1,11 @@
 # Pending Tasks:
 
-> ### Utils:
->  - Add Carousel Indicator ??
+> ### Production Issues:
+> - Fix Share for Blogs
+> - Fix Share for Posts
+> - FAQ Backend Connection
+> - Add Background Refresh for Auth Token
+> - Add Tap for Going towards Next Story
 
 
 > ### Help & Support:
@@ -9,11 +13,8 @@
 
 
 > ### Community:
->   - Add Story Details Page
->
-> 
->   - **[ Optional ]** Add Story Like Feature 
->   - **[ Optional ]** Add Post Share Feature 
+>   - **[ Optional ]** Add Story Like Feature
+>   - **[ Optional ]** Add Post Share Feature
 
 
 > ### Payments:
@@ -27,12 +28,12 @@
 
 
 > ### Landing Pages
->   - Fix Footer 
->   - Fix Community Showcase 
+>   - Fix Footer
+>   - Fix Community Showcase
 
 
 > ### Go To Market Activity
->   - Fix About Us 
+>   - Fix About Us
 
 
 > ### Certificate Verification Portal:
@@ -43,8 +44,8 @@
 >   - Add Backend Metrics to Calculate each page revenue
 >   - Add Support for Worker Highlighting
 >   - Add Links and Images for TipTap
-> 
-> 
+>
+>
 >   - **[ Optional ]** Add Notification Toggles
 >   - **[ Optional ]** Add Payment Gateway
 >   - **[ Optional ]** Add Draft Page
