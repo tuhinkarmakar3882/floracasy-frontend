@@ -179,8 +179,19 @@
           </transition>
 
           <section class="actions">
+            <input
+              v-show="false"
+              ref="imageUpload"
+              accept="image/jpeg, image/png"
+              type="file"
+              @change="preprocessUploadedImage"
+            />
             <!--  Gallery Button  -->
-            <button v-ripple class="muted-outlined-btn">
+            <button
+              v-ripple
+              class="muted-outlined-btn"
+              @click="$refs.imageUpload.click()"
+            >
               <i class="mdi mdi-image-multiple mdi-36px" />
             </button>
 
@@ -613,14 +624,11 @@ export default {
 
       canvas.getContext('2d').drawImage(video, 0, 0)
 
-      // this.photo.source = canvas.toDataURL()
-      // this.photo.isPhotoTaken = true
-
       this.showUITip('Optimizing Image For Faster Upload Speeds')
 
       canvas.toBlob(this.compressImage, 'image/webp', 0.7)
     },
-    async compressImage(blobImage) {
+    async compressImage(imageFile, msg) {
       const useWebWorker = true
       this.photo.showProgress = true
       const options = {
@@ -629,21 +637,28 @@ export default {
         useWebWorker,
         onProgress: this.updateProgressBar,
       }
-      this.photo.output = await imageCompression(blobImage, options)
+      this.photo.output = await imageCompression(imageFile, options)
 
-      this.photo.source = URL.createObjectURL(blobImage)
+      this.photo.source = URL.createObjectURL(imageFile)
 
       this.photo.isPhotoTaken = true
       this.photo.compressionProgress = null
       this.photo.showProgress = false
 
-      await this.showUITip('Photo Captured!', 'success')
+      await this.showUITip(msg || 'Photo Captured!', 'success')
     },
+
+    async preprocessUploadedImage(event) {
+      const file = event.target.files[0]
+      await this.showUITip('Optimizing Image For Faster Upload Speeds')
+      await this.compressImage(file)
+    },
+
     updateProgressBar(compressProgress) {
       this.photo.compressionProgress = compressProgress
     },
     async uploadPhotoStory() {
-      await this.showUITip('Uploading Photo Story!', 'success')
+      await this.showUITip('Uploading Photo Story!', 'info')
       try {
         const data = new FormData()
         data.append('image', this.photo.output, this.photo.output.name)
