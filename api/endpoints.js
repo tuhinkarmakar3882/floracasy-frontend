@@ -45,14 +45,15 @@ const endpoints = {
   },
   community_service: {
     stories: {
-      fetch: '/allow_authenticated/community_service/stories/',
+      index: '/allow_authenticated/community_service/stories/',
+      reaction: '/allow_authenticated/community_service/stories/reactions/',
       detail:
         '/allow_authenticated/community_service/stories/detail/{identifier}/',
     },
     posts: {
+      index: '/allow_authenticated/community_service/posts/',
       detail:
         '/allow_authenticated/community_service/posts/detail/{identifier}/',
-      index: '/allow_authenticated/community_service/posts/',
       like: '/allow_authenticated/community_service/posts/like/',
       share: '/allow_authenticated/community_service/posts/share/',
       getByUserUID:
