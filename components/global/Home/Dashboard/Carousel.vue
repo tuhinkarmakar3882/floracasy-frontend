@@ -281,8 +281,8 @@ export default {
 
     .dot {
       display: block;
-      height: $nano-unit;
-      width: $nano-unit;
+      height: $nano-unit + $double-unit;
+      width: $nano-unit + $double-unit;
       border-radius: 50%;
       background: $muted;
 
