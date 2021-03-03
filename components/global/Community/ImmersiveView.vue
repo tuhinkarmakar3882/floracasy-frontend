@@ -125,8 +125,11 @@
           :class="
             showReactionOptions
               ? 'mdi-close danger-light'
+              : containsReaction
+              ? reactionIcon
               : 'mdi-emoticon-outline'
           "
+          :style="containsReaction && { color: reactionColor }"
           class="mdi"
         />
       </section>
@@ -141,6 +144,7 @@
             color: reaction.color,
           }"
           class="px-4"
+          @click="addReaction(reaction.type)"
         />
       </aside>
     </footer>
@@ -148,7 +152,7 @@
 </template>
 
 <script>
-import { getRelativeTime } from '~/utils/utility'
+import { getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -174,22 +178,27 @@ export default {
         {
           icon: 'mdi mdi-heart',
           color: '#80ff71',
+          type: 'heart',
         },
         {
           icon: 'mdi mdi-fire',
           color: '#ffd646',
+          type: 'fire',
         },
         {
           icon: 'mdi mdi-emoticon-lol',
           color: '#b4a7ff',
+          type: 'haha',
         },
         {
           icon: 'mdi mdi-emoticon-cry',
           color: '#32e9be',
+          type: 'sad',
         },
         {
           icon: 'mdi mdi-emoticon-angry',
           color: '#ff4d84',
+          type: 'angry',
         },
       ],
       allStories: [],
@@ -204,6 +213,41 @@ export default {
       return this.story.user.displayName.length > 23
         ? this.story.user.displayName.substr(0, 22) + '...'
         : this.story.user.displayName
+    },
+    containsReaction() {
+      return this.allStories[this.activeElement]?.reactions?.hasReaction
+    },
+    reactionIcon() {
+      switch (this.allStories[this.activeElement]?.reactions?.reactionType) {
+        case 'heart':
+          return 'mdi-heart'
+        case 'fire':
+          return 'mdi-fire'
+        case 'haha':
+          return 'mdi-emoticon-lol'
+        case 'sad':
+          return 'mdi-emoticon-cry'
+        case 'angry':
+          return 'mdi-emoticon-angry'
+        default:
+          return 'mdi-home'
+      }
+    },
+    reactionColor() {
+      switch (this.allStories[this.activeElement]?.reactions?.reactionType) {
+        case 'heart':
+          return '#80ff71'
+        case 'fire':
+          return '#ffd646'
+        case 'haha':
+          return '#b4a7ff'
+        case 'sad':
+          return '#32e9be'
+        case 'angry':
+          return '#ff4d84'
+        default:
+          return ''
+      }
     },
   },
 
@@ -240,6 +284,30 @@ export default {
           identifier: this.allStories[this.activeElement].identifier,
         },
       })
+    },
+
+    async addReaction(reactionType) {
+      this.showReactionOptions = false
+      this.updateReaction(this.activeElement, reactionType, true)
+      try {
+        const { action } = await this.$axios.$post(
+          endpoints.community_service.stories.reaction,
+          {
+            identifier: this.allStories[this.activeElement].identifier,
+            reactionType,
+          }
+        )
+        action === 'clear' &&
+          this.updateReaction(this.activeElement, reactionType, false)
+      } catch (e) {
+        this.updateReaction(this.activeElement, reactionType, false)
+        await showUITip(this.$store, 'Network Error...Try Again!')
+      }
+    },
+
+    updateReaction(activeItem, reactionType, hasReaction) {
+      this.allStories[activeItem].reactions.hasReaction = hasReaction
+      this.allStories[activeItem].reactions.reactionType = reactionType
     },
   },
 }
