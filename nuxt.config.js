@@ -52,10 +52,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  // modern: {
-  //   client: true,
-  //   server: true,
-  // },
+  modern: {
+    client: true,
+    server: true,
+  },
 
   modules: [
     'nuxt-helmet',
