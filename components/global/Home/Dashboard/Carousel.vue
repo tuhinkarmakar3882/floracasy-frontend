@@ -281,14 +281,14 @@ export default {
 
     .dot {
       display: block;
-      height: $micro-unit;
-      width: $micro-unit;
+      height: $nano-unit;
+      width: $nano-unit;
       border-radius: 50%;
       background: $muted;
 
       &.active {
-        width: $milli-unit;
-        height: $milli-unit;
+        width: $micro-unit;
+        height: $micro-unit;
         background: $vibrant;
       }
     }
