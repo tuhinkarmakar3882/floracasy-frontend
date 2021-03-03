@@ -23,10 +23,10 @@
     <transition name="gray-shift">
       <LazyModal
         v-if="showModal"
-        class="modal"
-        :toggle="hideModal"
         :color="notification.notificationType.color"
         :modal-type="notification.onclickAction"
+        :toggle="hideModal"
+        class="modal"
       >
         <template slot="title">
           <h5>{{ notification.message }}</h5>
@@ -89,12 +89,9 @@
 import { getRelativeTime } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import Modal from '~/components/global/Modal'
-import LoadingIcon from '~/components/global/LoadingIcon'
 
 export default {
   name: 'NotificationItem',
-  components: { LoadingIcon, Modal },
   props: {
     notification: {
       type: Object,
