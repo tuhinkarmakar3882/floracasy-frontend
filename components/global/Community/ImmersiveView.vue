@@ -457,12 +457,14 @@ export default {
       border-top-right-radius: $border-radius;
       box-shadow: $up-only-box-shadow;
       overflow: hidden;
+      transform: translateY(27px);
 
       &.hidden {
         height: 0;
       }
       &.open {
         height: 320px;
+        transform: translateY(0);
       }
 
       * {
