@@ -58,7 +58,13 @@ export const policies = {
 }
 
 export const ADSENSE_CSP = {
-  'default-src': ["'self'", 'https:', ...secrets.PRIMARY_HOSTS],
+  'default-src': [
+    "'self'",
+    'https:',
+    ...secrets.PRIMARY_HOSTS,
+    ...secrets.BACKEND_SERVICES,
+    ...secrets.FIREBASE_SERVICES,
+  ],
   'media-src': [
     "'self'",
     'https:',
@@ -70,8 +76,11 @@ export const ADSENSE_CSP = {
   'worker-src': ["'self'", `blob:`, ...secrets.PRIMARY_HOSTS],
   'style-src': [
     "'self'",
+    'https:',
     "'unsafe-inline'",
     ...secrets.PRIMARY_HOSTS,
+    ...secrets.BACKEND_SERVICES,
+    ...secrets.FIREBASE_SERVICES,
     'https://fonts.googleapis.com/',
     'https://fonts.gstatic.com/',
     'https://cdn.materialdesignicons.com/',
@@ -85,10 +94,14 @@ export const ADSENSE_CSP = {
     '*.googletagmanager.com',
     'blob:',
     ...secrets.PRIMARY_HOSTS,
+    ...secrets.BACKEND_SERVICES,
+    ...secrets.FIREBASE_SERVICES,
   ],
   'font-src': [
     "'self'",
     ...secrets.PRIMARY_HOSTS,
+    ...secrets.BACKEND_SERVICES,
+    ...secrets.FIREBASE_SERVICES,
     'https://fonts.googleapis.com/',
     'https://fonts.gstatic.com/',
     'https://cdn.materialdesignicons.com/',
