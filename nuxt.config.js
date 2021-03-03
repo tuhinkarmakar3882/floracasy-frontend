@@ -138,7 +138,7 @@ export default {
       //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
     },
     csp: {
-      reportOnly: true,
+      reportOnly: false,
       hashAlgorithm: 'sha256',
       policies: ADSENSE_CSP,
     },
