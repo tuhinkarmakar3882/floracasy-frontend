@@ -6,7 +6,7 @@ import {
   useTouchEvents,
 } from './environmentalVariables'
 import * as packageJson from './package.json'
-import { ADSENSE_CSP } from './config/csp-policies'
+// import { ADSENSE_CSP } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
   src: '~/plugins/sentry.js',
@@ -52,10 +52,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   client: true,
+  //   server: true,
+  // },
 
   modules: [
     'nuxt-helmet',
@@ -130,18 +130,18 @@ export default {
     injectScripts: true,
     resourceHints: true,
     asyncScripts: true,
-    http2: {
-      push: true,
-      // pushAssets: (_, __, publicPath, preloadFiles) =>
-      //   preloadFiles
-      //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
-      //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
-    },
-    csp: {
-      reportOnly: false,
-      hashAlgorithm: 'sha256',
-      policies: ADSENSE_CSP,
-    },
+    // http2: {
+    //   push: true,
+    //   // pushAssets: (_, __, publicPath, preloadFiles) =>
+    //   //   preloadFiles
+    //   //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
+    //   //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
+    // },
+    // csp: {
+    //   reportOnly: false,
+    //   hashAlgorithm: 'sha256',
+    //   policies: ADSENSE_CSP,
+    // },
   },
 
   axios: {
