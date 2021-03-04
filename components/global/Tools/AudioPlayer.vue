@@ -129,7 +129,9 @@ export default {
     .header-text {
       position: absolute;
       height: 14px;
-      left: 166px;
+      left: 0;
+      right: 0;
+      text-align: center;
       top: 10px;
     }
 
@@ -137,9 +139,10 @@ export default {
       position: absolute;
       right: 16px;
       bottom: 10px;
+      letter-spacing: 0;
       visibility: hidden;
 
-      @media only screen and (min-width: 332px) {
+      @media only screen and (min-width: 316px) {
         visibility: visible;
       }
     }
