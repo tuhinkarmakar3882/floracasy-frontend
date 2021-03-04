@@ -103,7 +103,7 @@
           <img :src="item.photo" alt="story-photo" />
         </div>
 
-        <div v-if="item.storyType === 'audio'">
+        <div v-if="item.storyType === 'audio'" style="width: 100%">
           <AudioPlayer :audio-source="item.audio" />
         </div>
       </section>
