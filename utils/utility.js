@@ -110,3 +110,15 @@ export const blogImageParser = (blogToBeRendered) => {
 export const processLink = (link) => {
   return link ? `allow_authenticated${link.substr(21)}` : null
 }
+
+export const getFormattedTime = (decimalTimeInSeconds) => {
+  if (decimalTimeInSeconds === Infinity) return 'Calculating...'
+
+  const roundedSeconds = Math.round(decimalTimeInSeconds)
+  const seconds = roundedSeconds % 60
+  const minutes = Math.floor(roundedSeconds / 60)
+
+  return `${minutes.toString().padStart(2, '0')}:${seconds
+    .toString()
+    .padStart(2, '0')}`
+}
