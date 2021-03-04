@@ -110,9 +110,10 @@
 
             <transition name="scale-down">
               <section v-if="postAudio.source">
-                <audio class="my-6 px-4" controls style="width: 100%">
-                  <source :src="postAudio.source" />
-                </audio>
+                <AudioPlayer
+                  class="my-6 px-4"
+                  :audio-source="postAudio.source"
+                />
                 <aside
                   class="mdi mdi-close floating-close"
                   @click="clearAudioPreview"
