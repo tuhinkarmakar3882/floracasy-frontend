@@ -1,6 +1,12 @@
 <template>
   <div class="audio-player-component">
-    <section class="player-background">
+    <aside v-if="audioPlaybackError" class="player-background text-center">
+      <span class="mdi mdi-alert mdi-36px danger-light" />
+      <br />
+      <span class="danger-light">Unable to Load Audio</span>
+    </aside>
+
+    <section v-else class="player-background">
       <p class="header-text">Audio Note</p>
 
       <main>
@@ -51,7 +57,7 @@
 </template>
 
 <script>
-import { getFormattedTime } from '@/utils/utility'
+import { getFormattedTime, showUITip } from '@/utils/utility'
 
 export default {
   name: 'AudioPlayer',
@@ -65,10 +71,12 @@ export default {
     return {
       isMuted: false,
       isPlaying: false,
+      audioPlaybackError: false,
       currentPosition: 0,
       seekPosition: 0,
     }
   },
+
   watch: {
     currentPosition(value) {
       const percentage = value / this.$refs.audio.duration
@@ -76,6 +84,7 @@ export default {
       this.seekPosition = this.$refs.progressBar.scrollWidth * percentage
     },
   },
+
   mounted() {
     this.$refs.audio.addEventListener('timeupdate', this.updateCurrentTimeInUI)
     this.$refs.audio.addEventListener('ended', this.pause)
@@ -96,7 +105,11 @@ export default {
     },
     play() {
       this.isPlaying = true
-      this.$refs.audio.play()
+      this.$refs.audio.play().catch(() => {
+        this.audioPlaybackError = true
+        showUITip(this.$store, 'Check your network & Refresh', 'error')
+        this.pause()
+      })
     },
     pause() {
       this.isPlaying = false
