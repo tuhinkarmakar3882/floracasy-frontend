@@ -61,6 +61,10 @@ export default {
     this.$refs.audio.addEventListener('timeupdate', this.updateCurrentTimeInUI)
   },
 
+  beforeDestroy() {
+    this.pause()
+  },
+
   methods: {
     getFormattedTime,
     updateCurrentTimeInUI() {
