@@ -85,9 +85,6 @@ export default {
 
   mounted() {
     this.$refs.audio.addEventListener('timeupdate', this.updateCurrentTimeInUI)
-    this.$refs.audio.addEventListener('seeking', () => {
-      console.log('Seeking...')
-    })
     this.$refs.audio.addEventListener('ended', this.pause)
   },
 
@@ -234,10 +231,6 @@ export default {
         opacity: 0.7;
         border-radius: 12px;
         width: 63%;
-
-        &:hover {
-          all: unset;
-        }
       }
     }
 
