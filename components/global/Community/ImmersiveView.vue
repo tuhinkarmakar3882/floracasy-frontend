@@ -104,7 +104,7 @@
         </div>
 
         <div v-if="item.storyType === 'audio'">
-          <audio :src="item.audio" controls />
+          <AudioPlayer :audio-source="item.audio" />
         </div>
       </section>
 
