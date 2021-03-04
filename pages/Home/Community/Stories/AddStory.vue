@@ -235,14 +235,13 @@
           </section>
 
           <transition name="slide-up">
-            <audio
+            <AudioPlayer
               v-if="audio.source"
               class="my-6 px-4"
               controls
               style="width: 100%"
-            >
-              <source :src="audio.source" />
-            </audio>
+              :audio-source="audio.source"
+            />
           </transition>
 
           <section class="audio-controls">
