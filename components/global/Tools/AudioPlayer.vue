@@ -19,18 +19,16 @@
         />
 
         <section class="progress">
-          <div id="pg" ref="progressBar" class="bar" />
-          <div
-            :style="{
-              width: `${seekPosition}px`,
-            }"
-            class="active-bar"
-          />
-          <aside
-            :style="{
-              left: `${seekPosition + 60}px`,
-            }"
-            class="seek"
+          <input
+            v-model="seekPosition"
+            aria-label="progress-bar"
+            class="seek bar"
+            max="100"
+            min="0"
+            step="0.0001"
+            type="range"
+            value="0"
+            @change="changeSeekPosition"
           />
         </section>
 
@@ -81,12 +79,15 @@ export default {
     currentPosition(value) {
       const percentage = value / this.$refs.audio.duration
 
-      this.seekPosition = this.$refs.progressBar.scrollWidth * percentage
+      this.seekPosition = 100 * percentage
     },
   },
 
   mounted() {
     this.$refs.audio.addEventListener('timeupdate', this.updateCurrentTimeInUI)
+    this.$refs.audio.addEventListener('seeking', () => {
+      console.log('Seeking...')
+    })
     this.$refs.audio.addEventListener('ended', this.pause)
   },
 
@@ -98,6 +99,11 @@ export default {
     getFormattedTime,
     updateCurrentTimeInUI() {
       this.currentPosition = this.$refs.audio.currentTime
+    },
+
+    changeSeekPosition() {
+      this.$refs.audio.currentTime =
+        this.$refs.audio.duration * (this.seekPosition / 100)
     },
 
     togglePlayer() {
@@ -217,9 +223,9 @@ export default {
       .bar {
         position: absolute;
         height: 6px;
-        left: 68px;
+        left: 66px;
         right: 68px;
-        top: 39px;
+        top: 30px;
         background: linear-gradient(
           90deg,
           #9e9e9e 1.54%,
@@ -227,32 +233,11 @@ export default {
         );
         opacity: 0.7;
         border-radius: 12px;
-      }
+        width: 63%;
 
-      .active-bar {
-        position: absolute;
-        height: 6px;
-        left: 68px;
-        right: 68px;
-        top: 39px;
-        background: $secondary-highlight;
-        opacity: 0.7;
-        border-radius: 12px;
-      }
-
-      .seek {
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        left: 68px;
-        top: 34px;
-        border-radius: 50%;
-        background: radial-gradient(
-          53.57% 53.57% at 50% 46.43%,
-          #104753 0,
-          #81b1af 100%
-        );
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        &:hover {
+          all: unset;
+        }
       }
     }
 
