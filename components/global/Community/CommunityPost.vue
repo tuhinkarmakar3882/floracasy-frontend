@@ -57,8 +57,8 @@
       </div>
     </transition>
 
-    <section v-ripple class="post-body py-4 px-4" @click="viewPostDetails">
-      <p v-if="post.body" :style="post.style">
+    <section v-ripple="!!post.image || !!post.body" class="post-body py-4 px-4">
+      <p v-if="post.body" v-ripple :style="post.style" @click="viewPostDetails">
         {{
           expanded
             ? post.body
@@ -68,11 +68,19 @@
         }}
       </p>
 
-      <img v-if="post.image" :src="post.image" alt="image" class="mt-4" />
+      <img
+        v-if="post.image"
+        :src="post.image"
+        alt="image"
+        class="mt-4"
+        @click="viewPostDetails"
+      />
 
-      <audio v-if="post.audio" :src="post.audio" class="mt-4 mx-auto" controls>
-        <source :src="post.audio" type="audio/mp3" />
-      </audio>
+      <AudioPlayer
+        v-if="post.audio"
+        :audio-source="post.audio"
+        class="mt-4 mx-auto"
+      />
     </section>
 
     <hr class="faded-divider mt-2 mb-0" />
