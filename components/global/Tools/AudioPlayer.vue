@@ -6,15 +6,26 @@
       <main>
         <i
           v-ripple
-          class="mdi play-pause-button"
           :class="isPlaying ? 'mdi-pause-circle-outline' : 'mdi-play'"
           :style="isPlaying && { color: 'yellow' }"
+          class="mdi play-pause-button"
           @click="togglePlayer"
         />
 
         <section class="progress">
-          <div class="bar" />
-          <aside class="seek" />
+          <div id="pg" ref="progressBar" class="bar" />
+          <div
+            :style="{
+              width: `${seekPosition}px`,
+            }"
+            class="active-bar"
+          />
+          <aside
+            :style="{
+              left: `${seekPosition + 60}px`,
+            }"
+            class="seek"
+          />
         </section>
 
         <small v-if="$refs.audio" class="timings">
@@ -25,9 +36,9 @@
 
         <i
           v-ripple
-          class="mdi volume-button"
           :class="isMuted ? 'mdi-volume-mute' : 'mdi-volume-high'"
           :style="isMuted && { color: '#ff8282' }"
+          class="mdi volume-button"
           @click="toggleMute"
         />
       </main>
@@ -55,10 +66,19 @@ export default {
       isMuted: false,
       isPlaying: false,
       currentPosition: 0,
+      seekPosition: 0,
     }
+  },
+  watch: {
+    currentPosition(value) {
+      const percentage = value / this.$refs.audio.duration
+
+      this.seekPosition = this.$refs.progressBar.scrollWidth * percentage
+    },
   },
   mounted() {
     this.$refs.audio.addEventListener('timeupdate', this.updateCurrentTimeInUI)
+    this.$refs.audio.addEventListener('ended', this.pause)
   },
 
   beforeDestroy() {
@@ -103,6 +123,7 @@ export default {
 
 .audio-player-component {
   position: relative;
+  box-shadow: $default-box-shadow;
 
   .player-background {
     position: relative;
@@ -191,6 +212,17 @@ export default {
           #9e9e9e 1.54%,
           hsla(0, 0%, 62%, 0.3) 105.51%
         );
+        opacity: 0.7;
+        border-radius: 12px;
+      }
+
+      .active-bar {
+        position: absolute;
+        height: 6px;
+        left: 68px;
+        right: 68px;
+        top: 39px;
+        background: $secondary-highlight;
         opacity: 0.7;
         border-radius: 12px;
       }
