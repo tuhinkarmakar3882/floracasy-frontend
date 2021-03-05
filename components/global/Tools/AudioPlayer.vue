@@ -13,7 +13,7 @@
         <i
           v-ripple
           :class="isPlaying ? 'mdi-pause-circle-outline' : 'mdi-play'"
-          :style="isPlaying && { color: 'yellow' }"
+          :style="isPlaying && { color: '#8FF2E1' }"
           class="mdi play-pause-button"
           @click="togglePlayer"
         />
@@ -217,20 +217,128 @@ export default {
     }
 
     .progress {
-      .bar {
-        position: absolute;
-        height: 6px;
-        left: 66px;
-        right: 68px;
-        top: 30px;
-        background: linear-gradient(
-          90deg,
-          #9e9e9e 1.54%,
-          hsla(0, 0%, 62%, 0.3) 105.51%
-        );
-        opacity: 0.7;
-        border-radius: 12px;
-        width: 63%;
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        $track-background: #6d7273;
+
+        input[type='range'] {
+          position: absolute;
+          height: 6px;
+          padding: 0;
+          left: 66px;
+          right: 68px;
+          top: 39px;
+          opacity: 0.8;
+          border-radius: 12px;
+          width: 63%;
+          overflow: hidden;
+          outline: none;
+          border: none;
+          -webkit-appearance: none;
+          background-color: $track-background;
+
+          &::-webkit-slider-runnable-track {
+            width: 63%;
+            height: 10px;
+            -webkit-appearance: none;
+            color: $vibrant;
+            margin-top: -1px;
+          }
+
+          &::-moz-range-progress {
+            background-color: $vibrant;
+          }
+
+          &::-ms-fill-lower {
+            background-color: $vibrant;
+          }
+
+          &::-moz-range-track {
+            background-color: $track-background;
+          }
+
+          &::-ms-fill-upper {
+            background-color: $track-background;
+          }
+
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: $thumb;
+            cursor: pointer;
+            box-shadow: -80px 0 0 80px $vibrant;
+            border: none;
+          }
+
+          &::-moz-range-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: $thumb;
+            cursor: pointer;
+            box-shadow: -80px 0 0 80px $vibrant;
+            border: none;
+          }
+
+          &::-ms-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: $thumb;
+            cursor: pointer;
+            box-shadow: -80px 0 0 80px $vibrant;
+            border: none;
+          }
+
+          &:focus {
+            outline: none;
+          }
+
+          &::-ms-track {
+            width: 63%;
+            cursor: pointer;
+            background: transparent; /* Hides the slider so custom styles can be added */
+            border-color: transparent;
+            color: transparent;
+          }
+        }
+
+        .bar {
+          &::-moz-range-track {
+            height: 4px;
+            background: linear-gradient(
+              90deg,
+              #9e9e9e 1.54%,
+              hsla(0, 0%, 62%, 0.3) 105.51%
+            );
+          }
+
+          &::-moz-range-progress,
+          &::-webkit-progress-value {
+            -webkit-appearance: none;
+            height: 8px;
+            background-color: #00fff7;
+          }
+
+          &::-ms-track {
+            height: 4px;
+            cursor: pointer;
+            background: transparent;
+            border-color: transparent;
+            border-width: 16px 0;
+            color: transparent;
+          }
+
+          &:focus,
+          &:hover {
+            outline: none;
+            border: none;
+          }
+
+          &:focus::-webkit-slider-runnable-track {
+            background: #ccc;
+          }
+        }
       }
     }
 
