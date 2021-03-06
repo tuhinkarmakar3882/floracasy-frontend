@@ -2,6 +2,8 @@
   <footer class="page-footer">
     <h5 class="text-center my-2">Floracasy</h5>
 
+    <hr class="reversed-faded-divider" />
+
     <section class="tag-lines">
       <p class="option">Blog</p>
       <p class="option">Community</p>
@@ -13,20 +15,23 @@
 
     <div class="communication">
       <section class="page-links">
-        <p class="text-center">Quick Links</p>
-        <nuxt-link :to="navigationRoutes.Home.MoreOptions.About">
-          About
-        </nuxt-link>
-        <nuxt-link
-          :to="navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback"
-        >
-          Support
-        </nuxt-link>
+        <p>Quick Links</p>
+
+        <aside class="mt-4">
+          <nuxt-link :to="navigationRoutes.Home.MoreOptions.About">
+            About
+          </nuxt-link>
+          <nuxt-link
+            :to="navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback"
+          >
+            Support
+          </nuxt-link>
+        </aside>
       </section>
 
       <section class="social-links">
-        <p class="text-center">Let's Connect</p>
-        <aside>
+        <p class="text-right">Let's Connect</p>
+        <aside class="text-right">
           <i class="mdi mdi-linkedin mdi-48px" />
           <i class="mdi mdi-gmail mdi-48px" />
         </aside>
@@ -34,15 +39,20 @@
     </div>
 
     <section class="text-center">
-      <button class="secondary-outlined-btn my-4">Sign up or Log in</button>
+      <button
+        v-ripple
+        class="secondary-outlined-btn my-4"
+        @click="$router.push(navigationRoutes.Authentication.SignInToContinue)"
+      >
+        Sign up or Log in
+      </button>
 
-      <br />
       <a class="no-underline my-4" href="#">
         <i class="mdi mdi-triangle mdi-18px" />
         Back to Top
       </a>
-      <br />
-      <p class="my-2">
+
+      <p>
         <small>&copy; Floracasy.com {{ new Date().getFullYear() }}</small>
       </p>
     </section>
@@ -92,26 +102,18 @@ footer.page-footer {
     align-content: center;
   }
 
+  a {
+    display: block;
+  }
+
   .communication {
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-content: center;
 
-    .page-links {
-      a {
-        display: block;
-      }
-    }
-
     .social-links {
       display: flex;
       flex-direction: column;
-
-      aside {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
     }
   }
 }
