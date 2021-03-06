@@ -88,12 +88,12 @@ export default {
         overflow: 'hidden',
       },
       listOptions: [
-        {
-          name: 'New Feature',
-          icon: 'mdi mdi-crown',
-          color: '#8FF2E1',
-          route: '/',
-        },
+        // {
+        //   name: 'New Feature',
+        //   icon: 'mdi mdi-crown',
+        //   color: '#8FF2E1',
+        //   route: '/',
+        // },
         {
           name: 'Write & Earn',
           icon: 'mdi mdi-currency-usd',
