@@ -11,7 +11,7 @@
 
       <LazyEarnWithUs class="segment" />
 
-      <LazyHearTheExperiences class="segment" />
+      <LazyHearTheExperiences v-if="showExperiences" class="segment" />
 
       <LazyProZone v-if="usePremiumServices" class="segment" />
     </main>
@@ -30,6 +30,7 @@ export default {
     return {
       pageTitle: 'Welcome to Floracasy',
       usePremiumServices,
+      showExperiences: false,
     }
   },
 
