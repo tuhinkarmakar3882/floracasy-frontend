@@ -1,8 +1,6 @@
 # Pending Tasks:
 
 > ### Production Issues:
-> - Fix Share for Blogs
-> - Fix Share for Posts
 > - FAQ Backend Connection
 > - Add Background Refresh for Auth Token
 > - Add Tap for Going towards Next Story
@@ -26,7 +24,6 @@
 
 
 > ### Landing Pages
->   - Fix Footer
 >   - Fix Community Showcase
 
 
