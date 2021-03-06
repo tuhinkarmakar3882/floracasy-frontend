@@ -179,7 +179,7 @@ export default {
     blockquote.carousel-item {
       border: none;
       border-radius: $xx-large-unit;
-      width: 80vw;
+      width: calc(100vw - 32px);
 
       img {
         border-radius: 50%;
