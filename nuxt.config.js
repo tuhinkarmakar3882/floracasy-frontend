@@ -286,7 +286,12 @@ export default {
     },
   },
 
-  loading: { color: '#C5C2FF' },
+  loading: {
+    color: '#aeacff',
+    failedColor: '#ff8282',
+    continuous: true,
+    height: '2px',
+  },
 
   loadingIndicator: {
     name: 'rectangle-bounce',
