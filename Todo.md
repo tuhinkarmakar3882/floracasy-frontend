@@ -6,10 +6,8 @@
 > - FAQ Backend Connection
 > - Add Background Refresh for Auth Token
 > - Add Tap for Going towards Next Story
-
-
-> ### Help & Support:
->  - Fix Message Display
+> - Fix Message Display
+> - Add Share Fallback
 
 
 > ### Community:

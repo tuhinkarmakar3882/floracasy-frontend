@@ -137,6 +137,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
+$seek-progress: -1000px 0 0 1000px $vibrant;
 .audio-player-component {
   position: relative;
   box-shadow: $default-box-shadow;
@@ -266,7 +267,7 @@ export default {
             height: 16px;
             background: $thumb;
             cursor: pointer;
-            box-shadow: -80px 0 0 80px $vibrant;
+            box-shadow: $seek-progress;
             border: none;
           }
 
@@ -276,7 +277,7 @@ export default {
             height: 16px;
             background: $thumb;
             cursor: pointer;
-            box-shadow: -80px 0 0 80px $vibrant;
+            box-shadow: $seek-progress;
             border: none;
           }
 
@@ -286,7 +287,7 @@ export default {
             height: 16px;
             background: $thumb;
             cursor: pointer;
-            box-shadow: -80px 0 0 80px $vibrant;
+            box-shadow: $seek-progress;
             border: none;
           }
 
