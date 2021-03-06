@@ -40,6 +40,7 @@
 
     <section class="text-center">
       <button
+        v-if="!user"
         v-ripple
         class="secondary-outlined-btn my-4"
         @click="$router.push(navigationRoutes.Authentication.SignInToContinue)"
@@ -60,6 +61,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
@@ -75,6 +77,11 @@ export default {
       ],
       joinUsButtonLoading: false,
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
   methods: {
     changeIt() {
