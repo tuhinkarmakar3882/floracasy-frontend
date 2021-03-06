@@ -6,7 +6,7 @@
       <nuxt />
     </main>
 
-    <LazyFooter />
+    <LazyFooter class="px-4 py-4" />
 
     <LazyInstallBadge class="install-badge" show-close-button />
   </div>
@@ -28,11 +28,5 @@ export default {
   width: 100%;
   z-index: 2;
   border-radius: $micro-unit $micro-unit 0 0;
-}
-
-.main-router-content {
-  max-width: $max-width;
-  margin-left: auto;
-  margin-right: auto;
 }
 </style>
