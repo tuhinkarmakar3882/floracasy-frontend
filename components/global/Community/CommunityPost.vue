@@ -57,7 +57,7 @@
       </div>
     </transition>
 
-    <section v-ripple="!!post.image || !!post.body" class="post-body py-4 px-4">
+    <section class="post-body py-4 px-4">
       <p v-if="post.body" v-ripple :style="post.style" @click="viewPostDetails">
         {{
           expanded
