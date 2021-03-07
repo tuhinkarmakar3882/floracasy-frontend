@@ -86,7 +86,11 @@
       </div>
     </transition>
 
-    <main class="story-display-container" @scroll="calculateActiveElement">
+    <main
+      ref="storyDisplayContainer"
+      class="story-display-container"
+      @scroll="calculateActiveElement"
+    >
       <FallBackLoader v-if="loadingStories" class="my-4" />
 
       <section
@@ -107,6 +111,11 @@
           <AudioPlayer :audio-source="item.audio" />
         </div>
       </section>
+
+      <aside class="controls">
+        <button class="forward" @click="nextStory" />
+        <button class="backward" @click="prevStory" />
+      </aside>
 
       <LoadingError
         v-if="errorWhileFetchingStory"
@@ -134,7 +143,7 @@
         />
       </section>
 
-      <aside class="reactions hidden" :class="showReactionOptions && 'open'">
+      <aside :class="showReactionOptions && 'open'" class="reactions hidden">
         <i
           v-for="(reaction, index) in reactions"
           :key="index"
@@ -308,6 +317,18 @@ export default {
     updateReaction(activeItem, reactionType, hasReaction) {
       this.allStories[activeItem].reactions.hasReaction = hasReaction
       this.allStories[activeItem].reactions.reactionType = reactionType
+    },
+    nextStory() {
+      this.$refs.storyDisplayContainer.scrollBy({
+        left: 100,
+        behavior: 'smooth',
+      })
+    },
+    prevStory() {
+      this.$refs.storyDisplayContainer.scrollBy({
+        left: -100,
+        behavior: 'smooth',
+      })
     },
   },
 }
@@ -529,6 +550,28 @@ export default {
       .text-story {
         text-align: center;
         line-height: 1.75;
+      }
+    }
+
+    .controls {
+      button {
+        all: unset;
+      }
+
+      .forward,
+      .backward {
+        position: absolute !important;
+        height: calc(100vh - 56px);
+        width: 20vw;
+        top: 56px;
+      }
+
+      .forward {
+        right: 0;
+      }
+
+      .backward {
+        left: 0;
       }
     }
   }
