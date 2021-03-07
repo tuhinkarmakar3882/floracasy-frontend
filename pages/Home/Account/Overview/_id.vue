@@ -83,6 +83,31 @@
               :blog="blog"
               class="activity pt-4"
             />
+            <footer v-if="!loadingError">
+              <client-only>
+                <infinite-loading
+                  key="infinite-blog-fetch"
+                  @infinite="loadBlogs"
+                >
+                  <template slot="spinner">
+                    <LoadingIcon class="mt-4 mb-8" />
+                    <p>Getting your blogs...</p>
+                  </template>
+
+                  <template slot="error">
+                    <p class="danger-light my-6">Network Error</p>
+                  </template>
+
+                  <template slot="no-more">
+                    <div />
+                  </template>
+
+                  <template slot="no-results">
+                    <p class="my-5">It's Lonely Here...</p>
+                  </template>
+                </infinite-loading>
+              </client-only>
+            </footer>
           </section>
 
           <section v-if="tabNumber === 1">
@@ -92,52 +117,35 @@
               :post="post"
               class="activity py-8"
             />
+            <footer v-if="!loadingError">
+              <client-only>
+                <infinite-loading
+                  key="infinite-posts-fetch"
+                  @infinite="loadPosts"
+                >
+                  <template slot="spinner">
+                    <LoadingIcon class="mt-4 mb-8" />
+                    <p>Getting your posts...</p>
+                  </template>
+
+                  <template slot="error">
+                    <p class="danger-light my-6">Network Error</p>
+                  </template>
+
+                  <template slot="no-more">
+                    <div />
+                  </template>
+
+                  <template slot="no-results">
+                    <p class="my-5">It's Lonely Here...</p>
+                  </template>
+                </infinite-loading>
+              </client-only>
+            </footer>
           </section>
         </main>
       </section>
     </main>
-
-    <footer v-if="!loadingError">
-      <client-only>
-        <infinite-loading key="infinite-blog-fetch" @infinite="loadBlogs">
-          <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-8" />
-            <p>Getting your blogs...</p>
-          </template>
-
-          <template slot="error">
-            <p class="danger-light my-6">Network Error</p>
-          </template>
-
-          <template slot="no-more">
-            <div />
-          </template>
-
-          <template slot="no-results">
-            <p class="my-5">It's Lonely Here...</p>
-          </template>
-        </infinite-loading>
-
-        <infinite-loading key="infinite-posts-fetch" @infinite="loadPosts">
-          <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-8" />
-            <p>Getting your posts...</p>
-          </template>
-
-          <template slot="error">
-            <p class="danger-light my-6">Network Error</p>
-          </template>
-
-          <template slot="no-more">
-            <div />
-          </template>
-
-          <template slot="no-results">
-            <p class="my-5">It's Lonely Here...</p>
-          </template>
-        </infinite-loading>
-      </client-only>
-    </footer>
   </div>
 </template>
 
