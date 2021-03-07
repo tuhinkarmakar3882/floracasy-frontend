@@ -29,9 +29,7 @@ messaging.onBackgroundMessage((payload) => {
   const notification = payload.notification
   const notificationTitle = notification?.title
   const notificationOptions = {
-    body: notification?.body,
-    icon: notification?.image || '/static/icon.png',
-    image: notification?.image || '/static/icon.png',
+    icon: '/static/icon.png',
     vibrate: [300, 100, 400, 100, 400, 100, 400],
     data: {
       click_action: notification?.click_action,
