@@ -32,7 +32,6 @@ self.addEventListener('activate', (event) => {
 
 // Serve from Cache
 self.addEventListener('fetch', (event) => {
-  console.log('Fetch event for ', event.request.url)
   event.respondWith(
     caches
       .match(event.request)
