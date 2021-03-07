@@ -53,6 +53,9 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { showUITip } from '~/utils/utility'
+import { firebaseCloudMessaging } from '~/plugins/firebase'
+import { vapidKey } from '~/environmentVariables'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Preferences',
@@ -91,32 +94,66 @@ export default {
       try {
         const notificationState = await Notification.requestPermission().then()
         if (notificationState === 'granted') {
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Notifications are enabled',
-            notificationType: 'success',
-            dismissible: true,
-          })
           this.switchState = true
+          await this.setupFCM()
         }
         if (notificationState === 'default') {
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'May be some other day? No Problem.',
-            notificationType: 'info',
-            dismissible: true,
-          })
+          await showUITip(
+            this.$store,
+            'May be some other day? No Problem.',
+            'info'
+          )
         }
         if (notificationState === 'denied') {
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Please Turn on Manually.',
-            notificationType: 'error',
-            dismissible: true,
-          })
+          await showUITip(
+            this.$store,
+            'Please Turn on Manually by going to site settings in Browser ',
+            'error'
+          )
         }
       } catch (e) {
         await showUITip(
           this.$store,
           'Notifications are not Supported',
           'warning'
+        )
+      }
+    },
+
+    async setupFCM() {
+      this.fcm = firebaseCloudMessaging()
+
+      try {
+        const token = await this.fcm.getToken({
+          vapidKey,
+        })
+        await this.sendToServer(token)
+      } catch (e) {
+        await showUITip(this.$store, 'Something Went Wrong', 'error')
+      }
+    },
+
+    async sendToServer(token) {
+      try {
+        await this.$axios.$post(endpoints.notification_system.saveFCMToken, {
+          registrationToken: token,
+          deviceType: 'web',
+        })
+        if (!localStorage.getItem('already-shown')) {
+          await showUITip(this.$store, 'Notifications are Active', 'success')
+          localStorage.setItem('already-shown', 'true')
+        } else {
+          await showUITip(
+            this.$store,
+            "No need, It's already active",
+            'success'
+          )
+        }
+      } catch (e) {
+        await showUITip(
+          this.$store,
+          'Unable to Activate Realtime Notifications...',
+          'error'
         )
       }
     },
