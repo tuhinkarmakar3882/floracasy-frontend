@@ -1,7 +1,8 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/analytics'
-import { analyticsID } from '~/environmentalVariables'
+import 'firebase/messaging'
+import { analyticsID } from '~/environmentVariables'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBC8dH53PFPOWqN72FHSZtjM6ekF3gbEOM',
@@ -20,3 +21,4 @@ if (firebase.apps.length === 0) {
 }
 
 export const auth = firebase.auth()
+export const firebaseCloudMessaging = firebase.messaging
