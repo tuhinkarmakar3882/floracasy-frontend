@@ -50,7 +50,7 @@
       <p class="footer-text">Powered by Floracasy</p>
     </section>
 
-    <audio id="ax" ref="audio" :src="audioSource || '/audio/test-audio.mp3'" />
+    <audio id="ax" ref="audio" :src="audioSource" />
   </div>
 </template>
 
