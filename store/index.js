@@ -1,5 +1,5 @@
 import endpoints from '@/api/endpoints'
-import * as secrets from '@/environmentalVariables'
+import * as secrets from '@/environmentVariables'
 import { auth } from '@/plugins/firebase.js'
 
 export const state = () => {

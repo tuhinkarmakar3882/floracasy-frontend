@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { usePremiumServices } from '~/environmentalVariables'
+import { usePremiumServices } from '~/environmentVariables'
 
 export default {
   name: 'LandingPage',

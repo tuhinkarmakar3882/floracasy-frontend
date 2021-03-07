@@ -57,17 +57,10 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import NotificationItem from '~/components/global/Home/Notification/NotificationItem'
 import { processLink } from '~/utils/utility'
 
 export default {
   name: 'Notifications',
-  components: {
-    RequestPermissionDialog: () =>
-      import('@/components/global/Home/Notification/RequestPermissionDialog'),
-    NotificationItem,
-    LoadingIcon: () => import('@/components/global/LoadingIcon'),
-  },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 

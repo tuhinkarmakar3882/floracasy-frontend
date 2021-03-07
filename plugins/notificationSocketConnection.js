@@ -1,5 +1,5 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import * as secrets from '~/environmentalVariables'
+import * as secrets from '~/environmentVariables'
 import { showUITip } from '~/utils/utility'
 
 export default async ({ store, $cookies }) => {

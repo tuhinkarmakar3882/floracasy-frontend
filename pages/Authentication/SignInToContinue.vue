@@ -43,7 +43,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
-import * as secrets from '@/environmentalVariables'
+import * as secrets from '@/environmentVariables'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { showUITip } from '~/utils/utility'
 

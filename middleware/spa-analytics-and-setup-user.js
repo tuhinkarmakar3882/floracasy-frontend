@@ -1,5 +1,5 @@
 import { setupUser } from '~/utils/utility'
-import { analyticsID } from '~/environmentalVariables'
+import { analyticsID } from '~/environmentVariables'
 
 export default async ({ app, store }) => {
   app.router.afterEach(async (to, _) => {

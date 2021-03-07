@@ -1,4 +1,4 @@
-import * as secrets from '../environmentalVariables'
+import * as secrets from '../environmentVariables'
 
 export const policies = {
   'default-src': ["'self'", ...secrets.PRIMARY_HOSTS],

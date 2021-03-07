@@ -1,5 +1,5 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { useMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentVariables'
 
 const messageOption = [
   {

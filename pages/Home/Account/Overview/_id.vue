@@ -154,7 +154,7 @@ import { mapGetters } from 'vuex'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
-import { useMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentVariables'
 
 export default {
   name: 'Overview',

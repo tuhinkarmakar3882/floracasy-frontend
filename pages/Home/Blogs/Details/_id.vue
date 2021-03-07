@@ -148,7 +148,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { sanitizationConfig } from '@/config/sanitizationConfig'
 import { mapGetters } from 'vuex'
 
-const { useMessageService } = require('~/environmentalVariables')
+const { useMessageService } = require('~/environmentVariables')
 
 export default {
   name: 'BlogDetails',

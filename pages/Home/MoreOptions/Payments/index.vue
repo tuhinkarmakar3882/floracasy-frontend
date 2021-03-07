@@ -86,7 +86,7 @@
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import KeyPoint from '@/components/global/KeyPoint'
-import { usePremiumServices } from '~/environmentalVariables'
+import { usePremiumServices } from '~/environmentVariables'
 
 export default {
   name: 'Payments',

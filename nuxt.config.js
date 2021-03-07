@@ -1,10 +1,10 @@
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
-import * as secrets from './environmentalVariables'
+import * as secrets from './environmentVariables'
 import {
   useRealtimeNotifications,
   useSentryLogging,
   useTouchEvents,
-} from './environmentalVariables'
+} from './environmentVariables'
 import * as packageJson from './package.json'
 // import { ADSENSE_CSP } from './config/csp-policies'
 

@@ -243,7 +243,7 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import NotificationBadge from '@/components/global/NotificationBadge'
-import { useMessageService } from '~/environmentalVariables'
+import { useMessageService } from '~/environmentVariables'
 import CustomListView from '~/components/global/Layout/CustomListView'
 import Logo from '~/components/global/Logo'
 

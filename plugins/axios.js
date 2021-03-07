@@ -1,4 +1,4 @@
-import { cookieSavingConfig } from '~/environmentalVariables'
+import { cookieSavingConfig } from '~/environmentVariables'
 
 const errorMessages = {
   credentialsWereNotProvided: 'Authentication credentials were not provided.',

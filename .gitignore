@@ -1,4 +1,4 @@
-environmentalVariables.js
+environmentVariables.js
 yarn.lock
 deploy/keys/*
 # Created by https://www.toptal.com/developers/gitignore/api/vue,vuejs,pycharm+all,yarn,node
