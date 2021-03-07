@@ -1,5 +1,9 @@
 self.addEventListener('notificationclick', function (event) {
-  self.clients.openWindow('http://localhost:3001', '_blank')
+  self.clients.openWindow(
+    event.notification.data.FCM_MSG.data.click_action ||
+      'https://floracasy.com',
+    '_blank'
+  )
   event.notification.close()
 })
 
@@ -26,13 +30,13 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = notification?.title
   const notificationOptions = {
     body: notification?.body,
-    icon: '/static/splash/logo-512x512.png',
-    image: '/static/splash/logo-512x512.png',
+    icon: notification?.image || '/static/icon.png',
+    image: notification?.image || '/static/icon.png',
     vibrate: [300, 100, 400, 100, 400, 100, 400],
     data: {
       click_action: notification?.click_action,
     },
-    actions: [{ action: 'open_url', title: 'Read Now' }],
+    actions: [{ action: 'open_url', title: 'Check Now' }],
     click_action: notification?.click_action,
   }
 
