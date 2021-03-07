@@ -47,7 +47,7 @@
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { firebaseCloudMessaging } from '~/plugins/firebase'
+import { firebaseCloudMessaging } from '~/plugins/fcm'
 import endpoints from '~/api/endpoints'
 import { showUITip } from '~/utils/utility'
 import { vapidKey } from '~/environmentVariables'
@@ -107,10 +107,8 @@ export default {
     },
 
     async setupFCM() {
-      this.fcm = firebaseCloudMessaging()
-
       try {
-        const token = await this.fcm.getToken({
+        const token = await firebaseCloudMessaging.getToken({
           vapidKey,
         })
         await this.sendToServer(token)

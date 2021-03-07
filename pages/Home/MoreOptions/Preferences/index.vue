@@ -50,20 +50,14 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { showUITip } from '~/utils/utility'
-import { firebaseCloudMessaging } from '~/plugins/firebase'
+import { firebaseCloudMessaging } from '~/plugins/fcm'
 import { vapidKey } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Preferences',
-  components: {
-    SwitchButton: () => import('@/components/global/SwitchButton'),
-    CustomListView: () => import('@/components/global/Layout/CustomListView'),
-    AppFeel,
-  },
   middleware: 'isAuthenticated',
   data() {
     return {
@@ -121,10 +115,8 @@ export default {
     },
 
     async setupFCM() {
-      this.fcm = firebaseCloudMessaging()
-
       try {
-        const token = await this.fcm.getToken({
+        const token = await firebaseCloudMessaging.getToken({
           vapidKey,
         })
         await this.sendToServer(token)

@@ -1,7 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/analytics'
-import 'firebase/messaging'
 import { analyticsID } from '~/environmentVariables'
 
 const firebaseConfig = {
@@ -21,4 +20,3 @@ if (firebase.apps.length === 0) {
 }
 
 export const auth = firebase.auth()
-export const firebaseCloudMessaging = firebase.messaging
