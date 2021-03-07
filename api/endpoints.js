@@ -1,4 +1,4 @@
-import { uploadServerBase } from '~/environmentalVariables'
+import { uploadServerBase } from '~/environmentVariables'
 
 const endpoints = {
   auth: {
@@ -94,6 +94,8 @@ const endpoints = {
   },
   notification_system: {
     fetch: '/allow_authenticated/notification_system/fetch/',
+    saveFCMToken: '/allow_authenticated/notification_system/save_fcm_token/',
+
     updateNotificationSeenStatus:
       '/allow_authenticated/notification_system/update_notification_seen_status/',
     getNotificationChannelId:
