@@ -3,8 +3,7 @@
 > ### Production Issues:
 > - FAQ Backend Connection
 > - Add Background Refresh for Auth Token
-> - Add Tap for Going towards Next Story
-> - Fix Message Display
+> - Fix Help & Support Message Display
 > - Add Share Fallback
 
 
@@ -14,7 +13,7 @@
 
 
 > ### Payments:
->   - Add Payments Detail Page
+>   - Add Payments Page
 >   - Handle Payments
 
 
@@ -24,7 +23,7 @@
 
 
 > ### Landing Pages
->   - Fix Community Showcase
+>   - Migrate to On-Boarding App Style
 
 
 > ### Go To Market Activity
@@ -51,7 +50,6 @@
 
 
 > ### Message System:
->   - Add feature toggle
 >   - Fix security bug
 >   - Fix Chat Message Screen CSS
 >   - Add a check before showing the message on the message chat
