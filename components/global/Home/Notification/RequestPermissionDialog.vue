@@ -1,7 +1,7 @@
 <template>
   <div
-    class="request-permission-dialog text-center px-2"
     :style="[showBanner ? { height: '300px' } : {}]"
+    class="request-permission-dialog text-center px-2"
   >
     <section v-if="maybeLater">
       <h5 class="text-center mb-4">No Problem</h5>
@@ -47,6 +47,10 @@
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { firebaseCloudMessaging } from '~/plugins/firebase'
+import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
+import { vapidKey } from '~/environmentVariables'
 
 export default {
   name: 'RequestPermissionDialog',
@@ -58,9 +62,10 @@ export default {
       success: false,
       maybeLater: false,
       computedHeight: 0,
+      fcm: undefined,
     }
   },
-  mounted() {
+  async mounted() {
     if (
       Notification.permission !== 'granted' &&
       Notification.permission !== 'denied'
@@ -78,6 +83,8 @@ export default {
           (parseInt(hideNotificationConsent) - 1).toString()
         )
     }
+
+    if (Notification.permission === 'granted') await this.setupFCM()
   },
 
   methods: {
@@ -87,6 +94,7 @@ export default {
           case 'granted':
             this.success = true
             this.maybeLater = false
+            this.setupFCM()
             this.hideBanner()
             break
           case 'denied':
@@ -97,6 +105,36 @@ export default {
         }
       })
     },
+
+    async setupFCM() {
+      this.fcm = firebaseCloudMessaging()
+
+      try {
+        const token = await this.fcm.getToken({
+          vapidKey,
+        })
+        await this.sendToServer(token)
+      } catch (e) {
+        await showUITip(this.$store, 'Something Went Wrong', 'error')
+      }
+    },
+
+    async sendToServer(token) {
+      try {
+        await this.$axios.$post(endpoints.notification_system.saveFCMToken, {
+          registrationToken: token,
+          deviceType: 'web',
+        })
+        await showUITip(this.$store, 'Notifications are Active', 'success')
+      } catch (e) {
+        await showUITip(
+          this.$store,
+          'Unable to Activate Realtime Notifications...',
+          'error'
+        )
+      }
+    },
+
     showMaybeAndCollapse() {
       this.success = false
       this.maybeLater = true
