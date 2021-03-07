@@ -141,7 +141,7 @@ export default {
           break
 
         case 'like_blog':
-          await this.openModal()
+          await this.openModalForBlogLike()
           break
 
         case 'open_ticket_detail':
@@ -155,7 +155,7 @@ export default {
           break
 
         case 'open_blog_comment_page':
-          await this.openModal()
+          await this.openModalForBlogComments()
           break
 
         default:
@@ -178,11 +178,17 @@ export default {
       await this.$router.back()
     },
 
-    async openModal() {
+    async openModalForBlogComments() {
       this.message = undefined
       await this.$router.push('#detail')
       this.showModal = true
       await this.getCommentMessage(this.notification.onclickActionInfo)
+    },
+
+    async openModalForBlogLike() {
+      this.message = undefined
+      await this.$router.push('#detail')
+      this.showModal = true
     },
 
     async openProfilePage(keyName) {
