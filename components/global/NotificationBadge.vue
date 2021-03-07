@@ -1,18 +1,19 @@
 <template>
   <client-only>
     <div
-      class="notification-badge"
       :style="[{ height: socketMessage ? '56px' : 0 }]"
+      class="notification-badge"
     >
       <span
         v-if="socketMessage"
-        class="mdi mr-3"
         :class="getIconFor(socketMessageType)"
         :style="{ color: getColorFor(socketMessageType) }"
+        class="mdi mr-3"
       />
       <p :style="{ color: getColorFor(socketMessageType) }">
         {{ socketMessage }}
       </p>
+      <audio ref="notificationTone" src="/audio/notify.mp3" />
     </div>
   </client-only>
 </template>
@@ -27,6 +28,20 @@ export default {
       socketMessageType: 'SocketHandler/getSocketMessageType',
     }),
   },
+  watch: {
+    socketMessage(newMessage) {
+      if (!newMessage) return
+      switch (this.socketMessageType) {
+        case 'error' || 'reconnecting' || 'warning':
+          break
+
+        default:
+          this.$refs.notificationTone.play().catch(() => {})
+          break
+      }
+    },
+  },
+
   methods: {
     getIconFor(notificationType) {
       switch (notificationType) {
