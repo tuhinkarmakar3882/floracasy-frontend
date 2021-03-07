@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import * as Sentry from '@sentry/vue'
 import { Integrations } from '@sentry/tracing'
-import { sentryDSN } from '~/environmentalVariables'
+import { sentryDSN } from '~/environmentVariables'
 
 Sentry.init({
   Vue,
