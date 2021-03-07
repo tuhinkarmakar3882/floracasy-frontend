@@ -13,7 +13,7 @@
       <p :style="{ color: getColorFor(socketMessageType) }">
         {{ socketMessage }}
       </p>
-      <audio ref="notificationTone" src="/audio/notify.mp3" />
+      <!--      <audio ref="notificationTone" src="/audio/notify.mp3" />-->
     </div>
   </client-only>
 </template>
@@ -28,19 +28,19 @@ export default {
       socketMessageType: 'SocketHandler/getSocketMessageType',
     }),
   },
-  watch: {
-    socketMessage(newMessage) {
-      if (!newMessage) return
-      switch (this.socketMessageType) {
-        case 'error' || 'reconnecting' || 'warning':
-          break
-
-        default:
-          this.$refs.notificationTone.play().catch(() => {})
-          break
-      }
-    },
-  },
+  // watch: {
+  //   socketMessage(newMessage) {
+  //     if (!newMessage) return
+  //     switch (this.socketMessageType) {
+  //       case 'error' || 'reconnecting' || 'warning' || 'success':
+  //         break
+  //
+  //       default:
+  //         this.$refs.notificationTone.play().catch(() => {})
+  //         break
+  //     }
+  //   },
+  // },
 
   methods: {
     getIconFor(notificationType) {
