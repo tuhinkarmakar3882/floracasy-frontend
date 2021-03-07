@@ -125,7 +125,10 @@ export default {
           registrationToken: token,
           deviceType: 'web',
         })
-        await showUITip(this.$store, 'Notifications are Active', 'success')
+        if (!localStorage.getItem('already-shown')) {
+          await showUITip(this.$store, 'Notifications are Active', 'success')
+          localStorage.setItem('already-shown', 'true')
+        }
       } catch (e) {
         await showUITip(
           this.$store,
