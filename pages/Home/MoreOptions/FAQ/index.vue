@@ -76,15 +76,11 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import QuestionCard from '~/pages/Home/MoreOptions/FAQ/QuestionCard'
-import CustomListView from '~/components/global/Layout/CustomListView'
 
 export default {
   name: 'FAQ',
   middleware: 'isAuthenticated',
-  components: { CustomListView, QuestionCard, AppFeel },
   data() {
     return {
       drawerIsOpened: false,
