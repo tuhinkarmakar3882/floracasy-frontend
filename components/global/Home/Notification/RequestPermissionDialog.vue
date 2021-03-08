@@ -107,11 +107,11 @@ export default {
 
     async setupFCM() {
       try {
-        const { firebaseCloudMessaging } = require('~/plugins/firebase')
-        const token = await firebaseCloudMessaging.getToken({
+        const { firebaseCloudMessaging } = require('~/plugins/fcm')
+        const token = await firebaseCloudMessaging?.getToken({
           vapidKey,
         })
-        await this.sendToServer(token)
+        token && (await this.sendToServer(token))
       } catch (e) {
         await showUITip(this.$store, 'Something Went Wrong', 'error')
       }

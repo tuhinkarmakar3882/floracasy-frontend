@@ -1,9 +1,6 @@
 self.addEventListener('notificationclick', function (event) {
-  self.clients.openWindow(
-    event.notification.data.FCM_MSG.data.click_action ||
-      'https://floracasy.com/Home/Notifications',
-    '_blank'
-  )
+  // event.notification.data.FCM_MSG.data.click_action ||
+  self.clients.openWindow('https://floracasy.com/Home/Notifications', '_blank')
   event.notification.close()
 })
 

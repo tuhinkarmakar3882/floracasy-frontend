@@ -3,7 +3,6 @@ import 'firebase/auth'
 import 'firebase/analytics'
 import 'firebase/messaging'
 import { analyticsID } from '~/environmentVariables'
-import { showUITip } from '~/utils/utility'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBC8dH53PFPOWqN72FHSZtjM6ekF3gbEOM',
@@ -22,21 +21,3 @@ if (firebase.apps.length === 0) {
 }
 
 export const auth = firebase.auth()
-
-export const firebaseCloudMessaging = process.client
-  ? firebase.messaging()
-  : undefined
-
-export default function ({ store }) {
-  process.client &&
-    firebaseCloudMessaging.onMessage(async function (payload) {
-      const notification = payload.notification
-      await showUITip(
-        store,
-        notification.title,
-        notification.type || 'info',
-        notification.dismissible || true,
-        notification.timeout || 2500
-      )
-    })
-}
