@@ -18,7 +18,6 @@
 
 
 > ### Miscellaneous
->   - Firebase Cloud Message Notifications
 >   - Add Desktop Layout
 
 
