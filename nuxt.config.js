@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentVariables'
 import {
@@ -6,6 +7,7 @@ import {
   useTouchEvents,
 } from './environmentVariables'
 import * as packageJson from './package.json'
+import endpoints from './api/endpoints'
 // import { ADSENSE_CSP } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
@@ -56,10 +58,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  modern: {
-    client: true,
-    server: true,
-  },
+  // modern: {
+  //   server: true,
+  //   client: true,
+  // },
 
   modules: [
     'nuxt-helmet',
@@ -67,8 +69,33 @@ export default {
     'cookie-universal-nuxt',
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
+    '@nuxtjs/sitemap',
     // '~/module/csp.js'
   ],
+
+  sitemap: {
+    hostname: 'https://floracasy.com',
+    gzip: true,
+    exclude: [
+      '/Home/Messages',
+      '/Home/Blogs/Create/Drafts',
+      '/Home/MoreOptions/HelpAndSupport/PopularTopics',
+      '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
+
+      '/Home/Messages/**',
+      '/Home/MoreOptions/HelpAndSupport/PopularTopics/**',
+      '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp/**',
+    ],
+    routes: async () => {
+      const { data } = await axios.get(secrets.baseUrl + endpoints.blog.seo)
+      return data.results.map((blog) => ({
+        url: '/Home/Blogs/Details/{}'.replace('{}', blog.identifier),
+        changefreq: 'daily',
+        priority: 1,
+        lastmod: new Date(),
+      }))
+    },
+  },
 
   buildModules: [
     '@nuxt/typescript-build',
