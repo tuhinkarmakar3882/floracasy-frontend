@@ -42,7 +42,13 @@
       </section>
 
       <section class="search-results-container">
-        <p v-if="noResultsFound" class="text-center danger-light my-8 py-8">
+        <p v-if="searchQuery.trim().length === 0" class="text-center my-8 py-8">
+          Please tap enter to see results (^-^)
+        </p>
+        <p
+          v-else-if="noResultsFound"
+          class="text-center danger-light my-8 py-8"
+        >
           We didn't found anyone with that search query
         </p>
         <UserSearchResult
