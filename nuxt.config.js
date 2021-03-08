@@ -38,10 +38,6 @@ export default {
       mode: 'client',
     },
     {
-      src: '~/plugins/fcm.js',
-      mode: 'client',
-    },
-    {
       src: '~/middleware/spa-analytics-and-setup-user.js',
       mode: 'client',
     },

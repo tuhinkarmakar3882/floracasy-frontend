@@ -1,7 +1,7 @@
 self.addEventListener('notificationclick', function (event) {
   self.clients.openWindow(
     event.notification.data.FCM_MSG.data.click_action ||
-      'https://floracasy.com',
+      'https://floracasy.com/Home/Notifications',
     '_blank'
   )
   event.notification.close()
@@ -25,21 +25,21 @@ firebase.initializeApp(firebaseConfig)
 
 const messaging = firebase.messaging()
 
-messaging.onBackgroundMessage((payload) => {
-  const notification = payload.notification
-  const notificationTitle = notification?.title
-  const notificationOptions = {
-    // icon: '/static/icon.png',
-    vibrate: [300, 100, 400, 100, 400, 100, 400],
-    data: {
-      click_action: notification?.click_action,
-    },
-    actions: [{ action: 'open_url', title: 'Check Now' }],
-    click_action: notification?.click_action,
-  }
-
-  return self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  )
-})
+// messaging.onBackgroundMessage((payload) => {
+//   const notification = payload.notification
+//   const notificationTitle = notification?.title
+//   const notificationOptions = {
+//     // icon: '/static/icon.png',
+//     vibrate: [300, 100, 400, 100, 400, 100, 400],
+//     data: {
+//       click_action: notification?.click_action,
+//     },
+//     actions: [{ action: 'open_url', title: 'Check Now' }],
+//     click_action: notification?.click_action,
+//   }
+//
+//   return self.registration.showNotification(
+//     notificationTitle,
+//     notificationOptions
+//   )
+// })

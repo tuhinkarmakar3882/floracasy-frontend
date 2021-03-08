@@ -115,7 +115,7 @@ export default {
 
     async setupFCM() {
       try {
-        const { firebaseCloudMessaging } = require('~/plugins/fcm')
+        const { firebaseCloudMessaging } = require('~/plugins/firebase')
         const token = await firebaseCloudMessaging.getToken({
           vapidKey,
         })
