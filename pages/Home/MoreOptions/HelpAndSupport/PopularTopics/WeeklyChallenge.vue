@@ -52,13 +52,12 @@
 </template>
 
 <script>
-import AppFeel from '~/components/global/Layout/AppFeel'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { usePopularTopics } from '~/environmentVariables'
 
 export default {
   name: 'WeeklyChallenge',
-  middleware: 'isAuthenticated',
-  components: { AppFeel },
+  middleware: usePopularTopics ? 'isAuthenticated' : 'hidden',
   data() {
     return {
       pageTitle: 'Weekly Challenge',

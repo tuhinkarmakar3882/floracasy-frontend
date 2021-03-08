@@ -34,6 +34,37 @@
 <script>
 import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import { usePopularTopics } from '~/environmentVariables'
+
+const popularTopics = {
+  name: 'Explore Popular Topics',
+  icon: 'mdi mdi-compass',
+  color: '#9c9aff',
+  route: navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics.index,
+}
+
+const menuOptions = [
+  {
+    name: 'Send Feedback',
+    icon: 'mdi mdi-message-draw',
+    color: '#daa43d',
+    route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback,
+  },
+  {
+    name: 'View Ticket Status',
+    icon: 'mdi mdi-bulletin-board',
+    color: '#34b334',
+    route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index,
+  },
+  {
+    name: 'Contact Support',
+    icon: 'mdi mdi-alert-octagon',
+    color: '#ff8282',
+    route: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
+  },
+]
+
+if (usePopularTopics) menuOptions.push(popularTopics)
 
 export default {
   name: 'HelpAndSupport',
@@ -46,43 +77,7 @@ export default {
     return {
       navigationRoutes,
       pageTitle: 'Help And Support',
-      options: [
-        {
-          name: 'Send Feedback',
-          icon: 'mdi mdi-message-draw',
-          color: '#daa43d',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Feedback,
-        },
-        {
-          name: 'View Ticket Status',
-          icon: 'mdi mdi-bulletin-board',
-          color: '#34b334',
-          route: navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index,
-        },
-        {
-          name: 'Privacy & Security',
-          icon: 'mdi mdi-security',
-          color: '#52B2A2',
-          route:
-            navigationRoutes.Home.MoreOptions.HelpAndSupport
-              .PrivacyAndSecurityHelp,
-        },
-        {
-          name: 'Explore Popular Topics',
-          icon: 'mdi mdi-compass',
-          color: '#9c9aff',
-          route:
-            navigationRoutes.Home.MoreOptions.HelpAndSupport.PopularTopics
-              .index,
-        },
-        {
-          name: 'Contact Support',
-          icon: 'mdi mdi-alert-octagon',
-          color: '#ff8282',
-          route:
-            navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
-        },
-      ],
+      options: menuOptions,
     }
   },
   mounted() {},

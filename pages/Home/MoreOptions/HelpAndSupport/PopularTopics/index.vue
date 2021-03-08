@@ -32,14 +32,12 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import CustomListView from '~/components/global/Layout/CustomListView'
+import { usePopularTopics } from '~/environmentVariables'
 
 export default {
   name: 'PopularTopics',
-  components: { CustomListView, AppFeel },
-  middleware: 'isAuthenticated',
+  middleware: usePopularTopics ? 'isAuthenticated' : 'hidden',
   data() {
     return {
       navigationRoutes,
