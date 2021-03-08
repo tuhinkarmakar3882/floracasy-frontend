@@ -6,7 +6,7 @@
       class="community-post"
     >
       <CommunityPost :post="post" class="py-6" />
-      <FollowSuggestions v-if="index === 7" />
+      <!--      <FollowSuggestions v-if="index === 7" />-->
     </article>
 
     <client-only>
@@ -27,15 +27,11 @@
 </template>
 
 <script>
-import FollowSuggestions from '~/components/global/Community/FollowSuggestions'
-import CommunityPost from '~/components/global/Community/CommunityPost'
 import endpoints from '~/api/endpoints'
-import LoadingIcon from '~/components/global/LoadingIcon'
 import { processLink } from '~/utils/utility'
 
 export default {
   name: 'FetchCommunityPosts',
-  components: { LoadingIcon, CommunityPost, FollowSuggestions },
 
   data() {
     return {
