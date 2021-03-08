@@ -42,6 +42,9 @@
       </section>
 
       <section class="search-results-container">
+        <p v-if="noResultsFound" class="text-center danger-light my-8 py-8">
+          We didn't found anyone with that search query
+        </p>
         <UserSearchResult
           v-for="result in searchResults.results"
           :key="result.userUID"
@@ -69,6 +72,7 @@ export default {
       searchQuery: '',
       showFallback: false,
       searchResults: [],
+      noResultsFound: false,
     }
   },
 
@@ -100,6 +104,7 @@ export default {
           console.log(e)
         } finally {
           this.showFallback = false
+          this.noResultsFound = this.searchResults?.results?.length === 0
         }
       }
     },
