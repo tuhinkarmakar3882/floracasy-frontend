@@ -28,7 +28,7 @@
       </div>
 
       <div v-else class="my-4">
-        <div class="header mb-6 px-4">
+        <section class="header mb-6 px-4">
           <img
             :src="user.photoURL"
             alt="profile-picture"
@@ -42,9 +42,9 @@
           <section class="ml-auto">
             <span :class="moodIcon" class="mdi vibrant mdi-36px" />
           </section>
-        </div>
+        </section>
 
-        <div class="-hidden-input-fields">
+        <section class="-hidden-input-fields">
           <input
             v-show="false"
             ref="photoInput"
@@ -59,9 +59,12 @@
             type="file"
             @change="loadAudioPreview"
           />
-        </div>
+        </section>
 
-        <div class="actions my-4">
+        <section
+          :class="useMoodOptions ? 'tri-actions' : 'dual-actions'"
+          class="my-4"
+        >
           <p v-ripple @click="openPhotoPicker">
             <span class="mdi mdi-image mdi-24px secondary mr-2" />
             Photos
@@ -70,11 +73,11 @@
             <span class="mdi mdi-headphones mdi-24px secondary mr-2" />
             Audio
           </p>
-          <p v-ripple>
+          <p v-if="useMoodOptions" v-ripple>
             <span class="mdi mdi-emoticon mdi-24px secondary mr-2" />
             Mood
           </p>
-        </div>
+        </section>
 
         <section class="main px-2">
           <div
@@ -111,8 +114,8 @@
             <transition name="scale-down">
               <section v-if="postAudio.source">
                 <AudioPlayer
-                  class="my-6 px-4"
                   :audio-source="postAudio.source"
+                  class="my-6 px-4"
                 />
                 <aside
                   class="mdi mdi-close floating-close"
@@ -164,6 +167,7 @@ import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
 import { showUITip } from '~/utils/utility'
+import { useMoodOptions } from '~/environmentVariables'
 
 const commonStyles = {
   minHeight: '100px',
@@ -186,6 +190,7 @@ export default {
 
   data() {
     return {
+      useMoodOptions,
       prevURL: undefined,
       navigationRoutes,
       pageTitle: 'Add New Post',
@@ -455,9 +460,17 @@ export default {
     }
   }
 
-  .actions {
-    display: grid;
+  .tri-actions {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dual-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tri-actions,
+  .dual-actions {
+    display: grid;
 
     p {
       display: flex;
