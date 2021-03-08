@@ -58,10 +58,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  // modern: {
-  //   server: true,
-  //   client: true,
-  // },
+  modern: {
+    server: true,
+    client: true,
+  },
 
   modules: [
     'nuxt-helmet',
@@ -73,29 +73,50 @@ export default {
     // '~/module/csp.js'
   ],
 
-  sitemap: {
-    hostname: 'https://floracasy.com',
-    gzip: true,
-    exclude: [
-      '/Home/Messages',
-      '/Home/Blogs/Create/Drafts',
-      '/Home/MoreOptions/HelpAndSupport/PopularTopics',
-      '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
+  sitemap:
+    process.env.NODE_ENV === 'production'
+      ? {
+          hostname: 'https://floracasy.com',
+          gzip: true,
+          exclude: [
+            '/Home/Messages',
+            '/Home/Blogs/Create/Drafts',
+            '/Home/MoreOptions/HelpAndSupport/PopularTopics',
+            '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
 
-      '/Home/Messages/**',
-      '/Home/MoreOptions/HelpAndSupport/PopularTopics/**',
-      '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp/**',
-    ],
-    routes: async () => {
-      const { data } = await axios.get(secrets.baseUrl + endpoints.blog.seo)
-      return data.results.map((blog) => ({
-        url: '/Home/Blogs/Details/{}'.replace('{}', blog.identifier),
-        changefreq: 'daily',
-        priority: 1,
-        lastmod: new Date(),
-      }))
-    },
-  },
+            '/Home/Messages/**',
+            '/Home/MoreOptions/HelpAndSupport/PopularTopics/**',
+            '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp/**',
+          ],
+          routes: async () => {
+            const DYNAMIC_ROUTES = []
+            const { data: blogList } = await axios.get(
+              secrets.baseUrl + endpoints.blog.seo
+            )
+            DYNAMIC_ROUTES.push(
+              ...blogList.results.map((blog) => ({
+                url: '/Home/Blogs/Details/{}'.replace('{}', blog.identifier),
+                changefreq: 'daily',
+                priority: 1,
+                lastmod: new Date(),
+              }))
+            )
+
+            const { data: categoryList } = await axios.get(
+              secrets.baseUrl + endpoints.categories.fetch
+            )
+            DYNAMIC_ROUTES.push(
+              ...categoryList.data.map((category) => ({
+                url: '/Home/Blogs/CategoryWise/{}'.replace('{}', category.name),
+                changefreq: 'daily',
+                priority: 1,
+                lastmod: new Date(),
+              }))
+            )
+            return DYNAMIC_ROUTES
+          },
+        }
+      : false,
 
   buildModules: [
     '@nuxt/typescript-build',
