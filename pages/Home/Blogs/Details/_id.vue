@@ -62,9 +62,11 @@
               {{ blog.category.name }}
             </nuxt-link>
           </p>
-          <h3 class="blog-title mb-4">
+
+          <h1 class="blog-title mb-4">
             {{ blog.title }}
-          </h3>
+          </h1>
+
           <small class="timestamp">
             <span class="mdi mdi-clock-time-nine-outline" />
             {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
@@ -134,8 +136,6 @@
 
 <script>
 import sanitizeHtml from 'sanitize-html'
-import AppFeel from '@/components/global/Layout/AppFeel'
-import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 
 import {
@@ -152,7 +152,6 @@ const { useMessageService } = require('~/environmentVariables')
 
 export default {
   name: 'BlogDetails',
-  components: { AppFeel, LoadingIcon },
 
   async asyncData({ $axios, redirect, params, from: prevURL }) {
     try {
@@ -317,9 +316,28 @@ export default {
       title: this.blog.title,
       meta: [
         {
-          hid: 'description',
-          name: this.blog.title,
-          content: this.blog.subtitle,
+          name: 'keywords',
+          content: this?.blog?.title + ',' + this?.blog?.category?.name,
+        },
+        {
+          name: 'description',
+          content: this?.blog?.subtitle,
+        },
+        {
+          name: 'og:title',
+          content: this?.blog?.title,
+        },
+        {
+          name: 'og:description',
+          content: this?.blog?.subtitle,
+        },
+        {
+          name: 'og:image',
+          content: this?.blog?.coverImage || 'https://floracasy.com/icon.png',
+        },
+        {
+          name: 'author',
+          content: this?.blog?.author?.displayName || 'Floracasy Team',
         },
       ],
     }
@@ -357,6 +375,10 @@ export default {
           border-left: 1px solid $primary;
         }
       }
+    }
+
+    .blog-title {
+      font-size: 1.8rem;
     }
   }
 
