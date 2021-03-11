@@ -42,9 +42,35 @@
             </header>
             <main class="step-2">
               <section
-                v-for="(option, index) in mobileCategories"
-                :key="index"
-                class="category"
+                v-for="option in mobileCategories.slice(0, 2)"
+                :key="option.name"
+                class="category first-line"
+              >
+                <img
+                  :alt="option.name"
+                  :src="option.image"
+                  height="58"
+                  width="58"
+                />
+                <p class="mt-4">{{ option.name }}</p>
+              </section>
+              <section
+                v-for="option in mobileCategories.slice(2, 5)"
+                :key="option.name"
+                class="category second-line"
+              >
+                <img
+                  :alt="option.name"
+                  :src="option.image"
+                  height="58"
+                  width="58"
+                />
+                <p class="mt-4">{{ option.name }}</p>
+              </section>
+              <section
+                v-for="option in mobileCategories.slice(5, 9)"
+                :key="option.name"
+                class="category third-line"
               >
                 <img
                   :alt="option.name"
@@ -242,12 +268,6 @@ export default {
     .carousel-container {
       overflow: scroll;
 
-      .book-lover-image {
-        height: 200px;
-        object-fit: scale-down;
-        display: none;
-      }
-
       .community-banner-image {
         width: clamp(200px, 100%, 414px);
         object-fit: scale-down;
@@ -255,16 +275,26 @@ export default {
 
       section.carousel-item {
         main.step-1 {
-          @media only screen and (min-height: 810px) {
-            .book-lover-image {
+          .book-lover-image {
+            height: 200px;
+            object-fit: scale-down;
+            display: none;
+
+            @media only screen and (min-height: 810px) {
               display: block;
             }
           }
 
-          @media only screen and (max-height: 810px) {
-            aside {
-              padding: 20px;
-              margin-top: 32px;
+          aside {
+            padding: 20px;
+
+            @media only screen and (min-height: 710px) {
+              margin: 32px 0;
+            }
+
+            @media only screen and (min-height: 810px) {
+              padding: 0;
+              margin: 0;
 
               .keypoint {
                 margin: 20px 0;
@@ -274,10 +304,16 @@ export default {
         }
 
         main.step-2 {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          place-items: center;
-          grid-row-gap: 20px;
+          display: none;
+          @media only screen and (min-height: 560px) {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            place-items: center;
+            grid-row-gap: 20px;
+          }
+          @media only screen and (min-height: 640px) and (max-height: 730px) {
+            margin-top: 32px;
+          }
 
           .category {
             text-align: center;
@@ -299,9 +335,24 @@ export default {
             p {
               font-size: 14px;
             }
+
             i::before {
               font-size: 58px;
               line-height: 1;
+            }
+          }
+
+          .second-line {
+            display: none;
+            @media only screen and (min-height: 730px) {
+              display: block;
+            }
+          }
+
+          .third-line {
+            display: none;
+            @media only screen and (min-height: 793px) {
+              display: block;
             }
           }
         }
