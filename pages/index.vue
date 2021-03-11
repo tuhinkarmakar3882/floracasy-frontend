@@ -132,10 +132,10 @@
               </p>
             </header>
 
-            <main class="step-3">
+            <main class="step-4">
               <img
-                alt="An Illustration where people are socializing"
-                class="community-banner-image mx-auto"
+                alt="An Illustration where people are getting paid"
+                class="reward-banner-image mx-auto"
                 height="200"
                 src="/images/reward_illustration.svg"
               />
@@ -385,6 +385,28 @@ export default {
 
           .community-banner-image {
             height: clamp(200px, 33vh, 300px);
+            object-fit: scale-down;
+            display: none;
+
+            @media only screen and (min-height: $break-point) {
+              display: block;
+            }
+          }
+
+          aside {
+            @media only screen and (min-height: $break-point) {
+              display: none;
+            }
+          }
+        }
+
+        main.step-4 {
+          $break-point: 670px;
+
+          margin-top: 7%;
+
+          .reward-banner-image {
+            height: clamp(200px, 31vh, 300px);
             object-fit: scale-down;
             display: none;
 
