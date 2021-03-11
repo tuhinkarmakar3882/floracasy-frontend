@@ -119,17 +119,11 @@
     <main v-else class="desktop-view my-8 text-center py-8">
       <h1>Hello Desktop</h1>
       <LazyHeroContent class="segment" />
-
       <LazyPromotionalBlogs />
-
       <LazyCategoriesPreview class="segment" />
-
       <LazyCommunityPreview class="segment text-center" />
-
       <LazyEarnWithUs class="segment" />
-
       <LazyHearTheExperiences v-if="showExperiences" class="segment" />
-
       <LazyProZone v-if="usePremiumServices" class="segment" />
     </main>
   </div>
@@ -227,13 +221,127 @@ export default {
     transition: all 300ms ease-in-out;
   }
 
-  main {
+  .desktop-view {
     .segment {
       position: relative;
       padding: $xx-large-unit $standard-unit;
 
       &:nth-child(odd):not(:first-child) {
         background-color: $segment-background;
+      }
+    }
+  }
+
+  .mobile-view {
+    position: relative;
+    height: 100vh;
+    border-top: 1px solid #050513;
+    border-bottom: 1px solid #00283f;
+    background: linear-gradient(180deg, #050513 50%, #00283f 100%);
+
+    .carousel-container {
+      overflow: scroll;
+
+      .book-lover-image {
+        height: 200px;
+        object-fit: scale-down;
+        display: none;
+      }
+
+      .community-banner-image {
+        width: clamp(200px, 100%, 414px);
+        object-fit: scale-down;
+      }
+
+      section.carousel-item {
+        main.step-1 {
+          @media only screen and (min-height: 810px) {
+            .book-lover-image {
+              display: block;
+            }
+          }
+
+          @media only screen and (max-height: 810px) {
+            aside {
+              padding: 20px;
+              margin-top: 32px;
+
+              .keypoint {
+                margin: 20px 0;
+              }
+            }
+          }
+        }
+
+        main.step-2 {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          place-items: center;
+          grid-row-gap: 20px;
+
+          .category {
+            text-align: center;
+
+            $image-size: 58px;
+
+            img {
+              margin: auto;
+              max-height: $image-size;
+              height: $image-size;
+              min-height: $image-size;
+              max-width: $image-size;
+              width: $image-size;
+              min-width: $image-size;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            p {
+              font-size: 14px;
+            }
+            i::before {
+              font-size: 58px;
+              line-height: 1;
+            }
+          }
+        }
+      }
+    }
+
+    footer {
+      position: fixed;
+      bottom: $micro-unit;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      button {
+        display: grid;
+        grid-template-columns: 20% 80%;
+        align-items: center;
+        width: 80%;
+        height: 48px;
+        margin: 16px 0;
+
+        i,
+        .icon {
+          display: block;
+          margin-right: 16px;
+        }
+
+        .icon {
+          height: 24px;
+          width: 24px;
+        }
+
+        span {
+          justify-self: flex-start;
+        }
       }
     }
   }
