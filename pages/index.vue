@@ -34,7 +34,7 @@
 
           <section class="carousel-item px-6">
             <header class="text-center">
-              <h2 class="my-4">Let Our Knowledge Be Omnidirectional</h2>
+              <h2 class="my-4">Omnidirectional Knowledge</h2>
               <p class="my-4 muted">
                 We want to be versatile, starting with you, with an growing
                 number of enriching content & categories
@@ -65,7 +65,7 @@
                   height="58"
                   width="58"
                 />
-                <p class="mt-4">{{ option.name }}</p>
+                <p class="white mt-4">{{ option.name }}</p>
               </section>
               <section
                 v-for="option in mobileCategories.slice(5, 9)"
@@ -78,7 +78,7 @@
                   height="58"
                   width="58"
                 />
-                <p class="mt-4">{{ option.name }}</p>
+                <p class="white mt-4">{{ option.name }}</p>
               </section>
               <section class="category">
                 <i class="mdi mdi-dots-horizontal-circle" />
@@ -365,7 +365,7 @@ export default {
 
           .second-line {
             display: none;
-            @media only screen and (min-height: 600px) {
+            @media only screen and (min-height: 650px) {
               display: block;
             }
           }
