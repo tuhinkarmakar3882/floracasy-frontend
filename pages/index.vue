@@ -140,7 +140,7 @@ import { usePremiumServices } from '~/environmentVariables'
 
 export default {
   name: 'LandingPage',
-  layout: 'PublicRoutes',
+  layout: 'FullScreen',
   middleware: 'isNotAuthenticated',
 
   data() {
@@ -148,7 +148,63 @@ export default {
       pageTitle: 'Welcome to Floracasy',
       usePremiumServices,
       showExperiences: false,
+      points: [
+        'Explore enriching articles',
+        'Discover people around the world',
+        'Get paid for your knowledge',
+        'Go Premium with Floracoins',
+        'And much more!',
+      ],
+      mobileCategories: [
+        {
+          name: 'Automobile',
+          image:
+            'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'History',
+          image:
+            'https://images.unsplash.com/photo-1612010863676-468979bb49af?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Programming',
+          image:
+            'https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Food',
+          image:
+            'https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Gaming',
+          image:
+            'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Finance',
+          image:
+            'https://images.unsplash.com/photo-1553729459-efe14ef6055d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Beauty',
+          image:
+            'https://images.unsplash.com/photo-1599847987657-881f11b92a75?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Education',
+          image:
+            'https://images.unsplash.com/photo-1527384025924-f30fc2ac98e3?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=300&q=80',
+        },
+      ],
     }
+  },
+
+  computed: {
+    mobileView() {
+      if (process.server) return true
+      return window.innerWidth < 768
+    },
   },
 
   mounted() {},
