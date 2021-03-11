@@ -1,17 +1,17 @@
 <template>
   <div class="index-page">
     <main v-if="mobileView" class="mobile-view">
-      <CustomCarousel :total-items="4" class="carousel-container pt-4">
+      <LazyCustomCarousel :total-items="4" class="carousel-container pt-4">
         <template v-slot:slides>
-          <section class="carousel-item px-2">
+          <section class="carousel-item px-6">
             <header class="text-center">
-              <h1>Floracasy</h1>
+              <h1 class="my-4">Floracasy</h1>
               <p class="my-4 muted">
                 &lsquo;Where Knowledge Gets Socialized&rdquo;
               </p>
             </header>
 
-            <main class="px-2 step-1">
+            <main class="step-1">
               <img
                 alt="An Illustration where someone is reading a book"
                 class="book-lover-image mx-auto my-6"
@@ -25,17 +25,17 @@
                   :point="point"
                   :tick-size="20"
                   class="my-4 keypoint"
-                  text-color="#b9b9b9"
+                  text-color="#dadada"
                   tick-color="#6DD0BF"
                 />
               </aside>
             </main>
           </section>
 
-          <section class="carousel-item px-2">
+          <section class="carousel-item px-6">
             <header class="text-center">
-              <h2 class="my-4">Let The Knowledge Be Omnidirectional</h2>
-              <p class="muted my-6">
+              <h2 class="my-4">Let Our Knowledge Be Omnidirectional</h2>
+              <p class="my-4 muted">
                 We want to be versatile, starting with you, with an growing
                 number of enriching content & categories
               </p>
@@ -52,7 +52,7 @@
                   height="58"
                   width="58"
                 />
-                <p class="mt-4">{{ option.name }}</p>
+                <p class="white mt-4">{{ option.name }}</p>
               </section>
               <section
                 v-for="option in mobileCategories.slice(2, 5)"
@@ -87,23 +87,43 @@
             </main>
           </section>
 
-          <section class="carousel-item px-2">
+          <section class="carousel-item px-6">
             <header class="text-center">
-              <h2>The More , The Merrier</h2>
-              <p class="muted mt-6">
+              <h2 class="my-4">The More , The Merrier</h2>
+              <p class="my-4 muted">
                 A platform where people can socialize, share ideas, grow &
                 create impact together.
               </p>
             </header>
-            <img
-              alt="An Illustration where people are socializing"
-              class="community-banner-image mx-auto"
-              height="200"
-              src="/images/community_banner.svg"
-            />
+
+            <main class="step-3">
+              <img
+                alt="An Illustration where people are socializing"
+                class="community-banner-image mx-auto"
+                height="200"
+                src="/images/friends_illustration.svg"
+              />
+
+              <aside>
+                <KeyPoint
+                  :tick-size="20"
+                  class="my-4"
+                  point="Connect with the People that Matter to you"
+                  text-color="#dadada"
+                  tick-color="#6DD0BF"
+                />
+                <KeyPoint
+                  :tick-size="20"
+                  class="my-4"
+                  point="Discover Amazing Minds around the World"
+                  text-color="#dadada"
+                  tick-color="#6DD0BF"
+                />
+              </aside>
+            </main>
           </section>
 
-          <section class="carousel-item px-2">
+          <section class="carousel-item px-6">
             <header class="text-center">
               <h3>Get Rewarded For Your Knowledge</h3>
               <p class="muted my-6">
@@ -112,29 +132,37 @@
               </p>
             </header>
 
-            <main class="px-2">
-              <KeyPoint
-                :tick-size="20"
-                class="my-4"
-                point="Earn Upto $100 per month Only By writing Blogs"
-                tick-color="#6DD0BF"
+            <main class="step-3">
+              <img
+                alt="An Illustration where people are socializing"
+                class="community-banner-image mx-auto"
+                height="200"
+                src="/images/reward_illustration.svg"
               />
-              <KeyPoint
-                :tick-size="20"
-                class="my-4"
-                point="Earn Floracoins to get extra rewards & enjoy premium features"
-                tick-color="#6DD0BF"
-              />
+
+              <aside>
+                <KeyPoint
+                  :tick-size="20"
+                  class="my-4"
+                  point="Earn Upto $100 per month Only By writing Blogs"
+                  text-color="#dadada"
+                  tick-color="#6DD0BF"
+                />
+                <KeyPoint
+                  :tick-size="20"
+                  class="my-4"
+                  point="Earn Floracoins to get extra rewards & enjoy premium features"
+                  text-color="#dadada"
+                  tick-color="#6DD0BF"
+                />
+              </aside>
             </main>
           </section>
         </template>
-      </CustomCarousel>
+      </LazyCustomCarousel>
 
       <footer>
-        <button v-ripple class="secondary-btn">
-          <GoogleIcon class="icon" />
-          <span>Continue with Google</span>
-        </button>
+        <GoogleSignInButton class="secondary-btn" />
         <button v-ripple class="secondary-outlined-btn">
           <i class="mdi mdi-account-circle mdi-24px" />
           <span class="white">Continue as Guest</span>
@@ -143,7 +171,6 @@
     </main>
 
     <main v-else class="desktop-view my-8 text-center py-8">
-      <h1>Hello Desktop</h1>
       <LazyHeroContent class="segment" />
       <LazyPromotionalBlogs />
       <LazyCategoriesPreview class="segment" />
@@ -159,7 +186,7 @@
 import { usePremiumServices } from '~/environmentVariables'
 
 export default {
-  name: 'LandingPage',
+  name: 'WelcomePage',
   layout: 'FullScreen',
   middleware: 'isNotAuthenticated',
 
@@ -177,16 +204,6 @@ export default {
       ],
       mobileCategories: [
         {
-          name: 'Automobile',
-          image:
-            'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-        },
-        {
-          name: 'History',
-          image:
-            'https://images.unsplash.com/photo-1612010863676-468979bb49af?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=300&q=80',
-        },
-        {
           name: 'Programming',
           image:
             'https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
@@ -195,6 +212,16 @@ export default {
           name: 'Food',
           image:
             'https://images.unsplash.com/photo-1484980972926-edee96e0960d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'Automobile',
+          image:
+            'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+        },
+        {
+          name: 'History',
+          image:
+            'https://images.unsplash.com/photo-1612010863676-468979bb49af?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=300&q=80',
         },
         {
           name: 'Gaming',
@@ -268,11 +295,6 @@ export default {
     .carousel-container {
       overflow: scroll;
 
-      .community-banner-image {
-        width: clamp(200px, 100%, 414px);
-        object-fit: scale-down;
-      }
-
       section.carousel-item {
         main.step-1 {
           .book-lover-image {
@@ -305,14 +327,13 @@ export default {
 
         main.step-2 {
           display: none;
-          @media only screen and (min-height: 560px) {
+          margin-top: 7%;
+
+          @media only screen and (min-height: 450px) {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             place-items: center;
             grid-row-gap: 20px;
-          }
-          @media only screen and (min-height: 640px) and (max-height: 730px) {
-            margin-top: 32px;
           }
 
           .category {
@@ -344,7 +365,7 @@ export default {
 
           .second-line {
             display: none;
-            @media only screen and (min-height: 730px) {
+            @media only screen and (min-height: 600px) {
               display: block;
             }
           }
@@ -356,12 +377,35 @@ export default {
             }
           }
         }
+
+        main.step-3 {
+          $break-point: 670px;
+
+          margin-top: 7%;
+
+          .community-banner-image {
+            height: clamp(200px, 33vh, 300px);
+            object-fit: scale-down;
+            display: none;
+
+            @media only screen and (min-height: $break-point) {
+              display: block;
+            }
+          }
+
+          aside {
+            @media only screen and (min-height: $break-point) {
+              display: none;
+            }
+          }
+        }
       }
     }
 
     footer {
       position: fixed;
-      bottom: $micro-unit;
+      bottom: 0;
+      height: 212px;
       left: 0;
       right: 0;
       padding: 16px;
@@ -370,6 +414,7 @@ export default {
       align-content: center;
       align-items: center;
       flex-direction: column;
+      background: linear-gradient(0deg, #050514, transparent);
 
       button {
         display: grid;
@@ -378,17 +423,6 @@ export default {
         width: 80%;
         height: 48px;
         margin: 16px 0;
-
-        i,
-        .icon {
-          display: block;
-          margin-right: 16px;
-        }
-
-        .icon {
-          height: 24px;
-          width: 24px;
-        }
 
         span {
           justify-self: flex-start;
