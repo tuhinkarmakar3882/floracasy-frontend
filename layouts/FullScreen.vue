@@ -1,7 +1,6 @@
 <template>
   <div>
     <nuxt />
-    <!--    <LazyInstallBadge class="install-badge" show-close-button />-->
   </div>
 </template>
 
@@ -11,15 +10,15 @@ export default {
 }
 </script>
 
-<!--<style lang="scss" scoped>-->
-<!--@import 'assets/all-variables';-->
+<style lang="scss" scoped>
+@import 'assets/all-variables';
 
-<!--.install-badge {-->
-<!--  position: fixed;-->
-<!--  bottom: 0;-->
-<!--  left: 0;-->
-<!--  width: 100%;-->
-<!--  z-index: 2;-->
-<!--  border-radius: $micro-unit $micro-unit 0 0;-->
-<!--}-->
-<!--</style>-->
+.install-badge {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  border-radius: $micro-unit $micro-unit 0 0;
+}
+</style>
