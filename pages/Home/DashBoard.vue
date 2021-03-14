@@ -57,7 +57,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'DashBoard',
-  middleware: 'isAuthenticated',
+  // middleware: 'isAuthenticated',
 
   layout: 'ResponsiveApp',
 
