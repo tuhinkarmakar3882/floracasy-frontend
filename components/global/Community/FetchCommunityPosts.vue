@@ -1,11 +1,12 @@
 <template>
   <div class="fetch-community-posts-component">
     <article
-      v-for="post in posts"
+      v-for="(post, index) in posts"
       :key="post.identifier"
       class="community-post"
     >
       <CommunityPost :post="post" class="py-6" />
+      <InFeedAd v-if="index % 3 === 0" />
     </article>
 
     <client-only>
