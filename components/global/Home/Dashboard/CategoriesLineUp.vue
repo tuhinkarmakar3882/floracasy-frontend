@@ -57,7 +57,6 @@
               </span>
               <span class="mdi mdi-chevron-right arrow-go" />
             </p>
-            <InFeedAd v-if="index % 7 === 0" />
           </li>
         </template>
       </LazyCustomListView>
