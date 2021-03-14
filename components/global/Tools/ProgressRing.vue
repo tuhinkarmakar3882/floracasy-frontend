@@ -1,21 +1,16 @@
 <template>
   <div class="progress-ring-component">
     <section class="ring">
-      <p>{{ percentage }}%</p>
+      <p>
+        <strong>{{ percentage }}%</strong>
+      </p>
       <svg
         class="active-region"
         height="120"
         width="120"
         :style="activeRegionSize"
       >
-        <circle
-          class="progress-ring__circle"
-          cx="60"
-          cy="60"
-          data-v-13358e9c=""
-          fill="transparent"
-          r="44"
-        />
+        <circle cx="60" cy="60" fill="transparent" r="40" />
       </svg>
     </section>
   </div>
@@ -47,8 +42,8 @@ export default {
 
 .progress-ring-component {
   .ring {
-    height: 3 * $xx-large-unit;
-    width: 3 * $xx-large-unit;
+    height: 88px;
+    width: 88px;
     border-radius: 50%;
     border: 8px solid $white;
     display: flex;
@@ -67,7 +62,7 @@ export default {
 
     p {
       font-family: $Nunito-Sans;
-      font-size: $large-unit;
+      font-size: $medium-unit;
       color: $primary-light;
     }
   }
