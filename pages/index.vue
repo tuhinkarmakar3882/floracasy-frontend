@@ -249,7 +249,7 @@ export default {
 
   computed: {
     mobileView() {
-      if (process.server) return false
+      if (process.server) return true
       return window.innerWidth < 768
     },
   },
