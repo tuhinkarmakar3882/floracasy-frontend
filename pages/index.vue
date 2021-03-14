@@ -163,7 +163,11 @@
 
       <footer>
         <GoogleSignInButton class="secondary-btn" />
-        <button v-ripple class="secondary-outlined-btn">
+        <button
+          v-ripple
+          class="secondary-outlined-btn"
+          @click="$router.push(navigationRoutes.Home.DashBoard)"
+        >
           <i class="mdi mdi-account-circle mdi-24px" />
           <span class="white">Continue as Guest</span>
         </button>
@@ -184,6 +188,7 @@
 
 <script>
 import { usePremiumServices } from '~/environmentVariables'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'WelcomePage',
@@ -192,6 +197,7 @@ export default {
 
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'Welcome to Floracasy',
       usePremiumServices,
       showExperiences: false,
