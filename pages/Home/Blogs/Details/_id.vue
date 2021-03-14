@@ -98,7 +98,9 @@
         </section>
 
         <section class="blog-body px-4 pb-8">
+          <InArticleAd :ad-slot="5758109393" />
           <article v-html="noXSS(blog.content, sanitizationConfig)" />
+          <InArticleAd :ad-slot="8097332277" />
         </section>
       </div>
 
