@@ -7,8 +7,7 @@
     data-ad-slot="8879096758"
     data-full-width-responsive="true"
     style="display: block"
-  ></ins>
-  <script></script>
+  />
 </template>
 
 <script>
@@ -19,5 +18,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>
