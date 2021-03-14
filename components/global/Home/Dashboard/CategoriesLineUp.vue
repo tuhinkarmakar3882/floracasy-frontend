@@ -39,7 +39,7 @@
         </template>
         <template v-slot:list-items>
           <li
-            v-for="category in matchCategories"
+            v-for="(category, index) in matchCategories"
             :key="category.id"
             v-ripple
             class="px-4 py-3"
@@ -57,6 +57,7 @@
               </span>
               <span class="mdi mdi-chevron-right arrow-go" />
             </p>
+            <InFeedAd v-if="index % 7 === 0" />
           </li>
         </template>
       </LazyCustomListView>
