@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Advertisement',
+  name: 'DisplayAd',
   mounted() {
     ;(window.adsbygoogle || []).push({})
   },
