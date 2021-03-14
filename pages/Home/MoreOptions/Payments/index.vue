@@ -8,26 +8,29 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <section class="payment-card px-4">
+      <section class="payment-card px-4 py-6">
         <header>
-          <p>$60</p>
-          <p>Total Amount Earned</p>
+          <section>
+            <p>Total Amount Earned</p>
+            <small>$60</small>
+          </section>
+          <button class="disabled-btn" disabled>Redeem</button>
         </header>
 
         <main>
           <div class="chart" />
         </main>
 
-        <aside class="bottom-part">
-          <section class="progress-ring" />
+        <aside class="bottom-part mt-6">
+          <ProgressRing :percentage="60" />
 
-          <section class="content">
-            <h6>Progress</h6>
-            <p>
-              Need <span class="vibrant">$40</span> more to redeem your earning.
+          <section class="content ml-4">
+            <h6 class="my-0">Progress</h6>
+            <p class="mt-2 muted">
+              Need <span class="vibrant"><strong>$40</strong></span> more to
+              redeem your earning.
             </p>
           </section>
-          <button class="disabled-btn" disabled>Redeem</button>
         </aside>
       </section>
 
@@ -50,19 +53,19 @@
 
         <h4>How To Earn Floracoin?</h4>
         <KeyPoint
+          :tick-size="20"
           point="When You Share Floracasy & someone join with Your reference You Can Get 50 Floracoin"
           tick-color="#9a9a9a"
-          :tick-size="20"
         />
         <KeyPoint
+          :tick-size="20"
           point="On each Blog That Written By You You May Get 15 Floracoin"
           tick-color="#9a9a9a"
-          :tick-size="20"
         />
         <KeyPoint
+          :tick-size="20"
           point="When you get your first threshold money you can get 10 Floracoin"
           tick-color="#9a9a9a"
-          :tick-size="20"
         />
       </section>
 
@@ -86,19 +89,19 @@
 
         <h4>Now Earn Floracoin & Get Exciting Offers</h4>
         <KeyPoint
+          :tick-size="20"
           point="When You Share Floracasy & someone join with Your reference You Can Get 50 Floracoin"
           tick-color="#9a9a9a"
-          :tick-size="20"
         />
         <KeyPoint
+          :tick-size="20"
           point="On each Blog That Written By You You May Get 15 Floracoin"
           tick-color="#9a9a9a"
-          :tick-size="20"
         />
         <KeyPoint
+          :tick-size="20"
           point="When you get your first threshold money you can get 10 Floracoin"
           tick-color="#9a9a9a"
-          :tick-size="20"
         />
       </section>
     </template>
@@ -145,3 +148,40 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.payments-page {
+  .payment-card {
+    background: $card-background;
+
+    * {
+      font-family: $Nunito-Sans;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      section {
+        small {
+          font-size: $medium-unit;
+          color: $vibrant;
+        }
+
+        p {
+          font-family: $Raleway;
+          color: $muted;
+        }
+      }
+    }
+
+    .bottom-part {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+</style>
