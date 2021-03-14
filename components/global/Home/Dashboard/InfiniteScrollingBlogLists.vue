@@ -1,8 +1,9 @@
 <template>
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
-      <article v-for="blog in blogs" :key="blog.id">
+      <article v-for="(blog, index) in blogs" :key="blog.id">
         <BlogPost :blog="blog" class="pb-0 pt-8" />
+        <Advertisement v-if="index === 1" />
       </article>
     </section>
 
