@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import {
   parseTimeUsingStandardLibrary,
   shorten,
@@ -154,11 +155,24 @@ export default {
       showOptions: false,
     }
   },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
   methods: {
     parseTimeUsingStandardLibrary,
     shorten,
+    async openSignInPage() {
+      await this.$router.push(navigationRoutes.Authentication.SignInToContinue)
+    },
 
     async like() {
+      if (!this.user) {
+        await this.openSignInPage()
+        return
+      }
       try {
         const action = await this.$axios
           .$post(endpoints.blog.like, {
@@ -173,6 +187,10 @@ export default {
     },
 
     async comment() {
+      if (!this.user) {
+        await this.openSignInPage()
+        return
+      }
       await this.$router.push(
         navigationRoutes.Home.Blogs.Comments.BlogId.replace(
           '{BlogId}',
