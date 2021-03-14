@@ -65,16 +65,13 @@
           />
 
           <aside class="form-hints">
-            <small
-              v-if="issueDetails.trim().length < 60"
-              class="mt-3 hint-text"
-            >
-              (Hint: At least {{ 60 - issueDetails.trim().length }} more
+            <small v-if="issueDetails.trim().length < 5" class="mt-3 hint-text">
+              (Hint: At least {{ 5 - issueDetails.trim().length }} more
               characters are required)
             </small>
             <small
               v-else-if="
-                issueDetails.trim().length >= 60 &&
+                issueDetails.trim().length >= 5 &&
                 issueDetails.trim().length <= 1500
               "
               class="mt-3 secondary-matte"
@@ -175,7 +172,7 @@ export default {
     validForm() {
       const issueDetailsContentLength = this.issueDetails.trim().length
       return (
-        issueDetailsContentLength >= 60 &&
+        issueDetailsContentLength >= 5 &&
         issueDetailsContentLength <= 1500 &&
         this.issueTopic.trim().length > 0
       )
