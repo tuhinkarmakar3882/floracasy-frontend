@@ -39,7 +39,7 @@
         </template>
         <template v-slot:list-items>
           <li
-            v-for="(category, index) in matchCategories"
+            v-for="category in matchCategories"
             :key="category.id"
             v-ripple
             class="px-4 py-3"
