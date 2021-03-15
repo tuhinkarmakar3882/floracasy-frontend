@@ -28,9 +28,6 @@
         </template>
       </CustomListView>
     </template>
-    <template v-slot:footer>
-      <InFeedAd class="mt-8" use-small-ads />
-    </template>
   </AppFeel>
 </template>
 

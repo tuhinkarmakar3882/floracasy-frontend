@@ -6,7 +6,7 @@
       class="community-post"
     >
       <CommunityPost :post="post" class="py-6" />
-      <InFeedAd v-if="index % 2 === 0" :key="index" use-small-ads />
+      <InFeedAd v-if="index % 2 === 0" />
     </article>
 
     <client-only>

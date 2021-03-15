@@ -39,10 +39,6 @@
         </div>
       </section>
     </template>
-
-    <template v-slot:footer>
-      <InFeedAd use-small-ads />
-    </template>
   </AppFeel>
 </template>
 

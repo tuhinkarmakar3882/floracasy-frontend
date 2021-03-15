@@ -31,10 +31,6 @@
         </template>
       </LazyCustomListView>
     </template>
-
-    <template v-slot:footer>
-      <InFeedAd class="my-4" use-small-ads />
-    </template>
   </AppFeel>
 </template>
 
