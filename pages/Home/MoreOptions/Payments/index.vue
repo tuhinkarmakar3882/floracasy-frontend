@@ -35,37 +35,43 @@
       </section>
 
       <hr class="faded-divider" />
-      <section class="floracoins-promotion px-4">
-        <h4>Now Earn Floracoin & Get Exciting Offers</h4>
 
+      <section class="question-answer px-4">
         <h6>What is Floracoin?</h6>
         <p>
           As you all know you can earn money by writing blogs .Here we represent
           your earning &many more statistics against your blogs.
         </p>
+      </section>
 
+      <section class="question-answer text-right px-4">
         <h6>Purpose of Floracoins?</h6>
         <p>
           Floracoin Mainly a digital currency for you which is only valid on
           Floracasy . You can use this Coins for going Premium. You can also get
           more interesting stuff access buy spending floracoins.
         </p>
+      </section>
 
+      <section class="question-answer px-4">
         <h4>How To Earn Floracoin?</h4>
         <KeyPoint
+          class="my-4"
           :tick-size="20"
           point="When You Share Floracasy & someone join with Your reference You Can Get 50 Floracoin"
-          tick-color="#9a9a9a"
+          tick-color="#65db65"
         />
         <KeyPoint
+          class="my-4"
           :tick-size="20"
           point="On each Blog That Written By You You May Get 15 Floracoin"
-          tick-color="#9a9a9a"
+          tick-color="#65db65"
         />
         <KeyPoint
+          class="my-4"
           :tick-size="20"
           point="When you get your first threshold money you can get 10 Floracoin"
-          tick-color="#9a9a9a"
+          tick-color="#65db65"
         />
       </section>
 
@@ -74,36 +80,47 @@
       <section class="premium-perks px-4">
         <h4>Get Ultimate Exclusive Access</h4>
 
-        <h6>What is Floracoin?</h6>
-        <p>
-          As you all know you can earn money by writing blogs .Here we represent
-          your earning &many more statistics against your blogs.
-        </p>
-
-        <h6>Purpose of Floracoins?</h6>
-        <p>
-          Floracoin Mainly a digital currency for you which is only valid on
-          Floracasy . You can use this Coins for going Premium. You can also get
-          more interesting stuff access buy spending floracoins.
-        </p>
-
-        <h4>Now Earn Floracoin & Get Exciting Offers</h4>
         <KeyPoint
+          class="my-4"
           :tick-size="20"
-          point="When You Share Floracasy & someone join with Your reference You Can Get 50 Floracoin"
-          tick-color="#9a9a9a"
+          point="Get Add Free Experience"
+          tick-color="#65db65"
         />
         <KeyPoint
+          class="my-4"
           :tick-size="20"
-          point="On each Blog That Written By You You May Get 15 Floracoin"
-          tick-color="#9a9a9a"
+          point="Get Audio blogs"
+          tick-color="#65db65"
         />
         <KeyPoint
+          class="my-4"
           :tick-size="20"
-          point="When you get your first threshold money you can get 10 Floracoin"
-          tick-color="#9a9a9a"
+          point="Ultimate Use Of Our Messaging Services"
+          tick-color="#65db65"
+        />
+        <KeyPoint
+          class="my-4"
+          :tick-size="20"
+          point="Priority 24×7 Contact Support"
+          tick-color="#65db65"
+        />
+        <KeyPoint
+          class="my-4"
+          :tick-size="20"
+          point="Get More User Friendly Interface"
+          tick-color="#65db65"
+        />
+        <KeyPoint
+          class="my-4"
+          :tick-size="20"
+          point="Get Free 50 flora coin for Net Purchase"
+          tick-color="#65db65"
         />
       </section>
+    </template>
+
+    <template v-slot:footer>
+      <DisplayAd />
     </template>
   </AppFeel>
 </template>
