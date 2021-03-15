@@ -3,7 +3,7 @@
     <section v-if="blogs">
       <article v-for="(blog, index) in blogs" :key="blog.id">
         <BlogPost :blog="blog" class="pb-0 pt-8" />
-        <InFeedAd v-if="index % 2 === 0" />
+        <InFeedAd v-if="index % 2 === 0" :key="index" />
       </article>
     </section>
 
