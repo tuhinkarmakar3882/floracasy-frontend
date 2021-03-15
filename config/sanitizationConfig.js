@@ -1,6 +1,7 @@
 export const sanitizationConfig = {
   allowedTags: [
     'address',
+    'img',
     'article',
     'aside',
     'footer',
