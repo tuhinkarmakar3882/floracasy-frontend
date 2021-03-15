@@ -94,7 +94,7 @@
       <FallBackLoader v-if="loadingStories" class="my-4" />
 
       <section
-        v-for="(item, index) in allStories"
+        v-for="item in allStories"
         :key="item.identifier"
         :style="item.style"
         class="scroll-list"
@@ -110,8 +110,6 @@
         <div v-if="item.storyType === 'audio'" style="width: 100%">
           <AudioPlayer :audio-source="item.audio" />
         </div>
-
-        <DisplayAd v-if="index % 3 === 0" />
       </section>
 
       <aside class="controls">
@@ -564,7 +562,7 @@ export default {
       .backward {
         position: absolute !important;
         height: calc(100vh - 56px);
-        width: 20vw;
+        width: 10vw;
         top: 56px;
       }
 
