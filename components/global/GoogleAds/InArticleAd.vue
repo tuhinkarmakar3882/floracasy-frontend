@@ -16,7 +16,7 @@ export default {
   props: {
     adSlot: {
       type: Number || String,
-      required: true,
+      default: 5758109393,
     },
   },
   mounted() {
