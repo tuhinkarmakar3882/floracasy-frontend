@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.MoreOptions.index"
     class="preferences-page"
   >
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
+    <template v-slot:app-bar-title> {{ pageTitle }}</template>
 
-    <template slot="main">
+    <template v-slot:main>
       <CustomListView>
         <template slot="list-items">
           <li
@@ -45,6 +45,10 @@
           </li>
         </template>
       </CustomListView>
+    </template>
+
+    <template v-slot:footer>
+      <DisplayAd />
     </template>
   </AppFeel>
 </template>

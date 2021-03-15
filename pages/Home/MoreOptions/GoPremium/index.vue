@@ -4,7 +4,7 @@
     class="go-premium-page"
     custom-header
   >
-    <template slot="app-bar-custom-header">
+    <template v-slot:app-bar-custom-header>
       <h5
         v-ripple
         class="px-5 mdi mdi-arrow-left"
@@ -18,7 +18,7 @@
       <p>{{ pageTitle }}</p>
     </template>
 
-    <template slot="main" class="my-4">
+    <template v-slot:main class="my-4">
       <section class="main-content px-4">
         <PremiumCrownLogo :width="120" class="mx-auto" />
         <h4 class="heading-title">The Premium Perks!</h4>
@@ -38,6 +38,10 @@
           <button v-ripple class="premium-btn">Continue to Buy</button>
         </div>
       </section>
+    </template>
+
+    <template v-slot:footer>
+      <DisplayAd />
     </template>
   </AppFeel>
 </template>

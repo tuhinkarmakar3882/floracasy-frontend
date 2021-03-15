@@ -26,15 +26,17 @@
     </template>
 
     <template slot="main">
-      <QuestionCard
-        v-for="question in questions"
-        :id="question.statement"
-        :key="question.id"
-        :content="question"
-        :show-default-feedback="true"
-        border-shade="#364075"
-        class="px-4"
-      />
+      <section v-for="(question, index) in questions" :key="question.id">
+        <QuestionCard
+          :id="question.statement"
+          :content="question"
+          :show-default-feedback="true"
+          border-shade="#364075"
+          class="px-4"
+        />
+
+        <DisplayAd v-if="index % 3 === 0" />
+      </section>
     </template>
 
     <template slot="footer">

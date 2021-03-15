@@ -38,6 +38,9 @@
         </section>
       </main>
     </template>
+    <template v-slot:footer>
+      <DisplayAd />
+    </template>
   </AppFeel>
 </template>
 

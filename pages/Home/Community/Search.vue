@@ -59,6 +59,10 @@
         />
       </section>
     </template>
+
+    <template v-slot:footer>
+      <DisplayAd />
+    </template>
   </AppFeel>
 </template>
 
@@ -107,7 +111,7 @@ export default {
             }
           )
         } catch (e) {
-          console.log(e)
+          // console.log(e)
         } finally {
           this.showFallback = false
           this.noResultsFound = this.searchResults?.results?.length === 0

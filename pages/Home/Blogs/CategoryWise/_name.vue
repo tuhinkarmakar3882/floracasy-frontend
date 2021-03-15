@@ -6,9 +6,14 @@
     dynamic-back
   >
     <template v-slot:app-bar-title>{{ pageTitle }}</template>
-    <template slot="main">
+
+    <template v-slot:main>
       <h4 class="heading-title">{{ $route.params.name }}</h4>
       <InfiniteScrollingBlogLists :category="$route.params.name" />
+    </template>
+
+    <template v-slot:footer>
+      <DisplayAd />
     </template>
   </AppFeel>
 </template>
