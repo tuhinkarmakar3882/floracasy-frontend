@@ -15,7 +15,6 @@
     </template>
 
     <template slot="main">
-      <InFeedAd />
       <div ref="commentStart" />
       <section v-if="blog" class="top-section px-4">
         <div class="introduction">

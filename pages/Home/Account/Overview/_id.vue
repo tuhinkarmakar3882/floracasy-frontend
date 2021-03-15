@@ -83,7 +83,11 @@
             >
               <LazyBlogPost :blog="blog" class="activity pt-4" />
 
-              <InFeedAd v-if="index % 3 === 0" use-small-ads />
+              <InFeedAd
+                v-if="index % 2 === 0"
+                :key="'blog-ad-' + index"
+                use-small-ads
+              />
             </article>
 
             <footer v-if="!loadingError">
@@ -120,7 +124,11 @@
             >
               <CommunityPost :post="post" class="activity py-8" />
 
-              <InFeedAd v-if="index % 3 === 0" use-small-ads />
+              <InFeedAd
+                v-if="index % 2 === 0"
+                :key="'post-ad-' + index"
+                use-small-ads
+              />
             </article>
 
             <footer v-if="!loadingError">

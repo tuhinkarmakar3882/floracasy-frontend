@@ -34,7 +34,7 @@
         </aside>
       </section>
 
-      <InFeedAd use-small-ads />
+      <InFeedAd class="my-4" use-small-ads />
 
       <h4 class="px-4">Now Earn Floracoin & Get Exciting Offers</h4>
       <hr class="faded-divider" />

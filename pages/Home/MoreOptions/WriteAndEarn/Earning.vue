@@ -36,12 +36,16 @@
             {{ paragraph }}
           </p>
 
-          <InFeedAd v-if="index % 3 === 0" use-small-ads />
+          <InFeedAd
+            v-if="index % 3 === 0"
+            :key="'earning-ad-' + index"
+            use-small-ads
+          />
         </section>
       </main>
     </template>
     <template v-slot:footer>
-      <InFeedAd use-small-ads />
+      <InFeedAd class="my-4" use-small-ads />
     </template>
   </AppFeel>
 </template>

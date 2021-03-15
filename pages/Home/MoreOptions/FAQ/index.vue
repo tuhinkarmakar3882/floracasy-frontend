@@ -35,7 +35,11 @@
           class="px-4"
         />
 
-        <InFeedAd v-if="index % 3 === 0" use-small-ads />
+        <InFeedAd
+          v-if="index % 2 === 0"
+          :key="'faq-ad-' + index"
+          use-small-ads
+        />
       </section>
     </template>
 
