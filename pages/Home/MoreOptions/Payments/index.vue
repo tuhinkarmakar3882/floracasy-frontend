@@ -34,6 +34,9 @@
         </aside>
       </section>
 
+      <InArticleAd />
+
+      <h4 class="px-4">Now Earn Floracoin & Get Exciting Offers</h4>
       <hr class="faded-divider" />
 
       <section class="question-answer px-4">
