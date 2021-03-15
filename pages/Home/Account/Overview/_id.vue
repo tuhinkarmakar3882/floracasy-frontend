@@ -83,9 +83,7 @@
             >
               <LazyBlogPost :blog="blog" class="activity pt-4" />
 
-              <aside>
-                <InFeedAd v-if="index % 3 === 0" />
-              </aside>
+              <InFeedAd v-if="index % 3 === 0" use-small-ads />
             </article>
 
             <footer v-if="!loadingError">
@@ -116,12 +114,13 @@
           </section>
 
           <section v-if="tabNumber === 1">
-            <article v-for="(post, index)in recentPosts" :key="post.identifier">
+            <article
+              v-for="(post, index) in recentPosts"
+              :key="post.identifier"
+            >
               <CommunityPost :post="post" class="activity py-8" />
 
-              <aside>
-                <InFeedAd v-if="index % 3 === 0" />
-              </aside>
+              <InFeedAd v-if="index % 3 === 0" use-small-ads />
             </article>
 
             <footer v-if="!loadingError">
