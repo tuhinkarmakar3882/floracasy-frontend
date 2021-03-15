@@ -13,7 +13,7 @@
     </template>
 
     <template v-slot:footer>
-      <DisplayAd />
+      <InFeedAd />
     </template>
   </AppFeel>
 </template>

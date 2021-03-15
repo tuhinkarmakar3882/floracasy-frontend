@@ -77,12 +77,17 @@
 
         <main class="timeline pt-4">
           <section v-if="tabNumber === 0">
-            <LazyBlogPost
-              v-for="blog in recentBlogs"
+            <article
+              v-for="(blog, index) in recentBlogs"
               :key="blog.identifier"
-              :blog="blog"
-              class="activity pt-4"
-            />
+            >
+              <LazyBlogPost :blog="blog" class="activity pt-4" />
+
+              <aside>
+                <InFeedAd v-if="index % 3 === 0" />
+              </aside>
+            </article>
+
             <footer v-if="!loadingError">
               <client-only>
                 <infinite-loading
@@ -111,12 +116,14 @@
           </section>
 
           <section v-if="tabNumber === 1">
-            <CommunityPost
-              v-for="post in recentPosts"
-              :key="post.identifier"
-              :post="post"
-              class="activity py-8"
-            />
+            <article v-for="(post, index)in recentPosts" :key="post.identifier">
+              <CommunityPost :post="post" class="activity py-8" />
+
+              <aside>
+                <InFeedAd v-if="index % 3 === 0" />
+              </aside>
+            </article>
+
             <footer v-if="!loadingError">
               <client-only>
                 <infinite-loading

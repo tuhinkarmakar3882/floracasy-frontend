@@ -34,7 +34,7 @@
         </aside>
       </section>
 
-      <InArticleAd />
+      <InFeedAd use-small-ads />
 
       <h4 class="px-4">Now Earn Floracoin & Get Exciting Offers</h4>
       <hr class="faded-divider" />
@@ -120,10 +120,6 @@
           tick-color="#65db65"
         />
       </section>
-    </template>
-
-    <template v-slot:footer>
-      <DisplayAd />
     </template>
   </AppFeel>
 </template>

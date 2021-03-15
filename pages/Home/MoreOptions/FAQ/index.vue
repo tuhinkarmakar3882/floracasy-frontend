@@ -35,7 +35,7 @@
           class="px-4"
         />
 
-        <DisplayAd v-if="index % 3 === 0" />
+        <InFeedAd v-if="index % 3 === 0" use-small-ads />
       </section>
     </template>
 

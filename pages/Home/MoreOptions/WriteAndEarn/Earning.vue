@@ -35,11 +35,13 @@
           >
             {{ paragraph }}
           </p>
+
+          <InFeedAd v-if="index % 3 === 0" use-small-ads />
         </section>
       </main>
     </template>
     <template v-slot:footer>
-      <DisplayAd />
+      <InFeedAd use-small-ads />
     </template>
   </AppFeel>
 </template>

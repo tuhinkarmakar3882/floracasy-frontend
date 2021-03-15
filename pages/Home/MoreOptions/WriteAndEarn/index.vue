@@ -33,7 +33,7 @@
     </template>
 
     <template v-slot:footer>
-      <DisplayAd />
+      <InFeedAd use-small-ads />
     </template>
   </AppFeel>
 </template>

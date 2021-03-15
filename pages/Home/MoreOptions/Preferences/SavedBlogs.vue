@@ -10,8 +10,9 @@
       <h4 class="heading-title">Saved Blogs</h4>
       <client-only>
         <section v-if="blogs">
-          <article v-for="{ blog } in blogs" :key="blog.id">
+          <article v-for="({ blog }, index) in blogs" :key="blog.id">
             <BlogPost :blog="blog" class="pt-8 pb-0" />
+            <InFeedAd v-if="index % 2 === 0" />
           </article>
         </section>
 

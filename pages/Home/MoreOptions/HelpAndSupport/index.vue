@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.MoreOptions.index"
     class="help-and-support-page"
   >
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
+    <template v-slot:app-bar-title> {{ pageTitle }}</template>
 
-    <template slot="main">
+    <template v-slot:main>
       <CustomListView>
         <template slot="list-items">
           <li
@@ -27,6 +27,9 @@
           </li>
         </template>
       </CustomListView>
+    </template>
+    <template v-slot:footer>
+      <InFeedAd use-small-ads />
     </template>
   </AppFeel>
 </template>
