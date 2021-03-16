@@ -7,8 +7,12 @@ export default ({ app }) => {
   }
   app.router.afterEach(async (to, _) => {
     if (process.client) {
-      window.gtag('config', firebaseConfig.measurementId, { page_path: to })
-      window.gtag('config', universalTrackingID, { page_path: to })
+      const currentPageDetails = {
+        page_title: to.name,
+        page_path: to.path,
+      }
+      window.gtag('config', firebaseConfig.measurementId, currentPageDetails)
+      window.gtag('config', universalTrackingID, currentPageDetails)
     }
   })
 }
