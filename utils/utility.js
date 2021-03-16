@@ -132,5 +132,4 @@ export const LogPageViewEvent = (eventType = '', payload = {}) => {
 
 export const LogAnalyticsEvent = (eventType = '', payload = {}) => {
   window.gtag('event', eventType, payload)
-  window.gtag('event', eventType, payload)
 }
