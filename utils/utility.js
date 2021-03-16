@@ -125,11 +125,6 @@ export const getFormattedTime = (decimalTimeInSeconds) => {
     .padStart(2, '0')}`
 }
 
-export const LogPageViewEvent = (eventType = '', payload = {}) => {
-  window.gtag(eventType, firebaseConfig.measurementId, payload)
-  window.gtag(eventType, universalTrackingID, payload)
-}
-
 export const LogAnalyticsEvent = (eventType = '', payload = {}) => {
   window.gtag('event', eventType, payload)
 }

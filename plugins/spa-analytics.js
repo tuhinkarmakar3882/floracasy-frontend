@@ -1,4 +1,3 @@
-import { LogPageViewEvent } from '~/utils/utility'
 import { firebaseConfig, universalTrackingID } from '~/environmentVariables'
 
 export default ({ app }) => {
@@ -8,11 +7,13 @@ export default ({ app }) => {
   }
   app.router.afterEach(async (to, _) => {
     if (process.client) {
-      const currentPageDetails = {
+      window.gtag('config', firebaseConfig.measurementId, {
+        page_path: to,
+      })
+      window.gtag('config', universalTrackingID, {
         page_title: to.name,
         page_path: to.path,
-      }
-      LogPageViewEvent('config', currentPageDetails)
+      })
     }
   })
 }
