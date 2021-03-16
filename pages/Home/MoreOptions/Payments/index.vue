@@ -12,7 +12,7 @@
         <header>
           <section>
             <p>Total Amount Earned</p>
-            <small>$60</small>
+            <small>$0</small>
           </section>
           <button class="disabled-btn" disabled>Redeem</button>
         </header>
@@ -22,19 +22,17 @@
         </main>
 
         <aside class="bottom-part mt-6">
-          <ProgressRing :percentage="60" />
+          <ProgressRing :percentage="0" />
 
           <section class="content ml-4">
             <h6 class="my-0">Progress</h6>
             <p class="mt-2 muted">
-              Need <span class="vibrant"><strong>$40</strong></span> more to
+              Need <span class="vibrant"><strong>$100</strong></span> more to
               redeem your earning.
             </p>
           </section>
         </aside>
       </section>
-
-      <InFeedAd class="my-4" use-small-ads />
 
       <h4 class="px-4">Now Earn Floracoin & Get Exciting Offers</h4>
       <hr class="faded-divider" />
@@ -55,6 +53,8 @@
           more interesting stuff access buy spending floracoins.
         </p>
       </section>
+
+      <InFeedAd class="my-4" use-small-ads />
 
       <section class="question-answer px-4">
         <h4>How To Earn Floracoin?</h4>
