@@ -132,6 +132,7 @@ export default {
       await this.updateVuexStates(payload)
 
       this.updateInfo('Welcome')
+      window.gtag('event', 'login', { method: 'Google' })
       window.location = navigationRoutes.Home.DashBoard
     },
 

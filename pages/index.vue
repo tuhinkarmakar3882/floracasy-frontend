@@ -166,7 +166,7 @@
         <button
           v-ripple
           class="secondary-outlined-btn"
-          @click="$router.push(navigationRoutes.Home.DashBoard)"
+          @click="continueAsGuest"
         >
           <i class="mdi mdi-account-circle mdi-24px" />
           <span class="white">Continue as Guest</span>
@@ -262,7 +262,12 @@ export default {
 
   mounted() {},
 
-  methods: {},
+  methods: {
+    async continueAsGuest() {
+      window.gtag('event', 'login', { method: 'Anonymous' })
+      await this.$router.push(navigationRoutes.Home.DashBoard)
+    },
+  },
 
   head() {
     return {
