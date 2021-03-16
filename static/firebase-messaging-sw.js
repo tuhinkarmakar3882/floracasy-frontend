@@ -8,13 +8,13 @@ importScripts('https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js')
 importScripts('https://www.gstatic.com/firebasejs/8.2.10/firebase-messaging.js')
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBC8dH53PFPOWqN72FHSZtjM6ekF3gbEOM',
-  authDomain: 'floracasy-673ff.firebaseapp.com',
-  databaseURL: 'https://floracasy-673ff.firebaseio.com',
-  projectId: 'floracasy-673ff',
-  storageBucket: 'floracasy-673ff.appspot.com',
-  messagingSenderId: '804365562035',
-  appId: '1:804365562035:web:c45a8c8ff793dfe2ec00c6',
+  apiKey: 'AIzaSyCzV0kNLyZFAs9R3paAKPnyt5dROSYFGOM',
+  authDomain: 'ts-floracasy-love.firebaseapp.com',
+  projectId: 'ts-floracasy-love',
+  databaseURL: 'https://ts-floracasy-love.firebaseio.com',
+  storageBucket: 'ts-floracasy-love.appspot.com',
+  messagingSenderId: '806848884487',
+  appId: '1:806848884487:web:52e5e287afd2f0d9fe1fa2',
   measurementId: 'G-M1MPRCJT7Z',
 }
 
