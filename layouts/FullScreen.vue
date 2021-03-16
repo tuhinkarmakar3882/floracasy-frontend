@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LazynstallBadge class="install-badge" show-close-button />
+    <LazyInstallBadge class="install-badge" show-close-button />
     <nuxt />
   </div>
 </template>
