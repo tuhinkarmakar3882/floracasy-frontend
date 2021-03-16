@@ -21,6 +21,8 @@
 //   },
 // })
 
+import { firebaseConfig, universalTrackingID } from '~/environmentVariables'
+
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -121,4 +123,14 @@ export const getFormattedTime = (decimalTimeInSeconds) => {
   return `${minutes.toString().padStart(2, '0')}:${seconds
     .toString()
     .padStart(2, '0')}`
+}
+
+export const LogPageViewEvent = (eventType = '', payload = {}) => {
+  window.gtag(eventType, firebaseConfig.measurementId, payload)
+  window.gtag(eventType, universalTrackingID, payload)
+}
+
+export const LogAnalyticsEvent = (eventType = '', payload = {}) => {
+  window.gtag('event', eventType, payload)
+  window.gtag('event', eventType, payload)
 }
