@@ -30,7 +30,7 @@ export default {
   server: {
     port: 3001,
   },
-  serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
+  // serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
   plugins: [
     '~/plugins/custom-material-ripple.js',
@@ -44,7 +44,11 @@ export default {
       mode: 'client',
     },
     {
-      src: '~/middleware/spa-analytics-and-setup-user.js',
+      src: '~/plugins/spa-analytics.js',
+      mode: 'client',
+    },
+    {
+      src: '~/plugins/setup-user.js',
       mode: 'client',
     },
     '~/plugins/axios.js',
@@ -58,10 +62,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  modern: {
-    server: true,
-    client: true,
-  },
+  // modern: {
+  //   server: true,
+  //   client: true,
+  // },
 
   modules: [
     'nuxt-helmet',
@@ -232,52 +236,28 @@ export default {
       },
 
       //  Google Fonts
-      {
-        rel: 'dns-prefetch',
-        crossorigin: true,
-        href: 'https://fonts.gstatic.com/',
-      },
-      {
-        rel: 'preconnect',
-        crossorigin: true,
-        href: 'https://fonts.gstatic.com/',
-      },
-      {
-        rel: 'preload',
-        as: 'style',
-        href:
-          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-      },
-      {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href:
-          'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-      },
-
-      //  Material Design Icons
-      {
-        rel: 'dns-prefetch',
-        crossorigin: true,
-        href: 'https://cdn.materialdesignicons.com/',
-      },
-      {
-        rel: 'preconnect',
-        crossorigin: true,
-        href: 'https://cdn.materialdesignicons.com/',
-      },
-      {
-        rel: 'preload',
-        as: 'style',
-        href:
-          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-      },
-      {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href:
-          'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-      },
+      // {
+      //   rel: 'dns-prefetch',
+      //   crossorigin: true,
+      //   href: 'https://fonts.gstatic.com/',
+      // },
+      // {
+      //   rel: 'preconnect',
+      //   crossorigin: true,
+      //   href: 'https://fonts.gstatic.com/',
+      // },
+      // {
+      //   rel: 'preload',
+      //   as: 'style',
+      //   href:
+      //     'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+      // },
+      // {
+      //   rel: 'stylesheet',
+      //   type: 'text/css',
+      //   href:
+      //     'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+      // },
     ],
   },
 
