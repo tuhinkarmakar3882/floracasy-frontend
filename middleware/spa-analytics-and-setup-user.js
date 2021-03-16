@@ -1,12 +1,13 @@
 import { setupUser } from '~/utils/utility'
-import { firebaseConfig } from '~/environmentVariables'
+import { firebaseConfig, universalTrackingID } from '~/environmentVariables'
 
 export default async ({ app, store }) => {
   app.router.afterEach(async (to, _) => {
-    process.client &&
+    if (process.client) {
       window.gtag('config', firebaseConfig.measurementId, { page_path: to })
-    if (store.state.isUserAuthenticated) {
-      await setupUser(store)
+      window.gtag('config', universalTrackingID, { page_path: to })
     }
+
+    store.state.isUserAuthenticated && (await setupUser(store))
   })
 }
