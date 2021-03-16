@@ -452,9 +452,9 @@ export default {
 
       button {
         display: grid;
-        grid-template-columns: 20% 80%;
+        grid-template-columns: 30% 70%;
         align-items: center;
-        width: 80%;
+        width: 100%;
         height: 48px;
         margin: 16px 0;
 

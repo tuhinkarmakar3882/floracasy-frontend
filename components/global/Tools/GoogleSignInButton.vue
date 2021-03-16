@@ -133,11 +133,12 @@ export default {
 <style lang="scss" scoped>
 button {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 30% 70%;
   align-items: center;
   width: 80%;
   height: 48px;
   margin: 16px 0;
+  place-items: center;
 
   span {
     justify-self: flex-start;
@@ -145,7 +146,6 @@ button {
 
   .icon {
     display: block;
-    margin-right: 16px;
     height: 24px;
     width: 24px;
   }
