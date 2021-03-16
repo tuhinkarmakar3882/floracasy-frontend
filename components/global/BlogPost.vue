@@ -126,6 +126,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
+  LogAnalyticsEvent,
   parseTimeUsingStandardLibrary,
   shorten,
   showUITip,
@@ -253,6 +254,7 @@ export default {
     },
 
     async openBlogDetails() {
+      LogAnalyticsEvent('read_blog')
       await this.$router.push(
         navigationRoutes.Home.Blogs.Details.replace(
           '{id}',

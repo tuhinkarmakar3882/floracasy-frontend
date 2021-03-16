@@ -8,7 +8,7 @@
 <script>
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import * as secrets from '~/environmentVariables'
@@ -77,7 +77,9 @@ export default {
       await this.updateVuexStates(payload)
 
       this.updateInfo('Welcome')
-      window.gtag('event', 'login', { method: 'Google' })
+
+      LogAnalyticsEvent('google_sign_in')
+
       window.location = navigationRoutes.Home.DashBoard
     },
 

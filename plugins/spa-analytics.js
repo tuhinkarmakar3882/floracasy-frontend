@@ -1,3 +1,4 @@
+import { LogPageViewEvent } from '~/utils/utility'
 import { firebaseConfig, universalTrackingID } from '~/environmentVariables'
 
 export default ({ app }) => {
@@ -11,8 +12,7 @@ export default ({ app }) => {
         page_title: to.name,
         page_path: to.path,
       }
-      window.gtag('config', firebaseConfig.measurementId, currentPageDetails)
-      window.gtag('config', universalTrackingID, currentPageDetails)
+      LogPageViewEvent('config', currentPageDetails)
     }
   })
 }

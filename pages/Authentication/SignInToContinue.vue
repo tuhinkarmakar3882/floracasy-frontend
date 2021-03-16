@@ -45,7 +45,7 @@ import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import * as secrets from '@/environmentVariables'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 
 export default {
   name: 'SignInToContinue',
@@ -132,7 +132,9 @@ export default {
       await this.updateVuexStates(payload)
 
       this.updateInfo('Welcome')
-      window.gtag('event', 'login', { method: 'Google' })
+
+      LogAnalyticsEvent('google_sign_in')
+
       window.location = navigationRoutes.Home.DashBoard
     },
 

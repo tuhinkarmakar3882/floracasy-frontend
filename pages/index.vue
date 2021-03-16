@@ -189,6 +189,7 @@
 <script>
 import { usePremiumServices } from '~/environmentVariables'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { LogAnalyticsEvent } from '~/utils/utility'
 
 export default {
   name: 'WelcomePage',
@@ -264,7 +265,7 @@ export default {
 
   methods: {
     async continueAsGuest() {
-      window.gtag('event', 'login', { method: 'Anonymous' })
+      LogAnalyticsEvent('anonymous_login')
       await this.$router.push(navigationRoutes.Home.DashBoard)
     },
   },
