@@ -78,9 +78,6 @@
               ]"
               class="mdi menu-option-icon"
             />
-            <!--          <small style="width: 12ch" class="menu-option-text text-left ml-2">-->
-            <!--            {{ menuOption.text }}-->
-            <!--          </small>-->
           </section>
         </div>
       </footer>
@@ -249,7 +246,6 @@ import Logo from '~/components/global/Logo'
 
 export default {
   name: 'MobileApp',
-  components: { Logo, CustomListView, NotificationBadge },
 
   data() {
     return {
