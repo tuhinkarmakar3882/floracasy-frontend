@@ -2,15 +2,13 @@
   <main class="modal-style">
     <NotificationBadge />
     <nuxt />
-    <LazyInstallBadge show-close-button class="install-badge" />
+    <LazyInstallBadge class="install-badge" show-close-button />
   </main>
 </template>
 
 <script>
-import NotificationBadge from '@/components/global/NotificationBadge'
 export default {
   name: 'Authentication',
-  components: { NotificationBadge },
 }
 </script>
 
