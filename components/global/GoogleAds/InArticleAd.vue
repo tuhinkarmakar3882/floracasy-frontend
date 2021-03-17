@@ -5,7 +5,7 @@
     data-ad-client="ca-pub-9863542606738743"
     data-ad-format="fluid"
     data-ad-layout="in-article"
-    :data-ad-slot="adSlot"
+    :data-ad-slot="8097332277"
     style="display: block; text-align: center"
   />
 </template>
@@ -13,12 +13,6 @@
 <script>
 export default {
   name: 'InArticleAd',
-  props: {
-    adSlot: {
-      type: Number || String,
-      default: 5758109393,
-    },
-  },
   mounted() {
     ;(window.adsbygoogle || []).push({})
   },
