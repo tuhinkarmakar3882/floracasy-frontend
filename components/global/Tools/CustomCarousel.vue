@@ -113,11 +113,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
     position: absolute;
     bottom: 0;
     height: $medium-unit;
     width: 100%;
-    z-index: 1;
+
+    @supports (gap: $nano-unit) {
+      gap: $nano-unit;
+    }
 
     .dot {
       display: block;
@@ -125,12 +129,12 @@ export default {
       width: $nano-unit + $double-unit;
       border-radius: 50%;
       background: $muted;
-      margin: 0 $nano-unit;
+      margin: 0 $double-unit;
 
       &.active {
         width: $standard-unit;
         height: $micro-unit;
-        border-radius: $micro-unit;
+        border-radius: $xxx-large-unit;
         background: $vibrant;
       }
     }

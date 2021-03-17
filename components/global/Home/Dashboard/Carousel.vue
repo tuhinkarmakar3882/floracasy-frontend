@@ -278,18 +278,23 @@ export default {
     height: $medium-unit;
     width: 100%;
 
+    @supports (gap: $nano-unit) {
+      gap: $nano-unit;
+    }
+
     .dot {
-      margin: 0 $nano-unit;
+      margin: 0 $double-unit;
       display: block;
       height: $nano-unit + $double-unit;
       width: $nano-unit + $double-unit;
-      border-radius: 999999px;
+      border-radius: 50%;
       background: $muted;
 
       &.active {
         width: $standard-unit;
         height: $micro-unit;
         background: $vibrant;
+        border-radius: $xxx-large-unit;
       }
     }
 
