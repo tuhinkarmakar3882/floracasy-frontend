@@ -113,7 +113,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: $micro-unit;
     position: absolute;
     bottom: 0;
     height: $medium-unit;
@@ -126,6 +125,7 @@ export default {
       width: $nano-unit + $double-unit;
       border-radius: 50%;
       background: $muted;
+      margin: 0 $nano-unit;
 
       &.active {
         width: $standard-unit;

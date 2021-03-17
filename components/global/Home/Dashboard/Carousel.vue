@@ -273,21 +273,21 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: $micro-unit;
     position: absolute;
     bottom: 0;
     height: $medium-unit;
     width: 100%;
 
     .dot {
+      margin: 0 $nano-unit;
       display: block;
       height: $nano-unit + $double-unit;
       width: $nano-unit + $double-unit;
-      border-radius: 50%;
+      border-radius: 999999px;
       background: $muted;
 
       &.active {
-        width: $micro-unit;
+        width: $standard-unit;
         height: $micro-unit;
         background: $vibrant;
       }
