@@ -1,10 +1,5 @@
 const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
-const filesToCache = [
-  'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-  'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-  'https://cdn.materialdesignicons.com/5.4.55/fonts/materialdesignicons-webfont.woff2?v=5.4.55',
-  '/offline',
-]
+const filesToCache = []
 
 // Cache on install
 self.addEventListener('install', (event) => {
@@ -35,10 +30,10 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches
       .match(event.request)
-      .then((response) => {
-        if (response) {
-          return response
-        }
+      .then(() => {
+        // if (response) {
+        //   return response
+        // }
         return fetch(event.request)
       })
       .catch(() => {
