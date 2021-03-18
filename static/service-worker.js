@@ -30,10 +30,11 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches
       .match(event.request)
-      .then(() => {
-        // if (response) {
-        //   return response
-        // }
+      .then((response) => {
+        if (response) {
+          return response
+        }
+        console.log('---', event.request)
         return fetch(event.request)
       })
       .catch(() => {
