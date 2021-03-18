@@ -185,7 +185,7 @@ export default {
   render: {
     injectScripts: true,
     resourceHints: true,
-    asyncScripts: true,
+    // asyncScripts: true,
     // http2: {
     //   push: true,
     //   // pushAssets: (_, __, publicPath, preloadFiles) =>
