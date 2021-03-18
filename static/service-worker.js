@@ -27,19 +27,21 @@ self.addEventListener('activate', (event) => {
 
 // Serve from Cache
 self.addEventListener('fetch', (event) => {
+  console.log('[+] Requesting for:', event.request.url)
+
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((response) => {
-        if (response) {
-          return response
-        }
-        console.log('---', event.request)
-        return fetch(event.request)
-      })
-      .catch(() => {
-        return caches.match('/offline')
-      })
+    fetch(event.request)
+    // caches
+    //   .match(event.request)
+    //   .then((response) => {
+    //     if (response) {
+    //       return response
+    //     }
+    //     return fetch(event.request)
+    //   })
+    //   .catch(() => {
+    //     return caches.match('/offline')
+    //   })
   )
 })
 
