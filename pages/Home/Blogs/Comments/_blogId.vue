@@ -68,12 +68,22 @@
           :key="comment.id"
           class="comment my-6"
         >
-          <img :src="comment.user.photoURL" alt="profile-image" />
+          <img
+            :src="comment.user.photoURL"
+            alt="profile-image"
+            height="40"
+            width="40"
+            @click="openProfile(comment.userUID)"
+          />
           <div class="comment-message-container">
             <p class="top-line">
-              <span class="username secondary">{{
-                getInitials(comment.user.displayName)
-              }}</span>
+              <span
+                v-ripple
+                class="username secondary"
+                @click="openProfile(comment.userUID)"
+              >
+                {{ getInitials(comment.user.displayName) }}
+              </span>
               <span class="timestamp">
                 <span class="mdi mdi-clock-time-nine-outline" />
                 {{ getRelativeTime(comment.createdAt) }}
@@ -186,6 +196,13 @@ export default {
   methods: {
     getRelativeTime,
 
+    openProfile(userUID) {
+      userUID &&
+        this.$router.push(
+          navigationRoutes.Home.Account.Overview.replace('{userUID}', userUID)
+        )
+    },
+
     async infiniteHandler($state) {
       if (!this.fetchCommentsEndpoint) {
         $state.complete()
@@ -228,6 +245,7 @@ export default {
           })
           const newComment = {
             id: Date.now(),
+            userUID: this.user.uid,
             user: {
               photoURL: this.user.photoURL,
               displayName: this.user.displayName,
