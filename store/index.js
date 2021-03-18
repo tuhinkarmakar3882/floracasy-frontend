@@ -22,20 +22,21 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ dispatch }) {
-    await dispatch('checkTokenValidity')
+    await dispatch('updateCredentials')
   },
 
-  async checkTokenValidity({ commit }) {
+  async updateCredentials({ commit }) {
     await this.$axios.setToken('', 'Bearer')
+    const access = await this.$cookies.get('access')
+    const refresh = await this.$cookies.get('refresh')
 
     try {
-      const { data } = await this.$axios.post(
-        endpoints.auth.checkToken,
-        {},
-        { withCredentials: true }
-      )
+      const { data } = await this.$axios.post(endpoints.auth.checkToken, {
+        access,
+        refresh,
+      })
 
-      if (data?.authState) {
+      if (data?.isAuthenticated) {
         const cookieSavingConfig = {
           path: '/',
           maxAge: secrets.cookieMaxAge,
@@ -49,7 +50,7 @@ export const actions = {
         await this.$cookies.remove('refresh')
       }
 
-      commit('SET_IS_USER_AUTHENTICATED', data?.authState)
+      commit('SET_IS_USER_AUTHENTICATED', data?.isAuthenticated)
     } catch (e) {
       commit('SET_IS_USER_AUTHENTICATED', false)
     }
