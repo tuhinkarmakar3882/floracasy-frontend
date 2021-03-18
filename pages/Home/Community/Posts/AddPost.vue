@@ -44,7 +44,7 @@
           </section>
         </section>
 
-        <section class="hidden-input-fields">
+        <section class="-hidden-input-fields">
           <input
             v-show="false"
             ref="photoInput"
@@ -80,7 +80,7 @@
         </section>
 
         <section class="main px-2">
-          <pre
+          <div
             id="post-body"
             :style="[
               {
@@ -90,10 +90,8 @@
                 !hasAudio &&
                 customStyle && {
                   ...customStyle,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  lineHeight: '1.75',
+                  display: 'grid',
+                  placeItems: 'center',
                   minHeight: '200px',
                 },
             ]"
@@ -366,8 +364,7 @@ export default {
     },
 
     updateText() {
-      // eslint-disable-next-line
-      this.postBody = document.getElementById('post-body').innerText
+      this.postBody = document.getElementById('post-body').textContent
     },
     loadAudioPreview(event) {
       this.hasAudio = false
@@ -563,15 +560,6 @@ export default {
     border-radius: 0 $standard-unit;
     min-height: 200px;
     outline: 0 none;
-    background: transparent;
-    margin: 0;
-    color: #bababa;
-    font-family: $Raleway;
-    letter-spacing: $single-unit;
-    font-weight: 300;
-    font-size: 1rem;
-    line-height: 1.75;
-    word-break: break-word;
 
     &:focus {
       border: 1px solid $secondary;
