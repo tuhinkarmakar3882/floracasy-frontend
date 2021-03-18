@@ -56,17 +56,20 @@
         </ul>
       </div>
     </transition>
-
     <section class="post-body py-4 px-4">
-      <p v-if="post.body" v-ripple :style="post.style" @click="viewPostDetails">
-        {{
+      <pre
+        v-if="post.body"
+        v-ripple
+        :style="post.style"
+        @click="viewPostDetails"
+        >{{
           expanded
             ? post.body
             : `${post.body.substr(0, 100)} ${
                 post.body.length > 99 ? '...' : ''
               }`
-        }}
-      </p>
+        }}</pre
+      >
 
       <img
         v-if="post.image"
@@ -162,6 +165,12 @@ export default {
     }
   },
 
+  mounted() {
+    try {
+      this.post.body = atob(this.post.body || '')
+    } catch (e) {}
+  },
+
   methods: {
     shorten,
     getRelativeTime,
@@ -245,6 +254,19 @@ export default {
       width: 100%;
       object-fit: scale-down;
       box-shadow: $default-box-shadow;
+    }
+
+    pre {
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      color: #bababa;
+      font-family: $Raleway;
+      letter-spacing: $single-unit;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 1.75;
+      word-break: break-word;
     }
   }
 
