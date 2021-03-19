@@ -1,6 +1,8 @@
 <template>
   <div class="fallback-loader">
-    <LoadingIcon class="mb-8" />
+    <div class="text-center">
+      <LoadingIcon class="mb-8" />
+    </div>
     <slot name="fallback">
       <p class="text-center">Fetching data from server</p>
     </slot>
