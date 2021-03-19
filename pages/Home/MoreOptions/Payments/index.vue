@@ -8,31 +8,52 @@
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <template slot="main">
-      <section class="payment-card px-4 py-6">
-        <header>
-          <section>
-            <p>Total Amount Earned</p>
-            <small>$0</small>
-          </section>
-          <button class="disabled-btn" disabled>Redeem</button>
-        </header>
+      <div class="payment-card px-4 py-6">
+        <FallBackLoader v-if="loading">
+          <template v-slot:fallback>
+            <p class="text-center">Fetching Latest Earnings from server</p>
+          </template>
+        </FallBackLoader>
 
-        <main>
-          <div class="chart" />
-        </main>
+        <LoadingError
+          v-else-if="loadingError"
+          error-section="Current Earnings"
+        />
 
-        <aside class="bottom-part mt-6">
-          <ProgressRing :percentage="0" />
+        <section v-else>
+          <header>
+            <section>
+              <p>Total Amount Earned</p>
+              <small>
+                <strong>${{ balanceInfo.earning }}</strong>
+              </small>
+            </section>
+            <button class="disabled-btn" disabled>Redeem</button>
+          </header>
 
-          <section class="content ml-4">
-            <h6 class="my-0">Progress</h6>
-            <p class="mt-2 muted">
-              Need <span class="vibrant"><strong>$100</strong></span> more to
-              redeem your earning.
-            </p>
-          </section>
-        </aside>
-      </section>
+          <main>
+            <div class="chart" />
+          </main>
+
+          <aside class="bottom-part mt-6">
+            <ProgressRing :percentage="0" />
+
+            <section class="content ml-4">
+              <h6 class="my-0">Progress</h6>
+              <p class="mt-2 muted">
+                Need
+                <span class="danger-light"><strong>$100</strong></span> more to
+                redeem your earning.
+              </p>
+            </section>
+          </aside>
+          <p class="text-center mt-6 primary-light">
+            <small>
+              - Updated {{ getRelativeTime(balanceInfo.updatedAt) }} -
+            </small>
+          </p>
+        </section>
+      </div>
 
       <h4 class="heading-title my-6 px-4">Tips to Improve Your Earnings</h4>
 
@@ -140,6 +161,8 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { usePremiumServices } from '~/environmentVariables'
+import endpoints from '~/api/endpoints'
+import { getRelativeTime } from '~/utils/utility'
 
 export default {
   name: 'Payments',
@@ -170,11 +193,27 @@ export default {
         'Avail Faster Customer Support',
         'And Much More!',
       ],
+      loading: true,
+      loadingError: false,
+      balanceInfo: undefined,
     }
   },
-  mounted() {},
+  async mounted() {
+    await this.fetchCurrentEarnings()
+  },
 
-  methods: {},
+  methods: {
+    async fetchCurrentEarnings() {
+      try {
+        this.balanceInfo = await this.$axios.$get(endpoints.payments.fetch)
+      } catch (e) {
+        this.loadingError = true
+      } finally {
+        this.loading = false
+      }
+    },
+    getRelativeTime,
+  },
 
   head() {
     return {
