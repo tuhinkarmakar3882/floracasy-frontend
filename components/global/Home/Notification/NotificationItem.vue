@@ -144,6 +144,10 @@ export default {
           await this.openModalForBlogLike()
           break
 
+        case 'like_post':
+          await this.openPostDetails('identifier')
+          break
+
         case 'open_ticket_detail':
           await this.$router.push(
             navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index
@@ -156,6 +160,10 @@ export default {
 
         case 'open_blog_comment_page':
           await this.openModalForBlogComments()
+          break
+
+        case 'open_post_comment_page':
+          await this.openPostDetails('postIdentifier')
           break
 
         default:
@@ -195,6 +203,15 @@ export default {
       await this.$router.push(
         navigationRoutes.Home.Account.Overview.replace(
           '{userUID}',
+          this.notification.onclickActionInfo[keyName]
+        )
+      )
+    },
+    async openPostDetails(keyName) {
+      console.log(this.notification.onclickActionInfo[keyName])
+      await this.$router.push(
+        navigationRoutes.Home.Community.Posts.detail.replace(
+          '{postIdentifier}',
           this.notification.onclickActionInfo[keyName]
         )
       )
