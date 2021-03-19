@@ -36,14 +36,20 @@
           </main>
 
           <aside class="bottom-part mt-6">
-            <ProgressRing :percentage="0" />
+            <ProgressRing
+              :percentage="
+                balanceInfo.earning > 100 ? 100 : balanceInfo.earning
+              "
+            />
 
             <section class="content ml-4">
               <h6 class="my-0">Progress</h6>
               <p class="mt-2 muted">
                 Need
-                <span class="danger-light"><strong>$100</strong></span> more to
-                redeem your earning.
+                <span class="danger-light"
+                  ><strong>${{ 100 - balanceInfo.earning }}</strong></span
+                >
+                more to redeem your earning.
               </p>
             </section>
           </aside>
