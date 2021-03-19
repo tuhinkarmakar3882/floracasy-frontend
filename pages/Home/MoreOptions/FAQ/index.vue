@@ -111,81 +111,62 @@ export default {
             consistency in writing. Try engaging with your audience by utilizing the Community Section. May be increase
             the followers?`,
         },
-        // {
-        //   id: 104,
-        //   statement: `Earn by winning weekly challenges:-`,
-        //   answer: `In floracasy , we try our best that users can earn as much as
-        //       possible so that we organise a weekly content writing
-        //       competition & give exciting price money to winners.`,
-        // },
-        // {
-        //   id: 105,
-        //   statement: `How to follow someone?`,
-        //   answer: `One user can easily follow other by pressing "follow" button . you
-        //       can see a "follow" button on any user's profile.`,
-        // },
-        // {
-        //   id: 106,
-        //   statement: `How to see your payments?`,
-        //   answer: `A user can only see his/her payment details. They can easily go to
-        //       their payment page by pressing "payment" button which can found in
-        //       profile page Or one can go to more action from navigation and
-        //       click on payments . you can see your payment insight view &
-        //       fill you payment details to get payment.`,
-        // },
-        // {
-        //   id: 107,
-        //   statement: `Why should one follow a blogger?`,
-        //   answer: `If one follow a blogger then he/she can easily get update whenever
-        //       that particular blogger update a blog. If you are blogger then you
-        //       can also follow others to get their best update.`,
-        // },
-        // {
-        //   id: 108,
-        //   statement: `How can one send massage to others?`,
-        //   answer: `As we all know messaging is the best way to communicate so in this
-        //       case user can communicate with each other. To send message you can
-        //       just press message found in every user's profile & start
-        //       conversation. you can also access you chats from upper right
-        //       corner's chat room.`,
-        // },
-        // {
-        //   id: 109,
-        //   statement: `How to share your blogs to other?`,
-        //   answer: `One can easily share their blogs from home page , by pressing
-        //       "share" option which is visible in a row containing like , comment
-        //       , share.. just below the blog .`,
-        // },
-        // {
-        //   id: 110,
-        //   statement: `How to like someone's blog?`,
-        //   answer: `One can easily share their blogs from home page , by pressing
-        //       "share" option which is visible in a row containing like , comment
-        //       , share.. just below the blog.`,
-        // },
-        // {
-        //   id: 111,
-        //   statement: `How to comment on other's blog?`,
-        //   answer: `One can easily comment in any blog. To add a comment press the
-        //       "comments icon" & you can see a text area open just below,
-        //       type your comment there & simply tap on add . You comment
-        //       will be added generally.`,
-        // },
-        // {
-        //   id: 112,
-        //   statement: `What is the function of Help & support?`,
-        //   answer: `Help & Support mainly a communication are with Floracasy team.
-        //       You can share you any doubt, any difficulties. We are ready to
-        //       help you 24×7. Go and check out help & support, you may found
-        //       many different solution of your problem.`,
-        // },
-        // {
-        //   id: 113,
-        //   statement: `How to edit User profile?`,
-        //   answer: `To edit profile go on "More option" from bottom navigation bar &
-        //       you may see Edit profile option .Click on that & simply change
-        //       your display picture; about; designation.`,
-        // },
+        {
+          id: 104,
+          statement: `When can I redeem the amount?`,
+          answer: `Once you hit the minimum threshold, you can claim the amount. It'll be transferred post your identity
+            verification.`,
+        },
+        {
+          id: 105,
+          statement: `How to see my earnings?`,
+          answer: `You can see your earning details by going to the payment page by pressing "payment" button (which
+            can found in profile page) or you can go to "More Options" from the navigation and click on payments.
+            There you'll be shown your earnings.`,
+        },
+        {
+          id: 106,
+          statement: `How can I follow someone?`,
+          answer: `You can follow someone by tapping on the "follow" button, which is available in their profile.`,
+        },
+        {
+          id: 107,
+          statement: `How do I share my blogs?`,
+          answer: `One can easily share their blogs from either the "Home" page or their account details page,
+            by pressing "Share" option which is visible in a row containing like, comment, share
+            (just below the blog).`,
+        },
+        {
+          id: 108,
+          statement: `Can I Message Someone in Floracasy?`,
+          answer: `Yes, we are working to roll out a secure & privacy focused ad-free messaging experience, very soon
+            in the near future.`,
+        },
+        {
+          id: 109,
+          statement: `How to like/unlike a blog?`,
+          answer: `You can hit like/unlike a blog by pressing "HEART SYMBOL" option which is visible in a row below the
+            blog.`,
+        },
+        {
+          id: 110,
+          statement: `How to comment on a post or a blog?`,
+          answer: `To add a comment press the "comments" icon & type your comments in the textbox. Then simply tap on
+            send. You comment will be added generally.`,
+        },
+        {
+          id: 111,
+          statement: `What is Help & support?`,
+          answer: `Help & Support is mainly a communication section with the Floracasy team. You can share your
+            questions or any difficulties faced or any bug or feature request or report unsuitable content. We are
+            there to help you out in a best possible manner based on that scenario.`,
+        },
+        {
+          id: 112,
+          statement: `How to edit your profile?`,
+          answer: `To edit your profile go on "More option" from bottom navigation bar &
+              tap on Preferences -> Edit profile. Then change whatever you want to change.`,
+        },
       ],
     }
   },
