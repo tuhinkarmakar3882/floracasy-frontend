@@ -21,8 +21,6 @@
 //   },
 // })
 
-import { firebaseConfig, universalTrackingID } from '~/environmentVariables'
-
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
