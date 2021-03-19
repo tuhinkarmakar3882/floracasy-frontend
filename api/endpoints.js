@@ -115,6 +115,10 @@ const endpoints = {
     upload_audio: uploadServerBase + '/upload/audio/',
   },
 
+  payments: {
+    fetch: '/allow_authenticated/payments/fetch/',
+  },
+
   health_check: {
     test: 'health_check/',
   },
