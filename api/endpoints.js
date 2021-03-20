@@ -54,6 +54,7 @@ const endpoints = {
     },
     posts: {
       index: '/allow_authenticated/community_service/posts/',
+      delete: '/allow_authenticated/community_service/posts/delete/',
       detail:
         '/allow_authenticated/community_service/posts/detail/{identifier}/',
       like: '/allow_authenticated/community_service/posts/like/',
