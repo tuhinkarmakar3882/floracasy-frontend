@@ -1,126 +1,141 @@
 <template>
-  <div class="blog-post-component">
-    <section class="content">
-      <p class="px-4 mb-2 top-line">
-        <nuxt-link
-          v-ripple
-          :to="
-            navigationRoutes.Home.Account.Overview.replace(
-              '{userUID}',
-              blog.author.uid
-            )
-          "
-          class="no-underline"
-        >
-          {{ blog.author.displayName }}
-        </nuxt-link>
-        <strong class="mx-1">IN</strong>
-        <nuxt-link
-          v-ripple
-          :to="
-            navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
-              '{name}',
-              blog.category.name
-            )
-          "
-          class="no-underline"
-        >
-          {{ blog.category.name }}
-        </nuxt-link>
-        <i
-          v-if="!hideMoreOptionsButton"
-          v-ripple="'#4f4f4f5F'"
-          class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
-          @click="showOptions = !showOptions"
-        />
-      </p>
-
-      <transition name="gray-shift">
-        <div v-if="showOptions" class="options">
-          <ul>
-            <li
-              v-ripple="'#6DD0BF5F'"
-              class="py-2 px-6"
-              @click="addOrRemoveToSaveBlogs"
-            >
-              <span
-                :class="
-                  blog.isSavedForLater
-                    ? 'mdi-bookmark-check'
-                    : 'mdi-bookmark-outline'
-                "
-                class="icon mdi"
-                style="color: #6dd0bf"
-              />
-              {{ !blog.isSavedForLater ? 'Save for later' : 'Saved' }}
-            </li>
-            <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportBlog">
-              <span class="icon mdi mdi-alert-octagon danger-light" />
-              Report Blog
-            </li>
-            <li class="my-0 py-2 px-4" style="display: block">
-              <hr class="my-0" style="background-color: #464646" />
-            </li>
-            <li v-ripple="`#ff82815f`" class="py-2 px-4">
-              <p
-                class="danger-light text-center my-0"
-                style="width: 100%"
-                @click="showOptions = false"
-              >
-                Close
-              </p>
-            </li>
-          </ul>
-        </div>
-      </transition>
-
-      <div v-ripple class="px-4 pb-6" @click="openBlogDetails">
-        <h5>{{ blog.title }}</h5>
-
-        <small class="timestamp mt-3">
-          <span class="mdi mdi-clock-time-nine-outline" />
-          {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
-        </small>
-
-        <img
-          v-if="blog.coverImage"
-          :alt="blog.title"
-          :src="blog.coverImage"
-          class="my-5"
-        />
-        <p :class="!blog.coverImage && 'my-5'">
-          <span v-if="blog.subtitle">
-            {{ blog.subtitle.substr(0, 100) }}...
-          </span>
-          <span class="secondary"> Read More </span>
+  <transition name="slide-left">
+    <div v-if="!hideBlog" class="blog-post-component">
+      <section class="content">
+        <p class="px-4 mb-2 top-line">
+          <nuxt-link
+            v-ripple
+            :to="
+              navigationRoutes.Home.Account.Overview.replace(
+                '{userUID}',
+                blog.author.uid
+              )
+            "
+            class="no-underline"
+          >
+            {{ blog.author.displayName }}
+          </nuxt-link>
+          <strong class="mx-1">IN</strong>
+          <nuxt-link
+            v-ripple
+            :to="
+              navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+                '{name}',
+                blog.category.name
+              )
+            "
+            class="no-underline"
+          >
+            {{ blog.category.name }}
+          </nuxt-link>
+          <i
+            v-if="!hideMoreOptionsButton"
+            v-ripple="'#4f4f4f5F'"
+            class="mdi mdi-dots-vertical mr-2 inline-block align-middle"
+            @click="showOptions = !showOptions"
+          />
         </p>
-      </div>
-    </section>
 
-    <section v-if="!hideBlogActions" class="blog-actions px-4 pb-8">
-      <div v-ripple class="like" @click="like">
-        <i
-          :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
-          class="mdi mr-2 inline-block align-middle"
-        />
-        <span class="value inline-block align-middle">
-          {{ shorten(blog.totalLikes) }}
-        </span>
-      </div>
-      <div v-ripple class="comment" @click="comment">
-        <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
-        <span class="value inline-block align-middle">
-          {{ shorten(blog.totalComments) }}
-        </span>
-      </div>
-      <div v-ripple class="share" @click="share">
-        <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
-        <span class="value inline-block align-middle">
-          {{ shorten(blog.totalShares) }}
-        </span>
-      </div>
-    </section>
-  </div>
+        <transition name="gray-shift">
+          <div v-if="showOptions" class="options">
+            <ul>
+              <li
+                v-ripple="'#6DD0BF5F'"
+                class="py-2 px-6"
+                @click="addOrRemoveToSaveBlogs"
+              >
+                <span
+                  :class="
+                    blog.isSavedForLater
+                      ? 'mdi-bookmark-check'
+                      : 'mdi-bookmark-outline'
+                  "
+                  class="icon mdi"
+                  style="color: #6dd0bf"
+                />
+                {{ !blog.isSavedForLater ? 'Save for later' : 'Saved' }}
+              </li>
+
+              <li
+                v-if="blog.author.uid === user.uid"
+                v-ripple="`#ffcf005F`"
+                class="py-2 px-6"
+                @click="deleteBlog"
+              >
+                <span class="icon mdi mdi-delete" style="color: #ffcf00" />
+                Delete Blog
+              </li>
+
+              <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportBlog">
+                <span class="icon mdi mdi-alert-octagon danger-light" />
+                Report Blog
+              </li>
+
+              <li class="my-0 py-2 px-4" style="display: block">
+                <hr class="my-0" style="background-color: #464646" />
+              </li>
+
+              <li v-ripple="`#ff82815f`" class="py-2 px-4">
+                <p
+                  class="danger-light text-center my-0"
+                  style="width: 100%"
+                  @click="showOptions = false"
+                >
+                  Close
+                </p>
+              </li>
+            </ul>
+          </div>
+        </transition>
+
+        <div v-ripple class="px-4 pb-6" @click="openBlogDetails">
+          <h5>{{ blog.title }}</h5>
+
+          <small class="timestamp mt-3">
+            <span class="mdi mdi-clock-time-nine-outline" />
+            {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
+          </small>
+
+          <img
+            v-if="blog.coverImage"
+            :alt="blog.title"
+            :src="blog.coverImage"
+            class="my-5"
+          />
+          <p :class="!blog.coverImage && 'my-5'">
+            <span v-if="blog.subtitle">
+              {{ blog.subtitle.substr(0, 100) }}...
+            </span>
+            <span class="secondary"> Read More </span>
+          </p>
+        </div>
+      </section>
+
+      <section v-if="!hideBlogActions" class="blog-actions px-4 pb-8">
+        <div v-ripple class="like" @click="like">
+          <i
+            :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+            class="mdi mr-2 inline-block align-middle"
+          />
+          <span class="value inline-block align-middle">
+            {{ shorten(blog.totalLikes) }}
+          </span>
+        </div>
+        <div v-ripple class="comment" @click="comment">
+          <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">
+            {{ shorten(blog.totalComments) }}
+          </span>
+        </div>
+        <div v-ripple class="share" @click="share">
+          <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">
+            {{ shorten(blog.totalShares) }}
+          </span>
+        </div>
+      </section>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -154,6 +169,7 @@ export default {
     return {
       navigationRoutes,
       showOptions: false,
+      hideBlog: false,
     }
   },
   computed: {
@@ -251,6 +267,28 @@ export default {
           identifier: this.blog.identifier,
         },
       })
+    },
+
+    async deleteBlog() {
+      if (this.blog.author.uid !== this.user.uid) return
+
+      const confirmDeletion = confirm('Are you sure?')
+      if (confirmDeletion) {
+        try {
+          this.hideBlog = true
+          await this.$axios.$post(endpoints.blog.delete, {
+            identifier: this.blog.identifier,
+          })
+          await showUITip(this.$store, 'Successfully Deleted!', 'success')
+        } catch (e) {
+          await showUITip(
+            this.$store,
+            'Failed To Delete Blog. Try Again',
+            'error'
+          )
+          this.hideBlog = false
+        }
+      }
     },
 
     async openBlogDetails() {
