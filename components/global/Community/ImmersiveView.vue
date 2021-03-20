@@ -53,7 +53,9 @@
           </nuxt-link>
         </p>
 
-        <small>{{ getRelativeTime(story.updatedAt) }}</small>
+        <small v-if="currentElement">{{
+          getRelativeTime(currentElement)
+        }}</small>
       </section>
 
       <i
@@ -113,8 +115,16 @@
       </section>
 
       <aside class="controls">
-        <button class="forward" @click="nextStory" />
-        <button class="backward" @click="prevStory" />
+        <button
+          class="forward"
+          @click="nextStory"
+          @scroll="calculateActiveElement"
+        />
+        <button
+          class="backward"
+          @click="prevStory"
+          @scroll="calculateActiveElement"
+        />
       </aside>
 
       <LoadingError
@@ -215,6 +225,7 @@ export default {
       errorWhileFetchingStory: false,
       loadingStories: true,
       activeElement: 0,
+      currentElement: undefined,
     }
   },
   computed: {
@@ -279,10 +290,12 @@ export default {
           this.story.identifier
         )
       )
+      this.currentElement = this.allStories[0].createdAt
     },
 
     calculateActiveElement({ target }) {
       this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
+      this.currentElement = this.allStories[this.activeElement].createdAt
     },
 
     async reportStory() {
@@ -319,6 +332,9 @@ export default {
       this.allStories[activeItem].reactions.reactionType = reactionType
     },
     nextStory() {
+      if (this.activeElement === this.story.story_count - 1)
+        this.onClickFunction()
+
       this.$refs.storyDisplayContainer.scrollBy({
         left: 100,
         behavior: 'smooth',
@@ -554,6 +570,10 @@ export default {
     }
 
     .controls {
+      position: fixed;
+      left: 0;
+      right: 0;
+
       button {
         all: unset;
       }
@@ -562,7 +582,7 @@ export default {
       .backward {
         position: absolute !important;
         height: calc(100vh - 56px);
-        width: 10vw;
+        width: 40vw;
         top: 56px;
       }
 
