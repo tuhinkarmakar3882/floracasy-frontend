@@ -57,7 +57,7 @@
               </li>
 
               <li
-                v-if="blog.author.uid === user.uid"
+                v-if="user && blog.author.uid === user.uid"
                 v-ripple="`#ffcf005F`"
                 class="py-2 px-6"
                 @click="deleteBlog"
@@ -248,6 +248,11 @@ export default {
     },
 
     async addOrRemoveToSaveBlogs() {
+      if (!this.user) {
+        await this.openSignInPage()
+        return
+      }
+
       this.showOptions = false
       try {
         await this.$axios.$post(endpoints.blog.addOrRemoveToSaveBlogs, {
