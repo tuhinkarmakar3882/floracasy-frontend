@@ -1,127 +1,144 @@
 <template>
-  <div class="community-post-component">
-    <section class="post-header px-4 mb-2">
-      <img
-        :alt="post.user.displayName"
-        :src="post.user.photoURL"
-        class="mr-3"
-      />
-      <div class="details">
-        <p v-ripple class="secondary">
-          <nuxt-link
-            v-ripple
-            :to="
-              navigationRoutes.Home.Account.Overview.replace(
-                '{userUID}',
-                post.user.uid
-              )
-            "
-            class="no-underline"
-          >
-            {{ post.user.displayName }}
-          </nuxt-link>
-        </p>
-        <small>
-          <span class="mdi mdi-clock-outline mr-1" />
-          <em>{{ getRelativeTime(post.createdAt) }}</em>
-        </small>
-      </div>
-      <i
-        v-if="showMoreOption"
-        v-ripple="'#4f4f4f5F'"
-        class="mdi mdi-dots-vertical mr-2 inline-block align-middle ml-auto"
-        @click="showOptions = !showOptions"
-      />
-    </section>
-
-    <transition name="gray-shift">
-      <div v-if="showOptions" class="options">
-        <ul>
-          <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportPost">
-            <span class="icon mdi mdi-alert-octagon danger-light" />
-            Report Post
-          </li>
-          <li class="my-0 py-2 px-4" style="display: block">
-            <hr class="my-0" style="background-color: #464646" />
-          </li>
-          <li v-ripple="`#ff82815f`" class="py-2 px-4">
-            <p
-              class="danger-light text-center my-0"
-              style="width: 100%"
-              @click="showOptions = false"
-            >
-              Close
-            </p>
-          </li>
-        </ul>
-      </div>
-    </transition>
-
-    <section class="post-body py-4 px-4">
-      <p v-if="post.body" v-ripple :style="post.style" @click="viewPostDetails">
-        {{
-          expanded
-            ? post.body
-            : `${post.body.substr(0, 100)} ${
-                post.body.length > 99 ? '...' : ''
-              }`
-        }}
-      </p>
-
-      <img
-        v-if="post.image"
-        :src="post.image"
-        alt="image"
-        class="mt-4"
-        @click="viewPostDetails"
-      />
-
-      <AudioPlayer
-        v-if="post.audio"
-        :audio-source="post.audio"
-        class="mt-4 mx-auto"
-      />
-    </section>
-
-    <hr class="faded-divider mt-2 mb-0" />
-
-    <section class="post-actions px-4">
-      <div v-if="showLikeOption" v-ripple class="like" @click="like">
-        <i
-          :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
-          class="mdi mr-2 inline-block align-middle"
+  <transition name="slide-left">
+    <div v-if="!hidePost" class="community-post-component">
+      <section class="post-header px-4 mb-2">
+        <img
+          :alt="post.user.displayName"
+          :src="post.user.photoURL"
+          class="mr-3"
         />
-        <span class="value inline-block align-middle">
-          {{ shorten(post.totalLikes) }}
-        </span>
-      </div>
+        <div class="details">
+          <p v-ripple class="secondary">
+            <nuxt-link
+              v-ripple
+              :to="
+                navigationRoutes.Home.Account.Overview.replace(
+                  '{userUID}',
+                  post.user.uid
+                )
+              "
+              class="no-underline"
+            >
+              {{ post.user.displayName }}
+            </nuxt-link>
+          </p>
+          <small>
+            <span class="mdi mdi-clock-outline mr-1" />
+            <em>{{ getRelativeTime(post.createdAt) }}</em>
+          </small>
+        </div>
+        <i
+          v-if="showMoreOption"
+          v-ripple="'#4f4f4f5F'"
+          class="mdi mdi-dots-vertical mr-2 inline-block align-middle ml-auto"
+          @click="showOptions = !showOptions"
+        />
+      </section>
 
-      <div
-        v-if="showCommentOption"
-        v-ripple
-        class="comment"
-        @click="viewPostDetails"
-      >
-        <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
-        <span class="value inline-block align-middle">
-          {{ shorten(post.totalComments) }}
-        </span>
-      </div>
+      <transition name="gray-shift">
+        <div v-if="showOptions" class="options">
+          <ul>
+            <li
+              v-if="post.userUID === user.uid"
+              v-ripple="`#ffcf005F`"
+              class="py-2 px-6"
+              @click="deletePost"
+            >
+              <span class="icon mdi mdi-delete" style="color: #ffcf00" />
+              Delete Post
+            </li>
+            <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportPost">
+              <span class="icon mdi mdi-alert-octagon danger-light" />
+              Report Post
+            </li>
+            <li class="my-0 py-2 px-4" style="display: block">
+              <hr class="my-0" style="background-color: #464646" />
+            </li>
+            <li v-ripple="`#ff82815f`" class="py-2 px-4">
+              <p
+                class="danger-light text-center my-0"
+                style="width: 100%"
+                @click="showOptions = false"
+              >
+                Close
+              </p>
+            </li>
+          </ul>
+        </div>
+      </transition>
 
-      <div v-if="showShareOption" v-ripple class="share" @click="share">
-        <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
-        <span class="value inline-block align-middle">
-          {{ shorten(post.totalShares) }}
-        </span>
-      </div>
-    </section>
+      <section class="post-body py-4 px-4">
+        <p
+          v-if="post.body"
+          v-ripple
+          :style="post.style"
+          @click="viewPostDetails"
+        >
+          {{
+            expanded
+              ? post.body
+              : `${post.body.substr(0, 100)} ${
+                  post.body.length > 99 ? '...' : ''
+                }`
+          }}
+        </p>
 
-    <hr class="reversed-faded-divider mt-0 mb-2" />
-  </div>
+        <img
+          v-if="post.image"
+          :src="post.image"
+          alt="image"
+          class="mt-4"
+          @click="viewPostDetails"
+        />
+
+        <AudioPlayer
+          v-if="post.audio"
+          :audio-source="post.audio"
+          class="mt-4 mx-auto"
+        />
+      </section>
+
+      <hr class="faded-divider mt-2 mb-0" />
+
+      <section class="post-actions px-4">
+        <div v-if="showLikeOption" v-ripple class="like" @click="like">
+          <i
+            :class="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
+            class="mdi mr-2 inline-block align-middle"
+          />
+          <span class="value inline-block align-middle">
+            {{ shorten(post.totalLikes) }}
+          </span>
+        </div>
+
+        <div
+          v-if="showCommentOption"
+          v-ripple
+          class="comment"
+          @click="viewPostDetails"
+        >
+          <i class="mdi mdi-message-text mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">
+            {{ shorten(post.totalComments) }}
+          </span>
+        </div>
+
+        <div v-if="showShareOption" v-ripple class="share" @click="share">
+          <i class="mdi mdi-share-variant mr-2 inline-block align-middle" />
+          <span class="value inline-block align-middle">
+            {{ shorten(post.totalShares) }}
+          </span>
+        </div>
+      </section>
+
+      <hr class="reversed-faded-divider mt-0 mb-2" />
+    </div>
+  </transition>
 </template>
 
 <script>
 import { getRelativeTime, shorten, showUITip } from '@/utils/utility'
+import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 
@@ -159,7 +176,14 @@ export default {
     return {
       navigationRoutes,
       showOptions: false,
+      hidePost: false,
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   methods: {
@@ -227,6 +251,28 @@ export default {
           identifier: this.post.identifier,
         },
       })
+    },
+
+    async deletePost() {
+      if (this.post.userUID !== this.user.uid) return
+
+      const confirmDeletion = confirm('Are you sure?')
+      if (confirmDeletion) {
+        try {
+          this.hidePost = true
+          await this.$axios.$post(endpoints.community_service.posts.delete, {
+            identifier: this.post.identifier,
+          })
+          await showUITip(this.$store, 'Successfully Deleted!', 'success')
+        } catch (e) {
+          await showUITip(
+            this.$store,
+            'Failed To Delete Post. Try Again',
+            'error'
+          )
+          this.hidePost = false
+        }
+      }
     },
   },
 }
