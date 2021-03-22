@@ -25,30 +25,10 @@
           </div>
         </div>
 
-        <div>
-          <section v-if="statisticsItem" class="stats">
-            <div class="item">
-              <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
-              <p class="type">Blogs</p>
-            </div>
-            <div class="item">
-              <span class="number">{{
-                statisticsItem['peopleSharedMyBlogs'] +
-                statisticsItem['peopleLikedMyBlogs']
-              }}</span>
-              <p class="type">Engagements</p>
-            </div>
-            <div class="item">
-              <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
-              <p class="type">Followers</p>
-            </div>
-          </section>
-
-          <section v-else class="text-center my-8">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p>Loading Profile Data...</p>
-          </section>
-        </div>
+        <LazyUserStatistics
+          v-if="statisticsItem"
+          :statistics-item="statisticsItem"
+        />
 
         <section class="other-info">
           <p v-ripple class="about text-center" @click="editContent">
