@@ -41,7 +41,7 @@
             <ul>
               <li
                 v-ripple="'#6DD0BF5F'"
-                class="py-2 px-6"
+                class="py-2 px-6 list-option"
                 @click="addOrRemoveToSaveBlogs"
               >
                 <span
@@ -59,14 +59,18 @@
               <li
                 v-if="user && blog.author.uid === user.uid"
                 v-ripple="`#ffcf005F`"
-                class="py-2 px-6"
+                class="py-2 px-6 list-option"
                 @click="deleteBlog"
               >
                 <span class="icon mdi mdi-delete" style="color: #ffcf00" />
                 Delete Blog
               </li>
 
-              <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportBlog">
+              <li
+                v-ripple="`#ff82825F`"
+                class="py-2 px-6 list-option"
+                @click="reportBlog"
+              >
                 <span class="icon mdi mdi-alert-octagon danger-light" />
                 Report Blog
               </li>
@@ -75,7 +79,7 @@
                 <hr class="my-0" style="background-color: #464646" />
               </li>
 
-              <li v-ripple="`#ff82815f`" class="py-2 px-4">
+              <li v-ripple="`#ff82815f`" class="py-2 px-4 list-option">
                 <p
                   class="danger-light text-center my-0"
                   style="width: 100%"
@@ -88,7 +92,7 @@
           </div>
         </transition>
 
-        <div v-ripple class="px-4 pb-6" @click="openBlogDetails">
+        <div v-ripple class="px-4 pb-6 blog-summary" @click="openBlogDetails">
           <h5>{{ blog.title }}</h5>
 
           <small class="timestamp mt-3">
@@ -318,6 +322,7 @@ export default {
 
   .content {
     img {
+      cursor: pointer;
       width: 100%;
       object-fit: cover;
       height: 155px;
@@ -326,6 +331,7 @@ export default {
     }
 
     small {
+      cursor: pointer;
       color: $muted;
     }
 
@@ -334,6 +340,7 @@ export default {
       position: relative;
 
       i {
+        cursor: pointer;
         position: absolute !important;
         right: -7px;
         font-size: $x-large-unit - $double-unit;
@@ -345,10 +352,15 @@ export default {
         align-items: center;
         color: $secondary;
         border-radius: $nano-unit;
+
+        &:hover {
+          background: $card-background;
+        }
       }
     }
 
     .options {
+      cursor: pointer;
       position: absolute;
       background: $card-background;
       border-radius: $nano-unit;
@@ -365,21 +377,32 @@ export default {
         padding: $micro-unit 0;
 
         li {
+          cursor: pointer;
           display: flex;
           align-items: center;
           color: #dadada;
           margin: 0;
+
+          &.list-option:hover {
+            background: $disabled;
+          }
         }
       }
 
       .icon {
+        cursor: pointer;
         font-size: $large-unit;
         margin-right: $micro-unit;
       }
     }
+
+    .blog-summary {
+      cursor: pointer;
+    }
   }
 
   .blog-actions {
+    cursor: pointer;
     font-family: $Nunito-Sans;
     color: $secondary;
     font-size: 1.3rem;
@@ -397,6 +420,10 @@ export default {
       .value {
         color: $muted;
         font-size: 1rem;
+      }
+
+      &:hover {
+        background: $card-background;
       }
     }
   }
