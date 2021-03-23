@@ -48,8 +48,8 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
-import { vapidKey } from '~/environmentVariables'
+import { showUITip, isProductionEnvironment } from '~/utils/utility'
+import { vapidKey, testVapidKey } from '~/environmentVariables'
 
 export default {
   name: 'RequestPermissionDialog',
@@ -109,7 +109,7 @@ export default {
       try {
         const { firebaseCloudMessaging } = require('~/plugins/fcm')
         const token = await firebaseCloudMessaging?.getToken({
-          vapidKey,
+          vapidKey: isProductionEnvironment() ? vapidKey : testVapidKey,
         })
         token && (await this.sendToServer(token))
       } catch (e) {
