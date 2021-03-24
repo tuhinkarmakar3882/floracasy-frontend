@@ -233,6 +233,35 @@
         </aside>
       </transition>
     </section>
+
+    <LazyPromoModal
+      v-if="showPromoModal"
+      class="promo-modal"
+      one-time
+      key-name="congratulate"
+    >
+      <template v-slot:header>
+        <img
+          src="https://media.tenor.com/images/3ca2eda717899b075ccaa1079d6a84ba/tenor.gif"
+          alt=""
+          height="100"
+        />
+        <h4>Congratulations!</h4>
+      </template>
+
+      <template v-slot:body>
+        <p class="muted mb-4 text-center">
+          Thank you for joining Floracasy <br />
+          Since, We're in Beta, it's on us now. <br />
+        </p>
+        <KeyPoint
+          point="Enjoy a Limited Time Ad Free Experience!"
+          tick-color="#8FF2E1"
+          text-color="white"
+          :tick-size="24"
+        />
+      </template>
+    </LazyPromoModal>
   </div>
 </template>
 
@@ -246,6 +275,7 @@ export default {
 
   data() {
     return {
+      showPromoModal: false,
       useMessageService,
       navigationRoutes,
       showFragment: false,
@@ -319,6 +349,10 @@ export default {
       }
       next()
     })
+
+    if (this.user) {
+      this.showPromoModal = !localStorage.getItem('congratulate')
+    }
   },
 
   beforeDestroy() {
@@ -622,6 +656,13 @@ export default {
   .fragment {
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  .promo-modal {
+    img {
+      height: 100px;
+      margin: auto;
     }
   }
 }
