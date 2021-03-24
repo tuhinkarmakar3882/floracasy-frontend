@@ -343,7 +343,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      color: $muted;
+      color: $secondary-matte;
       border-radius: $nano-unit;
     }
   }
