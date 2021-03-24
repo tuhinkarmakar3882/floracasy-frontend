@@ -168,7 +168,7 @@
           class="secondary-outlined-btn guest-btn"
           @click="continueAsGuest"
         >
-          <i class="mdi mdi-account-circle mdi-24px mr-3" />
+          <i class="mdi mdi-account-circle mdi-24px mx-4" />
           <span class="white">Continue as Guest</span>
         </button>
       </footer>

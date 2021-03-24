@@ -1,6 +1,6 @@
 <template>
   <button v-ripple class="button-component" @click="signInWithGoogle">
-    <GoogleIcon class="icon mr-3" />
+    <GoogleIcon class="icon mx-4" />
     <span>Continue with Google</span>
   </button>
 </template>
