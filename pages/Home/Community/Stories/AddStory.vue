@@ -487,11 +487,12 @@ export default {
       AudioRecorder.encoder = require('audio-recorder-polyfill/mpeg-encoder')
       AudioRecorder.prototype.mimeType = 'audio/mpeg'
       window.MediaRecorder = AudioRecorder
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message: 'Polyfill for Apple Devices are Ready',
-        notificationType: 'info',
-        dismissible: true,
-      })
+      await showUITip(
+        this.$store,
+        'Polyfill for Apple Devices are Ready',
+        'info',
+        true
+      )
     }
 
     this.audio.stream && this.destroySetup(this.audio.stream)
