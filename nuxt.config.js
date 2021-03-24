@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { lazyLoadConfig } from './config/nuxt-lazy-load-config'
 import * as secrets from './environmentVariables'
 import {
@@ -7,7 +6,7 @@ import {
   useTouchEvents,
 } from './environmentVariables'
 import * as packageJson from './package.json'
-import endpoints from './api/endpoints'
+import sitemapGenerationConfig from './config/sitemapData'
 // import { ADSENSE_CSP } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
@@ -78,49 +77,7 @@ export default {
   ],
 
   sitemap:
-    process.env.NODE_ENV === 'production'
-      ? {
-          hostname: 'https://floracasy.com',
-          gzip: true,
-          exclude: [
-            '/Home/Messages',
-            '/Home/Blogs/Create/Drafts',
-            '/Home/MoreOptions/HelpAndSupport/PopularTopics',
-            '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
-
-            '/Home/Messages/**',
-            '/Home/MoreOptions/HelpAndSupport/PopularTopics/**',
-            '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp/**',
-          ],
-          routes: async () => {
-            const DYNAMIC_ROUTES = []
-            const { data: blogList } = await axios.get(
-              secrets.baseUrl + endpoints.blog.seo
-            )
-            DYNAMIC_ROUTES.push(
-              ...blogList.results.map((blog) => ({
-                url: '/Home/Blogs/Details/{}'.replace('{}', blog.identifier),
-                changefreq: 'daily',
-                priority: 1,
-                lastmod: new Date(),
-              }))
-            )
-
-            const { data: categoryList } = await axios.get(
-              secrets.baseUrl + endpoints.categories.fetch
-            )
-            DYNAMIC_ROUTES.push(
-              ...categoryList.data.map((category) => ({
-                url: '/Home/Blogs/CategoryWise/{}'.replace('{}', category.name),
-                changefreq: 'daily',
-                priority: 1,
-                lastmod: new Date(),
-              }))
-            )
-            return DYNAMIC_ROUTES
-          },
-        }
-      : false,
+    process.env.NODE_ENV === 'production' ? sitemapGenerationConfig : false,
 
   buildModules: [
     '@nuxt/typescript-build',
