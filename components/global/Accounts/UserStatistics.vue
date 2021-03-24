@@ -1,5 +1,5 @@
 <template>
-  <div v-if="statisticsItem" class="stats">
+  <div v-if="statisticsItem" class="stats text-center">
     <section class="item">
       <span class="number">{{ statisticsItem['totalBlogs'] }}</span>
       <p class="type">Blogs</p>
