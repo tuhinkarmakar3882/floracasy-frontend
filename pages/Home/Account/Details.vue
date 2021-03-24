@@ -1,15 +1,16 @@
 <template>
-  <div class="text-center py-6 details-page">
-    <main v-if="loadingProfile">
-      <div class="pageLoading">
-        <LoadingIcon />
-        Fetching data from server
-      </div>
-    </main>
+  <div class="py-6 details-page">
+    <FallBackLoader v-if="loadingProfile" />
+
+    <LoadingError
+      v-else-if="loadingError"
+      class="px-4"
+      error-section="Profile Details"
+    />
 
     <main v-else>
       <section class="user-profile px-1">
-        <div class="basic-data">
+        <div class="basic-data text-center">
           <img
             :src="user.photoURL"
             alt="profile-picture"
@@ -60,79 +61,7 @@
         </section>
       </section>
 
-      <section class="recent-activity">
-        <h4 class="heading-title">Recent Activities</h4>
-
-        <article
-          v-for="activity in recentActivities"
-          :key="activity.id"
-          v-ripple
-          class="content py-6 px-2"
-          @click="
-            $router.push(
-              navigationRoutes.Home.Blogs.Details.replace(
-                '{id}',
-                activity.identifier
-              )
-            )
-          "
-        >
-          <img
-            :alt="activity.title"
-            :src="
-              activity.coverImage || '/images/fc_alternate_default_logo.svg'
-            "
-            height="64"
-            width="64"
-          />
-          <div class="data text-left">
-            <h6 class="mt-0 mb-1">{{ activity.title }}</h6>
-
-            <section>
-              <i class="mdi mdi-clock mr-2" />
-              <small style="font-size: 13px">
-                {{ getRelativeTime(activity.createdAt) }}
-              </small>
-            </section>
-          </div>
-        </article>
-
-        <client-only>
-          <infinite-loading @infinite="infiniteHandler">
-            <template slot="spinner">
-              <LoadingIcon class="mt-4 mb-6" />
-              <p>Loading Recent Activities Data...</p>
-            </template>
-            <template slot="error">
-              <p class="danger-light my-6">Network Error</p>
-            </template>
-            <template slot="no-more">
-              <div class="no-activity mt-6">
-                <button
-                  v-ripple
-                  class="secondary-outlined-btn"
-                  @click="$router.push('/Home/Blogs/Create')"
-                >
-                  Create More
-                </button>
-              </div>
-            </template>
-            <template slot="no-results">
-              <div class="no-activity">
-                <Logo style="width: 56px" />
-                <p class="my-5">It's Lonely Here...</p>
-                <button
-                  v-ripple
-                  class="secondary-outlined-btn"
-                  @click="$router.push('/Home/Blogs/Create')"
-                >
-                  Publish Your First Blog Now!
-                </button>
-              </div>
-            </template>
-          </infinite-loading>
-        </client-only>
-      </section>
+      <UserTimeline :user-uid="user.uid" />
     </main>
   </div>
 </template>
@@ -140,14 +69,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
-import LoadingIcon from '@/components/global/LoadingIcon'
-import Logo from '@/components/global/Logo'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, processLink, showUITip } from '~/utils/utility'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'Details',
-  components: { Logo, LoadingIcon },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
@@ -156,6 +82,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Profile Details',
       loadingProfile: true,
+      loadingError: false,
       statisticsItem: null,
       recentActivities: [],
       userBlogEndpoint: endpoints.blog.getBlogsByUid,
@@ -194,31 +121,6 @@ export default {
   },
 
   methods: {
-    getRelativeTime,
-
-    async infiniteHandler($state) {
-      if (!this.userBlogEndpoint) {
-        $state.complete()
-        return
-      }
-
-      try {
-        const { results, next } = await this.$axios.$get(
-          this.userBlogEndpoint,
-          { params: { uid: this.user.uid } }
-        )
-        if (results.length) {
-          this.userBlogEndpoint = processLink(next)
-          this.recentActivities.push(...results)
-          $state.loaded()
-        } else {
-          $state.complete()
-        }
-      } catch (e) {
-        $state.complete()
-      }
-    },
-
     async editContent() {
       await this.$router.push(
         navigationRoutes.Home.MoreOptions.Preferences.EditProfile
@@ -244,12 +146,6 @@ export default {
   button {
     min-width: auto;
     width: auto;
-  }
-
-  .page-loading {
-    height: calc(100vh - 120px);
-    display: grid;
-    place-items: center;
   }
 
   .user-profile {
@@ -312,53 +208,6 @@ export default {
     .other-info {
       text-align: left;
     }
-  }
-
-  .recent-activity {
-    .heading {
-      text-align: left;
-      font-weight: 400;
-      color: #fff;
-      font-size: 20px;
-      margin-top: 2rem;
-      font-family: $Prata;
-      margin-bottom: 1rem;
-    }
-
-    .content {
-      display: flex;
-      align-items: flex-start;
-
-      $size: 64px;
-
-      img {
-        height: $size;
-        min-height: $size;
-        width: $size;
-        min-width: $size;
-        size: $size;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-right: $large-unit;
-      }
-
-      .data {
-        section {
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      &:nth-child(even) {
-        background: $nav-bar-bg;
-        box-shadow: $default-box-shadow;
-      }
-    }
-  }
-
-  .no-activity {
-    display: grid;
-    place-items: center;
   }
 }
 </style>
