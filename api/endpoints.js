@@ -48,6 +48,7 @@ const endpoints = {
   community_service: {
     stories: {
       index: '/allow_authenticated/community_service/stories/',
+      delete: '/allow_authenticated/community_service/stories/delete/',
       reaction: '/allow_authenticated/community_service/stories/reactions/',
       detail:
         '/allow_authenticated/community_service/stories/detail/{identifier}/',
