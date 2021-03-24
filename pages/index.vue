@@ -165,10 +165,10 @@
         <GoogleSignInButton class="secondary-btn" />
         <button
           v-ripple
-          class="secondary-outlined-btn"
+          class="secondary-outlined-btn guest-btn"
           @click="continueAsGuest"
         >
-          <i class="mdi mdi-account-circle mdi-24px" />
+          <i class="mdi mdi-account-circle mdi-24px mr-3" />
           <span class="white">Continue as Guest</span>
         </button>
       </footer>
@@ -451,8 +451,8 @@ export default {
       background: linear-gradient(0deg, #050514, transparent);
 
       button {
-        display: grid;
-        grid-template-columns: 30% 70%;
+        display: flex;
+        justify-content: flex-start;
         align-items: center;
         width: 100%;
         height: 48px;

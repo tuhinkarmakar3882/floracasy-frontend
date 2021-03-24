@@ -1,6 +1,6 @@
 <template>
-  <button v-ripple @click="signInWithGoogle">
-    <GoogleIcon class="icon" />
+  <button v-ripple class="button-component" @click="signInWithGoogle">
+    <GoogleIcon class="icon mr-3" />
     <span>Continue with Google</span>
   </button>
 </template>
@@ -131,21 +131,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
-  display: grid;
-  grid-template-columns: 30% 70%;
+.button-component {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  width: 80%;
   height: 48px;
   margin: 16px 0;
-  place-items: center;
 
   span {
     justify-self: flex-start;
   }
 
   .icon {
-    display: block;
     height: 24px;
     width: 24px;
   }
