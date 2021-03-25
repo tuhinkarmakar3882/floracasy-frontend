@@ -99,7 +99,11 @@
 
         <section class="blog-body px-4 pb-8">
           <InArticleAd key="Top-Ad" />
-          <article v-html="noXSS(blog.content, sanitizationConfig)" />
+          <article
+            ref="articleContent"
+            class="my-6"
+            v-html="noXSS(blog.content, sanitizationConfig)"
+          />
           <InArticleAd key="Bottom-Ad" />
         </section>
       </div>
