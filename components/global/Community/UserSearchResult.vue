@@ -36,11 +36,13 @@ export default {
       required: true,
     },
   },
-  data: () => ({
-    photoURL: '/images/default.svg',
-    designation: undefined,
-    about: undefined,
-  }),
+  data() {
+    return {
+      photoURL: '/images/default.svg',
+      designation: undefined,
+      about: undefined,
+    }
+  },
   mounted() {
     this.fetchProfileImage()
     this.fetchProfileData()
