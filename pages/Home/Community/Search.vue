@@ -51,6 +51,7 @@
         >
           We didn't found anyone with that search query
         </p>
+
         <UserSearchResult
           v-for="result in searchResults.results"
           :key="result.userUID"
@@ -58,6 +59,12 @@
           class="px-4 py-4 search-result"
         />
       </section>
+
+      <transition name="scale-down">
+        <LazyFollowSuggestions
+          v-if="!searchResults.results || noResultsFound"
+        />
+      </transition>
     </template>
   </AppFeel>
 </template>
