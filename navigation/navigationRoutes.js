@@ -30,6 +30,7 @@ export const navigationRoutes = {
     Community: {
       index: '/Home/Community',
       Search: '/Home/Community/Search',
+      Explore: '/Home/Community/Explore',
       Posts: {
         detail: '/Home/Community/Posts/{postIdentifier}',
         add: '/Home/Community/Posts/AddPost',
