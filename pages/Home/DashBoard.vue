@@ -37,12 +37,14 @@
     <InfiniteScrollingBlogLists
       v-if="tabNumber === 0"
       :key="tabNumber"
+      show-follow-suggestions
       class="consume-full-height"
     />
 
     <LazyInfiniteScrollingBlogLists
       v-else-if="tabNumber === 1"
       :key="tabNumber"
+      show-follow-suggestions
       class="consume-full-height"
       trending-mode
     />
