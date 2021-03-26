@@ -170,11 +170,12 @@ export default {
         })
         this.statisticsItem.isFollowing = !this.statisticsItem.isFollowing
       } catch (e) {
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Unable to Perform Operation! Try Again',
-          notificationType: 'alert',
-          dismissible: true,
-        })
+        await showUITip(
+          this.$store,
+          'Unable to Perform Operation! Try Again',
+          'alert',
+          true
+        )
       }
       this.followOrUnfollowLoading = false
       this.followOrUnfollowWorking = false
