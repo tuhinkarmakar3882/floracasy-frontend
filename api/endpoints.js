@@ -83,6 +83,7 @@ const endpoints = {
     follow_or_unfollow:
       '/allow_authenticated/follow_system/follow_or_unfollow/',
     search: '/allow_authenticated/follow_system/search/',
+    fetch: '/allow_authenticated/follow_system/fetch/',
     getSuggestions: '/allow_authenticated/follow_system/getSuggestions/',
   },
   help_and_support: {
