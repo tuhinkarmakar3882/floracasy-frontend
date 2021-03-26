@@ -36,7 +36,7 @@
             <header class="text-center">
               <h2 class="my-4">Omnidirectional Knowledge</h2>
               <p class="my-4 muted">
-                We want to be versatile, starting with you, with an growing
+                We want to be versatile, starting with you, with a growing
                 number of enriching content & categories
               </p>
             </header>
@@ -81,7 +81,7 @@
                 <p class="white mt-4">{{ option.name }}</p>
               </section>
               <section class="category">
-                <i class="mdi mdi-dots-horizontal-circle" />
+                <i class="mdi mdi-dots-horizontal-circle-outline" />
                 <p class="mt-4">More</p>
               </section>
             </main>
