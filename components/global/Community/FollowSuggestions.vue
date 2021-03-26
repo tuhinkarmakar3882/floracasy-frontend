@@ -1,5 +1,5 @@
 <template>
-  <section v-if="suggestedPeople" class="people-you-may-follow">
+  <section v-if="user && suggestedPeople" class="people-you-may-follow">
     <h6 class="px-4">Explore People</h6>
 
     <main class="container py-4 px-4">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -35,8 +36,14 @@ export default {
       suggestedPeople: [],
     }
   },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
   async mounted() {
-    await this.getSuggestedPeople()
+    this.user && (await this.getSuggestedPeople())
   },
   methods: {
     async getSuggestedPeople() {
