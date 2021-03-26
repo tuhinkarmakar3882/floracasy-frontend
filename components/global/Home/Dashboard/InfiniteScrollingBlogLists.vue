@@ -4,6 +4,10 @@
       <article v-for="(blog, index) in blogs" :key="blog.id">
         <BlogPost :blog="blog" class="pb-0 pt-8" />
         <InFeedAd v-if="index % 2 === 0" />
+        <LazyFollowSuggestions
+          v-if="showFollowSuggestions && index === 2"
+          class="pb-6"
+        />
       </article>
     </section>
 
@@ -17,7 +21,11 @@
           <p class="danger-light my-6">Network Error</p>
         </template>
         <template slot="no-more">
-          <p class="success my-6">That's all for now :)</p>
+          <p class="secondary-matte text-center mt-4 mb-8">
+            <i class="mdi mdi-party-popper mdi-18px" />
+            <br />
+            <small> Come back soon for more </small>
+          </p>
         </template>
         <!--        <template slot="no-results">No results message</template>-->
       </infinite-loading>
@@ -38,6 +46,10 @@ export default {
       default: null,
     },
     trendingMode: {
+      type: Boolean,
+      default: null,
+    },
+    showFollowSuggestions: {
       type: Boolean,
       default: null,
     },
