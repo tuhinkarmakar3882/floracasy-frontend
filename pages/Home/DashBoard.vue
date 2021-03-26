@@ -176,7 +176,7 @@ $blog-border-radius: 20px;
     top: 56px;
     background-color: $nav-bar-bg;
     box-shadow: $down-only-box-shadow;
-    z-index: 1;
+    z-index: 3;
     transition: all 0.3s ease-in-out;
 
     * {
