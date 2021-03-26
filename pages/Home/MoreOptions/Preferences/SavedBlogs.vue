@@ -18,16 +18,32 @@
 
         <infinite-loading @infinite="infiniteHandler">
           <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p class="text-center">Getting Latest Articles...</p>
+            <FallBackLoader>
+              <template v-slot:fallback>
+                <p class="text-center">Getting your saved articles</p>
+              </template>
+            </FallBackLoader>
           </template>
+
           <template slot="error">
-            <p class="danger-light my-6">Network Error</p>
+            <LoadingError error-section="saved articles" />
           </template>
+
           <template slot="no-more">
-            <p class="success my-6">That's all for now :)</p>
+            <p class="secondary-matte text-center mt-4 mb-8">
+              <i class="mdi mdi-party-popper mdi-18px" />
+              <br />
+              <small> You're All Caught Up! </small>
+            </p>
           </template>
-          <!--        <template slot="no-results">No results message</template>-->
+
+          <template slot="no-results">
+            <p class="danger-light text-center my-8">
+              <i class="mdi mdi-book mdi-24px" />
+              <br />
+              <small> You Haven't Added Anything to Saved Blogs Yet! </small>
+            </p>
+          </template>
         </infinite-loading>
       </client-only>
     </template>
@@ -57,6 +73,7 @@ export default {
   data() {
     return {
       navigationRoutes,
+      prevURL: undefined,
       blogs: [],
       savedBlogFetchEndpoint: endpoints.blog.getSavedBlogs,
       pageTitle: 'Saved Blogs',
