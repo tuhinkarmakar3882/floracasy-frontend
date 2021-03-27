@@ -54,9 +54,7 @@
             </section>
           </aside>
           <p class="text-center mt-6 primary-light">
-            <small>
-              - Updated {{ getRelativeTime(balanceInfo.updatedAt) }} -
-            </small>
+            <small> - Updated Yesterday - </small>
           </p>
         </section>
       </div>
