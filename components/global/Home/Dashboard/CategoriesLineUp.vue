@@ -198,7 +198,7 @@ $image-dimension: 64px;
     position: fixed;
     top: 56px;
     right: 0;
-    z-index: 2;
+    z-index: 11;
     background: $body-background;
     box-shadow: $down-only-box-shadow;
     left: 0;
