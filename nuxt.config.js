@@ -7,7 +7,7 @@ import {
 } from './environmentVariables'
 import * as packageJson from './package.json'
 import sitemapGenerationConfig from './config/sitemapData'
-// import { ADSENSE_CSP } from './config/csp-policies'
+import { SECURE_CSP } from './config/csp-policies'
 
 const sentryLoggingPlugin = {
   src: '~/plugins/sentry.js',
@@ -61,10 +61,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  // modern: {
-  //   server: true,
-  //   client: true,
-  // },
+  modern: {
+    server: true,
+    client: true,
+  },
 
   modules: [
     'nuxt-helmet',
@@ -142,19 +142,11 @@ export default {
   render: {
     injectScripts: true,
     resourceHints: true,
-    // asyncScripts: true,
-    // http2: {
-    //   push: true,
-    //   // pushAssets: (_, __, publicPath, preloadFiles) =>
-    //   //   preloadFiles
-    //   //     .filter((f) => f.asType === 'script' && f.file === 'runtime.js')
-    //   //     .map((f) => `<${publicPath}${f.file}>; rel=preload; as=${f.asType}`),
-    // },
-    // csp: {
-    //   reportOnly: false,
-    //   hashAlgorithm: 'sha256',
-    //   policies: ADSENSE_CSP,
-    // },
+    csp: {
+      reportOnly: true,
+      hashAlgorithm: 'sha256',
+      policies: SECURE_CSP,
+    },
   },
 
   axios: {

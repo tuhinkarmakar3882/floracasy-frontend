@@ -1,6 +1,6 @@
 import * as secrets from '../environmentVariables'
 
-export const policies = {
+export const SECURE_CSP = {
   'default-src': ["'self'", ...secrets.PRIMARY_HOSTS],
   'media-src': [
     "'self'",
