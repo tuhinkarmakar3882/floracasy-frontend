@@ -48,7 +48,7 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { vapidKey } from '~/environmentVariables'
 
 export default {
@@ -93,6 +93,7 @@ export default {
           case 'granted':
             this.success = true
             this.maybeLater = false
+            LogAnalyticsEvent('notifications_activated')
             this.setupFCM()
             this.hideBanner()
             break
@@ -141,6 +142,7 @@ export default {
       this.maybeLater = true
       localStorage.setItem('hide-notification-consent', '120')
       this.hideBanner()
+      LogAnalyticsEvent('no_opinion_on_notifications')
     },
 
     hideBanner() {
