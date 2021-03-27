@@ -166,7 +166,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { useMoodOptions } from '~/environmentVariables'
 
 const commonStyles = {
@@ -356,6 +356,7 @@ export default {
           endpoints.community_service.posts.index,
           payload
         )
+        LogAnalyticsEvent('create_post')
         await this.$router.replace(navigationRoutes.Home.Community.index)
         await showUITip(this.$store, 'Post Added!', 'success')
       } catch (e) {
