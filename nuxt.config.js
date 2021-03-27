@@ -183,30 +183,6 @@ export default {
         crossorigin: true,
         href: secrets.baseUrl,
       },
-
-      //  Google Fonts
-      // {
-      //   rel: 'dns-prefetch',
-      //   crossorigin: true,
-      //   href: 'https://fonts.gstatic.com/',
-      // },
-      // {
-      //   rel: 'preconnect',
-      //   crossorigin: true,
-      //   href: 'https://fonts.gstatic.com/',
-      // },
-      // {
-      //   rel: 'preload',
-      //   as: 'style',
-      //   href:
-      //     'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-      // },
-      // {
-      //   rel: 'stylesheet',
-      //   type: 'text/css',
-      //   href:
-      //     'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-      // },
     ],
   },
 
