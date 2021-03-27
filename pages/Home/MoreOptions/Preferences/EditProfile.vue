@@ -80,6 +80,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 import endpoints from '@/api/endpoints'
 import imageCompression from 'browser-image-compression'
+import { LogAnalyticsEvent } from '~/utils/utility'
 
 export default {
   name: 'EditProfile',
@@ -155,6 +156,7 @@ export default {
           await this.uploadImage()
         }
 
+        LogAnalyticsEvent('updated_profile_data')
         await this.updateVuexUserData()
 
         await this.$router.replace(
