@@ -284,7 +284,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppFeel from '~/components/global/Layout/AppFeel'
 import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 
 const commonStyles = {
   minHeight: '100px',
@@ -525,13 +525,6 @@ export default {
         this.$refs.tabNavigation.scrollTop = 0
       })
     },
-    async showUITip(message, type) {
-      await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-        message,
-        notificationType: type || 'info',
-        dismissible: true,
-      })
-    },
     async prepareCameraRecordingInitialSetup(constraint) {
       this.photo.isLoading = true
 
@@ -589,11 +582,12 @@ export default {
             style: this.text.customStyle,
           })
 
-          await this.$router.replace(navigationRoutes.Home.Community.index)
+          await showUITip(this.$store, 'Story Posted!', 'success')
+          LogAnalyticsEvent('upload_text_story')
 
-          await this.showUITip('Story Posted!', 'success')
+          await this.$router.replace(navigationRoutes.Home.Community.index)
         } catch (e) {
-          await this.showUITip('Error Posting story', 'error')
+          await showUITip(this.$store, 'Error Posting story', 'error')
         } finally {
           this.text.isSending = false
         }
@@ -613,9 +607,9 @@ export default {
         })
       }
     },
-    takePhoto() {
+    async takePhoto() {
       this.photo.isPhotoTaken = false
-      this.showUITip('Say Cheese!')
+      await showUITip(this.$store, 'Say Cheese!')
 
       const canvas = this.$refs.canvasPreview
       const video = this.$refs.videoPreview
@@ -624,7 +618,7 @@ export default {
 
       canvas.getContext('2d').drawImage(video, 0, 0)
 
-      this.showUITip('Optimizing Image For Faster Upload Speeds')
+      await showUITip(this.$store, 'Optimizing Image For Faster Upload Speeds')
 
       canvas.toBlob(this.compressImage, 'image/webp', 0.7)
     },
@@ -645,12 +639,12 @@ export default {
       this.photo.compressionProgress = null
       this.photo.showProgress = false
 
-      await this.showUITip(msg || 'Photo Captured!', 'success')
+      await showUITip(this.$store, msg || 'Photo Captured!', 'success')
     },
 
     async preprocessUploadedImage(event) {
       const file = event.target.files[0]
-      await this.showUITip('Optimizing Image For Faster Upload Speeds')
+      await showUITip(this.$store, 'Optimizing Image For Faster Upload Speeds')
       await this.compressImage(file)
     },
 
@@ -658,7 +652,12 @@ export default {
       this.photo.compressionProgress = compressProgress
     },
     async uploadPhotoStory() {
-      await this.showUITip('Uploading Photo Story!', 'info')
+      await showUITip(
+        this.$store,
+        'Uploading Story, Please Wait',
+        'info',
+        false
+      )
       try {
         const data = new FormData()
         data.append('image', this.photo.output, this.photo.output.name)
@@ -671,10 +670,13 @@ export default {
           storyType: 'photo',
           imageID,
         })
+
+        LogAnalyticsEvent('upload_photo_story')
+        await showUITip(this.$store, 'Story Posted!', 'success')
+
         await this.$router.replace(navigationRoutes.Home.Community.index)
-        await this.showUITip('Story Posted!', 'success')
       } catch (e) {
-        await this.showUITip('Error Posting story', 'error')
+        await showUITip(this.$store, 'Error Posting story', 'error')
       }
     },
     recapture() {
@@ -713,7 +715,12 @@ export default {
       this.audio.recordingDone = true
     },
     async uploadAudioStory() {
-      await showUITip(this.$store, 'Uploading Audio')
+      await showUITip(
+        this.$store,
+        'Uploading Story, Please Wait',
+        'info',
+        false
+      )
       const data = new FormData()
       data.append('audio', this.audio.audioClip, this.audio.audioClip?.name)
       try {
@@ -724,10 +731,13 @@ export default {
           storyType: 'audio',
           audioID,
         })
+
+        await showUITip(this.$store, 'Story Posted!', 'success')
+        LogAnalyticsEvent('upload_audio_story')
+
         await this.$router.replace(navigationRoutes.Home.Community.index)
-        await this.showUITip('Story Posted!', 'success')
       } catch (e) {
-        await this.showUITip('Error Posting story', 'error')
+        await showUITip(this.$store, 'Error Posting story', 'error')
       }
     },
   },
