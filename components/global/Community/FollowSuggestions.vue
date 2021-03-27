@@ -7,7 +7,7 @@
         v-for="people in suggestedPeople"
         :key="`suggested-people-${people.userUID}`"
         :userdata="people"
-        class="px-4 py-4 search-result"
+        class="py-4 search-result"
       />
     </main>
 

@@ -25,7 +25,7 @@
           :disabled="followOrUnfollowWorking"
           :loading="followOrUnfollowLoading"
           class="px-6"
-          style="width: 120px"
+          style="width: 120px; min-width: auto"
         >
           {{ isFollowing ? 'Unfollow' : 'Follow' }}
         </RippleButton>
@@ -133,13 +133,13 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 260px;
+  height: 250px;
   background: linear-gradient(225deg, #050515 50%, #00283f 100%);
   position: relative;
   border-radius: 16px;
   box-shadow: 0 0 0.25rem #2c2c3f;
   text-align: center;
-  min-width: 200px;
+  min-width: 184px;
 
   * {
     z-index: 1;
