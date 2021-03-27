@@ -82,41 +82,50 @@
         class="px-4"
         error-section="Ticket Details"
       />
-      <aside class="bottom-area">
-        <img
-          v-if="user"
-          :src="user.photoURL"
-          alt="profile-image"
-          height="40"
-          width="40"
-        />
-        <div
-          ref="textBox"
-          class="text-box"
-          contenteditable
-          @focusin="showPlaceholder = false"
-          @focusout="showPlaceholder = true"
-          @keyup="updateText"
-          @keyup.enter="addSupportMessage"
+      <section v-if="ticketDetails">
+        <main
+          v-if="ticketDetails.status !== 'Ticket Resolved'"
+          class="bottom-area"
         >
-          <transition name="scale-up">
-            <label
-              v-if="supportMessage.length === 0 && showPlaceholder"
-              class="muted"
-            >
-              Type your message here...
-            </label>
-          </transition>
-        </div>
-        <RippleButton
-          :disabled="supportMessage.trim().length === 0"
-          :loading="isSendingSupportMessage"
-          :on-click="addSupportMessage"
-          style="background: transparent !important"
-        >
-          <span class="mdi mdi-send mdi-36px" />
-        </RippleButton>
-      </aside>
+          <img
+            v-if="user"
+            :src="user.photoURL"
+            alt="profile-image"
+            height="40"
+            width="40"
+          />
+          <div
+            ref="textBox"
+            class="text-box"
+            contenteditable
+            @focusin="showPlaceholder = false"
+            @focusout="showPlaceholder = true"
+            @keyup="updateText"
+            @keyup.enter="addSupportMessage"
+          >
+            <transition name="scale-up">
+              <label
+                v-if="supportMessage.length === 0 && showPlaceholder"
+                class="muted"
+              >
+                Type your message here...
+              </label>
+            </transition>
+          </div>
+          <RippleButton
+            :disabled="supportMessage.trim().length === 0"
+            :loading="isSendingSupportMessage"
+            :on-click="addSupportMessage"
+            style="background: transparent !important"
+          >
+            <span class="mdi mdi-send mdi-36px" />
+          </RippleButton>
+        </main>
+
+        <aside v-else class="bottom-area">
+          <p class="mx-auto py-6 success-light">The Ticket has been Resolved</p>
+        </aside>
+      </section>
       <span ref="conversation" />
     </template>
   </AppFeel>
