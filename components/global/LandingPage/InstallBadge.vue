@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { LogAnalyticsEvent } from '~/utils/utility'
+
 export default {
   name: 'InstallBadge',
 
@@ -66,6 +68,7 @@ export default {
     },
 
     installPWA() {
+      LogAnalyticsEvent('trigger_pwa_installation')
       const promptEvent = window.deferredPrompt
       if (!promptEvent) return
 
@@ -73,6 +76,7 @@ export default {
 
       promptEvent.userChoice.then(() => {
         window.deferredPrompt = null
+        LogAnalyticsEvent('pwa_installed')
       })
     },
 
