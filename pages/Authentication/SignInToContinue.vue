@@ -135,7 +135,7 @@ export default {
 
       LogAnalyticsEvent('google_sign_in')
 
-      window.location = navigationRoutes.Home.DashBoard
+      await this.$router.replace(navigationRoutes.Home.DashBoard)
     },
 
     async abort() {
