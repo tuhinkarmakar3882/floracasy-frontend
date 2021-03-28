@@ -57,13 +57,12 @@ export default {
         e.preventDefault()
         this.showInstallPrompt = true
         window.deferredPrompt = e
-        // Todo - Send analytics event that PWA install promo was shown.
+        LogAnalyticsEvent('pwa_installation_badge_shown')
       })
     },
     addAppInstalledListener() {
       window.addEventListener('appinstalled', () => {
         this.hideInstallBadge()
-        // Todo - Send analytics event that PWA was installed.
       })
     },
 
