@@ -109,10 +109,23 @@
           <img :src="item.photo" alt="story-photo" />
         </div>
 
-        <div v-if="item.storyType === 'audio'" style="width: 100%">
+        <div v-if="item.storyType === 'audio'" style="width: 100%; z-index: 1">
           <AudioPlayer :audio-source="item.audio" />
         </div>
       </section>
+
+      <aside class="controls">
+        <button
+          class="forward"
+          @click="nextStory"
+          @scroll="calculateActiveElement"
+        />
+        <button
+          class="backward"
+          @click="prevStory"
+          @scroll="calculateActiveElement"
+        />
+      </aside>
 
       <LoadingError
         v-if="errorWhileFetchingStory"
@@ -553,6 +566,32 @@ export default {
       .text-story {
         text-align: center;
         line-height: 1.75;
+      }
+    }
+
+    .controls {
+      position: fixed;
+      left: 0;
+      right: 0;
+
+      button {
+        all: unset;
+      }
+
+      .forward,
+      .backward {
+        position: absolute !important;
+        height: calc(100vh - 56px);
+        width: 40vw;
+        top: 56px;
+      }
+
+      .forward {
+        right: 0;
+      }
+
+      .backward {
+        left: 0;
       }
     }
   }
