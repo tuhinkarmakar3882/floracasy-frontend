@@ -495,6 +495,7 @@ export default {
       box-shadow: $up-only-box-shadow;
       overflow: hidden;
       opacity: 0;
+      z-index: 2;
       transform: translateY(27px);
 
       &.hidden {
