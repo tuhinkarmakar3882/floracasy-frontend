@@ -145,6 +145,7 @@
       <transition name="slide-up">
         <ShareFallbackForDesktop
           v-if="useShareFallBack"
+          fixed-mode
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"
           :description="blog.title"

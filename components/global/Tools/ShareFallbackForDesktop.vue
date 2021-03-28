@@ -1,13 +1,16 @@
 <template>
-  <aside class="share-fallback">
+  <aside
+    class="share-fallback"
+    :style="{ position: fixedMode ? 'fixed' : 'absolute' }"
+  >
     <i v-ripple class="mdi mdi-close mdi-24px close-btn" @click="handleClose" />
 
     <p>Share this on:</p>
     <ul class="options">
       <li>
         <a
-          class="shareBtn btn fbBtn py-1"
           :href="`https://www.facebook.com/sharer/sharer.php?u=${linkUrl}`"
+          class="shareBtn btn fbBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
@@ -16,8 +19,8 @@
       </li>
       <li>
         <a
-          class="shareBtn btn whatsAppBtn py-1"
           :href="`https://api.whatsapp.com/send?text=${description} ... Read More on Floracasy: ${linkUrl}`"
+          class="shareBtn btn whatsAppBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
@@ -26,8 +29,8 @@
       </li>
       <li>
         <a
-          class="shareBtn btn twitterBtn py-1"
           :href="`https://twitter.com/share?url=${linkUrl}&text=${description}`"
+          class="shareBtn btn twitterBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
@@ -36,8 +39,8 @@
       </li>
       <li>
         <a
-          class="shareBtn btn telegramBtn py-1"
           :href="`https://t.me/share/url?url=${linkUrl}&text=${description}... Read More on Floracasy`"
+          class="shareBtn btn telegramBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
@@ -56,6 +59,11 @@ export default {
       type: Function,
       required: true,
     },
+    fixedMode: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     description: {
       type: String,
       required: true,
@@ -72,7 +80,6 @@ export default {
 @import 'assets/all-variables';
 
 .share-fallback {
-  position: absolute;
   top: 0;
   left: 0;
   right: 0;
