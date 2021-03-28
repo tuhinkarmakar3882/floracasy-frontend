@@ -295,7 +295,10 @@ export default {
           await navigator.share({
             title: this.blog.title + '- Floracasy',
             text:
-              this.blog.subtitle.substr(0, 40) + '... Read More on Floracasy',
+              this.blog.title +
+              ' - ' +
+              this.blog.subtitle.substr(0, 40) +
+              '... Read More on Floracasy',
             url: navigationRoutes.Home.Blogs.Details.replace(
               '{id}',
               this.blog.identifier
@@ -428,6 +431,11 @@ export default {
     display: grid;
     place-items: center;
     height: calc(100vh - 120px);
+  }
+
+  .floating-action-button {
+    bottom: 64px;
+    min-width: auto;
   }
 }
 </style>
