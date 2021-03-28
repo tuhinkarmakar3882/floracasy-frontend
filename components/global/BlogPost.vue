@@ -138,6 +138,15 @@
           </span>
         </div>
       </section>
+
+      <transition name="slide-left">
+        <ShareFallbackForDesktop
+          v-if="useShareFallBack"
+          :handle-close="hideFallback"
+          :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"
+          :description="blog.title"
+        />
+      </transition>
     </div>
   </transition>
 </template>
@@ -174,6 +183,7 @@ export default {
       navigationRoutes,
       showOptions: false,
       hideBlog: false,
+      useShareFallBack: false,
     }
   },
   computed: {
@@ -247,7 +257,7 @@ export default {
           await showUITip(this.$store, 'Network Error', 'error')
         }
       } else {
-        await showUITip(this.$store, 'Feature Not Supported', 'warning')
+        this.useShareFallBack = !this.useShareFallBack
       }
     },
 
@@ -309,15 +319,19 @@ export default {
         )
       )
     },
+
+    hideFallback() {
+      this.useShareFallBack = false
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
-@import 'assets/transitions-and-animations';
 
 .blog-post-component {
+  position: relative;
   transition: all 150ms ease-in-out;
 
   .content {
