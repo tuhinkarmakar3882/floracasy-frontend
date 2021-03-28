@@ -144,6 +144,15 @@
       </section>
 
       <hr class="reversed-faded-divider mt-0 mb-2" />
+
+      <transition name="slide-left">
+        <ShareFallbackForDesktop
+          v-if="useShareFallBack"
+          :handle-close="hideFallback"
+          :link-url="`https://floracasy.com/Home/Community/Posts/${post.identifier}`"
+          :description="post.body || 'View this Post on Floracasy'"
+        />
+      </transition>
     </div>
   </transition>
 </template>
@@ -189,6 +198,7 @@ export default {
       navigationRoutes,
       showOptions: false,
       hidePost: false,
+      useShareFallBack: false,
     }
   },
 
@@ -229,8 +239,8 @@ export default {
       if (navigator.share) {
         try {
           await navigator.share({
-            title: this.post.title + '- Floracasy',
-            text: this.post.subtitle,
+            title: this.post.body + '- Floracasy',
+            text: this.post.body || 'View this Post on Floracasy',
             url: navigationRoutes.Home.Community.Posts.detail.replace(
               '{postIdentifier}',
               this.post.identifier
@@ -251,7 +261,7 @@ export default {
           await showUITip(this.$store, 'Network Error', 'error')
         }
       } else {
-        await showUITip(this.$store, 'Feature Not Supported', 'warning')
+        this.useShareFallBack = !this.useShareFallBack
       }
     },
 
@@ -285,6 +295,10 @@ export default {
           this.hidePost = false
         }
       }
+    },
+
+    hideFallback() {
+      this.useShareFallBack = false
     },
   },
 }
