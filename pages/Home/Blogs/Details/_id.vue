@@ -133,9 +133,23 @@
           />
         </div>
         <div v-ripple class="share" @click="share">
-          <i class="mdi mdi-share-variant" />
+          <i
+            class="mdi"
+            :class="
+              useShareFallBack ? 'mdi-close danger-light' : 'mdi-share-variant'
+            "
+          />
         </div>
       </section>
+
+      <transition name="slide-up">
+        <ShareFallbackForDesktop
+          v-if="useShareFallBack"
+          :handle-close="hideFallback"
+          :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"
+          :description="blog.title"
+        />
+      </transition>
     </template>
   </AppFeel>
 </template>
@@ -158,6 +172,7 @@ const { useMessageService } = require('~/environmentVariables')
 
 export default {
   name: 'BlogDetails',
+  layout: 'FullScreen',
 
   async asyncData({ $axios, redirect, params, from: prevURL }) {
     try {
@@ -179,6 +194,8 @@ export default {
       noXSS: sanitizeHtml,
       blog: null,
       sanitizationConfig,
+      playbackStarted: false,
+      useShareFallBack: false,
     }
   },
 
@@ -299,15 +316,12 @@ export default {
           await showUITip(this.$store, 'Unable to share', 'error')
         }
       } else {
-        await showUITip(
-          this.$store,
-          'Not Yet Supported on this Browser',
-          'warning',
-          true
-        )
+        this.useShareFallBack = !this.useShareFallBack
       }
     },
-
+    hideFallback() {
+      this.useShareFallBack = false
+    },
     async handleBackButtonPress() {
       if (this.prevURL) {
         await this.$router.back()
@@ -376,10 +390,6 @@ export default {
       section {
         display: flex;
         align-items: center;
-
-        &:nth-child(2) {
-          border-left: 1px solid $primary;
-        }
       }
     }
 
