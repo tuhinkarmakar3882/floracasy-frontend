@@ -140,7 +140,6 @@ export default {
 $seek-progress: -1000px 0 0 1000px $vibrant;
 .audio-player-component {
   position: relative;
-  box-shadow: $default-box-shadow;
 
   .player-background {
     position: relative;
