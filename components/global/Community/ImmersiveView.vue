@@ -110,7 +110,10 @@
           <img :src="item.photo" alt="story-photo" />
         </div>
 
-        <div v-if="item.storyType === 'audio'" style="width: 100%; z-index: 1">
+        <div
+          v-if="item.storyType === 'audio'"
+          :style="{ width: '100%', zIndex: showStatisticsInfo ? 0 : 1 }"
+        >
           <AudioPlayer :audio-source="item.audio" />
         </div>
       </section>
@@ -124,10 +127,23 @@
         v-if="errorWhileFetchingStory"
         error-section="Story Details"
       />
+
+      <transition name="scale-up">
+        <div
+          v-if="showStatisticsInfo"
+          class="backdrop"
+          @click="showStatisticsInfo = false"
+        />
+      </transition>
     </main>
 
     <footer>
-      <section v-if="isOwner()" v-ripple class="story-stats">
+      <section
+        v-if="isOwner()"
+        v-ripple
+        class="story-stats"
+        @click="loadStatistics"
+      >
         <i class="mdi mdi-eye mr-2 mdi-18px" />
         <p>
           {{
@@ -171,6 +187,22 @@
         </aside>
       </section>
     </footer>
+
+    <transition name="slide-up">
+      <aside v-if="showStatisticsInfo" class="stats-data">
+        <i
+          v-ripple
+          class="mdi mdi-close mdi-24px"
+          @click="showStatisticsInfo = false"
+        />
+        <UserChiplet
+          v-for="item in statisticsData"
+          :key="item.id"
+          class="px-4 py-4"
+          :userdata="item"
+        />
+      </aside>
+    </transition>
   </div>
 </template>
 
@@ -230,6 +262,9 @@ export default {
       errorWhileFetchingStory: false,
       loadingStories: true,
       activeElement: 0,
+
+      statisticsData: undefined,
+      showStatisticsInfo: false,
     }
   },
   computed: {
@@ -288,7 +323,6 @@ export default {
     try {
       await this.getAllStories()
       await this.markAsViewed()
-      this.isOwner() && (await this.loadStatistics())
     } catch (e) {
       this.errorWhileFetchingStory = true
     } finally {
@@ -301,8 +335,16 @@ export default {
       return this.story.user.uid === this.user.uid
     },
 
-    loadStatistics() {
-      console.log('loading stats')
+    async loadStatistics() {
+      this.showStatisticsInfo = true
+
+      this.statisticsData = await this.$axios
+        .$get(endpoints.community_service.stories.status, {
+          params: {
+            identifier: this.allStories[this.activeElement].identifier,
+          },
+        })
+        .catch(() => {})
     },
 
     getRelativeTime,
@@ -395,6 +437,40 @@ export default {
 
   * {
     transition: all 250ms ease-in-out;
+  }
+
+  .stats-data {
+    position: fixed;
+    bottom: 0;
+    height: 60vh;
+    overflow: scroll;
+    width: 100%;
+    background: $segment-background;
+    box-shadow: $up-only-box-shadow;
+    z-index: 2;
+    border-radius: 16px 16px 0 0;
+
+    * {
+      z-index: 2;
+    }
+
+    i {
+      position: absolute !important;
+      height: 64px;
+      width: 64px;
+      display: grid;
+      place-items: center;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  .backdrop {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background: rgba(black, 0.7);
   }
 
   header {
@@ -626,7 +702,7 @@ export default {
 
       .forward,
       .backward {
-        position: absolute !important;
+        position: fixed !important;
         height: calc(100vh - 56px);
         width: 40vw;
         top: 56px;
