@@ -253,7 +253,7 @@ export default {
     },
     onAllStoryDeletion: {
       type: Function,
-      required: false,
+      required: true,
     },
   },
 
