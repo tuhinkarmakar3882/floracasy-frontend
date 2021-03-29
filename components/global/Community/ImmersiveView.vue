@@ -137,11 +137,18 @@
         error-section="Story Details"
       />
 
-      <transition name="scale-up">
+      <transition name="scale-down">
         <div
           v-if="showStatisticsInfo"
           class="backdrop"
           @click="showStatisticsInfo = false"
+        />
+      </transition>
+      <transition name="scale-down">
+        <div
+          v-if="showReactionOptions"
+          class="backdrop"
+          @click="showReactionOptions = false"
         />
       </transition>
     </main>
