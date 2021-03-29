@@ -9,9 +9,12 @@
 
     <template slot="main">
       <section v-if="stories" class="story-wrapper px-6 py-4">
-        <article v-for="story in stories" :key="story.identifier">
-          <LazyStoryPost :story="story" class="pb-0 pt-8" />
-        </article>
+        <LazyStoryPost
+          v-for="story in stories"
+          :key="story.identifier"
+          :story="story"
+          class="pb-0 pt-8"
+        />
       </section>
 
       <client-only>
