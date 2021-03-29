@@ -127,43 +127,55 @@
     </main>
 
     <footer>
-      <section
-        v-ripple
-        :class="showReactionOptions && 'active'"
-        class="floating-action-button"
-        @click="showReactionOptions = !showReactionOptions"
-      >
-        <i
-          :class="
-            showReactionOptions
-              ? 'mdi-close danger-light'
-              : containsReaction
-              ? reactionIcon
-              : 'mdi-emoticon-outline'
-          "
-          :style="containsReaction && { color: reactionColor }"
-          class="mdi"
-        />
+      <section v-if="isOwner()" v-ripple class="story-stats">
+        <i class="mdi mdi-eye mr-2 mdi-18px" />
+        <p>
+          {{
+            allStories[activeElement] && allStories[activeElement].totalViews
+          }}
+        </p>
       </section>
 
-      <aside :class="showReactionOptions && 'open'" class="reactions hidden">
-        <i
-          v-for="(reaction, index) in reactions"
-          :key="index"
-          v-ripple="`${reaction.color}5F`"
-          :class="reaction.icon"
-          :style="{
-            color: reaction.color,
-          }"
-          class="px-4"
-          @click="addReaction(reaction.type)"
-        />
-      </aside>
+      <section v-else>
+        <section
+          v-ripple
+          :class="showReactionOptions && 'active'"
+          class="floating-action-button"
+          @click="showReactionOptions = !showReactionOptions"
+        >
+          <i
+            :class="
+              showReactionOptions
+                ? 'mdi-close danger-light'
+                : containsReaction
+                ? reactionIcon
+                : 'mdi-emoticon-outline'
+            "
+            :style="containsReaction && { color: reactionColor }"
+            class="mdi"
+          />
+        </section>
+
+        <aside :class="showReactionOptions && 'open'" class="reactions hidden">
+          <i
+            v-for="(reaction, index) in reactions"
+            :key="`${reaction.icon}-${index}`"
+            v-ripple="`${reaction.color}5F`"
+            :class="reaction.icon"
+            :style="{
+              color: reaction.color,
+            }"
+            class="px-4"
+            @click="addReaction(reaction.type)"
+          />
+        </aside>
+      </section>
     </footer>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
@@ -218,7 +230,6 @@ export default {
       errorWhileFetchingStory: false,
       loadingStories: true,
       activeElement: 0,
-      currentElement: undefined,
     }
   },
   computed: {
@@ -262,11 +273,22 @@ export default {
           return ''
       }
     },
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
+  watch: {
+    activeElement() {
+      this.markAsViewed()
+    },
   },
 
   async mounted() {
     try {
       await this.getAllStories()
+      await this.markAsViewed()
+      this.isOwner() && (await this.loadStatistics())
     } catch (e) {
       this.errorWhileFetchingStory = true
     } finally {
@@ -275,7 +297,16 @@ export default {
   },
 
   methods: {
+    isOwner() {
+      return this.story.user.uid === this.user.uid
+    },
+
+    loadStatistics() {
+      console.log('loading stats')
+    },
+
     getRelativeTime,
+
     async getAllStories() {
       this.allStories = await this.$axios.$get(
         endpoints.community_service.stories.detail.replace(
@@ -283,12 +314,18 @@ export default {
           this.story.identifier
         )
       )
-      this.currentElement = this.allStories[0].createdAt
     },
 
     calculateActiveElement({ target }) {
       this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
-      this.currentElement = this.allStories[this.activeElement].createdAt
+    },
+
+    async markAsViewed() {
+      await this.$axios
+        .$put(endpoints.community_service.stories.updateViewStatus, {
+          identifier: this.allStories[this.activeElement].identifier,
+        })
+        .catch(() => {})
     },
 
     async reportStory() {
@@ -457,6 +494,20 @@ export default {
   }
 
   footer {
+    .story-stats {
+      position: fixed !important;
+      bottom: 0;
+      width: 100%;
+      height: 2 * $xxx-large-unit;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      * {
+        font-family: $Nunito-Sans;
+      }
+    }
+
     .floating-action-button {
       height: 56px;
       width: 56px;
