@@ -69,6 +69,15 @@
     <transition name="gray-shift">
       <div v-if="showOptions" class="options">
         <ul>
+          <li
+            v-if="user && story.userUID === user.uid"
+            v-ripple="`#ffcf005F`"
+            class="py-2 px-6 list-option"
+            @click="deleteStory"
+          >
+            <span class="icon mdi mdi-delete" style="color: #ffcf00" />
+            Delete Story
+          </li>
           <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportStory">
             <span class="icon mdi mdi-alert-octagon danger-light" />
             Report Story
@@ -435,6 +444,33 @@ export default {
         left: -100,
         behavior: 'smooth',
       })
+    },
+
+    async deleteStory() {
+      if (this.story.userUID !== this.user.uid) return
+
+      const confirmDeletion = confirm('Are you sure?')
+      if (confirmDeletion) {
+        try {
+          this.hideBlog = true
+          await this.$axios.$post(endpoints.community_service.stories.delete, {
+            storyIdentifier: this.allStories[this.activeElement].identifier,
+            wrapperIdentifier: this.story.identifier,
+          })
+          this.story.story_count--
+          this.allStories.splice(this.activeElement, 1)
+          await showUITip(this.$store, 'Successfully Deleted!', 'success')
+        } catch (e) {
+          await showUITip(
+            this.$store,
+            'Failed To Delete Blog. Try Again',
+            'error'
+          )
+          this.hideBlog = false
+        } finally {
+          this.showOptions = false
+        }
+      }
     },
   },
 }
