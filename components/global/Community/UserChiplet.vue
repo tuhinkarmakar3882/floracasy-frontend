@@ -10,11 +10,13 @@
         {{ username || 'Loading...' }}
       </h6>
 
-      <aside>
-        <small v-if="designation">{{ designation || 'Loading...' }}</small>
-        <p v-if="about">{{ about || 'Loading...' }}</p>
-      </aside>
+      <p v-if="designation">{{ designation || 'Loading...' }}</p>
     </section>
+    <i
+      :class="`mdi mdi-24px mdi-${userdata.reaction.reactionType}`"
+      :style="{ color: iconColor }"
+    />
+    <!--      <small v-if="about">{{ about || 'Loading...' }}</small>-->
   </div>
 </template>
 
@@ -37,6 +39,29 @@ export default {
       designation: undefined,
       about: undefined,
     }
+  },
+  computed: {
+    iconColor() {
+      switch (this.userdata?.reaction?.reactionType) {
+        case 'heart':
+          return '#80ff71'
+
+        case 'fire':
+          return '#ffd646'
+
+        case 'haha':
+          return '#b4a7ff'
+
+        case 'sad':
+          return '#32e9be'
+
+        case 'angry':
+          return '#ff4d84'
+
+        default:
+          return '#fff'
+      }
+    },
   },
   mounted() {
     this.fetchProfileImage()
@@ -82,8 +107,11 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
+$img-size: 44px;
+
 .user-search-result-component {
-  display: flex;
+  display: grid;
+  grid-template-columns: $img-size auto $img-size;
 
   button {
     min-width: auto;
@@ -91,8 +119,6 @@ export default {
     min-height: auto;
     height: auto;
   }
-
-  $img-size: 64px;
 
   img {
     height: $img-size;
@@ -108,6 +134,7 @@ export default {
 
   .user-data {
     width: 100%;
+
     small {
       display: block;
       font-weight: 300;
@@ -116,29 +143,24 @@ export default {
 
     h6 {
       text-transform: capitalize;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 300;
       margin: 0 auto 4px 0;
       font-family: $Raleway;
     }
 
     p {
-      font-size: 14px;
-      margin: 4px 0 8px;
-      margin-left: auto;
+      font-size: 13px;
+      margin: 4px 0 8px auto;
       display: flex;
       align-items: center;
       line-height: 1;
-
-      span.dot {
-        width: $nano-unit;
-        height: $nano-unit;
-        border-radius: 50%;
-        box-shadow: $default-box-shadow;
-        background: #cacaca;
-        display: block;
-      }
     }
+  }
+
+  i {
+    display: grid;
+    justify-content: center;
   }
 }
 </style>
