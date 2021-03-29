@@ -190,16 +190,23 @@
 
     <transition name="slide-up">
       <aside v-if="showStatisticsInfo" class="stats-data">
-        <i
-          v-ripple
-          class="mdi mdi-close mdi-24px"
-          @click="showStatisticsInfo = false"
-        />
+        <header>
+          <p class="px-4 title">Story Details</p>
+          <i
+            v-ripple
+            class="mdi mdi-close mdi-24px"
+            @click="showStatisticsInfo = false"
+          />
+        </header>
         <UserChiplet
           v-for="item in statisticsData"
           :key="item.id"
-          class="px-4 py-4"
           :userdata="item"
+          class="px-2 py-4"
+          style="
+            border-bottom: 1px solid #0d0d17;
+            border-top: 1px solid #0d0d17;
+          "
         />
       </aside>
     </transition>
@@ -439,32 +446,6 @@ export default {
     transition: all 250ms ease-in-out;
   }
 
-  .stats-data {
-    position: fixed;
-    bottom: 0;
-    height: 60vh;
-    overflow: scroll;
-    width: 100%;
-    background: $segment-background;
-    box-shadow: $up-only-box-shadow;
-    z-index: 2;
-    border-radius: 16px 16px 0 0;
-
-    * {
-      z-index: 2;
-    }
-
-    i {
-      position: absolute !important;
-      height: 64px;
-      width: 64px;
-      display: grid;
-      place-items: center;
-      right: 0;
-      top: 0;
-    }
-  }
-
   .backdrop {
     position: fixed;
     top: 0;
@@ -488,6 +469,50 @@ export default {
       &.active {
         background: $white;
       }
+    }
+  }
+
+  .stats-data {
+    position: fixed;
+    bottom: 0;
+    height: 70vh;
+    overflow: scroll;
+    width: 100%;
+    background: linear-gradient(180deg, #140627, #050113);
+    box-shadow: $up-only-box-shadow;
+    z-index: 2;
+    border-radius: 16px 16px 0 0;
+
+    $size: 2 * $xx-large-unit;
+
+    header {
+      height: $size;
+      position: sticky !important;
+      top: 0;
+      background: #20153a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: $down-only-box-shadow;
+
+      p.title {
+        color: white;
+        font-weight: 400;
+      }
+
+      i {
+        position: sticky !important;
+        height: $size;
+        width: $size;
+        display: grid;
+        place-items: center;
+        right: 0;
+        top: 0;
+      }
+    }
+
+    * {
+      z-index: 2;
     }
   }
 
