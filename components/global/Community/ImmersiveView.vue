@@ -781,6 +781,7 @@ export default {
       .text-story {
         text-align: center;
         line-height: 1.75;
+        word-break: break-all;
       }
     }
 
