@@ -53,8 +53,9 @@
           </nuxt-link>
         </p>
 
-        <small v-if="currentElement">{{
-          getRelativeTime(currentElement)
+        <small>{{
+          allStories[activeElement] &&
+          getRelativeTime(allStories[activeElement].createdAt)
         }}</small>
       </section>
 
@@ -115,16 +116,8 @@
       </section>
 
       <aside class="controls">
-        <button
-          class="forward"
-          @click="nextStory"
-          @scroll="calculateActiveElement"
-        />
-        <button
-          class="backward"
-          @click="prevStory"
-          @scroll="calculateActiveElement"
-        />
+        <button class="forward" @click="nextStory" />
+        <button class="backward" @click="prevStory" />
       </aside>
 
       <LoadingError
@@ -331,6 +324,7 @@ export default {
       this.allStories[activeItem].reactions.hasReaction = hasReaction
       this.allStories[activeItem].reactions.reactionType = reactionType
     },
+
     nextStory() {
       if (this.activeElement === this.story.story_count - 1)
         this.onClickFunction()
