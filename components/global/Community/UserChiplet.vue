@@ -6,11 +6,13 @@
   >
     <img :src="photoURL" alt="user-image" height="64" width="64" />
     <section class="user-data ml-4">
-      <h6 class="mt-0 mb-1 secondary mr-auto">{{ username }}</h6>
+      <h6 class="mt-0 mb-1 secondary mr-auto">
+        {{ username || 'Loading...' }}
+      </h6>
 
       <aside>
-        <small v-if="designation">{{ designation }}</small>
-        <p v-if="about">{{ about }}</p>
+        <small v-if="designation">{{ designation || 'Loading...' }}</small>
+        <p v-if="about">{{ about || 'Loading...' }}</p>
       </aside>
     </section>
   </div>
