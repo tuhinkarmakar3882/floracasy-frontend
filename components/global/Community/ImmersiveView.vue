@@ -198,16 +198,19 @@
             @click="showStatisticsInfo = false"
           />
         </header>
-        <UserChiplet
-          v-for="item in statisticsData"
-          :key="item.id"
-          :userdata="item"
-          class="px-4 py-4"
-          style="
-            border-bottom: 1px solid #0d0d17;
-            border-top: 1px solid #0d0d17;
-          "
-        />
+        <FallBackLoader v-if="!statisticsData" class="my-4" />
+        <main v-else>
+          <UserChiplet
+            v-for="item in statisticsData"
+            :key="item.id"
+            :userdata="item"
+            class="px-4 py-4"
+            style="
+              border-bottom: 1px solid #0d0d17;
+              border-top: 1px solid #0d0d17;
+            "
+          />
+        </main>
       </aside>
     </transition>
   </div>
