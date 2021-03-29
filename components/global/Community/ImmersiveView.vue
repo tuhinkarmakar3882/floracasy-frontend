@@ -417,8 +417,10 @@ export default {
     },
 
     nextStory() {
-      if (this.activeElement === this.story.story_count - 1)
+      if (this.activeElement === this.story.story_count - 1) {
+        this.story.contains_unseen = false
         this.onClickFunction()
+      }
 
       this.$refs.storyDisplayContainer.scrollBy({
         left: 100,
