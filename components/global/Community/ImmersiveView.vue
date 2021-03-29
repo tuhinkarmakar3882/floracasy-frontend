@@ -75,7 +75,7 @@
             class="py-2 px-6 list-option"
             @click="deleteStory"
           >
-            <span class="icon mdi mdi-delete" style="color: #ffcf00" />
+            <span class="icon mdi mdi-delete delete-color" />
             Delete Story
           </li>
           <li v-ripple="`#ff82825F`" class="py-2 px-6" @click="reportStory">
@@ -153,11 +153,13 @@
         class="story-stats"
         @click="loadStatistics"
       >
-        <i class="mdi mdi-eye mr-2 mdi-18px" />
-        <p>
-          {{
-            allStories[activeElement] && allStories[activeElement].totalViews
-          }}
+        <i class="mdi mdi-eye mr-2 mdi-18px secondary" />
+        <p class="secondary">
+          <strong>
+            {{
+              allStories[activeElement] && allStories[activeElement].totalViews
+            }}
+          </strong>
         </p>
       </section>
 
@@ -201,11 +203,18 @@
       <aside v-if="showStatisticsInfo" class="stats-data">
         <header>
           <p class="px-4 title">Story Details</p>
-          <i
-            v-ripple
-            class="mdi mdi-close mdi-24px"
-            @click="showStatisticsInfo = false"
-          />
+          <aside>
+            <i
+              v-ripple="`#ffcf005F`"
+              class="mdi mdi-delete mdi-24px delete-color"
+              @click="deleteStory"
+            />
+            <i
+              v-ripple="`#ff82825F`"
+              class="mdi mdi-close mdi-24px danger-light"
+              @click="showStatisticsInfo = false"
+            />
+          </aside>
         </header>
         <FallBackLoader v-if="!statisticsData" class="my-4" />
         <main v-else>
@@ -241,6 +250,10 @@ export default {
     onClickFunction: {
       type: Function,
       required: true,
+    },
+    onAllStoryDeletion: {
+      type: Function,
+      required: false,
     },
   },
 
@@ -469,6 +482,11 @@ export default {
           this.hideBlog = false
         } finally {
           this.showOptions = false
+          this.showStatisticsInfo = false
+          if (this.allStories.length === 0) {
+            this.onAllStoryDeletion && this.onAllStoryDeletion()
+            this.onClickFunction()
+          }
         }
       }
     },
@@ -521,7 +539,7 @@ export default {
   .stats-data {
     position: fixed;
     bottom: 0;
-    height: 65vh;
+    max-height: 55vh;
     overflow: scroll;
     width: 100%;
     background: linear-gradient(180deg, #140627, #050113);
@@ -546,14 +564,18 @@ export default {
         font-weight: 400;
       }
 
-      i {
-        position: sticky !important;
-        height: $size;
-        width: $size;
-        display: grid;
-        place-items: center;
-        right: 0;
-        top: 0;
+      aside {
+        display: flex;
+
+        i {
+          position: sticky !important;
+          height: $size;
+          width: $size;
+          display: grid;
+          place-items: center;
+          right: 0;
+          top: 0;
+        }
       }
     }
 
