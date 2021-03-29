@@ -52,6 +52,9 @@ const endpoints = {
       reaction: '/allow_authenticated/community_service/stories/reactions/',
       updateViewStatus:
         '/allow_authenticated/community_service/stories/updateViewStatus/',
+
+      status: '/allow_authenticated/community_service/stories/status/',
+
       detail:
         '/allow_authenticated/community_service/stories/detail/{identifier}/',
     },
