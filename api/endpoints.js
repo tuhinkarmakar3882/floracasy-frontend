@@ -50,6 +50,8 @@ const endpoints = {
       index: '/allow_authenticated/community_service/stories/',
       delete: '/allow_authenticated/community_service/stories/delete/',
       reaction: '/allow_authenticated/community_service/stories/reactions/',
+      updateViewStatus:
+        '/allow_authenticated/community_service/stories/updateViewStatus/',
       detail:
         '/allow_authenticated/community_service/stories/detail/{identifier}/',
     },
