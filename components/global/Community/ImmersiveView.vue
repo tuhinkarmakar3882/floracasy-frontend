@@ -202,7 +202,7 @@
           v-for="item in statisticsData"
           :key="item.id"
           :userdata="item"
-          class="px-2 py-4"
+          class="px-4 py-4"
           style="
             border-bottom: 1px solid #0d0d17;
             border-top: 1px solid #0d0d17;
@@ -475,7 +475,7 @@ export default {
   .stats-data {
     position: fixed;
     bottom: 0;
-    height: 70vh;
+    height: 65vh;
     overflow: scroll;
     width: 100%;
     background: linear-gradient(180deg, #140627, #050113);
