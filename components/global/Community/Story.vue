@@ -1,7 +1,7 @@
 <template>
   <div v-ripple class="story-component">
     <main class="story" @click="openImmersiveView">
-      <section class="wrapper mb-4">
+      <section class="wrapper mb-4" :class="story.contains_unseen && 'unseen'">
         <img
           :alt="story.user.photoURL"
           :src="story.user.photoURL"
@@ -24,8 +24,8 @@
     <transition name="scale-up">
       <ImmersiveView
         v-if="immersiveMode"
-        :story="story"
         :on-click-function="closeImmersiveView"
+        :story="story"
       />
     </transition>
   </div>
@@ -94,6 +94,20 @@ export default {
       min-width: $wrapper-size;
       display: grid;
       place-items: center;
+
+      img {
+        min-height: $wrapper-size;
+        height: $wrapper-size;
+        min-width: $wrapper-size;
+        width: $wrapper-size;
+        object-fit: cover;
+        box-shadow: $default-box-shadow;
+        border-radius: 50%;
+      }
+    }
+
+    .unseen {
+      position: relative;
 
       img {
         min-height: $image-size;
