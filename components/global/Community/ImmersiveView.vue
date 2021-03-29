@@ -215,7 +215,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getRelativeTime, showUITip } from '~/utils/utility'
+import { getRelativeTime, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -231,6 +231,7 @@ export default {
       required: true,
     },
   },
+
   data() {
     return {
       navigationRoutes,
@@ -274,6 +275,7 @@ export default {
       showStatisticsInfo: false,
     }
   },
+
   computed: {
     username() {
       return this.story.user.displayName.length > 23
@@ -323,6 +325,9 @@ export default {
   watch: {
     activeElement() {
       this.markAsViewed()
+    },
+    showStatisticsInfo(newValue) {
+      newValue && LogAnalyticsEvent('open_story_details')
     },
   },
 
