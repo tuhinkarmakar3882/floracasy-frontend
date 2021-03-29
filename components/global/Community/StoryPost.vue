@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="visibility">
     <section v-ripple class="story-post px-4 py-4" @click="openImmersiveView">
       <span class="total-stories">{{ storyCount || '--' }}</span>
 
@@ -26,6 +26,7 @@
         v-if="immersiveMode"
         :story="story"
         :on-click-function="closeImmersiveView"
+        :on-all-story-deletion="hideStory"
       />
     </transition>
   </div>
@@ -46,6 +47,7 @@ export default {
   data() {
     return {
       immersiveMode: false,
+      visibility: true,
     }
   },
 
@@ -80,6 +82,10 @@ export default {
     async closeImmersiveView() {
       this.immersiveMode = false
       await this.$router.back()
+    },
+
+    hideStory() {
+      this.visibility = false
     },
   },
 }

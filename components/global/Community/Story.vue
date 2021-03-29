@@ -1,7 +1,7 @@
 <template>
-  <div v-ripple class="story-component">
+  <div v-if="visibility" v-ripple class="story-component">
     <main class="story" @click="openImmersiveView">
-      <section class="wrapper mb-4" :class="story.contains_unseen && 'unseen'">
+      <section :class="story.contains_unseen && 'unseen'" class="wrapper mb-4">
         <img
           :alt="story.user.photoURL"
           :src="story.user.photoURL"
@@ -25,6 +25,7 @@
       <ImmersiveView
         v-if="immersiveMode"
         :on-click-function="closeImmersiveView"
+        :on-all-story-deletion="hideStory"
         :story="story"
       />
     </transition>
@@ -44,6 +45,7 @@ export default {
   data() {
     return {
       immersiveMode: false,
+      visibility: true,
     }
   },
 
@@ -71,6 +73,9 @@ export default {
       this.immersiveMode = false
       await this.$router.back()
     },
+    hideStory() {
+      this.visibility = false
+    },
   },
 }
 </script>
@@ -87,27 +92,14 @@ export default {
     $wrapper-size: 74px;
     $image-size: 64px;
 
-    .wrapper {
+    .wrapper,
+    .unseen {
       text-align: center;
       position: relative;
       min-height: $wrapper-size;
       min-width: $wrapper-size;
       display: grid;
       place-items: center;
-
-      img {
-        min-height: $wrapper-size;
-        height: $wrapper-size;
-        min-width: $wrapper-size;
-        width: $wrapper-size;
-        object-fit: cover;
-        box-shadow: $default-box-shadow;
-        border-radius: 50%;
-      }
-    }
-
-    .unseen {
-      position: relative;
 
       img {
         min-height: $image-size;
@@ -118,7 +110,23 @@ export default {
         box-shadow: $default-box-shadow;
         border-radius: 50%;
       }
+    }
 
+    .wrapper {
+      &::before {
+        content: '';
+        position: absolute;
+        height: $wrapper-size;
+        width: $wrapper-size;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 50%;
+        border: 2px solid $muted;
+      }
+    }
+
+    .unseen {
       &::before {
         content: '';
         position: absolute;
