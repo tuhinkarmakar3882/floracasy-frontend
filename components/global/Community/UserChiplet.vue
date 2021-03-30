@@ -12,10 +12,7 @@
 
       <p v-if="designation">{{ designation || 'Loading...' }}</p>
     </section>
-    <i
-      :class="`mdi mdi-24px mdi-${userdata.reaction.reactionType}`"
-      :style="{ color: iconColor }"
-    />
+    <i :class="`mdi-24px ${iconName}`" :style="{ color: iconColor }" />
     <!--      <small v-if="about">{{ about || 'Loading...' }}</small>-->
   </div>
 </template>
@@ -60,6 +57,28 @@ export default {
 
         default:
           return '#fff'
+      }
+    },
+
+    iconName() {
+      switch (this.userdata?.reaction?.reactionType) {
+        case 'heart':
+          return 'mdi mdi-heart'
+
+        case 'fire':
+          return 'mdi mdi-fire'
+
+        case 'haha':
+          return 'mdi mdi-emoticon-lol'
+
+        case 'sad':
+          return 'mdi mdi-emoticon-cry'
+
+        case 'mdi mdi-emoticon-angry':
+          return '#ff4d84'
+
+        default:
+          return undefined
       }
     },
   },
