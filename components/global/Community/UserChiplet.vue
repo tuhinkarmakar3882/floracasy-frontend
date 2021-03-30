@@ -74,8 +74,8 @@ export default {
         case 'sad':
           return 'mdi mdi-emoticon-cry'
 
-        case 'mdi mdi-emoticon-angry':
-          return '#ff4d84'
+        case 'angry':
+          return 'mdi mdi-emoticon-angry'
 
         default:
           return undefined
