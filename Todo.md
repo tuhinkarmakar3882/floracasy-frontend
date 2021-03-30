@@ -1,19 +1,25 @@
 # Pending Tasks:
 
+
 > ### Production Issues:
 > - FAQ Backend Connection
+> - Activate clamdAV
 > - Add Background Refresh for Auth Token
+> - Fix Carousel Text
 > - Fix Help & Support Message Display
-> - Add Share Fallback
+
+> ### AUDIT CODE BASE:
+>   - Front-End
+>   - Back-End
 
 
 > ### Community:
->   - **[ Optional ]** Add Story Like Feature
->   - **[ Optional ]** Add Post Share Feature
+>   - Think about Security
+>   - Improve Photo Story UI
+>   - Improve Audio Story UI
 
 
 > ### Payments:
->   - Add Payments Page
 >   - Handle Payments
 
 
@@ -21,12 +27,10 @@
 >   - Add Desktop Layout
 
 
-> ### Landing Pages
->   - Migrate to On-Boarding App Style
-
-
-> ### Go To Market Activity
->   - Fix About Us
+> ### Missing {pages}
+>   - Payments
+>   - How to Write
+>   - FAQ Update
 
 
 > ### Certificate Verification Portal:
@@ -36,16 +40,11 @@
 > ### Functionality
 >   - Add Backend Metrics to Calculate each page revenue
 >   - Add Support for Worker Highlighting
->   - Add Links and Images for TipTap
 >
 >
 >   - **[ Optional ]** Add Notification Toggles
 >   - **[ Optional ]** Add Payment Gateway
 >   - **[ Optional ]** Add Draft Page
-
-
-> ### CSS + Front End Only
->   - **[ Optional ]** Payment Page
 
 
 > ### Message System:
