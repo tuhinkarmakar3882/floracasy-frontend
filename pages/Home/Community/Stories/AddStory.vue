@@ -81,104 +81,137 @@
       </section>
 
       <section v-if="activeTab === 1" class="camera-recording-container">
+        <canvas v-show="false" ref="canvasPreview" />
         <!--  Progress Bar  -->
-        <div
-          v-show="photo.showProgress"
-          :style="{
-            width: photo.compressionProgress
-              ? `${photo.compressionProgress}%`
-              : 0,
-          }"
-          class="compression-progress-bar"
-        />
-
-        <!--  Overlay controls  -->
-        <transition name="gray-shift">
-          <section v-show="photo.isPhotoTaken" class="overlay">
-            <button
-              v-ripple
-              class="danger-outlined-btn mx-4"
-              @click="recapture"
-            >
-              <span class="mdi mdi-reload mdi-36px" />
-            </button>
-            <button
-              v-ripple
-              class="vibrant-outlined-btn mx-4"
-              @click="uploadPhotoStory"
-            >
-              <span class="mdi mdi-send mdi-36px" />
-            </button>
-          </section>
-        </transition>
-
-        <LoadingIcon v-show="photo.isLoading" class="text-center my-6" />
-
-        <canvas ref="canvasPreview" style="display: none" />
-
-        <!--  Video  -->
-        <transition name="slide-left">
-          <video
-            v-show="!photo.isLoading && !photo.isPhotoTaken"
-            ref="videoPreview"
-            autoplay
+        <header>
+          <div
+            v-show="photo.showProgress"
+            :style="{
+              width: photo.compressionProgress
+                ? `${photo.compressionProgress}%`
+                : 0,
+            }"
+            class="compression-progress-bar"
           />
-        </transition>
+        </header>
 
-        <!--  Preview Image  -->
-        <transition name="slide-up">
-          <div class="preview-img-container">
+        <main>
+          <FallBackLoader v-if="photo.isLoading" class="my-8">
+            <template v-slot:fallback>
+              <p class="text-center">Connecting to Camera</p>
+            </template>
+          </FallBackLoader>
+          <LoadingError v-else-if="photo.loadingError" error-section="Camera" />
+
+          <!--  Video  -->
+          <section>
+            <video
+              v-show="!photo.isLoading && !photo.isPhotoTaken"
+              ref="videoPreview"
+              :style="{ filter: photo.currentFilter.filter }"
+              autoplay
+            />
+
+            <!-- Preview Image  -->
             <img
               v-show="photo.isPhotoTaken"
               :src="photo.source"
               alt="image-preview"
+              :style="{ filter: photo.currentFilter.filter }"
             />
-          </div>
-        </transition>
+          </section>
 
-        <div class="controls">
+          <!--  Overlay controls  -->
+          <transition name="slide-left">
+            <aside v-if="!photo.showFilters" class="overlay-controls">
+              <button v-ripple @click="photo.showFilters = !photo.showFilters">
+                <i class="mdi mdi-palette" />
+                Effects
+              </button>
+            </aside>
+          </transition>
+
           <transition name="slide-up">
-            <section v-show="photo.showMoreOptions" class="more-options">
-              <div class="px-4 photo-options">
-                <label for="current-camera-device-select">
-                  Currently Using
-                </label>
-                <select
-                  id="current-camera-device-select"
-                  v-model="photo.currentDevice"
-                  autocomplete="off"
-                  class="my-4 dropdown"
-                >
-                  <option
-                    v-for="(option, index) in photo.availableDevices"
-                    :key="`${option}-${index}`"
-                    :value="option"
-                  >
-                    {{ option }}
-                  </option>
-                </select>
+            <aside v-if="photo.showFilters" class="effects">
+              <section
+                v-for="(option, index) in photo.availableFilters"
+                :key="`Filter-${index}`"
+                v-ripple
+                :class="photo.currentFilter === option && 'selected'"
+                @click="updateCurrentFilter(option)"
+              >
+                <img
+                  :style="{ filter: option.filter }"
+                  height="56"
+                  width="56"
+                  alt="Sample Image"
+                  src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=64&q=80"
+                />
+                <p class="mt-2">{{ option.name }}</p>
+              </section>
+            </aside>
+          </transition>
+        </main>
 
-                <label for="aspect-ratio-select">Aspect Ratio</label>
-                <select
-                  id="aspect-ratio-select"
-                  v-model="photo.aspectRatio"
-                  autocomplete="off"
-                  class="my-4 dropdown"
-                  @change="updatePhotoRatio"
-                >
-                  <option
-                    v-for="(option, index) in photo.availableRatios"
-                    :key="`${option}-${index}`"
-                    :value="option"
-                  >
-                    {{ option.name }}
-                  </option>
-                </select>
-              </div>
+        <footer>
+          <transition v-if="photo.isPhotoTaken" name="slide-left">
+            <section class="actions preview-steps">
+              <button
+                v-ripple
+                class="danger-outlined-btn mx-4"
+                @click="recapture"
+              >
+                Re-Capture
+              </button>
+              <button
+                v-ripple
+                class="vibrant-outlined-btn mx-4"
+                @click="uploadPhotoStory"
+              >
+                <span class="mdi mdi-send mdi-36px" />
+              </button>
             </section>
           </transition>
 
-          <section class="actions">
+          <transition v-else name="slide-left">
+            <section class="actions">
+              <!--  Gallery Button  -->
+              <button
+                v-ripple
+                class="muted-outlined-btn"
+                @click="$refs.imageUpload.click()"
+              >
+                <i class="mdi mdi-image-multiple mdi-24px" />
+              </button>
+
+              <button
+                v-if="photo.isPhotoTaken"
+                v-ripple
+                class="disabled-outlined-btn mx-4"
+              >
+                <span class="mdi mdi-check mdi-36px" />
+              </button>
+
+              <button
+                v-else
+                v-ripple
+                class="vibrant-outlined-btn shutter"
+                @click="takePhoto"
+              >
+                <i class="mdi mdi-camera-iris mdi-36px" />
+              </button>
+
+              <button
+                v-ripple
+                class="muted-outlined-btn"
+                @click="photo.showMoreOptions = !photo.showMoreOptions"
+              >
+                <i class="mdi mdi-camera-rear mdi-24px" />
+              </button>
+            </section>
+          </transition>
+
+          <aside>
             <input
               v-show="false"
               ref="imageUpload"
@@ -186,41 +219,8 @@
               type="file"
               @change="preprocessUploadedImage"
             />
-            <!--  Gallery Button  -->
-            <button
-              v-ripple
-              class="muted-outlined-btn"
-              @click="$refs.imageUpload.click()"
-            >
-              <i class="mdi mdi-image-multiple mdi-36px" />
-            </button>
-
-            <button
-              v-if="photo.isPhotoTaken"
-              v-ripple
-              class="disabled-outlined-btn mx-4"
-            >
-              <span class="mdi mdi-check mdi-36px" />
-            </button>
-
-            <button
-              v-else
-              v-ripple
-              class="vibrant-outlined-btn"
-              @click="takePhoto"
-            >
-              <i class="mdi mdi-camera mdi-36px" />
-            </button>
-
-            <button
-              v-ripple
-              class="muted-outlined-btn"
-              @click="photo.showMoreOptions = !photo.showMoreOptions"
-            >
-              <i class="mdi mdi-dots-horizontal mdi-36px" />
-            </button>
-          </section>
-        </div>
+          </aside>
+        </footer>
       </section>
 
       <section v-if="activeTab === 2" class="audio-recording-container">
@@ -237,10 +237,10 @@
           <transition name="slide-up">
             <AudioPlayer
               v-if="audio.source"
+              :audio-source="audio.source"
               class="my-6 px-4"
               controls
               style="width: 100%"
-              :audio-source="audio.source"
             />
           </transition>
 
@@ -281,10 +281,12 @@
 <script>
 import imageCompression from 'browser-image-compression'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import AppFeel from '~/components/global/Layout/AppFeel'
-import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
 import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import AudioPlayer from '~/components/global/Tools/AudioPlayer'
+import AppFeel from '~/components/global/Layout/AppFeel'
+import FallBackLoader from '~/components/global/Accounts/FallBackLoader'
+import LoadingError from '~/components/global/Accounts/LoadingError'
 
 const commonStyles = {
   minHeight: '100px',
@@ -298,8 +300,13 @@ const commonStyles = {
 
 export default {
   name: 'AddStory',
-  components: { LoadingIcon, AppFeel },
-  middleware: 'isAuthenticated',
+  components: {
+    LoadingError,
+    FallBackLoader,
+    AppFeel,
+    AudioPlayer,
+  },
+  // middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -311,6 +318,7 @@ export default {
       pageTitle: 'Add New Story',
       activeTab: 0,
       tabs: ['Write', 'Photo', 'Audio'],
+      prevURL: undefined,
 
       text: {
         customStyle: null,
@@ -401,6 +409,7 @@ export default {
         // isCameraOpen: false,
         // isShotPhoto: false,
         isPhotoTaken: false,
+        loadingError: false,
         isLoading: false,
         link: '#',
         stream: null,
@@ -437,6 +446,58 @@ export default {
         output: null,
         showProgress: false,
         compressionProgress: null,
+        availableFilters: [
+          {
+            name: 'None',
+            filter: 'none',
+          },
+          {
+            name: 'Brannes',
+            filter: 'sepia(0.5) contrast(1.4)',
+          },
+          {
+            name: 'InkWell',
+            filter: 'sepia(0.3) contrast(1.1) brightness(1.1) grayscale(1)',
+          },
+          {
+            name: 'Lo-Fi',
+            filter: 'saturate(1.1) contrast(1.5)',
+          },
+          {
+            name: 'Moon',
+            filter: 'grayscale(1) contrast(1.1) brightness(1.1)',
+          },
+          {
+            name: 'NashVille',
+            filter: 'sepia(0.2) contrast(1.2) brightness(1.05) saturate(1.2)',
+          },
+          {
+            name: 'Toaster',
+            filter: 'contrast(1.5) brightness(0.9)',
+          },
+          {
+            name: 'Walden',
+            filter:
+              'brightness(1.1) hue-rotate(-10deg) sepia(0.3) saturate(1.6)',
+          },
+          {
+            name: 'Willow',
+            filter: 'grayscale(0.5) contrast(0.95) brightness(0.9)',
+          },
+          {
+            name: 'X-Pro II',
+            filter: 'sepia(0.3)',
+          },
+          {
+            name: 'One Shot',
+            filter: 'grayscale(1) contrast(1.15) brightness(1.3)',
+          },
+        ],
+        currentFilter: {
+          name: 'None',
+          filter: 'none',
+        },
+        showFilters: false,
       },
 
       audio: {
@@ -487,6 +548,7 @@ export default {
       AudioRecorder.encoder = require('audio-recorder-polyfill/mpeg-encoder')
       AudioRecorder.prototype.mimeType = 'audio/mpeg'
       window.MediaRecorder = AudioRecorder
+
       await showUITip(
         this.$store,
         'Polyfill for Apple Devices are Ready',
@@ -518,6 +580,11 @@ export default {
   },
 
   methods: {
+    updateCurrentFilter(filter) {
+      this.photo.currentFilter = filter
+      this.photo.showFilters = false
+    },
+
     //  --------------------- Generic Methods ---------------------
     setActiveTabTo(newTabNumber) {
       this.activeTab = newTabNumber
@@ -527,6 +594,7 @@ export default {
     },
     async prepareCameraRecordingInitialSetup(constraint) {
       this.photo.isLoading = true
+      this.photo.loadingError = false
 
       const constraints = constraint ?? {
         video: {
@@ -542,7 +610,6 @@ export default {
           },
         },
       }
-
       this.photo.stream = await navigator.mediaDevices.getUserMedia(constraints)
       this.photo.mediaRecorder = new MediaRecorder(this.photo.stream)
       this.photo.mediaRecorder.ondataavailable = this.handleDataAvailable
@@ -861,13 +928,135 @@ export default {
 
   .camera-recording-container {
     position: relative;
+    display: grid;
+    grid-template-rows: calc(100vh - 218px) 112px;
 
     button {
       padding: 0;
-      width: 2 * $xx-large-unit;
-      height: 2 * $xx-large-unit;
+      width: 2 * $x-large-unit;
+      height: 2 * $x-large-unit;
       text-align: center;
       border-radius: 100%;
+    }
+
+    header {
+      position: absolute;
+    }
+
+    video,
+    img {
+      width: 100%;
+      background: $card-background;
+      object-fit: cover;
+      border-radius: $nano-unit;
+    }
+
+    img {
+      box-shadow: $default-box-shadow;
+    }
+
+    main {
+      position: relative;
+      justify-self: center;
+      align-self: center;
+      display: grid;
+      place-items: center;
+      height: 100%;
+      width: 100vw;
+
+      aside.overlay-controls {
+        position: absolute;
+        bottom: 16px;
+        right: 12px;
+
+        button {
+          padding: 8px;
+          width: auto;
+          height: auto;
+          border-radius: 4px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+      }
+
+      aside.effects {
+        background: rgba($black, 0.7);
+        position: absolute;
+        bottom: 0;
+        box-shadow: $up-only-box-shadow;
+        left: 4px;
+        overflow: scroll;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        section {
+          min-width: 84px;
+          height: 110px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          border-radius: 10px;
+
+          img {
+            height: 56px;
+            width: 56px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: $default-box-shadow;
+          }
+
+          p {
+            font-size: 14px;
+          }
+
+          &.selected {
+            box-shadow: $default-box-shadow;
+            border: 1px solid $secondary-matte;
+
+            p {
+              color: $vibrant;
+            }
+          }
+        }
+      }
+    }
+
+    footer {
+      box-shadow: $up-only-box-shadow;
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      background: $segment-background;
+
+      .actions {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+
+        .shutter {
+          width: 2 * $xx-large-unit;
+          height: 2 * $xx-large-unit;
+        }
+
+        &.preview-steps {
+          button {
+            border-radius: 50px;
+            width: auto;
+            height: auto;
+          }
+        }
+      }
     }
 
     .compression-progress-bar {
@@ -892,52 +1081,6 @@ export default {
       display: grid;
       grid-auto-flow: column;
       place-items: center;
-    }
-
-    video,
-    .preview-img-container {
-      width: 100%;
-      background: $card-background;
-      object-fit: contain;
-      transform: scaleX(-1);
-      height: calc(100vh - 114px);
-    }
-
-    .preview-img-container {
-      display: grid;
-      place-items: center;
-      transform: unset;
-
-      img {
-        max-height: calc(100vh - 114px);
-        border-radius: $nano-unit;
-        box-shadow: $default-box-shadow;
-        background: white;
-      }
-    }
-
-    .controls {
-      width: 100%;
-      position: fixed;
-      bottom: 0;
-      padding: 20px 0;
-      border-top-left-radius: 36px;
-      border-top-right-radius: 36px;
-      background: rgba(black, 0.6);
-
-      .photo-options {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: $standard-unit;
-        align-items: center;
-      }
-
-      .actions {
-        display: grid;
-        grid-column-gap: 16px;
-        grid-auto-flow: column;
-        place-items: center;
-      }
     }
   }
 }
