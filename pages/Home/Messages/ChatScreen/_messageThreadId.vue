@@ -87,12 +87,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import AppFeel from '@/components/global/Layout/AppFeel'
-import LoadingIcon from '@/components/global/LoadingIcon'
-import RippleButton from '@/components/global/RippleButton'
 import * as secrets from '@/environmentVariables'
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import MessageItem from '@/components/global/MessageItem.vue'
 import { useMessageService } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
@@ -101,7 +97,6 @@ export default {
   scrollToTop: false,
   name: 'MessageThreadId',
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
-  components: { MessageItem, RippleButton, LoadingIcon, AppFeel },
 
   asyncData({ from: prevURL }) {
     return { prevURL }

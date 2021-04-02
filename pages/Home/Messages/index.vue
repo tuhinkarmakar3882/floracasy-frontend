@@ -63,12 +63,10 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
-import LoadingIcon from '@/components/global/LoadingIcon'
 import { useMessageService } from '~/environmentVariables'
 
 export default {
   name: 'Messages',
-  components: { LoadingIcon },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
   layout: 'ResponsiveApp',
 

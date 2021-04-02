@@ -37,16 +37,12 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import TicketCard from '@/components/global/TicketCard'
-import LoadingIcon from '@/components/global/LoadingIcon'
 import endpoints from '@/api/endpoints'
 import { processLink } from '~/utils/utility'
 
 export default {
   name: 'Tickets',
-  components: { LoadingIcon, TicketCard, AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {

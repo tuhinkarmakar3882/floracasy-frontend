@@ -27,10 +27,7 @@
 </template>
 
 <script>
-import Icon404 from '@/components/global/Icons/Icon404'
-
 export default {
-  components: { Icon404 },
   layout: 'empty',
   props: {
     error: {

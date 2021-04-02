@@ -24,9 +24,22 @@ const touchEventsPlugin = {
 
 export default {
   ssr: true,
-  components: true,
+  components: [
+    '~/components',
+    '~/components/Accounts',
+    '~/components/Community',
+    '~/components/FollowScreen',
+    '~/components/GoogleAds',
+    '~/components/Home/Dashboard',
+    '~/components/Home/Notification',
+    '~/components/Icons',
+    '~/components/LandingPage',
+    '~/components/Layout',
+    '~/components/Tools',
+  ],
 
   server: {
+    // host: '0.0.0.0',
     port: 3001,
   },
   // serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
@@ -61,10 +74,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  modern: {
-    server: true,
-    client: true,
-  },
+  // modern: {
+  //   server: true,
+  //   client: true,
+  // },
 
   modules: [
     'nuxt-helmet',
@@ -108,14 +121,15 @@ export default {
   router: {},
 
   build: {
-    extractCSS: {
-      ignoreOrder: true,
-    },
+    // extractCSS: {
+    //   ignoreOrder: true,
+    // },
     splitChunks: {
       layouts: true,
       pages: true,
       commons: true,
     },
+    parallel: true,
 
     postcss: {
       plugins: {

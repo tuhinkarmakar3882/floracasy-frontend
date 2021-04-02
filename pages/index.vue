@@ -175,13 +175,13 @@
     </main>
 
     <main v-else class="desktop-view my-8 text-center py-8">
-      <LazyHeroContent class="segment" />
-      <LazyPromotionalBlogs />
-      <LazyCategoriesPreview class="segment" />
-      <LazyCommunityPreview class="segment text-center" />
-      <LazyEarnWithUs class="segment" />
-      <LazyHearTheExperiences v-if="showExperiences" class="segment" />
-      <LazyProZone v-if="usePremiumServices" class="segment" />
+      <HeroContent class="segment" />
+      <PromotionalBlogs />
+      <CategoriesPreview class="segment" />
+      <CommunityPreview class="segment text-center" />
+      <EarnWithUs class="segment" />
+      <HearTheExperiences v-if="showExperiences" class="segment" />
+      <ProZone v-if="usePremiumServices" class="segment" />
     </main>
   </div>
 </template>

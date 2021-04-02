@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { usePopularTopics } from '~/environmentVariables'
 
@@ -69,10 +68,6 @@ if (usePopularTopics) menuOptions.push(popularTopics)
 export default {
   name: 'HelpAndSupport',
   middleware: 'isAuthenticated',
-  components: {
-    CustomListView: () => import('@/components/global/Layout/CustomListView'),
-    AppFeel,
-  },
   data() {
     return {
       navigationRoutes,

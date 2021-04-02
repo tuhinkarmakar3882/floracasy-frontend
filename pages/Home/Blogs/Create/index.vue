@@ -27,12 +27,10 @@
 </template>
 
 <script>
-import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'BlogCreation',
-  components: { CustomListView },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
   data() {

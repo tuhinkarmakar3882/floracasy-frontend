@@ -212,12 +212,10 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'HowToWrite',
-  components: { AppFeel },
   // middleware: 'isAuthenticated',
   data() {
     return {

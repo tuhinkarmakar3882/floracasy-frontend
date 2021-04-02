@@ -139,17 +139,12 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
-import AppFeel from '@/components/global/Layout/AppFeel'
-import ClientOnly from 'vue-client-only'
-import LoadingIcon from '@/components/global/LoadingIcon'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import { mapGetters } from 'vuex'
-import RippleButton from '@/components/global/RippleButton'
 
 export default {
   name: 'BlogComments',
   middleware: 'isAuthenticated',
-  components: { RippleButton, LoadingIcon, AppFeel, ClientOnly },
 
   async asyncData({ $axios, params, from: prevURL }) {
     const blog = await $axios.$get(endpoints.blog.info, {

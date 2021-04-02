@@ -22,11 +22,8 @@
   </aside>
 </template>
 <script>
-import LoadingIcon from '@/components/global/LoadingIcon'
-
 export default {
   name: 'UserStatistics',
-  components: { LoadingIcon },
   props: {
     statisticsItem: {
       type: Object,

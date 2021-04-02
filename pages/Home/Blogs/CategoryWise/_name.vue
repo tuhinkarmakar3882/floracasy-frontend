@@ -23,11 +23,6 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'CategoryWise',
-  components: {
-    InfiniteScrollingBlogLists: () =>
-      import('@/components/global/Home/Dashboard/InfiniteScrollingBlogLists'),
-    AppFeel: () => import('@/components/global/Layout/AppFeel'),
-  },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {

@@ -43,16 +43,12 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
-import KeyPoint from '@/components/global/KeyPoint'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import PremiumCrownLogo from '~/components/global/Icons/PremiumCrownLogo'
 import { usePremiumServices } from '~/environmentVariables'
 
 export default {
   name: 'GoPremium',
   middleware: usePremiumServices ? 'isAuthenticated' : 'hidden',
-  components: { PremiumCrownLogo, KeyPoint, AppFeel },
 
   asyncData({ from: prevURL }) {
     return { prevURL }

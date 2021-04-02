@@ -32,13 +32,6 @@ import endpoints from '@/api/endpoints'
 
 export default {
   name: 'PostDetails',
-  components: {
-    CommunityPost: () => import('@/components/global/Community/CommunityPost'),
-    LoadingIcon: () => import('@/components/global/LoadingIcon'),
-    AppFeel: () => import('@/components/global/Layout/AppFeel'),
-    CommunityPostComments: () =>
-      import('@/components/global/Community/CommunityPostComments'),
-  },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: prevURL }) {

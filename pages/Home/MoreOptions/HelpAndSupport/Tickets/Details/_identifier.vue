@@ -132,7 +132,6 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import { mapGetters } from 'vuex'
@@ -140,7 +139,6 @@ import { processLink, showUITip } from '~/utils/utility'
 
 export default {
   name: 'TicketDetail',
-  components: { AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {

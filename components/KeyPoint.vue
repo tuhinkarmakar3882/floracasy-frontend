@@ -14,7 +14,6 @@
 <script>
 export default {
   name: 'KeyPoint',
-  components: {},
   props: {
     tickColor: {
       type: String,

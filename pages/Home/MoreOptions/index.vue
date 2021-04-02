@@ -35,12 +35,10 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import CustomListView from '@/components/global/Layout/CustomListView'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'MoreOptions',
-  components: { CustomListView },
   middleware: 'isAuthenticated',
   layout: 'ResponsiveApp',
   data() {

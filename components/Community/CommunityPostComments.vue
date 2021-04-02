@@ -105,11 +105,9 @@ import {
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import RippleButton from '~/components/global/RippleButton'
 
 export default {
   name: 'CommunityPostComments',
-  components: { RippleButton },
   props: {
     post: {
       type: Object,

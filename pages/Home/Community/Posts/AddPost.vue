@@ -163,8 +163,6 @@
 import { mapGetters } from 'vuex'
 import imageCompression from 'browser-image-compression'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import AppFeel from '~/components/global/Layout/AppFeel'
-import LoadingIcon from '~/components/global/LoadingIcon'
 import endpoints from '~/api/endpoints'
 import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { useMoodOptions } from '~/environmentVariables'
@@ -181,7 +179,6 @@ const commonStyles = {
 
 export default {
   name: 'AddPost',
-  components: { LoadingIcon, AppFeel },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {

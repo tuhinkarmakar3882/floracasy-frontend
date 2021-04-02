@@ -69,14 +69,11 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import RippleButton from '~/components/global/RippleButton'
 import endpoints from '~/api/endpoints'
 
 export default {
   name: 'Feedback',
-  components: { RippleButton, AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {

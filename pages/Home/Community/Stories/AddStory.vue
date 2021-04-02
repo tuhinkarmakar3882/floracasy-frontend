@@ -116,8 +116,8 @@
             <img
               v-show="photo.isPhotoTaken"
               :src="photo.source"
-              alt="image-preview"
               :style="{ filter: photo.currentFilter.filter }"
+              alt="image-preview"
             />
           </section>
 
@@ -142,10 +142,10 @@
               >
                 <img
                   :style="{ filter: option.filter }"
-                  height="56"
-                  width="56"
                   alt="Sample Image"
+                  height="56"
                   src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=64&q=80"
+                  width="56"
                 />
                 <p class="mt-2">{{ option.name }}</p>
               </section>
@@ -283,10 +283,6 @@ import imageCompression from 'browser-image-compression'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
-import AudioPlayer from '~/components/global/Tools/AudioPlayer'
-import AppFeel from '~/components/global/Layout/AppFeel'
-import FallBackLoader from '~/components/global/Accounts/FallBackLoader'
-import LoadingError from '~/components/global/Accounts/LoadingError'
 
 const commonStyles = {
   minHeight: '100px',
@@ -300,13 +296,7 @@ const commonStyles = {
 
 export default {
   name: 'AddStory',
-  components: {
-    LoadingError,
-    FallBackLoader,
-    AppFeel,
-    AudioPlayer,
-  },
-  // middleware: 'isAuthenticated',
+  middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -575,6 +565,7 @@ export default {
   },
 
   beforeDestroy() {
+    confirm()
     this.audio.stream && this.destroySetup(this.audio.stream)
     this.photo.stream && this.destroySetup(this.photo.stream)
   },
@@ -949,9 +940,7 @@ export default {
       background: $card-background;
       object-fit: cover;
       border-radius: $nano-unit;
-    }
-
-    img {
+      transform: scaleX(-1);
       box-shadow: $default-box-shadow;
     }
 
@@ -988,10 +977,9 @@ export default {
         box-shadow: $up-only-box-shadow;
         left: 4px;
         overflow: scroll;
-        width: 100%;
+        right: 4px;
         z-index: 1;
         display: flex;
-        justify-content: center;
         gap: 8px;
 
         &::-webkit-scrollbar {

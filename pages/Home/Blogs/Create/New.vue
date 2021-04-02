@@ -451,7 +451,6 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import sanitizeHtml from 'sanitize-html'
@@ -499,7 +498,6 @@ export default {
   name: 'CreateNewBlog',
   middleware: 'isAuthenticated',
   components: {
-    AppFeel,
     EditorContent,
     EditorMenuBar,
   },

@@ -51,11 +51,8 @@
 </template>
 
 <script>
-import NotificationBadge from '@/components/global/NotificationBadge'
-
 export default {
   name: 'AppFeel',
-  components: { NotificationBadge },
   props: {
     dynamicBack: {
       type: Boolean,

@@ -11,12 +11,10 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 
 export default {
   name: 'Drafts',
-  components: { AppFeel },
   middleware: 'isAuthenticated',
   data() {
     return {

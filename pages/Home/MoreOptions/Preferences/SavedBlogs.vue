@@ -51,19 +51,12 @@
 </template>
 
 <script>
-import AppFeel from '@/components/global/Layout/AppFeel'
-import LoadingIcon from '@/components/global/LoadingIcon'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import { processLink } from '~/utils/utility'
 
 export default {
   name: 'SavedBlogs',
-  components: {
-    LoadingIcon,
-    BlogPost: () => import('@/components/global/BlogPost'),
-    AppFeel,
-  },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
