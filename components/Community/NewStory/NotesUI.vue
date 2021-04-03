@@ -1,57 +1,39 @@
 <template>
   <div class="story-board-notes-ui">
-    <h6 class="px-2 text-center mb-0">Share your thoughts</h6>
-    <hr class="reversed-faded-divider" />
-    <small class="px-4 text-right pb-4 muted" style="display: block">
-      {{ contentSize }} / 500
-    </small>
+    <header>
+      <i v-ripple class="mdi mdi-format-color-text" @click="changeFont" />
+      <i v-ripple class="mdi mdi-palette" @click="changeBackground" />
+    </header>
 
-    <section class="main px-2">
-      <div
-        id="text-body"
-        :style="[
-          customStyle && {
-            background: customStyle.background,
-            color: customStyle.color,
-            display: 'grid',
-            placeItems: 'center',
-          },
-        ]"
-        class="px-4 py-4"
+    <main>
+      <label for="text-box">{{ textData.trim().length }} / 500</label>
+      <textarea
+        id="text-box"
+        v-model="textData"
+        :style="[customStyle, customFontFamily]"
+        class="text-box"
         contenteditable="true"
-        @keyup="updateText"
+        placeholder="Tap here to Type"
       />
-    </section>
+    </main>
 
-    <section class="background-selection mt-4">
-      <p class="mb-8 px-2">Try with a background</p>
-      <div class="choices">
-        <section
-          v-ripple
-          class="option mx-1 mdi mdi-cancel mdi-24px"
-          style="background: transparent; display: grid; place-items: center"
-          @click="customStyle = null"
-        />
-        <section
-          v-for="(style, index) in customStyleOptions"
-          :key="index"
-          v-ripple
-          :style="{ background: style.background }"
-          class="option mx-1"
-          @click="customStyle = style"
-        />
-      </div>
-    </section>
+    <transition name="scale-down">
+      <aside v-if="isSending" class="loader">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+      </aside>
+    </transition>
 
-    <button
-      v-ripple
-      :class="canSend ? 'primary-btn' : 'disabled-btn'"
-      :disabled="!canSend || isSending"
-      class="floating-action-button"
-      @click="uploadTextStory"
-    >
-      <span class="mdi mdi-send mdi-24px" />
-    </button>
+    <footer>
+      <button
+        v-ripple
+        :class="canSend ? 'primary-btn' : 'disabled-btn'"
+        :disabled="!canSend || isSending"
+        class="primary-btn"
+        @click="uploadTextStory"
+      >
+        Send <i class="mdi mdi-send ml-2" />
+      </button>
+    </footer>
   </div>
 </template>
 
@@ -60,106 +42,132 @@ import endpoints from '~/api/endpoints'
 import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
-const commonStyles = {
-  minHeight: '100px',
-  borderRadius: '0',
-  padding: '12px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  color: 'black',
-}
 export default {
   name: 'NotesUI',
+
   data() {
     return {
-      customStyle: null,
-      customStyleOptions: [
+      customFontFamily: null,
+      fonts: [
+        { fontFamily: "'Raleway', sans-serif" },
+        { fontFamily: "'Prata', serif" },
+        { fontFamily: 'cursive' },
         {
-          ...commonStyles,
+          fontFamily:
+            "'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'Roboto Mono', monospace",
+        },
+      ],
+      currentPosForFonts: 0,
+
+      customStyle: null,
+      background: [
+        {
+          color: 'white',
+          background: 'none',
+        },
+        {
+          color: 'black',
           background: 'linear-gradient(to right, #D9A7C7, #FFFCDC)',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #1C92D2, #F2FCF3)',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #36D1DC, #5B86E5)',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #3A1C71, #D76D77, #FFAF7B)',
           color: 'white',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #007991, #78FFD6)',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #C33764, #1D2671)',
           color: 'white',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #4568DC, #B06AB3)',
           color: 'white',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #E8CBC0, #636FA4)',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #C0C0AA, #1CEFFF)',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #3494E6, #EC6EAD)',
           color: 'white',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #3C6A86, #89253E)',
           color: 'white',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #BE93C5, #7BC6CC)',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #2C3E50, #4CA1AF)',
           color: 'white',
         },
         {
-          ...commonStyles,
           background: 'linear-gradient(to right, #E96443, #904E95)',
           color: 'white',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #FF5F6D, #FFC371)',
         },
         {
-          ...commonStyles,
+          color: 'black',
           background: 'linear-gradient(to right, #BA5370, #F4E2D8)',
         },
       ],
-      body: null,
-      canSend: false,
+      currentPosForBackground: 0,
+
+      textData: '',
       isSending: false,
       contentSize: 0,
     }
   },
-  methods: {
-    updateText() {
-      this.body = document.getElementById('text-body').textContent
-      const bodyLength = this.body?.trim().length
-      this.canSend = bodyLength >= 5 && bodyLength < 501
-      this.contentSize = bodyLength ?? 0
+
+  computed: {
+    canSend() {
+      return this.textData.length >= 5 && this.textData.length < 501
     },
+  },
+
+  mounted() {
+    this.customStyle = this.background[this.currentPosForBackground]
+    this.customFontFamily = this.fonts[this.currentPosForFonts]
+  },
+
+  methods: {
+    changeBackground() {
+      this.currentPosForBackground++
+
+      if (this.currentPosForBackground >= this.background.length)
+        this.currentPosForBackground = 0
+
+      this.customStyle = this.background[this.currentPosForBackground]
+    },
+
+    changeFont() {
+      this.currentPosForFonts++
+
+      if (this.currentPosForFonts >= this.fonts.length)
+        this.currentPosForFonts = 0
+
+      this.customFontFamily = this.fonts[this.currentPosForFonts]
+    },
+
     async uploadTextStory() {
       if (this.canSend) {
         this.isSending = true
@@ -167,8 +175,11 @@ export default {
         try {
           await this.$axios.$post(endpoints.community_service.stories.index, {
             storyType: 'text',
-            body: this.body,
+            body: this.textData,
             style: this.customStyle,
+            metaData: {
+              fontFamily: this.customFontFamily,
+            },
           })
 
           await showUITip(this.$store, 'Story Posted!', 'success')
@@ -190,49 +201,109 @@ export default {
 @import 'assets/all-variables';
 
 .story-board-notes-ui {
-  .background-selection {
-    p {
-      position: relative;
+  position: relative;
 
-      &::after {
-        content: '';
-        position: absolute;
-        height: $single-unit;
-        width: 36px;
-        background: $primary-light;
-        bottom: -8px;
-        left: 8px;
-      }
-    }
+  i {
+    filter: drop-shadow($default-box-shadow);
+  }
 
-    .choices {
-      display: flex;
-      overflow: auto;
-      max-width: 100%;
+  button {
+    min-width: auto;
+  }
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+  &::before {
+    content: '';
+    background: linear-gradient(to bottom, black, transparent);
+    position: absolute;
+    width: 100%;
+    height: 2 * $xx-large-unit;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1;
+  }
 
-      .option {
-        border-radius: 12px;
-        min-height: 2 * $x-large-unit;
-        height: 2 * $x-large-unit;
-        min-width: 2 * $x-large-unit;
-        width: 2 * $x-large-unit;
-      }
+  header {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    top: $zero-unit;
+    z-index: 1;
+
+    i {
+      height: 2 * $xx-large-unit;
+      width: 2 * $xx-large-unit;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
     }
   }
 
-  #text-body {
-    border: 1px solid #3a3a3a;
-    border-radius: 0 $standard-unit;
-    min-height: 200px;
-    outline: 0 none;
+  main {
+    display: grid;
+    place-items: center;
+    height: 100vh;
 
-    &:focus {
-      border: 1px solid $secondary;
+    .text-box {
+      color: white;
+      padding: 64px 20px 64px;
+      overflow: scroll;
+      text-align: center;
+      height: 100vh;
+      width: 100%;
+      outline: 0 none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: $segment-background;
+      line-height: 1.75;
+      letter-spacing: 1px;
+      border: none !important;
+      resize: none;
     }
+
+    label {
+      position: fixed;
+      background: rgba($nav-bar-bg, 0.7);
+      box-shadow: $default-box-shadow;
+      bottom: 2 * $xxx-large-unit;
+      left: $zero-unit;
+      display: flex;
+      height: 2 * $large-unit;
+      align-items: center;
+      width: 5 * $large-unit;
+      justify-content: center;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+      font-family: $Nunito-Sans;
+      color: white;
+    }
+  }
+
+  footer {
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed !important;
+      bottom: 2 * $xxx-large-unit;
+      right: $zero-unit;
+      height: 2 * $large-unit;
+      width: 5 * $large-unit;
+      border-radius: 50px 0 0 50px;
+    }
+  }
+
+  aside.loader {
+    position: fixed;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1;
+    background: rgba($black, 0.7);
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
   }
 }
 </style>
