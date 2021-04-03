@@ -703,6 +703,18 @@ pre {
 
       * {
         font-family: $Nunito-Sans;
+        filter: drop-shadow(0 0 $single-unit rgba($black, 0.5));
+      }
+
+      &::after {
+        position: absolute;
+        content: '';
+        background: linear-gradient(to top, rgba($black, 0.3), transparent);
+        width: 100%;
+        height: 2 * $xxx-large-unit;
+        bottom: $zero-unit;
+        left: $zero-unit;
+        z-index: -1;
       }
     }
 
