@@ -115,8 +115,21 @@
           {{ item.body }}
         </div>
 
-        <div v-if="item.storyType === 'photo'">
-          <img :src="item.photo" alt="story-photo" />
+        <div v-if="item.storyType === 'photo'" style="z-index: -1">
+          <img
+            :src="item.photo"
+            alt="story-photo"
+            :style="[
+              {
+                filter: item.metaData.filter.filter,
+              },
+              item.metaData.fullScreen && {
+                height: '100vh',
+                objectFit: 'cover',
+              },
+              item.metaData.mirror && { transform: 'scaleX(-1)' },
+            ]"
+          />
         </div>
 
         <div
