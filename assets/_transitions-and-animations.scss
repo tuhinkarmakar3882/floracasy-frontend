@@ -45,11 +45,11 @@ $animation-duration: 300ms;
 }
 
 .slide-left-enter, .slide-left-leave-active {
-  transform: translateX(100px);
+  transform: translateX(-100px);
 }
 
 .slide-right-enter, .slide-right-leave-active {
-  transform: translateX(-100px);
+  transform: translateX(100px);
 }
 
 .slide-up-enter, .slide-up-leave-active {

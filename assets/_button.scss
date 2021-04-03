@@ -140,6 +140,18 @@ button {
   }
 }
 
+.white-outlined-btn {
+  background-color: transparent;
+  color: darken($white, $darken-percentage);
+  border: $single-unit solid darken($white, $darken-percentage);
+
+  &:focus, &:hover, &:active {
+    background-color: rgba($white, .1);
+    border-color: lighten($white, $lighten-percentage);
+    color: lighten($white, $lighten-percentage);
+  }
+}
+
 .primary-btn {
   color: $white;
   background-color: darken($primary, $darken-percentage);
