@@ -25,17 +25,18 @@ const touchEventsPlugin = {
 export default {
   ssr: true,
   components: [
-    '~/components',
-    '~/components/Accounts',
-    '~/components/Community',
-    '~/components/FollowScreen',
-    '~/components/GoogleAds',
-    '~/components/Home/Dashboard',
-    '~/components/Home/Notification',
-    '~/components/Icons',
-    '~/components/LandingPage',
-    '~/components/Layout',
-    '~/components/Tools',
+    { path: '~/components' },
+    { path: '~/components/Accounts' },
+    { path: '~/components/Community' },
+    { path: '~/components/Community/NewStory', prefix: 'StoryUpload' },
+    { path: '~/components/FollowScreen' },
+    { path: '~/components/GoogleAds' },
+    { path: '~/components/Home/Dashboard' },
+    { path: '~/components/Home/Notification' },
+    { path: '~/components/Icons' },
+    { path: '~/components/LandingPage' },
+    { path: '~/components/Layout' },
+    { path: '~/components/Tools' },
   ],
 
   server: {
@@ -74,10 +75,10 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  // modern: {
-  //   server: true,
-  //   client: true,
-  // },
+  modern: {
+    server: true,
+    client: true,
+  },
 
   modules: [
     'nuxt-helmet',
@@ -121,15 +122,15 @@ export default {
   router: {},
 
   build: {
-    // extractCSS: {
-    //   ignoreOrder: true,
-    // },
+    extractCSS: {
+      ignoreOrder: true,
+    },
+
     splitChunks: {
       layouts: true,
       pages: true,
       commons: true,
     },
-    parallel: true,
 
     postcss: {
       plugins: {
