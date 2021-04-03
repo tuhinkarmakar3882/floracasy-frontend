@@ -122,7 +122,7 @@
           </section>
 
           <!--  Overlay controls  -->
-          <transition name="slide-left">
+          <transition name="slide-right">
             <aside v-if="!photo.showFilters" class="overlay-controls">
               <button v-ripple @click="photo.showFilters = !photo.showFilters">
                 <i class="mdi mdi-palette" />
