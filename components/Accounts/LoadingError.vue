@@ -8,9 +8,11 @@
 
     <p>Try:</p>
     <ul class="mb-8 pb-4">
-      <li>Try Refreshing</li>
-      <li>Checking the network cables, modem and router</li>
-      <li>Reconnecting to Wi-Fi</li>
+      <slot name="remedy-option">
+        <li>Try Refreshing</li>
+        <li>Checking the network cables, modem and router</li>
+        <li>Reconnecting to Wi-Fi</li>
+      </slot>
     </ul>
 
     <p>
