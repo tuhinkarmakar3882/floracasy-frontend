@@ -175,7 +175,7 @@ export default {
         try {
           await this.$axios.$post(endpoints.community_service.stories.index, {
             storyType: 'text',
-            body: `<pre>${this.textData}</pre>`,
+            body: `${this.textData}`,
             style: this.customStyle,
             metaData: {
               fontFamily: this.customFontFamily,
