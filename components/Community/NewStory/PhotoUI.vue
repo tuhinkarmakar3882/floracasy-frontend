@@ -33,31 +33,39 @@
         </template>
       </LoadingError>
 
-      <ProgressRing v-if="showProgress" :percentage="compressionProgress" />
+      <transition name="scale-down">
+        <ProgressRing
+          v-if="showProgress"
+          :percentage="compressionProgress || 0"
+          class="overlay-progress"
+        />
+      </transition>
 
-      <img
-        v-show="isPhotoTaken"
-        :src="source"
-        :style="[
-          { filter: currentFilter.filter },
-          !fullScreen && { height: 'auto' },
-          mirror && { transform: 'scaleX(-1)' },
-        ]"
-        alt="image-preview"
-      />
+      <section v-show="systemReady">
+        <img
+          v-show="isPhotoTaken"
+          :src="source"
+          :style="[
+            { filter: currentFilter.filter },
+            !fullScreen && { height: 'auto' },
+            mirror && { transform: 'scaleX(-1)' },
+          ]"
+          alt="image-preview"
+        />
 
-      <video
-        v-show="!isPhotoTaken"
-        ref="videoPreview"
-        :style="[
-          {
-            filter: currentFilter.filter,
-          },
-          !fullScreen && { height: 'auto' },
-          mirror && { transform: 'scaleX(-1)' },
-        ]"
-        autoplay
-      />
+        <video
+          v-show="!isPhotoTaken"
+          ref="videoPreview"
+          :style="[
+            {
+              filter: currentFilter.filter,
+            },
+            !fullScreen && { height: 'auto' },
+            mirror && { transform: 'scaleX(-1)' },
+          ]"
+          autoplay
+        />
+      </section>
     </main>
 
     <aside v-show="false">
@@ -108,15 +116,13 @@
         </section>
       </transition>
 
-      <aside>
-        <input
-          v-show="false"
-          ref="imageUpload"
-          accept="image/jpeg, image/png"
-          type="file"
-          @change="preprocessUploadedImage"
-        />
-      </aside>
+      <input
+        v-show="false"
+        ref="imageUpload"
+        accept="image/jpeg, image/png"
+        type="file"
+        @input="preprocessUploadedImage"
+      />
 
       <section :style="showFilters && { height: ' 328px' }" class="backdrop" />
     </footer>
@@ -421,6 +427,7 @@ export default {
       this.isPhotoTaken = false
       this.output = undefined
       this.mirror = true
+      this.$refs.imageUpload.value = ''
     },
   },
 }
@@ -579,6 +586,19 @@ export default {
     height: calc(100vh - 36px);
     place-items: center;
 
+    .overlay-progress {
+      position: fixed;
+      background: rgba(0, 0, 0, 0.8);
+      height: 100%;
+      width: 100%;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+      * {
+        transition: all 10ms linear;
+      }
+    }
+
     video,
     img {
       height: 100vh;
@@ -662,18 +682,6 @@ export default {
           }
         }
       }
-    }
-
-    .compression-progress-bar {
-      height: $nano-unit;
-      background: $active-gradient;
-      position: absolute;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      transition: all 150ms ease-in-out;
-      border-radius: 0 0 16px 16px;
-      box-shadow: $down-only-box-shadow;
     }
   }
 }
