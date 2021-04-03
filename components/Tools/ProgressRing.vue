@@ -1,7 +1,7 @@
 <template>
   <div class="progress-ring-component">
     <section class="ring">
-      <p>
+      <p v-if="showPercentageText">
         <strong>{{ percentage }}%</strong>
       </p>
       <svg
@@ -23,6 +23,10 @@ export default {
     percentage: {
       type: Number,
       required: true,
+    },
+    showPercentageText: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

@@ -37,6 +37,7 @@
 
           <aside class="bottom-part mt-6">
             <ProgressRing
+              show-percentage-text
               :percentage="
                 balanceInfo.earning > 100 ? 100 : balanceInfo.earning
               "
