@@ -111,14 +111,17 @@
         :style="item.style"
         class="scroll-list"
       >
-        <div v-if="item.storyType === 'text'" class="px-4 text-story">
+        <div
+          v-if="item.storyType === 'text'"
+          :style="item.metaData.fontFamily"
+          class="px-4 text-story"
+        >
           {{ item.body }}
         </div>
 
         <div v-if="item.storyType === 'photo'" style="z-index: -1">
           <img
             :src="item.photo"
-            alt="story-photo"
             :style="[
               {
                 filter: item.metaData.filter.filter,
@@ -129,6 +132,7 @@
               },
               item.metaData.mirror && { transform: 'scaleX(-1)' },
             ]"
+            alt="story-photo"
           />
         </div>
 

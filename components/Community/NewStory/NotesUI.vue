@@ -6,7 +6,7 @@
     </header>
 
     <main>
-      <label for="text-box">{{ textData.trim().length }} / 500</label>
+      <label for="text-box">{{ textData.length }} / 500</label>
       <textarea
         id="text-box"
         v-model="textData"
