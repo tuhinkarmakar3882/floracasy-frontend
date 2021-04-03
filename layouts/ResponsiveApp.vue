@@ -81,7 +81,7 @@
           </section>
         </div>
       </footer>
-      <transition name="slide-right">
+      <transition name="slide-left">
         <aside
           v-if="showFragment"
           class="fragment"

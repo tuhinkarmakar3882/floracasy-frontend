@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide-left">
+  <transition name="slide-right">
     <div v-if="!hideBlog" class="blog-post-component">
       <section class="content">
         <p class="px-4 mb-2 top-line">
@@ -139,7 +139,7 @@
         </div>
       </section>
 
-      <transition name="slide-left">
+      <transition name="slide-right">
         <ShareFallbackForDesktop
           v-if="useShareFallBack"
           :handle-close="hideFallback"

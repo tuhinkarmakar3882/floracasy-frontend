@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide-left">
+  <transition name="slide-right">
     <div v-if="!hidePost" class="community-post-component">
       <section class="post-header px-4 mb-2">
         <img
@@ -145,7 +145,7 @@
 
       <hr class="reversed-faded-divider mt-0 mb-2" />
 
-      <transition name="slide-left">
+      <transition name="slide-right">
         <ShareFallbackForDesktop
           v-if="useShareFallBack"
           :handle-close="hideFallback"
