@@ -1,17 +1,15 @@
 <template>
   <div class="story-board-photo-ui">
     <header v-if="systemReady">
+      <div v-ripple @click="showFilters = !showFilters">
+        <EffectsIcon :active="showFilters" class="effects-toggle-button" />
+      </div>
+
       <i
         v-ripple
         :class="fullScreen ? 'vibrant mdi-fullscreen-exit' : 'mdi-fullscreen'"
         class="mdi mdi-24px"
         @click="fullScreen = !fullScreen"
-      />
-      <i
-        v-ripple
-        :class="showFilters && 'vibrant'"
-        class="mdi mdi-palette mdi-24px"
-        @click="showFilters = !showFilters"
       />
     </header>
 
@@ -111,7 +109,7 @@
             class="white-outlined-btn"
             @click="showMoreOptions = !showMoreOptions"
           >
-            <i class="mdi mdi-camera-rear mdi-24px" />
+            <CameraFlipIcon class="camera-flip-icon" />
           </button>
         </section>
       </transition>
@@ -146,6 +144,12 @@
           />
           <p class="mt-2">{{ option.name }}</p>
         </section>
+      </aside>
+    </transition>
+
+    <transition name="scale-down">
+      <aside v-if="sending" class="loader">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
       </aside>
     </transition>
   </div>
@@ -257,6 +261,7 @@ export default {
         filter: 'none',
       },
       showFilters: false,
+      sending: false,
     }
   },
 
@@ -352,12 +357,12 @@ export default {
 
       canvas.getContext('2d').drawImage(video, 0, 0)
 
-      await showUITip(this.$store, 'Optimizing Image For Faster Upload Speeds')
-
       canvas.toBlob(this.compressImage, 'image/webp', 0.7)
     },
 
     async compressImage(imageFile, msg) {
+      await showUITip(this.$store, 'Optimizing Image For Faster Upload Speeds')
+
       const useWebWorker = true
       this.showProgress = true
       const options = {
@@ -366,6 +371,7 @@ export default {
         useWebWorker,
         onProgress: this.updateProgressBar,
       }
+
       this.output = await imageCompression(imageFile, options)
 
       this.source = URL.createObjectURL(imageFile)
@@ -374,12 +380,11 @@ export default {
       this.compressionProgress = null
       this.showProgress = false
 
-      await showUITip(this.$store, msg || 'Photo Captured!', 'success')
+      await showUITip(this.$store, msg || 'Photo Optimized!', 'success')
     },
 
     async preprocessUploadedImage(event) {
       const file = event.target.files[0]
-      await showUITip(this.$store, 'Optimizing Image For Faster Upload Speeds')
       await this.compressImage(file)
       this.fullScreen = false
       this.mirror = false
@@ -390,6 +395,7 @@ export default {
     },
 
     async uploadPhotoStory() {
+      this.sending = true
       await showUITip(
         this.$store,
         'Uploading Story, Please Wait',
@@ -420,6 +426,8 @@ export default {
         await this.$router.replace(navigationRoutes.Home.Community.index)
       } catch (e) {
         await showUITip(this.$store, 'Error Posting story', 'error')
+      } finally {
+        this.sending = false
       }
     },
 
@@ -459,22 +467,24 @@ export default {
   }
 
   header {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+
     i {
-      position: absolute !important;
-      top: 0;
       height: 2 * $xx-large-unit;
       width: 2 * $xx-large-unit;
       display: grid;
       place-items: center;
-      z-index: 1;
+    }
 
-      &:nth-child(1) {
-        right: 0;
-      }
-
-      &:nth-child(2) {
-        right: 2 * $xx-large-unit;
-      }
+    .effects-toggle-button {
+      height: 2 * $xx-large-unit;
+      width: 2 * $xx-large-unit;
+      padding: $medium-unit;
     }
   }
 
@@ -594,6 +604,7 @@ export default {
       display: grid;
       place-items: center;
       z-index: 1;
+
       * {
         transition: all 10ms linear;
       }
@@ -684,5 +695,24 @@ export default {
       }
     }
   }
+
+  aside.loader {
+    position: fixed;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1;
+    background: rgba($black, 0.7);
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+}
+
+$size: 26px;
+.camera-flip-icon {
+  width: $size;
+  height: $size;
+  fill: $white;
 }
 </style>
