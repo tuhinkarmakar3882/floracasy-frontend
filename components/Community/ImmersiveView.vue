@@ -112,9 +112,7 @@
         class="scroll-list"
       >
         <div v-if="item.storyType === 'text'" class="px-4 text-story">
-          <pre :style="item.metaData.fontFamily">{{
-            item.body.substr(5, item.body.length - 11)
-          }}</pre>
+          <pre :style="item.metaData.fontFamily">{{ item.body.content }}</pre>
         </div>
 
         <div v-if="item.storyType === 'photo'" style="z-index: -1">
