@@ -175,7 +175,7 @@ export default {
         try {
           await this.$axios.$post(endpoints.community_service.stories.index, {
             storyType: 'text',
-            body: this.textData,
+            body: `<pre>${this.textData}</pre>`,
             style: this.customStyle,
             metaData: {
               fontFamily: this.customFontFamily,
@@ -203,14 +203,6 @@ export default {
 .story-board-notes-ui {
   position: relative;
 
-  i {
-    filter: drop-shadow($default-box-shadow);
-  }
-
-  button {
-    min-width: auto;
-  }
-
   &::before {
     content: '';
     background: linear-gradient(to bottom, black, transparent);
@@ -220,6 +212,14 @@ export default {
     top: $zero-unit;
     left: $zero-unit;
     z-index: 1;
+  }
+
+  i {
+    filter: drop-shadow($default-box-shadow);
+  }
+
+  button {
+    min-width: auto;
   }
 
   header {
