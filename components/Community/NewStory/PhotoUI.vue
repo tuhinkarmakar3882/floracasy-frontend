@@ -1,10 +1,10 @@
 <template>
   <div class="story-board-photo-ui">
-    <header>
+    <header v-if="systemReady">
       <i
         v-ripple
-        :class="fullScreen && 'vibrant'"
-        class="mdi mdi-fullscreen mdi-24px"
+        :class="fullScreen ? 'vibrant mdi-fullscreen-exit' : 'mdi-fullscreen'"
+        class="mdi mdi-24px"
         @click="fullScreen = !fullScreen"
       />
       <i
@@ -15,59 +15,56 @@
       />
     </header>
 
-    <main class="camera-recording-container">
-      <canvas v-show="false" ref="canvasPreview" />
-      <!--  Progress Bar  -->
-      <!--      <header>-->
-      <!--        <div-->
-      <!--          v-show="showProgress"-->
-      <!--          :style="{-->
-      <!--            width: compressionProgress ? `${compressionProgress}%` : 0,-->
-      <!--          }"-->
-      <!--          class="compression-progress-bar"-->
-      <!--        />-->
-      <!--      </header>-->
-
+    <main class="heads-up-display">
       <FallBackLoader v-if="isLoading" class="my-8">
         <template v-slot:fallback>
           <p class="text-center">Connecting to Camera</p>
         </template>
       </FallBackLoader>
 
-      <LoadingError v-else-if="loadingError" error-section="Camera" />
+      <LoadingError
+        v-else-if="loadingError"
+        class="py-8 px-4"
+        error-section="Camera"
+      >
+        <template v-slot:remedy-option>
+          <li>Make sure camera is connected</li>
+          <li>Make sure that you have enabled access to camera</li>
+        </template>
+      </LoadingError>
 
-      <!--  Video  -->
-      <section v-show="!(isLoading && loadingError)">
-        <video
-          v-show="!isLoading && !isPhotoTaken"
-          ref="videoPreview"
-          :style="[
-            {
-              filter: currentFilter.filter,
-            },
-            !fullScreen && { height: 'auto' },
-            mirror && { transform: 'scaleX(-1)' },
-          ]"
-          autoplay
-        />
+      <ProgressRing v-if="showProgress" :percentage="compressionProgress" />
 
-        <!-- Preview Image  -->
-        <img
-          v-show="isPhotoTaken"
-          :src="source"
-          :style="[
-            {
-              filter: currentFilter.filter,
-            },
-            !fullScreen && { height: 'auto' },
-            mirror && { transform: 'scaleX(-1)' },
-          ]"
-          alt="image-preview"
-        />
-      </section>
+      <img
+        v-show="isPhotoTaken"
+        :src="source"
+        :style="[
+          { filter: currentFilter.filter },
+          !fullScreen && { height: 'auto' },
+          mirror && { transform: 'scaleX(-1)' },
+        ]"
+        alt="image-preview"
+      />
+
+      <video
+        v-show="!isPhotoTaken"
+        ref="videoPreview"
+        :style="[
+          {
+            filter: currentFilter.filter,
+          },
+          !fullScreen && { height: 'auto' },
+          mirror && { transform: 'scaleX(-1)' },
+        ]"
+        autoplay
+      />
     </main>
 
-    <footer :style="showFilters && { bottom: '164px' }">
+    <aside v-show="false">
+      <canvas ref="canvasPreview" />
+    </aside>
+
+    <footer v-if="systemReady" :style="showFilters && { bottom: '164px' }">
       <transition v-if="isPhotoTaken" name="slide-left">
         <section class="actions preview-steps">
           <button v-ripple class="disabled-btn mx-4" @click="recapture">
@@ -125,7 +122,7 @@
     </footer>
 
     <transition name="slide-up">
-      <aside v-if="showFilters" class="effects">
+      <aside v-if="showFilters && systemReady" class="effects">
         <section
           v-for="(option, index) in availableFilters"
           :key="`Filter-${index}`"
@@ -257,6 +254,12 @@ export default {
     }
   },
 
+  computed: {
+    systemReady() {
+      return !this.isLoading && !this.loadingError
+    },
+  },
+
   async mounted() {
     this.stream && this.destroySetup(this.stream)
 
@@ -269,7 +272,13 @@ export default {
     this.currentDevice = this.availableDevices[0]
     this.aspectRatio = this.availableRatios[0]
 
-    await this.prepareCameraRecordingInitialSetup()
+    try {
+      await this.prepareCameraRecordingInitialSetup()
+    } catch (e) {
+      this.loadingError = true
+    } finally {
+      this.isLoading = false
+    }
   },
 
   beforeDestroy() {
@@ -298,8 +307,8 @@ export default {
       this.stream = await navigator.mediaDevices.getUserMedia(constraints)
       this.mediaRecorder = new MediaRecorder(this.stream)
       this.mediaRecorder.ondataavailable = this.handleDataAvailable
-      this.$refs.videoPreview.srcObject = this.stream
       this.isLoading = false
+      this.$refs.videoPreview.srcObject = this.stream
     },
 
     destroySetup(stream) {
@@ -564,7 +573,7 @@ export default {
     }
   }
 
-  main.camera-recording-container {
+  main.heads-up-display {
     position: relative;
     display: grid;
     height: calc(100vh - 36px);
