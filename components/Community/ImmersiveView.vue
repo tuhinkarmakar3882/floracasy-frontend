@@ -111,12 +111,10 @@
         :style="item.style"
         class="scroll-list"
       >
-        <div
-          v-if="item.storyType === 'text'"
-          :style="item.metaData.fontFamily"
-          class="px-4 text-story"
-        >
-          {{ item.body }}
+        <div v-if="item.storyType === 'text'" class="px-4 text-story">
+          <pre :style="item.metaData.fontFamily">{{
+            item.body.substr(5, item.body.length - 11)
+          }}</pre>
         </div>
 
         <div v-if="item.storyType === 'photo'" style="z-index: -1">
@@ -520,6 +518,13 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
+pre {
+  color: unset;
+  background: transparent;
+  padding: unset;
+  margin: unset;
+}
 
 .immersive-view-component {
   position: fixed;
