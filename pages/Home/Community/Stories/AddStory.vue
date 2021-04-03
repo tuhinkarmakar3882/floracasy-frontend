@@ -1,5 +1,7 @@
 <template>
   <div class="add-new-story-page">
+    <NotificationBadge />
+
     <header>
       <i v-ripple class="mdi mdi-arrow-left mdi-24px white" @click="goBack()" />
     </header>
