@@ -15,7 +15,7 @@
         @click="fullScreen = !fullScreen"
       />
 
-      <div v-ripple @click="showFilters = !showFilters">
+      <div v-ripple @click="showFilters = !showFilters" v-if="isPhotoTaken">
         <EffectsIcon :active="showFilters" class="effects-toggle-button" />
       </div>
     </header>
@@ -120,18 +120,10 @@
 
           <button
             v-ripple
-            :class="
-              this.availableDevices.length > 1
-                ? 'white-outlined-btn'
-                : 'disabled-btn'
-            "
-            :disabled="this.availableDevices.length <= 1"
-            @click="swapCamera"
+            class="white-outlined-btn"
+            @click="showFilters = !showFilters"
           >
-            <CameraFlipIcon
-              class="camera-flip-icon"
-              :class="this.availableDevices.length <= 1 && 'disabled'"
-            />
+            <EffectsIcon :active="showFilters" class="effects-toggle-button" />
           </button>
         </section>
       </transition>
@@ -465,6 +457,12 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
+.effects-toggle-button {
+  height: 2 * $x-large-unit;
+  width: 2 * $x-large-unit;
+  padding: $standard-unit;
+}
 
 .story-board-photo-ui {
   position: relative;
