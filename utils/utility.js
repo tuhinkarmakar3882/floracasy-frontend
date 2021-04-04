@@ -1,26 +1,3 @@
-// import moment from 'moment'
-// dayjs().format()
-// moment.updateLocale('en', {
-//   relativeTime: {
-//     future: 'in %s',
-//     past: '%s ago',
-//     s: 'a few seconds',
-//     ss: '%d seconds',
-//     m: '1 min',
-//     mm: '%d mins',
-//     h: '1 hr',
-//     hh: '%d hrs',
-//     d: '1 d',
-//     dd: '%d d',
-//     w: '1 w',
-//     ww: '%d w',
-//     M: 'a m',
-//     MM: '%d m',
-//     y: 'a yr',
-//     yy: '%d yrs',
-//   },
-// })
-
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -125,4 +102,27 @@ export const getFormattedTime = (decimalTimeInSeconds) => {
 
 export const LogAnalyticsEvent = (eventType = '', payload = {}) => {
   window.gtag('event', eventType, payload)
+}
+
+export const destroySetup = (stream, arrayMode = false) => {
+  if (!stream) {
+    return
+  }
+
+  if (arrayMode) {
+    for (let i of stream) {
+      const tracks = i.getTracks()
+      tracks.forEach(function (track) {
+        track.stop()
+      })
+    }
+    return
+  }
+
+  try {
+    const tracks = stream.getTracks()
+    tracks.forEach(function (track) {
+      track.stop()
+    })
+  } catch (e) {}
 }
