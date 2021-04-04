@@ -1,9 +1,12 @@
 <template>
   <div class="story-board-photo-ui">
     <header v-if="systemReady">
-      <div v-ripple @click="showFilters = !showFilters">
-        <EffectsIcon :active="showFilters" class="effects-toggle-button" />
-      </div>
+      <i
+        v-ripple
+        :class="mirror && 'vibrant'"
+        class="mdi mdi-24px mdi-flip-horizontal"
+        @click="mirror = !mirror"
+      />
 
       <i
         v-ripple
@@ -11,6 +14,10 @@
         class="mdi mdi-24px"
         @click="fullScreen = !fullScreen"
       />
+
+      <div v-ripple @click="showFilters = !showFilters">
+        <EffectsIcon :active="showFilters" class="effects-toggle-button" />
+      </div>
     </header>
 
     <main class="heads-up-display">
