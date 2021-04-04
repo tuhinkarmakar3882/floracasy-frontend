@@ -277,7 +277,6 @@ export default {
       showFilters: false,
       sending: false,
       currentCameraIndex: 0,
-      shouldFaceUser: true,
     }
   },
 
@@ -290,9 +289,9 @@ export default {
   async mounted() {
     const availableDevices = await navigator.mediaDevices.enumerateDevices()
 
-    this.availableDevices = availableDevices.filter(
-      (device) => device.kind === 'videoinput'
-    )
+    this.availableDevices = availableDevices
+      .filter((device) => device.kind === 'videoinput')
+      .slice(0, 2)
 
     this.currentDevice = this.availableDevices[this.currentCameraIndex]
 
@@ -325,8 +324,7 @@ export default {
             ideal: 1080,
             max: 1440,
           },
-          facingMode: this.shouldFaceUser ? 'user' : 'environment',
-          // deviceId: { exact: this.currentDevice.deviceId },
+          deviceId: { exact: this.currentDevice.deviceId },
         },
       }
       try {
@@ -346,7 +344,6 @@ export default {
     },
 
     swapCamera() {
-      this.shouldFaceUser = !this.shouldFaceUser
       this.currentCameraIndex++
 
       if (this.currentCameraIndex >= this.availableDevices.length)
