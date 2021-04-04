@@ -104,11 +104,7 @@
             <i class="mdi mdi-camera-iris mdi-36px" />
           </button>
 
-          <button
-            v-ripple
-            class="white-outlined-btn"
-            @click="showMoreOptions = !showMoreOptions"
-          >
+          <button v-ripple class="white-outlined-btn" @click="swapCamera">
             <CameraFlipIcon class="camera-flip-icon" />
           </button>
         </section>
@@ -262,6 +258,7 @@ export default {
       },
       showFilters: false,
       sending: false,
+      currentCameraIndex: 0,
     }
   },
 
@@ -280,7 +277,7 @@ export default {
       .filter((device) => device.kind === 'videoinput')
       .map((item) => item.label.split('(')[0])
 
-    this.currentDevice = this.availableDevices[0]
+    this.currentDevice = this.availableDevices[this.currentCameraIndex]
     this.aspectRatio = this.availableRatios[0]
 
     try {
@@ -320,6 +317,17 @@ export default {
       this.mediaRecorder.ondataavailable = this.handleDataAvailable
       this.isLoading = false
       this.$refs.videoPreview.srcObject = this.stream
+    },
+
+    swapCamera() {
+      this.currentCameraIndex++
+
+      if (this.currentCameraIndex >= this.availableDevices.length)
+        this.currentCameraIndex = 0
+
+      this.currentDevice = this.availableDevices[this.currentCameraIndex]
+
+      this.prepareCameraRecordingInitialSetup()
     },
 
     destroySetup(stream) {
