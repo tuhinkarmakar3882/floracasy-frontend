@@ -1,12 +1,19 @@
 <template>
   <div class="story-board-audio-ui">
-    <div class="text-center pt-8 mt-8">
-      <small class="timer"> {{ audioRecordingDuration }} seconds </small>
+    <header v-if="!recordingDone && recordingStarted">
+      <span class="timer">{{ getFormattedTime(audioRecordingDuration) }}</span>
+    </header>
 
-      <section class="display-icon pt-8 mt-8">
-        <i v-ripple class="mdi mdi-microphone mdi-48px headphone-icon" />
-        <p>Audio Story</p>
-      </section>
+    <main>
+      <i
+        v-if="!recordingDone"
+        v-ripple
+        :class="recordingStarted && 'pulse white'"
+        class="mdi mdi-microphone mdi-48px"
+      />
+      <transition v-if="!recordingStarted && !recordingDone" name="scale-up">
+        <p>Tap the bottom icon to Start</p>
+      </transition>
 
       <transition name="slide-up">
         <AudioPlayer
@@ -17,46 +24,66 @@
           style="width: 100%"
         />
       </transition>
+    </main>
 
-      <section class="audio-controls">
-        <button
-          v-if="!recordingStarted"
-          v-ripple
-          class="primary-outlined-btn mx-4"
-          @click="startRecording"
-        >
-          <span class="mdi mdi-microphone mdi-36px" />
-        </button>
+    <footer>
+      <transition v-if="recordingDone" name="slide-down">
+        <section class="actions preview-steps">
+          <button v-ripple class="disabled-btn mx-4" @click="startRecording">
+            <i class="mdi mdi-refresh mdi-24px mr-2 vibrant" />
+            <span class="white">Retake</span>
+          </button>
 
-        <button
-          v-else
-          v-ripple
-          class="danger-outlined-btn mx-4"
-          @click="stopRecording"
-        >
-          <span class="mdi mdi-check mdi-36px" />
-        </button>
+          <button
+            v-ripple
+            class="vibrant-outlined-btn mx-4"
+            @click="uploadAudioStory"
+          >
+            <span>Send</span>
+            <i class="mdi mdi-send mdi-24px ml-2" />
+          </button>
+        </section>
+      </transition>
 
-        <button
-          v-if="recordingDone"
-          v-ripple
-          class="vibrant-outlined-btn mx-4"
-          @click="uploadAudioStory"
-        >
-          <span class="mdi mdi-send mdi-36px" />
-        </button>
-      </section>
-    </div>
+      <transition v-else name="slide-down">
+        <section class="actions">
+          <button
+            v-if="!recordingStarted"
+            v-ripple
+            class="secondary-btn mx-4"
+            @click="startRecording"
+          >
+            <span class="mdi mdi-record mdi-36px" />
+          </button>
+
+          <button
+            v-else
+            v-ripple
+            class="danger-outlined-btn mx-4"
+            @click="stopRecording"
+          >
+            <span class="mdi mdi-stop mdi-36px" />
+          </button>
+        </section>
+      </transition>
+    </footer>
+
+    <transition name="scale-down">
+      <aside v-if="sending" class="loader">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+      </aside>
+    </transition>
   </div>
 </template>
 
 <script>
-import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import { getFormattedTime, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'AudioUI',
+
   data() {
     return {
       audioRecordingInterval: null,
@@ -68,8 +95,10 @@ export default {
       mediaRecorder: null,
       audioClip: [],
       availableDevices: [],
+      sending: false,
     }
   },
+
   async mounted() {
     this.stream && this.destroySetup(this.stream)
 
@@ -103,12 +132,14 @@ export default {
   },
 
   methods: {
+    getFormattedTime,
     destroySetup(stream) {
       const tracks = stream.getTracks()
       tracks.forEach(function (track) {
         track.stop()
       })
     },
+
     async prepareAudioRecordingInitialSetup() {
       const constraints = {
         audio: true,
@@ -117,6 +148,7 @@ export default {
       this.mediaRecorder = new MediaRecorder(this.stream)
       this.mediaRecorder.ondataavailable = this.handleDataAvailable
     },
+
     startRecording() {
       this.audioClip = []
       this.source = null
@@ -125,6 +157,7 @@ export default {
       this.recordingDone = false
       this.startTimer()
     },
+
     startTimer() {
       this.audioRecordingInterval = setInterval(() => {
         this.audioRecordingDuration <= 0
@@ -132,6 +165,7 @@ export default {
           : this.audioRecordingDuration--
       }, 1000)
     },
+
     handleDataAvailable(event) {
       if (event.data.size > 0) {
         this.audioClip = event.data
@@ -139,6 +173,7 @@ export default {
         this.source = URL.createObjectURL(event.data)
       }
     },
+
     stopRecording() {
       clearInterval(this.audioRecordingInterval)
       this.mediaRecorder.stop()
@@ -146,7 +181,9 @@ export default {
       this.recordingStarted = false
       this.recordingDone = true
     },
+
     async uploadAudioStory() {
+      this.sending = true
       await showUITip(
         this.$store,
         'Uploading Story, Please Wait',
@@ -170,6 +207,8 @@ export default {
         await this.$router.replace(navigationRoutes.Home.Community.index)
       } catch (e) {
         await showUITip(this.$store, 'Error Posting story', 'error')
+      } finally {
+        this.sending = false
       }
     },
   },
@@ -180,35 +219,183 @@ export default {
 @import 'assets/_all-variables.scss';
 
 .story-board-audio-ui {
-  .timer {
-    padding: 8px 24px;
-    border: 1px solid $vibrant;
-    border-radius: 2 * $x-large-unit;
-    color: $vibrant;
-  }
+  position: relative;
+  display: grid;
 
-  .headphone-icon {
-    display: block;
-    position: relative;
-  }
-
-  .audio-controls {
-    display: flex;
+  &::before {
+    content: '';
+    background: linear-gradient(to bottom, black -70%, transparent);
+    position: absolute;
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
+    height: 3 * $xxx-large-unit;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1;
+  }
+
+  i {
+    filter: drop-shadow($default-box-shadow);
   }
 
   button {
+    min-width: auto;
+  }
+
+  header {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    top: 56px;
+    z-index: 1;
+
+    span {
+      display: block;
+      background: $footer-background;
+      border-radius: 2 * $xxx-large-unit;
+      font-family: $Nunito-Sans;
+      padding: $nano-unit $milli-unit;
+      font-size: 14px;
+      color: white;
+      font-weight: 300;
+      letter-spacing: $double-unit;
+      box-shadow: $default-box-shadow;
+    }
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        $nav-bar-bg 20%,
+        $segment-background 40%,
+        $card-background 60%,
+        $segment-background 80%,
+        $nav-bar-bg 100%
+      )
+      right no-repeat;
+    background-size: 400%;
+    animation: shift-background 20s infinite alternate-reverse ease-in-out;
+
+    @keyframes shift-background {
+      from {
+        background-position: left;
+      }
+      to {
+        background-position: right;
+      }
+    }
+
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  footer {
+    position: fixed;
+    bottom: 64px;
+    left: 0;
+    right: 0;
+
+    .actions {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+
+      button {
+        display: grid;
+        place-items: center;
+        padding: 0;
+        width: 2 * $x-large-unit;
+        height: 2 * $x-large-unit;
+        border-radius: 100%;
+        box-shadow: $default-box-shadow;
+      }
+
+      .shutter {
+        width: 2 * $xx-large-unit;
+        height: 2 * $xx-large-unit;
+      }
+
+      &.preview-steps {
+        button {
+          border-radius: 50px;
+          width: 130px;
+          height: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          i {
+            filter: none;
+          }
+        }
+      }
+    }
+  }
+
+  aside.loader {
+    position: fixed;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1;
+    background: rgba($black, 0.7);
+    height: 100%;
+    width: 100%;
     display: grid;
     place-items: center;
-    padding: 0;
-    height: 64px;
-    width: 64px;
+  }
+
+  $common-values: 0 0 4px;
+  $outer-ring: #1d1d34;
+
+  .pulse {
+    animation: ripple-effect 5s ease-in-out infinite alternate-reverse;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 4px $outer-ring);
+    height: 80px;
+    width: 80px;
+    display: grid;
+    place-items: center;
+
+    @keyframes ripple-effect {
+      0% {
+        color: white;
+        box-shadow: $common-values 0 $segment-background,
+          $common-values 0 $card-background,
+          $common-values 0 lighten($footer-background, 1%),
+          $common-values 0 darken($outer-ring, $darken-percentage);
+      }
+      50% {
+        color: #cacaca;
+        box-shadow: $common-values 25px $segment-background,
+          $common-values 47px $card-background,
+          $common-values 60px lighten($footer-background, 1%),
+          $common-values 60 darken($outer-ring, $darken-percentage);
+      }
+      80% {
+        box-shadow: $common-values 40px $segment-background,
+          $common-values 60px $card-background,
+          $common-values 80px lighten($footer-background, 1%),
+          $common-values 90px darken($outer-ring, $darken-percentage);
+      }
+      100% {
+        color: white;
+        box-shadow: $common-values 45px $segment-background,
+          $common-values 65px $card-background,
+          $common-values 85px lighten($footer-background, 1%),
+          $common-values 95px darken($outer-ring, $darken-percentage);
+      }
+    }
   }
 }
 </style>
