@@ -457,7 +457,7 @@ export default {
 
   &::before {
     content: '';
-    background: linear-gradient(to bottom, black, transparent);
+    background: linear-gradient(to bottom, black -30%, transparent);
     position: absolute;
     width: 100%;
     height: 150px;
