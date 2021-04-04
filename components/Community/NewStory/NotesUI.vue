@@ -172,6 +172,13 @@ export default {
       if (this.canSend) {
         this.isSending = true
 
+        await showUITip(
+          this.$store,
+          'Uploading Story, Please Wait',
+          'info',
+          false
+        )
+
         try {
           await this.$axios.$post(endpoints.community_service.stories.index, {
             storyType: 'text',
@@ -205,7 +212,7 @@ export default {
 
   &::before {
     content: '';
-    background: linear-gradient(to bottom, black, transparent);
+    background: linear-gradient(to bottom, black -30%, transparent);
     position: absolute;
     width: 100%;
     height: 2 * $xx-large-unit;
@@ -291,6 +298,7 @@ export default {
       height: 2 * $large-unit;
       width: 5 * $large-unit;
       border-radius: 50px 0 0 50px;
+      box-shadow: $default-box-shadow;
     }
   }
 
