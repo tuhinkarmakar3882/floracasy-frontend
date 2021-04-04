@@ -104,8 +104,20 @@
             <i class="mdi mdi-camera-iris mdi-36px" />
           </button>
 
-          <button v-ripple class="white-outlined-btn" @click="swapCamera">
-            <CameraFlipIcon class="camera-flip-icon" />
+          <button
+            v-ripple
+            :class="
+              this.availableDevices.length > 1
+                ? 'white-outlined-btn'
+                : 'disabled-btn'
+            "
+            :disabled="this.availableDevices.length <= 1"
+            @click="swapCamera"
+          >
+            <CameraFlipIcon
+              class="camera-flip-icon"
+              :class="this.availableDevices.length <= 1 && 'disabled'"
+            />
           </button>
         </section>
       </transition>
@@ -724,5 +736,9 @@ $size: 26px;
   width: $size;
   height: $size;
   fill: $white;
+
+  &.disabled {
+    fill: #585858;
+  }
 }
 </style>
