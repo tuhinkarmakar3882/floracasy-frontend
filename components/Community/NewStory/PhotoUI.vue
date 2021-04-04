@@ -273,9 +273,9 @@ export default {
 
     const availableDevices = await navigator.mediaDevices.enumerateDevices()
 
-    this.availableDevices = availableDevices
-      .filter((device) => device.kind === 'videoinput')
-      .map((item) => item.label.split('(')[0])
+    this.availableDevices = availableDevices.filter(
+      (device) => device.kind === 'videoinput'
+    )
 
     this.currentDevice = this.availableDevices[this.currentCameraIndex]
     this.aspectRatio = this.availableRatios[0]
@@ -294,11 +294,11 @@ export default {
   },
 
   methods: {
-    async prepareCameraRecordingInitialSetup(constraint) {
+    async prepareCameraRecordingInitialSetup() {
       this.isLoading = true
       this.loadingError = false
 
-      const constraints = constraint ?? {
+      const constraints = {
         video: {
           width: {
             min: 1280,
@@ -311,6 +311,7 @@ export default {
             max: 1440,
           },
         },
+        deviceId: { exact: this.currentDevice.deviceId },
       }
       this.stream = await navigator.mediaDevices.getUserMedia(constraints)
       this.mediaRecorder = new MediaRecorder(this.stream)
