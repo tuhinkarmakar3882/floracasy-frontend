@@ -77,7 +77,12 @@
 </template>
 
 <script>
-import { getFormattedTime, LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import {
+  destroySetup,
+  getFormattedTime,
+  LogAnalyticsEvent,
+  showUITip,
+} from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -100,8 +105,6 @@ export default {
   },
 
   async mounted() {
-    this.stream && this.destroySetup(this.stream)
-
     if (!window.MediaRecorder) {
       const AudioRecorder = require('audio-recorder-polyfill')
       AudioRecorder.encoder = require('audio-recorder-polyfill/mpeg-encoder')
@@ -116,8 +119,6 @@ export default {
       )
     }
 
-    this.stream && this.destroySetup(this.stream)
-
     const availableDevices = await navigator.mediaDevices.enumerateDevices()
 
     this.availableDevices = availableDevices
@@ -128,25 +129,25 @@ export default {
   },
 
   beforeDestroy() {
-    this.stream && this.destroySetup(this.stream)
+    this.stream && destroySetup(this.stream)
+    window.streams && destroySetup(window.streams, true)
   },
 
   methods: {
     getFormattedTime,
-    destroySetup(stream) {
-      const tracks = stream.getTracks()
-      tracks.forEach(function (track) {
-        track.stop()
-      })
-    },
 
     async prepareAudioRecordingInitialSetup() {
       const constraints = {
         audio: true,
       }
-      this.stream = await navigator.mediaDevices.getUserMedia(constraints)
-      this.mediaRecorder = new MediaRecorder(this.stream)
-      this.mediaRecorder.ondataavailable = this.handleDataAvailable
+      try {
+        this.stream = await navigator.mediaDevices.getUserMedia(constraints)
+        window.streams.push(this.stream)
+        this.mediaRecorder = new MediaRecorder(this.stream)
+        this.mediaRecorder.ondataavailable = this.handleDataAvailable
+      } catch (e) {
+        console.error(e)
+      }
     },
 
     startRecording() {
@@ -312,8 +313,9 @@ export default {
       width: 100%;
 
       button {
-        display: grid;
-        place-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         padding: 0;
         width: 2 * $x-large-unit;
         height: 2 * $x-large-unit;
@@ -351,8 +353,9 @@ export default {
     background: rgba($black, 0.7);
     height: 100%;
     width: 100%;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   $common-values: 0 0 4px;
@@ -364,8 +367,9 @@ export default {
     filter: drop-shadow(0 0 4px $outer-ring);
     height: 80px;
     width: 80px;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     @keyframes ripple-effect {
       0% {

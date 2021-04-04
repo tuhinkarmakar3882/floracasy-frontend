@@ -39,7 +39,7 @@
 
 <script>
 import endpoints from '~/api/endpoints'
-import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import { destroySetup, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
@@ -147,6 +147,10 @@ export default {
   mounted() {
     this.customStyle = this.background[this.currentPosForBackground]
     this.customFontFamily = this.fonts[this.currentPosForFonts]
+  },
+
+  beforeDestroy() {
+    window.streams && destroySetup(window.streams)
   },
 
   methods: {

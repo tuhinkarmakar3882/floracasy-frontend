@@ -38,6 +38,7 @@
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { destroySetup } from '~/utils/utility'
 
 export default {
   name: 'AddStory',
@@ -58,12 +59,18 @@ export default {
   },
 
   async mounted() {
+    window.streams = []
+
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: -1,
     })
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+  },
+
+  beforeDestroy() {
+    window.streams && destroySetup(window.streams, true)
   },
 
   methods: {

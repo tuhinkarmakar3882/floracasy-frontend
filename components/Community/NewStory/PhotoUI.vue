@@ -171,7 +171,7 @@
 </template>
 
 <script>
-import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import { destroySetup, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import imageCompression from 'browser-image-compression'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
@@ -214,7 +214,6 @@ export default {
           ratio: 1.33,
         },
       ],
-      aspectRatio: null,
       availableDevices: [
         {
           label: 'nope',
@@ -288,8 +287,6 @@ export default {
   },
 
   async mounted() {
-    this.stream && this.destroySetup(this.stream)
-
     const availableDevices = await navigator.mediaDevices.enumerateDevices()
 
     this.availableDevices = availableDevices.filter(
@@ -297,7 +294,6 @@ export default {
     )
 
     this.currentDevice = this.availableDevices[this.currentCameraIndex]
-    this.aspectRatio = this.availableRatios[0]
 
     try {
       await this.prepareCameraRecordingInitialSetup()
@@ -309,7 +305,8 @@ export default {
   },
 
   beforeDestroy() {
-    this.stream && this.destroySetup(this.stream)
+    this.stream && destroySetup(this.stream)
+    window.streams && destroySetup(window.streams, true)
   },
 
   methods: {
@@ -330,11 +327,20 @@ export default {
           deviceId: { exact: this.currentDevice.deviceId },
         },
       }
-      this.stream = await navigator.mediaDevices.getUserMedia(constraints)
-      this.mediaRecorder = new MediaRecorder(this.stream)
-      this.mediaRecorder.ondataavailable = this.handleDataAvailable
-      this.isLoading = false
-      this.$refs.videoPreview.srcObject = this.stream
+      try {
+        this.stream = await navigator.mediaDevices.getUserMedia(constraints)
+
+        window.streams.push(this.stream)
+
+        this.mediaRecorder = new MediaRecorder(this.stream)
+        this.mediaRecorder.ondataavailable = this.handleDataAvailable
+
+        this.isLoading = false
+        this.$refs.videoPreview.srcObject = this.stream
+      } catch (e) {
+        console.error(e)
+        this.isLoading = false
+      }
     },
 
     swapCamera() {
@@ -348,28 +354,8 @@ export default {
       this.prepareCameraRecordingInitialSetup()
     },
 
-    destroySetup(stream) {
-      const tracks = stream.getTracks()
-      tracks.forEach(function (track) {
-        track.stop()
-      })
-    },
-
     updateCurrentFilter(filter) {
       this.currentFilter = filter
-    },
-
-    updatePhotoRatio() {
-      if (this.aspectRatio) {
-        this.stream && this.destroySetup(this.stream)
-        this.prepareCameraRecordingInitialSetup({
-          video: {
-            aspectRatio: { ideal: this.aspectRatio.ratio },
-            // width: { max: this.aspectRatio.width },
-            // height: { ideal: this.aspectRatio.height },
-          },
-        })
-      }
     },
 
     async takePhoto() {
@@ -503,8 +489,9 @@ export default {
     i {
       height: 2 * $xx-large-unit;
       width: 2 * $xx-large-unit;
-      display: grid;
-      place-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .effects-toggle-button {
@@ -627,8 +614,9 @@ export default {
       background: rgba(0, 0, 0, 0.8);
       height: 100%;
       width: 100%;
-      display: grid;
-      place-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       z-index: 1;
 
       * {
@@ -650,8 +638,9 @@ export default {
       position: relative;
       justify-self: center;
       align-self: center;
-      display: grid;
-      place-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100%;
       width: 100vw;
 
