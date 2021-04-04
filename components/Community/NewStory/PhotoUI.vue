@@ -47,6 +47,13 @@
       </transition>
 
       <section v-show="systemReady">
+        <aside class="loader soft-error" v-if="softError">
+          <p class="px-4">
+            Can't connect to Camera. Make sure camera Permission is available Or
+            Try Swapping Camera
+          </p>
+        </aside>
+
         <img
           v-show="isPhotoTaken"
           :src="source"
@@ -189,6 +196,7 @@ export default {
       mirror: true,
       isPhotoTaken: false,
       loadingError: false,
+      softError: false,
       isLoading: false,
       link: '#',
       stream: null,
@@ -289,9 +297,9 @@ export default {
   async mounted() {
     const availableDevices = await navigator.mediaDevices.enumerateDevices()
 
-    this.availableDevices = availableDevices
-      .filter((device) => device.kind === 'videoinput')
-      .slice(0, 2)
+    this.availableDevices = availableDevices.filter(
+      (device) => device.kind === 'videoinput'
+    )
 
     this.currentDevice = this.availableDevices[this.currentCameraIndex]
 
@@ -313,6 +321,7 @@ export default {
     async prepareCameraRecordingInitialSetup() {
       this.isLoading = true
       this.loadingError = false
+      this.softError = false
 
       const constraints = {
         video: {
@@ -324,7 +333,7 @@ export default {
             ideal: 1080,
             max: 1440,
           },
-          deviceId: { exact: this.currentDevice.deviceId },
+          deviceId: this.currentDevice.deviceId,
         },
       }
       try {
@@ -340,6 +349,7 @@ export default {
       } catch (e) {
         console.error(e)
         this.isLoading = false
+        this.softError = true
       }
     },
 
@@ -721,6 +731,11 @@ export default {
     width: 100%;
     display: grid;
     place-items: center;
+
+    &.soft-error {
+      background: transparent;
+      height: calc(100% - 134px);
+    }
   }
 }
 
