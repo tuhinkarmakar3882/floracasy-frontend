@@ -140,14 +140,11 @@ export default {
       const constraints = {
         audio: true,
       }
-      try {
-        this.stream = await navigator.mediaDevices.getUserMedia(constraints)
-        window.streams.push(this.stream)
-        this.mediaRecorder = new MediaRecorder(this.stream)
-        this.mediaRecorder.ondataavailable = this.handleDataAvailable
-      } catch (e) {
-        console.error(e)
-      }
+
+      this.stream = await navigator.mediaDevices.getUserMedia(constraints)
+      window.streams.push(this.stream)
+      this.mediaRecorder = new MediaRecorder(this.stream)
+      this.mediaRecorder.ondataavailable = this.handleDataAvailable
     },
 
     startRecording() {
