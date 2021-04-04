@@ -298,20 +298,21 @@ export default {
       this.isLoading = true
       this.loadingError = false
 
+      // width: {
+      //   min: 1280,
+      //     ideal: 1920,
+      //     max: 2560,
+      // },
+      // height: {
+      //   min: 720,
+      //     ideal: 1080,
+      //     max: 1440,
+      // },
+
       const constraints = {
         video: {
-          width: {
-            min: 1280,
-            ideal: 1920,
-            max: 2560,
-          },
-          height: {
-            min: 720,
-            ideal: 1080,
-            max: 1440,
-          },
+          deviceId: { exact: this.currentDevice.deviceId },
         },
-        deviceId: { exact: this.currentDevice.deviceId },
       }
       this.stream = await navigator.mediaDevices.getUserMedia(constraints)
       this.mediaRecorder = new MediaRecorder(this.stream)
