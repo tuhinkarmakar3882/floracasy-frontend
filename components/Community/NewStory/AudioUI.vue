@@ -273,11 +273,14 @@ export default {
     background: linear-gradient(
         45deg,
         transparent 0%,
-        $nav-bar-bg 20%,
-        $segment-background 40%,
-        $card-background 60%,
-        $segment-background 80%,
-        $nav-bar-bg 100%
+        $nav-bar-bg 12.5%,
+        $segment-background 25%,
+        $card-background 37.5%,
+        $footer-background 50%,
+        $card-background 62.5%,
+        $segment-background 75%,
+        $nav-bar-bg 87.5%,
+        transparent 100%
       )
       right no-repeat;
     background-size: 400%;
