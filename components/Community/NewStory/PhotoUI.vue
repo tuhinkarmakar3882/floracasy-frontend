@@ -48,10 +48,15 @@
 
       <section v-show="systemReady">
         <aside class="loader soft-error" v-if="softError">
-          <p class="px-4">
-            Can't connect to Camera. Make sure camera Permission is available Or
-            Try Swapping Camera
-          </p>
+          <LoadingError class="py-8 px-4" error-section="Camera">
+            <template v-slot:remedy-option>
+              <li>Make sure camera is connected</li>
+              <li>Make sure that you have enabled access to camera</li>
+              <li>
+                Open Browser -> Check Site Permissions -> Allow Camera access
+              </li>
+            </template>
+          </LoadingError>
         </aside>
 
         <img
@@ -339,9 +344,9 @@ export default {
         this.isLoading = false
         this.$refs.videoPreview.srcObject = this.stream
       } catch (e) {
-        console.error(e)
         this.isLoading = false
         this.softError = true
+        await showUITip(this.$store, e, 'error')
       }
     },
 
@@ -731,8 +736,21 @@ export default {
     place-items: center;
 
     &.soft-error {
-      background: transparent;
-      height: calc(100% - 134px);
+      background: linear-gradient(
+          45deg,
+          transparent 0%,
+          $nav-bar-bg 12.5%,
+          $segment-background 25%,
+          $card-background 37.5%,
+          $footer-background 50%,
+          $card-background 62.5%,
+          $segment-background 75%,
+          $nav-bar-bg 87.5%,
+          transparent 100%
+        )
+        right no-repeat;
+      background-size: 400%;
+      animation: shift-background 20s infinite alternate-reverse ease-in-out;
     }
   }
 }
@@ -745,6 +763,14 @@ $size: 26px;
 
   &.disabled {
     fill: #585858;
+  }
+}
+@keyframes shift-background {
+  from {
+    background-position: left;
+  }
+  to {
+    background-position: right;
   }
 }
 </style>
