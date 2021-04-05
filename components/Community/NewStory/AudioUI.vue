@@ -73,6 +73,18 @@
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
       </aside>
     </transition>
+
+    <aside class="loader soft-error" v-if="softError">
+      <LoadingError class="py-8 px-4" error-section="Microphone">
+        <template v-slot:remedy-option>
+          <li>Make sure Microphone is connected</li>
+          <li>Make sure that you have enabled access to Microphone</li>
+          <li>
+            Open Browser -> Check Site Permissions -> Allow Microphone access
+          </li>
+        </template>
+      </LoadingError>
+    </aside>
   </div>
 </template>
 
@@ -101,6 +113,7 @@ export default {
       audioClip: [],
       availableDevices: [],
       sending: false,
+      softError: false,
     }
   },
 
@@ -137,14 +150,19 @@ export default {
     getFormattedTime,
 
     async prepareAudioRecordingInitialSetup() {
+      this.softError = false
       const constraints = {
         audio: true,
       }
-
-      this.stream = await navigator.mediaDevices.getUserMedia(constraints)
-      window.streams.push(this.stream)
-      this.mediaRecorder = new MediaRecorder(this.stream)
-      this.mediaRecorder.ondataavailable = this.handleDataAvailable
+      try {
+        this.stream = await navigator.mediaDevices.getUserMedia(constraints)
+        window.streams.push(this.stream)
+        this.mediaRecorder = new MediaRecorder(this.stream)
+        this.mediaRecorder.ondataavailable = this.handleDataAvailable
+      } catch (e) {
+        this.softError = true
+        await showUITip(this.$store, e, 'error')
+      }
     },
 
     startRecording() {
@@ -283,15 +301,6 @@ export default {
     background-size: 400%;
     animation: shift-background 20s infinite alternate-reverse ease-in-out;
 
-    @keyframes shift-background {
-      from {
-        background-position: left;
-      }
-      to {
-        background-position: right;
-      }
-    }
-
     section {
       display: flex;
       justify-content: center;
@@ -356,6 +365,24 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &.soft-error {
+      background: linear-gradient(
+          45deg,
+          transparent 0%,
+          $nav-bar-bg 12.5%,
+          $segment-background 25%,
+          $card-background 37.5%,
+          $footer-background 50%,
+          $card-background 62.5%,
+          $segment-background 75%,
+          $nav-bar-bg 87.5%,
+          transparent 100%
+        )
+        right no-repeat;
+      background-size: 400%;
+      animation: shift-background 20s infinite alternate-reverse ease-in-out;
+    }
   }
 
   $common-values: 0 0 4px;
@@ -399,6 +426,15 @@ export default {
           $common-values 85px lighten($footer-background, 1%),
           $common-values 95px darken($outer-ring, $darken-percentage);
       }
+    }
+  }
+
+  @keyframes shift-background {
+    from {
+      background-position: left;
+    }
+    to {
+      background-position: right;
     }
   }
 }
