@@ -2,7 +2,7 @@
   "name": "floracasy",
   "appName": "Floracasy",
   "description": "Where Knowledge Gets Socialized",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "themeColor": "#0d0d17",
   "private": true,
   "resolutions": {
@@ -21,7 +21,7 @@
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore . --fix",
     "lint:style-scss": "stylelint '**/*.scss' --config ./stylelint.config.js --fix",
     "lint:style-vue": "stylelint '**/*.vue' --config ./stylelint.config.js --fix",
-    "lint": "yarn lint:js && yarn lint:style-vue && yarn lint:style-scss",
+    "lint": "yarn lint:style-vue && yarn lint:style-scss && yarn lint:js",
     "test": "snyk test && jest"
   },
   "dependencies": {
@@ -61,8 +61,8 @@
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.5",
-    "@nuxtjs/eslint-config": "^4.0.0",
-    "@nuxtjs/eslint-config-typescript": "^5.0.0",
+    "@nuxtjs/eslint-config": "^6.0.0",
+    "@nuxtjs/eslint-config-typescript": "^6.0.0",
     "@nuxtjs/pwa": "^3.0.2",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^3.0.2",

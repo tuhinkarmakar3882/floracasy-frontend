@@ -167,9 +167,7 @@ export default {
       connectionOptions
     )
 
-    this.chatSocket.onopen = () => {
-      console.log('socket ready')
-    }
+    this.chatSocket.onopen = () => {}
 
     this.chatSocket.onmessage = async (incomingMessage) => {
       const data = JSON.parse(incomingMessage.data)
@@ -190,7 +188,7 @@ export default {
       }
 
       this.chatMessages.push(newMessage)
-      this.resetUnreadCount()
+      await this.resetUnreadCount()
     }
   },
 

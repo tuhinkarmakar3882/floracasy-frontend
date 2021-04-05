@@ -14,24 +14,20 @@ export default async function ({ $axios, $cookies, store }) {
     await store.dispatch('NotificationChannel/fetchNotificationChannelId')
 
   $axios.onError(({ response: error }) => {
-    if (!error) {
-      console.log('Having Trouble to connect')
-    }
+    if (!error) return
+
     if (error?.status === 401) {
       switch (error.data.detail) {
         case errorMessages.credentialsWereNotProvided:
-          console.warn('No Credentials were Provided')
           process.client && window.location.reload()
           break
 
         case errorMessages.invalidTokens:
-          console.warn('Credentials Expired.')
           $cookies.set('access', '', cookieSavingConfig)
           process.client && window.location.reload()
           break
 
         default:
-          console.error('Unhandled Error', error)
           process.client && window.location.reload()
           break
       }

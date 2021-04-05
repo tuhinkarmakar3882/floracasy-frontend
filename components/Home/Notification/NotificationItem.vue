@@ -208,7 +208,6 @@ export default {
       )
     },
     async openPostDetails(keyName) {
-      console.log(this.notification.onclickActionInfo[keyName])
       await this.$router.push(
         navigationRoutes.Home.Community.Posts.detail.replace(
           '{postIdentifier}',

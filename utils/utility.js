@@ -110,7 +110,7 @@ export const destroySetup = (stream, arrayMode = false) => {
   }
 
   if (arrayMode) {
-    for (let i of stream) {
+    for (const i of stream) {
       const tracks = i.getTracks()
       tracks.forEach(function (track) {
         track.stop()

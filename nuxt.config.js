@@ -214,6 +214,16 @@ export default {
     manifest: {
       name: packageJson.appName,
       description: packageJson.description,
+      categories: [
+        'social',
+        'education',
+        'blogs',
+        'online communities',
+        'messaging',
+        'community',
+        'earning',
+        'publishing',
+      ],
       short_name: 'Floracasy',
       lang: 'en-US',
       background_color: packageJson.themeColor,

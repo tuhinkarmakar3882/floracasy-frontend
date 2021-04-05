@@ -15,7 +15,7 @@
         @click="fullScreen = !fullScreen"
       />
 
-      <div v-ripple @click="showFilters = !showFilters" v-if="isPhotoTaken">
+      <div v-if="isPhotoTaken" v-ripple @click="showFilters = !showFilters">
         <EffectsIcon :active="showFilters" class="effects-toggle-button" />
       </div>
     </header>
@@ -47,7 +47,7 @@
       </transition>
 
       <section v-show="systemReady">
-        <aside class="loader soft-error" v-if="softError">
+        <aside v-if="softError" class="loader soft-error">
           <LoadingError class="py-8 px-4" error-section="Camera">
             <template v-slot:remedy-option>
               <li>Make sure camera is connected</li>
@@ -175,8 +175,8 @@
 </template>
 
 <script>
-import { destroySetup, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import imageCompression from 'browser-image-compression'
+import { destroySetup, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 
@@ -765,6 +765,7 @@ $size: 26px;
     fill: #585858;
   }
 }
+
 @keyframes shift-background {
   from {
     background-position: left;

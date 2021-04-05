@@ -74,7 +74,7 @@
       </aside>
     </transition>
 
-    <aside class="loader soft-error" v-if="softError">
+    <aside v-if="softError" class="loader soft-error">
       <LoadingError class="py-8 px-4" error-section="Microphone">
         <template v-slot:remedy-option>
           <li>Make sure Microphone is connected</li>
