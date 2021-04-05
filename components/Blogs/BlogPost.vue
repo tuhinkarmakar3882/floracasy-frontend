@@ -139,8 +139,8 @@
         </div>
       </section>
 
-      <transition name="slide-right">
-        <ShareFallbackForDesktop
+      <transition name="slide-up">
+        <LazyShareFallbackForDesktop
           v-if="useShareFallBack"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"

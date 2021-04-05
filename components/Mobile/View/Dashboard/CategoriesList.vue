@@ -96,7 +96,7 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'CategoriesLineUp',
+  name: 'CategoriesList',
 
   data() {
     return {

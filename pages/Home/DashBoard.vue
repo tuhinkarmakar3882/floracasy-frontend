@@ -49,7 +49,7 @@
       trending-mode
     />
 
-    <CategoriesLineUp v-else :key="tabNumber" class="consume-full-height" />
+    <CategoriesList v-else :key="tabNumber" class="consume-full-height" />
   </div>
 </template>
 

@@ -27,23 +27,34 @@ export default {
   components: [
     { path: '~/components' },
     { path: '~/components/Accounts' },
-    { path: '~/components/Community' },
-    { path: '~/components/Community/NewStory', prefix: 'StoryUpload' },
-    { path: '~/components/FollowScreen' },
-    { path: '~/components/GoogleAds' },
-    { path: '~/components/Home/Dashboard' },
-    { path: '~/components/Home/Notification' },
+    { path: '~/components/Blogs' },
+    { path: '~/components/Cards' },
+
+    { path: '~/components/Common/GoogleAdsense' },
+    { path: '~/components/Common/Tools' },
+
+    { path: '~/components/Desktop/Tools' },
+    { path: '~/components/Desktop/View/LandingPage' },
+
     { path: '~/components/Icons' },
-    { path: '~/components/LandingPage' },
     { path: '~/components/Layout' },
-    { path: '~/components/Tools' },
+
+    { path: '~/components/Mobile/View/Dashboard' },
+    { path: '~/components/Mobile/View/Message' },
+    { path: '~/components/Mobile/View/Notification' },
+
+    { path: '~/components/Security' },
+
+    { path: '~/components/Social/Posts' },
+    { path: '~/components/Social/Shared' },
+    { path: '~/components/Social/Stories' },
+    { path: '~/components/Social/Stories/Upload', prefix: 'StoryUpload' },
   ],
 
   server: {
     // host: '0.0.0.0',
     port: 3001,
   },
-  // serverMiddleware: ['~/api', '~/server/middleware/selective-ssr.js'],
 
   plugins: [
     '~/plugins/custom-material-ripple.js',
@@ -239,8 +250,6 @@ export default {
   },
 
   telemetry: false,
-
-  // watch: ['~/module/csp.js'],
 
   tailwindcss: {
     config: {

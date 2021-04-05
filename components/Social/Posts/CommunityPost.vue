@@ -145,8 +145,8 @@
 
       <hr class="reversed-faded-divider mt-0 mb-2" />
 
-      <transition name="slide-right">
-        <ShareFallbackForDesktop
+      <transition name="slide-up">
+        <LazyShareFallbackForDesktop
           v-if="useShareFallBack"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Community/Posts/${post.identifier}`"

@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'PromoModal',
+  name: 'PopupModal',
   props: {
     keyName: {
       type: String,
