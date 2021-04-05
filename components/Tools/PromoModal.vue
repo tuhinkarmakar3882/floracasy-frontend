@@ -27,6 +27,10 @@ export default {
       required: false,
       default: '',
     },
+    user: {
+      type: Object || undefined,
+      required: true,
+    },
     oneTime: {
       type: Boolean,
       required: false,
@@ -35,7 +39,13 @@ export default {
   },
   data() {
     return {
-      displayModal: true,
+      displayModal: false,
+    }
+  },
+
+  mounted() {
+    if (this.user) {
+      this.displayModal = !localStorage.getItem(this.keyName)
     }
   },
   methods: {
