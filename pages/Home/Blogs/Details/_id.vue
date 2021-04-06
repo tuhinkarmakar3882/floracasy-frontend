@@ -369,15 +369,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'assets/all-variables';
 
 .blog-details-page {
   .blog {
-    max-width: $max-width;
+    max-width: $large;
+    margin: auto;
     word-break: break-word;
-    margin-left: auto;
-    margin-right: auto;
 
     .blog-intro-image {
       box-shadow: $down-only-box-shadow;

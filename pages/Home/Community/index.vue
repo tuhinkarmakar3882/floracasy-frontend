@@ -158,6 +158,9 @@ export default {
 @import 'assets/all-variables';
 
 .community-page {
+  max-width: $large;
+  margin: auto;
+
   .add-post-preview {
     display: flex;
     background: $segment-background;

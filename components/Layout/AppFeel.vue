@@ -149,6 +149,7 @@ export default {
 
   main.main-content {
     background-color: $body-background;
+    max-width: $large;
     margin-left: auto;
     margin-right: auto;
 

@@ -134,3 +134,12 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables.scss';
+
+.more-options-page {
+  max-width: $large;
+  margin: auto;
+}
+</style>

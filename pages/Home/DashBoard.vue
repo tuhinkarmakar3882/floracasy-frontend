@@ -37,15 +37,15 @@
     <InfiniteScrollingBlogLists
       v-if="tabNumber === 0"
       :key="tabNumber"
-      show-follow-suggestions
       class="consume-full-height"
+      show-follow-suggestions
     />
 
     <LazyInfiniteScrollingBlogLists
       v-else-if="tabNumber === 1"
       :key="tabNumber"
-      show-follow-suggestions
       class="consume-full-height"
+      show-follow-suggestions
       trending-mode
     />
 
@@ -141,6 +141,9 @@ export default {
 $blog-border-radius: 20px;
 
 .dashboard-page {
+  max-width: $large;
+  margin: auto;
+
   * {
     transition: all 300ms ease-in-out;
   }

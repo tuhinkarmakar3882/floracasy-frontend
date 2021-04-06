@@ -194,6 +194,8 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
+  max-width: $large;
+  margin: auto;
   padding: 2rem 0;
 
   button {

@@ -152,6 +152,9 @@ export default {
 @import 'assets/transitions-and-animations';
 
 .notification-page {
+  max-width: $large;
+  margin: auto;
+
   * {
     transition: all 0.3s ease-in-out;
   }
