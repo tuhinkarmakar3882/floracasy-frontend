@@ -3,7 +3,10 @@
     <section class="carousel-items-container" @scroll="calculateActiveElement">
       <slot name="slides"></slot>
     </section>
-    <aside class="carousel-navigation floating-carousel">
+    <aside
+      class="carousel-navigation floating-carousel"
+      :style="`absoluteMode` && { position: 'absolute' }"
+    >
       <span
         v-for="(item, index) in totalItems"
         :key="`dot-${item}`"
@@ -21,6 +24,11 @@ export default {
     totalItems: {
       type: Number,
       required: true,
+    },
+    absoluteMode: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 
@@ -82,6 +90,10 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
+
+      &.auto-width {
+        width: auto;
+      }
     }
   }
 
