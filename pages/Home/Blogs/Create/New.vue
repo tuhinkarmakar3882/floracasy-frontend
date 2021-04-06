@@ -520,7 +520,7 @@ export default {
       navigationRoutes,
       noXSS: sanitizeHtml,
       sanitizationConfig,
-      step: 1,
+      step: 2,
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
 
@@ -673,7 +673,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
 
 $inactive-background: #e8f8f5;
