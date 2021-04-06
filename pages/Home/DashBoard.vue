@@ -1,10 +1,10 @@
 <template>
   <div class="dashboard-page">
-    <LazyCarousel
-      :carousel-items="carouselItems"
-      image-carousel
-      use-floating-carousel
-    />
+    <!--    <LazyCarousel-->
+    <!--      :carousel-items="carouselItems"-->
+    <!--      image-carousel-->
+    <!--      use-floating-carousel-->
+    <!--    />-->
 
     <section class="tab-bar">
       <p
@@ -70,7 +70,7 @@ export default {
       carouselItems: [
         {
           id: 0,
-          name: 'Listen on the Go',
+          name: 'Simplified Experience',
           body:
             'Now you can continue to listen to your favourite articles whenever you want to',
           image: '/images/Frame_0.jpg',
@@ -79,7 +79,7 @@ export default {
         },
         {
           id: 1,
-          name: 'Second Item in the carousel',
+          name: 'Avail',
           body: 'This is a body Text',
           image: '/images/Frame_1.jpg',
         },
@@ -139,6 +139,20 @@ export default {
 @import 'assets/all-variables';
 
 $blog-border-radius: 20px;
+.carousel-container {
+  border: 1px solid red;
+
+  @media only screen and (min-width: $small) {
+    border: 1px solid greenyellow;
+    width: calc(100vw - 4.5rem);
+  }
+
+  .carousel-item {
+    border: 1px solid red;
+    max-width: $large;
+    align-self: stretch;
+  }
+}
 
 .dashboard-page {
   max-width: $large;
@@ -146,29 +160,6 @@ $blog-border-radius: 20px;
 
   * {
     transition: all 300ms ease-in-out;
-  }
-
-  .image-carousel {
-    display: flex;
-    gap: $standard-unit;
-    text-align: center;
-    overflow: scroll !important;
-    scroll-snap-type: x mandatory;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-
-    .carousel-item {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      flex-shrink: 0;
-      width: 100%;
-      transform-origin: center center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
   }
 
   .tab-bar {
