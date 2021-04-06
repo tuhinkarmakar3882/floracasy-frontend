@@ -520,7 +520,7 @@ export default {
       navigationRoutes,
       noXSS: sanitizeHtml,
       sanitizationConfig,
-      step: 2,
+      step: 1,
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
 
