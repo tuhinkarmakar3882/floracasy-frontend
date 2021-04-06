@@ -1,6 +1,6 @@
 <template>
   <div class="index-page">
-    <main v-if="mobileView" class="mobile-view">
+    <main class="mobile-view">
       <LazyCustomCarousel :total-items="4" class="carousel-container pt-4">
         <template v-slot:slides>
           <section class="carousel-item px-6">
@@ -172,16 +172,6 @@
           <span class="white">Continue as Guest</span>
         </button>
       </footer>
-    </main>
-
-    <main v-else class="desktop-view my-8 text-center py-8">
-      <HeroContent class="segment" />
-      <PromotionalBlogs />
-      <CategoriesPreview class="segment" />
-      <CommunityPreview class="segment text-center" />
-      <EarnWithUs class="segment" />
-      <HearTheExperiences v-if="showExperiences" class="segment" />
-      <ProZone v-if="usePremiumServices" class="segment" />
     </main>
   </div>
 </template>
