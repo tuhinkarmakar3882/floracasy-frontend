@@ -5,7 +5,7 @@
     </section>
     <aside
       class="carousel-navigation floating-carousel"
-      :style="`absoluteMode` && { position: 'absolute' }"
+      :style="absoluteMode && { position: 'absolute' }"
     >
       <span
         v-for="(item, index) in totalItems"
