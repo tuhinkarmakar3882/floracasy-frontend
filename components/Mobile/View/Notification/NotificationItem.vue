@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { getRelativeTime } from '@/utils/utility'
+import { getRelativeTime, showUITip } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 
@@ -130,7 +130,7 @@ export default {
     getRelativeTime,
 
     async performNotificationAction() {
-      this.notification.unread && this.markAsRead()
+      this.notification.unread && (await this.markAsRead())
 
       const actionName = this.notification.onclickAction
       const actionInfo = this.notification.onclickActionInfo
@@ -172,13 +172,19 @@ export default {
       }
     },
 
-    markAsRead() {
-      this.$axios
-        .$post(endpoints.notification_system.updateNotificationSeenStatus, {
-          identifier: this.notification.identifier,
-          is_read: true,
-        })
-        .then(() => (this.notification.unread = false))
+    async markAsRead() {
+      try {
+        await this.$axios.$post(
+          endpoints.notification_system.updateNotificationSeenStatus,
+          {
+            identifier: this.notification.identifier,
+            is_read: true,
+          }
+        )
+        this.notification.unread = false
+      } catch (e) {
+        await showUITip(this.$store, 'Network Error!', 'error')
+      }
     },
 
     async hideModal() {
