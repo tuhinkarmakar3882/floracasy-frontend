@@ -1,3 +1,6 @@
+import sanitizeHtml from 'sanitize-html'
+import { sanitizationConfig } from '~/config/sanitizationConfig'
+
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
@@ -125,4 +128,8 @@ export const destroySetup = (stream, arrayMode = false) => {
       track.stop()
     })
   } catch (e) {}
+}
+
+export const cleanHTML = (rawHTML) => {
+  return sanitizeHtml(rawHTML, sanitizationConfig)
 }
