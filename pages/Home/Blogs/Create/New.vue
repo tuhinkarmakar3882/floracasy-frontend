@@ -400,7 +400,7 @@
             <editor-content
               :editor="editor"
               class="editor__content px-4 pt-4"
-              style="min-height: calc(100vh - 150px)"
+              style="min-height: calc(100vh - 150px); overflow: scroll"
             />
           </div>
         </client-only>
@@ -411,14 +411,14 @@
         <section class="px-4 blog-body">
           <p class="mb-2">
             <nuxt-link
-              :to="navigationRoutes.Home.Blogs.Create.New"
+              :to="navigationRoutes.Home.Blogs.Create.AddBlog"
               class="no-underline"
             >
               {{ user.displayName }}
             </nuxt-link>
             IN
             <nuxt-link
-              :to="navigationRoutes.Home.Blogs.Create.New"
+              :to="navigationRoutes.Home.Blogs.Create.AddBlog"
               class="no-underline"
             >
               {{ mappingTable[blogCategory].name }}
@@ -443,7 +443,7 @@
           </p>
         </section>
         <section class="blog-body px-4 pb-8">
-          <article v-html="noXSS(content, sanitizationConfig)" />
+          <article v-html="cleanHTML(content, sanitizationConfig)" />
         </section>
       </div>
     </template>
@@ -453,11 +453,9 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
-import sanitizeHtml from 'sanitize-html'
-import { getRelativeTime } from '@/utils/utility'
+import { cleanHTML, getRelativeTime } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-import { sanitizationConfig } from '@/config/sanitizationConfig'
 import {
   Blockquote,
   Bold,
@@ -518,8 +516,6 @@ export default {
       previewEditor: null,
       prevURL: null,
       navigationRoutes,
-      noXSS: sanitizeHtml,
-      sanitizationConfig,
       step: 1,
       pageTitle: 'Create New Blog',
       totalSteps: [1, 2, 3, 4],
@@ -625,6 +621,7 @@ export default {
   },
 
   methods: {
+    cleanHTML,
     async handleBackButtonPress() {
       if (this.step === 1) {
         this.prevURL

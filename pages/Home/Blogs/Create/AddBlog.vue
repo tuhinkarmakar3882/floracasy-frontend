@@ -1,0 +1,545 @@
+<template>
+  <div class="new-editor">
+    <AppBarHeader>
+      <template #title>{{ pageTitle }}</template>
+
+      <template #action-button>
+        <button
+          v-if="stepNumber === 0"
+          v-ripple
+          class="secondary-outlined-btn"
+          @click="nextStep"
+        >
+          Next
+        </button>
+
+        <button
+          v-else-if="stepNumber === 1"
+          v-ripple
+          class="secondary-outlined-btn"
+          @click="showPreview"
+        >
+          Preview
+        </button>
+
+        <button v-else-if="stepNumber === 2" v-ripple class="secondary-btn">
+          Publish
+        </button>
+      </template>
+    </AppBarHeader>
+
+    <main v-if="stepNumber === 0" class="steps px-4 py-4">
+      <InputField class="my-4" label="Blog Title" hint-text="*Required">
+        <template #input-field>
+          <input v-model="blog.title" type="text" />
+        </template>
+      </InputField>
+      <InputField class="my-4" label="Blog Subtitle">
+        <template #input-field>
+          <input v-model="blog.subtitle" type="text" />
+        </template>
+      </InputField>
+      <InputField class="my-4" label="Blog Cover Image URL">
+        <template #input-field>
+          <input v-model="blog.coverImage" type="text" />
+        </template>
+      </InputField>
+
+      <select v-model="blog.category">
+        <option
+          v-for="category in categories"
+          :key="category.id"
+          :value="category.id"
+        >
+          {{ category.name }}
+        </option>
+      </select>
+    </main>
+
+    <main v-show="stepNumber === 1" class="steps">
+      <div id="toolbar">
+        <button v-ripple class="ql-bold" type="button">
+          <i class="mdi mdi-format-bold"></i>
+        </button>
+        <button v-ripple class="ql-italic" type="button">
+          <i class="mdi mdi-format-italic"></i>
+        </button>
+        <button v-ripple class="ql-underline" type="button">
+          <i class="mdi mdi-format-underline"></i>
+        </button>
+        <button v-ripple class="ql-divider" type="button">
+          <i class="mdi mdi-minus"></i>
+        </button>
+        <button v-ripple class="ql-blockquote" type="button">
+          <i class="mdi mdi-format-quote-close"></i>
+        </button>
+        <button v-ripple class="ql-code-block" type="button">
+          <i class="mdi mdi-xml"></i>
+        </button>
+        <button v-ripple class="ql-link" type="button">
+          <i class="mdi mdi-link"></i>
+        </button>
+        <button v-ripple class="ql-header ql-active" type="button" value="">
+          <i class="mdi mdi-format-paragraph"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="1">
+          <i class="mdi mdi-format-header-1"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="2">
+          <i class="mdi mdi-format-header-2"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="3">
+          <i class="mdi mdi-format-header-3"></i>
+        </button>
+        <button v-ripple class="ql-image" type="button">
+          <i class="mdi mdi-image"></i>
+        </button>
+        <button v-ripple class="ql-video" type="button">
+          <i class="mdi mdi-video"></i>
+        </button>
+        <button v-ripple class="ql-clean" type="button">
+          <i class="mdi mdi-format-clear"></i>
+        </button>
+        <button v-ripple class="ql-strike" type="button">
+          <i class="mdi mdi-format-strikethrough-variant"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="4">
+          <i class="mdi mdi-format-header-4"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="5">
+          <i class="mdi mdi-format-header-5"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="6">
+          <i class="mdi mdi-format-header-6"></i>
+        </button>
+        <button v-ripple class="ql-list" type="button" value="ordered">
+          <i class="mdi mdi-format-list-numbered"></i>
+        </button>
+        <button v-ripple class="ql-list" type="button" value="bullet">
+          <i class="mdi mdi-format-list-bulleted"></i>
+        </button>
+        <button v-ripple class="ql-script" type="button" value="sub">
+          <i class="mdi mdi-format-subscript"></i>
+        </button>
+        <button v-ripple class="ql-script" type="button" value="super">
+          <i class="mdi mdi-format-superscript"></i>
+        </button>
+        <button v-ripple class="ql-indent" type="button" value="-1">
+          <i class="mdi mdi-format-indent-decrease"></i>
+        </button>
+        <button v-ripple class="ql-indent" type="button" value="+1">
+          <i class="mdi mdi-format-indent-increase"></i>
+        </button>
+        <button v-ripple class="ql-align ql-active" type="button" value="">
+          <i class="mdi mdi-format-align-left"></i>
+        </button>
+        <button v-ripple class="ql-align" type="button" value="center">
+          <i class="mdi mdi-format-align-center"></i>
+        </button>
+        <button v-ripple class="ql-align" type="button" value="right">
+          <i class="mdi mdi-format-align-right"></i>
+        </button>
+        <button v-ripple class="ql-align" type="button" value="justify">
+          <i class="mdi mdi-format-align-justify"></i>
+        </button>
+      </div>
+
+      <div id="editor" />
+    </main>
+
+    <main v-if="stepNumber === 2" class="steps px-4">
+      <section>
+        <p class="mb-2">
+          <span class="secondary"> {{ user.displayName }} </span>
+          IN
+          <span class="secondary">
+            <!--            {{ mappingTable[blog.category].name }}-->
+          </span>
+        </p>
+        <h3 class="mb-4">{{ blog.title }}</h3>
+        <small>
+          <i class="mdi mdi-clock-time-nine-outline" />
+          {{ getRelativeTime(new Date()) }}
+        </small>
+        <img
+          v-if="blog.coverImage"
+          :alt="blog.title"
+          :src="blog.coverImage"
+          class="mt-5"
+          style="width: 100%; object-fit: cover; max-height: 250px"
+        />
+        <p class="my-4">
+          {{ blog.subtitle }}
+        </p>
+      </section>
+
+      <section class="pb-4">
+        <article class="ql-editor" v-html="cleanHTML(blog.content)" />
+      </section>
+    </main>
+  </div>
+</template>
+
+<script>
+import 'assets/strict/custom_quill.scss'
+import 'quill/dist/quill.snow.css'
+import { mapGetters } from 'vuex'
+import { cleanHTML, getRelativeTime } from '~/utils/utility'
+
+export default {
+  name: 'AddBlog',
+  middleware: 'isAuthenticated',
+
+  data() {
+    return {
+      pageTitle: 'Create new Blog',
+      Quill: undefined,
+      editor: undefined,
+      toolbarOptions: undefined,
+
+      categories: [],
+      blog: {
+        title: null,
+        subtitle: null,
+        category: null,
+        coverImage: null,
+        content: undefined,
+      },
+      stepNumber: 0,
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+  },
+
+  watch: {
+    stepNumber(value) {
+      switch (value) {
+        case 0:
+          this.pageTitle = 'Create new Blog'
+          break
+        case 1:
+          this.pageTitle = 'Write Blog'
+          break
+        case 2:
+          this.pageTitle = 'Preview'
+          break
+      }
+    },
+  },
+
+  mounted() {
+    this.$router.beforeEach((to, _, next) => {
+      switch (to.hash) {
+        case '#1':
+          this.stepNumber = 1
+          break
+        case '#2':
+          this.stepNumber = 2
+          break
+        default:
+          this.stepNumber = 0
+          break
+      }
+      next()
+    })
+
+    this.setupQuillEditor()
+  },
+
+  beforeDestroy() {
+    this.$router.beforeEach((__, _, next) => {
+      next()
+    })
+  },
+
+  methods: {
+    cleanHTML,
+    getRelativeTime,
+
+    setupIcons() {
+      const icons = this.Quill.import('ui/icons')
+
+      icons.bold = '<i class="mdi mdi-format-bold" />'
+      icons.divider = '<i class="mdi mdi-minus" />'
+      icons.italic = '<i class="mdi mdi-format-italic" />'
+      icons.strike = '<i class="mdi mdi-format-strikethrough-variant" />'
+      icons.underline = '<i class="mdi mdi-format-underline" />'
+      icons['code-block'] = '<i class="mdi mdi-xml" />'
+      icons.header = {
+        '': '<i class="mdi mdi-format-paragraph" />',
+        1: '<i class="mdi mdi-format-header-1" />',
+        2: '<i class="mdi mdi-format-header-2" />',
+        3: '<i class="mdi mdi-format-header-3" />',
+        4: '<i class="mdi mdi-format-header-4" />',
+        5: '<i class="mdi mdi-format-header-5" />',
+        6: '<i class="mdi mdi-format-header-6" />',
+      }
+      icons.blockquote = '<i class="mdi mdi-format-quote-close" />'
+      icons.image = '<i class="mdi mdi-image" />'
+      icons.video = '<i class="mdi mdi-video" />'
+      icons.link = '<i class="mdi mdi-link" />'
+      icons.list = {
+        ordered: '<i class="mdi mdi-format-list-numbered" />',
+        bullet: '<i class="mdi mdi-format-list-bulleted" />',
+        check: '<i class="mdi mdi-check" />',
+      }
+      icons.script = {
+        sub: '<i class="mdi mdi-format-subscript" />',
+        super: '<i class="mdi mdi-format-superscript" />',
+      }
+      icons.align = {
+        '': '<i class="mdi mdi-format-align-left" />',
+        center: '<i class="mdi mdi-format-align-center" />',
+        right: '<i class="mdi mdi-format-align-right" />',
+        justify: '<i class="mdi mdi-format-align-justify" />',
+      }
+      icons.indent = {
+        '+1': '<i class="mdi mdi-format-indent-increase" />',
+        '-1': '<i class="mdi mdi-format-indent-decrease" />',
+      }
+      icons.clean = '<i class="mdi mdi-format-clear" />'
+    },
+    setupCustomTags() {
+      const BlockEmbed = this.Quill.import('blots/block')
+
+      class DividerBlot extends BlockEmbed {}
+
+      DividerBlot.blotName = 'divider'
+      DividerBlot.tagName = 'hr'
+      this.Quill.register(DividerBlot)
+    },
+    setupCustomHandler() {
+      const quill = this.editor
+      const Quill = this.Quill
+
+      const toolbar = this.editor.getModule('toolbar')
+      toolbar.addHandler('image', () => {
+        const range = quill.getSelection(true)
+        const value = prompt('Enter Image URL: ', false)
+        quill.insertText(range.index, '\n', Quill.sources.USER)
+        quill.insertEmbed(
+          range.index + 1,
+          'image',
+          {
+            alt: 'Quill Cloud',
+            url: value,
+          },
+          Quill.sources.USER
+        )
+        quill.setSelection(range.index + 2, Quill.sources.SILENT)
+      })
+    },
+    setupToolbarOptions() {
+      this.toolbarOptions = [
+        'bold',
+        'italic',
+        'underline',
+        'divider',
+        'strike',
+        'blockquote',
+        'code-block',
+        'link',
+        { header: '' },
+        { header: 1 },
+        { header: 2 },
+        { header: 3 },
+        { header: 4 },
+        { header: 5 },
+        { header: 6 },
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { script: 'sub' },
+        { script: 'super' },
+        { indent: '-1' },
+        { indent: '+1' },
+        { align: '' },
+        { align: 'center' },
+        { align: 'right' },
+        { align: 'justify' },
+        'image',
+        'video',
+        'clean',
+      ]
+    },
+
+    setupQuillEditor() {
+      this.Quill = require('quill/dist/quill.js')
+
+      this.setupIcons()
+      this.setupCustomTags()
+      this.setupToolbarOptions()
+
+      this.editor = new this.Quill('#editor', {
+        theme: 'snow',
+        modules: {
+          toolbar: '#toolbar',
+        },
+        syntax: true,
+        placeholder: `Compose Something great today!\n\nNeed Inspiration? Read the following quote:\n\n“Close the door. Write with no one looking over your shoulder. Don’t try to figure out what other people want to hear from you; figure out what you have to say. It’s the one and only thing you have to offer.”\n- Barbara Kingsolver`,
+      })
+
+      // this.setupCustomHandler()
+      window.editor = this.editor
+    },
+
+    nextStep() {
+      this.stepNumber = 1
+      this.$router.push('#1')
+    },
+    showPreview() {
+      this.blog.content = this.editor.root.innerHTML
+      this.stepNumber = 2
+      this.$router.push('#2')
+    },
+  },
+
+  head() {
+    return {
+      title: this.pageTitle,
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+$inactive-background: #e8f8f5;
+$inactive-color: #5a5a5a;
+$active-background: $primary-matte;
+$active-color: $white;
+
+.new-editor {
+  button {
+    padding: 0;
+    min-width: auto;
+  }
+
+  main.steps {
+    max-width: $large;
+    margin: auto;
+  }
+
+  #editor {
+    border: 1px solid $card-background;
+  }
+
+  #toolbar {
+    display: flex;
+    vertical-align: middle;
+    overflow: scroll;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    height: 56px;
+    background: $inactive-background;
+
+    button {
+      height: 56px;
+      min-width: 60px;
+      display: grid;
+      place-items: center;
+      border-radius: 0;
+
+      i {
+        color: $inactive-color;
+        font-size: 28px;
+      }
+
+      &.ql-active {
+        background: $active-background;
+        outline: 0 none;
+        box-shadow: 0 0 4px $card-background;
+
+        i {
+          color: $active-color;
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}
+
+article.ql-editor {
+  padding: 0;
+}
+</style>
+
+<!--
+  .ql-editor.ql-blank {
+    &::before {
+      color: $muted;
+      line-height: 1.75;
+      font-size: 16px;
+      font-weight: 300;
+      font-style: normal;
+    }
+  }
+
+  .ql-editor {
+    min-height: calc(100vh - 112px);
+  }
+
+  .ql-toolbar.ql-snow {
+    position: sticky;
+    top: 0;
+    padding: 0;
+    border: none;
+    z-index: 1;
+    background: $inactive-background !important;
+  }
+
+  .ql-tooltip,
+  .ql-tooltip.ql-editing {
+    background: $segment-background;
+    border: none;
+    box-shadow: $default-box-shadow;
+    padding: 1rem;
+    border-radius: 8px;
+    z-index: 2;
+
+    &.ql-flip {
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      input {
+        margin: 1rem 0 !important;
+        background: $footer-background;
+        border-bottom: 1px solid red !important;
+        padding: 1.2rem 0;
+      }
+
+      .ql-action {
+        display: inline-block;
+        font-size: 16px;
+
+        &::after {
+          text-decoration: none;
+          margin-left: 0;
+        }
+      }
+
+      .ql-remove {
+        display: inline-block;
+        color: $danger-light !important;
+        text-decoration: none;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .ql-snow .ql-tooltip[data-mode='video']::before {
+    content: 'Enter video URL:';
+    color: white;
+  }
+
+  .ql-snow.ql-toolbar input.ql-image[type='file'],
+  .ql-snow .ql-toolbar input.ql-image[type='file'] {
+    display: none;
+  }
+-->
