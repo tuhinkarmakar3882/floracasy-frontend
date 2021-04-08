@@ -124,7 +124,7 @@
           <i class="mdi mdi-format-header-3"></i>
         </button>
 
-        <button v-ripple class="ql-image" type="button">
+        <button v-ripple class="ql-photo" type="button">
           <i class="mdi mdi-image"></i>
         </button>
         <button v-ripple class="ql-video" type="button">
@@ -351,6 +351,7 @@ export default {
       }
       icons.blockquote = '<i class="mdi mdi-format-quote-close" />'
       icons.image = '<i class="mdi mdi-image" />'
+      icons.photo = '<i class="mdi mdi-image-album" />'
       icons.video = '<i class="mdi mdi-video" />'
       icons.link = '<i class="mdi mdi-link" />'
       icons.list = {
@@ -374,34 +375,51 @@ export default {
       icons.clean = '<i class="mdi mdi-format-clear" />'
     },
     setupCustomTags() {
-      const BlockEmbed = this.Quill.import('blots/block')
-
-      class DividerBlot extends BlockEmbed {}
+      const Block = this.Quill.import('blots/block')
+      class DividerBlot extends Block {}
 
       DividerBlot.blotName = 'divider'
       DividerBlot.tagName = 'hr'
+
       this.Quill.register(DividerBlot)
+
+      const BlockEmbed = this.Quill.import('blots/block/embed')
+      class PhotoBlot extends BlockEmbed {
+        static create(value) {
+          const node = super.create()
+          node.setAttribute('alt', value.alt)
+          node.setAttribute('src', value.url)
+          return node
+        }
+
+        static value(node) {
+          return {
+            alt: node.getAttribute('alt'),
+            url: node.getAttribute('src'),
+          }
+        }
+      }
+      PhotoBlot.blotName = 'photo'
+      PhotoBlot.tagName = 'img'
+      this.Quill.register(PhotoBlot)
     },
     setupCustomHandler() {
-      const quill = this.editor
-      const Quill = this.Quill
-
-      const toolbar = this.editor.getModule('toolbar')
-      toolbar.addHandler('image', () => {
-        const range = quill.getSelection(true)
-        const value = prompt('Enter Image URL: ', false)
-        quill.insertText(range.index, '\n', Quill.sources.USER)
-        quill.insertEmbed(
-          range.index + 1,
-          'image',
-          {
-            alt: 'Quill Cloud',
-            url: value,
-          },
-          Quill.sources.USER
-        )
-        quill.setSelection(range.index + 2, Quill.sources.SILENT)
-      })
+      this.editor.getModule('toolbar').addHandler('photo', this.addImage)
+    },
+    addImage() {
+      const range = this.editor.getSelection(true)
+      const value = prompt('Enter Image URL: ', 'https://picsum.photos/500')
+      this.editor.insertText(range.index, '\n', this.Quill.sources.USER)
+      this.editor.insertEmbed(
+        range.index + 1,
+        'photo',
+        {
+          alt: 'Image Upload',
+          url: value,
+        },
+        this.Quill.sources.USER
+      )
+      this.editor.setSelection(range.index + 2, this.Quill.sources.SILENT)
     },
     setupToolbarOptions() {
       this.toolbarOptions = [
@@ -434,6 +452,7 @@ export default {
         'clean',
       ]
     },
+
     setupQuillEditor() {
       this.Quill = require('quill/dist/quill.js')
 
@@ -450,7 +469,7 @@ export default {
         placeholder: `Compose Something great today!\n\nNeed Inspiration? Read the following quote:\n\n“Close the door. Write with no one looking over your shoulder. Don’t try to figure out what other people want to hear from you; figure out what you have to say. It’s the one and only thing you have to offer.”\n- Barbara Kingsolver`,
       })
 
-      // this.setupCustomHandler()
+      this.setupCustomHandler()
       window.editor = this.editor
     },
 
