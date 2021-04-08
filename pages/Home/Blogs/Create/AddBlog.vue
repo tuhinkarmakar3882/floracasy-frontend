@@ -153,7 +153,7 @@
           <span class="secondary"> {{ user.displayName }} </span>
           IN
           <span class="secondary">
-            <!--            {{ mappingTable[blog.category].name }}-->
+            {{ mappingTable[blog.category].name }}
           </span>
         </p>
         <h3 class="mb-4">{{ blog.title }}</h3>
@@ -185,10 +185,29 @@ import 'assets/strict/custom_quill.scss'
 import 'quill/dist/quill.snow.css'
 import { mapGetters } from 'vuex'
 import { cleanHTML, getRelativeTime } from '~/utils/utility'
+import endpoints from '~/api/endpoints'
+
+function createMappingFor(categoryList) {
+  const mappingTable = {}
+  categoryList.forEach((category) => {
+    mappingTable[category.id] = category
+  })
+  return mappingTable
+}
 
 export default {
   name: 'AddBlog',
   middleware: 'isAuthenticated',
+
+  async asyncData({ $axios, from: prevURL }) {
+    const response = await $axios
+      .$get(endpoints.categories.fetch)
+      .then((response) => response.data)
+
+    const mappingTable = createMappingFor(response)
+
+    return { categories: response, mappingTable, prevURL }
+  },
 
   data() {
     return {
@@ -196,7 +215,7 @@ export default {
       Quill: undefined,
       editor: undefined,
       toolbarOptions: undefined,
-
+      mappingTable: {},
       categories: [],
       blog: {
         title: null,
@@ -231,7 +250,7 @@ export default {
     },
   },
 
-  mounted() {
+  async mounted() {
     this.$router.beforeEach((to, _, next) => {
       switch (to.hash) {
         case '#1':
@@ -246,6 +265,12 @@ export default {
       }
       next()
     })
+
+    const currentUser = await this.$store.getters['UserManagement/getUser']
+    if (!currentUser) {
+      this.loadingProfile = true
+      await this.$store.dispatch('UserManagement/fetchData')
+    }
 
     this.setupQuillEditor()
   },
@@ -468,78 +493,3 @@ article.ql-editor {
   padding: 0;
 }
 </style>
-
-<!--
-  .ql-editor.ql-blank {
-    &::before {
-      color: $muted;
-      line-height: 1.75;
-      font-size: 16px;
-      font-weight: 300;
-      font-style: normal;
-    }
-  }
-
-  .ql-editor {
-    min-height: calc(100vh - 112px);
-  }
-
-  .ql-toolbar.ql-snow {
-    position: sticky;
-    top: 0;
-    padding: 0;
-    border: none;
-    z-index: 1;
-    background: $inactive-background !important;
-  }
-
-  .ql-tooltip,
-  .ql-tooltip.ql-editing {
-    background: $segment-background;
-    border: none;
-    box-shadow: $default-box-shadow;
-    padding: 1rem;
-    border-radius: 8px;
-    z-index: 2;
-
-    &.ql-flip {
-      bottom: 0;
-      left: 0;
-      right: 0;
-
-      input {
-        margin: 1rem 0 !important;
-        background: $footer-background;
-        border-bottom: 1px solid red !important;
-        padding: 1.2rem 0;
-      }
-
-      .ql-action {
-        display: inline-block;
-        font-size: 16px;
-
-        &::after {
-          text-decoration: none;
-          margin-left: 0;
-        }
-      }
-
-      .ql-remove {
-        display: inline-block;
-        color: $danger-light !important;
-        text-decoration: none;
-        font-size: 16px;
-      }
-    }
-  }
-
-  .ql-snow .ql-tooltip[data-mode='video']::before {
-    content: 'Enter video URL:';
-    color: white;
-  }
-
-  .ql-snow.ql-toolbar input.ql-image[type='file'],
-  .ql-snow .ql-toolbar input.ql-image[type='file'] {
-    display: none;
-  }
--->
