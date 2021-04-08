@@ -64,7 +64,7 @@
         </template>
       </InputField>
 
-      <InputField class="my-2" label="Blog Category">
+      <InputField class="my-2" label="Blog Category" hint-text="*Required">
         <template #input-field>
           <select v-model="blog.category">
             <option
@@ -184,7 +184,7 @@
       <div id="editor" />
     </main>
 
-    <main v-if="stepNumber === 2" class="steps px-4">
+    <main v-if="stepNumber === 2" class="steps px-4 pt-6">
       <section>
         <p class="mb-2">
           <span class="secondary"> {{ user.displayName }} </span>
@@ -249,7 +249,7 @@ export default {
 
   data() {
     return {
-      pageTitle: 'Create new Blog',
+      pageTitle: 'Create Blog',
       Quill: undefined,
       editor: undefined,
       toolbarOptions: undefined,
@@ -283,7 +283,7 @@ export default {
     stepNumber(value) {
       switch (value) {
         case 0:
-          this.pageTitle = 'Create new Blog'
+          this.pageTitle = 'Create Blog'
           break
         case 1:
           this.pageTitle = 'Write Blog'
