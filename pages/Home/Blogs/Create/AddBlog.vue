@@ -1,6 +1,6 @@
 <template>
   <div class="new-editor">
-    <AppBarHeader>
+    <AppBarHeader class="app-header">
       <template #title>{{ pageTitle }}</template>
 
       <template #action-button>
@@ -43,31 +43,46 @@
     </AppBarHeader>
 
     <main v-if="stepNumber === 0" class="steps px-4 py-4">
-      <InputField class="my-4" hint-text="*Required" label="Blog Title">
+      <InputField
+        class="my-4"
+        hint-text="*Required"
+        label="Blog Title"
+        material
+      >
         <template #input-field>
           <input v-model="blog.title" type="text" />
         </template>
       </InputField>
-      <InputField class="my-4" label="Blog Subtitle">
+      <InputField class="my-4" label="Blog Subtitle" material>
         <template #input-field>
           <input v-model="blog.subtitle" type="text" />
         </template>
       </InputField>
-      <InputField class="my-4" label="Blog Cover Image URL">
+      <InputField class="mt-4" label="Blog Cover Image URL" material>
         <template #input-field>
           <input v-model="blog.coverImage" type="text" />
         </template>
       </InputField>
 
-      <select v-model="blog.category">
-        <option
-          v-for="category in categories"
-          :key="category.id"
-          :value="category.id"
-        >
-          {{ category.name }}
-        </option>
-      </select>
+      <InputField class="my-2" label="Blog Category">
+        <template #input-field>
+          <select v-model="blog.category">
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </template>
+      </InputField>
+
+      <!--      <InputField class="my-2" material label="Tags for the Blog">-->
+      <!--        <template #input-field>-->
+      <!--          <textarea v-model="blog.tags" @keyup.space="convertToChips" />-->
+      <!--        </template>-->
+      <!--      </InputField>-->
     </main>
 
     <main v-show="stepNumber === 1" class="steps">
@@ -245,6 +260,7 @@ export default {
         subtitle: null,
         category: null,
         coverImage: null,
+        tags: null,
         content: undefined,
       },
       stepNumber: 0,
@@ -313,6 +329,7 @@ export default {
   methods: {
     cleanHTML,
     getRelativeTime,
+    convertToChips() {},
 
     setupIcons() {
       const icons = this.Quill.import('ui/icons')
@@ -485,6 +502,12 @@ $active-color: $white;
     min-width: auto;
   }
 
+  .app-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 1;
+  }
+
   .secondary-outlined-btn,
   .disabled-btn,
   .secondary-btn {
@@ -509,9 +532,10 @@ $active-color: $white;
     margin: 0;
     padding: 0;
     align-items: center;
-    height: 56px;
+    height: 2 * $x-large-unit;
     background: $inactive-background;
     position: sticky;
+    border: none;
     top: 0;
     z-index: 1;
 
