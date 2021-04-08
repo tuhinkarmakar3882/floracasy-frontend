@@ -1,0 +1,112 @@
+@import "../all-variables";
+
+body {
+  font-family: $Raleway !important;
+
+  strong {
+    font-weight: 900 !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $white !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    font-family: $Prata !important;
+    line-height: 1.6 !important;
+    letter-spacing: $single-unit !important;
+    word-break: break-word !important;
+
+    a {
+      color: $secondary-highlight !important;
+    }
+
+    strong {
+      font-weight: 400 !important;
+    }
+  }
+
+  h1 {
+    font-size: 2.2rem !important;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+  }
+
+  h3 {
+    font-size: 1.8rem !important;
+  }
+
+  h4 {
+    font-size: 1.6rem !important;
+  }
+
+  h5 {
+    font-size: 1.4rem !important;
+  }
+
+  h6 {
+    font-size: 1.2rem !important;
+  }
+
+  p {
+    color: #bababa !important;
+    font-family: $Raleway !important;
+    letter-spacing: $single-unit !important;
+    font-weight: 300 !important;
+    font-size: 1rem !important;
+    line-height: 1.75 !important;
+    word-break: break-word !important;
+  }
+
+  small {
+    font-family: $Nunito-Sans !important;
+    font-weight: 300 !important;
+    font-size: 0.9rem !important;
+  }
+
+  span, p, small {
+    a {
+      color: $secondary-highlight !important;
+    }
+  }
+
+  input {
+    font-family: $Nunito-Sans !important;
+    transition: all 150ms ease-in-out !important;
+  }
+
+  label {
+    font-family: $Raleway !important;
+    transition: all 150ms ease-in-out !important;
+  }
+
+  ul, ol {
+    li {
+      font-family: $Nunito-Sans !important;
+      font-weight: 300 !important;
+      font-size: 1rem !important;
+    }
+  }
+}
+
+.heading-title {
+  text-align: center !important;
+  position: relative !important;
+  font-weight: 300 !important;
+
+  &::after {
+    content: '' !important;
+    position: absolute !important;
+    height: $single-unit !important;
+    width: 84px !important;
+    bottom: (-$milli-unit) !important;
+    left: calc(50% - 42px) !important;
+    background: lighten($primary, $lighten-percentage) !important;
+  }
+}
