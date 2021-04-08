@@ -101,7 +101,7 @@
           <InArticleAd key="Top-Ad" />
           <article
             ref="articleContent"
-            class="my-6"
+            class="my-6 ql-editor"
             v-html="cleanHTML(blog.content)"
           />
           <InArticleAd key="Bottom-Ad" />
@@ -157,6 +157,8 @@
 
 <script>
 import endpoints from '@/api/endpoints'
+import 'assets/strict/custom_quill.scss'
+import 'quill/dist/quill.snow.css'
 
 import {
   cleanHTML,
