@@ -255,7 +255,7 @@ export default {
           name: 'Create New Blog',
           icon: 'mdi mdi-newspaper-variant',
           color: '#8FF2E1',
-          route: navigationRoutes.Home.Blogs.Create.New,
+          route: navigationRoutes.Home.Blogs.Create.AddBlog,
         },
         {
           name: 'Create New Post',
