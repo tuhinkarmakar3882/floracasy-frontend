@@ -7,7 +7,10 @@
         <button
           v-if="stepNumber === 0"
           v-ripple
-          class="secondary-outlined-btn"
+          :class="
+            hasTitleAndCategory ? 'secondary-outlined-btn' : 'disabled-btn'
+          "
+          :disabled="!hasTitleAndCategory"
           @click="nextStep"
         >
           Next
@@ -16,20 +19,31 @@
         <button
           v-else-if="stepNumber === 1"
           v-ripple
-          class="secondary-outlined-btn"
+          :class="
+            hasTitleAndCategory ? 'secondary-outlined-btn' : 'disabled-btn'
+          "
+          :disabled="!hasTitleAndCategory"
           @click="showPreview"
         >
           Preview
         </button>
 
-        <button v-else-if="stepNumber === 2" v-ripple class="secondary-btn">
+        <button
+          v-else-if="stepNumber === 2"
+          v-ripple
+          :class="
+            hasBody && hasTitleAndCategory ? 'secondary-btn' : 'disabled-btn'
+          "
+          :disabled="!hasBody && !hasTitleAndCategory"
+          @click="publish"
+        >
           Publish
         </button>
       </template>
     </AppBarHeader>
 
     <main v-if="stepNumber === 0" class="steps px-4 py-4">
-      <InputField class="my-4" label="Blog Title" hint-text="*Required">
+      <InputField class="my-4" hint-text="*Required" label="Blog Title">
         <template #input-field>
           <input v-model="blog.title" type="text" />
         </template>
@@ -67,9 +81,11 @@
         <button v-ripple class="ql-underline" type="button">
           <i class="mdi mdi-format-underline"></i>
         </button>
+
         <button v-ripple class="ql-divider" type="button">
           <i class="mdi mdi-minus"></i>
         </button>
+
         <button v-ripple class="ql-blockquote" type="button">
           <i class="mdi mdi-format-quote-close"></i>
         </button>
@@ -79,6 +95,7 @@
         <button v-ripple class="ql-link" type="button">
           <i class="mdi mdi-link"></i>
         </button>
+
         <button v-ripple class="ql-header ql-active" type="button" value="">
           <i class="mdi mdi-format-paragraph"></i>
         </button>
@@ -91,45 +108,14 @@
         <button v-ripple class="ql-header" type="button" value="3">
           <i class="mdi mdi-format-header-3"></i>
         </button>
+
         <button v-ripple class="ql-image" type="button">
           <i class="mdi mdi-image"></i>
         </button>
         <button v-ripple class="ql-video" type="button">
           <i class="mdi mdi-video"></i>
         </button>
-        <button v-ripple class="ql-clean" type="button">
-          <i class="mdi mdi-format-clear"></i>
-        </button>
-        <button v-ripple class="ql-strike" type="button">
-          <i class="mdi mdi-format-strikethrough-variant"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="4">
-          <i class="mdi mdi-format-header-4"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="5">
-          <i class="mdi mdi-format-header-5"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="6">
-          <i class="mdi mdi-format-header-6"></i>
-        </button>
-        <button v-ripple class="ql-list" type="button" value="ordered">
-          <i class="mdi mdi-format-list-numbered"></i>
-        </button>
-        <button v-ripple class="ql-list" type="button" value="bullet">
-          <i class="mdi mdi-format-list-bulleted"></i>
-        </button>
-        <button v-ripple class="ql-script" type="button" value="sub">
-          <i class="mdi mdi-format-subscript"></i>
-        </button>
-        <button v-ripple class="ql-script" type="button" value="super">
-          <i class="mdi mdi-format-superscript"></i>
-        </button>
-        <button v-ripple class="ql-indent" type="button" value="-1">
-          <i class="mdi mdi-format-indent-decrease"></i>
-        </button>
-        <button v-ripple class="ql-indent" type="button" value="+1">
-          <i class="mdi mdi-format-indent-increase"></i>
-        </button>
+
         <button v-ripple class="ql-align ql-active" type="button" value="">
           <i class="mdi mdi-format-align-left"></i>
         </button>
@@ -139,8 +125,44 @@
         <button v-ripple class="ql-align" type="button" value="right">
           <i class="mdi mdi-format-align-right"></i>
         </button>
-        <button v-ripple class="ql-align" type="button" value="justify">
-          <i class="mdi mdi-format-align-justify"></i>
+
+        <button v-ripple class="ql-strike" type="button">
+          <i class="mdi mdi-format-strikethrough-variant"></i>
+        </button>
+
+        <button v-ripple class="ql-header" type="button" value="4">
+          <i class="mdi mdi-format-header-4"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="5">
+          <i class="mdi mdi-format-header-5"></i>
+        </button>
+        <button v-ripple class="ql-header" type="button" value="6">
+          <i class="mdi mdi-format-header-6"></i>
+        </button>
+
+        <button v-ripple class="ql-list" type="button" value="ordered">
+          <i class="mdi mdi-format-list-numbered"></i>
+        </button>
+        <button v-ripple class="ql-list" type="button" value="bullet">
+          <i class="mdi mdi-format-list-bulleted"></i>
+        </button>
+
+        <button v-ripple class="ql-indent" type="button" value="-1">
+          <i class="mdi mdi-format-indent-decrease"></i>
+        </button>
+        <button v-ripple class="ql-indent" type="button" value="+1">
+          <i class="mdi mdi-format-indent-increase"></i>
+        </button>
+
+        <button v-ripple class="ql-script" type="button" value="sub">
+          <i class="mdi mdi-format-subscript"></i>
+        </button>
+        <button v-ripple class="ql-script" type="button" value="super">
+          <i class="mdi mdi-format-superscript"></i>
+        </button>
+
+        <button v-ripple class="ql-clean" type="button">
+          <i class="mdi mdi-format-clear"></i>
         </button>
       </div>
 
@@ -184,8 +206,9 @@
 import 'assets/strict/custom_quill.scss'
 import 'quill/dist/quill.snow.css'
 import { mapGetters } from 'vuex'
-import { cleanHTML, getRelativeTime } from '~/utils/utility'
+import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 function createMappingFor(categoryList) {
   const mappingTable = {}
@@ -232,6 +255,12 @@ export default {
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
+    hasTitleAndCategory() {
+      return !!this.blog.title && !!this.blog.category
+    },
+    hasBody() {
+      return !!this.blog.content
+    },
   },
 
   watch: {
@@ -320,7 +349,6 @@ export default {
         '': '<i class="mdi mdi-format-align-left" />',
         center: '<i class="mdi mdi-format-align-center" />',
         right: '<i class="mdi mdi-format-align-right" />',
-        justify: '<i class="mdi mdi-format-align-justify" />',
       }
       icons.indent = {
         '+1': '<i class="mdi mdi-format-indent-increase" />',
@@ -384,13 +412,11 @@ export default {
         { align: '' },
         { align: 'center' },
         { align: 'right' },
-        { align: 'justify' },
         'image',
         'video',
         'clean',
       ]
     },
-
     setupQuillEditor() {
       this.Quill = require('quill/dist/quill.js')
 
@@ -420,6 +446,21 @@ export default {
       this.stepNumber = 2
       this.$router.push('#2')
     },
+    async publish() {
+      try {
+        await this.$axios.$post(endpoints.blog.create, {
+          categoryID: this.blog.category,
+          coverImage: this.blog.coverImage,
+          title: this.blog.title,
+          subtitle: this.blog.subtitle,
+          content: this.blog.content,
+        })
+        localStorage.clear()
+        await this.$router.replace(navigationRoutes.Home.DashBoard)
+      } catch (e) {
+        await showUITip(this.$store, 'Network error. Please Retry', 'error')
+      }
+    },
   },
 
   head() {
@@ -444,6 +485,14 @@ $active-color: $white;
     min-width: auto;
   }
 
+  .secondary-outlined-btn,
+  .disabled-btn,
+  .secondary-btn {
+    border-radius: 50px !important;
+    width: 7rem !important;
+    height: 2.5rem !important;
+  }
+
   main.steps {
     max-width: $large;
     margin: auto;
@@ -462,6 +511,9 @@ $active-color: $white;
     align-items: center;
     height: 56px;
     background: $inactive-background;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
     button {
       height: 56px;
