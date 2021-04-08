@@ -12,10 +12,10 @@
               ref="search"
               class="input-box"
               contenteditable
-              @keyup="updateSearchQuery"
-              @keyup.esc="toggleSearchBar"
               @focusin="clearPlaceholderText"
               @focusout="putPlaceholderText"
+              @keyup="updateSearchQuery"
+              @keyup.esc="toggleSearchBar"
             >
               {{ placeholderText }}
             </div>
