@@ -59,8 +59,6 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'DashBoard',
-  // middleware: 'isAuthenticated',
-
   layout: 'ResponsiveApp',
 
   data() {
@@ -119,6 +117,7 @@ export default {
       linkPosition: -1,
     })
   },
+
   methods: {
     changeTab(newTabNumber) {
       this.tabNumber = newTabNumber

@@ -102,7 +102,7 @@
           <article
             ref="articleContent"
             class="my-6"
-            v-html="noXSS(blog.content, sanitizationConfig)"
+            v-html="cleanHTML(blog.content)"
           />
           <InArticleAd key="Bottom-Ad" />
         </section>
@@ -134,10 +134,10 @@
         </div>
         <div v-ripple class="share" @click="share">
           <i
-            class="mdi"
             :class="
               useShareFallBack ? 'mdi-close danger-light' : 'mdi-share-variant'
             "
+            class="mdi"
           />
         </div>
       </section>
@@ -145,10 +145,10 @@
       <transition name="slide-up">
         <ShareFallbackForDesktop
           v-if="useShareFallBack"
-          fixed-mode
+          :description="blog.title"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"
-          :description="blog.title"
+          fixed-mode
         />
       </transition>
     </template>
@@ -156,17 +156,16 @@
 </template>
 
 <script>
-import sanitizeHtml from 'sanitize-html'
 import endpoints from '@/api/endpoints'
 
 import {
+  cleanHTML,
   parseTimeUsingStandardLibrary,
   shorten,
   showUITip,
 } from '@/utils/utility'
 import 'highlight.js/styles/monokai.css'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { sanitizationConfig } from '@/config/sanitizationConfig'
 import { mapGetters } from 'vuex'
 
 const { useMessageService } = require('~/environmentVariables')
@@ -192,9 +191,7 @@ export default {
       useMessageService,
       prevURL: null,
       navigationRoutes,
-      noXSS: sanitizeHtml,
       blog: null,
-      sanitizationConfig,
       playbackStarted: false,
       useShareFallBack: false,
     }
@@ -217,6 +214,7 @@ export default {
   },
 
   methods: {
+    cleanHTML,
     parseTimeUsingStandardLibrary,
     shorten,
 
