@@ -482,7 +482,6 @@ export default {
       })
 
       this.setupCustomHandler()
-      window.editor = this.editor
     },
 
     nextStep() {
