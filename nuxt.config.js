@@ -108,18 +108,18 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/stylelint-module',
     '@nuxtjs/tailwindcss',
-    'nuxt-purgecss',
+    // 'nuxt-purgecss',
     'nuxt-compress',
   ],
 
-  purgecss: {
-    content: [
-      './pages/**/*.vue',
-      './layouts/**/*.vue',
-      './components/**/*.vue',
-    ],
-    whitelist: ['html', 'body'],
-  },
+  // purgecss: {
+  //   content: [
+  //     './pages/**/*.vue',
+  //     './layouts/**/*.vue',
+  //     './components/**/*.vue',
+  //   ],
+  //   whitelist: ['html', 'body'],
+  // },
 
   'nuxt-compress': {
     gzip: {
