@@ -158,7 +158,6 @@
 <script>
 import endpoints from '@/api/endpoints'
 import '~/assets/override/quill.scss'
-import 'quill/dist/quill.snow.css'
 
 import {
   cleanHTML,

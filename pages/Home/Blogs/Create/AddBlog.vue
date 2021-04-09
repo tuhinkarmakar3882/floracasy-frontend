@@ -230,7 +230,6 @@
 
 <script>
 import '~/assets/override/quill.scss'
-import 'quill/dist/quill.snow.css'
 import { mapGetters } from 'vuex'
 import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
@@ -363,8 +362,7 @@ export default {
         6: '<i class="mdi mdi-format-header-6" />',
       }
       icons.blockquote = '<i class="mdi mdi-format-quote-close" />'
-      icons.image = '<i class="mdi mdi-image" />'
-      icons.photo = '<i class="mdi mdi-image-album" />'
+      icons.photo = '<i class="mdi mdi-image" />'
       icons.video = '<i class="mdi mdi-video" />'
       icons.link = '<i class="mdi mdi-link" />'
       icons.list = {
