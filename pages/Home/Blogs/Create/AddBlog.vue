@@ -230,6 +230,7 @@
 
 <script>
 import '~/assets/override/quill.scss'
+import 'quill/dist/quill.snow.css'
 import { mapGetters } from 'vuex'
 import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
