@@ -2,6 +2,12 @@
   <button v-ripple class="button-component" @click="signInWithGoogle">
     <GoogleIcon class="icon mx-4" />
     <span>Continue with Google</span>
+    <transition name="scale-down">
+      <aside v-if="showLoaderAnimation" class="loader soft-error">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+        <p class="mt-4">{{ stateInformation }}</p>
+      </aside>
+    </transition>
   </button>
 </template>
 
@@ -15,10 +21,15 @@ import * as secrets from '~/environmentVariables'
 
 export default {
   name: 'GoogleSignInButton',
+  data() {
+    return {
+      showLoaderAnimation: false,
+      stateInformation: '',
+    }
+  },
   methods: {
     async signInWithGoogle() {
-      await showUITip(this.$store, 'hello', '', true)
-
+      await showUITip(this.$store, 'Opening Google Auth Page')
       this.showLoaderAnimation = true
 
       this.updateInfo('Loading OAuth Provider')
@@ -131,6 +142,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'assets/all-variables';
+
 .button-component {
   display: flex;
   justify-content: flex-start;
@@ -145,6 +158,45 @@ export default {
   .icon {
     height: 24px;
     width: 24px;
+  }
+
+  aside.loader {
+    position: fixed;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1234567890;
+    background: linear-gradient(
+        45deg,
+        rgba($nav-bar-bg, 0.95) 0%,
+        rgba($segment-background, 0.95) 16%,
+        rgba($card-background, 0.95) 32%,
+        rgba($footer-background, 0.95) 48%,
+        rgba($card-background, 0.95) 64%,
+        rgba($segment-background, 0.95) 80%,
+        rgba($nav-bar-bg, 0.95) 100%
+      )
+      right no-repeat;
+    background-size: 400%;
+    animation: shift-background 20s infinite alternate-reverse ease-in-out;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      font-size: 18px;
+      color: $white;
+    }
+  }
+  @keyframes shift-background {
+    from {
+      background-position: left;
+    }
+    to {
+      background-position: right;
+    }
   }
 }
 </style>
