@@ -34,7 +34,7 @@
 
     <template slot="main">
       <div v-if="blog" class="my-6 blog">
-        <section class="px-4">
+        <section class="px-4 pt-4">
           <p class="mb-1" style="display: flex !important">
             <nuxt-link
               v-ripple
@@ -97,11 +97,11 @@
           </p>
         </section>
 
-        <section class="blog-body px-4 pb-8">
+        <section class="blog-body pb-8">
           <InArticleAd key="Top-Ad" />
           <article
             ref="articleContent"
-            class="my-6 ql-editor"
+            class="my-6 px-4 ql-editor"
             v-html="cleanHTML(blog.content)"
           />
           <InArticleAd key="Bottom-Ad" />
@@ -157,7 +157,7 @@
 
 <script>
 import endpoints from '@/api/endpoints'
-import 'assets/strict/custom_quill.scss'
+import '~/assets/override/quill.scss'
 import 'quill/dist/quill.snow.css'
 
 import {
@@ -341,7 +341,13 @@ export default {
       meta: [
         {
           name: 'keywords',
-          content: this?.blog?.title + ',' + this?.blog?.category?.name,
+          content:
+            this?.blog?.title +
+            ',' +
+            this?.blog?.category?.name +
+            this?.blog?.keywords?.split(',')?.reduce((acc, elm) => {
+              return `${acc}, ${elm}`
+            }, ''),
         },
         {
           name: 'description',
