@@ -1,5 +1,5 @@
 <template>
-  <div class="new-editor">
+  <div class="create-new-blog-screen">
     <AppBarHeader class="app-header">
       <template #title>{{ pageTitle }}</template>
 
@@ -63,7 +63,6 @@
           <input v-model="blog.coverImage" type="text" />
         </template>
       </InputField>
-
       <InputField class="my-2" label="Blog Category" hint-text="*Required">
         <template #input-field>
           <select v-model="blog.category">
@@ -77,12 +76,6 @@
           </select>
         </template>
       </InputField>
-
-      <!--      <InputField class="my-2" material label="Tags for the Blog">-->
-      <!--        <template #input-field>-->
-      <!--          <textarea v-model="blog.tags" @keyup.space="convertToChips" />-->
-      <!--        </template>-->
-      <!--      </InputField>-->
     </main>
 
     <main v-show="stepNumber === 1" class="steps">
@@ -185,6 +178,18 @@
     </main>
 
     <main v-if="stepNumber === 2" class="steps px-4 pt-6">
+      <InputField
+        class="mb-2"
+        material
+        label="Keywords for the Blog"
+        hint-text="Keywords helps your article to reach more potential audience. Multiple Keywords can be Separate it with Comma."
+      >
+        <template #input-field>
+          <textarea v-model="blog.keywords" @keyup.space="convertToChips" />
+        </template>
+      </InputField>
+      <hr />
+
       <section>
         <p class="mb-2">
           <span class="secondary"> {{ user.displayName }} </span>
@@ -214,11 +219,17 @@
         <article class="ql-editor" v-html="cleanHTML(blog.content)" />
       </section>
     </main>
+
+    <transition name="scale-down">
+      <aside v-if="sending" class="loader">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+      </aside>
+    </transition>
   </div>
 </template>
 
 <script>
-import 'assets/strict/custom_quill.scss'
+import '~/assets/override/quill.scss'
 import 'quill/dist/quill.snow.css'
 import { mapGetters } from 'vuex'
 import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
@@ -262,8 +273,10 @@ export default {
         coverImage: null,
         tags: null,
         content: undefined,
+        keywords: undefined,
       },
       stepNumber: 0,
+      sending: false,
     }
   },
 
@@ -483,6 +496,8 @@ export default {
       this.$router.push('#2')
     },
     async publish() {
+      this.sending = true
+      await showUITip(this.$store, 'Uploading Article...')
       try {
         await this.$axios.$post(endpoints.blog.create, {
           categoryID: this.blog.category,
@@ -490,11 +505,14 @@ export default {
           title: this.blog.title,
           subtitle: this.blog.subtitle,
           content: this.blog.content,
+          keywords: this.blog.keywords,
         })
         localStorage.clear()
         await this.$router.replace(navigationRoutes.Home.DashBoard)
       } catch (e) {
         await showUITip(this.$store, 'Network error. Please Retry', 'error')
+      } finally {
+        this.sending = false
       }
     },
   },
@@ -515,7 +533,7 @@ $inactive-color: #5a5a5a;
 $active-background: $primary-matte;
 $active-color: $white;
 
-.new-editor {
+.create-new-blog-screen {
   button {
     padding: 0;
     min-width: auto;
@@ -582,9 +600,40 @@ $active-color: $white;
       }
     }
   }
-}
 
-article.ql-editor {
-  padding: 0;
+  article.ql-editor {
+    padding: 0;
+  }
+
+  aside.loader {
+    position: fixed;
+    top: $zero-unit;
+    left: $zero-unit;
+    z-index: 1;
+    background: rgba($black, 0.7);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.soft-error {
+      background: linear-gradient(
+          45deg,
+          transparent 0%,
+          $nav-bar-bg 12.5%,
+          $segment-background 25%,
+          $card-background 37.5%,
+          $footer-background 50%,
+          $card-background 62.5%,
+          $segment-background 75%,
+          $nav-bar-bg 87.5%,
+          transparent 100%
+        )
+        right no-repeat;
+      background-size: 400%;
+      animation: shift-background 20s infinite alternate-reverse ease-in-out;
+    }
+  }
 }
 </style>
