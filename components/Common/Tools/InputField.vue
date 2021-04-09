@@ -95,7 +95,7 @@ $border-color: lighten($footer-background, $lighten-percentage);
 
   small {
     display: block;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 }
 </style>
