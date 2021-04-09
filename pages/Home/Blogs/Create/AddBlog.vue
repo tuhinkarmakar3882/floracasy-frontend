@@ -182,7 +182,7 @@
         class="mb-2"
         material
         label="Keywords for the Blog"
-        hint-text="Keywords helps your article to reach more potential audience. Multiple Keywords can be Separate it with Comma."
+        hint-text="Multiple Keywords can be Separate it with Comma."
       >
         <template #input-field>
           <textarea v-model="blog.keywords" @keyup.space="convertToChips" />
