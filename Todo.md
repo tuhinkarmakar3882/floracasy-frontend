@@ -5,8 +5,9 @@
 > - FAQ Backend Connection
 > - Activate clamdAV
 > - Add Background Refresh for Auth Token
-> - Fix Carousel Text
 > - Fix Help & Support Message Display
+> - Add Loader while logging in
+> - Add Loader while Creating Blog
 
 > ### AUDIT CODE BASE:
 >   - Front-End
@@ -15,16 +16,10 @@
 
 > ### Community:
 >   - Think about Security
->   - Improve Photo Story UI
->   - Improve Audio Story UI
 
 
 > ### Payments:
 >   - Handle Payments
-
-
-> ### Miscellaneous
->   - Add Desktop Layout
 
 
 > ### Missing {pages}
