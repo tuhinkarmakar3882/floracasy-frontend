@@ -616,24 +616,6 @@ $active-color: $white;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    &.soft-error {
-      background: linear-gradient(
-          45deg,
-          transparent 0%,
-          $nav-bar-bg 12.5%,
-          $segment-background 25%,
-          $card-background 37.5%,
-          $footer-background 50%,
-          $card-background 62.5%,
-          $segment-background 75%,
-          $nav-bar-bg 87.5%,
-          transparent 100%
-        )
-        right no-repeat;
-      background-size: 400%;
-      animation: shift-background 20s infinite alternate-reverse ease-in-out;
-    }
   }
 }
 </style>

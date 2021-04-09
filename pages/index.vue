@@ -2,7 +2,7 @@
   <div class="index-page">
     <main class="mobile-view">
       <LazyCustomCarousel :total-items="4" class="carousel-container pt-4">
-        <template v-slot:slides>
+        <template #slides>
           <section class="carousel-item px-6">
             <header class="text-center">
               <h1 class="my-4">Floracasy</h1>
