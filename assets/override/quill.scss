@@ -80,6 +80,7 @@ $active-color: $white;
 }
 
 .ql-editor {
+  position: relative !important;
   min-height: calc(100vh - 112px) !important;
 }
 
