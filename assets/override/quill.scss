@@ -4,30 +4,32 @@ $inactive-background: #e8f8f5;
 $inactive-color: #5a5a5a;
 $active-background: $primary-matte;
 $active-color: $white;
-
-button {
-  height: 56px !important;
-  min-width: 60px !important;
-  display: grid !important;
-  place-items: center !important;
-  border-radius: 0 !important;
-
-  i {
-    color: $inactive-color !important;
-    font-size: 28px !important;
-  }
-
-  &.ql-active {
-    background: $active-background !important;
-    outline: 0 none !important;
-    box-shadow: 0 0 4px $card-background !important;
+.ql-toolbar {
+  button {
+    height: 56px !important;
+    min-width: 60px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 0 !important;
 
     i {
-      color: $active-color !important;
+      color: $inactive-color !important;
       font-size: 28px !important;
     }
   }
 }
+
+.ql-active {
+  background: $active-background !important;
+  outline: 0 none !important;
+  box-shadow: 0 0 4px $card-background !important;
+
+  i {
+    color: $active-color !important;
+    font-size: 28px !important;
+  }
+}
+
 
 .ql-editor.ql-blank {
   &::before {
