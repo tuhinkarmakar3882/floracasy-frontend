@@ -7,7 +7,8 @@ $active-color: $white;
 #toolbar {
   display: flex;
   vertical-align: middle;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
   margin: 0;
   padding: 0;
   align-items: center;
@@ -81,7 +82,7 @@ $active-color: $white;
 
 .ql-editor {
   position: relative !important;
-  min-height: calc(100vh - 112px) !important;
+  min-height: calc(100vh - 139px)!important;
 }
 
 .ql-tooltip,

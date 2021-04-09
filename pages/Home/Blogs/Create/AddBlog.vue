@@ -564,7 +564,8 @@ $active-color: $white;
   #toolbar {
     display: flex;
     vertical-align: middle;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
     margin: 0;
     padding: 0;
     align-items: center;
