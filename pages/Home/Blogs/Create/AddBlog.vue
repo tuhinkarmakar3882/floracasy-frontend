@@ -584,8 +584,8 @@ $active-color: $white;
       border-radius: 0;
 
       i {
-        color: $inactive-color;
-        font-size: 28px;
+        color: $inactive-color !important;
+        font-size: 28px !important;
       }
 
       &.ql-active {
@@ -594,8 +594,8 @@ $active-color: $white;
         box-shadow: 0 0 4px $card-background;
 
         i {
-          color: $active-color;
-          font-size: 28px;
+          color: $active-color !important;
+          font-size: 28px !important;
         }
       }
     }
