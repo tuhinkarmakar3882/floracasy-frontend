@@ -3,9 +3,3 @@
 @import "colors";
 @import "button";
 @import "typography";
-
-* {
-  @media (prefers-reduced-motion) {
-    transition: unset !important;
-  }
-}
