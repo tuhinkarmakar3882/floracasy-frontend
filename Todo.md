@@ -6,8 +6,6 @@
 > - Activate clamdAV
 > - Add Background Refresh for Auth Token
 > - Fix Help & Support Message Display
-> - Add Loader while logging in
-> - Add Loader while Creating Blog
 
 > ### AUDIT CODE BASE:
 >   - Front-End
@@ -34,8 +32,6 @@
 
 > ### Functionality
 >   - Add Backend Metrics to Calculate each page revenue
->   - Add Support for Worker Highlighting
->
 >
 >   - **[ Optional ]** Add Notification Toggles
 >   - **[ Optional ]** Add Payment Gateway
