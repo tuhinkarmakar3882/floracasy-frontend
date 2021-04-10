@@ -158,7 +158,7 @@ export default {
 @import 'assets/all-variables';
 
 .community-page {
-  max-width: $large;
+  max-width: $large-screen;
   margin: auto;
 
   .add-post-preview {

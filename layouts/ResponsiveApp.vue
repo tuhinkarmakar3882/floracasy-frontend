@@ -355,7 +355,7 @@ export default {
   .desktop-app-layout {
     display: none;
 
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       display: block;
     }
 
@@ -487,7 +487,7 @@ export default {
   .mobile-app-layout {
     display: block;
 
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       display: none;
     }
 
@@ -594,7 +594,7 @@ export default {
   main {
     min-height: calc(100vh - 200px);
     padding: 2 * $x-large-unit 0;
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       margin-left: 2 * $xxx-large-unit;
     }
 

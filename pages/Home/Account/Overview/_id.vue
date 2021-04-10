@@ -194,7 +194,7 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  max-width: $large;
+  max-width: $large-screen;
   margin: auto;
   padding: 2rem 0;
 

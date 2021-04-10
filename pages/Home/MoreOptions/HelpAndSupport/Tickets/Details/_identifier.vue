@@ -279,7 +279,7 @@ export default {
 @import 'assets/all-variables';
 
 .ticket-details-page {
-  max-width: $large;
+  max-width: $large-screen;
   margin: auto;
 
   .main-body {
@@ -326,7 +326,7 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-width: $large;
+    max-width: $large-screen;
     max-height: 3.5 * $xx-large-unit;
     padding: $micro-unit $nano-unit;
     display: flex;

@@ -1,23 +1,31 @@
 //  Root Colors
+$primary-matte: #3734E5;
 $primary: #514EFF;
+$primary-light: #9c9aff;
+
+$secondary-matte: #52B2A2;
 $secondary: #6DD0BF;
+$secondary-highlight: #8FF2E1;
+
 $success: #34b334;
 $success-light: #65db65;
+
 $danger: #ba5454;
 $danger-light: #ff8282;
+
 $info: #008B8B;
+
 $muted: #9a9a9a;
 $disabled: #796d6d;
+
 $black: #000;
 $white: #FFF;
 
-//  Derived Colors
-$primary-matte: #3734E5;
-$secondary-matte: #52B2A2;
-$secondary-highlight: #8FF2E1;
+$warning: #EFB33D;
+$audio-thumb: #d6f809;
+$premium: #ffc34d;
+
 $vibrant: #37F5D3;
 $quote: #3A3A49;
-
-$primary-light: #9c9aff;
 
 $active-gradient: linear-gradient(to right, #CC2B5E, #753A88)

@@ -75,17 +75,17 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: $milli-unit;
 
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       grid-template-columns: repeat(3, 1fr);
       grid-column-gap: 32px;
       grid-row-gap: 32px;
     }
-    @media only screen and (min-width: $medium) {
+    @media only screen and (min-width: $medium-screen) {
       grid-template-columns: repeat(4, 1fr);
       grid-column-gap: 36px;
       grid-row-gap: 36px;
     }
-    @media only screen and (min-width: $large) {
+    @media only screen and (min-width: $large-screen) {
       grid-template-columns: repeat(5, 1fr);
       grid-column-gap: 36px;
       grid-row-gap: 36px;

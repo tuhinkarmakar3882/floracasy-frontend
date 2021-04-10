@@ -1,6 +1,6 @@
 <template>
   <AppFeel class="chat-screen-page" custom-header on-back="/">
-    <template v-slot:app-bar-custom-header>
+    <template #app-bar-custom-header>
       <h5
         v-ripple
         class="px-5 mdi mdi-arrow-left"
@@ -14,7 +14,7 @@
       <p>{{ threadDetail ? threadDetail.name : pageTitle }}</p>
     </template>
 
-    <template v-slot:main>
+    <template #main>
       <client-only>
         <!-- add a special attribute for the real scroll wrapper -->
         <!--        <div infinite-wrapper>-->
@@ -58,7 +58,7 @@
       </main>
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <section class="bottom-area px-4">
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
         <input
@@ -343,7 +343,7 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-width: $max-width;
+    max-width: $large-screen;
     height: 2 * $xx-large-unit;
     display: flex;
     align-items: center;

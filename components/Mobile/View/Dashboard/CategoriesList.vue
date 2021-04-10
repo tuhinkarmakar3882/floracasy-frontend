@@ -203,7 +203,7 @@ $image-dimension: 64px;
     box-shadow: $down-only-box-shadow;
     left: 0;
 
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       left: 2 * $xxx-large-unit;
     }
 

@@ -152,7 +152,7 @@ export default {
 @import 'assets/transitions-and-animations';
 
 .notification-page {
-  max-width: $large;
+  max-width: $large-screen;
   margin: auto;
 
   * {

@@ -139,7 +139,7 @@ export default {
 @import 'assets/all-variables.scss';
 
 .more-options-page {
-  max-width: $large;
+  max-width: $large-screen;
   margin: auto;
 }
 </style>

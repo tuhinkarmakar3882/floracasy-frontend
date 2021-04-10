@@ -552,7 +552,7 @@ $active-color: $white;
   }
 
   main.steps {
-    max-width: $large;
+    max-width: $large-screen;
     margin: auto;
   }
 

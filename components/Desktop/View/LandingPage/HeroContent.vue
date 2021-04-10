@@ -80,7 +80,7 @@ export default {
 .hero-container {
   text-align: center;
 
-  @media only screen and (min-width: $small) {
+  @media only screen and (min-width: $small-screen) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,7 +92,7 @@ export default {
     order: 0;
     margin: auto;
 
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       order: 2;
       margin: unset;
     }
@@ -102,7 +102,7 @@ export default {
     text-align: center;
     order: 1;
 
-    @media only screen and (min-width: $small) {
+    @media only screen and (min-width: $small-screen) {
       text-align: left;
       order: 0;
     }

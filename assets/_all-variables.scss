@@ -1,22 +1,8 @@
+@import "assets/variables/accessibility";
+@import "assets/variables/display-utilities";
 @import "assets/variables/fonts-variables";
 @import "assets/variables/spacing-variables";
 @import "assets/variables/theme-color-variables";
-@import "assets/variables/service-pack-colors-variables";
-
-//  Accessibility Colors
-$card-background: #191928;
-$body-background: #050514;
-$segment-background: #111120;
-$footer-background: #1C1C2B;
-$body-text-default: #B9B9B9;
-$nav-bar-bg: #0d0d17;
-$editor-toolbar-background: #F5DEB3;
-
-//  Display Utils
-$small: 576px;
-$medium: 768px;
-$large: 992px;
-$extra-large: 1200px;
 
 $lighten-percentage: 8%;
 $darken-percentage: 5%;

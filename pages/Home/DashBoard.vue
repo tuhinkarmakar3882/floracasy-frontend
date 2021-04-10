@@ -138,23 +138,9 @@ export default {
 @import 'assets/all-variables';
 
 $blog-border-radius: 20px;
-.carousel-container {
-  border: 1px solid red;
-
-  @media only screen and (min-width: $small) {
-    border: 1px solid greenyellow;
-    width: calc(100vw - 4.5rem);
-  }
-
-  .carousel-item {
-    border: 1px solid red;
-    max-width: $large;
-    align-self: stretch;
-  }
-}
 
 .dashboard-page {
-  max-width: $large;
+  max-width: $large-screen;
   margin: auto;
 
   * {

@@ -179,7 +179,7 @@ button {
     margin-right: $micro-unit;
   }
 
-  @media only screen and (min-width: $max-width) {
+  @media only screen and (min-width: $large-screen) {
     padding-left: 64px;
     padding-right: 32px;
   }

@@ -380,7 +380,7 @@ export default {
 
 .blog-details-page {
   .blog {
-    max-width: $large;
+    max-width: $large-screen;
     margin: auto;
     word-break: break-word;
 

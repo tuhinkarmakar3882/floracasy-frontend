@@ -31,27 +31,27 @@ body {
   }
 
   h1 {
-    font-size: 2.2rem;
+    font-size: $max-font-size;
   }
 
   h2 {
-    font-size: 2rem !important;
+    font-size: $xxx-large-unit;
   }
 
   h3 {
-    font-size: 1.8rem;
+    font-size: $xx-large-unit !important;
   }
 
   h4 {
-    font-size: 1.6rem;
+    font-size: $x-large-unit;
   }
 
   h5 {
-    font-size: 1.4rem;
+    font-size: $large-unit;
   }
 
   h6 {
-    font-size: 1.2rem;
+    font-size: $medium-unit;
   }
 
   p {
@@ -59,7 +59,7 @@ body {
     font-family: $Raleway;
     letter-spacing: $single-unit;
     font-weight: 300;
-    font-size: 1rem;
+    font-size: $standard-unit;
     line-height: 1.75;
     word-break: break-word;
   }
