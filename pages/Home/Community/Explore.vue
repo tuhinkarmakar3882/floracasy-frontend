@@ -5,9 +5,9 @@
     dynamic-back
     :prev-url-path="prevURL"
   >
-    <template v-slot:app-bar-title> {{ pageTitle }}</template>
+    <template #app-bar-title> {{ pageTitle }}</template>
 
-    <template v-if="listOfUsers" v-slot:main>
+    <template v-if="listOfUsers" #main>
       <section class="my-4">
         <UserSearchResult
           v-for="(person, index) in listOfUsers"
@@ -19,16 +19,16 @@
       </section>
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <client-only>
         <infinite-loading @infinite="loadUsers">
-          <template v-slot:spinner>
+          <template #spinner>
             <FallBackLoader />
           </template>
-          <template v-slot:error>
+          <template #error>
             <LoadingError error-section="List of users" />
           </template>
-          <template v-slot:no-more>
+          <template #no-more>
             <p class="secondary-matte text-center mt-4 mb-8">
               <i class="mdi mdi-party-popper mdi-18px" />
               <br />

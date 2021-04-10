@@ -32,7 +32,7 @@
       </client-only>
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <aside
         v-ripple
         class="floating-action-button primary-btn"

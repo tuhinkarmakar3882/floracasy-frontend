@@ -22,7 +22,7 @@
 
     <main class="heads-up-display">
       <FallBackLoader v-if="isLoading" class="my-8">
-        <template v-slot:fallback>
+        <template #fallback>
           <p class="text-center">Connecting to Camera</p>
         </template>
       </FallBackLoader>
@@ -32,7 +32,7 @@
         class="py-8 px-4"
         error-section="Camera"
       >
-        <template v-slot:remedy-option>
+        <template #remedy-option>
           <li>Make sure camera is connected</li>
           <li>Make sure that you have enabled access to camera</li>
         </template>
@@ -49,7 +49,7 @@
       <section v-show="systemReady">
         <aside v-if="softError" class="loader soft-error">
           <LoadingError class="py-8 px-4" error-section="Camera">
-            <template v-slot:remedy-option>
+            <template #remedy-option>
               <li>Make sure camera is connected</li>
               <li>Make sure that you have enabled access to camera</li>
               <li>

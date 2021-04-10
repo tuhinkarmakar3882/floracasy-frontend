@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
     class="contact-support-page"
   >
-    <template v-slot:app-bar-title> {{ pageTitle }}</template>
+    <template #app-bar-title> {{ pageTitle }}</template>
 
-    <template v-slot:app-bar-action-button>
+    <template #app-bar-action-button>
       <button
         v-ripple
         :class="validForm ? 'primary-btn' : 'disabled-btn'"
@@ -17,7 +17,7 @@
       </button>
     </template>
 
-    <template v-slot:main>
+    <template #main>
       <section class="px-4 my-4">
         <h5 class="heading-title my-8">We're here to help!</h5>
         <p>
@@ -87,7 +87,7 @@
       </form>
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <section v-if="showAttachedPreview" class="px-4">
         <h6>Attached Preview</h6>
         <hr class="faded-divider" />
@@ -119,7 +119,7 @@
       <transition name="scale-up">
         <aside v-if="raisingTicking" class="app-overlay">
           <FallBackLoader>
-            <template v-slot:fallback>
+            <template #fallback>
               <p>Raising Ticket</p>
             </template>
           </FallBackLoader>

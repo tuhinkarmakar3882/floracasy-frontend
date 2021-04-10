@@ -88,7 +88,7 @@
           @click="showFragment = false"
         >
           <CustomListView>
-            <template v-slot:list-items>
+            <template #list-items>
               <li
                 v-for="(option, index) in fragmentOptions"
                 :key="index"
@@ -204,10 +204,10 @@
       <transition name="slide-up">
         <aside v-if="showFragment" class="fragment">
           <CustomListView>
-            <template v-slot:heading>
+            <template #heading>
               <h6 class="heading-title mb-0">What do you want to do?</h6>
             </template>
-            <template v-slot:list-items>
+            <template #list-items>
               <li
                 v-for="(option, index) in fragmentOptions"
                 :key="index"

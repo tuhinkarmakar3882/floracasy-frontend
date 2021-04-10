@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.MoreOptions.index"
     class="preferences-page"
   >
-    <template v-slot:app-bar-title> {{ pageTitle }}</template>
+    <template #app-bar-title> {{ pageTitle }}</template>
 
-    <template v-slot:main>
+    <template #main>
       <CustomListView>
         <template slot="list-items">
           <li

@@ -5,14 +5,14 @@
     class="about-page"
     dynamic-back
   >
-    <template v-slot:app-bar-title>{{ pageTitle }}</template>
+    <template #app-bar-title>{{ pageTitle }}</template>
 
-    <template v-slot:main>
+    <template #main>
       <h4 class="heading-title">{{ $route.params.name }}</h4>
       <InfiniteScrollingBlogLists :category="$route.params.name" />
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <InFeedAd class="mt-8" use-small-ads />
     </template>
   </AppFeel>

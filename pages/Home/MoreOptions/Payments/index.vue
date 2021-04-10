@@ -10,7 +10,7 @@
     <template slot="main">
       <div class="payment-card px-4 py-6">
         <FallBackLoader v-if="loading">
-          <template v-slot:fallback>
+          <template #fallback>
             <p class="text-center">Fetching Latest Earnings from server</p>
           </template>
         </FallBackLoader>

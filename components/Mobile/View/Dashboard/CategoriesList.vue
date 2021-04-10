@@ -34,10 +34,10 @@
       </transition>
 
       <LazyCustomListView>
-        <template v-slot:heading>
+        <template #heading>
           <h4 class="heading-title">Explore Categories</h4>
         </template>
-        <template v-slot:list-items>
+        <template #list-items>
           <li
             v-for="category in matchCategories"
             :key="category.id"

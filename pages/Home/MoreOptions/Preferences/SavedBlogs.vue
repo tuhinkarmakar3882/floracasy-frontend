@@ -19,7 +19,7 @@
         <infinite-loading @infinite="infiniteHandler">
           <template slot="spinner">
             <FallBackLoader>
-              <template v-slot:fallback>
+              <template #fallback>
                 <p class="text-center">Getting your saved articles</p>
               </template>
             </FallBackLoader>

@@ -3,10 +3,10 @@
     :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn"
     class="earning-page"
   >
-    <template v-slot:app-bar-title>
+    <template #app-bar-title>
       {{ pageTitle }}
     </template>
-    <template v-slot:main>
+    <template #main>
       <main>
         <h4 class="heading-title my-6 px-4">Tips to Improve Your Earnings</h4>
 
@@ -44,7 +44,7 @@
         </section>
       </main>
     </template>
-    <template v-slot:footer>
+    <template #footer>
       <InFeedAd class="my-4" use-small-ads />
     </template>
   </AppFeel>

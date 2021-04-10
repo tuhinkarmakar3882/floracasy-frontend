@@ -5,9 +5,9 @@
     class="write-and-earn-page"
     dynamic-back
   >
-    <template v-slot:app-bar-title>{{ pageTitle }}</template>
+    <template #app-bar-title>{{ pageTitle }}</template>
 
-    <template v-slot:main>
+    <template #main>
       <LazyCustomListView>
         <template slot="list-items">
           <li

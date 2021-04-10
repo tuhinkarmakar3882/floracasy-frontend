@@ -205,7 +205,7 @@
       <!--      </main>-->
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <InFeedAd class="my-4" use-small-ads />
     </template>
   </AppFeel>

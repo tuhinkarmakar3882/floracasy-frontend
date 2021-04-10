@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.Community.index"
     class="community-search-page"
   >
-    <template v-slot:app-bar-title> {{ pageTitle }}</template>
+    <template #app-bar-title> {{ pageTitle }}</template>
 
-    <template v-slot:main>
+    <template #main>
       <section class="search-box-container px-4 mt-5 mb-4">
         <div class="search-box">
           <input

@@ -76,7 +76,7 @@
 
     <aside v-if="softError" class="loader soft-error">
       <LoadingError class="py-8 px-4" error-section="Microphone">
-        <template v-slot:remedy-option>
+        <template #remedy-option>
           <li>Make sure Microphone is connected</li>
           <li>Make sure that you have enabled access to Microphone</li>
           <li>

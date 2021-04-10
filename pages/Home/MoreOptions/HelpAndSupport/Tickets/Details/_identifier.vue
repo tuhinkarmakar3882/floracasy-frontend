@@ -3,9 +3,9 @@
     :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index"
     class="ticket-details-page"
   >
-    <template v-slot:app-bar-title>{{ pageTitle }}</template>
+    <template #app-bar-title>{{ pageTitle }}</template>
 
-    <template v-slot:main>
+    <template #main>
       <main v-if="ticketDetails" class="main-body">
         <section class="info-card py-6 px-4 active-background">
           <aside class="top-section mb-4">
@@ -76,7 +76,7 @@
       </main>
     </template>
 
-    <template v-slot:footer>
+    <template #footer>
       <LoadingError
         v-if="unableToLoadTicketDetails"
         class="px-4"
