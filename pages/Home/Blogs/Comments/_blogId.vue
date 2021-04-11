@@ -6,105 +6,60 @@
       </template>
     </AppBarHeader>
 
-    <main>
-      <div ref="commentStart" />
-      <section v-if="blog" class="top-section px-4">
-        <div class="introduction">
+    <main ref="commentStart">
+      <header v-if="blog" class="px-4">
+        <section>
           <h6>{{ blog.title }}</h6>
-          <div
-            v-ripple="'#52B2A25F'"
-            class="view-blog py-4"
-            @click="
-              $router.push(
-                navigationRoutes.Home.Blogs.Details.replace(
-                  '{id}',
-                  blog.identifier
-                )
-              )
-            "
-          >
+
+          <nuxt-link v-ripple class="view-blog py-4" :to="blogDetailsPage">
             View Blog
-          </div>
-        </div>
+          </nuxt-link>
+        </section>
+
         <p>
-          <nuxt-link
-            :to="
-              navigationRoutes.Home.Account.Overview.replace(
-                '{userUID}',
-                blog.author.uid
-              )
-            "
-            class="no-underline"
-          >
+          <nuxt-link :to="authorDetailsPage" class="no-underline">
             {{ blog.author.displayName }}
           </nuxt-link>
+
           <strong>IN</strong>
-          <nuxt-link
-            :to="
-              navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
-                '{name}',
-                blog.category.name
-              )
-            "
-            class="no-underline"
-          >
+
+          <nuxt-link :to="exploreMorePage" class="no-underline">
             {{ blog.category.name }}
           </nuxt-link>
         </p>
-        <hr class="my-4" />
+      </header>
+
+      <hr class="my-4 faded-divider px-4" />
+
+      <section v-for="comment in comments" :key="comment.id" class="my-6 px-4">
+        <Comment :comment="comment" />
       </section>
 
-      <main class="px-4">
-        <section
-          v-for="comment in comments"
-          :key="comment.id"
-          class="comment my-6"
-        >
-          <img
-            :src="comment.user.photoURL"
-            alt="profile-image"
-            height="40"
-            width="40"
-            @click="openProfile(comment.userUID)"
-          />
-          <div class="comment-message-container">
-            <p class="top-line">
-              <span
-                v-ripple
-                class="username secondary"
-                @click="openProfile(comment.userUID)"
-              >
-                {{ getInitials(comment.user.displayName) }}
-              </span>
-              <span class="timestamp">
-                <span class="mdi mdi-clock-time-nine-outline" />
-                {{ getRelativeTime(comment.createdAt) }}
-              </span>
-            </p>
-            <p class="message-body">{{ comment.message }}</p>
-          </div>
-        </section>
-      </main>
-
-      <client-only>
-        <div class="pb-8 mb-8">
-          <infinite-loading @infinite="infiniteHandler">
-            <template slot="spinner">
-              <LoadingIcon class="mt-4 mb-6" />
-              <p class="text-center">Fetching Comments...</p>
+      <aside>
+        <client-only>
+          <infinite-loading @infinite="fetchComments">
+            <template #spinner>
+              <FallBackLoader>
+                <template #fallback>
+                  <p class="text-center">Fetching Comments...</p>
+                </template>
+              </FallBackLoader>
             </template>
-            <template slot="error">
+
+            <template #error>
               <p class="danger-light mb-8">Network Error</p>
             </template>
-            <template slot="no-more">
+
+            <template #no-more>
               <p class="mb-8">No More Comments</p>
             </template>
-            <template slot="no-results">
+
+            <template #no-results>
               <p class="mb-8">Be the first to comment on this!</p>
             </template>
           </infinite-loading>
-        </div>
-      </client-only>
+        </client-only>
+      </aside>
     </main>
 
     <footer>
@@ -136,10 +91,11 @@ import endpoints from '@/api/endpoints'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'BlogComments',
-  components: { AppBarHeader },
+  components: { FallBackLoader, AppBarHeader },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: prevURL }) {
@@ -167,6 +123,24 @@ export default {
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
+    blogDetailsPage() {
+      return navigationRoutes.Home.Blogs.Details.replace(
+        '{id}',
+        this.blog?.identifier
+      )
+    },
+    authorDetailsPage() {
+      return navigationRoutes.Home.Account.Overview.replace(
+        '{userUID}',
+        this.blog?.author?.uid
+      )
+    },
+    exploreMorePage() {
+      return navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+        '{name}',
+        this.blog?.category?.name
+      )
+    },
   },
 
   watch: {
@@ -187,14 +161,7 @@ export default {
   methods: {
     getRelativeTime,
 
-    openProfile(userUID) {
-      userUID &&
-        this.$router.push(
-          navigationRoutes.Home.Account.Overview.replace('{userUID}', userUID)
-        )
-    },
-
-    async infiniteHandler($state) {
+    async fetchComments($state) {
       if (!this.fetchCommentsEndpoint) {
         $state.complete()
         return
@@ -214,10 +181,6 @@ export default {
       } catch (e) {
         $state.complete()
       }
-    },
-
-    getInitials(name) {
-      return name.split(' ')[0]
     },
 
     async addComment() {
@@ -280,128 +243,95 @@ export default {
 
 .blog-comment-page {
   position: relative;
+  display: grid;
+  grid-template-rows: 56px auto 64px;
 
-  .top-section {
-    .introduction {
-      display: flex;
-      align-items: center;
+  main {
+    height: calc(100vh - 120px);
+    max-width: $large-screen;
+    width: 100%;
+    margin: auto;
+    overflow: scroll;
 
-      h6 {
-        width: 100%;
-      }
+    header {
+      section {
+        display: flex;
+        align-items: center;
 
-      .view-blog {
-        text-align: center;
-        width: 5 * $xxx-large-unit;
-        color: $secondary;
-        position: relative;
+        h6 {
+          width: 100%;
+        }
 
-        &::after {
-          content: '';
-          position: absolute;
-          height: $single-unit;
-          width: 84px;
-          bottom: 0;
-          left: calc(50% - 42px);
-          background: $secondary-matte;
+        .view-blog {
+          text-align: center;
+          text-decoration: none;
+          width: 5 * $xxx-large-unit;
+          color: $secondary;
+          position: relative;
+
+          &::after {
+            content: '';
+            position: absolute;
+            height: $single-unit;
+            width: 84px;
+            bottom: 0;
+            left: calc(50% - 42px);
+            background: $secondary-matte;
+          }
         }
       }
     }
   }
-
-  .bottom-area {
-    position: fixed;
-    bottom: 0;
+  footer {
     width: 100%;
-    padding: $micro-unit;
-    height: 2 * $xx-large-unit;
-    display: flex;
-    align-items: center;
-    background-color: $nav-bar-bg;
-    box-shadow: $up-only-box-shadow;
+    max-width: $large-screen;
+    margin: auto;
 
-    $size: 2 * $medium-unit;
-
-    img {
-      width: $size;
-      min-width: $size;
-      height: $size;
-      min-height: $size;
-      object-position: center;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: $default-box-shadow;
-    }
-
-    input {
-      border: 1px solid #4a4a4a;
-      background-color: $segment-background;
-      width: 100%;
-      margin: 0 $micro-unit;
-      height: 2 * $medium-unit;
-      padding: 0 $micro-unit;
-      border-radius: $micro-unit;
-
-      &::placeholder {
-        color: darken($muted, $darken-percentage);
-      }
-
-      &:not(:placeholder-shown) {
-        color: $secondary-matte;
-        border: 1px solid $secondary-matte;
-      }
-    }
-
-    button {
-      min-width: auto;
-      font-size: 26px;
-      padding: 0;
-      color: $secondary-matte;
-    }
-  }
-
-  main {
-    .comment {
+    .bottom-area {
+      padding: $micro-unit;
+      height: 2 * $xx-large-unit;
       display: flex;
+      align-items: center;
+      background-color: $nav-bar-bg;
+      box-shadow: $up-only-box-shadow;
+
+      $size: 2 * $medium-unit;
 
       img {
-        width: 2 * $medium-unit;
-        height: 2 * $medium-unit;
+        width: $size;
+        min-width: $size;
+        height: $size;
+        min-height: $size;
         object-position: center;
         object-fit: cover;
         border-radius: 50%;
         box-shadow: $default-box-shadow;
       }
 
-      .comment-message-container {
+      input {
+        border: 1px solid #4a4a4a;
+        background-color: $segment-background;
         width: 100%;
-        margin-left: $standard-unit;
-        background-color: darken(#232340, $darken-percentage);
-        padding: $nano-unit $standard-unit $standard-unit;
+        margin: 0 $micro-unit;
+        height: 2 * $medium-unit;
+        padding: 0 $micro-unit;
         border-radius: $micro-unit;
-        box-shadow: $default-box-shadow;
 
-        .top-line {
-          display: flex;
-          width: 100%;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: $micro-unit;
-
-          .username {
-            font-size: 18px;
-          }
-
-          .timestamp {
-            font-family: $Nunito-Sans;
-            font-size: 14px;
-            color: $muted;
-          }
+        &::placeholder {
+          color: darken($muted, $darken-percentage);
         }
 
-        .message-body {
-          font-size: 15px;
+        &:not(:placeholder-shown) {
+          color: $secondary-matte;
+          border: 1px solid $secondary-matte;
         }
+      }
+
+      button {
+        min-width: auto;
+        font-size: 26px;
+        padding: 0;
+        color: $secondary-matte;
       }
     }
   }
