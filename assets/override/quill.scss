@@ -82,7 +82,20 @@ $active-color: $white;
 
 .ql-editor {
   position: relative !important;
-  min-height: calc(100vh - 139px)!important;
+  min-height: calc(100vh - 139px) !important;
+
+  .ql-align-center {
+    text-align: center !important;
+  }
+
+  .ql-align-right {
+    text-align: right !important;
+  }
+
+  .ql-align-left {
+    text-align: right !important;
+  }
+
 }
 
 .ql-tooltip,

@@ -2,7 +2,7 @@
   <div class="responsive-layout">
     <section class="desktop-app-layout">
       <header>
-        <nuxt-link v-ripple :to="navigationRoutes.index">
+        <nuxt-link v-ripple :to="navigationRoutes.Home.DashBoard">
           <h6>Floracasy</h6>
         </nuxt-link>
 

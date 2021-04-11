@@ -155,12 +155,12 @@
           <i class="mdi mdi-format-list-bulleted"></i>
         </button>
 
-        <button v-ripple class="ql-indent" type="button" value="-1">
-          <i class="mdi mdi-format-indent-decrease"></i>
-        </button>
-        <button v-ripple class="ql-indent" type="button" value="+1">
-          <i class="mdi mdi-format-indent-increase"></i>
-        </button>
+        <!--        <button v-ripple class="ql-indent" type="button" value="-1">-->
+        <!--          <i class="mdi mdi-format-indent-decrease"></i>-->
+        <!--        </button>-->
+        <!--        <button v-ripple class="ql-indent" type="button" value="+1">-->
+        <!--          <i class="mdi mdi-format-indent-increase"></i>-->
+        <!--        </button>-->
 
         <button v-ripple class="ql-script" type="button" value="sub">
           <i class="mdi mdi-format-subscript"></i>
