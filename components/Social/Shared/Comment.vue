@@ -76,7 +76,7 @@ export default {
   .comment-message-container {
     width: 100%;
     margin-left: $standard-unit;
-    background-color: $footer-background;
+    background-color: $card-bg-alternate;
     padding: $nano-unit $standard-unit $standard-unit;
     border-radius: $micro-unit;
     box-shadow: $default-box-shadow;
@@ -89,14 +89,14 @@ export default {
       margin-bottom: $micro-unit;
 
       .username {
-        font-size: 18px;
+        font-size: $standard-unit;
         text-decoration: none;
         color: $secondary;
       }
 
       .timestamp {
         font-family: $Nunito-Sans;
-        font-size: 14px;
+        font-size: $milli-unit;
         color: $muted;
       }
     }
