@@ -1,20 +1,12 @@
 <template>
-  <AppFeel class="blog-comment-page" custom-header on-back="/">
-    <template #app-bar-custom-header>
-      <h5
-        v-ripple
-        class="px-5 mdi mdi-arrow-left"
-        style="height: 56px; display: flex; align-items: center"
-        @click="
-          prevURL
-            ? $router.back()
-            : $router.replace(navigationRoutes.Home.DashBoard)
-        "
-      />
-      <p>{{ pageTitle }}</p>
-    </template>
+  <div class="blog-comment-page">
+    <AppBarHeader>
+      <template #title>
+        {{ pageTitle }}
+      </template>
+    </AppBarHeader>
 
-    <template #main>
+    <main>
       <div ref="commentStart" />
       <section v-if="blog" class="top-section px-4">
         <div class="introduction">
@@ -113,9 +105,9 @@
           </infinite-loading>
         </div>
       </client-only>
-    </template>
+    </main>
 
-    <template #footer>
+    <footer>
       <section class="bottom-area">
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
         <input
@@ -134,8 +126,8 @@
           <span class="mdi mdi-send" />
         </RippleButton>
       </section>
-    </template>
-  </AppFeel>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -143,9 +135,11 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import { mapGetters } from 'vuex'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'BlogComments',
+  components: { AppBarHeader },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: prevURL }) {
