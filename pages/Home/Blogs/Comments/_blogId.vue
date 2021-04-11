@@ -285,6 +285,8 @@ export default {
 @import 'assets/all-variables';
 
 .blog-comment-page {
+  position: relative;
+
   .top-section {
     .introduction {
       display: flex;
@@ -316,9 +318,8 @@ export default {
   .bottom-area {
     position: fixed;
     bottom: 0;
-    left: 0;
     width: 100%;
-    padding: 0.5rem;
+    padding: $micro-unit;
     height: 2 * $xx-large-unit;
     display: flex;
     align-items: center;
@@ -358,6 +359,7 @@ export default {
     }
 
     button {
+      min-width: auto;
       font-size: 26px;
       padding: 0;
       color: $secondary-matte;

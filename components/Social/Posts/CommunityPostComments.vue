@@ -331,6 +331,7 @@ export default {
     button {
       padding: 0;
       color: $secondary-matte;
+      min-width: auto;
       width: 64px;
       min-height: 2 * $x-large-unit;
       height: auto;
