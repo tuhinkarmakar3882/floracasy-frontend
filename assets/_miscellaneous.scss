@@ -4,7 +4,7 @@ $material-form-label: #9a9a9a;
 $material-form-label-focus: $secondary;
 $material-form-line: #777;
 $material-form-line-focus: $material-form-label-focus;
-$material-form-input-text: lighten($body-text-default, $lighten-percentage);
+$material-form-input-text: lighten($text-default-color, $lighten-percentage);
 $material-form-input-text-focus: $material-form-label-focus;
 $material-form-field-invalid-foreground: #d50000;
 
@@ -27,7 +27,7 @@ html {
   }
 
   &::-webkit-scrollbar-track {
-    background: lighten($card-background, 10%);
+    background: lighten($card-bg, 10%);
   }
 
   &::-webkit-scrollbar-thumb {
@@ -39,8 +39,8 @@ html {
   }
 
   body {
-    background: $body-background;
-    color: $body-text-default;
+    background: $body-bg;
+    color: $text-default-color;
     letter-spacing: $single-unit;
 
     * {
@@ -50,7 +50,7 @@ html {
     hr {
       border: none;
       height: $single-unit;
-      background: $card-background;
+      background: $card-bg;
     }
 
     a {
@@ -63,12 +63,12 @@ html {
       font-weight: 300;
       font-family: $Raleway;
       border-left: 4px solid $info;
-      background: $segment-background;
+      background: $body-bg-alternate;
       padding: 1.5rem 1rem;
       line-height: 1.9;
       box-shadow: $default-box-shadow;
       border-radius: $nano-unit;
-      color: $body-text-default;
+      color: $text-default-color;
 
       a {
         color: $secondary-highlight;
@@ -174,7 +174,7 @@ html {
           td {
             min-width: 20px;
             min-height: 20px;
-            border: 1px solid lighten($card-background, $lighten-percentage);
+            border: 1px solid lighten($card-bg, $lighten-percentage);
             text-align: center;
           }
         }
@@ -183,14 +183,14 @@ html {
 
     select {
       color: $muted;
-      background: $segment-background;
+      background: $body-bg-alternate;
       width: 100%;
       height: 3.125rem;
       border-radius: 4px;
       padding: 0.75rem;
       letter-spacing: $single-unit;
       font-size: 1rem;
-      border: $single-unit solid $segment-background;
+      border: $single-unit solid $body-bg-alternate;
 
       &:hover,
       &:focus,

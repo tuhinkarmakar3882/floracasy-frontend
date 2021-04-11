@@ -111,7 +111,7 @@ export default {
   section {
     article {
       &:nth-child(even) {
-        background: $nav-bar-bg;
+        background: $navigation-bar-color;
         box-shadow: $default-box-shadow;
       }
     }

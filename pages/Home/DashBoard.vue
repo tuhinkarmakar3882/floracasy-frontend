@@ -1,12 +1,6 @@
 <template>
   <div class="dashboard-page">
-    <!--    <LazyCarousel-->
-    <!--      :carousel-items="carouselItems"-->
-    <!--      image-carousel-->
-    <!--      use-floating-carousel-->
-    <!--    />-->
-
-    <section class="tab-bar">
+    <section class="tab-bar" ref="tabNavigation">
       <p
         v-ripple
         :class="tabNumber === 0 ? 'active-tab' : ''"
@@ -32,7 +26,6 @@
         Categories
       </p>
     </section>
-    <div id="abc" ref="tabNavigation"></div>
 
     <InfiniteScrollingBlogLists
       v-if="tabNumber === 0"
@@ -153,7 +146,7 @@ $blog-border-radius: 20px;
     grid-template-columns: repeat(3, 1fr);
     position: sticky;
     top: 56px;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     box-shadow: $down-only-box-shadow;
     z-index: 3;
     transition: all 0.3s ease-in-out;

@@ -119,7 +119,7 @@ export default {
 
 .segment {
   &:nth-child(odd) {
-    background: $segment-background;
+    background: $body-bg-alternate;
   }
 }
 </style>

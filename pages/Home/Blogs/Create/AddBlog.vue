@@ -557,7 +557,7 @@ $active-color: $white;
   }
 
   #editor {
-    border: 1px solid $card-background;
+    border: 1px solid $card-bg;
   }
 
   #toolbar {
@@ -590,7 +590,7 @@ $active-color: $white;
       &.ql-active {
         background: $active-background;
         outline: 0 none;
-        box-shadow: 0 0 4px $card-background;
+        box-shadow: 0 0 4px $card-bg;
 
         i {
           color: $active-color !important;

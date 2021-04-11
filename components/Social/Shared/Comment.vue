@@ -5,24 +5,23 @@
       alt="profile-image"
       height="40"
       width="40"
-      @click="openProfile(comment.userUID)"
+      @click="openProfile"
     />
-    <div class="comment-message-container">
+
+    <section class="comment-message-container">
       <p class="top-line">
-        <span
-          v-ripple
-          class="username secondary"
-          @click="openProfile(comment.userUID)"
-        >
+        <nuxt-link v-ripple class="username" :to="profileLink">
           {{ getInitials(comment.user.displayName) }}
-        </span>
+        </nuxt-link>
+
         <span class="timestamp">
           <span class="mdi mdi-clock-time-nine-outline" />
           {{ getRelativeTime(comment.createdAt) }}
         </span>
       </p>
+
       <p class="message-body">{{ comment.message }}</p>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -38,14 +37,19 @@ export default {
       required: true,
     },
   },
+  computed: {
+    profileLink() {
+      return navigationRoutes.Home.Account.Overview.replace(
+        '{userUID}',
+        this.comment?.userUID
+      )
+    },
+  },
   methods: {
     getRelativeTime,
 
-    openProfile(userUID) {
-      userUID &&
-        this.$router.push(
-          navigationRoutes.Home.Account.Overview.replace('{userUID}', userUID)
-        )
+    async openProfile() {
+      await this.$router.push(this.profileLink)
     },
     getInitials(name) {
       return name.split(' ')[0]
@@ -72,7 +76,7 @@ export default {
   .comment-message-container {
     width: 100%;
     margin-left: $standard-unit;
-    background-color: darken(#232340, $darken-percentage);
+    background-color: $footer-background;
     padding: $nano-unit $standard-unit $standard-unit;
     border-radius: $micro-unit;
     box-shadow: $default-box-shadow;
@@ -86,6 +90,8 @@ export default {
 
       .username {
         font-size: 18px;
+        text-decoration: none;
+        color: $secondary;
       }
 
       .timestamp {

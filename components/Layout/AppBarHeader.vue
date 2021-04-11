@@ -38,7 +38,7 @@ export default {
     top: -$single-unit !important;
     display: flex !important;
     align-items: center !important;
-    background-color: $nav-bar-bg !important;
+    background-color: $navigation-bar-color !important;
     box-shadow: $down-only-box-shadow !important;
     height: $size !important;
     transition: all 300s ease-in-out !important;

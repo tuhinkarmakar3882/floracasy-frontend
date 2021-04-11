@@ -163,7 +163,7 @@ export default {
 
   .add-post-preview {
     display: flex;
-    background: $segment-background;
+    background: $body-bg-alternate;
     align-items: center;
     justify-content: flex-start;
   }
@@ -194,7 +194,7 @@ export default {
       justify-items: center;
       place-items: center;
       border-radius: 50%;
-      background: $vibrant;
+      background: $secondary-vibrant;
       right: 12px;
       bottom: 60px;
       color: #000;

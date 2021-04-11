@@ -108,7 +108,7 @@ export default {
 .explore-people-page {
   .user-search-result {
     &:nth-child(even) {
-      background: $nav-bar-bg;
+      background: $navigation-bar-color;
       box-shadow: $default-box-shadow;
     }
   }

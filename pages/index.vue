@@ -1,7 +1,7 @@
 <template>
   <div class="index-page">
-    <main class="mobile-view">
-      <LazyCustomCarousel :total-items="4" class="carousel-container pt-4">
+    <section class="mobile-view">
+      <LazyCarousel :total-items="4" class="carousel-container pt-4">
         <template #slides>
           <section class="carousel-item px-6">
             <header class="text-center">
@@ -159,7 +159,7 @@
             </main>
           </section>
         </template>
-      </LazyCustomCarousel>
+      </LazyCarousel>
 
       <footer>
         <GoogleSignInButton class="secondary-btn" />
@@ -172,7 +172,7 @@
           <span class="white">Continue as Guest</span>
         </button>
       </footer>
-    </main>
+    </section>
   </div>
 </template>
 
@@ -274,17 +274,6 @@ export default {
 .index-page {
   * {
     transition: all 300ms ease-in-out;
-  }
-
-  .desktop-view {
-    .segment {
-      position: relative;
-      padding: $xx-large-unit $standard-unit;
-
-      &:nth-child(odd):not(:first-child) {
-        background-color: $segment-background;
-      }
-    }
   }
 
   .mobile-view {

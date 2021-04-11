@@ -371,7 +371,7 @@ export default {
         border-radius: $nano-unit;
 
         &:hover {
-          background: $card-background;
+          background: $card-bg;
         }
       }
     }
@@ -379,7 +379,7 @@ export default {
     .options {
       cursor: pointer;
       position: absolute;
-      background: $card-background;
+      background: $card-bg;
       border-radius: $nano-unit;
       right: $medium-unit;
       box-shadow: $down-only-box-shadow;
@@ -440,7 +440,7 @@ export default {
       }
 
       &:hover {
-        background: $card-background;
+        background: $card-bg;
       }
     }
   }

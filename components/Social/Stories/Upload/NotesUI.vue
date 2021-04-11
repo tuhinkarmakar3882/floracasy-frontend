@@ -266,7 +266,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: $segment-background;
+      background: $body-bg-alternate;
       line-height: 1.75;
       letter-spacing: 1px;
       border: none !important;
@@ -275,7 +275,7 @@ export default {
 
     label {
       position: fixed;
-      background: rgba($nav-bar-bg, 0.7);
+      background: rgba($navigation-bar-color, 0.7);
       box-shadow: $default-box-shadow;
       bottom: 2 * $xxx-large-unit;
       left: $zero-unit;

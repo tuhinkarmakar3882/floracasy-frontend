@@ -136,7 +136,7 @@ export default {
     display: flex;
     align-items: center;
     height: 2 * $x-large-unit;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     box-shadow: $down-only-box-shadow;
     transition: all 0.2s ease-in-out;
 
@@ -148,7 +148,7 @@ export default {
   }
 
   main.main-content {
-    background-color: $body-background;
+    background-color: $body-bg;
     max-width: $large-screen;
     margin-left: auto;
     margin-right: auto;

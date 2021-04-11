@@ -77,7 +77,7 @@ export default {
 .fetch-community-posts-component {
   .community-post {
     &:nth-child(even) {
-      background: $nav-bar-bg;
+      background: $navigation-bar-color;
       box-shadow: $default-box-shadow;
     }
   }

@@ -530,7 +530,7 @@ pre {
   bottom: 0;
   left: 0;
   right: 0;
-  background: $body-background;
+  background: $body-bg;
   z-index: 2 * $bring-to-front;
 
   * {
@@ -660,7 +660,7 @@ pre {
 
   .options {
     position: absolute;
-    background: $segment-background;
+    background: $body-bg-alternate;
     border-radius: $nano-unit;
     box-shadow: $down-only-box-shadow;
     max-width: 300px;

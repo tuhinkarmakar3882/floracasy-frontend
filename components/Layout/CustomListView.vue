@@ -43,7 +43,7 @@ export default {
         .option-name {
           margin-left: $xx-large-unit;
           padding-right: $standard-unit;
-          color: lighten($body-text-default, $lighten-percentage);
+          color: lighten($text-default-color, $lighten-percentage);
           font-size: clamp(1.1rem, 8vw, 1.2rem);
           width: 100%;
         }

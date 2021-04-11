@@ -70,7 +70,7 @@ export default {
 
 .modal-component {
   position: fixed;
-  background: rgba($nav-bar-bg, 0.99);
+  background: rgba($navigation-bar-color, 0.99);
   width: 100%;
   height: calc(100% - 56px);
   top: 0;

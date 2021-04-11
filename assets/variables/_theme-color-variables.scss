@@ -5,6 +5,7 @@ $primary-light: #9c9aff;
 
 $secondary-matte: #52B2A2;
 $secondary: #6DD0BF;
+$secondary-vibrant: #37F5D3;
 $secondary-highlight: #8FF2E1;
 
 $success: #34b334;
@@ -25,7 +26,18 @@ $warning: #EFB33D;
 $audio-thumb: #d6f809;
 $premium: #ffc34d;
 
-$vibrant: #37F5D3;
-$quote: #3A3A49;
+$gray-tone: #3a3a3a;
+$delete-icon-color:#ddb000;
 
-$active-gradient: linear-gradient(to right, #CC2B5E, #753A88)
+$gradient-color-1: #CC2B5E;
+$gradient-color-2: #753A88;
+$active-gradient: linear-gradient(to right, $gradient-color-1, $gradient-color-2);
+
+$body-bg: #050514;
+$body-bg-alternate: #111120;
+
+$card-bg: #191928;
+$card-bg-alternate: #1C1C2B;
+
+$text-default-color: #B9B9B9;
+$navigation-bar-color: #0d0d17;

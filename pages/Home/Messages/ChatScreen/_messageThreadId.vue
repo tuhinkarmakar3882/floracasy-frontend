@@ -347,7 +347,7 @@ export default {
     height: 2 * $xx-large-unit;
     display: flex;
     align-items: center;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     box-shadow: $up-only-box-shadow;
 
     img {
@@ -361,7 +361,7 @@ export default {
 
     input {
       border: 1px solid #4a4a4a;
-      background-color: $segment-background;
+      background-color: $body-bg-alternate;
       width: 100%;
       margin: 0 $micro-unit;
       height: 2 * $medium-unit;

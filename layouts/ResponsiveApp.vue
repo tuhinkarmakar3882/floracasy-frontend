@@ -366,7 +366,7 @@ export default {
     header,
     footer {
       position: fixed;
-      background: $nav-bar-bg;
+      background: $navigation-bar-color;
     }
 
     footer {
@@ -480,7 +480,7 @@ export default {
       z-index: $bring-to-front - 10;
       border-top-right-radius: 36px;
       border-bottom-right-radius: 36px;
-      background: $segment-background;
+      background: $body-bg-alternate;
     }
   }
 
@@ -496,7 +496,7 @@ export default {
       z-index: $bring-to-front;
       position: fixed;
       left: 0;
-      background: $nav-bar-bg;
+      background: $navigation-bar-color;
       width: 100%;
       height: 2 * $x-large-unit;
     }
@@ -587,7 +587,7 @@ export default {
       z-index: $bring-to-front - 10;
       border-top-left-radius: 36px;
       border-top-right-radius: 36px;
-      background: $segment-background;
+      background: $body-bg-alternate;
     }
   }
 

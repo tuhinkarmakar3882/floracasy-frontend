@@ -610,7 +610,7 @@ export default {
         border: 1px solid $secondary-matte;
 
         p {
-          color: $vibrant;
+          color: $secondary-vibrant;
         }
       }
     }
@@ -641,7 +641,7 @@ export default {
     img {
       height: 100vh;
       width: 100vw;
-      background: $card-background;
+      background: $card-bg;
       object-fit: cover;
       border-radius: $nano-unit;
       box-shadow: $default-box-shadow;
@@ -716,7 +716,7 @@ export default {
             border: 1px solid $secondary-matte;
 
             p {
-              color: $vibrant;
+              color: $secondary-vibrant;
             }
           }
         }
@@ -739,13 +739,13 @@ export default {
       background: linear-gradient(
           45deg,
           transparent 0%,
-          $nav-bar-bg 12.5%,
-          $segment-background 25%,
-          $card-background 37.5%,
-          $footer-background 50%,
-          $card-background 62.5%,
-          $segment-background 75%,
-          $nav-bar-bg 87.5%,
+          $navigation-bar-color 12.5%,
+          $body-bg-alternate 25%,
+          $card-bg 37.5%,
+          $card-bg-alternate 50%,
+          $card-bg 62.5%,
+          $body-bg-alternate 75%,
+          $navigation-bar-color 87.5%,
           transparent 100%
         )
         right no-repeat;

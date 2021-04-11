@@ -177,7 +177,7 @@ export default {
     grid-template-columns: repeat(2, 1fr);
     position: sticky;
     top: 56px;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     box-shadow: $down-only-box-shadow;
     z-index: 1;
     transition: all 0.3s ease-in-out;
@@ -198,7 +198,7 @@ export default {
 
   .activity {
     &:nth-child(even) {
-      background: $segment-background;
+      background: $body-bg-alternate;
     }
   }
 }

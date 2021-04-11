@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$border-color: lighten($footer-background, $lighten-percentage);
+$border-color: lighten($card-bg-alternate, $lighten-percentage);
 .input-field-component {
   position: relative;
 
@@ -46,7 +46,7 @@ $border-color: lighten($footer-background, $lighten-percentage);
     display: block;
     font-size: $standard-unit !important;
     font-family: $Nunito-Sans !important;
-    color: $body-text-default;
+    color: $text-default-color;
     font-weight: 300 !important;
     margin-bottom: $standard-unit !important;
 
@@ -55,7 +55,7 @@ $border-color: lighten($footer-background, $lighten-percentage);
       position: absolute;
       top: $nano-unit !important;
       left: $milli-unit;
-      background: $body-background;
+      background: $body-bg;
       border-radius: 0;
       padding: 0 $micro-unit;
     }

@@ -212,7 +212,7 @@ export default {
         }
 
         &:focus {
-          color: $vibrant;
+          color: $secondary-vibrant;
           border: 1px solid $secondary-matte;
 
           & ~ label {
@@ -234,7 +234,7 @@ export default {
       left: 0;
       bottom: 0;
       right: 0;
-      background: rgba($nav-bar-bg, 0.9);
+      background: rgba($navigation-bar-color, 0.9);
       z-index: $bring-to-front - 15;
 
       .content {
@@ -246,7 +246,7 @@ export default {
   .search-results-container {
     .search-result {
       &:nth-child(even) {
-        background: $segment-background;
+        background: $body-bg-alternate;
       }
     }
   }

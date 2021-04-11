@@ -56,7 +56,7 @@ export default {
 .promotional-blogs-component {
   .blog-post {
     &:nth-child(even) {
-      background: $card-background;
+      background: $card-bg;
     }
   }
 }

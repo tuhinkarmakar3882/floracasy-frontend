@@ -37,7 +37,7 @@
 }
 
 .delete-color {
-  color: #ddb000;
+  color: $delete-icon-color;
 }
 
 .black {
@@ -68,24 +68,20 @@
   color: $secondary-highlight;
 }
 
-.quote {
-  color: $quote;
-}
-
 .premium {
   color: $premium;
 }
 
 .vibrant {
-  color: $vibrant;
+  color: $secondary-vibrant;
 }
 
 .faded-divider {
-  background: linear-gradient(to right, $card-background, $body-background);
+  background: linear-gradient(to right, $card-bg, $body-bg);
 }
 
 .reversed-faded-divider {
-  background: linear-gradient(to left, $card-background, $body-background);
+  background: linear-gradient(to left, $card-bg, $body-bg);
 }
 
 .active-background {

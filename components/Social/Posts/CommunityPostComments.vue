@@ -290,7 +290,7 @@ export default {
     padding: $micro-unit;
     display: flex;
     align-items: center;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     box-shadow: $up-only-box-shadow;
 
     $image-size: 2 * $medium-unit;
@@ -309,7 +309,7 @@ export default {
 
     .text-box {
       border: 1px solid #4a4a4a;
-      background-color: $segment-background;
+      background-color: $body-bg-alternate;
       width: 100%;
       word-break: break-all;
       margin: 0 $micro-unit;

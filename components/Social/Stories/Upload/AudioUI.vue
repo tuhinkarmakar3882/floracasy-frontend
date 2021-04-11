@@ -267,7 +267,7 @@ export default {
 
     span {
       display: block;
-      background: $footer-background;
+      background: $card-bg-alternate;
       border-radius: 2 * $xxx-large-unit;
       font-family: $Nunito-Sans;
       padding: $nano-unit $milli-unit;
@@ -288,13 +288,13 @@ export default {
     background: linear-gradient(
         45deg,
         transparent 0%,
-        $nav-bar-bg 12.5%,
-        $segment-background 25%,
-        $card-background 37.5%,
-        $footer-background 50%,
-        $card-background 62.5%,
-        $segment-background 75%,
-        $nav-bar-bg 87.5%,
+        $navigation-bar-color 12.5%,
+        $body-bg-alternate 25%,
+        $card-bg 37.5%,
+        $card-bg-alternate 50%,
+        $card-bg 62.5%,
+        $body-bg-alternate 75%,
+        $navigation-bar-color 87.5%,
         transparent 100%
       )
       right no-repeat;
@@ -370,13 +370,13 @@ export default {
       background: linear-gradient(
           45deg,
           transparent 0%,
-          $nav-bar-bg 12.5%,
-          $segment-background 25%,
-          $card-background 37.5%,
-          $footer-background 50%,
-          $card-background 62.5%,
-          $segment-background 75%,
-          $nav-bar-bg 87.5%,
+          $navigation-bar-color 12.5%,
+          $body-bg-alternate 25%,
+          $card-bg 37.5%,
+          $card-bg-alternate 50%,
+          $card-bg 62.5%,
+          $body-bg-alternate 75%,
+          $navigation-bar-color 87.5%,
           transparent 100%
         )
         right no-repeat;
@@ -401,29 +401,29 @@ export default {
     @keyframes ripple-effect {
       0% {
         color: white;
-        box-shadow: $common-values 0 $segment-background,
-          $common-values 0 $card-background,
-          $common-values 0 lighten($footer-background, 1%),
+        box-shadow: $common-values 0 $body-bg-alternate,
+          $common-values 0 $card-bg,
+          $common-values 0 lighten($card-bg-alternate, 1%),
           $common-values 0 darken($outer-ring, $darken-percentage);
       }
       50% {
         color: #cacaca;
-        box-shadow: $common-values 25px $segment-background,
-          $common-values 47px $card-background,
-          $common-values 60px lighten($footer-background, 1%),
+        box-shadow: $common-values 25px $body-bg-alternate,
+          $common-values 47px $card-bg,
+          $common-values 60px lighten($card-bg-alternate, 1%),
           $common-values 60 darken($outer-ring, $darken-percentage);
       }
       80% {
-        box-shadow: $common-values 40px $segment-background,
-          $common-values 60px $card-background,
-          $common-values 80px lighten($footer-background, 1%),
+        box-shadow: $common-values 40px $body-bg-alternate,
+          $common-values 60px $card-bg,
+          $common-values 80px lighten($card-bg-alternate, 1%),
           $common-values 90px darken($outer-ring, $darken-percentage);
       }
       100% {
         color: white;
-        box-shadow: $common-values 45px $segment-background,
-          $common-values 65px $card-background,
-          $common-values 85px lighten($footer-background, 1%),
+        box-shadow: $common-values 45px $body-bg-alternate,
+          $common-values 65px $card-bg,
+          $common-values 85px lighten($card-bg-alternate, 1%),
           $common-values 95px darken($outer-ring, $darken-percentage);
       }
     }

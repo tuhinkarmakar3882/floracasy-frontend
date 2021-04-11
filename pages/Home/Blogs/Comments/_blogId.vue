@@ -11,7 +11,7 @@
         <section>
           <h6>{{ blog.title }}</h6>
 
-          <nuxt-link v-ripple class="view-blog py-4" :to="blogDetailsPage">
+          <nuxt-link v-ripple :to="blogDetailsPage" class="view-blog py-4">
             View Blog
           </nuxt-link>
         </section>
@@ -88,7 +88,7 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
-import { getRelativeTime, processLink } from '@/utils/utility'
+import { getRelativeTime, processLink, showUITip } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
@@ -184,48 +184,43 @@ export default {
     },
 
     async addComment() {
-      if (this.canSendComment) {
-        this.canSendComment = false
-        this.isSendingComment = true
-        await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-          message: 'Adding Comment...',
-          notificationType: 'info',
-          dismissible: true,
+      if (!this.canSendComment) return
+
+      this.canSendComment = false
+      this.isSendingComment = true
+      await showUITip(this.$store, 'Adding Comment...', 'info')
+
+      try {
+        await this.$axios.$post(endpoints.comment_system.blog.create, {
+          blogIdentifier: this.$route.params.blogId,
+          message: this.commentMessage,
         })
-        try {
-          await this.$axios.$post(endpoints.comment_system.blog.create, {
-            blogIdentifier: this.$route.params.blogId,
-            message: this.commentMessage,
-          })
-          const newComment = {
-            id: Date.now(),
-            userUID: this.user.uid,
-            user: {
-              photoURL: this.user.photoURL,
-              displayName: this.user.displayName,
-            },
-            createdAt: Date.now(),
-            message: this.commentMessage,
-          }
 
-          this.comments.unshift(newComment)
-          this.commentMessage = ''
-          this.isSendingComment = false
-
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Comment Added',
-            notificationType: 'success',
-            dismissible: true,
-          })
-          this.$refs.commentStart.scrollIntoView()
-        } catch (e) {
-          this.isSendingComment = false
-          await this.$store.dispatch('SocketHandler/updateSocketMessage', {
-            message: 'Failed to Add Comment. Please Retry',
-            notificationType: 'error',
-            dismissible: true,
-          })
+        const newComment = {
+          id: Date.now(),
+          userUID: this.user.uid,
+          user: {
+            photoURL: this.user.photoURL,
+            displayName: this.user.displayName,
+          },
+          createdAt: Date.now(),
+          message: this.commentMessage,
         }
+
+        this.comments.unshift(newComment)
+        this.commentMessage = ''
+
+        await showUITip(this.$store, 'Comment Added', 'success')
+
+        this.$refs.commentStart.scrollIntoView()
+      } catch (e) {
+        await showUITip(
+          this.$store,
+          'Failed to Add Comment. Please Retry',
+          'error'
+        )
+      } finally {
+        this.isSendingComment = false
       }
     },
   },
@@ -282,6 +277,7 @@ export default {
       }
     }
   }
+
   footer {
     width: 100%;
     max-width: $large-screen;
@@ -292,7 +288,7 @@ export default {
       height: 2 * $xx-large-unit;
       display: flex;
       align-items: center;
-      background-color: $nav-bar-bg;
+      background-color: $navigation-bar-color;
       box-shadow: $up-only-box-shadow;
 
       $size: 2 * $medium-unit;
@@ -310,7 +306,7 @@ export default {
 
       input {
         border: 1px solid #4a4a4a;
-        background-color: $segment-background;
+        background-color: $body-bg-alternate;
         width: 100%;
         margin: 0 $micro-unit;
         height: 2 * $medium-unit;

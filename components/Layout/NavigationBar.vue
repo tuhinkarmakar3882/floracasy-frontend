@@ -139,7 +139,7 @@ button {
   position: sticky;
   top: -$single-unit;
   z-index: $bring-to-front;
-  background-color: $nav-bar-bg;
+  background-color: $navigation-bar-color;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -189,7 +189,7 @@ button {
     min-height: calc(100vh - 56px);
     left: 0;
     top: 2 * $x-large-unit;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     box-shadow: $right-only-box-shadow;
     z-index: $bring-to-zero-level;
     display: flex;
@@ -198,7 +198,7 @@ button {
     transition: all 300ms cubic-bezier(0.55, 0.29, 0.31, 0.76);
 
     section {
-      background: $footer-background;
+      background: $card-bg-alternate;
     }
 
     ul {

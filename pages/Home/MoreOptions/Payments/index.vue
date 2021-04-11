@@ -233,7 +233,7 @@ export default {
 
 .payments-page {
   .payment-card {
-    background: $card-background;
+    background: $card-bg;
 
     * {
       font-family: $Nunito-Sans;
@@ -247,7 +247,7 @@ export default {
       section {
         small {
           font-size: $medium-unit;
-          color: $vibrant;
+          color: $secondary-vibrant;
         }
 
         p {

@@ -199,7 +199,7 @@ $image-dimension: 64px;
     top: 56px;
     right: 0;
     z-index: 11;
-    background: $body-background;
+    background: $body-bg;
     box-shadow: $down-only-box-shadow;
     left: 0;
 
@@ -259,7 +259,7 @@ $image-dimension: 64px;
         }
 
         &:focus {
-          color: $vibrant;
+          color: $secondary-vibrant;
           border: 1px solid $secondary-matte;
 
           & ~ .prepend-icon {

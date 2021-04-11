@@ -131,7 +131,7 @@ $border-radius: 100px;
     nav {
       bottom: 0;
       width: 100%;
-      background: rgba($segment-background, 0.8);
+      background: rgba($body-bg-alternate, 0.8);
       box-shadow: $default-box-shadow;
       display: grid;
       place-items: center;
@@ -145,7 +145,7 @@ $border-radius: 100px;
         text-align: center;
 
         &.active-tab {
-          color: $vibrant;
+          color: $secondary-vibrant;
           font-weight: 500;
           position: relative;
           &::after {

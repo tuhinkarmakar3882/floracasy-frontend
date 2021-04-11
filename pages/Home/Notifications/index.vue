@@ -161,7 +161,7 @@ export default {
 
   .notification-item {
     &:nth-child(even) {
-      background-color: $nav-bar-bg;
+      background-color: $navigation-bar-color;
     }
   }
 }

@@ -195,10 +195,10 @@ export default {
   display: block;
   position: relative;
   width: clamp(300px, 90vw, 650px);
-  background: darken($card-background, 5%);
+  background: darken($card-bg, 5%);
   border-radius: 10px;
   padding: 2rem 1.5rem;
-  box-shadow: 0 0 4px lighten($card-background, 50%);
+  box-shadow: 0 0 4px lighten($card-bg, 50%);
 
   .close-btn {
     position: absolute;

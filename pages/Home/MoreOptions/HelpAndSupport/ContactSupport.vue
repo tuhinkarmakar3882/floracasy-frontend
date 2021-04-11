@@ -252,18 +252,18 @@ export default {
   }
 
   textarea {
-    border: $single-unit solid $card-background;
+    border: $single-unit solid $card-bg;
     padding: $milli-unit;
     border-radius: $nano-unit;
     box-shadow: $default-box-shadow;
-    background: $segment-background;
+    background: $body-bg-alternate;
     color: $muted;
     resize: none;
     font-family: $Nunito-Sans;
     font-weight: 300;
 
     &:focus {
-      border: $single-unit solid $vibrant;
+      border: $single-unit solid $secondary-vibrant;
       color: $secondary;
     }
   }
@@ -282,7 +282,7 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba($segment-background, 0.9);
+    background: rgba($body-bg-alternate, 0.9);
     backdrop-filter: blur(1px);
     box-shadow: $default-box-shadow;
     display: grid;

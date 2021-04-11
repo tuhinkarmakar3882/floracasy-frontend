@@ -66,8 +66,8 @@ export default {
 
   .body {
     position: relative;
-    color: $vibrant;
-    background: $segment-background;
+    color: $secondary-vibrant;
+    background: $body-bg-alternate;
     border-radius: $micro-unit;
 
     &::after {
@@ -76,7 +76,7 @@ export default {
       left: $milli-unit;
       top: -$x-large-unit;
       border: $standard-unit solid transparent;
-      border-bottom-color: $segment-background;
+      border-bottom-color: $body-bg-alternate;
     }
   }
 
@@ -91,8 +91,8 @@ export default {
       color: $muted;
 
       &:nth-child(2) {
-        border-left: 1px solid $card-background;
-        border-right: 1px solid $card-background;
+        border-left: 1px solid $card-bg;
+        border-right: 1px solid $card-bg;
       }
     }
   }

@@ -179,7 +179,7 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba($nav-bar-bg, 0.8);
+    background: rgba($navigation-bar-color, 0.8);
     backdrop-filter: blur(1px);
     z-index: $bring-to-front - 15;
   }

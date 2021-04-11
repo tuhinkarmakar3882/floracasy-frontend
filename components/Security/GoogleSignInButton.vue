@@ -167,13 +167,13 @@ export default {
     z-index: 1234567890;
     background: linear-gradient(
         45deg,
-        rgba($nav-bar-bg, 0.95) 0%,
-        rgba($segment-background, 0.95) 16%,
-        rgba($card-background, 0.95) 32%,
-        rgba($footer-background, 0.95) 48%,
-        rgba($card-background, 0.95) 64%,
-        rgba($segment-background, 0.95) 80%,
-        rgba($nav-bar-bg, 0.95) 100%
+        rgba($navigation-bar-color, 0.95) 0%,
+        rgba($body-bg-alternate, 0.95) 16%,
+        rgba($card-bg, 0.95) 32%,
+        rgba($card-bg-alternate, 0.95) 48%,
+        rgba($card-bg, 0.95) 64%,
+        rgba($body-bg-alternate, 0.95) 80%,
+        rgba($navigation-bar-color, 0.95) 100%
       )
       right no-repeat;
     background-size: 400%;

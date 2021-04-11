@@ -477,8 +477,8 @@ export default {
       color: $muted;
 
       &:nth-child(2) {
-        border-left: 1px solid $card-background;
-        border-right: 1px solid $card-background;
+        border-left: 1px solid $card-bg;
+        border-right: 1px solid $card-bg;
       }
     }
   }

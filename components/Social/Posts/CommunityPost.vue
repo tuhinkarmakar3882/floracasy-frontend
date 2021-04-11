@@ -376,7 +376,7 @@ export default {
 
   .options {
     position: absolute;
-    background: $card-background;
+    background: $card-bg;
     border-radius: $nano-unit;
     right: $large-unit;
     top: 3 * $medium-unit;

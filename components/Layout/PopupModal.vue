@@ -76,7 +76,7 @@ export default {
     display: grid;
     place-items: center;
     z-index: 5;
-    background: $card-background;
+    background: $card-bg;
     padding: 2rem 1.5rem;
     border-radius: 16px;
     text-align: left;

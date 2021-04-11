@@ -155,7 +155,7 @@ $blog-border-radius: 20px;
       grid-template-columns: repeat(3, 1fr);
       position: sticky;
       top: (2 * $x-large-unit) - $double-unit;
-      background-color: $nav-bar-bg;
+      background-color: $navigation-bar-color;
       box-shadow: $down-only-box-shadow;
       z-index: 1;
       transition: all 0.3s ease-in-out;

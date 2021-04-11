@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'CustomCarousel',
+  name: 'Carousel',
   props: {
     totalItems: {
       type: Number,
@@ -147,7 +147,7 @@ export default {
         width: $standard-unit;
         height: $micro-unit;
         border-radius: $xxx-large-unit;
-        background: $vibrant;
+        background: $secondary-vibrant;
       }
     }
 

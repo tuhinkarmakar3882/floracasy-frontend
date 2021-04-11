@@ -100,7 +100,7 @@ export default {
 .scrollable-blog-list {
   article {
     &:nth-child(even) {
-      background: $nav-bar-bg;
+      background: $navigation-bar-color;
       box-shadow: $default-box-shadow;
     }
   }

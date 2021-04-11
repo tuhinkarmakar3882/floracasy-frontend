@@ -137,7 +137,7 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$seek-progress: -1000px 0 0 1000px $vibrant;
+$seek-progress: -1000px 0 0 1000px $secondary-vibrant;
 .audio-player-component {
   position: relative;
 
@@ -240,16 +240,16 @@ $seek-progress: -1000px 0 0 1000px $vibrant;
             width: 63%;
             height: 10px;
             -webkit-appearance: none;
-            color: $vibrant;
+            color: $secondary-vibrant;
             margin-top: -1px;
           }
 
           &::-moz-range-progress {
-            background-color: $vibrant;
+            background-color: $secondary-vibrant;
           }
 
           &::-ms-fill-lower {
-            background-color: $vibrant;
+            background-color: $secondary-vibrant;
           }
 
           &::-moz-range-track {

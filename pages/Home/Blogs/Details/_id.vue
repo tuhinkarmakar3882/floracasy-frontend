@@ -413,7 +413,7 @@ export default {
     width: 100%;
     z-index: $bring-to-front;
     bottom: 0;
-    background-color: $nav-bar-bg;
+    background-color: $navigation-bar-color;
     height: 56px;
     font-family: $Nunito-Sans;
     color: $secondary;
