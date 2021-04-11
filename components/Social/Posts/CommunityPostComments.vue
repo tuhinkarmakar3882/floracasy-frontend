@@ -284,9 +284,10 @@ export default {
   .bottom-area {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     max-height: 4 * $xxx-large-unit;
-    padding: $micro-unit 0;
+    padding: $micro-unit;
     display: flex;
     align-items: center;
     background-color: $nav-bar-bg;

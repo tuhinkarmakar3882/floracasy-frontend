@@ -1,6 +1,6 @@
 <template>
   <AppFeel class="blog-comment-page" custom-header on-back="/">
-    <template slot="app-bar-custom-header">
+    <template #app-bar-custom-header>
       <h5
         v-ripple
         class="px-5 mdi mdi-arrow-left"
@@ -14,7 +14,7 @@
       <p>{{ pageTitle }}</p>
     </template>
 
-    <template slot="main">
+    <template #main>
       <div ref="commentStart" />
       <section v-if="blog" class="top-section px-4">
         <div class="introduction">
@@ -113,8 +113,10 @@
           </infinite-loading>
         </div>
       </client-only>
+    </template>
 
-      <section class="bottom-area px-4">
+    <template #footer>
+      <section class="bottom-area">
         <img v-if="user" :src="user.photoURL" alt="profile-image" />
         <input
           v-model="commentMessage"
@@ -314,7 +316,9 @@ export default {
   .bottom-area {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
+    padding: 0.5rem;
     height: 2 * $xx-large-unit;
     display: flex;
     align-items: center;
