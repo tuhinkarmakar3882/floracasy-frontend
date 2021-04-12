@@ -50,7 +50,7 @@
                 overflow: 'scroll',
               }
             : {
-                width: 0,
+                width: `clamp(250px, 50%, 350px)`,
                 transform: 'translateX(100%)',
                 overflow: 'hidden',
               }
