@@ -165,8 +165,8 @@ export default {
       await this.$router.push({
         path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
         query: {
-          type: 'Comment',
-          identifier: this.comment.identifier,
+          type: this.commentType + 'Comment',
+          identifier: this.comment.commentIdentifier,
         },
       })
     },
