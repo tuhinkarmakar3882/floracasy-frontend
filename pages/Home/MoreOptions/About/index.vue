@@ -42,9 +42,9 @@
 
         <section v-else-if="activeTab === 1" class="the-vision px-4">
           <article class="my-4">
-            <h4 class="heading-title mt-4 mb-6">
+            <h5 class="heading-title mt-4 mb-6">
               The World can be a Better Place
-            </h4>
+            </h5>
             <p class="my-4">
               Though, the pandemic has taken away a lot of jobs, We understand
               that, each one of us is a bearer of a potential amount of
@@ -58,7 +58,7 @@
           </article>
 
           <article class="my-4">
-            <h4 class="heading-title mt-4 mb-6">The Knowledge is Valuable</h4>
+            <h5 class="heading-title mt-4 mb-6">The Knowledge is Valuable</h5>
             <p class="my-4">
               And, yet many people still don't quite have enough access to it.
               Here, we want to bridge the gap with just a little help from you.
@@ -68,7 +68,7 @@
 
         <section v-else-if="activeTab === 2" class="the-story px-4">
           <article class="my-4">
-            <h4 class="heading-title mt-4 mb-6">Who are we?</h4>
+            <h5 class="heading-title mt-4 mb-6">Who are we?</h5>
             <p class="my-4">
               We are a duo of self motivated enthusiasts (One Developer & One
               UX-Designer), doing our best to do our part for a platform where
