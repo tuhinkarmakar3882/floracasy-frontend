@@ -38,12 +38,13 @@ const endpoints = {
       fetch: '/allow_authenticated/comment_system/blog/fetch/',
       create: '/allow_authenticated/comment_system/blog/create/',
       detail: '/allow_authenticated/comment_system/detail/Blog/{identifier}/',
-      delete: '/allow_authenticated/comment_system/delete/Blog/{identifier}/',
+      delete: '/allow_authenticated/comment_system/blog/delete/',
     },
     post: {
       fetch: '/allow_authenticated/comment_system/post/fetch/',
       create: '/allow_authenticated/comment_system/post/create/',
       detail: '/allow_authenticated/comment_system/detail/Post/{identifier}/',
+      delete: '/allow_authenticated/comment_system/post/delete/',
     },
   },
   community_service: {
