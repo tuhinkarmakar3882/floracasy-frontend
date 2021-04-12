@@ -67,21 +67,24 @@
             {{ blog.title }}
           </h1>
 
-          <small class="timestamp">
+          <small class="timestamp muted">
             <span class="mdi mdi-clock-time-nine-outline" />
             {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
           </small>
 
-          <div class="view-count mt-4">
+          <div class="extra-info mt-4">
             <section>
               <i class="mdi mdi-eye mdi-18px mr-2" />
               <small>{{ blog.totalViews }}</small>
             </section>
-            <!--            <section class="ml-4 pl-4">-->
-            <!--              <i class="mdi mdi-clock mdi-18px mr-2" />-->
-            <!--              <small>5 min</small>-->
-            <!--            </section>-->
           </div>
+
+          <hr class="faded-divider my-4" />
+
+          <section>
+            <i class="mdi mdi-book-open-variant mr-2" />
+            <small>Approx {{ approxReadingTime }} min read</small>
+          </section>
 
           <hr v-if="!blog.coverImage" class="faded-divider" />
 
@@ -97,11 +100,11 @@
           </p>
         </section>
 
-        <section class="blog-body pb-8">
+        <section class="blog-body pb-8 mb-4">
           <InArticleAd key="Top-Ad" />
           <article
             ref="articleContent"
-            class="my-6 px-4 ql-editor"
+            class="my-6 pb-4 px-4 ql-editor"
             v-html="cleanHTML(blog.content)"
           />
           <InArticleAd key="Bottom-Ad" />
@@ -166,7 +169,6 @@ import {
   shorten,
   showUITip,
 } from '@/utils/utility'
-import 'highlight.js/styles/monokai.css'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 
@@ -196,6 +198,7 @@ export default {
       blog: null,
       playbackStarted: false,
       useShareFallBack: false,
+      approxReadingTime: 0,
     }
   },
 
@@ -213,6 +216,7 @@ export default {
       linkPosition: -1,
     })
     await this.incrementViewCount()
+    await this.calculateReadingTime()
   },
 
   methods: {
@@ -226,17 +230,19 @@ export default {
           endpoints.blog.updateViewCount.replace(
             '{identifier}',
             this.$route.params.id
-          ),
-          {},
-          {
-            withCredentials: true,
-          }
+          )
         )
       }
     },
 
     async navigateTo(path) {
       await this.$router.push(path)
+    },
+
+    async calculateReadingTime() {
+      this.approxReadingTime = Math.ceil(
+        this.$refs?.articleContent?.textContent?.split(' ')?.length / 220
+      )
     },
 
     async sendLikeRequest() {
@@ -389,16 +395,20 @@ export default {
       border-radius: 4px;
     }
 
-    .view-count {
+    .extra-info {
       display: flex;
-
-      * {
-        display: block;
-      }
 
       section {
         display: flex;
         align-items: center;
+
+        * {
+          display: block;
+        }
+
+        &:first-child {
+          margin-right: $micro-unit;
+        }
       }
     }
 
