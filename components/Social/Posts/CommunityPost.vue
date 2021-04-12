@@ -100,6 +100,12 @@
           :src="post.image"
           alt="image"
           class="mt-4"
+          :style="
+            expanded && {
+              height: '100%',
+              objectFit: 'unset',
+            }
+          "
           @click="viewPostDetails"
         />
 
