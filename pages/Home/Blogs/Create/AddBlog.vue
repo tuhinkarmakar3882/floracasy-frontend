@@ -185,7 +185,11 @@
         hint-text="Multiple Keywords can be Separate it with Comma."
       >
         <template #input-field>
-          <textarea v-model="blog.keywords" @keyup.space="convertToChips" />
+          <textarea
+            v-model="blog.keywords"
+            @keyup.space="convertToChips"
+            rows="5"
+          />
         </template>
       </InputField>
       <hr />
