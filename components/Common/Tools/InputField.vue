@@ -9,6 +9,10 @@
     <small v-if="hintText" class="mt-2 hint-text">
       {{ hintText }}
     </small>
+
+    <aside>
+      <slot name="custom-hint"></slot>
+    </aside>
   </section>
 </template>
 
