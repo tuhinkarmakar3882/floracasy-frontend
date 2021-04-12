@@ -1,6 +1,6 @@
 <template>
   <div class="blog-comment-page">
-    <AppBarHeader>
+    <AppBarHeader sticky>
       <template #title>
         {{ pageTitle }}
       </template>

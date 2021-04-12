@@ -1,5 +1,9 @@
 <template>
-  <div class="py-6 details-page">
+  <div class="details-page">
+    <AppBarHeader sticky>
+      <template #title>{{ pageTitle }}</template>
+    </AppBarHeader>
+
     <FallBackLoader v-if="loadingProfile" />
 
     <LoadingError
@@ -62,10 +66,11 @@ import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { getRelativeTime, showUITip } from '~/utils/utility'
 import { useMessageService } from '~/environmentVariables'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'Overview',
-  layout: 'ResponsiveApp',
+  components: { AppBarHeader },
   middleware: 'isAuthenticated',
   data() {
     return {
@@ -194,19 +199,15 @@ export default {
 @import 'assets/all-variables';
 
 .details-page {
-  max-width: $large-screen;
-  margin: auto;
-  padding: 2rem 0;
+  main {
+    padding: 1rem 0;
+    max-width: $large-screen;
+    margin: auto;
+  }
 
   button {
     min-width: auto;
     width: auto;
-  }
-
-  .page-loading {
-    height: calc(100vh - 120px);
-    display: grid;
-    place-items: center;
   }
 
   .user-profile {

@@ -276,11 +276,11 @@ export default {
 
   aside.overlay {
     position: fixed;
-    background: rgba($black, 0.5);
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    background: rgba($black, 0.6);
+    top: $zero-unit;
+    left: $zero-unit;
+    right: $zero-unit;
+    bottom: $zero-unit;
     z-index: 1;
   }
 }

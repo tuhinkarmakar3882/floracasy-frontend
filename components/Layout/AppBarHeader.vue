@@ -1,11 +1,13 @@
 <template>
-  <div class="app-bar-header">
+  <div :class="[sticky && 'sticky', 'app-bar-header']">
     <NotificationBadge />
 
     <header>
       <i v-ripple class="mdi mdi-arrow-left" @click="$router.back()" />
 
-      <p><slot name="title" /></p>
+      <p>
+        <slot name="title" />
+      </p>
 
       <aside class="ml-auto pr-4">
         <slot name="action-button" />
@@ -22,6 +24,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    sticky: {
+      type: Boolean,
+      default: false,
+    },
   },
 }
 </script>
@@ -31,6 +37,13 @@ export default {
 
 .app-bar-header {
   position: relative !important;
+
+  &.sticky {
+    position: sticky !important;
+    top: 0;
+    z-index: $bring-to-front !important;
+  }
+
   $size: 2 * $x-large-unit;
 
   header {

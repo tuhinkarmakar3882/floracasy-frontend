@@ -1,6 +1,6 @@
 <template>
   <div class="contact-support-page">
-    <AppBarHeader>
+    <AppBarHeader sticky>
       <template #title> {{ pageTitle }}</template>
 
       <template #action-button>
@@ -307,6 +307,12 @@ export default {
       background-size: 400%;
       animation: shift-background 20s infinite alternate-reverse ease-in-out;
     }
+  }
+
+  main,
+  footer {
+    max-width: $large-screen;
+    margin: auto;
   }
 }
 </style>
