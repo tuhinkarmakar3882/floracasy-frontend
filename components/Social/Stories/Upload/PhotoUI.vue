@@ -728,12 +728,16 @@ export default {
     position: fixed;
     top: $zero-unit;
     left: $zero-unit;
+    right: $zero-unit;
+    bottom: $zero-unit;
     z-index: 1;
     background: rgba($black, 0.7);
     height: 100%;
     width: 100%;
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     &.soft-error {
       background: linear-gradient(

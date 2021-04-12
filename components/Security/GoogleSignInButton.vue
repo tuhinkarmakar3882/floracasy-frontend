@@ -164,6 +164,8 @@ export default {
     position: fixed;
     top: $zero-unit;
     left: $zero-unit;
+    right: $zero-unit;
+    bottom: $zero-unit;
     z-index: 1234567890;
     background: linear-gradient(
         45deg,

@@ -612,6 +612,8 @@ $active-color: $white;
     position: fixed;
     top: $zero-unit;
     left: $zero-unit;
+    right: $zero-unit;
+    bottom: $zero-unit;
     z-index: 1;
     background: rgba($black, 0.7);
     height: 100%;
