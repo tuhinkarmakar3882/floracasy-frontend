@@ -12,6 +12,10 @@
 * {
   -webkit-tap-highlight-color: transparent;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @media (prefers-reduced-motion) {
     transition: unset !important;
   }

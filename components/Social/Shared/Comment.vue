@@ -206,6 +206,10 @@ export default {
   display: flex;
   position: relative;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   img {
     width: 2 * $standard-unit;
     height: 2 * $standard-unit;

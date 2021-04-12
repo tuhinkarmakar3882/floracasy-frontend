@@ -256,6 +256,10 @@ export default {
   display: grid;
   grid-template-rows: 56px auto 64px;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   main {
     height: calc(100vh - 120px);
     max-width: $large-screen;
