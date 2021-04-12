@@ -86,7 +86,7 @@ export default {
     ...(useTouchEvents ? [touchEventsPlugin] : []),
   ],
 
-  modern: {
+  modern: process.env.NODE_ENV === 'production' && {
     server: true,
     client: true,
   },

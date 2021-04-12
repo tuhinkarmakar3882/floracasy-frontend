@@ -1,5 +1,5 @@
 # Pending Tasks:
-
+> - Add Comment Deletion
 
 > ### Production Issues:
 > - FAQ Backend Connection
