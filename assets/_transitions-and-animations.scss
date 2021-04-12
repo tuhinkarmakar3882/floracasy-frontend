@@ -1,4 +1,4 @@
-$animation-duration: 250ms;
+$animation-duration: 200ms;
 $animation-style: cubic-bezier(.55, 0, .1, 1);
 
 .gray-shift-enter, .gray-shift-leave-active {
@@ -29,12 +29,6 @@ $animation-style: cubic-bezier(.55, 0, .1, 1);
   transform: scale(1.05);
 }
 
-.page-enter-to,
-.page-enter,
-.page-enter-active,
-.page-leave-to,
-.page-leave,
-.page-leave-active,
 .gray-shift-enter-to,
 .gray-shift-enter,
 .gray-shift-enter-active,
@@ -94,3 +88,18 @@ $animation-style: cubic-bezier(.55, 0, .1, 1);
 .scale-down-enter, .scale-down-leave-active {
   opacity: 0;
 }
+
+
+.page-enter-to,
+.page-enter,
+.page-enter-active,
+.page-leave-to,
+.page-leave,
+.page-leave-active {
+  transition: all 150ms $animation-style !important;
+
+  @media (prefers-reduced-motion) {
+    transition: unset !important;
+  }
+}
+
