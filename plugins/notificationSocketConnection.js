@@ -1,8 +1,21 @@
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import * as secrets from '~/environmentVariables'
 import { showUITip } from '~/utils/utility'
+import endpoints from '~/api/endpoints'
 
-export default async ({ store, $cookies }) => {
+async function checkForNewNotification(axios, store) {
+  const { unreadNotifications } = await axios.$get(
+    endpoints.notification_system.hasUnread
+  )
+  if (unreadNotifications) {
+    await store.dispatch('NavigationState/updateNewContent', {
+      position: 3,
+      value: true,
+    })
+  }
+}
+
+export default async ({ $axios, store, $cookies }) => {
   if (process.client && store.state.isUserAuthenticated) {
     await showUITip(store, 'Connecting to Server...', 'info', false)
 
@@ -52,5 +65,7 @@ export default async ({ store, $cookies }) => {
         true
       )
     }
+
+    await checkForNewNotification($axios, store).catch(() => {})
   }
 }
