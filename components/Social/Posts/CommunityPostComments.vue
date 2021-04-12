@@ -2,39 +2,19 @@
   <div class="community-post-comments-component">
     <h4 class="px-4">Comments</h4>
 
-    <main class="px-4">
-      <span ref="commentStart" />
-      <transition-group name="scale-down">
-        <section
-          v-for="comment in comments"
-          :key="comment.id"
-          class="comment my-6"
-        >
-          <img
-            :src="comment.user.photoURL"
-            alt="profile-image"
-            height="40"
-            width="40"
-            @click="openProfile(comment.user.uid)"
+    <main ref="commentStart">
+      <section class="comments-container">
+        <transition-group name="scale-down">
+          <Comment
+            v-for="comment in comments"
+            :key="comment.id"
+            :comment="comment"
+            :owner-uid="post.userUID"
+            class="my-6 px-4"
+            comment-type="Post"
           />
-          <div class="comment-message-container">
-            <p class="top-line">
-              <span
-                v-ripple
-                class="username secondary"
-                @click="openProfile(comment.user.uid)"
-              >
-                {{ getInitials(comment.user.displayName) }}
-              </span>
-              <span class="timestamp">
-                <span class="mdi mdi-clock-time-nine-outline" />
-                {{ getRelativeTime(comment.createdAt) }}
-              </span>
-            </p>
-            <p class="message-body">{{ comment.message }}</p>
-          </div>
-        </section>
-      </transition-group>
+        </transition-group>
+      </section>
     </main>
 
     <client-only>
@@ -145,13 +125,6 @@ export default {
     shorten,
     getRelativeTime,
 
-    openProfile(userUID) {
-      userUID &&
-        this.$router.push(
-          navigationRoutes.Home.Account.Overview.replace('{userUID}', userUID)
-        )
-    },
-
     async fetchComments($state) {
       if (!this.fetchCommentsEndpoint) {
         $state.complete()
@@ -174,26 +147,27 @@ export default {
       }
     },
 
-    getInitials(name) {
-      return name.split(' ')[0]
-    },
-
     async sendComment() {
       try {
-        await this.$axios.$post(endpoints.comment_system.post.create, {
-          postIdentifier: this.post.identifier,
-          message: this.commentMessage,
-        })
+        const { commentIdentifier } = await this.$axios.$post(
+          endpoints.comment_system.post.create,
+          {
+            postIdentifier: this.post.identifier,
+            message: this.commentMessage,
+          }
+        )
 
         const newComment = {
           id: Date.now(),
+          userUID: this.user.uid,
           user: {
-            uid: this.user.uid,
             photoURL: this.user.photoURL,
             displayName: this.user.displayName,
           },
           createdAt: Date.now(),
           message: this.commentMessage,
+          postIdentifier: this.post.identifier,
+          commentIdentifier,
         }
         this.comments.unshift(newComment)
 
