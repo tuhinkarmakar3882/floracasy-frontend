@@ -98,7 +98,6 @@ export default {
     ['nuxt-lazy-load', lazyLoadConfig],
     ['@nuxtjs/pwa', { workbox: false }],
     '@nuxtjs/sitemap',
-    // '~/module/csp.js'
   ],
 
   sitemap:
@@ -189,9 +188,7 @@ export default {
     titleTemplate: '%s - Floracasy',
     title: process.env.npm_package_name || '',
     meta: [
-      {
-        charset: 'utf-8',
-      },
+      { charset: 'utf-8' },
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1, shrink-to-fit=no',
@@ -299,8 +296,8 @@ export default {
     mode: 'out-in',
   },
 
-  pageTransition: {
-    name: 'page',
-    mode: 'out-in',
-  },
+  // pageTransition: {
+  //   name: 'page',
+  //   mode: 'out-in',
+  // },
 }
