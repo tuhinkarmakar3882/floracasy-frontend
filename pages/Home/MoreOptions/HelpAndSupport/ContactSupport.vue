@@ -1,23 +1,22 @@
 <template>
-  <AppFeel
-    :on-back="navigationRoutes.Home.MoreOptions.HelpAndSupport.index"
-    class="contact-support-page"
-  >
-    <template #app-bar-title> {{ pageTitle }}</template>
+  <div class="contact-support-page">
+    <AppBarHeader>
+      <template #title> {{ pageTitle }}</template>
 
-    <template #app-bar-action-button>
-      <button
-        v-ripple
-        :class="validForm ? 'primary-btn' : 'disabled-btn'"
-        :disabled="!validForm"
-        class="my-6"
-        @click="raiseTicket"
-      >
-        Send
-      </button>
-    </template>
+      <template #action-button>
+        <button
+          v-ripple
+          :class="validForm ? 'primary-btn' : 'disabled-btn'"
+          :disabled="!validForm"
+          class="my-6"
+          @click="raiseTicket"
+        >
+          Send
+        </button>
+      </template>
+    </AppBarHeader>
 
-    <template #main>
+    <main>
       <section class="px-4 my-4">
         <h5 class="heading-title my-8">We're here to help!</h5>
         <p>
@@ -85,9 +84,9 @@
           </aside>
         </section>
       </form>
-    </template>
+    </main>
 
-    <template #footer>
+    <footer>
       <section v-if="showAttachedPreview" class="px-4">
         <h6>Attached Preview</h6>
         <hr class="faded-divider" />
@@ -115,27 +114,26 @@
           hide-more-options-button
         />
       </aside>
+    </footer>
 
-      <transition name="scale-up">
-        <aside v-if="raisingTicking" class="app-overlay">
-          <FallBackLoader>
-            <template #fallback>
-              <p>Raising Ticket</p>
-            </template>
-          </FallBackLoader>
-        </aside>
-      </transition>
-    </template>
-  </AppFeel>
+    <transition name="scale-down">
+      <aside v-if="raisingTicking" class="loader">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+        <p>Raising Ticket</p>
+      </aside>
+    </transition>
+  </div>
 </template>
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { showUITip } from '~/utils/utility'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'ContactSupport',
+  components: { AppBarHeader },
   middleware: 'isAuthenticated',
 
   data() {
@@ -216,6 +214,7 @@ export default {
 
     async raiseTicket() {
       this.raisingTicking = true
+
       try {
         await this.$axios.$post(endpoints.help_and_support.create, {
           issueTopic: this.issueTopic,
@@ -276,17 +275,38 @@ export default {
     }
   }
 
-  aside.app-overlay {
+  aside.loader {
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba($body-bg-alternate, 0.9);
-    backdrop-filter: blur(1px);
-    box-shadow: $default-box-shadow;
-    display: grid;
-    place-items: center;
+    top: $zero-unit;
+    left: $zero-unit;
+    right: $zero-unit;
+    bottom: $zero-unit;
+    z-index: 1;
+    background: rgba($black, 0.7);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &.soft-error {
+      background: linear-gradient(
+          45deg,
+          transparent 0%,
+          $navigation-bar-color 12.5%,
+          $body-bg-alternate 25%,
+          $card-bg 37.5%,
+          $card-bg-alternate 50%,
+          $card-bg 62.5%,
+          $body-bg-alternate 75%,
+          $navigation-bar-color 87.5%,
+          transparent 100%
+        )
+        right no-repeat;
+      background-size: 400%;
+      animation: shift-background 20s infinite alternate-reverse ease-in-out;
+    }
   }
 }
 </style>
