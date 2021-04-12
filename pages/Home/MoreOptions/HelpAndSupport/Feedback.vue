@@ -7,49 +7,33 @@
 
     <template slot="main">
       <section class="px-4 my-4">
-        <h5 class="heading-title">We'd love to hear from you!</h5>
-        <p class="text-center pb-8">
+        <h6 class="heading-title my-8">We'd love to hear from you!</h6>
+        <p class="text-center pb-8 muted">
           We're working tirelessly to bring the best possible experience to you,
           your opinions are really valuable for us.
         </p>
 
-        <div class="material-form-field">
-          <input
-            id="feedback-form"
-            ref="feedbackTitle"
-            v-model="feedbackText"
-            autocomplete="off"
-            name="text"
-            required
-            type="text"
-          />
-          <label class="material-form-field-label" for="feedback-form">
-            Type your feedback here
-          </label>
-          <small
-            v-if="feedbackText.trim().length < 30"
-            class="mt-3 hint-text"
-            style="display: block; font-weight: 400; font-size: 13px"
-          >
-            (Hint: At least {{ 30 - feedbackText.trim().length }} more
-            characters are required)
-          </small>
-          <small
-            v-if="feedbackText.trim().length >= 30 && !feedbackTextError"
-            class="mt-3 secondary-matte"
-            style="display: block; font-weight: 400; font-size: 13px"
-          >
-            <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
-          </small>
-          <small
-            v-if="feedbackTextError"
-            class="mt-3 danger-light"
-            style="display: block; font-weight: 400; font-size: 13px"
-          >
-            <i class="mdi mdi-alert-circle-outline" />
-            Exceed 300 character limit
-          </small>
-        </div>
+        <InputField class="mb-2" material label="Type your feedback here">
+          <template #input-field>
+            <textarea v-model="feedbackText" rows="5" />
+          </template>
+          <template #custom-hint>
+            <small
+              v-if="feedbackText.trim().length < 30"
+              class="mt-3 hint-text"
+            >
+              (Hint: At least {{ 30 - feedbackText.trim().length }} more
+              characters are required)
+            </small>
+            <small v-else-if="feedbackTextError" class="mt-3 danger-light">
+              <i class="mdi mdi-alert-circle-outline" />
+              Exceed 300 character limit
+            </small>
+            <small v-else class="mt-3 secondary-matte">
+              <i class="mdi mdi-checkbox-marked-circle-outline" /> Looks good!
+            </small>
+          </template>
+        </InputField>
 
         <div class="text-center mt-7 pt-4">
           <RippleButton
@@ -71,9 +55,11 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
+import InputField from '~/components/Common/Tools/InputField'
 
 export default {
   name: 'Feedback',
+  components: { InputField },
   middleware: 'isAuthenticated',
   data() {
     return {
