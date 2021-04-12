@@ -6,8 +6,8 @@
       </template>
     </AppBarHeader>
 
-    <main ref="commentStart">
-      <header v-if="blog" class="px-4">
+    <main ref="mainSection" v-if="blog">
+      <header class="px-4">
         <section>
           <h6>{{ blog.title }}</h6>
 
@@ -29,10 +29,19 @@
         </p>
       </header>
 
-      <hr class="my-4 faded-divider px-4" />
+      <hr class="my-4 mx-2 faded-divider" />
 
-      <section v-for="comment in comments" :key="comment.id" class="my-6 px-4">
-        <Comment :comment="comment" />
+      <section class="comments-container">
+        <transition-group name="slide-up">
+          <Comment
+            v-for="comment in comments"
+            :key="comment.id"
+            :comment="comment"
+            :owner-uid="blog.author.uid"
+            class="my-6 px-4"
+            comment-type="Blog"
+          />
+        </transition-group>
       </section>
 
       <aside>
@@ -171,6 +180,7 @@ export default {
           this.fetchCommentsEndpoint,
           { params: { blogIdentifier: this.$route.params.blogId } }
         )
+
         if (results.length) {
           this.fetchCommentsEndpoint = processLink(next)
           this.comments.push(...results)
@@ -191,10 +201,13 @@ export default {
       await showUITip(this.$store, 'Adding Comment...', 'info')
 
       try {
-        await this.$axios.$post(endpoints.comment_system.blog.create, {
-          blogIdentifier: this.$route.params.blogId,
-          message: this.commentMessage,
-        })
+        const { commentIdentifier } = await this.$axios.$post(
+          endpoints.comment_system.blog.create,
+          {
+            blogIdentifier: this.$route.params.blogId,
+            message: this.commentMessage,
+          }
+        )
 
         const newComment = {
           id: Date.now(),
@@ -205,6 +218,8 @@ export default {
           },
           createdAt: Date.now(),
           message: this.commentMessage,
+          blogIdentifier: this.$route.params.blogId,
+          commentIdentifier,
         }
 
         this.comments.unshift(newComment)
@@ -212,7 +227,7 @@ export default {
 
         await showUITip(this.$store, 'Comment Added', 'success')
 
-        this.$refs.commentStart.scrollIntoView()
+        this.$refs.mainSection.scrollIntoView()
       } catch (e) {
         await showUITip(
           this.$store,
