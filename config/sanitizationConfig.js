@@ -40,7 +40,6 @@ export const sanitizationConfig = {
     'kbd',
     'li',
     'main',
-    'main',
     'mark',
     'nav',
     'ol',
