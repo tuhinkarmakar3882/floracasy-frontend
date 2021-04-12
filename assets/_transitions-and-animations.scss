@@ -96,7 +96,7 @@ $animation-style: cubic-bezier(.55, 0, .1, 1);
 .page-leave-to,
 .page-leave,
 .page-leave-active {
-  transition: all 0ms $animation-style !important;
+  transition: all 140ms $animation-style !important;
 
   @media (prefers-reduced-motion) {
     transition: unset !important;
