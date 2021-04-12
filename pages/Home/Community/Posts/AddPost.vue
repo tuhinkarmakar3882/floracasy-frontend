@@ -379,8 +379,8 @@ export default {
       const useWebWorker = true
 
       const options = {
-        maxSizeMB: 0.15,
-        maxWidthOrHeight: 750,
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 1600,
         useWebWorker,
         // onProgress: this.updateImageCompressProgress,
       }
