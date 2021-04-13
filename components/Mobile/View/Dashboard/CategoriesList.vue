@@ -1,8 +1,10 @@
 <template>
   <section class="categories">
-    <div v-if="contentIsLoading" class="my-6">
-      <LoadingIcon />
-    </div>
+    <FallBackLoader v-if="contentIsLoading" class="my-4">
+      <template #fallback>
+        <p class="text-center">Loading Categories</p>
+      </template>
+    </FallBackLoader>
 
     <div v-else>
       <transition name="scale-up">
@@ -94,10 +96,11 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'CategoriesList',
-
+  components: { FallBackLoader },
   data() {
     return {
       navigationRoutes,
