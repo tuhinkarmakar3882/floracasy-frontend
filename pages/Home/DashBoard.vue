@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-page">
-    <Carousel
+    <LazyCarousel
+      v-if="showCarousel"
       class="carousel"
       :total-items="8"
       absolute-mode
@@ -18,7 +19,7 @@
           <img :alt="item.name" :src="item.image" style="object-fit: cover" />
         </section>
       </template>
-    </Carousel>
+    </LazyCarousel>
 
     <section ref="tabNavigation" class="tab-bar">
       <p
@@ -69,11 +70,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import Carousel from '~/components/Common/Tools/Carousel'
 
 export default {
   name: 'DashBoard',
-  components: { Carousel },
   layout: 'ResponsiveApp',
 
   data() {
@@ -155,6 +154,7 @@ export default {
         },
       ],
       carouselHeight: '200px',
+      showCarousel: false,
     }
   },
 
@@ -187,6 +187,7 @@ export default {
       next()
     })
 
+    this.showCarousel = window.innerWidth < 992
     window.onresize = this.updateCarouselHeight
   },
   beforeDestroy() {
