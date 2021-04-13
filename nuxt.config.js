@@ -34,7 +34,7 @@ export default {
     { path: '~/components/Common/Tools' },
 
     { path: '~/components/Desktop/Tools' },
-    { path: '~/components/Desktop/View/LandingPage' },
+    // { path: '~/components/Desktop/View/LandingPage' },
 
     { path: '~/components/Icons' },
     { path: '~/components/Layout' },
