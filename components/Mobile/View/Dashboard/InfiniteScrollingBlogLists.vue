@@ -1,14 +1,16 @@
 <template>
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
-      <article v-for="(blog, index) in blogs" :key="blog.id">
-        <BlogPost :blog="blog" class="pb-0 pt-8" />
-        <InFeedAd v-if="index % 2 === 0" />
-        <LazyFollowSuggestions
-          v-if="showFollowSuggestions && index === 2"
-          class="pb-6"
-        />
-      </article>
+      <transition-group name="scale-up">
+        <article v-for="(blog, index) in blogs" :key="blog.id">
+          <BlogPost :blog="blog" class="pb-0 pt-8" />
+          <InFeedAd v-if="index % 2 === 0" />
+          <LazyFollowSuggestions
+            v-if="showFollowSuggestions && index === 2"
+            class="pb-6"
+          />
+        </article>
+      </transition-group>
     </section>
 
     <client-only>
