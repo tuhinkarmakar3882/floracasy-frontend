@@ -43,6 +43,9 @@ export default {
     { path: '~/components/Mobile/View/Message' },
     { path: '~/components/Mobile/View/Notification' },
 
+    { path: '~/components/Screen/Desktop', prefix: 'Desktop' },
+    { path: '~/components/Screen/Mobile', prefix: 'Mobile' },
+
     { path: '~/components/Security' },
 
     { path: '~/components/Social/Posts' },
