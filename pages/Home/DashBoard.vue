@@ -12,6 +12,8 @@
           v-for="item in carouselItems"
           :key="item.id"
           class="carousel-item"
+          v-ripple
+          @click="navigateTo(item.route)"
         >
           <img :alt="item.name" :src="item.image" style="object-fit: cover" />
         </section>
@@ -202,6 +204,9 @@ export default {
     },
     updateCarouselHeight() {
       this.carouselHeight = `${window.innerWidth * 0.5625}px`
+    },
+    async navigateTo(route) {
+      await this.$router.push(route)
     },
   },
 
