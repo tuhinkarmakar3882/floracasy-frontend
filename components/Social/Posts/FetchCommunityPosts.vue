@@ -1,14 +1,16 @@
 <template>
   <div class="fetch-community-posts-component">
-    <article
-      v-for="(post, index) in posts"
-      :key="post.identifier"
-      class="community-post"
-    >
-      <CommunityPost :post="post" class="py-6" />
-      <InFeedAd v-if="index % 2 === 0" />
-      <LazyFollowSuggestions v-if="index === 4" class="pb-6" />
-    </article>
+    <transition-group name="scale-up">
+      <article
+        v-for="(post, index) in posts"
+        :key="post.identifier"
+        class="community-post"
+      >
+        <CommunityPost :post="post" class="py-6" />
+        <InFeedAd v-if="index % 2 === 0" />
+        <LazyFollowSuggestions v-if="index === 4" class="pb-6" />
+      </article>
+    </transition-group>
 
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
