@@ -170,6 +170,7 @@ export default {
       await this.$store.dispatch('UserManagement/setUserData', {
         user: payload,
       })
+      await this.$store.dispatch('UserManagement/fetchData')
       await this.$store.dispatch(
         'NotificationChannel/fetchNotificationChannelId'
       )
