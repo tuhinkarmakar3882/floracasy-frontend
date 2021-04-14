@@ -1,8 +1,6 @@
 <template>
   <div class="dashboard-page">
     <LazyCarousel
-      disable-navigation-dot
-      disable-on-scroll-handler
       v-if="showCarousel"
       class="carousel"
       :total-items="8"
