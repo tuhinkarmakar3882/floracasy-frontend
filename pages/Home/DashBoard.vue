@@ -193,7 +193,7 @@ export default {
       next()
     })
 
-    this.showCarousel = window.innerWidth < 992
+    this.updateCarouselHeight()
     window.onresize = this.updateCarouselHeight
   },
   beforeDestroy() {
@@ -210,6 +210,7 @@ export default {
       this.$router.push('#' + newTabNumber)
     },
     updateCarouselHeight() {
+      this.showCarousel = window.innerWidth < 992
       this.carouselHeight = `${window.innerWidth * 0.5625}px`
     },
     async navigateTo(route) {
