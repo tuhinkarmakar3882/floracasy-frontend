@@ -1,7 +1,7 @@
 <template>
   <div>
-    <LazyInstallBadge class="install-badge" show-close-button />
     <nuxt />
+    <LazyInstallBadge class="install-badge" show-close-button />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   z-index: 1234567890;
   position: fixed;
   left: 0;
-  top: 0;
+  bottom: 0;
   right: 0;
 }
 </style>

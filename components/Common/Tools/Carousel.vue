@@ -4,6 +4,7 @@
       <slot name="slides"></slot>
     </section>
     <aside
+      v-if="!disableNavigationDot"
       class="carousel-navigation floating-carousel"
       :style="absoluteMode && { position: 'absolute' }"
     >
@@ -30,6 +31,16 @@ export default {
       required: false,
       default: false,
     },
+    disableNavigationDot: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    disableOnScrollHandler: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data() {
@@ -46,7 +57,9 @@ export default {
 
   methods: {
     calculateActiveElement({ target }) {
-      this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
+      if (!this.disableOnScrollHandler) {
+        this.activeElement = Math.round(target.scrollLeft / window.innerWidth)
+      }
     },
   },
 }

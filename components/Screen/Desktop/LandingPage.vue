@@ -1,15 +1,54 @@
 <template>
   <div class="desktop-landing-page">
-    <nav>Floracasy</nav>
+    <nav>
+      <h1>
+        <Logo :width="36" />
+        <nuxt-link to="/">Floracasy</nuxt-link>
+      </h1>
+      <button
+        v-ripple
+        class="secondary-outlined-btn guest-btn ml-auto"
+        @click="continueAsGuest"
+      >
+        <i class="mdi mdi-account-circle mdi-24px mx-4" />
+        <span class="white">Continue as Guest</span>
+      </button>
+    </nav>
+
+    <main>
+      <section>
+        <h1 class="mb-8">Where Knowledge gets Socialized</h1>
+        <section class="key-points mb-8">
+          <KeyPoint
+            v-for="(point, index) in points"
+            :key="index"
+            :point="point"
+            class="my-4"
+            text-color="#ccc"
+            tick-color="#8FF2E1"
+            :tick-size="20"
+          />
+        </section>
+
+        <GoogleSignInButton class="secondary-btn" />
+      </section>
+    </main>
+
+    <footer>Get Started</footer>
+
+    <aside class="overlay-gradient" />
   </div>
 </template>
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { LogAnalyticsEvent } from '~/utils/utility'
+import KeyPoint from '~/components/Common/Tools/KeyPoint'
+import Logo from '~/components/Common/Tools/Logo'
 
 export default {
   name: 'LandingPage',
+  components: { Logo, KeyPoint },
   data() {
     return {
       navigationRoutes,
@@ -35,171 +74,114 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.mobile-view {
+.desktop-landing-page {
   position: relative;
   height: 100vh;
-  border-top: 1px solid #050513;
-  border-bottom: 1px solid #00283f;
-  background: linear-gradient(180deg, #050513 50%, #00283f 100%);
+  width: 100%;
+  background: url('/images/LandingDesktopBG.jpg') no-repeat center;
+  background-size: cover;
 
-  .carousel-container {
-    overflow: scroll;
+  button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 270px;
+    height: 48px;
 
-    section.carousel-item {
-      main.step-1 {
-        .book-lover-image {
-          height: 200px;
-          object-fit: scale-down;
-          display: none;
+    span {
+      justify-self: flex-start;
+    }
+  }
 
-          @media only screen and (min-height: 810px) {
-            display: block;
-          }
-        }
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    padding: $standard-unit (2 * $xxx-large-unit);
+    display: flex;
+    align-items: center;
+    z-index: 2;
 
-        aside {
-          padding: 20px;
+    h1 {
+      display: flex;
+      align-items: center;
+      font-size: $large-unit;
+      margin: 0;
+      padding: 0;
 
-          @media only screen and (min-height: 710px) {
-            margin: 32px 0;
-          }
+      a {
+        color: $white;
+        text-decoration: none;
+        font-size: $large-unit;
+        display: block;
+        margin-left: $milli-unit;
+      }
+    }
+  }
 
-          @media only screen and (min-height: 810px) {
-            padding: 0;
-            margin: 0;
+  main {
+    z-index: 1;
+    display: grid;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2 * $xxx-large-unit;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 
-            .keypoint {
-              margin: 20px 0;
-            }
-          }
+    * {
+      z-index: 1;
+    }
+
+    section {
+      h1 {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          height: 6px;
+          width: 100px;
+          background: $secondary-vibrant;
+          top: -$large-unit;
+          left: 0;
         }
       }
+    }
 
-      main.step-2 {
-        display: none;
-        margin-top: 7%;
-
-        @media only screen and (min-height: 450px) {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          place-items: center;
-          grid-row-gap: 20px;
-        }
-
-        .category {
-          text-align: center;
-
-          $image-size: 58px;
-
-          img {
-            margin: auto;
-            max-height: $image-size;
-            height: $image-size;
-            min-height: $image-size;
-            max-width: $image-size;
-            width: $image-size;
-            min-width: $image-size;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-
-          p {
-            font-size: 14px;
-          }
-
-          i::before {
-            font-size: 58px;
-            line-height: 1;
-          }
-        }
-
-        .second-line {
-          display: none;
-          @media only screen and (min-height: 650px) {
-            display: block;
-          }
-        }
-
-        .third-line {
-          display: none;
-          @media only screen and (min-height: 793px) {
-            display: block;
-          }
-        }
-      }
-
-      main.step-3 {
-        $break-point: 670px;
-
-        margin-top: 7%;
-
-        .community-banner-image {
-          height: clamp(200px, 33vh, 300px);
-          object-fit: scale-down;
-          display: none;
-
-          @media only screen and (min-height: $break-point) {
-            display: block;
-          }
-        }
-
-        aside {
-          @media only screen and (min-height: $break-point) {
-            display: none;
-          }
-        }
-      }
-
-      main.step-4 {
-        $break-point: 670px;
-
-        margin-top: 7%;
-
-        .reward-banner-image {
-          height: clamp(200px, 31vh, 300px);
-          object-fit: scale-down;
-          display: none;
-
-          @media only screen and (min-height: $break-point) {
-            display: block;
-          }
-        }
-
-        aside {
-          @media only screen and (min-height: $break-point) {
-            display: none;
-          }
-        }
-      }
+    button {
+      width: 290px;
     }
   }
 
   footer {
     position: fixed;
     bottom: 0;
-    height: 212px;
+    right: 5%;
+    font-size: clamp(52px, 10vw, 150px);
+    z-index: 1;
+    color: $card-bg;
+  }
+
+  aside.overlay-gradient {
+    z-index: 0;
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
-    padding: 16px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: linear-gradient(0deg, #050514, transparent);
-
-    button {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      height: 48px;
-      margin: 16px 0;
-
-      span {
-        justify-self: flex-start;
-      }
-    }
+    bottom: 0;
+    background: linear-gradient(
+      111.48deg,
+      #000814 0%,
+      rgba(14, 0, 21, 0.55) 52.33%,
+      #00001b 99.48%
+    );
   }
 }
 </style>

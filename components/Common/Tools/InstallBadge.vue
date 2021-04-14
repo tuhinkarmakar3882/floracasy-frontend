@@ -10,7 +10,7 @@
 
       <section @click="installPWA">
         <p>Floracasy</p>
-        <span>Get our free app. It won't take up space in your phone!</span>
+        <span>Get our free app. It won't take up space in your device!</span>
       </section>
 
       <i
