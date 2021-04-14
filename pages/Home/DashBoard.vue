@@ -16,7 +16,13 @@
           v-ripple
           @click="navigateTo(item.route)"
         >
-          <img :alt="item.name" :src="item.image" style="object-fit: cover" />
+          <img
+            :alt="item.name"
+            :src="item.image"
+            style="object-fit: cover"
+            height="720"
+            width="1280"
+          />
         </section>
       </template>
     </LazyCarousel>
