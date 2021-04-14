@@ -35,7 +35,7 @@
           </template>
         </InputField>
 
-        <div class="text-center mt-7 pt-4">
+        <div class="text-center mt-7">
           <RippleButton
             :disabled="!(isValidFeedbackText && !feedbackTextError)"
             :loading="sendFeedbackLoading"
@@ -47,6 +47,13 @@
             Send Feedback
           </RippleButton>
         </div>
+
+        <p class="text-center">
+          If you prefer Google Forms,
+          <a href="https://forms.gle/KzAa34Nz8LEW6vkv6" target="_blank"
+            >Click here</a
+          >
+        </p>
       </section>
     </template>
   </AppFeel>
@@ -56,10 +63,11 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import InputField from '~/components/Common/Tools/InputField'
+import AppFeel from '~/components/Layout/AppFeel'
 
 export default {
   name: 'Feedback',
-  components: { InputField },
+  components: { AppFeel, InputField },
   middleware: 'isAuthenticated',
   data() {
     return {
