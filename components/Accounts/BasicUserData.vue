@@ -53,6 +53,7 @@ export default {
       color: white;
       margin-bottom: 12px;
       margin-top: 0;
+      text-transform: capitalize;
     }
 
     .designation {
