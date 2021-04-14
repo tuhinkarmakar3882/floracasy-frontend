@@ -82,7 +82,7 @@ export default {
           }
         )
         if (results.length) {
-          this.blogFetchCursorEndpoint = processLink(next)
+          this.blogFetchCursorEndpoint = processLink(next, false)
           this.blogs.push(...results)
           $state.loaded()
         } else {

@@ -107,8 +107,9 @@ export const blogImageParser = (blogToBeRendered) => {
   return defaultImagePath
 }
 
-export const processLink = (link) => {
-  return link ? `allow_authenticated${link.substr(21)}` : null
+export const processLink = (link, authenticationMode = true) => {
+  const prefix = authenticationMode ? 'allow_authenticated' : 'allow_any'
+  return link ? `${prefix}${link.substr(21)}` : null
 }
 
 export const getFormattedTime = (decimalTimeInSeconds) => {
