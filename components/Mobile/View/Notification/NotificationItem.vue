@@ -148,6 +148,10 @@ export default {
           await this.openPostDetails('identifier')
           break
 
+        case 'open_post':
+          await this.openPostDetails('identifier')
+          break
+
         case 'open_ticket_detail':
           await this.$router.push(
             navigationRoutes.Home.MoreOptions.HelpAndSupport.Tickets.index
