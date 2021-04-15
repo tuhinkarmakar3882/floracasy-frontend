@@ -3,7 +3,7 @@
     <GoogleIcon class="icon mx-4" />
     <span>Continue with Google</span>
     <transition name="scale-down">
-      <aside v-if="showLoaderAnimation" class="loader soft-error">
+      <aside v-if="showLoaderAnimation" @click.stop class="loader soft-error">
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
         <p class="mt-4">{{ stateInformation }}</p>
       </aside>
@@ -70,6 +70,8 @@ export default {
             backendPayload
           )
 
+          console.log(response)
+
           this.updateInfo('Logging you in...')
           await this.login(frontendPayload, response)
         } catch (e) {
@@ -111,6 +113,7 @@ export default {
     },
 
     async saveAndApplyTokens(tokens) {
+      console.log(tokens)
       await this.$cookies.set(
         'access',
         tokens.access,
