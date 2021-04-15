@@ -96,7 +96,9 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
-    this.$refs.search.focus()
+    try {
+      this.$refs.search.focus()
+    } catch (e) {}
   },
 
   methods: {
