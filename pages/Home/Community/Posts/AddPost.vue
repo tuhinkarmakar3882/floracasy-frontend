@@ -1,31 +1,29 @@
 <template>
-  <AppFeel
-    :on-back="navigationRoutes.Home.Community.index"
-    :prev-url-path="prevURL"
-    class="add-new-post-page"
-    dynamic-back
-  >
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
-    <template slot="app-bar-action-button">
-      <button
-        v-ripple
-        :class="
-          hasText || hasImage || hasAudio
-            ? 'vibrant-outlined-btn'
-            : 'disabled-btn'
-        "
-        :disabled="!hasText && !hasImage && !hasAudio"
-        style="min-width: auto"
-        @click="createPost"
-      >
-        Post
-      </button>
-    </template>
-
-    <template slot="main">
-      <div v-if="!isReady">
-        <LoadingIcon />
-      </div>
+  <div class="add-new-post-page">
+    <AppBarHeader>
+      <template #title> {{ pageTitle }}</template>
+      <template #action-button>
+        <button
+          v-ripple
+          :class="
+            hasText || hasImage || hasAudio
+              ? 'vibrant-outlined-btn'
+              : 'disabled-btn'
+          "
+          :disabled="!hasText && !hasImage && !hasAudio"
+          style="min-width: auto"
+          @click="createPost"
+        >
+          Post
+        </button>
+      </template>
+    </AppBarHeader>
+    <main>
+      <FallBackLoader v-if="!isReady">
+        <template #fallback>
+          <p class="text-center">Loading...</p>
+        </template>
+      </FallBackLoader>
 
       <div v-else class="my-4">
         <section class="header mb-6 px-4">
@@ -155,8 +153,16 @@
           </section>
         </transition>
       </div>
-    </template>
-  </AppFeel>
+    </main>
+
+    <footer>
+      <transition name="scale-down">
+        <aside v-if="isSending" class="loader">
+          <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+        </aside>
+      </transition>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -166,6 +172,8 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { useMoodOptions } from '~/environmentVariables'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 const commonStyles = {
   minHeight: '100px',
@@ -179,6 +187,7 @@ const commonStyles = {
 
 export default {
   name: 'AddPost',
+  components: { FallBackLoader, AppBarHeader },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {
@@ -193,6 +202,7 @@ export default {
       pageTitle: 'Add New Post',
       isReady: false,
       validPost: false,
+      isSending: false,
 
       postBody: '',
       postImage: {
@@ -347,6 +357,7 @@ export default {
     },
 
     async createPost() {
+      this.isSending = true
       const payload = await this.generatePayload()
       try {
         await this.$axios.$post(
@@ -358,6 +369,8 @@ export default {
         await showUITip(this.$store, 'Post Added!', 'success')
       } catch (e) {
         await showUITip(this.$store, 'Something Went Wrong', 'error')
+      } finally {
+        this.isSending = false
       }
     },
 
@@ -562,6 +575,22 @@ export default {
     &:focus {
       border: 1px solid $secondary;
     }
+  }
+
+  aside.loader {
+    position: fixed;
+    top: $zero-unit;
+    left: $zero-unit;
+    right: $zero-unit;
+    bottom: $zero-unit;
+    z-index: $bring-to-front;
+    background: rgba($black, 0.7);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

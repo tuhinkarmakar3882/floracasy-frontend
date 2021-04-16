@@ -730,7 +730,7 @@ export default {
     left: $zero-unit;
     right: $zero-unit;
     bottom: $zero-unit;
-    z-index: 1;
+    z-index: $bring-to-front;
     background: rgba($black, 0.7);
     height: 100%;
     width: 100%;
