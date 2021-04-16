@@ -74,25 +74,27 @@
           :style="post.style"
           @click="viewPostDetails"
         >
-          {{
-            expanded
-              ? post.body
-              : `${post.body.substr(0, 100)} ${
-                  post.body.length > 99 ? '...' : ''
-                }`
-          }}
-          <nuxt-link
-            v-if="!expanded && post.body.length > 99"
-            class="no-underline"
-            :to="
-              navigationRoutes.Home.Community.Posts.detail.replace(
-                '{postIdentifier}',
-                post.identifier
-              )
-            "
-          >
-            Read More
-          </nuxt-link>
+          <span>
+            {{
+              expanded
+                ? post.body
+                : `${post.body.substr(0, 100)} ${
+                    post.body.length > 99 ? '...' : ''
+                  }`
+            }}
+            <nuxt-link
+              v-if="!expanded && post.body.length > 99"
+              class="no-underline"
+              :to="
+                navigationRoutes.Home.Community.Posts.detail.replace(
+                  '{postIdentifier}',
+                  post.identifier
+                )
+              "
+            >
+              Read More
+            </nuxt-link>
+          </span>
         </p>
 
         <img

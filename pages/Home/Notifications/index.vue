@@ -25,12 +25,14 @@
         />
         <span v-else class="mx-auto">Mark all as Read</span>
       </button>
-      <NotificationItem
-        v-for="notification in notifications"
-        :key="notification.id"
-        :notification="notification"
-        class="notification-item py-4"
-      />
+      <transition-group name="scale-up">
+        <NotificationItem
+          v-for="notification in notifications"
+          :key="notification.id"
+          :notification="notification"
+          class="notification-item py-4"
+        />
+      </transition-group>
     </section>
 
     <client-only>
@@ -58,9 +60,11 @@ import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
+import NotificationItem from '~/components/Mobile/View/Notification/NotificationItem'
 
 export default {
   name: 'Notifications',
+  components: { NotificationItem },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
