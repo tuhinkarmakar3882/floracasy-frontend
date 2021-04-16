@@ -76,9 +76,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import CategoriesList from '~/components/Mobile/View/Dashboard/CategoriesList'
+import InfiniteScrollingBlogLists from '~/components/Mobile/View/Dashboard/InfiniteScrollingBlogLists'
 
 export default {
   name: 'DashBoard',
+  components: { InfiniteScrollingBlogLists, CategoriesList },
   layout: 'ResponsiveApp',
 
   data() {

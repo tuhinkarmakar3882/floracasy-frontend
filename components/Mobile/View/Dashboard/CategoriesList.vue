@@ -35,33 +35,35 @@
         </div>
       </transition>
 
-      <LazyCustomListView>
-        <template #heading>
-          <h4 class="heading-title">Explore Categories</h4>
-        </template>
-        <template #list-items>
-          <li
-            v-for="category in matchCategories"
-            :key="category.id"
-            v-ripple
-            class="px-4 py-3"
-            @click="openCategoryWisePage(category.name)"
-          >
-            <p>
-              <img
-                :alt="category.name"
-                :src="category.photo_url"
-                height="64"
-                width="64"
-              />
-              <span class="option-name ml-4" style="font-size: 18px">
-                {{ category.name }}
-              </span>
-              <span class="mdi mdi-chevron-right arrow-go" />
-            </p>
-          </li>
-        </template>
-      </LazyCustomListView>
+      <transition name="slide-up">
+        <LazyCustomListView>
+          <template #heading>
+            <h4 class="heading-title">Explore Categories</h4>
+          </template>
+          <template #list-items>
+            <li
+              v-for="category in matchCategories"
+              :key="category.id"
+              v-ripple
+              class="px-4 py-3"
+              @click="openCategoryWisePage(category.name)"
+            >
+              <p>
+                <img
+                  :alt="category.name"
+                  :src="category.photo_url"
+                  height="64"
+                  width="64"
+                />
+                <span class="option-name ml-4" style="font-size: 18px">
+                  {{ category.name }}
+                </span>
+                <span class="mdi mdi-chevron-right arrow-go" />
+              </p>
+            </li>
+          </template>
+        </LazyCustomListView>
+      </transition>
 
       <transition name="scale-up">
         <section
