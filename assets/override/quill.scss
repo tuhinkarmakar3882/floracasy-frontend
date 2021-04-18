@@ -311,8 +311,9 @@ $active-color: $white;
     margin: 1rem 0 !important;
     border-radius: $nano-unit !important;
     overflow-x: scroll !important;
-    white-space: break-spaces !important;
-    word-break: break-all !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    word-wrap: break-word !important;
     line-height: 1.8 !important;
   }
 

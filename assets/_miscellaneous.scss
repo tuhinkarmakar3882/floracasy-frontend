@@ -84,8 +84,9 @@ html {
       margin: 1rem 0;
       border-radius: $nano-unit;
       overflow-x: scroll;
-      white-space: break-spaces;
-      word-break: break-all;
+      white-space: pre-wrap ;
+      word-break: break-word;
+      word-wrap: break-word ;
       line-height: 1.8;
     }
 
