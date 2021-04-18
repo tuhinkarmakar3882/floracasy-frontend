@@ -171,11 +171,13 @@ import {
 } from '@/utils/utility'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
+import AppFeel from '~/components/Layout/AppFeel'
 
 const { useMessageService } = require('~/environmentVariables')
 
 export default {
   name: 'BlogDetails',
+  components: { AppFeel },
   layout: 'FullScreen',
 
   async asyncData({ $axios, redirect, params, from: prevURL }) {
