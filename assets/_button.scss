@@ -118,8 +118,8 @@ button {
 
 .info-outlined-btn {
   background-color: transparent;
-  color: darken($info, $darken-percentage);
-  border: $single-unit solid darken($info, $darken-percentage);
+  color: $info;
+  border: $single-unit solid $info;
 
   &:focus, &:hover, &:active {
     background-color: rgba($info, .1);
@@ -184,7 +184,7 @@ button {
 
 .warning-btn {
   color: $black;
-  background-color: darken($warning, $darken-percentage);
+  background-color: darken($warning, $darken-percentage + $lighten-percentage);
 
   &:focus, &:hover, &:active {
     background-color: lighten($warning, $lighten-percentage);
