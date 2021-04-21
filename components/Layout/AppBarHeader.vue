@@ -14,7 +14,7 @@
         <slot name="title" />
       </p>
 
-      <aside class="ml-auto pr-4">
+      <aside class="ml-auto" :class="!noRightPadding && 'pr-4'">
         <slot name="action-button" />
       </aside>
     </header>
@@ -26,6 +26,10 @@ export default {
   name: 'AppBarHeader',
   props: {
     noBackButton: {
+      type: Boolean,
+      default: false,
+    },
+    noRightPadding: {
       type: Boolean,
       default: false,
     },
