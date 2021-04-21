@@ -55,6 +55,12 @@ export default {
           color: '#5dd75d',
           route: navigationRoutes.Home.Community.Story.add,
         },
+        {
+          name: 'Start from Drafts',
+          icon: 'mdi mdi-file',
+          color: '#b377bd',
+          route: navigationRoutes.Home.Blogs.Create.Drafts,
+        },
       ],
     }
   },
