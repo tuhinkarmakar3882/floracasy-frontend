@@ -6,8 +6,8 @@
     </p>
     <hr class="faded-divider" />
 
-    <p>Try:</p>
-    <ul class="mb-8 pb-4">
+    <p v-if="!noRemedyOption">Try:</p>
+    <ul class="mb-8 pb-4" v-if="!noRemedyOption">
       <slot name="remedy-option">
         <li>Try Refreshing</li>
         <li>Checking the network cables, modem and router</li>
@@ -31,6 +31,10 @@ export default {
     errorSection: {
       type: String,
       required: true,
+    },
+    noRemedyOption: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
