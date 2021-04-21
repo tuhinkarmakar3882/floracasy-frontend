@@ -272,12 +272,12 @@ export default {
           color: '#5dd75d',
           route: navigationRoutes.Home.Community.Story.add,
         },
-        // {
-        //   name: 'Start from Drafts',
-        //   icon: 'mdi mdi-file',
-        //   color: '#b377bd',
-        //   route: navigationRoutes.Home.Blogs.Create.Drafts,
-        // },
+        {
+          name: 'Start from Drafts',
+          icon: 'mdi mdi-file',
+          color: '#b377bd',
+          route: navigationRoutes.Home.Blogs.Create.Drafts,
+        },
       ],
     }
   },
@@ -352,7 +352,7 @@ export default {
 
 .responsive-layout {
   * {
-    transition: all 300ms ease-in-out;
+    transition: all 200ms ease-in-out;
   }
 
   .desktop-app-layout {
@@ -360,10 +360,6 @@ export default {
 
     @media only screen and (min-width: $small-screen) {
       display: block;
-    }
-
-    * {
-      transition: all 0.2s ease-in-out;
     }
 
     header,
@@ -580,7 +576,7 @@ export default {
 
     aside {
       text-align: center;
-      max-height: 50vh;
+      max-height: 60vh;
       overflow: scroll;
       width: 100%;
       box-shadow: $up-only-box-shadow;
