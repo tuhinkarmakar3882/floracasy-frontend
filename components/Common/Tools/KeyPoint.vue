@@ -1,6 +1,6 @@
 <template>
   <section class="keypoint text-left">
-    <span
+    <i
       :style="{
         color: tickColor,
         fontSize: tickSize + 'px',
