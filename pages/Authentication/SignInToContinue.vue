@@ -4,11 +4,35 @@
       <i class="mdi mdi-close" />
     </a>
 
-    <h3 class="my-4">Let's Get Started</h3>
+    <h4 class="mt-6 mb-0">Let's Get Started!</h4>
 
-    <p class="my-4">It's Secure, Faster, Better</p>
+    <p class="my-4">It's Secure, Faster, Better!</p>
 
-    <GoogleSignInButton class="secondary-outlined-btn" />
+    <section class="my-2">
+      <KeyPoint
+        class="keypoint"
+        text-color="white"
+        point="Unlimited Articles"
+        tick-color="#9c9aff"
+        :tick-size="20"
+      />
+      <KeyPoint
+        class="keypoint"
+        text-color="white"
+        point="Discover People"
+        tick-color="#9c9aff"
+        :tick-size="20"
+      />
+      <KeyPoint
+        class="keypoint"
+        text-color="white"
+        point="And a Lot More!"
+        tick-color="#9c9aff"
+        :tick-size="20"
+      />
+    </section>
+
+    <GoogleSignInButton class="vibrant-outlined-btn" />
   </div>
 </template>
 
@@ -58,6 +82,10 @@ export default {
   padding: 2rem 1.5rem;
   box-shadow: 0 0 4px lighten($card-bg, 50%);
 
+  * {
+    text-align: center;
+  }
+
   a {
     position: absolute;
     top: $standard-unit;
@@ -65,6 +93,12 @@ export default {
     font-size: 1.5rem;
     text-decoration: none !important;
     z-index: 1;
+  }
+
+  section {
+    .keypoint {
+      margin: $micro-unit 0;
+    }
   }
 
   button {
