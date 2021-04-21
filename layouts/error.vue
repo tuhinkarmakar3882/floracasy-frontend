@@ -6,11 +6,6 @@
           <h6 v-ripple class="px-4 py-4">Floracasy</h6>
         </nuxt-link>
       </template>
-      <template #action-button>
-        <nuxt-link :to="navigationRoutes.Home.DashBoard" class="my-4">
-          <button class="info-outlined-btn" v-ripple>Dashboard</button>
-        </nuxt-link>
-      </template>
     </AppBarHeader>
 
     <header class="text-center px-4 pt-4 pb-8">
@@ -22,7 +17,7 @@
         place or unavailable.
       </p>
 
-      <nuxt-link :to="navigationRoutes.Home.DashBoard" class="my-4">
+      <nuxt-link :to="navigationRoutes.Home.DashBoard">
         <button class="warning-outlined-btn" v-ripple>Back to Home</button>
       </nuxt-link>
     </header>
