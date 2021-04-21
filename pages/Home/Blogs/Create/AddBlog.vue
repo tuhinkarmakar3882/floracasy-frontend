@@ -63,7 +63,7 @@
           <input v-model="blog.coverImage" type="text" />
         </template>
       </InputField>
-      <InputField class="my-2" label="Blog Category" hint-text="*Required">
+      <InputField class="my-2" hint-text="*Required" label="Blog Category">
         <template #input-field>
           <select v-model="blog.category">
             <option
@@ -79,116 +79,32 @@
     </main>
 
     <main v-show="stepNumber === 1" class="steps">
-      <div id="toolbar">
-        <button v-ripple class="ql-bold" type="button">
-          <i class="mdi mdi-format-bold"></i>
-        </button>
-        <button v-ripple class="ql-italic" type="button">
-          <i class="mdi mdi-format-italic"></i>
-        </button>
-        <button v-ripple class="ql-underline" type="button">
-          <i class="mdi mdi-format-underline"></i>
-        </button>
+      <section id="toolbar">
+        <button
+          v-ripple
+          v-for="(option, index) in toolbar"
+          :class="option.class"
+          :key="`toolbar-item-${index}`"
+          type="button"
+          :value="option.value"
+        />
+      </section>
 
-        <button v-ripple class="ql-divider" type="button">
-          <i class="mdi mdi-minus"></i>
-        </button>
-
-        <button v-ripple class="ql-blockquote" type="button">
-          <i class="mdi mdi-format-quote-close"></i>
-        </button>
-        <button v-ripple class="ql-code-block" type="button">
-          <i class="mdi mdi-xml"></i>
-        </button>
-        <button v-ripple class="ql-link" type="button">
-          <i class="mdi mdi-link"></i>
-        </button>
-
-        <button v-ripple class="ql-header ql-active" type="button" value="">
-          <i class="mdi mdi-format-paragraph"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="1">
-          <i class="mdi mdi-format-header-1"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="2">
-          <i class="mdi mdi-format-header-2"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="3">
-          <i class="mdi mdi-format-header-3"></i>
-        </button>
-
-        <button v-ripple class="ql-photo" type="button">
-          <i class="mdi mdi-image"></i>
-        </button>
-        <button v-ripple class="ql-video" type="button">
-          <i class="mdi mdi-video"></i>
-        </button>
-
-        <button v-ripple class="ql-align ql-active" type="button" value="">
-          <i class="mdi mdi-format-align-left"></i>
-        </button>
-        <button v-ripple class="ql-align" type="button" value="center">
-          <i class="mdi mdi-format-align-center"></i>
-        </button>
-        <button v-ripple class="ql-align" type="button" value="right">
-          <i class="mdi mdi-format-align-right"></i>
-        </button>
-
-        <button v-ripple class="ql-strike" type="button">
-          <i class="mdi mdi-format-strikethrough-variant"></i>
-        </button>
-
-        <button v-ripple class="ql-header" type="button" value="4">
-          <i class="mdi mdi-format-header-4"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="5">
-          <i class="mdi mdi-format-header-5"></i>
-        </button>
-        <button v-ripple class="ql-header" type="button" value="6">
-          <i class="mdi mdi-format-header-6"></i>
-        </button>
-
-        <button v-ripple class="ql-list" type="button" value="ordered">
-          <i class="mdi mdi-format-list-numbered"></i>
-        </button>
-        <button v-ripple class="ql-list" type="button" value="bullet">
-          <i class="mdi mdi-format-list-bulleted"></i>
-        </button>
-
-        <!--        <button v-ripple class="ql-indent" type="button" value="-1">-->
-        <!--          <i class="mdi mdi-format-indent-decrease"></i>-->
-        <!--        </button>-->
-        <!--        <button v-ripple class="ql-indent" type="button" value="+1">-->
-        <!--          <i class="mdi mdi-format-indent-increase"></i>-->
-        <!--        </button>-->
-
-        <button v-ripple class="ql-script" type="button" value="sub">
-          <i class="mdi mdi-format-subscript"></i>
-        </button>
-        <button v-ripple class="ql-script" type="button" value="super">
-          <i class="mdi mdi-format-superscript"></i>
-        </button>
-
-        <button v-ripple class="ql-clean" type="button">
-          <i class="mdi mdi-format-clear"></i>
-        </button>
-      </div>
-
-      <div id="editor" />
+      <section id="editor" />
     </main>
 
     <main v-if="stepNumber === 2" class="steps px-4 pt-6">
       <InputField
         class="mb-2"
-        material
-        label="Keywords for the Blog"
         hint-text="Multiple Keywords can be Separate it with Comma."
+        label="Keywords for the Blog"
+        material
       >
         <template #input-field>
           <textarea
             v-model="blog.keywords"
-            @keyup.space="convertToChips"
             rows="5"
+            @keyup.space="convertToChips"
           />
         </template>
       </InputField>
@@ -239,6 +155,7 @@ import { mapGetters } from 'vuex'
 import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { openDB } from 'idb'
 
 function createMappingFor(categoryList) {
   const mappingTable = {}
@@ -267,6 +184,32 @@ export default {
       pageTitle: 'Create Blog',
       Quill: undefined,
       editor: undefined,
+      toolbar: [
+        { class: 'ql-bold' },
+        { class: 'ql-italic' },
+        { class: 'ql-underline' },
+        { class: 'ql-divider' },
+        { class: 'ql-blockquote' },
+        { class: 'ql-code-block' },
+        { class: 'ql-link' },
+        { class: 'ql-header', value: '1' },
+        { class: 'ql-header', value: '2' },
+        { class: 'ql-header', value: '3' },
+        { class: 'ql-photo' },
+        { class: 'ql-video' },
+        { class: 'ql-align ql-active', value: '' },
+        { class: 'ql-align', value: 'center' },
+        { class: 'ql-align', value: 'right' },
+        { class: 'ql-strike' },
+        { class: 'ql-header', value: '4' },
+        { class: 'ql-header', value: '5' },
+        { class: 'ql-header', value: '6' },
+        { class: 'ql-list', value: 'ordered' },
+        { class: 'ql-list', value: 'bullet' },
+        { class: 'ql-script', value: 'sub' },
+        { class: 'ql-script', value: 'super' },
+        { class: 'ql-clean' },
+      ],
       toolbarOptions: undefined,
       mappingTable: {},
       categories: [],
@@ -281,6 +224,9 @@ export default {
       },
       stepNumber: 0,
       sending: false,
+
+      db: undefined,
+      uniqueId: Date.now(),
     }
   },
 
@@ -334,6 +280,8 @@ export default {
       await this.$store.dispatch('UserManagement/fetchData')
     }
 
+    await this.createLocalDBIfNotExists()
+
     this.setupQuillEditor()
   },
 
@@ -347,6 +295,16 @@ export default {
     cleanHTML,
     getRelativeTime,
     convertToChips() {},
+    async createLocalDBIfNotExists() {
+      this.db = await openDB('Blogs', 1, {
+        upgrade(db) {
+          const store = db.createObjectStore('drafts', {
+            keyPath: 'uniqueId',
+          })
+          store.createIndex('uniqueId', 'uniqueId')
+        },
+      })
+    },
 
     setupIcons() {
       const icons = this.Quill.import('ui/icons')
@@ -392,14 +350,13 @@ export default {
     },
     setupCustomTags() {
       const Block = this.Quill.import('blots/block')
-      class DividerBlot extends Block {}
+      const BlockEmbed = this.Quill.import('blots/block/embed')
 
+      class DividerBlot extends Block {}
       DividerBlot.blotName = 'divider'
       DividerBlot.tagName = 'hr'
-
       this.Quill.register(DividerBlot)
 
-      const BlockEmbed = this.Quill.import('blots/block/embed')
       class PhotoBlot extends BlockEmbed {
         static create(value) {
           const node = super.create()
@@ -486,6 +443,23 @@ export default {
       })
 
       this.setupCustomHandler()
+
+      this.editor.on('text-change', this.saveAsDraft)
+    },
+
+    async saveAsDraft() {
+      const tx = this.db.transaction('drafts', 'readwrite')
+      const store = tx.objectStore('drafts')
+      await store.put({
+        uniqueId: this.uniqueId,
+        title: this.blog.title,
+        categoryID: this.blog.category,
+        coverImage: this.blog.coverImage,
+        subtitle: this.blog.subtitle,
+        content: this.editor.root.innerHTML,
+        keywords: this.blog.keywords,
+      })
+      await tx.done
     },
 
     nextStep() {
