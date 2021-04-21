@@ -57,4 +57,8 @@ export const actions = {
   setUserDesignation({ commit }, { designation }) {
     commit('SET_USER_DESIGNATION', designation)
   },
+
+  clearUserState({ commit }) {
+    commit('SET_USER', null)
+  },
 }
