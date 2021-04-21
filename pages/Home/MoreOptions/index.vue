@@ -111,8 +111,8 @@ export default {
     async performLogout() {
       await this.$axios.setToken(false)
       await this.$store.dispatch('logout')
-      await this.$router.push('/')
-      localStorage.removeItem('is_auth')
+      await this.$store.dispatch('UserManagement/clearUserState')
+      await this.$router.replace('/')
     },
 
     async logout() {
