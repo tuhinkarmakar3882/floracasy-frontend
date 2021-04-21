@@ -41,7 +41,7 @@
           up!
         </p>
 
-        <section class="my-2">
+        <section class="mt-2 mb-4">
           <KeyPoint
             class="keypoint"
             text-color="white"
