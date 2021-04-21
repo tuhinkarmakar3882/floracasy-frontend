@@ -1,149 +1,167 @@
 <template>
-  <AppFeel
-    :on-back="navigationRoutes.Home.DashBoard"
-    auto-hide
-    class="blog-details-page"
-    custom-header
-  >
-    <template slot="app-bar-custom-header">
-      <h5
-        v-ripple
-        class="px-5 mdi mdi-arrow-left"
-        style="height: 56px; display: flex; align-items: center"
-        @click="handleBackButtonPress"
-      />
-      <h6 v-ripple>
+  <div class="blog-details-page">
+    <AppBarHeader no-right-padding>
+      <template #title>
+        <h6>
+          <nuxt-link
+            :to="navigationRoutes.Home.DashBoard"
+            class="brand-name no-underline"
+            style="color: white !important"
+          >
+            Floracasy
+          </nuxt-link>
+        </h6>
+      </template>
+
+      <template #action-button>
         <nuxt-link
-          :to="navigationRoutes.index"
-          class="brand-name no-underline"
-          style="color: white !important"
+          v-if="useMessageService"
+          v-ripple
+          :to="navigationRoutes.Home.Messages.index"
+          class="ml-auto px-6"
+          style="height: 56px; display: flex; align-items: center"
         >
-          Floracasy
+          <h5 class="mdi mdi-message-text-outline" />
         </nuxt-link>
-      </h6>
-      <nuxt-link
-        v-if="useMessageService"
-        v-ripple
-        :to="navigationRoutes.Home.Messages.index"
-        class="ml-auto px-6"
-        style="height: 56px; display: flex; align-items: center"
-      >
-        <h5 class="mdi mdi-message-text" />
-      </nuxt-link>
-    </template>
+      </template>
+    </AppBarHeader>
 
-    <template slot="main">
-      <div v-if="blog" class="my-6 blog">
-        <section class="px-4 pt-4">
-          <p class="mb-1" style="display: flex !important">
-            <nuxt-link
-              v-ripple
-              :to="
-                navigationRoutes.Home.Account.Overview.replace(
-                  '{userUID}',
-                  blog.author.uid
-                )
-              "
-              class="no-underline"
-            >
-              {{ blog.author.displayName }}
-            </nuxt-link>
-            <strong class="mx-1">IN</strong>
-            <nuxt-link
-              v-ripple
-              :to="
-                navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
-                  '{name}',
-                  blog.category.name
-                )
-              "
-              class="no-underline"
-            >
-              {{ blog.category.name }}
-            </nuxt-link>
-          </p>
+    <FallBackLoader v-if="!blog && !contentLoaded" class="my-8">
+      <template #fallback>
+        <p class="text-center">Loading Article</p>
+      </template>
+    </FallBackLoader>
 
-          <h1 class="blog-title mb-4">
-            {{ blog.title }}
-          </h1>
+    <transition name="scale-up" v-else-if="quotaIsExhausted && !user">
+      <aside class="quota-exhausted">
+        <h1>Keep the Flow Going!</h1>
+        <p class="my-4">
+          Hope you're having a good time here!<br />
+          Since you've exhausted your anonymous free reads, Let's get you signed
+          up!
+        </p>
 
-          <small class="timestamp muted">
-            <span class="mdi mdi-clock-time-nine-outline" />
-            {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
-          </small>
-
-          <div class="extra-info mt-4">
-            <section>
-              <i class="mdi mdi-eye mdi-18px mr-2" />
-              <small>{{ blog.totalViews }}</small>
-            </section>
-          </div>
-
-          <hr class="faded-divider my-4" />
-
-          <section>
-            <i class="mdi mdi-book-open-variant mr-2" />
-            <small>Approx {{ approxReadingTime }} min read</small>
-          </section>
-
-          <hr v-if="!blog.coverImage" class="faded-divider" />
-
-          <img
-            v-if="blog.coverImage"
-            :alt="blog.title"
-            :src="blog.coverImage"
-            class="mt-5 blog-intro-image"
-            style="width: 100%; object-fit: cover; max-height: 250px"
+        <section class="my-2">
+          <KeyPoint
+            class="keypoint"
+            text-color="white"
+            point="Unlimited Articles"
+            tick-color="#9c9aff"
+            :tick-size="20"
           />
-          <p v-if="blog.subtitle" class="my-4">
-            {{ blog.subtitle }}
-          </p>
+          <KeyPoint
+            class="keypoint"
+            text-color="white"
+            point="Discover People"
+            tick-color="#9c9aff"
+            :tick-size="20"
+          />
+          <KeyPoint
+            class="keypoint"
+            text-color="white"
+            point="Meet & Communicate"
+            tick-color="#9c9aff"
+            :tick-size="20"
+          />
+          <KeyPoint
+            class="keypoint"
+            text-color="white"
+            point="And a Lot More!"
+            tick-color="#9c9aff"
+            :tick-size="20"
+          />
         </section>
 
-        <section class="blog-body pb-8 mb-4">
-          <InArticleAd key="Top-Ad" />
-          <article
-            ref="articleContent"
-            class="my-6 pb-4 px-4 ql-editor"
-            v-html="cleanHTML(blog.content)"
-          />
-          <InArticleAd key="Bottom-Ad" />
-        </section>
-      </div>
-
-      <aside v-else class="loading-container">
-        <LoadingIcon />
+        <GoogleSignInButton class="secondary-btn" style="width: 290px" />
       </aside>
-    </template>
+    </transition>
 
-    <template slot="footer">
-      <section v-if="blog" class="actions">
-        <div v-ripple class="like" @click="like">
-          <i
-            :class="blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"
-            class="mdi"
-          />
-        </div>
-        <div v-ripple class="comment" @click="openCommentPage">
-          <i class="mdi mdi-message-text" />
-        </div>
-        <div v-ripple class="save" @click="updateSavedBlogPreference">
-          <i
-            :class="
-              blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
+    <main v-else class="my-6 blog">
+      <header class="px-4 pt-4">
+        <p>
+          <nuxt-link v-ripple :to="userAccountLink" class="no-underline">
+            {{ blog.author.displayName }}
+          </nuxt-link>
+          <strong class="mx-1">IN</strong>
+          <nuxt-link
+            v-ripple
+            :to="
+              navigationRoutes.Home.Blogs.CategoryWise.Name.replace(
+                '{name}',
+                blog.category.name
+              )
             "
-            class="mdi"
-          />
+            class="no-underline"
+          >
+            {{ blog.category.name }}
+          </nuxt-link>
+        </p>
+
+        <h1>{{ blog.title }}</h1>
+
+        <small class="muted">
+          <i class="mdi mdi-clock-time-nine-outline" />
+          {{ parseTimeUsingStandardLibrary(blog.createdAt) }}
+        </small>
+
+        <div class="extra-info mt-4">
+          <section>
+            <i class="mdi mdi-eye mdi-18px mr-2" />
+            <small>{{ blog.totalViews }}</small>
+          </section>
         </div>
-        <div v-ripple class="share" @click="share">
-          <i
-            :class="
-              useShareFallBack ? 'mdi-close danger-light' : 'mdi-share-variant'
-            "
-            class="mdi"
-          />
-        </div>
+
+        <hr class="faded-divider my-4" />
+
+        <section>
+          <i class="mdi mdi-book-open-variant mr-2" />
+          <small>Approx {{ approxReadingTime }} min read</small>
+        </section>
+
+        <hr v-if="!blog.coverImage" class="faded-divider" />
+
+        <img
+          v-if="blog.coverImage"
+          :alt="blog.title"
+          :src="blog.coverImage"
+          class="mt-5 cover-photo"
+        />
+
+        <p v-if="blog.subtitle" class="my-4">
+          {{ blog.subtitle }}
+        </p>
+      </header>
+
+      <section class="blog-body pb-8 mb-4">
+        <InArticleAd key="Top-Ad" />
+
+        <article
+          ref="articleContent"
+          class="my-6 pb-4 px-4 ql-editor"
+          v-html="cleanHTML(blog.content)"
+        />
+
+        <InArticleAd key="Bottom-Ad" />
       </section>
+    </main>
+
+    <footer class="actions" v-if="!quotaIsExhausted || user">
+      <i v-ripple :class="blogLikeStatus" class="mdi like" @click="like" />
+
+      <i
+        v-ripple
+        class="mdi mdi-message-text comment"
+        @click="openCommentPage"
+      />
+
+      <i
+        v-ripple
+        :class="blogSavedStatus"
+        class="mdi save"
+        @click="updateSavedBlogPreference"
+      />
+
+      <i v-ripple :class="dynamicShareClass" class="mdi share" @click="share" />
 
       <transition name="slide-up">
         <ShareFallbackForDesktop
@@ -154,8 +172,8 @@
           fixed-mode
         />
       </transition>
-    </template>
-  </AppFeel>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -171,13 +189,11 @@ import {
 } from '@/utils/utility'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
-import AppFeel from '~/components/Layout/AppFeel'
 
 const { useMessageService } = require('~/environmentVariables')
 
 export default {
   name: 'BlogDetails',
-  components: { AppFeel },
   layout: 'FullScreen',
 
   async asyncData({ $axios, redirect, params, from: prevURL }) {
@@ -201,6 +217,8 @@ export default {
       playbackStarted: false,
       useShareFallBack: false,
       approxReadingTime: 0,
+      quotaIsExhausted: false,
+      contentLoaded: false,
     }
   },
 
@@ -208,6 +226,24 @@ export default {
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
+    userAccountLink() {
+      if (!this.blog) return null
+      return navigationRoutes.Home.Account.Overview.replace(
+        '{userUID}',
+        this.blog.author.uid
+      )
+    },
+    dynamicShareClass() {
+      return this.useShareFallBack
+        ? 'mdi-close danger-light'
+        : 'mdi-share-variant'
+    },
+    blogSavedStatus() {
+      return this.blog.isSavedForLater ? 'mdi-bookmark' : 'mdi-bookmark-outline'
+    },
+    blogLikeStatus() {
+      return this.blog.isLiked ? 'mdi-heart' : 'mdi-heart-outline'
+    },
   },
 
   async mounted() {
@@ -217,6 +253,8 @@ export default {
     await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
       linkPosition: -1,
     })
+
+    await this.checkForQuotaExhaustion()
     await this.incrementViewCount()
     await this.calculateReadingTime()
   },
@@ -334,12 +372,27 @@ export default {
     hideFallback() {
       this.useShareFallBack = false
     },
-    async handleBackButtonPress() {
-      if (this.prevURL) {
-        await this.$router.back()
-      } else {
-        await this.$router.replace(navigationRoutes.index)
+
+    async checkForQuotaExhaustion() {
+      let quota = this.$cookies.get('anonymous_read_quota')
+      console.log(typeof quota, quota)
+
+      if (quota === undefined) {
+        console.log('case Undefined')
+        await this.$cookies.set('anonymous_read_quota', 2)
+        return
       }
+
+      if (quota > 0 && quota <= 2) {
+        console.log('case 2')
+        --quota
+        await this.$cookies.set('anonymous_read_quota', quota)
+        return
+      }
+
+      console.log('case last')
+      this.quotaIsExhausted = true
+      this.contentLoaded = true
     },
   },
 
@@ -387,73 +440,96 @@ export default {
 @import 'assets/all-variables';
 
 .blog-details-page {
-  .blog {
+  main.blog {
     max-width: $large-screen;
     margin: auto;
     word-break: break-word;
+    position: relative;
 
-    .blog-intro-image {
-      box-shadow: $down-only-box-shadow;
-      border-radius: 4px;
-    }
-
-    .extra-info {
-      display: flex;
-
-      section {
+    header {
+      p:first-child {
         display: flex;
-        align-items: center;
+      }
 
-        * {
-          display: block;
-        }
+      img.cover-photo {
+        box-shadow: $down-only-box-shadow;
+        border-radius: 4px;
+        width: 100%;
+        object-fit: cover;
+        max-height: 250px;
+      }
 
-        &:first-child {
-          margin-right: $micro-unit;
+      .extra-info {
+        display: flex;
+
+        section {
+          display: flex;
+          align-items: center;
+
+          * {
+            display: block;
+          }
+
+          &:first-child {
+            margin-right: $micro-unit;
+          }
         }
       }
     }
-
-    .blog-title {
-      font-size: 1.8rem;
-    }
   }
 
-  .actions {
-    border-radius: 0;
+  aside.quota-exhausted {
+    height: calc(100vh - 56px);
+    background: $body-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: $standard-unit;
+  }
+
+  footer.actions {
     position: fixed;
     width: 100%;
     z-index: $bring-to-front;
     bottom: 0;
     background-color: $navigation-bar-color;
-    height: 56px;
-    font-family: $Nunito-Sans;
-    color: $secondary;
+    height: 2 * $x-large-unit;
     box-shadow: $up-only-box-shadow;
-    font-size: $large-unit;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    flex: 1 1 100%;
 
-    div {
+    $large-break-point: $large-screen + (3 * $xxx-large-unit);
+
+    @media screen and (min-width: $large-break-point) {
+      position: fixed;
+      top: calc(50% - 10.5rem);
+      bottom: unset;
+      left: 0;
+      flex-direction: column;
+      height: 21rem;
+      width: 2 * $x-large-unit;
+      background: $card-bg-alternate;
+      border-top-right-radius: $standard-unit;
+      border-bottom-right-radius: $standard-unit;
+      box-shadow: $right-only-box-shadow;
+    }
+
+    i {
+      font-size: $large-unit;
+      color: $secondary;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 2 * $large-unit;
       width: 100%;
+      height: 2 * $x-large-unit;
+
+      @media screen and (min-width: $large-break-point) {
+        height: 5.5rem;
+      }
     }
-  }
-
-  .loading-container {
-    text-align: center;
-    display: grid;
-    place-items: center;
-    height: calc(100vh - 120px);
-  }
-
-  .floating-action-button {
-    bottom: 64px;
-    min-width: auto;
   }
 }
 </style>
