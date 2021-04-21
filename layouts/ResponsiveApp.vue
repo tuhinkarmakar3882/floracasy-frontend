@@ -240,10 +240,13 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { useMessageService } from '~/environmentVariables'
+import Logo from '~/components/Common/Tools/Logo'
+import CustomListView from '~/components/Layout/CustomListView'
+import NotificationBadge from '~/components/Layout/NotificationBadge'
 
 export default {
   name: 'MobileApp',
-
+  components: { NotificationBadge, CustomListView, Logo },
   data() {
     return {
       useMessageService,
