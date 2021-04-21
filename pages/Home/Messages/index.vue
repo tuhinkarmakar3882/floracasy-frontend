@@ -1,19 +1,17 @@
 <template>
   <div class="message-page mb-6">
+    <AppBarHeader>
+      <template #title>
+        {{ pageTitle }}
+      </template>
+    </AppBarHeader>
     <section class="message-thread-list">
       <div
         v-for="messageThread in messageThreads"
         :key="messageThread.id"
         v-ripple
         class="message-thread px-4 py-4"
-        @click="
-          $router.push(
-            navigationRoutes.Home.Messages.ChatScreen.replace(
-              /{messageThreadId}/,
-              messageThread.id
-            )
-          )
-        "
+        @click="openChatDetails(messageThread.id)"
       >
         <img
           :alt="messageThread.receiver.displayName"
@@ -42,9 +40,13 @@
     <client-only>
       <infinite-loading direction="top" @infinite="infiniteHandler">
         <template slot="spinner">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p class="text-center">Loading Messages...</p>
+          <FallBackLoader>
+            <template #fallback>
+              <p class="text-center">Loading Messages...</p>
+            </template>
+          </FallBackLoader>
         </template>
+
         <template slot="error">
           <p class="danger-light mb-8">Network Error</p>
         </template>
@@ -64,11 +66,13 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime, processLink } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import { useMessageService } from '~/environmentVariables'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'Messages',
+  components: { FallBackLoader, AppBarHeader },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
-  layout: 'ResponsiveApp',
 
   data() {
     return {
@@ -90,6 +94,7 @@ export default {
 
   methods: {
     getRelativeTime,
+
     getCount(countValue) {
       return countValue > 99 ? `${countValue.toString()}+` : countValue
     },
@@ -112,6 +117,15 @@ export default {
       } catch (e) {
         $state.complete()
       }
+    },
+
+    async openChatDetails(messageThreadId) {
+      await this.$router.push(
+        navigationRoutes.Home.Messages.ChatScreen.replace(
+          /{messageThreadId}/,
+          messageThreadId
+        )
+      )
     },
   },
 
