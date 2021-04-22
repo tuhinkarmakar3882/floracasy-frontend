@@ -81,12 +81,14 @@
     <main v-show="stepNumber === 1" class="steps">
       <section id="toolbar">
         <button
-          v-ripple
           v-for="(option, index) in toolbar"
-          :class="option.class"
           :key="`toolbar-item-${index}`"
-          type="button"
+          v-ripple
+          :aria-label="option.tooltip"
+          :class="option.class"
+          :title="option.tooltip"
           :value="option.value"
+          type="button"
         />
       </section>
 
@@ -156,6 +158,8 @@ import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { openDB } from 'idb'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
+import InputField from '~/components/Common/Tools/InputField'
 
 function createMappingFor(categoryList) {
   const mappingTable = {}
@@ -167,6 +171,7 @@ function createMappingFor(categoryList) {
 
 export default {
   name: 'AddBlog',
+  components: { InputField, AppBarHeader },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, from: prevURL }) {
@@ -185,30 +190,34 @@ export default {
       Quill: undefined,
       editor: undefined,
       toolbar: [
-        { class: 'ql-bold' },
-        { class: 'ql-italic' },
-        { class: 'ql-underline' },
-        { class: 'ql-divider' },
-        { class: 'ql-blockquote' },
-        { class: 'ql-code-block' },
-        { class: 'ql-link' },
-        { class: 'ql-header', value: '1' },
-        { class: 'ql-header', value: '2' },
-        { class: 'ql-header', value: '3' },
-        { class: 'ql-photo' },
-        { class: 'ql-video' },
-        { class: 'ql-align ql-active', value: '' },
-        { class: 'ql-align', value: 'center' },
-        { class: 'ql-align', value: 'right' },
-        { class: 'ql-strike' },
-        { class: 'ql-header', value: '4' },
-        { class: 'ql-header', value: '5' },
-        { class: 'ql-header', value: '6' },
-        { class: 'ql-list', value: 'ordered' },
-        { class: 'ql-list', value: 'bullet' },
-        { class: 'ql-script', value: 'sub' },
-        { class: 'ql-script', value: 'super' },
-        { class: 'ql-clean' },
+        { class: 'ql-bold', tooltip: 'Bold Text' },
+        { class: 'ql-italic', tooltip: 'Italic Text' },
+        { class: 'ql-underline', tooltip: 'Underline Text' },
+        { class: 'ql-divider', tooltip: 'Add a Divider' },
+        { class: 'ql-blockquote', tooltip: 'Add a Blockquote' },
+        { class: 'ql-code-block', tooltip: 'Add Code Block' },
+        { class: 'ql-link', tooltip: 'Add External Link' },
+        { class: 'ql-header', value: '1', tooltip: 'Heading Level 1' },
+        { class: 'ql-header', value: '2', tooltip: 'Heading Level 2' },
+        { class: 'ql-header', value: '3', tooltip: 'Heading Level 3' },
+        { class: 'ql-photo', tooltip: 'photo' },
+        { class: 'ql-video', tooltip: 'video' },
+        {
+          class: 'ql-align ql-active',
+          value: '',
+          tooltip: 'Left Align Content',
+        },
+        { class: 'ql-align', value: 'center', tooltip: 'Center Align Content' },
+        { class: 'ql-align', value: 'right', tooltip: 'Right Align Content' },
+        { class: 'ql-strike', tooltip: 'Strikeout the Text' },
+        { class: 'ql-header', value: '4', tooltip: 'Heading Level 4' },
+        { class: 'ql-header', value: '5', tooltip: 'Heading Level 5' },
+        { class: 'ql-header', value: '6', tooltip: 'Heading Level 6' },
+        { class: 'ql-list', value: 'ordered', tooltip: 'Add an Ordered List' },
+        { class: 'ql-list', value: 'bullet', tooltip: 'Add an Unordered List' },
+        { class: 'ql-script', value: 'sub', tooltip: 'Add a SuperScript Text' },
+        { class: 'ql-script', value: 'super', tooltip: 'Add a SubScript Text' },
+        { class: 'ql-clean', tooltip: 'Clear All Formatting' },
       ],
       toolbarOptions: undefined,
       mappingTable: {},
@@ -353,6 +362,7 @@ export default {
       const BlockEmbed = this.Quill.import('blots/block/embed')
 
       class DividerBlot extends Block {}
+
       DividerBlot.blotName = 'divider'
       DividerBlot.tagName = 'hr'
       this.Quill.register(DividerBlot)
@@ -372,6 +382,7 @@ export default {
           }
         }
       }
+
       PhotoBlot.blotName = 'photo'
       PhotoBlot.tagName = 'img'
       this.Quill.register(PhotoBlot)
