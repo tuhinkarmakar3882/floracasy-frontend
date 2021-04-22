@@ -10,11 +10,17 @@
 
     <header class="text-center px-4 pt-4 pb-8">
       <h1 class="my-4">Ouch!</h1>
-      <p class="mt-4 mb-8">
+      <p class="mt-4 mb-8" v-if="error.statusCode === 404">
         That was a broken link. <br />
         <br />
         The page you're trying to open, might have been moved to a different
         place or unavailable.
+      </p>
+      <p class="mt-4 mb-8" v-else>
+        It's not on you, It's on us...<br />
+        <br />
+        To Human is to err. And So Does, something has went wrong. But, This is
+        not the end! We'll be fixing it shortly!
       </p>
 
       <nuxt-link :to="navigationRoutes.Home.DashBoard">
@@ -38,6 +44,12 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
+  props: {
+    error: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       pageTitle: 'Page Not Found',
