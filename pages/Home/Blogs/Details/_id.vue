@@ -399,36 +399,71 @@ export default {
   head() {
     return {
       title: this.blog.title,
+      description: this.blog?.subtitle || 'Where Knowledge Gets Socialized',
       meta: [
+        {
+          name: 'title',
+          content: this.blog?.title,
+        },
         {
           name: 'keywords',
           content:
-            this?.blog?.title +
+            this.blog?.title +
             ',' +
-            this?.blog?.category?.name +
-            this?.blog?.keywords?.split(',')?.reduce((acc, elm) => {
+            this.blog?.category?.name +
+            this.blog?.keywords?.split(',')?.reduce((acc, elm) => {
               return `${acc}, ${elm}`
             }, ''),
         },
         {
           name: 'description',
-          content: this?.blog?.subtitle,
-        },
-        {
-          name: 'og:title',
-          content: this?.blog?.title,
-        },
-        {
-          name: 'og:description',
-          content: this?.blog?.subtitle,
-        },
-        {
-          name: 'og:image',
-          content: this?.blog?.coverImage || 'https://floracasy.com/icon.png',
+          content: this.blog?.subtitle,
         },
         {
           name: 'author',
-          content: this?.blog?.author?.displayName || 'Floracasy Team',
+          content: this.blog?.author?.displayName || 'Floracasy Team',
+        },
+
+        {
+          name: 'og:type',
+          content: 'website',
+        },
+        {
+          name: 'og:url',
+          content: this.$route.fullPath,
+        },
+        {
+          name: 'og:title',
+          content: this.blog?.title,
+        },
+        {
+          name: 'og:description',
+          content: this.blog?.subtitle,
+        },
+        {
+          name: 'og:image',
+          content: this.blog?.coverImage || 'https://floracasy.com/icon.png',
+        },
+
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+        {
+          name: 'twitter:url',
+          content: this.$route.fullPath,
+        },
+        {
+          name: 'twitter:title',
+          content: this.blog?.title,
+        },
+        {
+          name: 'twitter:description',
+          content: this.blog?.subtitle,
+        },
+        {
+          name: 'twitter:image',
+          content: this.blog?.coverImage || 'https://floracasy.com/icon.png',
         },
       ],
     }
