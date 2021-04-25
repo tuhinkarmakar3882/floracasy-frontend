@@ -19,7 +19,7 @@
       no-remedy-option
     />
 
-    <transition name="scale-up" v-else-if="emptyDraft">
+    <transition v-else-if="emptyDraft" name="scale-up">
       <aside class="px-4 py-6 text-center">
         <p class="my-4">No Saved Blog Drafts Found</p>
         <nuxt-link :to="navigationRoutes.Home.Blogs.Create.AddBlog">
@@ -30,26 +30,12 @@
 
     <transition name="scale-up" v-else>
       <main>
-        <article
+        <DraftItem
           v-for="draft in drafts"
           :key="draft.uniqueId"
+          :draft="draft"
           class="px-4 py-2"
-        >
-          <h5>{{ draft.title }}</h5>
-          <p>{{ draft.subtitle }}</p>
-
-          <button v-ripple class="secondary-outlined-btn my-4">
-            Continue Editing
-          </button>
-
-          <button
-            v-ripple
-            class="danger-outlined-btn my-4"
-            @click="deleteDraft(draft.uniqueId)"
-          >
-            Delete Draft
-          </button>
-        </article>
+        />
       </main>
     </transition>
   </div>
@@ -59,10 +45,18 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import { openDB } from 'idb'
+import LoadingError from '~/components/Common/Tools/LoadingError'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import DraftItem from '~/components/Common/Tools/DraftItem'
 
 export default {
   name: 'Drafts',
-  components: { AppBarHeader },
+  components: {
+    DraftItem,
+    FallBackLoader,
+    LoadingError,
+    AppBarHeader,
+  },
   middleware: 'isAuthenticated',
   data() {
     return {
@@ -100,11 +94,6 @@ export default {
           store.createIndex('uniqueId', 'uniqueId')
         },
       })
-    },
-
-    async deleteDraft(uniqueId) {
-      const tx = this.db.transaction('drafts', 'readwrite')
-      await Promise.all([tx.store.delete(uniqueId), tx.done])
     },
   },
 
