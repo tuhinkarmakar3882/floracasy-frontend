@@ -154,3 +154,42 @@ export const destroySetup = (stream, arrayMode = false) => {
 export const cleanHTML = (rawHTML) => {
   return sanitizeHtml(rawHTML, sanitizationConfig)
 }
+
+export const getEmbeddableLink = (url) => {
+  if (url.substr(0, 19) === 'https://codepen.io/') {
+    return { link: url.replace('/pen/', '/embed/') }
+  }
+  if (url.substr(0, 25) === 'https://codesandbox.io/s/') {
+    return {
+      link: `https://codesandbox.io/embed/${url.substr(
+        25
+      )}?fontsize=14&hidenavigation=1&theme=dark`,
+    }
+  }
+
+  if (url.substr(0, 24) === 'https://gist.github.com/') {
+    return {
+      link: `data:text/html;charset=UTF-8,<p>hello%20datauri<p><h1>give%0D%0A me%0D%0Asome%24</h1>"`,
+    }
+  }
+
+  if (url.substr(0, 18) === 'https://vimeo.com/') {
+    return { link: `https://player.vimeo.com/video/${url.substr(18)}` }
+  }
+
+  if (url.substr(0, 20) === 'https://youtube.com/') {
+    return { link: `${url.substr(0, 20)}embed/${url.substr(20)}` }
+  }
+  if (url.substr(0, 24) === 'https://www.youtube.com/') {
+    return { link: `${url.substr(0, 24)}embed/${url.substr(24)}` }
+  }
+
+  if (
+    url.substr(0, 22) === 'https://instagram.com/' ||
+    url.substr(0, 26) === 'https://www.instagram.com/'
+  ) {
+    return { link: `${url.split('?')[0]}embed/` }
+  }
+
+  return { link: url, unprocessed: true }
+}
