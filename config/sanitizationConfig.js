@@ -104,6 +104,23 @@ export const sanitizationConfig = {
   ],
   allowedSchemes: ['https', 'mailto'],
   allowedSchemesByTag: {},
+  allowedIframeHostnames: [
+    'codepen.io',
+    'codesandbox.io',
+    'gist.github.com',
+
+    'player.vimeo.com',
+    'youtube.com',
+    'instagram.com',
+
+    'www.codepen.io',
+    'www.codesandbox.io',
+    'www.gist.github.com',
+
+    'www.player.vimeo.com',
+    'www.youtube.com',
+    'www.instagram.com',
+  ],
   allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
   allowProtocolRelative: true,
   enforceHtmlBoundary: true,
