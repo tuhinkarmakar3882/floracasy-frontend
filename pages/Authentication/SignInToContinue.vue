@@ -1,6 +1,10 @@
 <template>
   <div class="get-started-authentication-page">
-    <a aria-label="Close Popup" title="Close Popup" @click="$router.back()">
+    <a
+      aria-label="Close Popup"
+      title="Close Popup"
+      @click="$router.push(navigationRoutes.Home.DashBoard)"
+    >
       <i class="mdi mdi-close" />
     </a>
 
@@ -37,6 +41,7 @@
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 import 'firebase/auth'
 
 export default {
@@ -46,16 +51,8 @@ export default {
 
   data() {
     return {
+      navigationRoutes,
       pageTitle: 'Sign In To Continue',
-      showLoaderAnimation: false,
-      stateInformation: 'Checking...',
-      signupOptions: [
-        {
-          id: 0,
-          provider: 'Google',
-          icon: 'mdi mdi-google',
-        },
-      ],
     }
   },
 
