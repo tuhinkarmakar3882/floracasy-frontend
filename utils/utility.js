@@ -169,7 +169,7 @@ export const getEmbeddableLink = (url) => {
 
   if (url.substr(0, 24) === 'https://gist.github.com/') {
     return {
-      link: `data:text/html;charset=UTF-8,<p>hello%20datauri<p><h1>give%0D%0A me%0D%0Asome%24</h1>"`,
+      link: `data:text/html;charset=UTF-8,<body> <script src="${url}.js"></script> </body>`,
     }
   }
 
@@ -178,10 +178,10 @@ export const getEmbeddableLink = (url) => {
   }
 
   if (url.substr(0, 20) === 'https://youtube.com/') {
-    return { link: `${url.substr(0, 20)}embed/${url.substr(20)}` }
+    return { link: `${url.substr(0, 20)}embed/${url.substr(28)}` }
   }
   if (url.substr(0, 24) === 'https://www.youtube.com/') {
-    return { link: `${url.substr(0, 24)}embed/${url.substr(24)}` }
+    return { link: `${url.substr(0, 24)}embed/${url.substr(32)}` }
   }
 
   if (
