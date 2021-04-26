@@ -1,5 +1,6 @@
 import sanitizeHtml from 'sanitize-html'
 import { sanitizationConfig } from '~/config/sanitizationConfig'
+import { supportedDomains } from '~/utils/linkProcessor'
 
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
@@ -156,40 +157,11 @@ export const cleanHTML = (rawHTML) => {
 }
 
 export const getEmbeddableLink = (url) => {
-  if (url.substr(0, 19) === 'https://codepen.io/') {
-    return { link: url.replace('/pen/', '/embed/') }
-  }
-  if (url.substr(0, 25) === 'https://codesandbox.io/s/') {
-    return {
-      link: `https://codesandbox.io/embed/${url.substr(
-        25
-      )}?fontsize=14&hidenavigation=1&theme=dark`,
+  for (const domain of supportedDomains) {
+    const domainLength = domain.url.length
+    if (url.substr(0, domainLength) === domain.url) {
+      return domain.applyTransform(url)
     }
   }
-
-  if (url.substr(0, 24) === 'https://gist.github.com/') {
-    return {
-      link: `data:text/html;charset=UTF-8,<body> <script src="${url}.js"></script> </body>`,
-    }
-  }
-
-  if (url.substr(0, 18) === 'https://vimeo.com/') {
-    return { link: `https://player.vimeo.com/video/${url.substr(18)}` }
-  }
-
-  if (url.substr(0, 20) === 'https://youtube.com/') {
-    return { link: `${url.substr(0, 20)}embed/${url.substr(28)}` }
-  }
-  if (url.substr(0, 24) === 'https://www.youtube.com/') {
-    return { link: `${url.substr(0, 24)}embed/${url.substr(32)}` }
-  }
-
-  if (
-    url.substr(0, 22) === 'https://instagram.com/' ||
-    url.substr(0, 26) === 'https://www.instagram.com/'
-  ) {
-    return { link: `${url.split('?')[0]}embed/` }
-  }
-
   return { link: url, unprocessed: true }
 }
