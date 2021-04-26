@@ -756,7 +756,7 @@ export default {
     async embedLinkPreview(link) {
       try {
         const { data: previewData } = await axios.get(
-          'http://localhost:3001/server/api/previewLinkUrl',
+          'http://localhost:3001/server/api/preview/link',
           {
             params: { link },
           }
