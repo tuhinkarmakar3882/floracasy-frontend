@@ -79,7 +79,7 @@
     </main>
 
     <main v-show="stepNumber === 1" class="steps">
-      <section id="toolbar">
+      <header id="toolbar">
         <button
           v-for="(option, index) in toolbar"
           :key="`toolbar-item-${index}`"
@@ -90,7 +90,7 @@
           :value="option.value"
           type="button"
         />
-      </section>
+      </header>
 
       <section id="editor" />
     </main>
@@ -103,11 +103,7 @@
         material
       >
         <template #input-field>
-          <textarea
-            v-model="blog.keywords"
-            rows="5"
-            @keyup.space="convertToChips"
-          />
+          <textarea v-model="blog.keywords" rows="5" />
         </template>
       </InputField>
       <hr />
@@ -147,6 +143,101 @@
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
       </aside>
     </transition>
+
+    <transition name="scale-down">
+      <aside
+        v-if="showEmbedContentUI"
+        class="loader embed-UI"
+        @click="showEmbedContentUI = false"
+        @keyup.esc="showEmbedContentUI = false"
+      >
+        <InputField
+          class="input-field mb-4"
+          label="Add External Link"
+          material
+          @click.stop
+        >
+          <template #input-field>
+            <input
+              v-model="embeddedURL"
+              placeholder="https://example.com"
+              required
+              type="url"
+              @click.stop
+              @keyup.enter="embedContent"
+            />
+          </template>
+        </InputField>
+
+        <section @click.stop>
+          <button v-ripple class="mx-4 info-btn" @click="embedContent">
+            Add
+          </button>
+          <button
+            v-ripple
+            class="mx-4 danger-outlined-btn"
+            @click="showEmbedContentUI = false"
+          >
+            Cancel
+          </button>
+        </section>
+      </aside>
+    </transition>
+
+    <transition name="scale-down">
+      <aside
+        v-if="showEmbedImageUI"
+        class="loader embed-UI"
+        @click="showEmbedImageUI = false"
+        @keyup.esc="showEmbedImageUI = false"
+      >
+        <InputField
+          class="input-field mb-4"
+          label="Enter Image URL"
+          material
+          @click.stop
+        >
+          <template #input-field>
+            <input
+              v-model="imageUpload.link"
+              placeholder="https://picsum.embedPhoto/560"
+              required
+              type="url"
+              @click.stop
+            />
+          </template>
+        </InputField>
+        <InputField
+          class="input-field mb-4"
+          label="Description"
+          material
+          @click.stop
+        >
+          <template #input-field>
+            <input
+              v-model="imageUpload.description"
+              placeholder="A Description of the Image"
+              required
+              type="url"
+              @click.stop
+            />
+          </template>
+        </InputField>
+
+        <section @click.stop>
+          <button v-ripple class="mx-4 info-btn" @click="embedPhoto">
+            Add Image
+          </button>
+          <button
+            v-ripple
+            class="mx-4 danger-outlined-btn"
+            @click="showEmbedImageUI = false"
+          >
+            Cancel
+          </button>
+        </section>
+      </aside>
+    </transition>
   </div>
 </template>
 
@@ -154,12 +245,20 @@
 import '~/assets/override/quill.scss'
 import 'quill/dist/quill.snow.css'
 import { mapGetters } from 'vuex'
-import { cleanHTML, getRelativeTime, showUITip } from '~/utils/utility'
+import {
+  cleanHTML,
+  getEmbeddableLink,
+  getRelativeTime,
+  showUITip,
+} from '~/utils/utility'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { openDB } from 'idb'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import InputField from '~/components/Common/Tools/InputField'
+import axios from 'axios'
+
+// import QuillMarkdown from 'quilljs-markdown'
 
 function createMappingFor(categoryList) {
   const mappingTable = {}
@@ -190,18 +289,23 @@ export default {
       Quill: undefined,
       editor: undefined,
       toolbar: [
-        { class: 'ql-bold', tooltip: 'Bold Text' },
-        { class: 'ql-italic', tooltip: 'Italic Text' },
-        { class: 'ql-underline', tooltip: 'Underline Text' },
-        { class: 'ql-divider', tooltip: 'Add a Divider' },
+        { class: 'ql-image', tooltip: 'Add Photo' },
+        { class: 'ql-embedIframe', tooltip: 'Embed External Link' },
         { class: 'ql-blockquote', tooltip: 'Add a Blockquote' },
         { class: 'ql-code-block', tooltip: 'Add Code Block' },
         { class: 'ql-link', tooltip: 'Add External Link' },
+        // { class: 'ql-video', tooltip: 'Add Video' },
+        { class: 'ql-divider', tooltip: 'Add a Divider' },
+
+        { class: 'ql-bold', tooltip: 'Bold Text' },
+        { class: 'ql-italic', tooltip: 'Italic Text' },
+
         { class: 'ql-header', value: '1', tooltip: 'Heading Level 1' },
         { class: 'ql-header', value: '2', tooltip: 'Heading Level 2' },
         { class: 'ql-header', value: '3', tooltip: 'Heading Level 3' },
-        { class: 'ql-photo', tooltip: 'photo' },
-        { class: 'ql-video', tooltip: 'video' },
+
+        { class: 'ql-underline', tooltip: 'Underline Text' },
+
         {
           class: 'ql-align ql-active',
           value: '',
@@ -209,12 +313,15 @@ export default {
         },
         { class: 'ql-align', value: 'center', tooltip: 'Center Align Content' },
         { class: 'ql-align', value: 'right', tooltip: 'Right Align Content' },
+
         { class: 'ql-strike', tooltip: 'Strikeout the Text' },
         { class: 'ql-header', value: '4', tooltip: 'Heading Level 4' },
         { class: 'ql-header', value: '5', tooltip: 'Heading Level 5' },
         { class: 'ql-header', value: '6', tooltip: 'Heading Level 6' },
+
         { class: 'ql-list', value: 'ordered', tooltip: 'Add an Ordered List' },
         { class: 'ql-list', value: 'bullet', tooltip: 'Add an Unordered List' },
+
         { class: 'ql-script', value: 'sub', tooltip: 'Add a SuperScript Text' },
         { class: 'ql-script', value: 'super', tooltip: 'Add a SubScript Text' },
         { class: 'ql-clean', tooltip: 'Clear All Formatting' },
@@ -233,6 +340,14 @@ export default {
       },
       stepNumber: 0,
       sending: false,
+
+      embeddedURL: '',
+      imageUpload: {
+        link: '',
+        description: '',
+      },
+      showEmbedContentUI: false,
+      showEmbedImageUI: false,
 
       db: undefined,
       uniqueId: Date.now(),
@@ -283,6 +398,20 @@ export default {
       next()
     })
 
+    if (this.$route?.params?.draft) {
+      const draft = this.$route?.params?.draft
+      this.blog = {
+        title: draft?.title,
+        subtitle: draft?.subtitle,
+        category: this.mappingTable[draft?.category],
+        coverImage: draft?.coverImage,
+        tags: draft?.tags,
+        content: draft?.content,
+        keywords: draft?.keywords,
+      }
+      this.uniqueId = draft?.uniqueId
+    }
+
     const currentUser = await this.$store.getters['UserManagement/getUser']
     if (!currentUser) {
       this.loadingProfile = true
@@ -301,9 +430,11 @@ export default {
   },
 
   methods: {
+    // Common
     cleanHTML,
     getRelativeTime,
-    convertToChips() {},
+
+    // Draft & AutoSave
     async createLocalDBIfNotExists() {
       this.db = await openDB('Blogs', 1, {
         upgrade(db) {
@@ -314,103 +445,31 @@ export default {
         },
       })
     },
-
-    setupIcons() {
-      const icons = this.Quill.import('ui/icons')
-
-      icons.bold = '<i class="mdi mdi-format-bold" />'
-      icons.divider = '<i class="mdi mdi-minus" />'
-      icons.italic = '<i class="mdi mdi-format-italic" />'
-      icons.strike = '<i class="mdi mdi-format-strikethrough-variant" />'
-      icons.underline = '<i class="mdi mdi-format-underline" />'
-      icons['code-block'] = '<i class="mdi mdi-xml" />'
-      icons.header = {
-        '': '<i class="mdi mdi-format-paragraph" />',
-        1: '<i class="mdi mdi-format-header-1" />',
-        2: '<i class="mdi mdi-format-header-2" />',
-        3: '<i class="mdi mdi-format-header-3" />',
-        4: '<i class="mdi mdi-format-header-4" />',
-        5: '<i class="mdi mdi-format-header-5" />',
-        6: '<i class="mdi mdi-format-header-6" />',
-      }
-      icons.blockquote = '<i class="mdi mdi-format-quote-close" />'
-      icons.photo = '<i class="mdi mdi-image" />'
-      icons.video = '<i class="mdi mdi-video" />'
-      icons.link = '<i class="mdi mdi-link" />'
-      icons.list = {
-        ordered: '<i class="mdi mdi-format-list-numbered" />',
-        bullet: '<i class="mdi mdi-format-list-bulleted" />',
-        check: '<i class="mdi mdi-check" />',
-      }
-      icons.script = {
-        sub: '<i class="mdi mdi-format-subscript" />',
-        super: '<i class="mdi mdi-format-superscript" />',
-      }
-      icons.align = {
-        '': '<i class="mdi mdi-format-align-left" />',
-        center: '<i class="mdi mdi-format-align-center" />',
-        right: '<i class="mdi mdi-format-align-right" />',
-      }
-      icons.indent = {
-        '+1': '<i class="mdi mdi-format-indent-increase" />',
-        '-1': '<i class="mdi mdi-format-indent-decrease" />',
-      }
-      icons.clean = '<i class="mdi mdi-format-clear" />'
+    async saveAsDraft() {
+      const tx = this.db.transaction('drafts', 'readwrite')
+      const store = tx.objectStore('drafts')
+      await store.put({
+        uniqueId: this.uniqueId,
+        title: this.blog.title,
+        categoryID: this.blog.category,
+        coverImage: this.blog.coverImage,
+        subtitle: this.blog.subtitle,
+        content: this.editor.root.innerHTML,
+        keywords: this.blog.keywords,
+      })
+      await tx.done
     },
-    setupCustomTags() {
-      const Block = this.Quill.import('blots/block')
-      const BlockEmbed = this.Quill.import('blots/block/embed')
 
-      class DividerBlot extends Block {}
-
-      DividerBlot.blotName = 'divider'
-      DividerBlot.tagName = 'hr'
-      this.Quill.register(DividerBlot)
-
-      class PhotoBlot extends BlockEmbed {
-        static create(value) {
-          const node = super.create()
-          node.setAttribute('alt', value.alt)
-          node.setAttribute('src', value.url)
-          return node
-        }
-
-        static value(node) {
-          return {
-            alt: node.getAttribute('alt'),
-            url: node.getAttribute('src'),
-          }
-        }
-      }
-
-      PhotoBlot.blotName = 'photo'
-      PhotoBlot.tagName = 'img'
-      this.Quill.register(PhotoBlot)
-    },
-    setupCustomHandler() {
-      this.editor.getModule('toolbar').addHandler('photo', this.addImage)
-    },
-    addImage() {
-      const range = this.editor.getSelection(true)
-      const value = prompt('Enter Image URL: ', 'https://picsum.photos/500')
-      this.editor.insertText(range.index, '\n', this.Quill.sources.USER)
-      this.editor.insertEmbed(
-        range.index + 1,
-        'photo',
-        {
-          alt: 'Image Upload',
-          url: value,
-        },
-        this.Quill.sources.USER
-      )
-      this.editor.setSelection(range.index + 2, this.Quill.sources.SILENT)
-    },
+    // Setup Editor
     setupToolbarOptions() {
       this.toolbarOptions = [
         'bold',
         'italic',
         'underline',
         'divider',
+        'embedIframe',
+        'image',
+
         'strike',
         'blockquote',
         'code-block',
@@ -431,12 +490,184 @@ export default {
         { align: '' },
         { align: 'center' },
         { align: 'right' },
-        'image',
-        'video',
+
         'clean',
       ]
     },
+    setupIcons() {
+      const icons = this.Quill.import('ui/icons')
+      icons.bold = '<i class="mdi mdi-format-bold" />'
+      icons.divider = '<i class="mdi mdi-minus" />'
+      icons.italic = '<i class="mdi mdi-format-italic" />'
+      icons.strike = '<i class="mdi mdi-format-strikethrough-variant" />'
+      icons.underline = '<i class="mdi mdi-format-underline" />'
 
+      icons.embedIframe = '<i class="mdi mdi-code-tags" />'
+      icons.image = '<i class="mdi mdi-image" />'
+
+      icons['code-block'] = '<i class="mdi mdi-code-json" />'
+      icons.header = {
+        '': '<i class="mdi mdi-format-paragraph" />',
+        1: '<i class="mdi mdi-format-header-1" />',
+        2: '<i class="mdi mdi-format-header-2" />',
+        3: '<i class="mdi mdi-format-header-3" />',
+        4: '<i class="mdi mdi-format-header-4" />',
+        5: '<i class="mdi mdi-format-header-5" />',
+        6: '<i class="mdi mdi-format-header-6" />',
+      }
+      icons.blockquote = '<i class="mdi mdi-format-quote-close" />'
+
+      icons.video = '<i class="mdi mdi-video" />'
+      icons.link = '<i class="mdi mdi-link" />'
+
+      icons.list = {
+        ordered: '<i class="mdi mdi-format-list-numbered" />',
+        bullet: '<i class="mdi mdi-format-list-bulleted" />',
+        check: '<i class="mdi mdi-check" />',
+      }
+      icons.script = {
+        sub: '<i class="mdi mdi-format-subscript" />',
+        super: '<i class="mdi mdi-format-superscript" />',
+      }
+
+      icons.align = {
+        '': '<i class="mdi mdi-format-align-left" />',
+        center: '<i class="mdi mdi-format-align-center" />',
+        right: '<i class="mdi mdi-format-align-right" />',
+      }
+
+      icons.indent = {
+        '+1': '<i class="mdi mdi-format-indent-increase" />',
+        '-1': '<i class="mdi mdi-format-indent-decrease" />',
+      }
+
+      icons.clean = '<i class="mdi mdi-format-clear" />'
+    },
+    setupCustomTags() {
+      const Block = this.Quill.import('blots/block')
+      const BlockEmbed = this.Quill.import('blots/block/embed')
+
+      class DividerBlot extends Block {}
+
+      DividerBlot.blotName = 'divider'
+      DividerBlot.tagName = 'hr'
+      this.Quill.register(DividerBlot)
+
+      class ImageBlot extends BlockEmbed {
+        static create(value) {
+          const node = super.create()
+          node.setAttribute('alt', value.alt)
+          node.setAttribute('src', value.url)
+          return node
+        }
+
+        static value(node) {
+          return {
+            alt: node.getAttribute('alt'),
+            url: node.getAttribute('src'),
+          }
+        }
+      }
+
+      ImageBlot.blotName = 'image'
+      ImageBlot.tagName = 'img'
+      this.Quill.register(ImageBlot)
+
+      class IframeBlot extends BlockEmbed {
+        static create(value) {
+          const node = super.create()
+          node.setAttribute('src', value.src)
+          node.setAttribute('class', 'ql-video')
+          node.setAttribute('frameborder', '0')
+          node.setAttribute('allowfullscreen', 'true')
+          return node
+        }
+
+        static value(node) {
+          return {
+            src: node.getAttribute('src'),
+          }
+        }
+      }
+
+      IframeBlot.blotName = 'embedIframe'
+      IframeBlot.tagName = 'iframe'
+      this.Quill.register(IframeBlot)
+
+      class LinkPreviewCardBlot extends BlockEmbed {
+        static create(value) {
+          const node = super.create()
+          node.setAttribute('class', 'ql-link-preview-card')
+
+          const anchorTag = document.createElement('a')
+          anchorTag.setAttribute('href', value.link)
+          anchorTag.setAttribute('target', '_blank')
+
+          const aside = document.createElement('aside')
+
+          const h4 = document.createElement('h4')
+          h4.textContent = value.title
+          aside.appendChild(h4)
+
+          const p = document.createElement('p')
+          p.textContent = value.description
+          aside.appendChild(p)
+
+          const span = document.createElement('span')
+
+          const icon = document.createElement('i')
+          icon.setAttribute('class', 'mdi mdi-link')
+          span.appendChild(icon)
+
+          const small = document.createElement('small')
+          small.textContent = value.domain
+          span.appendChild(small)
+
+          aside.appendChild(span)
+
+          const img = document.createElement('img')
+          img.src = value.img
+
+          anchorTag.appendChild(img)
+          anchorTag.appendChild(aside)
+          node.appendChild(anchorTag)
+
+          // node.innerHTML = `
+          //   <a href="${value.link}">
+          //     <img src="${value.img}" alt="Preview Image"/>
+          //     <aside>
+          //       <h4>${value.title}</h4>
+          //       <p>${value.description}</p>
+          //       <span>
+          //         <i class="mdi mdi-link"></i>
+          //         <small>${value.description}</small>
+          //       </span>
+          //     </aside>
+          //   </a>
+          // `
+          return node
+        }
+
+        static value(node) {
+          return {
+            // Update Values...
+            alt: node.getAttribute('alt'),
+            url: node.getAttribute('src'),
+          }
+        }
+      }
+
+      LinkPreviewCardBlot.blotName = 'linkPreviewCard'
+      LinkPreviewCardBlot.tagName = 'section'
+      this.Quill.register(LinkPreviewCardBlot)
+    },
+    setupCustomHandler() {
+      console.log(this.editor.getModule('toolbar'))
+      this.editor.getModule('toolbar').addHandler('image', this.showImageModal)
+      this.editor
+        .getModule('toolbar')
+        .addHandler('embedIframe', this.showEmbedModal)
+    },
     setupQuillEditor() {
       this.Quill = require('quill/dist/quill.js')
 
@@ -453,26 +684,98 @@ export default {
         placeholder: `Compose Something great today!\n\nNeed Inspiration? Read the following quote:\n\n“Close the door. Write with no one looking over your shoulder. Don’t try to figure out what other people want to hear from you; figure out what you have to say. It’s the one and only thing you have to offer.”\n- Barbara Kingsolver`,
       })
 
+      // const markdownOptions = {
+      //   tags: {
+      //     blockquote: {
+      //       pattern: /^(\|){1,6}\s/g,
+      //     },
+      //   },
+      //   /*
+      //      ignoreTags: [ 'pre', 'strikethrough'], // @option - if you need to ignore some tags.
+      //
+      //      tags: { // @option if you need to change for trigger pattern for some tags.
+      //         blockquote: {
+      //           pattern: /^(\|){1,6}\s/g,
+      //         },
+      //         bold: {
+      //           pattern:  /^(\|){1,6}\s/g,
+      //         },
+      //         italic: {
+      //           pattern: /(\_){1}(.+?)(?:\1){1}/g,
+      //         },
+      //       },
+      //    */
+      // }
+      // const _ = new QuillMarkdown.MarkdownActivity(this.editor, markdownOptions)
+
       this.setupCustomHandler()
 
       this.editor.on('text-change', this.saveAsDraft)
     },
 
-    async saveAsDraft() {
-      const tx = this.db.transaction('drafts', 'readwrite')
-      const store = tx.objectStore('drafts')
-      await store.put({
-        uniqueId: this.uniqueId,
-        title: this.blog.title,
-        categoryID: this.blog.category,
-        coverImage: this.blog.coverImage,
-        subtitle: this.blog.subtitle,
-        content: this.editor.root.innerHTML,
-        keywords: this.blog.keywords,
-      })
-      await tx.done
+    // Custom Handler for Quill Editor
+    showImageModal() {
+      this.imageUpload.link = ''
+      this.imageUpload.description = ''
+      this.showEmbedImageUI = true
+    },
+    showEmbedModal() {
+      this.embeddedURL = ''
+      this.showEmbedContentUI = true
     },
 
+    embedToQuill(blotName, payload) {
+      const range = this.editor.getSelection(true)
+      this.editor.insertText(range.index, '\n', this.Quill.sources.USER)
+      this.editor.insertEmbed(
+        range.index + 1,
+        blotName,
+        payload,
+        this.Quill.sources.USER
+      )
+      this.editor.setSelection(range.index + 2, this.Quill.sources.SILENT)
+    },
+
+    async embedPhoto() {
+      this.embedToQuill('image', {
+        url: this.imageUpload.link,
+        alt: this.imageUpload.description,
+      })
+    },
+    async embedContent() {
+      const { link, unprocessed } = getEmbeddableLink(this.embeddedURL)
+
+      if (unprocessed) {
+        await this.embedLinkPreview(link)
+        return
+      }
+
+      this.embedToQuill('embedIframe', { src: link })
+      this.showEmbedContentUI = false
+    },
+    async embedLinkPreview(link) {
+      try {
+        const { data: previewData } = await axios.get(
+          'http://localhost:3001/server/api/previewLinkUrl',
+          {
+            params: { link },
+          }
+        )
+        this.embedToQuill('linkPreviewCard', {
+          title: previewData.title,
+          description: previewData.description,
+          domain: previewData.domain,
+          img: previewData.img,
+          link,
+        })
+      } catch (e) {
+        await showUITip(this.$store, e, 'error')
+      } finally {
+        this.showEmbedContentUI = false
+      }
+    },
+
+    // Utils
     nextStep() {
       this.stepNumber = 1
       this.$router.push('#1')
@@ -494,7 +797,10 @@ export default {
           content: this.blog.content,
           keywords: this.blog.keywords,
         })
-        localStorage.clear()
+
+        const tx = this.db.transaction('drafts', 'readwrite')
+        await Promise.all([tx.store.delete(this.uniqueId), tx.done])
+
         await this.$router.replace(navigationRoutes.Home.DashBoard)
       } catch (e) {
         await showUITip(this.$store, 'Network error. Please Retry', 'error')
@@ -538,6 +844,31 @@ $active-color: $white;
     border-radius: 50px !important;
     width: 7rem !important;
     height: 2.5rem !important;
+  }
+
+  .embed-UI {
+    flex-direction: column;
+    background: rgba($black, 0.8);
+
+    .input-field {
+      width: 60%;
+
+      input {
+        &::placeholder {
+          color: $disabled;
+        }
+      }
+    }
+
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        width: 100px;
+      }
+    }
   }
 
   main.steps {
