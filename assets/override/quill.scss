@@ -401,3 +401,65 @@ $active-color: $white;
 .ql-container {
   position: relative !important;
 }
+
+.ql-link-preview-card {
+  display: grid;
+  background: $body-bg-alternate;
+  border-radius: $micro-unit;
+
+  a {
+    display: grid !important;
+    color: unset !important;
+    text-decoration: none !important;
+
+    @media screen and (min-width: $medium-screen) {
+      grid-template-columns: 1.5fr 3fr;
+    }
+
+    img {
+      object-fit: scale-down !important;
+      max-height: 250px !important;
+      width: 100% !important;
+      border-top-left-radius: $micro-unit !important;
+      border-top-right-radius: $micro-unit !important;
+
+      @media screen and (min-width: $medium-screen) {
+        object-fit: cover !important;
+        justify-self: stretch !important;
+        align-self: stretch !important;
+        border-radius: $micro-unit 0 0 $micro-unit !important;
+        max-height: unset !important;
+        margin-right: $large-unit !important;
+      }
+    }
+
+    aside {
+      padding: $standard-unit $micro-unit !important;
+
+      h4 {
+        margin: 0 0 $standard-unit !important;
+      }
+
+      p {
+        white-space: normal !important;
+        margin: $standard-unit 0 !important;
+        font-size: $small-text-unit;
+      }
+
+      span {
+        display: flex !important;
+        align-items: center !important;
+        color: $primary-light;
+
+        i,
+        small {
+          font-size: $milli-unit !important;
+          padding: 0 !important;
+          margin: 0 4px !important;
+          display: block !important;
+          line-height: 1 !important;
+        }
+      }
+    }
+  }
+}
