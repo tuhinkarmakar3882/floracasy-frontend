@@ -40,10 +40,10 @@ export const supportedDomains = [
     url: 'https://codesandbox.io/s/',
     applyTransform: codeSandboxTransform,
   },
-  {
-    url: 'https://gist.github.com/',
-    applyTransform: githubGistTransform,
-  },
+  // {
+  //   url: 'https://gist.github.com/',
+  //   applyTransform: githubGistTransform,
+  // },
   {
     url: 'https://vimeo.com/',
     applyTransform: vimeoTransform,
