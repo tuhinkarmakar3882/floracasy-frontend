@@ -355,6 +355,7 @@ export default {
     .top-line {
       display: flex !important;
       position: relative;
+      flex-wrap: wrap;
 
       i {
         cursor: pointer;
