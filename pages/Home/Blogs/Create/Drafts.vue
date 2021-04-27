@@ -1,6 +1,6 @@
 <template>
   <div class="draft-blog-page">
-    <AppBarHeader>
+    <AppBarHeader sticky>
       <template #title>
         {{ pageTitle }}
       </template>
@@ -28,13 +28,13 @@
       </aside>
     </transition>
 
-    <transition name="scale-up" v-else>
+    <transition v-else name="scale-up">
       <main>
         <DraftItem
           v-for="draft in drafts"
           :key="draft.uniqueId"
           :draft="draft"
-          class="px-4 py-2"
+          class="mx-4 my-4"
         />
       </main>
     </transition>
@@ -109,10 +109,17 @@ export default {
 @import 'assets/all-variables';
 
 .draft-blog-page {
-  article {
-    &:nth-child(even) {
-      background: $body-bg-alternate;
-      box-shadow: $default-box-shadow;
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 100%;
+    justify-content: center;
+    align-items: center;
+
+    article {
+      &:nth-child(even) {
+        box-shadow: $default-box-shadow;
+      }
     }
   }
 
