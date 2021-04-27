@@ -143,9 +143,9 @@ export default {
   router: {},
 
   build: {
-    extractCSS: {
-      ignoreOrder: true,
-    },
+    parallel: process.env.NODE_ENV !== 'production',
+    extractCSS:
+      process.env.NODE_ENV === 'production' ? { ignoreOrder: true } : false,
 
     splitChunks: {
       layouts: true,

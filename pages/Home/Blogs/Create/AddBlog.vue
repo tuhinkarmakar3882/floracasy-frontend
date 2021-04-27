@@ -603,9 +603,11 @@ export default {
           h4.textContent = value.title
           aside.appendChild(h4)
 
-          const p = document.createElement('p')
-          p.textContent = value.description
-          aside.appendChild(p)
+          if (value.description) {
+            const p = document.createElement('p')
+            p.textContent = value.description
+            aside.appendChild(p)
+          }
 
           const span = document.createElement('span')
 
@@ -619,10 +621,12 @@ export default {
 
           aside.appendChild(span)
 
-          const img = document.createElement('img')
-          img.src = value.img
+          if (value.img) {
+            const img = document.createElement('img')
+            img.src = value.img
+            anchorTag.appendChild(img)
+          }
 
-          anchorTag.appendChild(img)
           anchorTag.appendChild(aside)
           node.appendChild(anchorTag)
 
@@ -686,14 +690,15 @@ export default {
 
     embedToQuill(blotName, payload) {
       const range = this.editor.getSelection(true)
-      this.editor.insertText(range.index, '\n', this.Quill.sources.USER)
+      this.editor.insertText(range.index, '\n\n', this.Quill.sources.USER)
       this.editor.insertEmbed(
         range.index + 1,
         blotName,
         payload,
         this.Quill.sources.USER
       )
-      this.editor.setSelection(range.index + 2, this.Quill.sources.SILENT)
+      this.editor.setSelection(range.index + 3, this.Quill.sources.SILENT)
+      this.editor.insertText(range.index, '\n\n', this.Quill.sources.USER)
     },
 
     async embedPhoto() {
