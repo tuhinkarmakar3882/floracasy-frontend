@@ -139,7 +139,7 @@
     </main>
 
     <transition name="scale-down">
-      <aside v-if="sending" class="loader">
+      <aside v-if="showLoadingIndicator" class="loader">
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
       </aside>
     </transition>
@@ -325,7 +325,7 @@ export default {
         keywords: undefined,
       },
       stepNumber: 0,
-      sending: false,
+      showLoadingIndicator: false,
 
       embeddedURL: '',
       imageUpload: {
@@ -698,12 +698,17 @@ export default {
     },
 
     async embedPhoto() {
+      this.showLoadingIndicator = true
+      this.showEmbedImageUI = false
       this.embedToQuill('image', {
         url: this.imageUpload.link,
         alt: this.imageUpload.description,
       })
+      this.showLoadingIndicator = false
     },
     async embedContent() {
+      this.showLoadingIndicator = true
+      this.showEmbedContentUI = false
       const { link, unprocessed } = getEmbeddableLink(this.embeddedURL)
 
       if (unprocessed) {
@@ -712,7 +717,7 @@ export default {
       }
 
       this.embedToQuill('embedIframe', { src: link })
-      this.showEmbedContentUI = false
+      this.showLoadingIndicator = false
     },
     async embedLinkPreview(link) {
       try {
@@ -729,6 +734,7 @@ export default {
       } catch (e) {
         await showUITip(this.$store, e, 'error')
       } finally {
+        this.showLoadingIndicator = false
         this.showEmbedContentUI = false
       }
     },
@@ -744,7 +750,7 @@ export default {
       this.$router.push('#2')
     },
     async publish() {
-      this.sending = true
+      this.showLoadingIndicator = true
       await showUITip(this.$store, 'Uploading Article...')
       try {
         await this.$axios.$post(endpoints.blog.create, {
@@ -763,7 +769,7 @@ export default {
       } catch (e) {
         await showUITip(this.$store, 'Network error. Please Retry', 'error')
       } finally {
-        this.sending = false
+        this.showLoadingIndicator = false
       }
     },
   },
