@@ -18,6 +18,13 @@ const youtubeTransform = (url) => ({
   link: `${url.substr(0, 20)}embed/${url.substr(28)}`,
 })
 
+const mobileYoutubeTransform = (url) => ({
+  link: `https://youtube.com/embed/${url.substr(30)}`,
+})
+const shortenYoutubeTransform = (url) => ({
+  link: `https://youtube.com/embed/${url.substr(17)}`,
+})
+
 const wwwYoutubeTransform = (url) => ({
   link: `${url.substr(0, 24)}embed/${url.substr(32)}`,
 })
@@ -44,6 +51,14 @@ export const supportedDomains = [
   {
     url: 'https://youtube.com/',
     applyTransform: youtubeTransform,
+  },
+  {
+    url: 'https://m.youtube.com/',
+    applyTransform: mobileYoutubeTransform,
+  },
+  {
+    url: 'https://youtu.be/',
+    applyTransform: shortenYoutubeTransform,
   },
   {
     url: 'https://www.youtube.com/',
