@@ -257,6 +257,7 @@ import { openDB } from 'idb'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import InputField from '~/components/Common/Tools/InputField'
 import axios from 'axios'
+import { serverAPI } from '~/server/api/serverAPI'
 
 // import QuillMarkdown from 'quilljs-markdown'
 
@@ -293,7 +294,7 @@ export default {
         { class: 'ql-embedIframe', tooltip: 'Embed External Link' },
         { class: 'ql-blockquote', tooltip: 'Add a Blockquote' },
         { class: 'ql-code-block', tooltip: 'Add Code Block' },
-        { class: 'ql-link', tooltip: 'Add External Link' },
+        // { class: 'ql-link', tooltip: 'Add External Link' },
         // { class: 'ql-video', tooltip: 'Add Video' },
         { class: 'ql-divider', tooltip: 'Add a Divider' },
 
@@ -503,7 +504,8 @@ export default {
       icons.strike = '<i class="mdi mdi-format-strikethrough-variant" />'
       icons.underline = '<i class="mdi mdi-format-underline" />'
 
-      icons.embedIframe = '<i class="mdi mdi-code-tags" />'
+      // icons.link = '<i class="mdi mdi-link" />'
+      icons.embedIframe = '<i class="mdi mdi-link" />'
       icons.image = '<i class="mdi mdi-image" />'
 
       icons['code-block'] = '<i class="mdi mdi-code-json" />'
@@ -519,7 +521,6 @@ export default {
       icons.blockquote = '<i class="mdi mdi-format-quote-close" />'
 
       icons.video = '<i class="mdi mdi-video" />'
-      icons.link = '<i class="mdi mdi-link" />'
 
       icons.list = {
         ordered: '<i class="mdi mdi-format-list-numbered" />',
@@ -756,12 +757,9 @@ export default {
     },
     async embedLinkPreview(link) {
       try {
-        const { data: previewData } = await axios.get(
-          'http://localhost:3001/server/api/preview/link',
-          {
-            params: { link },
-          }
-        )
+        const { data: previewData } = await axios.get(serverAPI.preview.link, {
+          params: { link },
+        })
         this.embedToQuill('linkPreviewCard', {
           title: previewData.title,
           description: previewData.description,
