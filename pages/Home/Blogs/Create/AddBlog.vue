@@ -259,16 +259,6 @@ import InputField from '~/components/Common/Tools/InputField'
 import axios from 'axios'
 import { serverAPI } from '~/server/api/serverAPI'
 
-// import QuillMarkdown from 'quilljs-markdown'
-
-function createMappingFor(categoryList) {
-  const mappingTable = {}
-  categoryList.forEach((category) => {
-    mappingTable[category.id] = category
-  })
-  return mappingTable
-}
-
 export default {
   name: 'AddBlog',
   components: { InputField, AppBarHeader },
@@ -279,9 +269,7 @@ export default {
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
 
-    const mappingTable = createMappingFor(response)
-
-    return { categories: response, mappingTable, prevURL }
+    return { categories: response, prevURL }
   },
 
   data() {
@@ -294,8 +282,6 @@ export default {
         { class: 'ql-embedIframe', tooltip: 'Embed External Link' },
         { class: 'ql-blockquote', tooltip: 'Add a Blockquote' },
         { class: 'ql-code-block', tooltip: 'Add Code Block' },
-        // { class: 'ql-link', tooltip: 'Add External Link' },
-        // { class: 'ql-video', tooltip: 'Add Video' },
         { class: 'ql-divider', tooltip: 'Add a Divider' },
 
         { class: 'ql-bold', tooltip: 'Bold Text' },
@@ -328,7 +314,6 @@ export default {
         { class: 'ql-clean', tooltip: 'Clear All Formatting' },
       ],
       toolbarOptions: undefined,
-      mappingTable: {},
       categories: [],
       blog: {
         title: null,
@@ -463,6 +448,14 @@ export default {
     },
 
     // Setup Editor
+    setupMarkdownSupport() {
+      try {
+        require('quilljs-markdown')
+        new window.QuillMarkdown(this.editor, {})
+      } catch (e) {
+        console.warn("Markdown support wasn't added")
+      }
+    },
     setupToolbarOptions() {
       this.toolbarOptions = [
         'bold',
@@ -504,7 +497,6 @@ export default {
       icons.strike = '<i class="mdi mdi-format-strikethrough-variant" />'
       icons.underline = '<i class="mdi mdi-format-underline" />'
 
-      // icons.link = '<i class="mdi mdi-link" />'
       icons.embedIframe = '<i class="mdi mdi-link" />'
       icons.image = '<i class="mdi mdi-image" />'
 
@@ -634,27 +626,13 @@ export default {
           anchorTag.appendChild(aside)
           node.appendChild(anchorTag)
 
-          // node.innerHTML = `
-          //   <a href="${value.link}">
-          //     <img src="${value.img}" alt="Preview Image"/>
-          //     <aside>
-          //       <h4>${value.title}</h4>
-          //       <p>${value.description}</p>
-          //       <span>
-          //         <i class="mdi mdi-link"></i>
-          //         <small>${value.description}</small>
-          //       </span>
-          //     </aside>
-          //   </a>
-          // `
           return node
         }
 
         static value(node) {
           return {
             // Update Values...
-            alt: node.getAttribute('alt'),
-            url: node.getAttribute('src'),
+            content: node.innerHTML,
           }
         }
       }
@@ -677,8 +655,11 @@ export default {
       this.setupCustomTags()
       this.setupToolbarOptions()
 
+      this.Quill.debug(false)
+
       this.editor = new this.Quill('#editor', {
         theme: 'snow',
+        debug: false,
         modules: {
           toolbar: '#toolbar',
         },
@@ -686,29 +667,7 @@ export default {
         placeholder: `Compose Something great today!\n\nNeed Inspiration? Read the following quote:\n\n“Close the door. Write with no one looking over your shoulder. Don’t try to figure out what other people want to hear from you; figure out what you have to say. It’s the one and only thing you have to offer.”\n- Barbara Kingsolver`,
       })
 
-      // const markdownOptions = {
-      //   tags: {
-      //     blockquote: {
-      //       pattern: /^(\|){1,6}\s/g,
-      //     },
-      //   },
-      //   /*
-      //      ignoreTags: [ 'pre', 'strikethrough'], // @option - if you need to ignore some tags.
-      //
-      //      tags: { // @option if you need to change for trigger pattern for some tags.
-      //         blockquote: {
-      //           pattern: /^(\|){1,6}\s/g,
-      //         },
-      //         bold: {
-      //           pattern:  /^(\|){1,6}\s/g,
-      //         },
-      //         italic: {
-      //           pattern: /(\_){1}(.+?)(?:\1){1}/g,
-      //         },
-      //       },
-      //    */
-      // }
-      // const _ = new QuillMarkdown.MarkdownActivity(this.editor, markdownOptions)
+      this.setupMarkdownSupport()
 
       this.setupCustomHandler()
 
