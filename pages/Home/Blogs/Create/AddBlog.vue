@@ -642,7 +642,6 @@ export default {
       this.Quill.register(LinkPreviewCardBlot)
     },
     setupCustomHandler() {
-      console.log(this.editor.getModule('toolbar'))
       this.editor.getModule('toolbar').addHandler('image', this.showImageModal)
       this.editor
         .getModule('toolbar')

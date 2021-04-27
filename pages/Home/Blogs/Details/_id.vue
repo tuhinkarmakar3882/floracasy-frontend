@@ -375,22 +375,18 @@ export default {
 
     async checkForQuotaExhaustion() {
       let quota = this.$cookies.get('anonymous_read_quota')
-      console.log(typeof quota, quota)
 
       if (quota === undefined) {
-        console.log('case Undefined')
         await this.$cookies.set('anonymous_read_quota', 2)
         return
       }
 
       if (quota > 0 && quota <= 2) {
-        console.log('case 2')
         --quota
         await this.$cookies.set('anonymous_read_quota', quota)
         return
       }
 
-      console.log('case last')
       this.quotaIsExhausted = true
       this.contentLoaded = true
     },

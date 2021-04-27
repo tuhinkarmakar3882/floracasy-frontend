@@ -50,7 +50,6 @@ export default {
         .catch(() => {})
 
       if (!user) {
-        console.log('aborting..', user)
         await this.abort()
         return
       }
