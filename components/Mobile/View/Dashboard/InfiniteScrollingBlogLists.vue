@@ -38,10 +38,12 @@
 <script>
 import endpoints from '@/api/endpoints'
 import { processLink } from '~/utils/utility'
+import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
+import BlogPost from '~/components/Blogs/BlogPost'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
-
+  components: { BlogPost, InFeedAd },
   props: {
     category: {
       type: String,
