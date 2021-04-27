@@ -4,7 +4,7 @@
       <header>
         <p>
           <i class="mdi mdi-clock" />
-          <small>Edited {{ getRelativeTime(1619512846214) }} ago</small>
+          <small>Edited {{ getRelativeTime(draft.uniqueId) }} ago</small>
         </p>
         <p>
           <i class="mdi mdi-shape" />
