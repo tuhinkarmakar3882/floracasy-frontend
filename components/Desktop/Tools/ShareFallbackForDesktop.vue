@@ -2,11 +2,12 @@
   <aside
     class="share-fallback"
     :style="{ position: fixedMode ? 'fixed' : 'absolute' }"
+    @click="handleClose"
   >
     <i v-ripple class="mdi mdi-close mdi-24px close-btn" @click="handleClose" />
 
     <p>Share this on:</p>
-    <ul class="options">
+    <ul class="options" @click.stop>
       <li>
         <a
           :href="`https://www.facebook.com/sharer/sharer.php?u=${linkUrl}`"

@@ -13,34 +13,43 @@
       <p :style="{ color: getColorFor(socketMessageType) }">
         {{ socketMessage }}
       </p>
-      <!--      <audio ref="notificationTone" src="/audio/notify.mp3" />-->
+
+      <audio
+        v-if="useNotificationTone"
+        ref="notificationTone"
+        src="/audio/notification_tone.mp3"
+      />
     </div>
   </client-only>
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { useNotificationTone } from '~/environmentVariables'
 
 export default {
   name: 'NotificationBadge',
+  data() {
+    return {
+      useNotificationTone,
+    }
+  },
   computed: {
     ...mapGetters({
       socketMessage: 'SocketHandler/getSocketMessage',
       socketMessageType: 'SocketHandler/getSocketMessageType',
     }),
   },
-  // watch: {
-  //   socketMessage(newMessage) {
-  //     if (!newMessage) return
-  //     switch (this.socketMessageType) {
-  //       case 'error' || 'reconnecting' || 'warning' || 'success':
-  //         break
-  //
-  //       default:
-  //         this.$refs.notificationTone.play().catch(() => {})
-  //         break
-  //     }
-  //   },
-  // },
+  watch: {
+    socketMessage(newMessage) {
+      if (!this.useNotificationTone) return
+      if (!newMessage) return
+      switch (this.socketMessageType) {
+        case 'info' || 'blog_like' || 'blog_comment' || 'followed':
+          this.$refs.notificationTone.play().catch(() => {})
+          break
+      }
+    },
+  },
 
   methods: {
     getIconFor(notificationType) {

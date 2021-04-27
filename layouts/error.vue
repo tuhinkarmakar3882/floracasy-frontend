@@ -1,51 +1,74 @@
 <template>
-  <div class="error-page my-4 px-4">
-    <section v-if="error.statusCode === 404">
-      <header class="text-center">
-        <h6 class="heading-title">
-          {{ pageNotFound }}
-        </h6>
-      </header>
+  <div class="error-page">
+    <AppBarHeader sticky no-back-button>
+      <template #title>
+        <nuxt-link :to="navigationRoutes.Home.DashBoard" class="no-underline">
+          <h6 v-ripple class="px-4 py-4">Floracasy</h6>
+        </nuxt-link>
+      </template>
+    </AppBarHeader>
 
-      <main class="my-6">
-        <Icon404 class="error-svg mb-8" />
-        <a href="/" class="my-8"> Go to Homepage </a>
-      </main>
-    </section>
-    <section v-else>
-      <header class="text-center">
-        <h6>
-          {{ otherError }}
-        </h6>
-      </header>
+    <header class="text-center px-4 pt-4 pb-8">
+      <h1 class="my-4">Ouch!</h1>
+      <p class="mt-4 mb-8" v-if="error.statusCode === 404">
+        That was a broken link. <br />
+        <br />
+        The page you're trying to open, might have been moved to a different
+        place or unavailable.
+      </p>
+      <p class="mt-4 mb-8" v-else>
+        It's not on you, It's on us...<br />
+        <br />
+        To Human is to err. And So Does, something has went wrong. But, This is
+        not the end! We'll be fixing it shortly!
+      </p>
 
-      <main class="my-6">
-        <a href="/" class="my-8"> Go to Homepage </a>
-      </main>
-    </section>
+      <nuxt-link :to="navigationRoutes.Home.DashBoard">
+        <button class="warning-outlined-btn" v-ripple>Back to Home</button>
+      </nuxt-link>
+    </header>
+
+    <main>
+      <hr class="faded-divider" />
+      <h3 class="text-center px-4 my-6">The Knowledge Crave Must Go On!</h3>
+      <hr class="reversed-faded-divider my-0" />
+      <LazyInfiniteScrollingBlogLists />
+    </main>
+
+    <footer>
+      <LazyInstallBadge class="install-badge" show-close-button />
+    </footer>
   </div>
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
-  layout: 'empty',
   props: {
     error: {
       type: Object,
-      default: null,
+      required: true,
     },
   },
   data() {
     return {
-      pageNotFound: 'Page Not Found',
-      otherError: 'Something Went Wrong.',
+      pageTitle: 'Page Not Found',
+      navigationRoutes,
     }
   },
+
+  async mounted() {
+    await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
+      linkPosition: -1,
+    })
+    await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
+      linkPosition: -1,
+    })
+  },
+
   head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
-      title,
+      title: this.pageTitle,
     }
   },
 }
@@ -55,12 +78,26 @@ export default {
 @import 'assets/all-variables';
 
 .error-page {
-  main {
-    display: grid;
-    place-items: center;
+  button {
+    min-width: auto;
+  }
 
-    .error-svg {
-      width: 300px;
+  header {
+    background: $body-bg-alternate;
+  }
+
+  main {
+    max-width: $large-screen;
+    margin: auto;
+  }
+
+  footer {
+    .install-badge {
+      z-index: $bring-to-front;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
   }
 }

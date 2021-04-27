@@ -59,6 +59,10 @@ export default {
     port: 3001,
   },
 
+  serverMiddleware: [
+    { path: '/server/api', handler: '~/server/api/nuxt-server-api.js' },
+  ],
+
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',

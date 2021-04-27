@@ -236,9 +236,9 @@ export default {
           await navigator.share({
             title: this.blog.title + '- Floracasy',
             text:
-              this.blog.title +
+              this.blog?.title +
               ' - ' +
-              this.blog.subtitle.substr(0, 40) +
+              this.blog?.subtitle?.substr(0, 40) +
               '... Read More on Floracasy',
             url: navigationRoutes.Home.Blogs.Details.replace(
               '{id}',
@@ -355,6 +355,7 @@ export default {
     .top-line {
       display: flex !important;
       position: relative;
+      flex-wrap: wrap;
 
       i {
         cursor: pointer;

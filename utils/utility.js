@@ -1,5 +1,6 @@
 import sanitizeHtml from 'sanitize-html'
 import { sanitizationConfig } from '~/config/sanitizationConfig'
+import { supportedDomains } from '~/utils/linkProcessor'
 
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
@@ -153,4 +154,14 @@ export const destroySetup = (stream, arrayMode = false) => {
 
 export const cleanHTML = (rawHTML) => {
   return sanitizeHtml(rawHTML, sanitizationConfig)
+}
+
+export const getEmbeddableLink = (url) => {
+  for (const domain of supportedDomains) {
+    const domainLength = domain.url.length
+    if (url.substr(0, domainLength) === domain.url) {
+      return domain.applyTransform(url)
+    }
+  }
+  return { link: url, unprocessed: true }
 }

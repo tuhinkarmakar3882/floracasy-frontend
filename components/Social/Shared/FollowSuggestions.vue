@@ -51,9 +51,7 @@ export default {
         this.suggestedPeople = await this.$axios
           .$get(endpoints.follow_system.getSuggestions)
           .then((res) => res.results)
-      } catch (e) {
-        // console.log(e)
-      }
+      } catch (e) {}
     },
   },
 }

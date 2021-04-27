@@ -3,7 +3,12 @@
     <GoogleIcon class="icon mx-4" />
     <span>Continue with Google</span>
     <transition name="scale-down">
-      <aside v-if="showLoaderAnimation" @click.stop class="loader soft-error">
+      <aside
+        v-show="showLoaderAnimation"
+        class="loader"
+        @click.stop
+        :style="!showLoaderAnimation && { zIndex: -1 }"
+      >
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
         <p class="mt-4">{{ stateInformation }}</p>
       </aside>
@@ -27,10 +32,12 @@ export default {
       stateInformation: '',
     }
   },
+
   methods: {
     async signInWithGoogle() {
-      await showUITip(this.$store, 'Opening Google Auth Page')
       this.showLoaderAnimation = true
+
+      await showUITip(this.$store, 'Opening Google Auth Page')
 
       this.updateInfo('Loading OAuth Provider')
       const provider = new firebase.auth.GoogleAuthProvider()
@@ -42,42 +49,42 @@ export default {
         .then((result) => result.user)
         .catch(() => {})
 
-      if (user && user !== {}) {
-        this.updateInfo('Fetching Certificates...')
-        const jsonUser = user.toJSON()
-        const frontendPayload = {
-          uid: jsonUser?.uid,
-          displayName: jsonUser?.displayName,
-          phoneNumber: jsonUser?.phoneNumber,
-          email: jsonUser?.email,
-          photoURL: jsonUser?.photoURL,
-          createdAt: jsonUser?.createdAt,
-          lastLoginAt: jsonUser?.lastLoginAt,
-        }
-        const backendPayload = {
-          ...frontendPayload,
-          emailVerified: jsonUser?.emailVerified,
-          authDomain: jsonUser?.authDomain,
-          providerId: jsonUser?.providerData[0]?.uid,
-          updatedAt: jsonUser?.lastLoginAt,
-          accessToken: jsonUser?.stsTokenManager?.accessToken,
-        }
+      if (!user) {
+        await this.abort()
+        return
+      }
 
+      this.updateInfo('Fetching Certificates...')
+
+      const jsonUser = user.toJSON()
+      const frontendPayload = {
+        uid: jsonUser?.uid,
+        displayName: jsonUser?.displayName,
+        phoneNumber: jsonUser?.phoneNumber,
+        email: jsonUser?.email,
+        photoURL: jsonUser?.photoURL,
+        createdAt: jsonUser?.createdAt,
+        lastLoginAt: jsonUser?.lastLoginAt,
+      }
+      const backendPayload = {
+        ...frontendPayload,
+        emailVerified: jsonUser?.emailVerified,
+        authDomain: jsonUser?.authDomain,
+        providerId: jsonUser?.providerData[0]?.uid,
+        updatedAt: jsonUser?.lastLoginAt,
+        accessToken: jsonUser?.stsTokenManager?.accessToken,
+      }
+
+      try {
         this.updateInfo('Validating Credentials...')
-        try {
-          const response = await this.$axios.$post(
-            endpoints.auth.authenticate,
-            backendPayload
-          )
 
-          console.log(response)
+        const response = await this.$axios.$post(
+          endpoints.auth.authenticate,
+          backendPayload
+        )
 
-          this.updateInfo('Logging you in...')
-          await this.login(frontendPayload, response)
-        } catch (e) {
-          await this.abort()
-        }
-      } else {
+        await this.login(frontendPayload, response)
+      } catch (e) {
         await this.abort()
       }
     },
@@ -93,7 +100,11 @@ export default {
 
       LogAnalyticsEvent('google_sign_in')
 
-      await this.$router.replace(navigationRoutes.Home.DashBoard)
+      const redirectTo = this.$route.query?.next
+
+      redirectTo
+        ? await this.$router.replace(redirectTo)
+        : await this.$router.replace(navigationRoutes.Home.DashBoard)
     },
 
     async abort() {
@@ -101,19 +112,12 @@ export default {
       await this.$store.dispatch('logout')
 
       this.showLoaderAnimation = false
-      this.updateInfo('Checking...')
-      localStorage.clear()
 
-      await showUITip(
-        this.$store,
-        'Unable to Login. Please Refresh',
-        'error',
-        false
-      )
+      this.updateInfo('Checking...')
+      await showUITip(this.$store, 'Unable to Login. Please Refresh', 'error')
     },
 
     async saveAndApplyTokens(tokens) {
-      console.log(tokens)
       await this.$cookies.set(
         'access',
         tokens.access,
@@ -170,7 +174,7 @@ export default {
     left: $zero-unit;
     right: $zero-unit;
     bottom: $zero-unit;
-    z-index: 1234567890;
+    z-index: $bring-to-front + 1;
     background: linear-gradient(
         45deg,
         rgba($navigation-bar-color, 0.95) 0%,
@@ -196,6 +200,7 @@ export default {
       color: $white;
     }
   }
+
   @keyframes shift-background {
     from {
       background-position: left;

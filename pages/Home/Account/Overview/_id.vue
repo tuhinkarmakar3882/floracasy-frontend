@@ -4,7 +4,7 @@
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
 
-    <FallBackLoader v-if="loadingProfile" />
+    <FallBackLoader v-if="loadingProfile" class="my-8" />
 
     <LoadingError
       v-else-if="loadingError"
@@ -20,28 +20,29 @@
 
         <p v-if="otherUser.about" class="">{{ otherUser.about }}</p>
 
-        <section class="actions my-4">
-          <div @click="followOrUnfollow(otherUser)">
+        <aside class="actions my-4">
+          <section @click="followOrUnfollow(otherUser)">
             <RippleButton
               :class-list="
                 statisticsItem.isFollowing
                   ? 'danger-outlined-btn'
                   : 'primary-btn'
               "
-              :disabled="followOrUnfollowWorking"
+              :disabled="followOrUnfollowLoading"
               :loading="followOrUnfollowLoading"
               class="px-6"
               style="width: 120px"
             >
               {{ statisticsItem.isFollowing ? 'Unfollow' : 'Follow' }}
             </RippleButton>
-          </div>
-          <div
+          </section>
+
+          <section
             v-if="useMessageService"
             @click="initializeChatThread(otherUser)"
           >
             <RippleButton
-              :disabled="messageWorking"
+              :disabled="messageLoading"
               :loading="messageLoading"
               class="px-6"
               class-list="primary-outlined-btn"
@@ -49,13 +50,13 @@
             >
               Messages
             </RippleButton>
-          </div>
-        </section>
+          </section>
+        </aside>
       </section>
 
       <hr class="faded-divider" />
 
-      <UserTimeline :user-uid="$route.params.id" />
+      <LazyUserTimeline :user-uid="$route.params.id" />
     </main>
   </div>
 </template>
@@ -67,25 +68,32 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { getRelativeTime, showUITip } from '~/utils/utility'
 import { useMessageService } from '~/environmentVariables'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import LoadingError from '~/components/Common/Tools/LoadingError'
+import RippleButton from '~/components/Common/Tools/RippleButton'
 
 export default {
   name: 'Overview',
-  components: { AppBarHeader },
+  components: {
+    RippleButton,
+    LoadingError,
+    FallBackLoader,
+    AppBarHeader,
+  },
   middleware: 'isAuthenticated',
   data() {
     return {
+      pageTitle: 'Profile Details',
+
       useMessageService,
       navigationRoutes,
-      pageTitle: 'Profile Details',
 
       statisticsItem: null,
       otherUser: null,
 
       followOrUnfollowLoading: false,
-      followOrUnfollowWorking: false,
 
       messageLoading: false,
-      messageWorking: false,
 
       loadingProfile: true,
       loadingError: false,
@@ -140,7 +148,6 @@ export default {
 
     async initializeChatThread(receiverData) {
       this.messageLoading = true
-      this.messageWorking = true
       try {
         const {
           chat_thread_id: chatThreadId,
@@ -162,28 +169,23 @@ export default {
           dismissible: true,
         })
         this.messageLoading = false
-        this.messageWorking = false
       }
     },
 
     async followOrUnfollow(receiverData) {
       this.followOrUnfollowLoading = true
-      this.followOrUnfollowWorking = true
+
       try {
         await this.$axios.$post(endpoints.follow_system.follow_or_unfollow, {
           uid: receiverData.uid,
         })
+
         this.statisticsItem.isFollowing = !this.statisticsItem.isFollowing
       } catch (e) {
-        await showUITip(
-          this.$store,
-          'Unable to Perform Operation! Try Again',
-          'alert',
-          true
-        )
+        await showUITip(this.$store, 'Something Went Error', 'error')
+      } finally {
+        this.followOrUnfollowLoading = false
       }
-      this.followOrUnfollowLoading = false
-      this.followOrUnfollowWorking = false
     },
   },
 

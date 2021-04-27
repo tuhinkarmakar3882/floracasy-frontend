@@ -20,7 +20,7 @@ export default {
   place-items: center;
   height: 100vh;
   transition: all 0.5s ease-in-out;
-  background-color: darken($body-bg, 5%);
+  background-color: $black;
 
   .install-badge {
     position: fixed;

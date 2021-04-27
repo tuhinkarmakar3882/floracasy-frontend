@@ -3,13 +3,18 @@
     <NotificationBadge />
 
     <header>
-      <i v-ripple class="mdi mdi-arrow-left" @click="$router.back()" />
+      <i
+        v-if="!noBackButton"
+        v-ripple
+        class="mdi mdi-arrow-left"
+        @click="$router.back()"
+      />
 
       <p>
         <slot name="title" />
       </p>
 
-      <aside class="ml-auto pr-4">
+      <aside class="ml-auto" :class="!noRightPadding && 'pr-4'">
         <slot name="action-button" />
       </aside>
     </header>
@@ -20,9 +25,13 @@
 export default {
   name: 'AppBarHeader',
   props: {
-    showBackButton: {
+    noBackButton: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    noRightPadding: {
+      type: Boolean,
+      default: false,
     },
     sticky: {
       type: Boolean,

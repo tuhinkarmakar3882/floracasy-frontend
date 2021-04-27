@@ -84,6 +84,9 @@ export const sanitizationConfig = {
     h6: ['class', 'style'],
     p: ['class', 'style'],
     span: ['class', 'style'],
+    section: ['class'],
+    article: ['class'],
+    blockquote: ['class'],
     img: ['class', 'src', 'style', 'alt'],
     iframe: ['class', 'frameborder', 'allowfullscreen', 'src'],
     video: ['class', 'src'],
@@ -104,6 +107,23 @@ export const sanitizationConfig = {
   ],
   allowedSchemes: ['https', 'mailto'],
   allowedSchemesByTag: {},
+  allowedIframeHostnames: [
+    'codepen.io',
+    'codesandbox.io',
+    'gist.github.com',
+
+    'player.vimeo.com',
+    'youtube.com',
+    'instagram.com',
+
+    'www.codepen.io',
+    'www.codesandbox.io',
+    'www.gist.github.com',
+
+    'www.player.vimeo.com',
+    'www.youtube.com',
+    'www.instagram.com',
+  ],
   allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
   allowProtocolRelative: true,
   enforceHtmlBoundary: true,

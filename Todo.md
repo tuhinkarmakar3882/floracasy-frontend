@@ -1,5 +1,7 @@
 # Pending Tasks:
-> - Add Comment Deletion
+> - FIX XSS FOR BLOG ADDITION
+> - Add DRAFT Component
+> - Add Resume Editing  
 
 > ### Production Issues:
 > - FAQ Backend Connection
@@ -21,7 +23,6 @@
 
 
 > ### Missing {pages}
->   - Payments
 >   - How to Write
 >   - FAQ Update
 
