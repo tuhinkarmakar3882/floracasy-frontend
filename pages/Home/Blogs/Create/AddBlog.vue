@@ -69,7 +69,7 @@
             <option
               v-for="category in categories"
               :key="category.id"
-              :value="category.id"
+              :value="category"
             >
               {{ category.name }}
             </option>
@@ -113,7 +113,7 @@
           <span class="secondary"> {{ user.displayName }} </span>
           IN
           <span class="secondary">
-            {{ mappingTable[blog.category].name }}
+            {{ blog.category.name }}
           </span>
         </p>
         <h3 class="mb-4">{{ blog.title }}</h3>
@@ -398,20 +398,6 @@ export default {
       next()
     })
 
-    if (this.$route?.params?.draft) {
-      const draft = this.$route?.params?.draft
-      this.blog = {
-        title: draft?.title,
-        subtitle: draft?.subtitle,
-        category: this.mappingTable[draft?.category],
-        coverImage: draft?.coverImage,
-        tags: draft?.tags,
-        content: draft?.content,
-        keywords: draft?.keywords,
-      }
-      this.uniqueId = draft?.uniqueId
-    }
-
     const currentUser = await this.$store.getters['UserManagement/getUser']
     if (!currentUser) {
       this.loadingProfile = true
@@ -420,7 +406,22 @@ export default {
 
     await this.createLocalDBIfNotExists()
 
-    this.setupQuillEditor()
+    await this.setupQuillEditor()
+
+    if (this.$route?.params?.draft) {
+      const draft = this.$route?.params?.draft
+      this.blog = {
+        title: draft?.title,
+        subtitle: draft?.subtitle,
+        category: draft?.category,
+        coverImage: draft?.coverImage,
+        tags: draft?.tags,
+        content: draft?.content,
+        keywords: draft?.keywords,
+      }
+      this.uniqueId = draft?.uniqueId
+      this.editor.root.innerHTML = draft?.content
+    }
   },
 
   beforeDestroy() {
@@ -451,7 +452,7 @@ export default {
       await store.put({
         uniqueId: this.uniqueId,
         title: this.blog.title,
-        categoryID: this.blog.category,
+        category: this.blog.category,
         coverImage: this.blog.coverImage,
         subtitle: this.blog.subtitle,
         content: this.editor.root.innerHTML,
@@ -790,7 +791,7 @@ export default {
       await showUITip(this.$store, 'Uploading Article...')
       try {
         await this.$axios.$post(endpoints.blog.create, {
-          categoryID: this.blog.category,
+          categoryID: this.blog.category.id,
           coverImage: this.blog.coverImage,
           title: this.blog.title,
           subtitle: this.blog.subtitle,
