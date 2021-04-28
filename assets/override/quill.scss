@@ -413,7 +413,9 @@ $active-color: $white;
     text-decoration: none !important;
 
     @media screen and (min-width: $medium-screen) {
-      grid-template-columns: 1.5fr 3fr;
+      &.has-image {
+        grid-template-columns: 1.5fr 3fr;
+      }
     }
 
     img {

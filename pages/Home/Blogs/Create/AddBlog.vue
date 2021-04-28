@@ -622,6 +622,7 @@ export default {
           aside.appendChild(span)
 
           if (value.img) {
+            anchorTag.classList.add('has-image')
             const img = document.createElement('img')
             img.src = value.img
             anchorTag.appendChild(img)
