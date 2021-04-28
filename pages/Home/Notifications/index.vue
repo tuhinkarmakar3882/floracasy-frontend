@@ -26,12 +26,16 @@
         <span v-else class="mx-auto">Mark all as Read</span>
       </button>
       <transition-group name="scale-up">
-        <NotificationItem
-          v-for="notification in notifications"
+        <section
+          v-for="(notification, index) in notifications"
           :key="notification.id"
-          :notification="notification"
-          class="notification-item py-4"
-        />
+        >
+          <NotificationItem
+            :notification="notification"
+            class="notification-item py-4"
+          />
+          <InFeedAd use-small-ads v-if="index % 2" />
+        </section>
       </transition-group>
     </section>
 
@@ -61,10 +65,11 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
 import NotificationItem from '~/components/Mobile/View/Notification/NotificationItem'
+import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 
 export default {
   name: 'Notifications',
-  components: { NotificationItem },
+  components: { InFeedAd, NotificationItem },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
