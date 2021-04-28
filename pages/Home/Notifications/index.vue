@@ -34,7 +34,7 @@
             :notification="notification"
             class="notification-item py-4"
           />
-          <InFeedAd use-small-ads v-if="index % 2" />
+          <DisplayAd v-if="index % 2" />
         </section>
       </transition-group>
     </section>
@@ -65,11 +65,11 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
 import NotificationItem from '~/components/Mobile/View/Notification/NotificationItem'
-import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
+import DisplayAd from '~/components/Common/GoogleAdsense/DisplayAd'
 
 export default {
   name: 'Notifications',
-  components: { InFeedAd, NotificationItem },
+  components: { DisplayAd, NotificationItem },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
