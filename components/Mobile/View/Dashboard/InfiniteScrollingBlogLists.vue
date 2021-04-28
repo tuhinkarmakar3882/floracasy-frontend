@@ -4,7 +4,7 @@
       <transition-group name="scale-up">
         <article v-for="(blog, index) in blogs" :key="blog.id">
           <BlogPost :blog="blog" class="pb-0 pt-8" />
-          <InFeedAd />
+          <InFeedAd v-if="index % 2 === 0" />
           <LazyFollowSuggestions
             v-if="showFollowSuggestions && index === 2"
             class="pb-6"
@@ -29,6 +29,7 @@
             <small> Come back soon for more </small>
           </p>
         </template>
+        <!--        <template slot="no-results">No results message</template>-->
       </infinite-loading>
     </client-only>
   </div>

@@ -7,7 +7,7 @@
         class="community-post"
       >
         <CommunityPost :post="post" class="py-6" />
-        <InFeedAd />
+        <InFeedAd v-if="index % 2 === 0" />
         <LazyFollowSuggestions v-if="index === 4" class="pb-6" />
       </article>
     </transition-group>
