@@ -75,7 +75,7 @@ export const sanitizationConfig = {
   ],
   disallowedTagsMode: 'discard',
   allowedAttributes: {
-    a: ['href', 'name', 'target'],
+    a: ['href', 'name', 'target', 'class'],
     h1: ['class', 'style'],
     h2: ['class', 'style'],
     h3: ['class', 'style'],
