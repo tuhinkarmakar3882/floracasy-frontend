@@ -2,7 +2,7 @@
   "name": "floracasy",
   "appName": "Floracasy",
   "description": "Where Knowledge Gets Socialized",
-  "version": "2.0",
+  "version": "2.2",
   "themeColor": "#0d0d17",
   "private": true,
   "scripts": {
@@ -49,6 +49,7 @@
     "reconnecting-websocket": "^4.4.0",
     "sanitize-html": "^2.1.1",
     "vue-infinite-loading": "^2.4.5",
+    "vue-virtual-scroller": "^1.0.10",
     "vuex": "^3.5.1"
   },
   "devDependencies": {

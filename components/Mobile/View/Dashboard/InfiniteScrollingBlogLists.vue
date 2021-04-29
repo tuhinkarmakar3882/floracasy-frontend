@@ -1,16 +1,31 @@
 <template>
   <div class="mb-6 scrollable-blog-list">
     <section v-if="blogs">
-      <transition-group name="scale-up">
-        <article v-for="(blog, index) in blogs" :key="blog.id">
-          <BlogPost :blog="blog" class="pb-0 pt-8" />
-          <InFeedAd v-if="index % 2 === 0" />
-          <LazyFollowSuggestions
-            v-if="showFollowSuggestions && index === 2"
-            class="pb-6"
-          />
-        </article>
-      </transition-group>
+      <RecycleScroller
+        v-slot="{ item }"
+        class="virtual-scroller"
+        :item-size="4"
+        :items="blogs"
+        key-field="id"
+      >
+        <BlogPost :blog="item" class="pb-0 pt-8" />
+        <InFeedAd />
+        <LazyFollowSuggestions
+          v-if="showFollowSuggestions && index === 2"
+          class="pb-6"
+        />
+      </RecycleScroller>
+
+      <!--      <transition-group name="scale-up">-->
+      <!--        <article v-for="(blog, index) in blogs" :key="blog.id">-->
+      <!--          <BlogPost :blog="blog" class="pb-0 pt-8" />-->
+      <!--          <InFeedAd v-if="index % 2 === 0" />-->
+      <!--          <LazyFollowSuggestions-->
+      <!--            v-if="showFollowSuggestions && index === 2"-->
+      <!--            class="pb-6"-->
+      <!--          />-->
+      <!--        </article>-->
+      <!--      </transition-group>-->
     </section>
 
     <client-only>
@@ -40,10 +55,16 @@ import endpoints from '@/api/endpoints'
 import { processLink } from '~/utils/utility'
 import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 import BlogPost from '~/components/Blogs/BlogPost'
+import { RecycleScroller } from 'vue-virtual-scroller'
+import 'assets/override/dynamic-scroll.scss'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
-  components: { BlogPost, InFeedAd },
+  components: {
+    BlogPost,
+    InFeedAd,
+    RecycleScroller,
+  },
   props: {
     category: {
       type: String,
@@ -98,15 +119,24 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'assets/all-variables';
 
-.scrollable-blog-list {
-  article {
+.virtual-scroller {
+  .vue-recycle-scroller__item-wrapper {
     &:nth-child(even) {
       background: $navigation-bar-color;
       box-shadow: $default-box-shadow;
     }
   }
 }
+
+//.scrollable-blog-list {
+//  article {
+//    &:nth-child(even) {
+//      background: $navigation-bar-color;
+//      box-shadow: $default-box-shadow;
+//    }
+//  }
+//}
 </style>
