@@ -2,7 +2,7 @@
   <div class="notification-page mb-6">
     <LazyRequestPermissionDialog />
 
-    <section class="notifications">
+    <header>
       <button
         v-ripple="'#65db655f'"
         :disabled="processingRequest || processingRequestDone"
@@ -25,6 +25,9 @@
         />
         <span v-else class="mx-auto">Mark all as Read</span>
       </button>
+    </header>
+
+    <section class="notifications">
       <transition-group name="scale-up">
         <NotificationItem
           v-for="notification in notifications"
@@ -61,7 +64,6 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
 import NotificationItem from '~/components/Mobile/View/Notification/NotificationItem'
-
 export default {
   name: 'Notifications',
   components: { NotificationItem },
@@ -163,6 +165,11 @@ export default {
     transition: all 0.3s ease-in-out;
   }
 
+  header {
+    button {
+      width: 11rem;
+    }
+  }
   .notification-item {
     &:nth-child(even) {
       background-color: $navigation-bar-color;
