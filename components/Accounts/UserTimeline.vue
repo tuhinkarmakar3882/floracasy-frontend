@@ -28,7 +28,7 @@
         <article v-for="(blog, index) in recentBlogs" :key="blog.identifier">
           <LazyBlogPost :blog="blog" class="activity pt-4" />
 
-          <InFeedAd v-if="index % 2 === 0" use-small-ads />
+          <InFeedAd use-small-ads />
         </article>
 
         <footer v-if="!loadingError">
