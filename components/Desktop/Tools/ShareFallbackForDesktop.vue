@@ -1,51 +1,71 @@
 <template>
   <aside
-    class="share-fallback"
     :style="{ position: fixedMode ? 'fixed' : 'absolute' }"
+    class="share-fallback"
     @click="handleClose"
   >
     <i v-ripple class="mdi mdi-close mdi-24px close-btn" @click="handleClose" />
 
     <p>Share this on:</p>
     <ul class="options" @click.stop>
-      <li>
+      <li title="Share this on Facebook">
         <a
           :href="`https://www.facebook.com/sharer/sharer.php?u=${linkUrl}`"
-          class="shareBtn btn fbBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
-          <LazyFaceBookIcon />
+          <LazyFaceBookIcon class="svg-icon" />
         </a>
       </li>
-      <li>
+      <li title="Share this on Whatsapp">
         <a
           :href="`https://api.whatsapp.com/send?text=${description} ... Read More on Floracasy: ${linkUrl}`"
-          class="shareBtn btn whatsAppBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
-          <LazyWhatsAppIcon />
+          <LazyWhatsAppIcon class="svg-icon" />
         </a>
       </li>
-      <li>
+      <li title="Share this on Twitter">
         <a
           :href="`https://twitter.com/share?url=${linkUrl}&text=${description}`"
-          class="shareBtn btn twitterBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
-          <LazyTwitterIcon />
+          <LazyTwitterIcon class="svg-icon" />
         </a>
       </li>
-      <li>
+
+      <li title="Copy Link" @click="copyLink">
+        <input type="text" ref="shareLink" class="hidden-input" />
+        <LazyCopyToClipboardIcon />
+      </li>
+
+      <li title="Share this on Telegram">
         <a
           :href="`https://t.me/share/url?url=${linkUrl}&text=${description}... Read More on Floracasy`"
-          class="shareBtn btn telegramBtn py-1"
           rel="noreferrer noopener"
           target="_blank"
         >
-          <LazyTelegramIcon />
+          <LazyTelegramIcon class="svg-icon" />
+        </a>
+      </li>
+      <li title="Share this on LinkedIn">
+        <a
+          :href="`https://www.linkedin.com/sharing/share-offsite/?url=${linkUrl}&text=${description}... Read More on Floracasy`"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          <LazyLinkedinIcon class="svg-icon" />
+        </a>
+      </li>
+      <li title="Share this on Reddit">
+        <a
+          :href="`https://www.reddit.com/submit?url=${linkUrl}&text=${description}... Read More on Floracasy`"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          <LazyRedditIcon class="svg-icon" />
         </a>
       </li>
     </ul>
@@ -53,6 +73,8 @@
 </template>
 
 <script>
+import { showUITip } from '~/utils/utility'
+
 export default {
   name: 'ShareFallbackForDesktop',
   props: {
@@ -72,6 +94,17 @@ export default {
     linkUrl: {
       type: String,
       required: true,
+    },
+  },
+  methods: {
+    async copyLink() {
+      window.shareLink = this.$refs.shareLink
+      this.$refs.shareLink.value = `I just published this on Floracasy: ${this.description}. Read more at: ${this.linkUrl}`
+      this.$refs.shareLink.select()
+      this.$refs.shareLink.setSelectionRange(0, 99999)
+      document.execCommand('copy')
+      await showUITip(this.$store, 'Link Copied to Clipboard!', 'success')
+      this.handleClose()
     },
   },
 }
@@ -116,6 +149,27 @@ export default {
     align-items: center;
     flex-wrap: wrap;
     gap: $standard-unit;
+
+    li {
+      height: 64px;
+      width: 64px;
+
+      a {
+        display: grid;
+        place-items: center;
+
+        .svg-icon {
+          height: 64px;
+          width: 64px;
+        }
+      }
+    }
+  }
+
+  input.hidden-input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
   }
 }
 </style>
