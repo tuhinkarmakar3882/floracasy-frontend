@@ -1,5 +1,10 @@
 <template>
-  <div :class="[sticky && 'sticky', 'app-bar-header']">
+  <div
+    :class="[sticky && 'sticky', 'app-bar-header', autoHide && 'sticky']"
+    :style="{
+      top: showTopBar ? 0 : '-56px',
+    }"
+  >
     <NotificationBadge />
 
     <header>
@@ -10,9 +15,7 @@
         @click="$router.back()"
       />
 
-      <p>
-        <slot name="title" />
-      </p>
+      <p><slot name="title" /></p>
 
       <aside class="ml-auto" :class="!noRightPadding && 'pr-4'">
         <slot name="action-button" />
@@ -24,6 +27,7 @@
 <script>
 export default {
   name: 'AppBarHeader',
+
   props: {
     noBackButton: {
       type: Boolean,
@@ -36,6 +40,33 @@ export default {
     sticky: {
       type: Boolean,
       default: false,
+    },
+    autoHide: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  data() {
+    return {
+      showTopBar: true,
+    }
+  },
+
+  mounted() {
+    this.autoHide && document.addEventListener('scroll', this.autoHideOnScroll)
+  },
+
+  beforeDestroy() {
+    this.autoHide &&
+      document.removeEventListener('scroll', this.autoHideOnScroll)
+  },
+
+  methods: {
+    autoHideOnScroll() {
+      const currentScrollPos = window.pageYOffset
+      this.showTopBar = this.prevScrollPos > currentScrollPos
+      this.prevScrollPos = currentScrollPos
     },
   },
 }
