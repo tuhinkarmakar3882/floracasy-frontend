@@ -1,6 +1,6 @@
 <template>
   <div class="blog-details-page">
-    <AppBarHeader no-right-padding>
+    <AppBarHeader no-right-padding auto-hide>
       <template #title>
         <h6>
           <nuxt-link
