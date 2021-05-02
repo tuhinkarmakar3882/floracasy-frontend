@@ -19,15 +19,15 @@
       </template>
     </AppBarHeader>
 
-    <main>
-      <FallBackLoader v-if="!isReady">
-        <template #fallback>
-          <p class="text-center">Loading...</p>
-        </template>
-      </FallBackLoader>
+    <FallBackLoader v-if="!isReady">
+      <template #fallback>
+        <p class="text-center">Loading...</p>
+      </template>
+    </FallBackLoader>
 
-      <div v-else class="my-4">
-        <section class="header mb-6 px-4">
+    <section v-else class="page-content">
+      <main class="my-4">
+        <header class="header mb-6 px-4">
           <img
             :src="user.photoURL"
             alt="profile-picture"
@@ -41,29 +41,9 @@
           <section class="ml-auto">
             <span :class="moodIcon" class="mdi vibrant mdi-36px" />
           </section>
-        </section>
+        </header>
 
-        <section class="-hidden-input-fields">
-          <input
-            v-show="false"
-            ref="photoInput"
-            accept="image/*"
-            type="file"
-            @change="compressImage"
-          />
-          <input
-            v-show="false"
-            ref="audioInput"
-            accept="audio/ogg, audio/mp3, audio/aac"
-            type="file"
-            @change="loadAudioPreview"
-          />
-        </section>
-
-        <section
-          :class="useMoodOptions ? 'tri-actions' : 'dual-actions'"
-          class="my-4"
-        >
+        <nav class="my-4">
           <p v-ripple @click="openPhotoPicker">
             <span class="mdi mdi-image mdi-24px secondary mr-2" />
             Photos
@@ -72,32 +52,35 @@
             <span class="mdi mdi-headphones mdi-24px secondary mr-2" />
             Audio
           </p>
-          <p v-if="useMoodOptions" v-ripple>
-            <span class="mdi mdi-emoticon mdi-24px secondary mr-2" />
-            Mood
-          </p>
-        </section>
+          <!--        <p v-ripple @click="openComment">-->
+          <!--          <span class="mdi mdi-link mdi-24px secondary mr-2" />-->
+          <!--          Link-->
+          <!--        </p>-->
+        </nav>
 
         <section class="main px-2">
-          <div
-            id="post-body"
-            :style="[
-              {
-                minHeight: hasImage || hasAudio ? '50px' : '200px',
-              },
-              !hasImage &&
-                !hasAudio &&
-                customStyle && {
-                  ...customStyle,
-                  display: 'grid',
-                  placeItems: 'center',
-                  minHeight: '200px',
-                },
-            ]"
-            class="px-4 py-4"
-            contenteditable="true"
-            @keyup="updateText"
-          />
+          <InputField>
+            <template #input-field>
+              <textarea
+                v-model="postBody"
+                :style="[
+                  {
+                    minHeight: hasImage || hasAudio ? '50px' : '200px',
+                  },
+                  !hasImage &&
+                    !hasAudio &&
+                    customStyle && {
+                      ...customStyle,
+                      display: 'grid',
+                      placeItems: 'center',
+                      minHeight: '200px',
+                    },
+                ]"
+                cols="30"
+                rows="8"
+              />
+            </template>
+          </InputField>
 
           <div class="preview">
             <transition name="scale-down">
@@ -124,45 +107,58 @@
             </transition>
           </div>
         </section>
+      </main>
 
-        <transition name="scale-down">
-          <section
-            v-if="!hasImage && !hasAudio"
-            class="background-selection mt-4"
-          >
-            <p class="mb-8 px-2">Try with a background</p>
-            <div class="choices">
-              <section
-                v-ripple
-                class="option mx-1 mdi mdi-cancel mdi-24px"
-                style="
-                  background: transparent;
-                  display: grid;
-                  place-items: center;
-                "
-                @click="customStyle = null"
-              />
-              <section
-                v-for="(style, index) in customStyleOptions"
-                :key="index"
-                v-ripple
-                :style="{ background: style.background }"
-                class="option mx-1"
-                @click="customStyle = style"
-              />
-            </div>
-          </section>
-        </transition>
-      </div>
-    </main>
+      <aside class="-hidden-input-fields">
+        <input
+          v-show="false"
+          ref="photoInput"
+          accept="image/*"
+          type="file"
+          @change="compressImage"
+        />
+        <input
+          v-show="false"
+          ref="audioInput"
+          accept="audio/ogg, audio/mp3, audio/aac"
+          type="file"
+          @change="loadAudioPreview"
+        />
+      </aside>
 
-    <footer>
       <transition name="scale-down">
-        <aside v-if="isSending" class="loader">
-          <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
-        </aside>
+        <footer v-if="!hasImage && !hasAudio" class="background-selection mt-4">
+          <p class="mb-8 px-2">Try with a background</p>
+
+          <div class="choices">
+            <section
+              v-ripple
+              class="option mx-1 mdi mdi-cancel mdi-24px"
+              style="
+                background: transparent;
+                display: grid;
+                place-items: center;
+              "
+              @click="customStyle = null"
+            />
+            <section
+              v-for="(style, index) in customStyleOptions"
+              :key="index"
+              v-ripple
+              :style="{ background: style.background }"
+              class="option mx-1"
+              @click="customStyle = style"
+            />
+          </div>
+        </footer>
       </transition>
-    </footer>
+    </section>
+
+    <transition name="scale-down">
+      <aside v-if="isSending" class="loader">
+        <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+      </aside>
+    </transition>
   </div>
 </template>
 
@@ -434,11 +430,16 @@ export default {
 @import 'assets/all-variables';
 
 .add-new-post-page {
+  .page-content {
+    margin: auto;
+    max-width: $large-screen;
+  }
+
   * {
     transition: all 300ms ease-in-out;
   }
 
-  .background-selection {
+  footer {
     p {
       position: relative;
 
@@ -462,7 +463,7 @@ export default {
         display: none;
       }
 
-      .option {
+      section.option {
         border-radius: 12px;
         min-height: 2 * $x-large-unit;
         height: 2 * $x-large-unit;
@@ -472,67 +473,62 @@ export default {
     }
   }
 
-  .tri-actions {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .dual-actions {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .tri-actions,
-  .dual-actions {
-    display: grid;
-
-    p {
+  main {
+    nav {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      color: $muted;
+      flex: 1 1 100%;
 
-      &:nth-child(2) {
-        border-left: 1px solid $card-bg;
-        border-right: 1px solid $card-bg;
-      }
-    }
-  }
-
-  .header {
-    display: flex;
-    align-items: center;
-
-    $size: 52px;
-
-    img {
-      width: $size;
-      min-width: $size;
-      height: $size;
-      min-height: $size;
-      border-radius: 50%;
-      box-shadow: $default-box-shadow;
-      object-fit: cover;
-    }
-
-    button {
-      min-width: auto;
-      font-size: 14px;
-      width: 117px;
-      height: 32px;
-      margin-left: auto;
-    }
-
-    .user-details {
       p {
-        font-size: 1.2rem;
-        font-weight: 400;
+        flex-basis: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $muted;
+
+        &:nth-child(2) {
+          border-left: 1px solid $card-bg;
+          border-right: 1px solid $card-bg;
+        }
+      }
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+
+      $size: 52px;
+
+      img {
+        width: $size;
+        min-width: $size;
+        height: $size;
+        min-height: $size;
+        border-radius: 50%;
+        box-shadow: $default-box-shadow;
+        object-fit: cover;
       }
 
-      small {
-        font-size: 13px;
-        font-family: $Nunito-Sans;
-        font-weight: 300;
-        font-style: italic;
-        line-height: 16px;
+      button {
+        min-width: auto;
+        font-size: 14px;
+        width: 117px;
+        height: 32px;
+        margin-left: auto;
+      }
+
+      .user-details {
+        p {
+          font-size: 1.2rem;
+          font-weight: 400;
+        }
+
+        small {
+          font-size: 13px;
+          font-family: $Nunito-Sans;
+          font-weight: 300;
+          font-style: italic;
+          line-height: 16px;
+        }
       }
     }
   }
@@ -564,17 +560,6 @@ export default {
           font-size: 24px;
         }
       }
-    }
-  }
-
-  #post-body {
-    border: 1px solid #3a3a3a;
-    border-radius: 0 $standard-unit;
-    min-height: 200px;
-    outline: 0 none;
-
-    &:focus {
-      border: 1px solid $secondary;
     }
   }
 
