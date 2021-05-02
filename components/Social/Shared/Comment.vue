@@ -271,6 +271,7 @@ export default {
     .body {
       font-size: $standard-unit;
       font-weight: 300;
+      white-space: pre-line;
     }
   }
 
