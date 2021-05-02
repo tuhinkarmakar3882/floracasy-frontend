@@ -8,9 +8,9 @@
       <CommunityPost
         :post="post"
         :show-comment-option="false"
+        back-on-delete
         class="pt-6"
         expanded
-        back-on-delete
       />
 
       <CommunityPostComments :post="post" class="pb-8 mb-6" />
@@ -79,3 +79,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import 'assets/all-variables';
+
+.community-post-detail-page {
+  main {
+    margin: auto;
+    max-width: $large-screen;
+  }
+}
+</style>

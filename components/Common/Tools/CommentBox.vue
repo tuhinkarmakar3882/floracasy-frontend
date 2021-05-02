@@ -26,7 +26,7 @@ export default {
 
 .comment-box {
   position: fixed !important;
-  background: #090909;
+  background: $navigation-bar-color;
   bottom: 0;
   z-index: 1;
   width: 100%;
