@@ -2,19 +2,17 @@
   <div class="community-post-comments-component">
     <h4 class="px-4">Comments</h4>
 
-    <main ref="commentStart">
-      <section class="comments-container">
-        <transition-group name="scale-down">
-          <Comment
-            v-for="comment in comments"
-            :key="comment.id"
-            :comment="comment"
-            :owner-uid="post.userUID"
-            class="my-6 px-4"
-            comment-type="Post"
-          />
-        </transition-group>
-      </section>
+    <main ref="commentStart" class="comments-container">
+      <transition-group name="scale-down">
+        <Comment
+          v-for="comment in comments"
+          :key="comment.id"
+          :comment="comment"
+          :owner-uid="post.userUID"
+          class="my-6 px-4"
+          comment-type="Post"
+        />
+      </transition-group>
     </main>
 
     <client-only>
@@ -37,41 +35,33 @@
       </div>
     </client-only>
 
-    <aside class="bottom-area px-4">
-      <img
-        v-if="user"
-        :src="user.photoURL"
-        alt="profile-image"
-        height="40"
-        width="40"
-      />
-      <div
-        ref="textBox"
-        class="text-box"
-        contenteditable
-        @focusin="showPlaceholder = false"
-        @focusout="showPlaceholder = true"
-        @keyup="updateText"
-        @keyup.enter="addComment"
-      >
-        <transition name="scale-up">
-          <label
-            v-if="commentMessage.length === 0 && showPlaceholder"
-            class="muted"
-          >
-            Type your comment here...
-          </label>
-        </transition>
-      </div>
-      <RippleButton
-        :disabled="!canSendComment"
-        :loading="isSendingComment"
-        :on-click="addComment"
-        style="background: transparent !important"
-      >
-        <span class="mdi mdi-send mdi-36px" />
-      </RippleButton>
-    </aside>
+    <footer>
+      <CommentBox class="comment-box">
+        <template #text-box>
+          <InputField>
+            <template #input-field>
+              <textarea
+                v-model="commentMessage"
+                :disabled="isSendingComment"
+                placeholder="Say your Thoughts Here!"
+                @keyup.shift.enter="addComment"
+              />
+            </template>
+          </InputField>
+        </template>
+
+        <template #action-button>
+          <i
+            :class="[
+              canSendComment ? 'vibrant' : 'disabled',
+              isSendingComment ? 'mdi-spin mdi-loader' : 'mdi-send',
+            ]"
+            class="mdi mdi-36px"
+            @click="addComment"
+          />
+        </template>
+      </CommentBox>
+    </footer>
   </div>
 </template>
 
@@ -171,7 +161,7 @@ export default {
         }
         this.comments.unshift(newComment)
 
-        this.clearCommentInput()
+        this.commentMessage = ''
         this.$refs.commentStart.scrollIntoView()
 
         await showUITip(this.$store, 'Comment Added', 'success')
@@ -193,13 +183,8 @@ export default {
       }
     },
 
-    clearCommentInput() {
-      this.commentMessage = ''
-      this.$refs.textBox.textContent = ''
-    },
-
     updateText() {
-      this.commentMessage = this.$refs.textBox.textContent
+      this.commentMessage = this.$refs.textBox.innerText
     },
   },
 }
@@ -209,106 +194,9 @@ export default {
 @import 'assets/all-variables';
 
 .community-post-comments-component {
-  .comment {
-    display: flex;
-
-    img {
-      width: 2 * $medium-unit;
-      min-width: 2 * $medium-unit;
-      height: 2 * $medium-unit;
-      min-height: 2 * $medium-unit;
-      object-position: center;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: $default-box-shadow;
-    }
-
-    .comment-message-container {
-      width: 100%;
-      margin-left: $standard-unit;
-      background-color: darken(#232340, $darken-percentage);
-      padding: $nano-unit $standard-unit $standard-unit;
-      border-radius: $micro-unit;
-      box-shadow: $default-box-shadow;
-
-      .top-line {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: $micro-unit;
-
-        .username {
-          font-size: 18px;
-        }
-
-        .timestamp {
-          font-family: $Nunito-Sans;
-          font-size: 14px;
-          color: $muted;
-        }
-      }
-
-      .message-body {
-        font-size: 15px;
-      }
-    }
-  }
-
-  .bottom-area {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    max-height: 4 * $xxx-large-unit;
-    padding: $micro-unit;
-    display: flex;
-    align-items: center;
-    background-color: $navigation-bar-color;
-    box-shadow: $up-only-box-shadow;
-
-    $image-size: 2 * $medium-unit;
-
-    img {
-      min-width: $image-size;
-      width: $image-size;
-      min-height: $image-size;
-      height: $image-size;
-      object-position: center;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: $default-box-shadow;
-      aspect-ratio: 1;
-    }
-
-    .text-box {
-      border: 1px solid #4a4a4a;
-      background-color: $body-bg-alternate;
-      width: 100%;
-      word-break: break-all;
-      margin: 0 $micro-unit;
-      min-height: 2 * $x-large-unit;
-      max-height: 3 * $xxx-large-unit;
-      padding: $micro-unit $milli-unit;
-      border-radius: $micro-unit;
-      overflow: scroll;
-      outline: 0 none;
-      display: flex;
-      align-items: center;
-
-      &:focus(:placeholder-shown) {
-        color: $secondary-matte;
-        border: 1px solid $secondary-matte;
-      }
-    }
-
-    button {
-      padding: 0;
-      color: $secondary-matte;
-      min-width: auto;
-      width: 64px;
-      min-height: 2 * $x-large-unit;
-      height: auto;
+  footer {
+    .comment-box {
+      max-width: $large-screen;
     }
   }
 }
