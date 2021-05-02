@@ -82,32 +82,32 @@
                     post.body.length > 99 ? '...' : ''
                   }`
             }}
-            <nuxt-link
-              v-if="!expanded && post.body.length > 99"
-              class="no-underline"
-              :to="
-                navigationRoutes.Home.Community.Posts.detail.replace(
-                  '{postIdentifier}',
-                  post.identifier
-                )
-              "
-            >
-              Read More
-            </nuxt-link>
           </span>
+          <nuxt-link
+            v-if="!expanded && post.body.length > 99"
+            :to="
+              navigationRoutes.Home.Community.Posts.detail.replace(
+                '{postIdentifier}',
+                post.identifier
+              )
+            "
+            class="no-underline"
+          >
+            Read More
+          </nuxt-link>
         </p>
 
         <img
           v-if="post.image"
           :src="post.image"
-          alt="image"
-          class="mt-4"
           :style="
             expanded && {
               height: '100%',
               objectFit: 'unset',
             }
           "
+          alt="image"
+          class="mt-4"
           @click="viewPostDetails"
         />
 
@@ -156,9 +156,9 @@
       <transition name="slide-up">
         <LazyShareFallbackForDesktop
           v-if="useShareFallBack"
+          :description="post.body || 'View this Post on Floracasy'"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Community/Posts/${post.identifier}`"
-          :description="post.body || 'View this Post on Floracasy'"
         />
       </transition>
     </div>
@@ -194,6 +194,10 @@ export default {
     showMoreOption: {
       type: Boolean,
       default: true,
+    },
+    backOnDelete: {
+      type: Boolean,
+      default: false,
     },
     expanded: {
       type: Boolean,
@@ -294,6 +298,7 @@ export default {
             identifier: this.post.identifier,
           })
           await showUITip(this.$store, 'Successfully Deleted!', 'success')
+          this.backOnDelete && this.$router.back()
         } catch (e) {
           await showUITip(
             this.$store,
@@ -325,6 +330,12 @@ export default {
       width: 100%;
       object-fit: scale-down;
       box-shadow: $default-box-shadow;
+    }
+
+    p:first-child {
+      span {
+        white-space: pre-line;
+      }
     }
   }
 
