@@ -1,49 +1,46 @@
 <template>
   <div class="blog-comment-page">
-    <AppBarHeader sticky>
+    <AppBarHeader auto-hide sticky>
       <template #title>
         {{ pageTitle }}
       </template>
     </AppBarHeader>
 
-    <main ref="mainSection" v-if="blog">
-      <header class="px-4">
-        <section>
-          <h6>{{ blog.title }}</h6>
+    <header v-if="blog" class="px-4 pb-6" ref="mainSection">
+      <section>
+        <h6>{{ blog.title }}</h6>
 
-          <nuxt-link v-ripple :to="blogDetailsPage" class="view-blog py-4">
-            View Blog
-          </nuxt-link>
-        </section>
-
-        <p>
-          <nuxt-link :to="authorDetailsPage" class="no-underline">
-            {{ blog.author.displayName }}
-          </nuxt-link>
-
-          <strong>IN</strong>
-
-          <nuxt-link :to="exploreMorePage" class="no-underline">
-            {{ blog.category.name }}
-          </nuxt-link>
-        </p>
-      </header>
-
-      <hr class="my-4 mx-2 faded-divider" />
-
-      <section class="comments-container">
-        <transition-group name="slide-up">
-          <Comment
-            v-for="comment in comments"
-            :key="comment.id"
-            :comment="comment"
-            :owner-uid="blog.author.uid"
-            class="my-6 px-4"
-            comment-type="Blog"
-          />
-        </transition-group>
+        <nuxt-link v-ripple :to="blogDetailsPage" class="view-blog py-4">
+          View Blog
+        </nuxt-link>
       </section>
 
+      <p>
+        <nuxt-link :to="authorDetailsPage" class="no-underline">
+          {{ blog.author.displayName }}
+        </nuxt-link>
+
+        <strong>IN</strong>
+
+        <nuxt-link :to="exploreMorePage" class="no-underline">
+          {{ blog.category.name }}
+        </nuxt-link>
+      </p>
+    </header>
+
+    <hr class="my-0 faded-divider" />
+
+    <main class="comments-container">
+      <transition-group name="slide-up">
+        <Comment
+          v-for="comment in comments"
+          :key="comment.id"
+          :comment="comment"
+          :owner-uid="blog.author.uid"
+          class="my-6 px-4"
+          comment-type="Blog"
+        />
+      </transition-group>
       <aside>
         <client-only>
           <infinite-loading @infinite="fetchComments">
@@ -72,24 +69,31 @@
     </main>
 
     <footer>
-      <section class="bottom-area">
-        <img v-if="user" :src="user.photoURL" alt="profile-image" />
-        <input
-          v-model="commentMessage"
-          :disabled="isSendingComment"
-          placeholder="Add a comment..."
-          type="text"
-          @keyup.enter="addComment"
-        />
-        <RippleButton
-          :disabled="!canSendComment"
-          :loading="isSendingComment"
-          :on-click="addComment"
-          style="background: transparent !important"
-        >
-          <span class="mdi mdi-send" />
-        </RippleButton>
-      </section>
+      <CommentBox>
+        <template #text-box>
+          <InputField>
+            <template #input-field>
+              <textarea
+                v-model="commentMessage"
+                :disabled="isSendingComment"
+                placeholder="Say your Thoughts Here!"
+                @keyup.shift.enter="addComment"
+              />
+            </template>
+          </InputField>
+        </template>
+
+        <template #action-button>
+          <i
+            :class="[
+              canSendComment ? 'vibrant' : 'disabled',
+              isSendingComment ? 'mdi-spin mdi-loader' : 'mdi-send',
+            ]"
+            class="mdi mdi-36px"
+            @click="addComment"
+          />
+        </template>
+      </CommentBox>
     </footer>
   </div>
 </template>
@@ -253,102 +257,55 @@ export default {
 
 .blog-comment-page {
   position: relative;
-  display: grid;
-  grid-template-rows: 56px auto 64px;
 
   &::-webkit-scrollbar {
     display: none;
   }
 
-  main {
-    height: calc(100vh - 120px);
+  header {
     max-width: $large-screen;
-    width: 100%;
     margin: auto;
-    overflow: scroll;
 
-    header {
-      section {
-        display: flex;
-        align-items: center;
+    section {
+      display: flex;
+      align-items: center;
 
-        h6 {
-          width: 100%;
-        }
+      h6 {
+        width: 100%;
+      }
 
-        .view-blog {
-          text-align: center;
-          text-decoration: none;
-          width: 5 * $xxx-large-unit;
-          color: $secondary;
-          position: relative;
+      .view-blog {
+        text-align: center;
+        text-decoration: none;
+        width: 5 * $xxx-large-unit;
+        color: $secondary;
+        position: relative;
 
-          &::after {
-            content: '';
-            position: absolute;
-            height: $single-unit;
-            width: 84px;
-            bottom: 0;
-            left: calc(50% - 42px);
-            background: $secondary-matte;
-          }
+        &::after {
+          content: '';
+          position: absolute;
+          height: $single-unit;
+          width: 84px;
+          bottom: 0;
+          left: calc(50% - 42px);
+          background: $secondary-matte;
         }
       }
     }
   }
 
-  footer {
-    width: 100%;
+  hr {
     max-width: $large-screen;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: $down-only-box-shadow;
+  }
 
-    .bottom-area {
-      padding: $micro-unit;
-      height: 2 * $xx-large-unit;
-      display: flex;
-      align-items: center;
-      background-color: $navigation-bar-color;
-      box-shadow: $up-only-box-shadow;
-
-      $size: 2 * $medium-unit;
-
-      img {
-        width: $size;
-        min-width: $size;
-        height: $size;
-        min-height: $size;
-        object-position: center;
-        object-fit: cover;
-        border-radius: 50%;
-        box-shadow: $default-box-shadow;
-      }
-
-      input {
-        border: 1px solid #4a4a4a;
-        background-color: $body-bg-alternate;
-        width: 100%;
-        margin: 0 $micro-unit;
-        height: 2 * $medium-unit;
-        padding: 0 $micro-unit;
-        border-radius: $micro-unit;
-
-        &::placeholder {
-          color: darken($muted, $darken-percentage);
-        }
-
-        &:not(:placeholder-shown) {
-          color: $secondary-matte;
-          border: 1px solid $secondary-matte;
-        }
-      }
-
-      button {
-        min-width: auto;
-        font-size: 26px;
-        padding: 0;
-        color: $secondary-matte;
-      }
-    }
+  main {
+    max-width: $large-screen;
+    width: 100%;
+    overflow: scroll;
+    margin: auto auto 120px;
   }
 }
 </style>
