@@ -43,7 +43,7 @@ export default {
 @import 'assets/all-variables';
 
 $border-color: hsl(240, 20%, 28%);
-$placeholder-color: hsl(260, 0%, 30%);
+$placeholder-color: hsl(260, 0%, 45%);
 .input-field-component {
   position: relative;
 
