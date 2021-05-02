@@ -1,29 +1,23 @@
 <template>
-  <AppFeel
-    :on-back="navigationRoutes.Home.Community.index"
-    :prev-url-path="prevURL"
-    class="community-post-detail-page"
-    dynamic-back
-  >
-    <template slot="app-bar-title">{{ pageTitle }}</template>
+  <div class="community-post-detail-page">
+    <AppBarHeader auto-hide sticky>
+      <template #title>{{ pageTitle }}</template>
+    </AppBarHeader>
 
-    <template slot="main">
-      <main v-if="isReady">
-        <CommunityPost
-          :post="post"
-          :show-comment-option="false"
-          class="pt-6"
-          expanded
-        />
+    <main v-if="isReady">
+      <CommunityPost
+        :post="post"
+        :show-comment-option="false"
+        class="pt-6"
+        expanded
+        back-on-delete
+      />
 
-        <CommunityPostComments :post="post" class="pb-8 mb-6" />
-      </main>
+      <CommunityPostComments :post="post" class="pb-8 mb-6" />
+    </main>
 
-      <aside v-else>
-        <LoadingIcon />
-      </aside>
-    </template>
-  </AppFeel>
+    <FallBackLoader v-else />
+  </div>
 </template>
 
 <script>
