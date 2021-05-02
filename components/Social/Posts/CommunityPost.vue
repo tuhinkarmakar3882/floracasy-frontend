@@ -69,27 +69,16 @@
 
       <section class="post-body py-4 px-4">
         <p v-if="post.body" :style="post.style" @click="viewPostDetails">
-          <span>{{
-            expanded
-              ? post.body
-              : `${post.body.substr(0, 100)} ${
-                  post.body.length > 99 ? '...' : ''
-                }`
-          }}</span>
-
-          <nuxt-link
-            v-if="!expanded && post.body.length > 99"
-            :to="
-              navigationRoutes.Home.Community.Posts.detail.replace(
-                '{postIdentifier}',
-                post.identifier
-              )
-            "
-            class="no-underline"
-            v-ripple
-          >
-            Read More
-          </nuxt-link>
+          <span
+            >{{ getPostBody }}
+            <nuxt-link
+              v-if="showReadMore"
+              :to="postDetailsLink"
+              class="no-underline"
+            >
+              Read More
+            </nuxt-link>
+          </span>
         </p>
 
         <img
@@ -210,6 +199,22 @@ export default {
   },
 
   computed: {
+    getPostBody() {
+      return this.expanded
+        ? this.post?.body
+        : `${this.post.body.substr(0, 100)} ${
+            this.post.body.length > 99 ? '...' : ''
+          }`
+    },
+    showReadMore() {
+      return !this.expanded && this.post.body.length > 99
+    },
+    postDetailsLink() {
+      return navigationRoutes.Home.Community.Posts.detail.replace(
+        '{postIdentifier}',
+        this.post.identifier
+      )
+    },
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
