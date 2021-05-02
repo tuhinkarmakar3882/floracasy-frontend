@@ -18,6 +18,7 @@
         </button>
       </template>
     </AppBarHeader>
+
     <main>
       <FallBackLoader v-if="!isReady">
         <template #fallback>
@@ -375,7 +376,7 @@ export default {
     },
 
     updateText() {
-      this.postBody = document.getElementById('post-body').textContent
+      this.postBody = document.getElementById('post-body').innerText
     },
     loadAudioPreview(event) {
       this.hasAudio = false
