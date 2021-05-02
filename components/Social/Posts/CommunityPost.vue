@@ -68,21 +68,15 @@
       </transition>
 
       <section class="post-body py-4 px-4">
-        <p
-          v-if="post.body"
-          v-ripple
-          :style="post.style"
-          @click="viewPostDetails"
-        >
-          <span>
-            {{
-              expanded
-                ? post.body
-                : `${post.body.substr(0, 100)} ${
-                    post.body.length > 99 ? '...' : ''
-                  }`
-            }}
-          </span>
+        <p v-if="post.body" :style="post.style" @click="viewPostDetails">
+          <span>{{
+            expanded
+              ? post.body
+              : `${post.body.substr(0, 100)} ${
+                  post.body.length > 99 ? '...' : ''
+                }`
+          }}</span>
+
           <nuxt-link
             v-if="!expanded && post.body.length > 99"
             :to="
@@ -92,6 +86,7 @@
               )
             "
             class="no-underline"
+            v-ripple
           >
             Read More
           </nuxt-link>
