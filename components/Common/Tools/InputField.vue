@@ -42,7 +42,8 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-$border-color: lighten($card-bg-alternate, $lighten-percentage);
+$border-color: hsl(240, 20%, 28%);
+$placeholder-color: hsl(260, 20%, 50%);
 .input-field-component {
   position: relative;
 
@@ -79,6 +80,12 @@ $border-color: lighten($card-bg-alternate, $lighten-percentage);
         color: $secondary;
       }
     }
+
+    &::placeholder {
+      color: $placeholder-color;
+      font-size: $standard-unit;
+      font-weight: 300;
+    }
   }
 
   textarea {
@@ -86,6 +93,7 @@ $border-color: lighten($card-bg-alternate, $lighten-percentage);
     border: 1px solid $border-color !important;
     resize: none !important;
     border-radius: $nano-unit !important;
+
     &:hover,
     &:focus,
     &:active {
@@ -94,6 +102,12 @@ $border-color: lighten($card-bg-alternate, $lighten-percentage);
       & ~ label {
         color: $secondary;
       }
+    }
+
+    &::placeholder {
+      color: $placeholder-color;
+      font-size: $standard-unit;
+      font-weight: 300;
     }
   }
 
