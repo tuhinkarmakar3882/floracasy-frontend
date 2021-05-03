@@ -469,6 +469,13 @@ export default {
         height: 2 * $x-large-unit;
         min-width: 2 * $x-large-unit;
         width: 2 * $x-large-unit;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+          border-radius: 0;
+          transform: scale(1.2);
+        }
       }
     }
   }
@@ -479,6 +486,7 @@ export default {
       flex: 1 1 100%;
 
       p {
+        cursor: pointer;
         flex-basis: 100%;
         display: flex;
         justify-content: center;
@@ -486,8 +494,12 @@ export default {
         color: $muted;
 
         &:nth-child(2) {
-          border-left: 1px solid $card-bg;
-          border-right: 1px solid $card-bg;
+          border-left: 1px solid $card-bg; //border-right: 1px solid $card-bg;
+        }
+
+        &:hover,
+        &:focus {
+          background: $body-bg-alternate;
         }
       }
     }
