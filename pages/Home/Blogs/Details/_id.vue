@@ -246,6 +246,13 @@ export default {
     },
   },
 
+  watch: {
+    async contentLoaded() {
+      this.pushAds()
+      await this.calculateReadingTime()
+    },
+  },
+
   async mounted() {
     await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
       linkPosition: -1,
@@ -257,7 +264,6 @@ export default {
     await this.checkForQuotaExhaustion()
     await this.incrementViewCount()
     await this.calculateReadingTime()
-    this.pushAds()
   },
 
   methods: {
@@ -267,10 +273,16 @@ export default {
 
     pushAds() {
       try {
-        for (let i = 0; i < document.querySelectorAll('ins').length; i++) {
+        const totalAdBlocks = document.querySelectorAll('ins').length - 2
+
+        for (let adblock = 0; adblock < totalAdBlocks; adblock++) {
           ;(window.adsbygoogle || []).push({})
         }
-      } catch (e) {}
+
+        console.log(`${totalAdBlocks} Ads Loaded`)
+      } catch (e) {
+        console.log('Error in loading ads')
+      }
     },
 
     async incrementViewCount() {
@@ -570,6 +582,10 @@ export default {
         height: 5.5rem;
       }
     }
+  }
+
+  ins {
+    margin: 1rem auto;
   }
 }
 </style>
