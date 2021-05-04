@@ -101,7 +101,7 @@ export default {
     padding: $standard-unit (2 * $xxx-large-unit);
     display: flex;
     align-items: center;
-    z-index: 2;
+    z-index: 1;
 
     h1 {
       display: flex;
@@ -124,11 +124,7 @@ export default {
     z-index: 1;
     display: grid;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100vh;
     padding: 2 * $xxx-large-unit;
     grid-template-columns: 2fr 1fr;
     align-items: center;
