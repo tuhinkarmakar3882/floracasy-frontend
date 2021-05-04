@@ -142,9 +142,9 @@
       <transition name="slide-up">
         <LazyShareFallbackForDesktop
           v-if="useShareFallBack"
+          :description="blog.title"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"
-          :description="blog.title"
         />
       </transition>
     </div>
@@ -205,11 +205,10 @@ export default {
         return
       }
       try {
-        const action = await this.$axios
-          .$post(endpoints.blog.like, {
-            identifier: this.blog.identifier,
-          })
-          .then(({ action }) => action)
+        const { action } = await this.$axios.$post(endpoints.blog.like, {
+          identifier: this.blog.identifier,
+        })
+
         action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
         this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
@@ -230,38 +229,45 @@ export default {
       )
     },
 
-    async share() {
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: this.blog.title + '- Floracasy',
-            text:
-              this.blog?.title +
-              ' - ' +
-              this.blog?.subtitle?.substr(0, 40) +
-              '... Read More on Floracasy',
-            url: navigationRoutes.Home.Blogs.Details.replace(
-              '{id}',
-              this.blog.identifier
-            ),
-          })
-
-          await this.$axios
-            .$post(endpoints.blog.share, {
-              identifier: this.blog.identifier,
-            })
-            .then(() => {
-              this.blog.totalShares++
-            })
-            .catch(() => {
-              this.blog.totalShares--
-            })
-        } catch (error) {
-          await showUITip(this.$store, 'Network Error', 'error')
-        }
-      } else {
-        this.useShareFallBack = !this.useShareFallBack
+    async updateShareCount() {
+      try {
+        await this.$axios.$post(endpoints.blog.share, {
+          identifier: this.blog.identifier,
+        })
+        this.blog.totalShares++
+      } catch (e) {
+        this.blog.totalShares--
       }
+    },
+
+    async useNativeShare() {
+      try {
+        await navigator.share({
+          title: this.blog.title + '- Floracasy',
+          text:
+            this.blog?.title +
+            ' - ' +
+            this.blog?.subtitle?.substr(0, 40) +
+            '... Read More on Floracasy',
+          url: navigationRoutes.Home.Blogs.Details.replace(
+            '{id}',
+            this.blog.identifier
+          ),
+        })
+
+        await this.updateShareCount()
+      } catch (error) {
+        await showUITip(this.$store, 'May be Later?', 'warning')
+      }
+    },
+
+    async share() {
+      if (!navigator.share) {
+        this.useShareFallBack = !this.useShareFallBack
+        return
+      }
+
+      await this.useNativeShare()
     },
 
     async addOrRemoveToSaveBlogs() {
