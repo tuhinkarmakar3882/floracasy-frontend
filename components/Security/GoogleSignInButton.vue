@@ -7,7 +7,9 @@
         v-show="showLoaderAnimation"
         class="loader"
         @click.stop
-        :style="!showLoaderAnimation && { zIndex: -1 }"
+        :style="
+          !showLoaderAnimation && { zIndex: -1, opacity: 0, display: 'none' }
+        "
       >
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
         <p class="mt-4">{{ stateInformation }}</p>
