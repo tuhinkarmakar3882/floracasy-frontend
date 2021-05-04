@@ -37,6 +37,7 @@ export const sanitizationConfig = {
     'i',
     'iframe',
     'img',
+    'ins',
     'kbd',
     'li',
     'main',
@@ -93,6 +94,14 @@ export const sanitizationConfig = {
     ul: ['class', 'style'],
     ol: ['class', 'style'],
     li: ['class', 'style'],
+    ins: [
+      'class',
+      'data-ad-client',
+      'data-ad-format',
+      'data-ad-layout',
+      'data-ad-slot',
+      'style',
+    ],
   },
   selfClosing: [
     'img',
