@@ -133,7 +133,7 @@
       </header>
 
       <section class="blog-body pb-8 mb-4">
-        <InArticleAd key="Top-Ad" />
+        <InFeedAd key="Top-Ad" />
 
         <article
           ref="articleContent"
@@ -141,7 +141,7 @@
           v-html="cleanHTML(blog.content)"
         />
 
-        <InArticleAd key="Bottom-Ad" />
+        <InFeedAd key="Bottom-Ad" />
       </section>
     </main>
 
@@ -248,8 +248,8 @@ export default {
 
   watch: {
     async contentLoaded() {
-      this.pushAds()
       await this.calculateReadingTime()
+      this.pushAds()
     },
   },
 
@@ -274,15 +274,13 @@ export default {
     pushAds() {
       try {
         const totalAdBlocks = document.querySelectorAll('ins').length - 2
+        console.log(`${totalAdBlocks} Ads Found`)
 
         for (let adblock = 0; adblock < totalAdBlocks; adblock++) {
           ;(window.adsbygoogle || []).push({})
+          console.log(`${totalAdBlocks} Ads Loaded`)
         }
-
-        console.log(`${totalAdBlocks} Ads Loaded`)
-      } catch (e) {
-        console.log('Error in loading ads')
-      }
+      } catch (e) {}
     },
 
     async incrementViewCount() {
