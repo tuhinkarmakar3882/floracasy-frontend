@@ -257,13 +257,21 @@ export default {
     await this.checkForQuotaExhaustion()
     await this.incrementViewCount()
     await this.calculateReadingTime()
-    ;(window.adsbygoogle || []).push({})
+    this.pushAds()
   },
 
   methods: {
     cleanHTML,
     parseTimeUsingStandardLibrary,
     shorten,
+
+    pushAds() {
+      try {
+        for (let i = 0; i < document.querySelectorAll('ins').length; i++) {
+          ;(window.adsbygoogle || []).push({})
+        }
+      } catch (e) {}
+    },
 
     async incrementViewCount() {
       if (this.user) {
