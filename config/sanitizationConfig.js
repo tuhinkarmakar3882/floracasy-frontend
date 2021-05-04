@@ -123,6 +123,8 @@ export const sanitizationConfig = {
     'www.player.vimeo.com',
     'www.youtube.com',
     'www.instagram.com',
+
+    'w.soundcloud.com',
   ],
   allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
   allowProtocolRelative: true,
