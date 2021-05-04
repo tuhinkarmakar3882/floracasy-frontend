@@ -257,6 +257,7 @@ export default {
     await this.checkForQuotaExhaustion()
     await this.incrementViewCount()
     await this.calculateReadingTime()
+    ;(window.adsbygoogle || []).push({})
   },
 
   methods: {
