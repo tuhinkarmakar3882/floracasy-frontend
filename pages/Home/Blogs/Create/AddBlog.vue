@@ -749,12 +749,7 @@ export default {
       this.stepNumber = 1
       this.$router.push('#1')
     },
-    insertAdSections(html) {
-      return this.cleanHTML(html).replaceAll(
-        `<p><br /></p><p><br /></p>`,
-        `<p><br /></p><p><br /></p><ins class="adsbygoogle" data-ad-client="ca-pub-9863542606738743" data-ad-format="fluid" data-ad-layout="in-article" data-ad-slot="8097332277" style="display: block; text-align: center"/>`
-      )
-    },
+
     showPreview() {
       this.blog.content = this.editor.root.innerHTML
       this.stepNumber = 2
@@ -763,7 +758,7 @@ export default {
     async publish() {
       this.showLoadingIndicator = true
       await showUITip(this.$store, 'Uploading Article...')
-      const blogBody = this.insertAdSections(this.blog.content)
+      const blogBody = this.cleanHTML(this.blog.content)
       try {
         await this.$axios.$post(endpoints.blog.create, {
           categoryID: this.blog.category.id,
