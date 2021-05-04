@@ -138,7 +138,7 @@
         <article
           ref="articleContent"
           class="my-6 pb-4 px-4 ql-editor"
-          v-html="cleanHTML(blog.content)"
+          v-html="preprocess(blog.content)"
         />
 
         <InFeedAd key="Bottom-Ad" />
@@ -247,8 +247,8 @@ export default {
   },
 
   watch: {
-    async contentLoaded() {
-      await this.calculateReadingTime()
+    contentLoaded() {
+      this.calculateReadingTime()
       this.pushAds()
     },
   },
@@ -274,13 +274,18 @@ export default {
     pushAds() {
       try {
         const totalAdBlocks = document.querySelectorAll('ins').length - 2
-        console.log(`${totalAdBlocks} Ads Found`)
-
         for (let adblock = 0; adblock < totalAdBlocks; adblock++) {
           ;(window.adsbygoogle || []).push({})
-          console.log(`${totalAdBlocks} Ads Loaded`)
         }
       } catch (e) {}
+    },
+
+    preprocess(html) {
+      setTimeout(this.pushAds, 3000)
+      return this.cleanHTML(html).replaceAll(
+        `<p><br /></p><p><br /></p>`,
+        `<p><br /></p><p><br /></p> <ins class="adsbygoogle" data-ad-client="ca-pub-9863542606738743" data-ad-format="fluid" data-ad-layout-key="-50+c6-23-9g+y5" data-ad-slot="2010436071" style="display: block"></ins>`
+      )
     },
 
     async incrementViewCount() {
