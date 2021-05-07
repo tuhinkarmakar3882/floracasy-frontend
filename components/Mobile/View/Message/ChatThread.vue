@@ -36,8 +36,9 @@ export default {
 
 .chat-thread-component {
   cursor: pointer;
-  display: flex;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  grid-gap: 16px;
   padding: 20px 12px;
   overflow: hidden;
 
@@ -63,6 +64,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       line-height: 1.75;
+      white-space: nowrap;
     }
 
     h6 {
