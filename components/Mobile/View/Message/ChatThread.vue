@@ -4,13 +4,16 @@
     <section>
       <main>
         <h6 class="my-0">{{ thread.name }}</h6>
-        <small>05:26 a.m.</small>
+        <small>{{ getRelativeTime(1620369730191) }}</small>
       </main>
 
       <aside>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto
-          asperiores deleniti
+          <i class="mdi mdi-reply" />
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur
+          at commodi cumque cupiditate ea, eius eum excepturi hic itaque nam
+          nisi numquam odio possimus praesentium quaerat qui quisquam tenetur,
+          veritatis?
         </p>
 
         <span class="dot" />
@@ -20,6 +23,8 @@
 </template>
 
 <script>
+import { getRelativeTime } from '~/utils/utility'
+
 export default {
   name: 'ChatThread',
   props: {
@@ -27,6 +32,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    getRelativeTime,
   },
 }
 </script>
@@ -39,7 +47,7 @@ export default {
   display: grid;
   grid-template-columns: 56px 1fr;
   grid-gap: 16px;
-  padding: 20px 12px;
+  padding: 24px 12px;
   overflow: hidden;
 
   &:hover {
@@ -59,20 +67,61 @@ export default {
   }
 
   section {
-    h6,
-    p {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.75;
-      white-space: nowrap;
+    display: grid;
+    grid-gap: 8px;
+
+    main,
+    aside {
+      max-width: 100%;
+
+      h6,
+      p {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
 
-    h6 {
-      font-size: $standard-unit;
+    main {
+      display: grid;
+      grid-template-columns: 1fr 70px;
+      grid-gap: $standard-unit;
+
+      h6,
+      small {
+        display: block;
+        line-height: 1.5;
+      }
+
+      h6 {
+        font-size: $standard-unit;
+      }
+
+      small {
+        font-size: $milli-unit;
+        color: $disabled;
+        text-align: right;
+      }
     }
 
-    p {
-      font-size: $small-text-unit;
+    aside {
+      display: grid;
+      grid-template-columns: 1fr 16px;
+      grid-gap: $standard-unit;
+
+      p {
+        font-size: $small-text-unit;
+        line-height: 1.75;
+      }
+
+      span {
+        display: block;
+        height: $micro-unit;
+        width: $micro-unit;
+        border-radius: 50%;
+        background: $secondary-vibrant;
+      }
     }
   }
 }
