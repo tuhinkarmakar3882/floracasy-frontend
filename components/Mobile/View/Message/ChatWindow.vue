@@ -1,7 +1,7 @@
 <template>
   <div class="chat-window-component">
     <header>
-      <section v-ripple>
+      <section v-ripple @click="$router.back()">
         <i class="mdi mdi-arrow-left mdi-24px" />
         <img alt="" src="https://picsum.photos/46" />
       </section>
@@ -16,7 +16,7 @@
       <transition-group name="scale-up">
         <MessageItem
           v-for="(item, index) in chatMessages"
-          :key="index"
+          :key="`chatMessages${index}`"
           :chat-message="item"
           :sent-message="item.sent"
           class="my-4"
@@ -59,10 +59,6 @@ export default {
         return undefined
       },
     },
-    onCloseChat: {
-      type: Function,
-      required: true,
-    },
   },
 
   data() {
@@ -70,7 +66,68 @@ export default {
       message: '',
       isSendingMessage: false,
       canSendMessage: false,
-      chatMessages: [],
+      chatMessages: [
+        {
+          message: 'Hello!',
+          sent: true,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Hi!',
+          sent: false,
+          createdAt: Date.now(),
+        },
+        {
+          message: "how's it going?",
+          sent: false,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Good! You say!',
+          sent: true,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Hello!',
+          sent: true,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Hi!',
+          sent: false,
+          createdAt: Date.now(),
+        },
+        {
+          message: "how's it going?",
+          sent: false,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Good! You say!',
+          sent: true,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Hello!',
+          sent: true,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Hi!',
+          sent: false,
+          createdAt: Date.now(),
+        },
+        {
+          message: "how's it going?",
+          sent: false,
+          createdAt: Date.now(),
+        },
+        {
+          message: 'Good! You say!',
+          sent: true,
+          createdAt: Date.now(),
+        },
+      ],
     }
   },
   watch: {
@@ -112,7 +169,7 @@ export default {
 
   --footer-size: 72px;
 
-  grid-template-rows: 56px auto var(--footer-size);
+  grid-template-rows: 56px 1fr var(--footer-size);
 
   main,
   footer {
@@ -120,7 +177,6 @@ export default {
   }
 
   main {
-    height: calc(100vh - 56px - var(--footer-size));
     overflow: scroll;
     padding: 16px;
   }
