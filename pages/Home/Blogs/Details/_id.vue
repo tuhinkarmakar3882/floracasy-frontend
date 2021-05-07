@@ -504,6 +504,7 @@ export default {
     header {
       p:first-child {
         display: flex;
+        flex-wrap: wrap;
       }
 
       img.cover-photo {
