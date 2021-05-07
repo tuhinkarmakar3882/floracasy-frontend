@@ -1,24 +1,24 @@
 <template>
-  <div class="message-item-component">
-    <section
-      class="message-container"
-      :style="[
-        messageType === 'RECEIVED' ? receivedMessageStyles : sentMessageStyles,
-      ]"
+  <div class="chat-message-item-component">
+    <main
+      v-ripple
+      :class="[messageType, detailVisibility]"
+      @click="toggleDetails"
     >
-      <p class="message-body" style="overflow-wrap: break-word">
-        {{ chatMessage.message }}
-      </p>
-      <p class="timestamp my-2">
-        <span class="mdi mdi-check mr-2" />
-        {{ getStandardTime(chatMessage.createdAt) }}
-      </p>
-    </section>
+      <p>{{ chatMessage.message }}</p>
+    </main>
+
+    <transition name="scale-up">
+      <aside v-if="showDetails" :class="messageType" class="timestamp my-2">
+        <i v-if="sentMessage" class="mdi mdi-check mr-2" />
+
+        <span> {{ getStandardTime(chatMessage.createdAt) }} </span>
+      </aside>
+    </transition>
   </div>
 </template>
 
 <script>
-import { CustomMessageType } from '@/interfaces/CustomMessageTypes'
 import { getStandardTime } from '~/utils/utility'
 
 export default {
@@ -28,35 +28,39 @@ export default {
       type: Object,
       required: true,
     },
-    messageType: {
-      type: String,
-      default: CustomMessageType.RECEIVED_MESSAGE,
+    sentMessage: {
+      type: Boolean,
+      default: false,
     },
   },
 
   data() {
     return {
-      receivedMessageStyles: {
-        marginRight: 'auto',
-        backgroundColor: '#1c2d34',
-        borderTopLeftRadius: 0,
-        borderTopRightRadius: '12px',
-        borderBottomRightRadius: '12px',
-      },
-      sentMessageStyles: {
-        marginLeft: 'auto',
-        backgroundColor: '#003366',
-        borderBottomRightRadius: 0,
-        borderTopLeftRadius: '12px',
-        borderBottomLeftRadius: '12px',
-      },
+      showDetails: true,
+      timeout: undefined,
     }
+  },
+
+  computed: {
+    messageType() {
+      return this.sentMessage ? 'sent-msg' : 'received-msg'
+    },
+    detailVisibility() {
+      return this.showDetails && 'details'
+    },
+  },
+
+  mounted() {
+    this.timeout = setTimeout(() => {
+      this.showDetails = false
+    }, 5000)
   },
 
   methods: {
     getStandardTime,
-    getInitials(name) {
-      return name.split(' ')[0]
+    toggleDetails() {
+      clearTimeout(this.timeout)
+      this.showDetails = !this.showDetails
     },
   },
 }
@@ -65,39 +69,84 @@ export default {
 <style lang="scss" scoped>
 @import 'assets/all-variables';
 
-.message-item-component {
+.chat-message-item-component {
   display: flex;
+  flex-direction: column;
+  position: relative;
 
-  img {
-    width: 2 * $medium-unit;
-    height: 2 * $medium-unit;
-    object-position: center;
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: $default-box-shadow;
-  }
-
-  .message-container {
-    width: clamp(250px, 100%, 75vw);
-    max-width: 700px;
+  main {
+    width: auto;
+    max-width: 75%;
     padding: $micro-unit $standard-unit;
-    border-radius: $medium-unit;
     box-shadow: $default-box-shadow;
+    border-radius: $nano-unit;
+    position: relative;
 
-    .timestamp {
-      font-family: $Nunito-Sans;
-      font-size: 13px;
-      color: $muted;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      line-height: 1;
+    &::after {
+      position: absolute;
+      content: '';
+      height: 100px;
+      width: 100px;
+      clip-path: polygon(56% 16%, 8% 16%, 20% 32%);
+      top: -16px;
+    }
+
+    &.received-msg {
+      margin-right: auto;
+      background: #132e90;
+
+      &::after {
+        left: -16px;
+        background: #132e90;
+      }
+    }
+
+    &.sent-msg {
+      margin-left: auto;
+      background: #273954;
+
+      &::after {
+        right: -16px;
+        background: #273954;
+        transform: scaleX(-1);
+      }
+    }
+
+    &.details {
+      margin-bottom: 20px;
+    }
+
+    p {
+      overflow-wrap: break-word;
+      white-space: pre-line;
+      font-size: $standard-unit;
+      color: #cecece !important;
+      line-height: 1.5;
     }
   }
 
-  .message-body {
-    font-size: $standard-unit;
-    color: #cecece !important;
+  aside.timestamp {
+    position: absolute;
+    display: flex;
+    color: $muted;
+    align-items: center;
+    right: 0;
+
+    &.received-msg {
+      bottom: -$milli-unit;
+      right: unset;
+      left: 0;
+    }
+    &.sent-msg {
+      bottom: -$standard-unit;
+    }
+
+    span {
+      font-weight: 300;
+      font-family: $Nunito-Sans;
+      font-size: 12px;
+      line-height: 1;
+    }
   }
 }
 </style>
