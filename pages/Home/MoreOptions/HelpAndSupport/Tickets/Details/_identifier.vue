@@ -52,7 +52,7 @@
               v-for="message in conversationHistory"
               :key="message.identifier"
               :chat-message="message"
-              :message-type="message.messageType"
+              :sent-message="message.messageType !== 'RECEIVED'"
               class="my-4"
             />
           </aside>
