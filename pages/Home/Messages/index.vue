@@ -37,11 +37,11 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
-import { useMessageService } from '~/environmentVariables'
+// import { useMessageService } from '~/environmentVariables'
 
 export default {
   name: 'Messages',
-  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+  // middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
     return {
@@ -155,19 +155,16 @@ $image-size: 40px;
     box-shadow: $right-only-box-shadow;
 
     .chat-thread {
-      //&:nth-child(odd) {
-      //  background: #121212;
-      //}
+      &:nth-child(odd) {
+        background: #121212;
+      }
 
       .active {
-        border-left: $nano-unit solid $secondary;
-        border-right: $nano-unit solid $secondary;
         background: $card-bg-alternate;
         position: relative;
 
         @media screen and (min-width: $medium-screen) {
           border-left: 4px solid $secondary;
-          border-right: none;
         }
       }
     }
@@ -177,16 +174,16 @@ $image-size: 40px;
     background: linear-gradient(0deg, #050513 50%, #00283f 100%);
 
     @media screen and (max-width: $medium-screen) {
+      z-index: 99999999999;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 1;
     }
 
     .chat-window {
-      background: url('https://images.unsplash.com/photo-1516557070061-c3d1653fa646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2750&q=100')
+      background: url('https://images.unsplash.com/photo-1516557070061-c3d1653fa646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1360&q=85')
         no-repeat top;
       background-size: cover;
     }
