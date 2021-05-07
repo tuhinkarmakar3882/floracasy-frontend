@@ -37,11 +37,11 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
-import { useMessageService } from '~/environmentVariables'
+// import { useMessageService } from '~/environmentVariables'
 
 export default {
   name: 'Messages',
-  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+  // middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
     return {
@@ -113,9 +113,11 @@ $image-size: 40px;
 .message-page {
   position: relative;
   display: grid;
+  max-width: $extra-large-screen;
+  margin: auto;
 
   @media screen and (min-width: $medium-screen) {
-    grid-template-columns: minmax(272px, 25%) 1fr;
+    grid-template-columns: minmax(300px, 25%) 1fr;
   }
 
   header {
@@ -149,15 +151,18 @@ $image-size: 40px;
     height: 100vh;
     position: relative;
     overflow: scroll;
-    background: #111;
+    background: #0d0d0d;
     box-shadow: $right-only-box-shadow;
 
     .chat-thread {
+      //&:nth-child(odd) {
+      //  background: #121212;
+      //}
+
       .active {
         border-left: $nano-unit solid $secondary;
         border-right: $nano-unit solid $secondary;
-        border-radius: $nano-unit 0 0 $nano-unit;
-        background: $card-bg;
+        background: $card-bg-alternate;
         position: relative;
 
         @media screen and (min-width: $medium-screen) {
@@ -169,6 +174,8 @@ $image-size: 40px;
   }
 
   main {
+    background: linear-gradient(0deg, #050513 50%, #00283f 100%);
+
     @media screen and (max-width: $medium-screen) {
       position: fixed;
       top: 0;
