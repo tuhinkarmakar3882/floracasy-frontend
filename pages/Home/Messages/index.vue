@@ -1,131 +1,87 @@
 <template>
-  <div class="message-page mb-6">
-    <AppBarHeader>
-      <template #title>
-        {{ pageTitle }}
-      </template>
-    </AppBarHeader>
-    <section class="message-thread-list">
-      <div
-        v-for="messageThread in messageThreads"
-        :key="messageThread.id"
-        v-ripple
-        class="message-thread px-4 py-4"
-        @click="openChatDetails(messageThread.id)"
+  <div class="message-page">
+    <aside>
+      <header>
+        <i v-ripple class="mdi mdi-arrow-left mdi-24px" />
+        <p>Messages</p>
+        <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />
+      </header>
+
+      <FallBackLoader v-if="!chatThreads" />
+
+      <section
+        v-for="thread in chatThreads"
+        :key="thread.id"
+        class="chat-thread"
+        @click="openChat(thread)"
       >
-        <img
-          :alt="messageThread.receiver.displayName"
-          :src="messageThread.receiver.photoURL"
+        <ChatThread
+          v-ripple
+          :class="thread === currentThread && ['active']"
+          :thread="thread"
         />
+      </section>
+    </aside>
 
-        <section>
-          <p class="name">
-            {{ messageThread.receiver.displayName.substr(0, 17) }}
-          </p>
-          <p class="message-body mb-3">
-            {{ messageThread.lastMessage.substr(0, 50) }}
-          </p>
-          <small class="time-stamp">
-            <span class="mdi mdi-clock-time-nine-outline mr-1" />
-            {{ getRelativeTime(messageThread.updatedAt) }}
-          </small>
-        </section>
-
-        <span v-if="messageThread.unreadCount > 0" class="unread-count">
-          {{ getCount(messageThread.unreadCount) }}
-        </span>
-      </div>
-    </section>
-
-    <client-only>
-      <infinite-loading direction="top" @infinite="infiniteHandler">
-        <template slot="spinner">
-          <FallBackLoader>
-            <template #fallback>
-              <p class="text-center">Loading Messages...</p>
-            </template>
-          </FallBackLoader>
-        </template>
-
-        <template slot="error">
-          <p class="danger-light mb-8">Network Error</p>
-        </template>
-        <template slot="no-more">
-          <p class="my-8" />
-        </template>
-        <template slot="no-results">
-          <p class="my-8">You Haven't Started Chatting yet..</p>
-        </template>
-      </infinite-loading>
-    </client-only>
+    <transition name="scale-up">
+      <main v-if="currentThread">
+        <ChatWindow
+          :chat-thread="currentThread"
+          :on-close-chat="closeChat"
+          class="chat-window"
+        />
+      </main>
+    </transition>
   </div>
 </template>
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { getRelativeTime, processLink } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 import { useMessageService } from '~/environmentVariables'
-import AppBarHeader from '~/components/Layout/AppBarHeader'
-import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'Messages',
-  components: { FallBackLoader, AppBarHeader },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
     return {
       pageTitle: 'Messages',
-      messageThreads: [],
-      fetchThreads: endpoints.chat_system.fetchThreads,
+      chatThreads: [],
+      currentThread: undefined,
+      fetchThreadsEndpoint: endpoints.chat_system.fetchThreads,
       navigationRoutes,
     }
   },
 
   async mounted() {
-    await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
-      linkPosition: -1,
-    })
-    await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
-      linkPosition: 0,
-    })
+    await this.navigationStates()
+    await this.fetchThreads()
   },
 
   methods: {
     getRelativeTime,
-
-    getCount(countValue) {
-      return countValue > 99 ? `${countValue.toString()}+` : countValue
+    async navigationStates() {
+      await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
+        linkPosition: -1,
+      })
+      await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
+        linkPosition: 0,
+      })
     },
-
-    async infiniteHandler($state) {
-      if (!this.fetchThreads) {
-        $state.complete()
-        return
-      }
-
-      try {
-        const { results, next } = await this.$axios.$get(this.fetchThreads)
-        if (results.length) {
-          this.fetchThreads = processLink(next)
-          this.messageThreads.push(...results)
-          $state.loaded()
-        } else {
-          $state.complete()
-        }
-      } catch (e) {
-        $state.complete()
-      }
-    },
-
-    async openChatDetails(messageThreadId) {
-      await this.$router.push(
-        navigationRoutes.Home.Messages.ChatScreen.replace(
-          /{messageThreadId}/,
-          messageThreadId
-        )
+    async fetchThreads() {
+      this.chatThreads = await this.$axios.$get(
+        'https://jsonplaceholder.typicode.com/users'
       )
+    },
+
+    openChat(thread) {
+      if (this.currentThread === thread) return
+      this.currentThread = thread
+    },
+    closeChat() {
+      this.currentThread = undefined
     },
   },
 
@@ -143,54 +99,68 @@ export default {
 $image-size: 40px;
 
 .message-page {
-  .message-thread {
-    position: relative;
-    display: grid;
-    grid-column-gap: $large-unit;
-    grid-template-columns: $image-size auto;
+  position: relative;
+  display: grid;
+
+  @media screen and (min-width: $medium-screen) {
+    grid-template-columns: minmax(272px, 25%) 1fr;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: $navigation-bar-color;
+    display: flex;
     align-items: center;
+    box-shadow: $down-only-box-shadow;
 
-    img {
-      width: $image-size;
-      height: $image-size;
-      object-fit: cover;
-      object-position: center;
-      border-radius: 50%;
-      box-shadow: $default-box-shadow;
+    * {
+      color: white;
+      line-height: 1;
+      font-weight: 400;
     }
 
-    .name {
-      color: #ededed;
-      font-family: $Prata;
-    }
-
-    .message-body {
-      font-size: 15px;
-    }
-
-    .time-stamp {
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      color: darken($muted, $lighten-percentage);
-    }
-
-    &:nth-child(even) {
-      background-color: #08081f;
-    }
-
-    .unread-count {
-      position: absolute;
-      background-color: $primary-matte;
-      height: $x-large-unit;
-      width: 2 * $large-unit;
-      color: $white;
-      right: $milli-unit;
+    i {
       display: grid;
       place-items: center;
-      font-family: $Nunito-Sans;
-      border-radius: 2 * $x-large-unit;
-      font-size: 13px;
+      height: 56px;
+      width: 56px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  aside {
+    height: 100vh;
+    position: relative;
+    overflow: scroll;
+    background: #111;
+    box-shadow: $right-only-box-shadow;
+
+    .chat-thread {
+      .active {
+        border-left: 4px solid $secondary;
+        background: $card-bg;
+      }
+    }
+  }
+
+  main {
+    .chat-window {
+      background: url('https://images.unsplash.com/photo-1516557070061-c3d1653fa646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2750&q=100')
+        no-repeat top;
+      background-size: cover;
+      @media screen and (max-width: $medium-screen) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
     }
   }
 }
