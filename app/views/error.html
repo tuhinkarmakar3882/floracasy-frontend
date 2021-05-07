@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport">
+  <meta content="ie=edge" http-equiv="X-UA-Compatible">
+  <title>Server Error | Floracasy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-weight: 300;
+      color: var(--complement-color);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    body {
+      background: linear-gradient(
+        45deg,
+        #000 0%,
+        #0d0d17 12.5%,
+        #111120 25%,
+        #191928 37.5%,
+        #1C1C2B 50%,
+        #191928 62.5%,
+        #111120 75%,
+        #0d0d17 87.5%,
+        #000 100%
+      ) right no-repeat;
+      background-size: 400%;
+      animation: shift-background 10s infinite alternate-reverse ease-in-out;
+      display: grid;
+      place-items: center;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    @keyframes shift-background {
+      from {
+        background-position: left;
+      }
+      to {
+        background-position: right;
+      }
+    }
+
+    fieldset {
+      padding: 1rem;
+      border: 1px solid #3a3a3a;
+      display: grid;
+      place-items: center;
+      margin: 1rem;
+      box-shadow: 0 0 4px #753A88, 0 0 4px #753A88 inset;
+    }
+
+    legend {
+      padding: 0.5rem 0.75rem;
+      font-size: 1.25rem;
+      color: hsl(217, 0%, 80%);
+      font-weight: 300;
+      background: #111120;
+      border-radius: 50px;
+    }
+
+    h1 {
+      font-weight: 400;
+      margin: 0 0 2rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      font-size: 1rem;
+      font-family: sans-serif;
+      color: hsl(217, 0%, 80%);
+    }
+
+    :root {
+      --primary-color: hsl(200, 70%, 45%);
+      --primary-color-light: hsl(200, 80%, 60%);
+      --complement-color: hsl(0, 0%, 100%);
+      --muted-color: hsl(217, 0%, 80%);
+      --default-border-radius: 0.25rem;
+      --login-form-border: 1px solid hsl(217, 0%, 80%);
+    }
+
+
+    button {
+      display: block;
+      margin: 2rem 0 3rem;
+      padding: 0.75rem 2.75rem;
+      border: var(--login-form-border);
+      border-radius: var(--default-border-radius);
+      color: var(--complement-color);
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      font-weight: 400;
+      font-size: 1rem;
+    }
+
+    button:hover,
+    button:active,
+    button:focus {
+      color: var(--complement-color);
+      background-color: var(--primary-color-light);
+      border-color: var(--primary-color-light);
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      font-weight: 400;
+      color: var(--complement-color);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <fieldset>
+    <legend>Apologies!</legend>
+
+    <h1>Ouch! It's on us this time!</h1>
+    <p>Something went wrong. May be Because of the Devs didn't work smart?</p>
+    <br />
+    <p>Anyways, Let's get you back on track</p>
+
+    <a href="https://floracasy.com">
+      <button>Back to Floracasy</button>
+    </a>
+  </fieldset>
+</main>
+<script defer src="https://www.googletagmanager.com/gtag/js?id=G-M1MPRCJT7Z"></script>
+<script defer>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag("js", new Date());
+</script>
+</body>
+</html>
