@@ -7,29 +7,27 @@
         <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />
       </header>
 
-      <FallBackLoader v-if="!chatThreads" />
+      <FallBackLoader v-if="!chatThreads.length" class="my-6" />
 
-      <section
-        v-for="thread in chatThreads"
-        :key="thread.id"
-        class="chat-thread"
-        @click="openChat(thread)"
-      >
-        <ChatThread
-          v-ripple
-          :class="thread === currentThread && ['active']"
-          :thread="thread"
-        />
-      </section>
+      <transition-group name="scale-up">
+        <section
+          v-for="(thread, index) in chatThreads"
+          :key="`thread${index}`"
+          class="chat-thread"
+          @click="openChat(thread)"
+        >
+          <ChatThread
+            v-ripple
+            :class="thread === currentThread && ['active']"
+            :thread="thread"
+          />
+        </section>
+      </transition-group>
     </aside>
 
     <transition name="scale-up">
       <main v-if="currentThread">
-        <ChatWindow
-          :chat-thread="currentThread"
-          :on-close-chat="closeChat"
-          class="chat-window"
-        />
+        <ChatWindow :chat-thread="currentThread" class="chat-window" />
       </main>
     </transition>
   </div>
@@ -56,8 +54,20 @@ export default {
   },
 
   async mounted() {
+    this.$router.beforeEach((to, _, next) => {
+      if (to.hash === '') {
+        this.currentThread = undefined
+      }
+      next()
+    })
     await this.navigationStates()
     await this.fetchThreads()
+  },
+
+  beforeDestroy() {
+    this.$router.beforeEach((__, _, next) => {
+      next()
+    })
   },
 
   methods: {
@@ -70,18 +80,20 @@ export default {
         linkPosition: 0,
       })
     },
+
     async fetchThreads() {
-      this.chatThreads = await this.$axios.$get(
-        'https://jsonplaceholder.typicode.com/users'
-      )
+      this.chatThreads = await this.$axios
+        .$get('https://jsonplaceholder.typicode.com/users')
+        .catch((e) => {
+          console.warn(e)
+          return []
+        })
     },
 
     openChat(thread) {
       if (this.currentThread === thread) return
       this.currentThread = thread
-    },
-    closeChat() {
-      this.currentThread = undefined
+      this.$router.push(`#${this.currentThread.id}`)
     },
   },
 
@@ -142,25 +154,34 @@ $image-size: 40px;
 
     .chat-thread {
       .active {
-        border-left: 4px solid $secondary;
+        border-left: $nano-unit solid $secondary;
+        border-right: $nano-unit solid $secondary;
+        border-radius: $nano-unit 0 0 $nano-unit;
         background: $card-bg;
+        position: relative;
+
+        @media screen and (min-width: $medium-screen) {
+          border-left: 4px solid $secondary;
+          border-right: none;
+        }
       }
     }
   }
 
   main {
+    @media screen and (max-width: $medium-screen) {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+    }
+
     .chat-window {
       background: url('https://images.unsplash.com/photo-1516557070061-c3d1653fa646?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2750&q=100')
         no-repeat top;
       background-size: cover;
-      @media screen and (max-width: $medium-screen) {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-      }
     }
   }
 }
