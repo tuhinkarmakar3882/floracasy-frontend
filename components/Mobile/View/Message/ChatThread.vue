@@ -50,8 +50,10 @@ export default {
   padding: 24px 12px;
   overflow: hidden;
 
-  &:hover {
-    background: $gray-tone;
+  @media screen and (min-width: $medium-screen) {
+    &:hover {
+      background: $gray-tone;
+    }
   }
 
   &:nth-child(even) {

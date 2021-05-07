@@ -1,10 +1,6 @@
 <template>
   <div class="chat-message-item-component">
-    <main
-      v-ripple
-      :class="[messageType, detailVisibility]"
-      @click="toggleDetails"
-    >
+    <main :class="[messageType, detailVisibility]" @click="toggleDetails">
       <p>{{ chatMessage.message }}</p>
     </main>
 
@@ -93,11 +89,11 @@ export default {
 
     &.received-msg {
       margin-right: auto;
-      background: #132e90;
+      background: hsl(227, 77%, 32%);
 
       &::after {
         left: -16px;
-        background: #132e90;
+        background: hsl(227, 77%, 32%);
       }
     }
 

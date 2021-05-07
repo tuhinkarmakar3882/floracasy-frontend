@@ -167,13 +167,13 @@ export default {
   display: grid;
   height: 100vh;
 
-  --footer-size: 72px;
+  --footer-size: 64px;
 
   grid-template-rows: 56px 1fr var(--footer-size);
 
   main,
   footer {
-    background: rgba($black, 0.3);
+    background: rgba($black, 0.4);
   }
 
   main {
@@ -188,24 +188,25 @@ export default {
     position: relative;
 
     * {
-      height: 60px;
+      height: 56px;
     }
 
     textarea {
       position: relative;
       color: $white;
-      padding: $standard-unit 64px $standard-unit $standard-unit;
+      padding: $milli-unit 64px $milli-unit $milli-unit;
       margin: 0 $micro-unit;
       border: 1px solid #33334e;
       resize: none;
       border-radius: 50px;
       background: $card-bg;
+      line-height: 29px;
       box-shadow: $default-box-shadow;
 
       &:hover,
       &:focus,
       &:active {
-        border-color: #4b73ff;
+        border-color: hsl(227, 70%, 35%);
       }
 
       &::placeholder {
