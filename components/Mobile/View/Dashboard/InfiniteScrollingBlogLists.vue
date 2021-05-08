@@ -1,27 +1,45 @@
 <template>
   <div class="mb-6 scrollable-blog-list">
+    <!--    <section v-if="blogs">-->
+    <!--      <transition-group name="scale-up">-->
+    <!--        <article v-for="(blog, index) in blogs" :key="blog.id">-->
+    <!--          <BlogPost :blog="blog" class="pb-0 pt-8" />-->
+    <!--          <InFeedAd />-->
+    <!--          <LazyFollowSuggestions-->
+    <!--            v-if="showFollowSuggestions && index === 2"-->
+    <!--            class="pb-6"-->
+    <!--          />-->
+    <!--        </article>-->
+    <!--      </transition-group>-->
+    <!--    </section>-->
+
     <section v-if="blogs">
-      <transition-group name="scale-up">
-        <article v-for="(blog, index) in blogs" :key="blog.id">
-          <BlogPost :blog="blog" class="pb-0 pt-8" />
+      <RecycleScroller :items="blogs" :min-item-size="1" class="scroller">
+        <template #default="{ item, index }">
+          <BlogPost :blog="item" class="pb-0 pt-8" />
           <InFeedAd />
           <LazyFollowSuggestions
             v-if="showFollowSuggestions && index === 2"
             class="pb-6"
           />
-        </article>
-      </transition-group>
+        </template>
+      </RecycleScroller>
     </section>
 
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
         <template slot="spinner">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p class="text-center">Getting Latest Articles...</p>
+          <FallBackLoader>
+            <template #fallback>
+              <p class="text-center">Getting Latest Articles...</p>
+            </template>
+          </FallBackLoader>
         </template>
+
         <template slot="error">
           <p class="danger-light my-6">Network Error</p>
         </template>
+
         <template slot="no-more">
           <p class="secondary-matte text-center mt-4 mb-8">
             <i class="mdi mdi-party-popper mdi-18px" />
@@ -29,7 +47,6 @@
             <small> Come back soon for more </small>
           </p>
         </template>
-        <!--        <template slot="no-results">No results message</template>-->
       </infinite-loading>
     </client-only>
   </div>
@@ -40,10 +57,17 @@ import endpoints from '@/api/endpoints'
 import { processLink } from '~/utils/utility'
 import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 import BlogPost from '~/components/Blogs/BlogPost'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import { RecycleScroller } from 'vue-virtual-scroller'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
-  components: { BlogPost, InFeedAd },
+  components: {
+    FallBackLoader,
+    BlogPost,
+    InFeedAd,
+    RecycleScroller,
+  },
   props: {
     category: {
       type: String,
