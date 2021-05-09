@@ -1,0 +1,8 @@
+@import "../all-variables";
+
+.vue-recycle-scroller__item-view {
+  &:nth-child(even) {
+    background: $navigation-bar-color;
+    box-shadow: $default-box-shadow;
+  }
+}

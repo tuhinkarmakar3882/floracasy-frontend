@@ -59,6 +59,7 @@ import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 import BlogPost from '~/components/Blogs/BlogPost'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import { RecycleScroller } from 'vue-virtual-scroller'
+import '~/assets/override/virtual-scroller.scss'
 
 export default {
   name: 'InfiniteScrollingBlogLists',

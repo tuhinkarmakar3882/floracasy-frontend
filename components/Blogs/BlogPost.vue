@@ -456,5 +456,9 @@ export default {
       }
     }
   }
+
+  &:hover {
+    background: $body-bg-alternate;
+  }
 }
 </style>
