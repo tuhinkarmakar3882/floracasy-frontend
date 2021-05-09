@@ -4,7 +4,13 @@
     class="user-search-result-component"
     @click="openProfileDetails"
   >
-    <img :src="photoURL" alt="user-image" height="64" width="64" />
+    <img
+      decoding="async"
+      :src="photoURL"
+      alt="user-image"
+      height="64"
+      width="64"
+    />
     <section class="user-data ml-4">
       <div class="top-line">
         <h6 class="mt-0 mb-1 secondary mr-auto">{{ userdata.username }}</h6>

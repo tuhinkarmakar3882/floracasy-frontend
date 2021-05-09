@@ -85,7 +85,12 @@
           <div class="preview">
             <transition name="scale-down">
               <section v-if="postImage.source">
-                <img :src="postImage.source" alt="preview" class="my-4" />
+                <img
+                  decoding="async"
+                  :src="postImage.source"
+                  alt="preview"
+                  class="my-4"
+                />
                 <aside
                   class="mdi mdi-close floating-close"
                   @click="clearPhotoPreview"

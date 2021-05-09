@@ -1,6 +1,11 @@
 <template>
   <div class="chat-thread-component">
-    <img alt="Profile Image" src="https://picsum.photos/500" />
+    <img
+      loading="lazy"
+      decoding="async"
+      alt="Profile Image"
+      src="https://picsum.photos/500"
+    />
     <section>
       <main>
         <h6 class="my-0">{{ thread.name }}</h6>

@@ -1,6 +1,6 @@
 <template>
   <div class="comment-box">
-    <!--    <img v-if="user" :src="user.photoURL" alt="profile-image" />-->
+    <!--    <img loading="lazy"decoding="async"v-if="user" :src="user.photoURL" alt="profile-image" />-->
 
     <main><slot name="text-box" /></main>
 

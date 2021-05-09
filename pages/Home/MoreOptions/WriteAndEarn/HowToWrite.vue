@@ -112,7 +112,7 @@
 
       <!--          <h3>Alignments</h3>-->
 
-      <!--          <img alt=" screenshort or gify" src="#0.1_" />-->
+      <!--          <img loading="lazy"decoding="async"alt=" screenshort or gify" src="#0.1_" />-->
 
       <!--          <p>-->
       <!--            You can easily change your alignment by using these tools. These are-->
@@ -144,7 +144,7 @@
       <!--            which you can add below-->
       <!--          </p>-->
 
-      <!--          <img alt="screen recording" src="#0.1_" />-->
+      <!--          <img loading="lazy"decoding="async"alt="screen recording" src="#0.1_" />-->
 
       <!--          <ul>-->
       <!--            <li>-->
@@ -172,7 +172,7 @@
 
       <!--          <h3>How to set position</h3>-->
 
-      <!--          <img alt="screenshorts" src="#0.1_" />-->
+      <!--          <img loading="lazy"decoding="async"alt="screenshorts" src="#0.1_" />-->
 
       <!--          <p>-->
       <!--            You can simply set your position by using this particular element-->
@@ -189,7 +189,7 @@
       <!--            .-->
       <!--          </p>-->
 
-      <!--          <img alt=" screenshort" src="#0.1_" />-->
+      <!--          <img loading="lazy"decoding="async"alt=" screenshort" src="#0.1_" />-->
 
       <!--          <h3>link (icon)</h3>-->
 

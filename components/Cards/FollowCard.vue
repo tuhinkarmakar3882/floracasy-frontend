@@ -7,7 +7,12 @@
         @click="hideCard = true"
       />
 
-      <img alt="profile-picture" :src="photoURL" @click="openProfileDetails" />
+      <img
+        decoding="async"
+        alt="profile-picture"
+        :src="photoURL"
+        @click="openProfileDetails"
+      />
 
       <h6 class="mt-6 mb-4" @click="openProfileDetails">
         {{ userdata.username }}

@@ -3,7 +3,12 @@
     <header>
       <section v-ripple @click="$router.back()">
         <i class="mdi mdi-arrow-left mdi-24px" />
-        <img alt="" src="https://picsum.photos/46" />
+        <img
+          loading="lazy"
+          decoding="async"
+          alt=""
+          src="https://picsum.photos/46"
+        />
       </section>
 
       <p v-ripple>{{ chatThread.name }}</p>
