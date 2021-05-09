@@ -25,7 +25,7 @@
 
     <main class="timeline pt-4">
       <section v-if="tabNumber === 0">
-        <article v-for="(blog, index) in recentBlogs" :key="blog.identifier">
+        <article v-for="blog in recentBlogs" :key="blog.identifier">
           <LazyBlogPost :blog="blog" class="activity pt-4" />
 
           <InFeedAd use-small-ads />

@@ -381,6 +381,10 @@ export default {
           background: $card-bg;
         }
       }
+
+      a {
+        text-transform: capitalize;
+      }
     }
 
     .options {
