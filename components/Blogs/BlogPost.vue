@@ -362,6 +362,7 @@ export default {
       display: flex !important;
       position: relative;
       flex-wrap: wrap;
+      padding-right: 2 * $xx-large-unit;
 
       i {
         cursor: pointer;
