@@ -284,7 +284,6 @@ $image-dimension: 64px;
 
     &:nth-child(even) {
       background: darken($body-bg, 1%);
-
     }
 
     &:hover {

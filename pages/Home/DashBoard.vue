@@ -271,6 +271,11 @@ $blog-border-radius: 20px;
       padding: 0.7rem 0;
       font-size: 1rem;
       font-weight: 300;
+      cursor: pointer;
+
+      &:hover {
+        background: $body-bg-alternate;
+      }
     }
 
     .active-tab {

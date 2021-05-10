@@ -36,7 +36,9 @@
       </header>
       <footer>
         <div>
-          <Logo :width="36" />
+          <nuxt-link to="/Home/Dashboard">
+            <Logo :width="36" />
+          </nuxt-link>
         </div>
 
         <div
@@ -366,6 +368,10 @@ export default {
     footer {
       position: fixed;
       background: $navigation-bar-color;
+
+      * {
+        cursor: pointer;
+      }
     }
 
     footer {
@@ -421,6 +427,12 @@ export default {
         }
       }
 
+      section {
+        &:hover {
+          background: $card-bg;
+        }
+      }
+
       #active-nav-link {
         color: $white;
         position: relative;
@@ -436,6 +448,10 @@ export default {
           box-shadow: $right-only-box-shadow;
           background: $active-gradient;
           z-index: -1;
+        }
+
+        &:hover {
+          background: unset;
         }
       }
 
@@ -464,6 +480,10 @@ export default {
         height: 56px;
         display: flex;
         align-items: center;
+
+        &:hover {
+          background: $card-bg;
+        }
       }
     }
 
