@@ -143,11 +143,6 @@ export default {
           sent: false,
           createdAt: Date.now(),
         },
-        {
-          message: 'You too!',
-          sent: true,
-          createdAt: Date.now(),
-        },
       ],
     }
   },
@@ -167,6 +162,9 @@ export default {
     //     createdAt: 1620401158506,
     //   })
     // }
+    setTimeout(() => {
+      this.$refs.bottomOfChat.scrollIntoView()
+    }, 200)
   },
   methods: {
     // shouldShowTimeDiff(createdAt) {
@@ -204,7 +202,10 @@ export default {
           ...this.chatThread,
           lastMessage: this.message,
           updatedAt: Date.now(),
-          unread: false,
+          metadata: {
+            unread: false,
+            senderUID: this.chatMessages.length % 2 ? 'me' : 'you',
+          },
         })
         this.message = ''
       } catch (e) {
@@ -306,10 +307,11 @@ export default {
     position: sticky;
     top: 0;
     z-index: 1;
-    display: flex;
     align-items: center;
     box-shadow: $down-only-box-shadow;
     background: $navigation-bar-color;
+    display: grid;
+    grid-template-columns: 84px 1fr repeat(2, 56px);
 
     * {
       color: white;
@@ -328,6 +330,10 @@ export default {
 
     p {
       font-size: 18px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     section {

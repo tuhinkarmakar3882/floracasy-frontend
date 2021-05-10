@@ -14,12 +14,12 @@
 
       <aside>
         <p>
-          <i class="mdi mdi-reply" />
+          <i class="mdi mdi-reply" v-if="showReplySymbol" />
           {{ thread.lastMessage }}
         </p>
 
         <transition name="slide-right">
-          <span class="dot" v-if="thread.unread" />
+          <span class="dot" v-if="thread.metadata.unread" />
         </transition>
       </aside>
     </section>
@@ -35,6 +35,11 @@ export default {
     thread: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    showReplySymbol() {
+      return this.thread?.metadata?.senderUID === 'me'
     },
   },
   methods: {
@@ -115,6 +120,7 @@ export default {
       display: grid;
       grid-template-columns: 1fr 16px;
       grid-gap: $standard-unit;
+      align-items: center;
 
       p {
         font-size: $small-text-unit;
@@ -127,6 +133,24 @@ export default {
         width: $micro-unit;
         border-radius: 50%;
         background: $secondary-vibrant;
+        animation: ripple-effect 5s ease-in-out infinite alternate-reverse;
+
+        $common-values: 0 0 8px;
+
+        @keyframes ripple-effect {
+          0% {
+            box-shadow: $common-values 2px rgba($secondary-matte, 0.1);
+          }
+          50% {
+            box-shadow: $common-values 4px rgba($secondary-vibrant, 0.5);
+          }
+          80% {
+            box-shadow: $common-values 2px rgba($secondary, 0.1);
+          }
+          100% {
+            box-shadow: $common-values 4px rgba($secondary-matte, 0.1);
+          }
+        }
       }
     }
   }

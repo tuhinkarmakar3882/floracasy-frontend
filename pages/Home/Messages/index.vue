@@ -93,9 +93,12 @@ export default {
             displayName: 'Test User ' + i,
             photoURL: 'https://picsum.photos/' + i,
           },
-          unread: true,
+          metadata: {
+            unread: true,
+            senderUID: 'you',
+          },
           updatedAt: Date.now() - 8640000 * i,
-          lastMessage: 'Test Last Message',
+          lastMessage: 'Stay Indoors',
         })
       }
     },
