@@ -11,7 +11,7 @@
         />
       </section>
 
-      <p v-ripple>{{ chatThread.name }}</p>
+      <p v-ripple>{{ chatThread.user.displayName }}</p>
 
       <i v-ripple class="mdi mdi-phone mdi-24px ml-auto" />
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px" />
@@ -76,6 +76,10 @@ export default {
       default() {
         return undefined
       },
+    },
+    onChatUpdate: {
+      type: Function,
+      required: true,
     },
   },
 
@@ -196,6 +200,10 @@ export default {
           createdAt: Date.now(),
         })
         await showUITip(this.$store, 'Comment Added', 'success')
+        this.onChatUpdate(this.chatThread, {
+          ...this.chatThread,
+          lastMessage: this.message,
+        })
         this.message = ''
       } catch (e) {
       } finally {

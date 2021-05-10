@@ -4,21 +4,18 @@
       loading="lazy"
       decoding="async"
       alt="Profile Image"
-      src="https://picsum.photos/500"
+      :src="thread.user.photoURL"
     />
     <section>
       <main>
-        <h6 class="my-0">{{ thread.name }}</h6>
-        <small>{{ getRelativeTime(1620369730191) }}</small>
+        <h6 class="my-0">{{ thread.user.displayName }}</h6>
+        <small>{{ getRelativeTime(thread.updatedAt) }}</small>
       </main>
 
       <aside>
         <p>
           <i class="mdi mdi-reply" />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur
-          at commodi cumque cupiditate ea, eius eum excepturi hic itaque nam
-          nisi numquam odio possimus praesentium quaerat qui quisquam tenetur,
-          veritatis?
+          {{ thread.lastMessage }}
         </p>
 
         <span class="dot" />

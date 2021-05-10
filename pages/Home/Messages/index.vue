@@ -27,7 +27,11 @@
 
     <transition name="scale-up">
       <main v-if="currentThread">
-        <ChatWindow :chat-thread="currentThread" class="chat-window" />
+        <ChatWindow
+          :chat-thread="currentThread"
+          class="chat-window"
+          :on-chat-update="updateChatThread"
+        />
       </main>
     </transition>
   </div>
@@ -37,11 +41,11 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
-import { useMessageService } from '~/environmentVariables'
+// import { useMessageService } from '~/environmentVariables'
 
 export default {
   name: 'Messages',
-  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+  // middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
     return {
@@ -82,18 +86,33 @@ export default {
     },
 
     async fetchThreads() {
-      this.chatThreads = await this.$axios
-        .$get('https://jsonplaceholder.typicode.com/users')
-        .catch((e) => {
-          console.warn(e)
-          return []
+      for (let i = 100; i < 200; i++) {
+        this.chatThreads.push({
+          user: {
+            displayName: 'Test User ' + i,
+            photoURL: 'https://picsum.photos/' + i,
+          },
+          updatedAt: Date.now(),
+          lastMessage: 'Test Last Message',
         })
+      }
     },
 
     openChat(thread) {
       if (this.currentThread === thread) return
       this.currentThread = thread
       this.$router.push(`#${this.currentThread.id}`)
+    },
+
+    updateChatThread(oldThread, newThread) {
+      for (let i = 0; i < this.chatThreads.length; i++) {
+        if (this.chatThreads[i] === oldThread) {
+          this.chatThreads.splice(i, 1)
+          this.currentThread = newThread
+        }
+      }
+
+      this.chatThreads.unshift(newThread)
     },
   },
 
