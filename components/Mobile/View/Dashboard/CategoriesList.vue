@@ -45,7 +45,7 @@
               v-for="category in matchCategories"
               :key="category.id"
               v-ripple
-              class="px-4 py-3"
+              class="px-4 py-3 category-item"
               @click="openCategoryWisePage(category.name)"
             >
               <p>
@@ -276,6 +276,19 @@ $image-dimension: 64px;
           }
         }
       }
+    }
+  }
+
+  .category-item {
+    cursor: pointer;
+
+    &:nth-child(even) {
+      background: darken($body-bg, 1%);
+
+    }
+
+    &:hover {
+      background: $body-bg-alternate;
     }
   }
 }
