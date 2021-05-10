@@ -1,6 +1,15 @@
 <template>
   <ins
-    v-if="useSmallAds"
+    v-if="useAlternateAccount"
+    class="adsbygoogle"
+    data-ad-client="ca-pub-6503565742033720"
+    data-ad-format="fluid"
+    data-ad-layout-key="-5u+dg+44-5g+2z"
+    data-ad-slot="9825202092"
+    style="display: block"
+  />
+  <ins
+    v-else-if="useSmallAds"
     class="adsbygoogle"
     data-ad-client="ca-pub-9863542606738743"
     data-ad-format="fluid"
@@ -20,6 +29,7 @@
 </template>
 
 <script>
+import { useAlternateAccount } from '~/environmentVariables'
 export default {
   name: 'InFeedAd',
   props: {
@@ -27,6 +37,11 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  data() {
+    return {
+      useAlternateAccount,
+    }
   },
   mounted() {
     ;(window.adsbygoogle || []).push({})
