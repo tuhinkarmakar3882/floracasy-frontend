@@ -1,10 +1,8 @@
 <template>
   <div class="index-page">
-    <client-only>
-      <LazyMobileLandingPage v-if="mobileView" />
+    <MobileLandingPage v-if="mobileView" />
 
-      <LazyDesktopLandingPage v-else />
-    </client-only>
+    <LazyDesktopLandingPage v-else />
   </div>
 </template>
 
