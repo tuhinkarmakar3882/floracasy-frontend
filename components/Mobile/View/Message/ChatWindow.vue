@@ -4,9 +4,9 @@
       <section v-ripple @click="$router.back()">
         <i class="mdi mdi-arrow-left mdi-24px" />
         <img
-          loading="lazy"
-          decoding="async"
           alt=""
+          decoding="async"
+          loading="lazy"
           src="https://picsum.photos/46"
         />
       </section>
@@ -28,6 +28,11 @@
         />
       </transition-group>
       <div ref="bottomOfChat" />
+
+      <TypingAnimation
+        v-if="chatMessages.length % 2 && typing"
+        class="typing-animation"
+      />
     </main>
 
     <footer>
@@ -36,6 +41,7 @@
         v-model="message"
         class="input-field"
         placeholder="Type Your Message Here!"
+        @keyup="sendTypingEvent"
         @keyup.enter="sendMessage"
       />
       <i
@@ -53,9 +59,16 @@
 
 <script>
 import { showUITip } from '~/utils/utility'
+import TypingAnimation from '~/components/Mobile/View/Message/TypingAnimation'
+import MessageItem from '~/components/Mobile/View/Message/MessageItem'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 export default {
   name: 'ChatWindow',
+  components: {
+    MessageItem,
+    TypingAnimation,
+  },
   props: {
     chatThread: {
       type: Object,
@@ -69,23 +82,27 @@ export default {
   data() {
     return {
       message: '',
+      typing: true,
+      typingTimeout: undefined,
       isSendingMessage: false,
       canSendMessage: false,
+      lastMessageTime: Date.now(),
+
       chatMessages: [
         {
           message: 'Hello!',
           sent: true,
-          createdAt: Date.now(),
+          createdAt: 1620401158506,
         },
         {
           message: 'Hi!',
           sent: false,
-          createdAt: Date.now(),
+          createdAt: 1620401168506,
         },
         {
-          message: "how's it going?",
+          message: "How's it going?",
           sent: false,
-          createdAt: Date.now(),
+          createdAt: 1620501158506,
         },
         {
           message: 'Good! You say!',
@@ -93,54 +110,79 @@ export default {
           createdAt: Date.now(),
         },
         {
-          message: 'Hello!',
+          message: "I'm good till now only.",
           sent: true,
           createdAt: Date.now(),
         },
         {
-          message: 'Hi!',
+          message: "How's the Covid Situation over there buddy?",
           sent: false,
           createdAt: Date.now(),
         },
         {
-          message: "how's it going?",
+          message: 'It getting worse here day by day...',
           sent: false,
           createdAt: Date.now(),
         },
         {
-          message: 'Good! You say!',
+          message: 'Same Pinch... Cases are rising rapidly.',
           sent: true,
           createdAt: Date.now(),
         },
         {
-          message: 'Hello!',
-          sent: true,
-          createdAt: Date.now(),
-        },
-        {
-          message: 'Hi!',
+          message: 'I can understand.',
           sent: false,
           createdAt: Date.now(),
         },
         {
-          message: "how's it going?",
+          message: 'Stay indoors!',
           sent: false,
           createdAt: Date.now(),
         },
         {
-          message: 'Good! You say!',
+          message: 'You too!',
           sent: true,
           createdAt: Date.now(),
         },
       ],
     }
   },
+
   watch: {
     message(msg) {
       this.canSendMessage = msg.trim().length > 0
     },
   },
+
+  mounted() {
+    // for (let i = 0; i < 10000; i++) {
+    //   this.chatMessages.push({
+    //     id: i,
+    //     message: i,
+    //     sent: true,
+    //     createdAt: 1620401158506,
+    //   })
+    // }
+  },
   methods: {
+    // shouldShowTimeDiff(createdAt) {
+    //   const seconds = 1000
+    //   const minute = 60 * seconds
+    //   const hour = 60 * minute
+    //   const day = 24 * hour
+    //
+    //   const timeDiff = this.lastMessageTime - createdAt
+    //   const absoluteTimeDifference = Math.abs(timeDiff)
+    //   const timeDifferenceInDays = absoluteTimeDifference / day
+    //
+    //   if (timeDifferenceInDays >= 1) {
+    //     this.lastMessageTime = createdAt
+    //     console.log('cool')
+    //     return true
+    //   }
+    //   return false
+    // },
+
     async sendMessage() {
       if (!this.canSendMessage) return
 
@@ -161,6 +203,14 @@ export default {
         this.$refs.textbox.focus()
       }
     },
+
+    sendTypingEvent() {
+      this.typing = true
+      clearTimeout(this.typingTimeout)
+      this.typingTimeout = setTimeout(() => {
+        this.typing = false
+      }, 10000)
+    },
   },
 }
 </script>
@@ -175,6 +225,11 @@ export default {
   --footer-size: 64px;
 
   grid-template-rows: 56px 1fr var(--footer-size);
+  scroll-behavior: smooth;
+
+  * {
+    scroll-behavior: smooth;
+  }
 
   main,
   footer {
@@ -183,7 +238,8 @@ export default {
 
   main {
     overflow: scroll;
-    padding: 16px;
+    padding: 16px 16px 4px;
+    position: relative;
   }
 
   footer {
