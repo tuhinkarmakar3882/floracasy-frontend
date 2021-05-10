@@ -88,11 +88,13 @@ export default {
     async fetchThreads() {
       for (let i = 100; i < 200; i++) {
         this.chatThreads.push({
+          userUID: i,
           user: {
             displayName: 'Test User ' + i,
             photoURL: 'https://picsum.photos/' + i,
           },
-          updatedAt: Date.now(),
+          unread: true,
+          updatedAt: Date.now() - 8640000 * i,
           lastMessage: 'Test Last Message',
         })
       }
@@ -105,6 +107,12 @@ export default {
     },
 
     updateChatThread(oldThread, newThread) {
+      if (this.chatThreads[0] === oldThread) {
+        this.chatThreads[0] = newThread
+        this.currentThread = newThread
+        return
+      }
+
       for (let i = 0; i < this.chatThreads.length; i++) {
         if (this.chatThreads[i] === oldThread) {
           this.chatThreads.splice(i, 1)

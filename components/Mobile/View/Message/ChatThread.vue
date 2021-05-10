@@ -18,7 +18,9 @@
           {{ thread.lastMessage }}
         </p>
 
-        <span class="dot" />
+        <transition name="slide-right">
+          <span class="dot" v-if="thread.unread" />
+        </transition>
       </aside>
     </section>
   </div>
@@ -89,7 +91,7 @@ export default {
 
     main {
       display: grid;
-      grid-template-columns: 1fr 70px;
+      grid-template-columns: 1fr auto;
       grid-gap: $standard-unit;
 
       h6,

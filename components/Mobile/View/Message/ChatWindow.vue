@@ -203,6 +203,8 @@ export default {
         this.onChatUpdate(this.chatThread, {
           ...this.chatThread,
           lastMessage: this.message,
+          updatedAt: Date.now(),
+          unread: false,
         })
         this.message = ''
       } catch (e) {
