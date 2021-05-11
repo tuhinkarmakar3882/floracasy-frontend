@@ -1,7 +1,7 @@
 <template>
   <div class="chat-window-component">
     <header>
-      <section v-ripple @click="$router.back()">
+      <section v-ripple @click="closeChat">
         <i class="mdi mdi-arrow-left mdi-24px" />
         <img
           :src="chatThread.user.photoURL"
@@ -78,6 +78,10 @@ export default {
       },
     },
     onChatUpdate: {
+      type: Function,
+      required: true,
+    },
+    onChatClose: {
       type: Function,
       required: true,
     },
@@ -242,6 +246,11 @@ export default {
       this.typingTimeout = setTimeout(() => {
         this.typing = false
       }, 10000)
+    },
+
+    async closeChat() {
+      this.onChatClose()
+      await this.$router.back()
     },
   },
 }

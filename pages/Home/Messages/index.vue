@@ -31,17 +31,17 @@
       <main v-if="currentThread">
         <ChatWindow
           :chat-thread="currentThread"
+          :on-chat-close="closeChatThread"
           :on-chat-update="updateChatThread"
           class="chat-window"
         />
       </main>
     </transition>
-    <transition name="scale-up">
-      <section class="fallback" v-if="!currentThread">
-        <h3>Stay Connected</h3>
-        <p>Tap on a Chat Thread & Start Chatting!</p>
-      </section>
-    </transition>
+
+    <main v-if="!currentThread" class="fallback">
+      <h3>Stay Connected</h3>
+      <p>Tap on a Chat Thread & Start Chatting!</p>
+    </main>
   </div>
 </template>
 
@@ -120,6 +120,10 @@ export default {
       }
       this.currentThread = this.chatThreads[index]
       this.$router.push(`#${this.currentThread.id}`)
+    },
+
+    closeChatThread() {
+      this.currentThread = undefined
     },
 
     updateChatThread(oldThread, newThread) {
@@ -236,13 +240,39 @@ $image-size: 40px;
         no-repeat top;
       background-size: cover;
     }
-  }
 
-  section.fallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    &.fallback {
+      display: none;
+      @media screen and (min-width: $medium-screen) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: linear-gradient(
+            45deg,
+            transparent 0%,
+            $navigation-bar-color 12.5%,
+            $body-bg-alternate 25%,
+            $card-bg 37.5%,
+            $card-bg-alternate 50%,
+            $card-bg 62.5%,
+            $body-bg-alternate 75%,
+            $navigation-bar-color 87.5%,
+            transparent 100%
+          )
+          right no-repeat;
+        background-size: 400%;
+        animation: shift-background 15s infinite alternate-reverse ease-in-out;
+        @keyframes shift-background {
+          from {
+            background-position: left;
+          }
+          to {
+            background-position: right;
+          }
+        }
+      }
+    }
   }
 }
 </style>
