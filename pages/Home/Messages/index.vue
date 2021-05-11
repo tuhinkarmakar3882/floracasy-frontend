@@ -108,11 +108,11 @@ export default {
 
     openChat(thread, index) {
       if (this.currentThread === thread) return
-      this.currentThread = thread
       this.chatThreads[index] = {
         ...this.chatThreads[index],
         metadata: { unread: false },
       }
+      this.currentThread = this.chatThreads[index]
       this.$router.push(`#${this.currentThread.id}`)
     },
 
