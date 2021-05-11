@@ -1,6 +1,8 @@
 <template>
   <div class="message-page">
     <aside>
+      <p ref="chatThreadStart" />
+
       <header>
         <i v-ripple class="mdi mdi-arrow-left mdi-24px" />
         <p>Messages</p>
@@ -29,8 +31,8 @@
       <main v-if="currentThread">
         <ChatWindow
           :chat-thread="currentThread"
-          class="chat-window"
           :on-chat-update="updateChatThread"
+          class="chat-window"
         />
       </main>
     </transition>
@@ -88,6 +90,7 @@ export default {
     async fetchThreads() {
       for (let i = 100; i < 200; i++) {
         this.chatThreads.push({
+          id: i,
           userUID: i,
           user: {
             displayName: 'Test User ' + i,
@@ -124,6 +127,10 @@ export default {
       }
 
       this.chatThreads.unshift(newThread)
+
+      setTimeout(() => {
+        this.$refs.chatThreadStart.scrollIntoView()
+      }, 100)
     },
   },
 
@@ -145,6 +152,10 @@ $image-size: 40px;
   display: grid;
   max-width: $extra-large-screen;
   margin: auto;
+
+  * {
+    scroll-behavior: smooth;
+  }
 
   @media screen and (min-width: $medium-screen) {
     grid-template-columns: minmax(300px, 25%) 1fr;

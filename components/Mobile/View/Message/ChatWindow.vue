@@ -4,10 +4,10 @@
       <section v-ripple @click="$router.back()">
         <i class="mdi mdi-arrow-left mdi-24px" />
         <img
+          :src="chatThread.user.photoURL"
           alt=""
           decoding="async"
           loading="lazy"
-          :src="chatThread.user.photoURL"
         />
       </section>
 
@@ -151,21 +151,19 @@ export default {
     message(msg) {
       this.canSendMessage = msg.trim().length > 0
     },
+    chatThread(oldThread, newThread) {
+      oldThread.id !== newThread.id && this.resetChatWindow()
+    },
   },
 
   mounted() {
-    // for (let i = 0; i < 10000; i++) {
-    //   this.chatMessages.push({
-    //     id: i,
-    //     message: i,
-    //     sent: true,
-    //     createdAt: 1620401158506,
-    //   })
-    // }
+    this.fetchMessages()
+
     setTimeout(() => {
       this.$refs.bottomOfChat.scrollIntoView()
     }, 200)
   },
+
   methods: {
     // shouldShowTimeDiff(createdAt) {
     //   const seconds = 1000
@@ -185,11 +183,29 @@ export default {
     //   return false
     // },
 
+    resetChatWindow() {
+      this.typing = false
+      this.message = ''
+      this.fetchMessages()
+    },
+
+    fetchMessages() {
+      this.chatMessages = []
+      for (let i = 0; i < 10; i++) {
+        this.chatMessages.push({
+          id: i,
+          message: i,
+          sent: Math.random() > 0.5,
+          createdAt: 1620401158506,
+        })
+      }
+    },
+
     async sendMessage() {
       if (!this.canSendMessage) return
 
       this.canSendMessage = false
-      await showUITip(this.$store, 'Sending...', 'info')
+      await showUITip(this.$store, 'Sending...')
 
       try {
         this.chatMessages.push({
@@ -197,7 +213,8 @@ export default {
           sent: this.chatMessages.length % 2 === 0,
           createdAt: Date.now(),
         })
-        await showUITip(this.$store, 'Comment Added', 'success')
+        await showUITip(this.$store, 'Sent!', 'success', true, 1000)
+
         this.onChatUpdate(this.chatThread, {
           ...this.chatThread,
           lastMessage: this.message,
@@ -207,11 +224,15 @@ export default {
             senderUID: this.chatMessages.length % 2 ? 'me' : 'you',
           },
         })
+
         this.message = ''
       } catch (e) {
+        await showUITip(this.$store, 'Something Went Wrong', 'error')
       } finally {
-        this.$refs.bottomOfChat.scrollIntoView()
-        this.$refs.textbox.focus()
+        setTimeout(() => {
+          this.$refs.textbox.focus()
+          this.$refs.bottomOfChat.scrollIntoView()
+        }, 0)
       }
     },
 
