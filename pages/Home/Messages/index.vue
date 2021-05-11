@@ -23,7 +23,7 @@
             :class="thread === currentThread && ['active']"
             :thread="thread"
           />
-          <InFeedAd use-small-ads />
+          <InFeedAd v-if="index % 3" class="my-4" use-small-ads />
         </section>
       </transition-group>
     </aside>
@@ -40,19 +40,19 @@
     </transition>
 
     <main v-if="!currentThread" class="fallback">
-      <InFeedAd use-small-ads v-if="index % 3" class="my-4" />
+      <InFeedAd class="my-4" use-small-ads />
 
       <h3>Stay Connected</h3>
       <p>Tap on a Chat Thread & Start Chatting!</p>
 
-      <InFeedAd use-small-ads v-if="index % 3" class="my-4" />
+      <InFeedAd class="my-4" use-small-ads />
     </main>
   </div>
 </template>
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { getRelativeTime, LogAnalyticsEvent } from '@/utils/utility'
+import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 // import { useMessageService } from '~/environmentVariables'
 
