@@ -30,6 +30,8 @@
 
 <script>
 import { useAlternateAccount } from '~/environmentVariables'
+import { LogAnalyticsEvent } from '~/utils/utility'
+
 export default {
   name: 'InFeedAd',
   props: {
@@ -45,6 +47,7 @@ export default {
   },
   mounted() {
     ;(window.adsbygoogle || []).push({})
+    LogAnalyticsEvent('ads_requested')
   },
 }
 </script>

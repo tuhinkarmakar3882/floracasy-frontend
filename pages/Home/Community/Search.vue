@@ -72,7 +72,7 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 
 export default {
   name: 'Search',
@@ -120,6 +120,7 @@ export default {
         } finally {
           this.showFallback = false
           this.noResultsFound = this.searchResults?.results?.length === 0
+          LogAnalyticsEvent('searching_for_people')
         }
       }
     },

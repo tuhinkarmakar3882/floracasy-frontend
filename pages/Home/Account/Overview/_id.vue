@@ -65,7 +65,7 @@
 import { mapGetters } from 'vuex'
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
-import { getRelativeTime, showUITip } from '~/utils/utility'
+import { getRelativeTime, LogAnalyticsEvent, showUITip } from '~/utils/utility'
 import { useMessageService } from '~/environmentVariables'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
@@ -186,6 +186,8 @@ export default {
       } finally {
         this.followOrUnfollowLoading = false
       }
+
+      LogAnalyticsEvent('following_or_unfollowing')
     },
   },
 

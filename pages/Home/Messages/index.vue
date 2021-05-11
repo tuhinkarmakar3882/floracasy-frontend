@@ -52,7 +52,7 @@
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { getRelativeTime } from '@/utils/utility'
+import { getRelativeTime, LogAnalyticsEvent } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
 // import { useMessageService } from '~/environmentVariables'
 
