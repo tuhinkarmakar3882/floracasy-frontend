@@ -23,6 +23,7 @@
             :class="thread === currentThread && ['active']"
             :thread="thread"
           />
+          <InFeedAd use-small-ads v-if="index % 3" />
         </section>
       </transition-group>
     </aside>
