@@ -16,7 +16,7 @@
           v-for="(thread, index) in chatThreads"
           :key="`thread${index}`"
           class="chat-thread"
-          @click="openChat(thread)"
+          @click="openChat(thread, index)"
         >
           <ChatThread
             v-ripple
@@ -106,9 +106,13 @@ export default {
       }
     },
 
-    openChat(thread) {
+    openChat(thread, index) {
       if (this.currentThread === thread) return
       this.currentThread = thread
+      this.chatThreads[index] = {
+        ...this.chatThreads[index],
+        metadata: { unread: false },
+      }
       this.$router.push(`#${this.currentThread.id}`)
     },
 
