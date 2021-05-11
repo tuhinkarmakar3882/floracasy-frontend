@@ -47,7 +47,7 @@ export default {
   },
   mounted() {
     ;(window.adsbygoogle || []).push({})
-    LogAnalyticsEvent('ads_requested')
+    process.env.NODE_ENV === 'production' && LogAnalyticsEvent('ads_requested')
   },
 }
 </script>
