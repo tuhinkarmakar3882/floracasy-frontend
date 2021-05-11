@@ -41,11 +41,11 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime } from '@/utils/utility'
 import endpoints from '@/api/endpoints'
-import { useMessageService } from '~/environmentVariables'
+// import { useMessageService } from '~/environmentVariables'
 
 export default {
   name: 'Messages',
-  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+  // middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
     return {

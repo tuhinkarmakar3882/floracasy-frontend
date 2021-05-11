@@ -7,7 +7,7 @@
           alt=""
           decoding="async"
           loading="lazy"
-          src="https://picsum.photos/46"
+          :src="chatThread.user.photoURL"
         />
       </section>
 
@@ -330,10 +330,10 @@ export default {
 
     p {
       font-size: 18px;
-      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      justify-self: flex-start;
     }
 
     section {
