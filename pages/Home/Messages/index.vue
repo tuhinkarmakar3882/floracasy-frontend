@@ -23,7 +23,7 @@
             :class="thread === currentThread && ['active']"
             :thread="thread"
           />
-          <InFeedAd use-small-ads v-if="index % 3" />
+          <InFeedAd use-small-ads />
         </section>
       </transition-group>
     </aside>
@@ -40,8 +40,12 @@
     </transition>
 
     <main v-if="!currentThread" class="fallback">
+      <InFeedAd use-small-ads v-if="index % 3" class="my-4" />
+
       <h3>Stay Connected</h3>
       <p>Tap on a Chat Thread & Start Chatting!</p>
+
+      <InFeedAd use-small-ads v-if="index % 3" class="my-4" />
     </main>
   </div>
 </template>
