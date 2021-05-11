@@ -36,6 +36,12 @@
         />
       </main>
     </transition>
+    <transition name="scale-up">
+      <section class="fallback" v-if="!currentThread">
+        <h3>Stay Connected</h3>
+        <p>Tap on a Chat Thread & Start Chatting!</p>
+      </section>
+    </transition>
   </div>
 </template>
 
@@ -154,8 +160,6 @@ $image-size: 40px;
 .message-page {
   position: relative;
   display: grid;
-  max-width: $extra-large-screen;
-  margin: auto;
 
   * {
     scroll-behavior: smooth;
@@ -232,6 +236,13 @@ $image-size: 40px;
         no-repeat top;
       background-size: cover;
     }
+  }
+
+  section.fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 </style>
