@@ -40,7 +40,7 @@ export default {
   header {
     display: grid;
     position: sticky;
-    top: 4px;
+    top: 0;
     place-items: center;
     z-index: 1;
 

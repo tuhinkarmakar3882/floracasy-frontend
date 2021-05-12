@@ -278,11 +278,6 @@ export default {
   --footer-size: 64px;
 
   grid-template-rows: 56px 1fr var(--footer-size);
-  scroll-behavior: smooth;
-
-  * {
-    scroll-behavior: smooth;
-  }
 
   main,
   footer {
