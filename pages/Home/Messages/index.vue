@@ -132,24 +132,41 @@ export default {
     },
 
     updateChatThread(oldThread, newThread) {
+      this.currentThread = newThread
+
       if (this.chatThreads[0] === oldThread) {
         this.chatThreads[0] = newThread
-        this.currentThread = newThread
         return
       }
 
-      for (let i = 0; i < this.chatThreads.length; i++) {
-        if (this.chatThreads[i] === oldThread) {
-          this.chatThreads.splice(i, 1)
-          this.currentThread = newThread
-        }
-      }
-
+      const locationOfOldThread = this.binarySearch(oldThread)
+      this.chatThreads.splice(locationOfOldThread, 1)
       this.chatThreads.unshift(newThread)
 
       setTimeout(() => {
         this.$refs.chatThreadStart.scrollIntoView()
       }, 100)
+    },
+
+    binarySearch(thread) {
+      let low = 0
+      let high = this.chatThreads.length
+      while (low <= high) {
+        const mid = low + Math.floor((high - low) / 2)
+
+        if (this.chatThreads[mid].updatedAt === thread.updatedAt) {
+          return mid
+        }
+
+        if (this.chatThreads[mid].updatedAt >= thread.updatedAt) {
+          low = mid + 1
+        }
+
+        if (this.chatThreads[mid].updatedAt < thread.updatedAt) {
+          high = mid - 1
+        }
+      }
+      return -1
     },
   },
 

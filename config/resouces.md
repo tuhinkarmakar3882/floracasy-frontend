@@ -314,7 +314,7 @@ const options = {
       strategyPlugins: [],
     },
   ],
-  offlinePage: null,
+  offlinePage: '/Offline',
   pagesURLPattern: '/',
   offlineStrategy: 'NetworkFirst',
 }
