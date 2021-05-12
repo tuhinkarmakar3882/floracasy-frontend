@@ -33,6 +33,10 @@ export const getStandardTime = (timeString) => {
   return dayjs(timeString).format('h:mm A')
 }
 
+export const getFormattedDate = (timeString) => {
+  return dayjs(timeString).format('D MMMM YYYY')
+}
+
 export const shorten = (value) => {
   if (value < 1000) return value
   let suffix

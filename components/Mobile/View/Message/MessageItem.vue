@@ -32,7 +32,7 @@ export default {
 
   data() {
     return {
-      showDetails: true,
+      showDetails: false,
       timeout: undefined,
     }
   },
@@ -47,9 +47,9 @@ export default {
   },
 
   mounted() {
-    this.timeout = setTimeout(() => {
-      this.showDetails = false
-    }, 5000)
+    // this.timeout = setTimeout(() => {
+    //   this.showDetails = false
+    // }, 5000)
   },
 
   methods: {
