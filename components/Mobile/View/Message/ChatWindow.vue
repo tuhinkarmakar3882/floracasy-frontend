@@ -19,13 +19,12 @@
 
     <main>
       <transition-group name="scale-up">
-        <MessageItem
-          v-for="(item, index) in chatMessages"
-          :key="`chatMessages${index}`"
-          :chat-message="item"
-          :sent-message="item.sent"
-          class="my-4"
-        />
+        <section
+          v-for="(segment, index) in chatMessages"
+          :key="`day - ${index}`"
+        >
+          <ChatSegmentBlock :segment="segment" />
+        </section>
       </transition-group>
       <div ref="bottomOfChat" />
 
@@ -195,12 +194,23 @@ export default {
 
     fetchMessages() {
       this.chatMessages = []
-      for (let i = 0; i < 10; i++) {
+
+      for (let i = 10; i > -1; i--) {
+        const timestamp = Date.now() - i * 86400 * 1000
+
+        const temp = []
+        for (let j = 0; j < 20; j++) {
+          temp.push({
+            id: `${i} - ${j}`,
+            message: `Day ${i} | Message ${1}`,
+            sent: Math.random() > 0.5,
+            createdAt: 1620401158506,
+          })
+        }
+
         this.chatMessages.push({
-          id: i,
-          message: i,
-          sent: Math.random() > 0.5,
-          createdAt: 1620401158506,
+          date: timestamp,
+          messages: temp,
         })
       }
     },
@@ -212,7 +222,9 @@ export default {
       await showUITip(this.$store, 'Sending...')
 
       try {
-        this.chatMessages.push({
+        const lastIndex = this.chatMessages.length - 1
+        this.chatMessages[lastIndex].messages.push({
+          id: `chatMessages ${Date.now()}`,
           message: this.message,
           sent: this.chatMessages.length % 2 === 0,
           createdAt: Date.now(),
