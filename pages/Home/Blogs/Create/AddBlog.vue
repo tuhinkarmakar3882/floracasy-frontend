@@ -249,6 +249,7 @@ import {
   cleanHTML,
   getEmbeddableLink,
   getRelativeTime,
+  LogAnalyticsEvent,
   showUITip,
 } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
@@ -772,6 +773,7 @@ export default {
         const tx = this.db.transaction('drafts', 'readwrite')
         await Promise.all([tx.store.delete(this.uniqueId), tx.done])
 
+        LogAnalyticsEvent('create_new_blog')
         await this.$router.replace(navigationRoutes.Home.DashBoard)
       } catch (e) {
         await showUITip(this.$store, 'Network error. Please Retry', 'error')
