@@ -80,12 +80,12 @@ export default {
 
       this.timeout = setTimeout(() => {
         this.sendingState = 'Delivered'
-        this.icon = 'mdi-check-circle-outline'
+        this.icon = 'mdi-check-all'
       }, 4000)
 
       this.timeout = setTimeout(() => {
         this.sendingState = 'Read'
-        this.icon = 'mdi-check-circle-outline vibrant'
+        this.icon = 'mdi-check-all vibrant'
       }, 6000)
 
       this.timeout = setTimeout(() => {
