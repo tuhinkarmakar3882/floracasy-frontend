@@ -8,9 +8,9 @@
       <aside v-if="showDetails" :class="messageType" class="timestamp my-2">
         <i
           v-if="sentMessage"
-          class="mdi mr-2"
           :class="icon"
-          style="font-size: 12px"
+          class="mdi"
+          style="font-size: 12px; margin: 0 6px"
         />
 
         <span> {{ sendingState }} </span>
@@ -167,6 +167,7 @@ export default {
       right: unset;
       left: 0;
     }
+
     &.sent-msg {
       bottom: -$standard-unit;
     }
