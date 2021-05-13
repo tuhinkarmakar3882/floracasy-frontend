@@ -135,11 +135,11 @@ export default {
     fetchMessages() {
       this.chatMessages = []
 
-      for (let i = 1; i > -1; i--) {
+      for (let i = 4; i > -1; i--) {
         const timestamp = Date.now() - i * 86400 * 1000
 
         const temp = []
-        for (let j = 0; j < 2; j++) {
+        for (let j = 0; j < 5; j++) {
           temp.push({
             id: `${i} - ${j}`,
             message: `Day ${i} | Message ${1}`,
@@ -157,11 +157,14 @@ export default {
 
     async sendMessage() {
       if (!this.canSendMessage) return
+      this.$refs.textbox.focus()
+      const message = this.message
       this.canSendMessage = false
+      this.message = ''
 
       const newMessage = {
         id: `chatMessages ${Date.now()}`,
-        message: this.message,
+        message: message,
         sent: Math.random() > 0.5,
         createdAt: Date.now(),
         shouldSendToServer: true,
@@ -172,7 +175,7 @@ export default {
 
       this.onChatUpdate(this.chatThread, {
         ...this.chatThread,
-        lastMessage: this.message,
+        lastMessage: message,
         updatedAt: Date.now(),
         metadata: {
           unread: false,
@@ -180,7 +183,6 @@ export default {
         },
       })
 
-      this.message = ''
       setTimeout(() => {
         this.$refs.textbox.focus()
         this.$refs.bottomOfChat.scrollIntoView()
