@@ -28,10 +28,7 @@
       </transition-group>
       <div ref="bottomOfChat" />
 
-      <TypingAnimation
-        v-if="chatMessages.length % 2 && typing"
-        class="typing-animation"
-      />
+      <TypingAnimation v-if="typing" class="typing-animation" />
     </main>
 
     <footer>
@@ -59,13 +56,10 @@
 <script>
 import { showUITip } from '~/utils/utility'
 import TypingAnimation from '~/components/Mobile/View/Message/TypingAnimation'
-import MessageItem from '~/components/Mobile/View/Message/MessageItem'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 export default {
   name: 'ChatWindow',
   components: {
-    MessageItem,
     TypingAnimation,
   },
   props: {
@@ -93,60 +87,7 @@ export default {
       typingTimeout: undefined,
       isSendingMessage: false,
       canSendMessage: false,
-      lastMessageTime: Date.now(),
-
-      chatMessages: [
-        {
-          message: 'Hello!',
-          sent: true,
-          createdAt: 1620401158506,
-        },
-        {
-          message: 'Hi!',
-          sent: false,
-          createdAt: 1620401168506,
-        },
-        {
-          message: "How's it going?",
-          sent: false,
-          createdAt: 1620501158506,
-        },
-        {
-          message: 'Good! You say!',
-          sent: true,
-          createdAt: Date.now(),
-        },
-        {
-          message: "I'm good till now only.",
-          sent: true,
-          createdAt: Date.now(),
-        },
-        {
-          message: "How's the Covid Situation over there buddy?",
-          sent: false,
-          createdAt: Date.now(),
-        },
-        {
-          message: 'It getting worse here day by day...',
-          sent: false,
-          createdAt: Date.now(),
-        },
-        {
-          message: 'Same Pinch... Cases are rising rapidly.',
-          sent: true,
-          createdAt: Date.now(),
-        },
-        {
-          message: 'I can understand.',
-          sent: false,
-          createdAt: Date.now(),
-        },
-        {
-          message: 'Stay indoors!',
-          sent: false,
-          createdAt: Date.now(),
-        },
-      ],
+      chatMessages: [],
     }
   },
 
@@ -223,13 +164,13 @@ export default {
 
       try {
         const lastIndex = this.chatMessages.length - 1
+
         this.chatMessages[lastIndex].messages.push({
           id: `chatMessages ${Date.now()}`,
           message: this.message,
           sent: this.chatMessages.length % 2 === 0,
           createdAt: Date.now(),
         })
-        await showUITip(this.$store, 'Sent!', 'success', true, 1000)
 
         this.onChatUpdate(this.chatThread, {
           ...this.chatThread,
@@ -237,7 +178,7 @@ export default {
           updatedAt: Date.now(),
           metadata: {
             unread: false,
-            senderUID: this.chatMessages.length % 2 ? 'me' : 'you',
+            senderUID: 'me',
           },
         })
 
