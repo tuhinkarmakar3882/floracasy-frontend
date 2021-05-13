@@ -3,7 +3,6 @@
     <header>
       <small class="pill">{{ getFormattedDate(segment.date) }}</small>
     </header>
-
     <main>
       <MessageItem
         v-for="(message, index) in segment.messages"
@@ -11,6 +10,7 @@
         :chat-message="message"
         :sent-message="message.sent"
         class="my-4"
+        :should-send-to-server="message.shouldSendToServer"
       />
     </main>
   </div>

@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import { showUITip } from '~/utils/utility'
 import TypingAnimation from '~/components/Mobile/View/Message/TypingAnimation'
 
 export default {
@@ -136,11 +135,11 @@ export default {
     fetchMessages() {
       this.chatMessages = []
 
-      for (let i = 10; i > -1; i--) {
+      for (let i = 1; i > -1; i--) {
         const timestamp = Date.now() - i * 86400 * 1000
 
         const temp = []
-        for (let j = 0; j < 20; j++) {
+        for (let j = 0; j < 2; j++) {
           temp.push({
             id: `${i} - ${j}`,
             message: `Day ${i} | Message ${1}`,
@@ -158,39 +157,34 @@ export default {
 
     async sendMessage() {
       if (!this.canSendMessage) return
-
       this.canSendMessage = false
-      await showUITip(this.$store, 'Sending...')
 
-      try {
-        const lastIndex = this.chatMessages.length - 1
-
-        this.chatMessages[lastIndex].messages.push({
-          id: `chatMessages ${Date.now()}`,
-          message: this.message,
-          sent: this.chatMessages.length % 2 === 0,
-          createdAt: Date.now(),
-        })
-
-        this.onChatUpdate(this.chatThread, {
-          ...this.chatThread,
-          lastMessage: this.message,
-          updatedAt: Date.now(),
-          metadata: {
-            unread: false,
-            senderUID: 'me',
-          },
-        })
-
-        this.message = ''
-      } catch (e) {
-        await showUITip(this.$store, 'Something Went Wrong', 'error')
-      } finally {
-        setTimeout(() => {
-          this.$refs.textbox.focus()
-          this.$refs.bottomOfChat.scrollIntoView()
-        }, 0)
+      const newMessage = {
+        id: `chatMessages ${Date.now()}`,
+        message: this.message,
+        sent: Math.random() > 0.5,
+        createdAt: Date.now(),
+        shouldSendToServer: true,
       }
+
+      const lastIndex = this.chatMessages.length - 1
+      this.chatMessages[lastIndex].messages.push(newMessage)
+
+      this.onChatUpdate(this.chatThread, {
+        ...this.chatThread,
+        lastMessage: this.message,
+        updatedAt: Date.now(),
+        metadata: {
+          unread: false,
+          senderUID: 'me',
+        },
+      })
+
+      this.message = ''
+      setTimeout(() => {
+        this.$refs.textbox.focus()
+        this.$refs.bottomOfChat.scrollIntoView()
+      }, 0)
     },
 
     sendTypingEvent() {

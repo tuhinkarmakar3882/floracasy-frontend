@@ -6,9 +6,14 @@
 
     <transition name="scale-up">
       <aside v-if="showDetails" :class="messageType" class="timestamp my-2">
-        <i v-if="sentMessage" class="mdi mdi-check mr-2" />
+        <i
+          v-if="sentMessage"
+          class="mdi mr-2"
+          :class="icon"
+          style="font-size: 12px"
+        />
 
-        <span> {{ getStandardTime(chatMessage.createdAt) }} </span>
+        <span> {{ sendingState }} </span>
       </aside>
     </transition>
   </div>
@@ -28,12 +33,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    shouldSendToServer: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
     return {
       showDetails: false,
       timeout: undefined,
+      sendingState: getStandardTime(this.chatMessage.createdAt),
+      icon: 'mdi-check',
     }
   },
 
@@ -47,9 +58,7 @@ export default {
   },
 
   mounted() {
-    // this.timeout = setTimeout(() => {
-    //   this.showDetails = false
-    // }, 5000)
+    this.sentMessage && this.shouldSendToServer && this.sendToServer()
   },
 
   methods: {
@@ -57,6 +66,31 @@ export default {
     toggleDetails() {
       clearTimeout(this.timeout)
       this.showDetails = !this.showDetails
+    },
+
+    sendToServer() {
+      this.showDetails = true
+      this.sendingState = 'Sending...'
+      this.icon = 'mdi-loading mdi-spin'
+
+      this.timeout = setTimeout(() => {
+        this.sendingState = 'Sent'
+        this.icon = 'mdi-check'
+      }, 2000)
+
+      this.timeout = setTimeout(() => {
+        this.sendingState = 'Delivered'
+        this.icon = 'mdi-check-circle-outline'
+      }, 4000)
+
+      this.timeout = setTimeout(() => {
+        this.sendingState = 'Read'
+        this.icon = 'mdi-check-circle-outline vibrant'
+      }, 6000)
+
+      this.timeout = setTimeout(() => {
+        this.showDetails = false
+      }, 8000)
     },
   },
 }
