@@ -340,20 +340,33 @@ $active-color: $white;
 
     tbody {
       display: table !important;
-      min-width: 20px !important;
-      min-height: 20px !important;
+    }
 
-      tr {
-        min-width: 20px !important;
-        min-height: 20px !important;
+    thead {
+      display: table !important;
+    }
 
-        td {
-          min-width: 20px !important;
-          min-height: 20px !important;
-          border: 1px solid lighten($card-bg, $lighten-percentage) !important;
-          text-align: center !important;
-        }
-      }
+    tr, td, th {
+      min-width: 168px !important;
+      min-height: 40px !important;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    th {
+      background: $card-bg-alternate;
+      color: $white;
+    }
+
+    td {
+      border: 1px solid lighten($card-bg, $lighten-percentage) !important;
+      text-align: center !important;
+    }
+
+    tr:nth-child(even) {
+      background-color: $body-bg-alternate;
     }
   }
 

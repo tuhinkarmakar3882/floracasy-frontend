@@ -84,9 +84,9 @@ html {
       margin: 1rem 0;
       border-radius: $nano-unit;
       overflow-x: scroll;
-      white-space: pre-wrap ;
+      white-space: pre-wrap;
       word-break: break-word;
-      word-wrap: break-word ;
+      word-wrap: break-word;
       line-height: 1.8;
     }
 
@@ -162,6 +162,11 @@ html {
 
     table {
       display: table;
+      font-family: $Nunito-Sans;
+      * {
+        line-height: 1.75;
+        min-height: 24px;
+      }
 
       tbody {
         display: table;
@@ -171,16 +176,11 @@ html {
         tr {
           min-width: 20px;
           min-height: 20px;
-
-          td {
-            min-width: 20px;
-            min-height: 20px;
-            border: 1px solid lighten($card-bg, $lighten-percentage);
-            text-align: center;
-          }
         }
       }
     }
+
+
 
     select {
       color: $muted;
