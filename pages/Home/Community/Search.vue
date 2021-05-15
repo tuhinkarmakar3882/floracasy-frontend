@@ -14,6 +14,7 @@
             v-model="searchQuery"
             autocomplete="off"
             placeholder="Type here to search"
+            @keyup="debounceAndSearch"
             @keyup.enter="searchForPeople"
             @keyup.esc="$refs.search.blur()"
           />
@@ -86,6 +87,7 @@ export default {
       showFallback: false,
       searchResults: [],
       noResultsFound: false,
+      timeout: undefined,
     }
   },
 
@@ -102,6 +104,10 @@ export default {
   },
 
   methods: {
+    debounceAndSearch() {
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(this.searchForPeople, 300)
+    },
     async searchForPeople() {
       if (this.searchQuery.trim().length) {
         this.showFallback = true
