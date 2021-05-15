@@ -1,6 +1,6 @@
 <template>
   <AppFeel
-    :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn"
+    :on-back="navigationRoutes.Home.MoreOptions.WriteAndEarn.index"
     class="earning-page"
   >
     <template #app-bar-title>
