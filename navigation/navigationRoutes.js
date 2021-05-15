@@ -80,7 +80,11 @@ export const navigationRoutes = {
         NotificationSettings:
           '/Home/MoreOptions/Preferences/NotificationSettings',
       },
-      WriteAndEarn: '/Home/MoreOptions/WriteAndEarn',
+      WriteAndEarn: {
+        index: '/Home/MoreOptions/WriteAndEarn',
+        HowToWrite: '/Home/MoreOptions/WriteAndEarn/HowToWrite',
+        Earning: '/Home/MoreOptions/WriteAndEarn/Earning',
+      },
     },
 
     Notifications: {
