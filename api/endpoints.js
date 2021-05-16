@@ -71,17 +71,9 @@ const endpoints = {
         '/allow_authenticated/community_service/posts/fetch/by_user_uid/',
     },
   },
-  chat_system: {
-    initializeChatThread:
-      '/allow_authenticated/message_system/initializeChatThread/',
-
-    fetchThreads: '/allow_authenticated/message_system/fetchThreads/',
-    fetchMessages: '/allow_authenticated/message_system/fetchMessages/',
-    send: '/allow_authenticated/message_system/send/',
-    threadDetail: '/allow_authenticated/message_system/threadDetail/',
-
-    markAsRead: '/allow_authenticated/message_system/markAsRead/',
-    getMailBoxId: '/allow_authenticated/message_system/getMailBoxId/',
+  message_system: {
+    chats: '/allow_authenticated/message_system/chats/',
+    conversation: '/allow_authenticated/message_system/conversation/',
   },
   feedback_collection: {
     create: '/allow_authenticated/feedback_collection/create/',

@@ -22,63 +22,92 @@
   },
   "blog": {
     "actions": {
-      "like": "/blog/actions/like/",
-      "share": "/blog/actions/share/",
-      "update": {
-        "viewCount": "/blog/actions/update/viewCount"
+      "like": "/blog/:blogId/like/",
+      "share": "/blog/:blogId/share/",
+      "comment": {
+        "fetch": "GET: /blog/:blogId/comment/",
+        "create": "POST: /blog/:blogId/comment/",
+        "delete": "DELETE: /blog/:blogId/comment/:commentId/"
       }
     },
     "fetch": {
-      "details": "/blog/fetch/detail/",
-      "list": "/blog/fetch/list/"
+      "details": "Get: /blog/:blogId",
+      "list": "Get: /blog/"
     },
-    "create": "/blog/create/",
-    "delete": "/blog/delete/",
-    "update": "/blog/update/"
+    "create": "Post: /blog/",
+    "delete": "Delete: /blog/",
+    "update": "Put: /blog/"
   },
   "category": {},
-  "comment": {},
   "community": {
     "post": {
       "actions": {
-        "like": "/community/post/actions/like/",
-        "share": "/community/post/actions/share/",
-        "update": {
-          "viewCount": "/community/post/actions/update/viewCount"
+        "like": "/community/post/:postId/like/",
+        "share": "/community/post/:postId/share/",
+        "comment": {
+          "fetch": "GET: /post/:postId/comment/",
+          "create": "POST: /post/:postId/comment/",
+          "delete": "DELETE: /post/:postId/comment/:commentId/"
         }
       },
       "fetch": {
-        "details": "/community/post/fetch/detail/",
-        "list": "/community/post/fetch/list/"
+        "details": "/community/post/:postId/",
+        "list": "/community/post/"
       },
-      "create": "/community/post/create/",
-      "delete": "/community/post/delete/",
-      "update": "/community/post/update/"
+      "create": "POST: /community/post/",
+      "delete": "DELETE: /community/post/:postId/delete/",
+      "update": "PUT: /community/post/:postId"
     },
     "story": {
       "actions": {
-        "like": "/community/story/actions/like/",
-        "share": "/community/story/actions/share/",
-        "update": {
-          "viewCount": "/community/story/actions/update/viewCount"
+        "like": "/community/story/:storyId/like/",
+        "share": "/community/story/:storyId/share/",
+        "comment": {
+          "fetch": "GET: /story/:storyId/comment/",
+          "create": "POST: /story/:storyId/comment/",
+          "delete": "DELETE: /story/:storyId/comment/:commentId/"
         }
       },
       "fetch": {
-        "details": "/community/story/fetch/detail/",
-        "list": "/community/story/fetch/list/"
+        "details": "/community/story/:storyId/",
+        "list": "/community/story/"
       },
-      "create": "/community/story/create/",
-      "delete": "/community/story/delete/",
-      "update": "/community/story/update/"
+      "create": "POST: /community/story/",
+      "delete": "DELETE: /community/story/:storyId/delete/",
+      "update": "PUT: /community/story/:storyId"
     }
   },
-  "feedback": {},
-  "fileUpload": {},
+  "fileUpload": {
+    "image": "",
+    "audio": ""
+  },
   "follow": {},
-  "helpAndSupport": {},
+  "helpAndSupport": {
+    "feedback": {}
+  },
   "messaging": {},
-  "notification": {},
-  "payment": {},
-  "profileStatistics": {}
+  "notification": {
+    "fetch": "/notifications/",
+    "send": "/notifications/send/",
+    "save_and_send": "/notifications/save_and_send/",
+    "NotifyFollowers": "/notifications/notify/",
+    "initialize_notification_channel": "/notifications/initialize/",
+    "save_fcm_token": "POST: /notifications/fcm_token/",
+    "update_notification_seen_status": "PUT: /notifications/:notificationId/",
+    "has_unread": "/notifications/has_unread/",
+    "mark_all_as_read": "PUT: /notifications/mark_all_as_read/",
+    "get_notification_channel_id": "GET: /notifications/channel/"
+  },
+  "payment": {
+    "balance": "GET: /payments/balance/"
+  },
+  "profileStatistics": {
+    "detail": "/profile/detail/",
+    "profileData": "/profile/stats/",
+    "photoURL": {
+      "fetch": "GET: /profile/:userId/photo/",
+      "update": "POST: /profile/photo/"
+    }
+  }
 }
 ```
