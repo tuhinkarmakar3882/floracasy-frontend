@@ -32,7 +32,7 @@
       <hr class="faded-divider" />
       <h3 class="text-center px-4 my-6">The Knowledge Crave Must Go On!</h3>
       <hr class="reversed-faded-divider my-0" />
-      <InfiniteScrollingBlogLists />
+      <InfiniteScrollingBlogLists hide-ads />
     </main>
 
     <footer>

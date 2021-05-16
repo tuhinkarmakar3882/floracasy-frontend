@@ -4,7 +4,7 @@
       <transition-group name="scale-up">
         <article v-for="(blog, index) in blogs" :key="blog.id">
           <BlogPost :blog="blog" class="pb-0 pt-8" />
-          <InFeedAd />
+          <InFeedAd v-if="!hideAds" />
           <LazyFollowSuggestions
             v-if="showFollowSuggestions && index === 2"
             class="pb-6"
@@ -70,6 +70,11 @@ export default {
     // RecycleScroller,
   },
   props: {
+    hideAds: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     category: {
       type: String,
       default: null,

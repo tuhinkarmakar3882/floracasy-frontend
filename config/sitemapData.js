@@ -7,7 +7,7 @@ const sitemapGenerationConfig = {
   gzip: true,
   exclude: [
     '/Home/Messages',
-    '/Home/Blogs/Create/Drafts',
+    // '/Home/Blogs/Create/Drafts',
     '/Home/MoreOptions/HelpAndSupport/PopularTopics',
     '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp',
 
@@ -16,7 +16,15 @@ const sitemapGenerationConfig = {
     '/Home/MoreOptions/HelpAndSupport/PrivacyAndSecurityHelp/**',
   ],
   routes: async () => {
-    const DYNAMIC_ROUTES = []
+    const DYNAMIC_ROUTES = [
+      {
+        url: '/error',
+        changefreq: 'daily',
+        priority: 1,
+        lastmod: new Date(),
+      },
+    ]
+
     const { data: blogList } = await axios.get(
       secrets.baseUrl + endpoints.blog.seo
     )
