@@ -108,38 +108,19 @@ export default {
   },
 
   methods: {
-    // shouldShowTimeDiff(createdAt) {
-    //   const seconds = 1000
-    //   const minute = 60 * seconds
-    //   const hour = 60 * minute
-    //   const day = 24 * hour
-    //
-    //   const timeDiff = this.lastMessageTime - createdAt
-    //   const absoluteTimeDifference = Math.abs(timeDiff)
-    //   const timeDifferenceInDays = absoluteTimeDifference / day
-    //
-    //   if (timeDifferenceInDays >= 1) {
-    //     this.lastMessageTime = createdAt
-    //     console.log('cool')
-    //     return true
-    //   }
-    //   return false
-    // },
-
     resetChatWindow() {
       this.typing = false
       this.message = ''
+      this.chatMessages = []
       this.fetchMessages()
     },
 
     fetchMessages() {
-      this.chatMessages = []
-
       for (let i = 4; i > -1; i--) {
         const timestamp = Date.now() - i * 86400 * 1000
 
         const temp = []
-        for (let j = 0; j < 5; j++) {
+        for (let j = 0; j < 4; j++) {
           temp.push({
             id: `${i} - ${j}`,
             message: `Day ${i} | Message ${1}`,

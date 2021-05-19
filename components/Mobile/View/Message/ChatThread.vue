@@ -19,7 +19,7 @@
         </p>
 
         <transition name="slide-right">
-          <span class="dot" v-if="thread.metadata.unread" />
+          <span class="dot" v-if="hasUnread" />
         </transition>
       </aside>
     </section>
@@ -39,7 +39,10 @@ export default {
   },
   computed: {
     showReplySymbol() {
-      return this.thread?.metadata?.senderUID === 'me'
+      return this.thread?.meta?.senderUID === 'me'
+    },
+    hasUnread() {
+      return this.thread?.room?.meta?.unread
     },
   },
   methods: {

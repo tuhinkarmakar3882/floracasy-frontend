@@ -53,7 +53,6 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime } from '@/utils/utility'
-import endpoints from '@/api/endpoints'
 // import { useMessageService } from '~/environmentVariables'
 
 export default {
@@ -65,7 +64,7 @@ export default {
       pageTitle: 'Messages',
       chatThreads: [],
       currentThread: undefined,
-      fetchThreadsEndpoint: endpoints.chat_system.fetchThreads,
+      fetchError: false,
       navigationRoutes,
     }
   },
@@ -115,6 +114,16 @@ export default {
           lastMessage: 'Stay Indoors',
         })
       }
+      //  this.fetchError = false
+      //   try {
+      //     const { results } = await this.$axios.$get(
+      //       endpoints.message_system.chats
+      //     )
+      //     console.log(results)
+      //     this.chatThreads.push(...results)
+      //   } catch (e) {
+      //     this.fetchError = true
+      //   }
     },
 
     openChat(thread, index) {
