@@ -129,3 +129,24 @@ const endpoints = {
   test_access_token: 'test_access_token/',
 }
 export default endpoints
+
+const newAPI = {
+  blog: {
+    actions: {
+      like: '/protected/blog/{blogId}/like/',
+      share: '/public/blog/{blogId}/share/',
+      comment: {
+        fetch: '/protected/blog/{blogId}/comment/',
+        create: '/protected/blog/{blogId}/comment/',
+        delete: '/protected/blog/{blogId}/comment/{commentId}/',
+      },
+    },
+    fetch: {
+      details: '/public/blog/{blogId}/',
+      list: '/public/blog/',
+    },
+    create: '/protected/blog/',
+    delete: '/protected/blog/{blogId}/',
+    update: '/protected/blog/{blogId}/',
+  },
+}
