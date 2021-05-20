@@ -141,6 +141,7 @@
     <transition name="scale-down">
       <aside v-if="showLoadingIndicator" class="loader">
         <i class="mdi mdi-loading mdi-spin mdi-48px vibrant" />
+        <p v-if="loadingStatus">{{ loadingStatus }}</p>
       </aside>
     </transition>
 
@@ -225,12 +226,26 @@
         </InputField>
 
         <section @click.stop>
-          <button v-ripple class="mx-4 info-btn" @click="embedPhoto">
+          <input
+            v-show="false"
+            ref="imageInput"
+            accept="image/jpeg, image/png"
+            type="file"
+            @change="compressImage"
+          />
+          <button v-ripple class="info-btn" @click="embedPhoto">
             Add Image
           </button>
           <button
             v-ripple
-            class="mx-4 danger-outlined-btn"
+            class="mx-4 info-outlined-btn"
+            @click="addLocalImage"
+          >
+            Upload Image
+          </button>
+          <button
+            v-ripple
+            class="danger-outlined-btn"
             @click="showEmbedImageUI = false"
           >
             Cancel
@@ -259,6 +274,7 @@ import AppBarHeader from '~/components/Layout/AppBarHeader'
 import InputField from '~/components/Common/Tools/InputField'
 import axios from 'axios'
 import { serverAPI } from '~/server/api/serverAPI'
+import imageCompression from 'browser-image-compression'
 
 export default {
   name: 'AddBlog',
@@ -327,11 +343,13 @@ export default {
       },
       stepNumber: 0,
       showLoadingIndicator: false,
+      loadingStatus: '',
 
       embeddedURL: '',
       imageUpload: {
         link: '',
         description: '',
+        output: undefined,
       },
       showEmbedContentUI: false,
       showEmbedImageUI: false,
@@ -710,12 +728,20 @@ export default {
         url: this.imageUpload.link,
         alt: this.imageUpload.description,
       })
+
+      this.imageUpload = {
+        link: '',
+        description: '',
+        output: undefined,
+      }
+
       this.showLoadingIndicator = false
     },
     async embedContent() {
       this.showLoadingIndicator = true
       this.showEmbedContentUI = false
       const { link, unprocessed } = getEmbeddableLink(this.embeddedURL)
+      this.loadingStatus = 'Please Wait'
 
       if (unprocessed) {
         await this.embedLinkPreview(link)
@@ -723,6 +749,7 @@ export default {
       }
 
       this.embedToQuill('embedIframe', { src: link })
+      this.loadingStatus = undefined
       this.showLoadingIndicator = false
     },
     async embedLinkPreview(link) {
@@ -742,7 +769,55 @@ export default {
       } finally {
         this.showLoadingIndicator = false
         this.showEmbedContentUI = false
+        this.loadingStatus = undefined
       }
+    },
+
+    async addLocalImage() {
+      this.$refs.imageInput.click()
+    },
+
+    async uploadImage(image) {
+      this.loadingStatus = 'Uploading...'
+      const formData = new FormData()
+      formData.append('image', image, image?.name)
+      const { photoURL } = await this.$axios
+        .$post(endpoints.upload_handler_system.upload_image, formData)
+        .catch((e) => {
+          throw e
+        })
+      return photoURL
+    },
+    async compressImage(event) {
+      this.showLoadingIndicator = true
+      this.showEmbedImageUI = false
+
+      const file = event.target.files[0]
+      const useWebWorker = true
+
+      const options = {
+        maxSizeMB: 0.35,
+        maxWidthOrHeight: 1280,
+        useWebWorker,
+      }
+
+      this.loadingStatus = 'Optimizing Image'
+      this.imageUpload.output = await imageCompression(file, options)
+
+      const photoURL = await this.uploadImage(this.imageUpload.output)
+
+      this.loadingStatus = 'Adding Image'
+      this.embedToQuill('image', {
+        url: photoURL,
+        alt: 'null',
+      })
+
+      this.imageUpload = {
+        link: '',
+        description: '',
+        output: undefined,
+      }
+      this.showLoadingIndicator = false
     },
 
     // Utils
@@ -750,7 +825,6 @@ export default {
       this.stepNumber = 1
       this.$router.push('#1')
     },
-
     showPreview() {
       this.blog.content = this.editor.root.innerHTML
       this.stepNumber = 2
@@ -839,7 +913,7 @@ $active-color: $white;
       align-items: center;
 
       button {
-        width: 100px;
+        min-width: 8.25rem;
       }
     }
   }
@@ -908,6 +982,7 @@ $active-color: $white;
     height: 100%;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
