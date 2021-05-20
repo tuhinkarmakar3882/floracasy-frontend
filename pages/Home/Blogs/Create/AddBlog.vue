@@ -911,9 +911,12 @@ $active-color: $white;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-wrap: wrap;
 
       button {
         min-width: 8.25rem;
+        margin-top: $milli-unit;
+        margin-bottom: $milli-unit;
       }
     }
   }
