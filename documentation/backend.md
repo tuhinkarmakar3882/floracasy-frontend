@@ -8,7 +8,7 @@
 {
   "core": {
     "authentication": {
-      "login": "/core/authentication/login/",
+      "authenticate": "/core/authentication/authenticate/",
       "logout": "/core/authentication/logout/",
       "token": {
         "check": "/core/authentication/token/check/",
@@ -32,11 +32,15 @@
     },
     "fetch": {
       "details": "Get: /blog/:blogId",
-      "list": "Get: /blog/"
+      "list": "Get: /blog/",
+      "by": {
+        "user": "Get: /blog/by/user/:user_id",
+        "category": "Get: /blog/by/category/:category_id",
+      }
     },
     "create": "Post: /blog/",
-    "delete": "Delete: /blog/",
-    "update": "Put: /blog/"
+    "delete": "Delete: /blog/:blogId/",
+    "update": "Put: /blog/:blogId/"
   },
   "category": {},
   "community": {
