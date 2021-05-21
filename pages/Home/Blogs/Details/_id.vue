@@ -1,6 +1,6 @@
 <template>
   <div class="blog-details-page">
-    <AppBarHeader no-right-padding auto-hide>
+    <AppBarHeader auto-hide no-right-padding>
       <template #title>
         <h6>
           <nuxt-link
@@ -32,7 +32,7 @@
       </template>
     </FallBackLoader>
 
-    <transition name="scale-up" v-else-if="quotaIsExhausted && !user">
+    <transition v-else-if="quotaIsExhausted && !user" name="scale-up">
       <aside class="quota-exhausted">
         <h1>Keep the Flow Going!</h1>
         <p class="my-4">
@@ -43,32 +43,32 @@
 
         <section class="mt-2 mb-4">
           <KeyPoint
+            :tick-size="20"
             class="keypoint"
-            text-color="white"
             point="Unlimited Articles"
+            text-color="white"
             tick-color="#9c9aff"
-            :tick-size="20"
           />
           <KeyPoint
+            :tick-size="20"
             class="keypoint"
-            text-color="white"
             point="Discover People"
+            text-color="white"
             tick-color="#9c9aff"
-            :tick-size="20"
           />
           <KeyPoint
+            :tick-size="20"
             class="keypoint"
-            text-color="white"
             point="Meet & Communicate"
+            text-color="white"
             tick-color="#9c9aff"
-            :tick-size="20"
           />
           <KeyPoint
-            class="keypoint"
-            text-color="white"
-            point="And a Lot More!"
-            tick-color="#9c9aff"
             :tick-size="20"
+            class="keypoint"
+            point="And a Lot More!"
+            text-color="white"
+            tick-color="#9c9aff"
           />
         </section>
 
@@ -145,7 +145,7 @@
       </section>
     </main>
 
-    <footer class="actions" v-if="!quotaIsExhausted || user">
+    <footer v-if="!quotaIsExhausted || user" class="actions">
       <i v-ripple :class="blogLikeStatus" class="mdi like" @click="like" />
 
       <i
@@ -180,6 +180,7 @@
 import endpoints from '@/api/endpoints'
 import '~/assets/override/quill.scss'
 import 'quill/dist/quill.snow.css'
+import hljs from 'highlight.js/lib/core'
 
 import {
   cleanHTML,
@@ -264,6 +265,33 @@ export default {
     await this.checkForQuotaExhaustion()
     await this.incrementViewCount()
     await this.calculateReadingTime()
+
+    hljs.registerLanguage(
+      'javascript',
+      require('highlight.js/lib/languages/javascript')
+    )
+    hljs.registerLanguage('json', require('highlight.js/lib/languages/json'))
+    hljs.registerLanguage(
+      'typescript',
+      require('highlight.js/lib/languages/typescript')
+    )
+    hljs.registerLanguage(
+      'python',
+      require('highlight.js/lib/languages/python')
+    )
+    hljs.registerLanguage('java', require('highlight.js/lib/languages/java'))
+    hljs.registerLanguage('c', require('highlight.js/lib/languages/c'))
+    hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'))
+    hljs.registerLanguage(
+      'vbscriptHtml',
+      require('highlight.js/lib/languages/vbscript-html')
+    )
+
+    setTimeout(() => {
+      document.querySelectorAll('pre').forEach((block) => {
+        hljs.highlightBlock(block)
+      })
+    }, 3000)
   },
 
   methods: {
