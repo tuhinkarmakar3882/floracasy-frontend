@@ -190,6 +190,19 @@ import {
 } from '@/utils/utility'
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
+import javascript from 'highlight.js/lib/languages/javascript'
+import bash from 'highlight.js/lib/languages/bash'
+import json from 'highlight.js/lib/languages/json'
+import css from 'highlight.js/lib/languages/css'
+import scss from 'highlight.js/lib/languages/scss'
+import shell from 'highlight.js/lib/languages/shell'
+import yaml from 'highlight.js/lib/languages/yaml'
+import typescript from 'highlight.js/lib/languages/typescript'
+import python from 'highlight.js/lib/languages/python'
+import java from 'highlight.js/lib/languages/java'
+import c from 'highlight.js/lib/languages/c'
+import cpp from 'highlight.js/lib/languages/cpp'
+import vbscriptHtml from 'highlight.js/lib/languages/vbscript-html'
 
 const { useMessageService } = require('~/environmentVariables')
 
@@ -266,32 +279,7 @@ export default {
     await this.incrementViewCount()
     await this.calculateReadingTime()
 
-    hljs.registerLanguage(
-      'javascript',
-      require('highlight.js/lib/languages/javascript')
-    )
-    hljs.registerLanguage('json', require('highlight.js/lib/languages/json'))
-    hljs.registerLanguage(
-      'typescript',
-      require('highlight.js/lib/languages/typescript')
-    )
-    hljs.registerLanguage(
-      'python',
-      require('highlight.js/lib/languages/python')
-    )
-    hljs.registerLanguage('java', require('highlight.js/lib/languages/java'))
-    hljs.registerLanguage('c', require('highlight.js/lib/languages/c'))
-    hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'))
-    hljs.registerLanguage(
-      'vbscriptHtml',
-      require('highlight.js/lib/languages/vbscript-html')
-    )
-
-    setTimeout(() => {
-      document.querySelectorAll('pre').forEach((block) => {
-        hljs.highlightBlock(block)
-      })
-    }, 3000)
+    this.setupHighlighting()
   },
 
   methods: {
@@ -299,6 +287,27 @@ export default {
     parseTimeUsingStandardLibrary,
     shorten,
 
+    setupHighlighting() {
+      hljs.registerLanguage('javascript', javascript)
+      hljs.registerLanguage('bash', bash)
+      hljs.registerLanguage('typescript', typescript)
+      hljs.registerLanguage('python', python)
+      hljs.registerLanguage('java', java)
+      hljs.registerLanguage('c', c)
+      hljs.registerLanguage('cpp', cpp)
+      hljs.registerLanguage('vbscriptHtml', vbscriptHtml)
+      hljs.registerLanguage('json', json)
+      hljs.registerLanguage('css', css)
+      hljs.registerLanguage('scss', scss)
+      hljs.registerLanguage('shell', shell)
+      hljs.registerLanguage('yaml', yaml)
+
+      setTimeout(() => {
+        document.querySelectorAll('pre').forEach((block) => {
+          hljs.highlightBlock(block)
+        })
+      }, 3000)
+    },
     pushAds() {
       try {
         const totalAdBlocks = document.querySelectorAll('ins').length - 2
