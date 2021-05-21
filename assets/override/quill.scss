@@ -409,6 +409,10 @@ $active-color: $white;
     position: relative !important;
     margin: $medium-unit 0 !important;
   }
+
+  img {
+    margin: auto;
+  }
 }
 
 .ql-container {
