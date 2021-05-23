@@ -460,6 +460,8 @@ export default {
       this.editor.root.innerHTML = blogData?.content
     },
     initializeStartFromDrafts() {
+      LogAnalyticsEvent('starting_from_draft')
+
       const draft = this.$route?.params?.draft
       this.blog = {
         title: draft?.title,
@@ -877,6 +879,7 @@ export default {
             content: blogBody,
             keywords: this.blog.keywords,
           })
+          LogAnalyticsEvent('update_existing_blogs')
         } else {
           await this.$axios.$post(endpoints.blog.create, {
             categoryID: this.blog.category.id,
@@ -886,12 +889,12 @@ export default {
             content: blogBody,
             keywords: this.blog.keywords,
           })
+          LogAnalyticsEvent('create_new_blog')
         }
 
         const tx = this.db.transaction('drafts', 'readwrite')
         await Promise.all([tx.store.delete(this.uniqueId), tx.done])
 
-        LogAnalyticsEvent('create_new_blog')
         await this.$router.replace(navigationRoutes.Home.DashBoard)
       } catch (e) {
         await showUITip(this.$store, 'Network error. Please Retry', 'error')

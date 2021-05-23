@@ -266,6 +266,7 @@ export default {
         })
 
         await this.updateShareCount()
+        LogAnalyticsEvent('blog_shared')
       } catch (error) {
         await showUITip(this.$store, 'May be Later?', 'warning')
       }
@@ -273,6 +274,7 @@ export default {
 
     async share() {
       if (!navigator.share) {
+        LogAnalyticsEvent('share_fallback_opened')
         this.useShareFallBack = !this.useShareFallBack
         return
       }
@@ -292,12 +294,19 @@ export default {
           identifier: this.blog.identifier,
         })
         this.blog.isSavedForLater = !this.blog.isSavedForLater
+
+        LogAnalyticsEvent(
+          this.blog.isSavedForLater
+            ? 'added_to_Saved_blogs'
+            : 'removed_from_saved_blogs'
+        )
       } catch (e) {
         await showUITip(this.$store, 'Network Error', 'error')
       }
     },
 
     async reportBlog() {
+      LogAnalyticsEvent('blog_report')
       await this.$router.push({
         path: navigationRoutes.Home.MoreOptions.HelpAndSupport.ContactSupport,
         query: {
@@ -331,7 +340,7 @@ export default {
 
     async editBlog() {
       if (this.blog.author.uid !== this.user.uid) return
-
+      LogAnalyticsEvent('edit_existing_blog')
       await this.$router.push({
         name: 'Home-Blogs-Create-AddBlog',
         params: { editExisting: true, blogId: this.blog.identifier },
