@@ -356,6 +356,9 @@ export default {
 
       db: undefined,
       uniqueId: Date.now(),
+
+      editExisting: false,
+      startFromDrafts: false,
     }
   },
 
@@ -388,6 +391,8 @@ export default {
   },
 
   async mounted() {
+    window.onbeforeunload = () => true
+
     this.$router.beforeEach((to, _, next) => {
       switch (to.hash) {
         case '#1':
@@ -404,6 +409,7 @@ export default {
     })
 
     const currentUser = await this.$store.getters['UserManagement/getUser']
+
     if (!currentUser) {
       this.loadingProfile = true
       await this.$store.dispatch('UserManagement/fetchData')
@@ -413,7 +419,47 @@ export default {
 
     await this.setupQuillEditor()
 
-    if (this.$route?.params?.draft) {
+    this.editExisting = this.$route.params?.editExisting
+    this.startFromDrafts = this.$route?.params?.draft
+
+    this.startFromDrafts && this.initializeStartFromDrafts()
+
+    this.editExisting && (await this.initializeEditExistingBlog())
+  },
+
+  beforeDestroy() {
+    window.onbeforeunload = null
+    this.$router.beforeEach((__, _, next) => {
+      next()
+    })
+  },
+
+  methods: {
+    // Common
+    cleanHTML,
+    getRelativeTime,
+
+    // Draft & AutoSave
+    async initializeEditExistingBlog() {
+      const blogId = this.$route.params?.blogId
+
+      const blogData = await this.$axios.$get(endpoints.blog.detail, {
+        params: { identifier: blogId },
+      })
+
+      this.blog = {
+        title: blogData?.title,
+        subtitle: blogData?.subtitle,
+        category: blogData?.category,
+        coverImage: blogData?.coverImage,
+        tags: blogData?.tags,
+        content: blogData?.content,
+        keywords: blogData?.keywords,
+      }
+      this.uniqueId = blogData?.identifier
+      this.editor.root.innerHTML = blogData?.content
+    },
+    initializeStartFromDrafts() {
       const draft = this.$route?.params?.draft
       this.blog = {
         title: draft?.title,
@@ -426,21 +472,7 @@ export default {
       }
       this.uniqueId = draft?.uniqueId
       this.editor.root.innerHTML = draft?.content
-    }
-  },
-
-  beforeDestroy() {
-    this.$router.beforeEach((__, _, next) => {
-      next()
-    })
-  },
-
-  methods: {
-    // Common
-    cleanHTML,
-    getRelativeTime,
-
-    // Draft & AutoSave
+    },
     async createLocalDBIfNotExists() {
       this.db = await openDB('Blogs', 1, {
         upgrade(db) {
@@ -835,14 +867,26 @@ export default {
       await showUITip(this.$store, 'Uploading Article...')
       const blogBody = this.cleanHTML(this.blog.content)
       try {
-        await this.$axios.$post(endpoints.blog.create, {
-          categoryID: this.blog.category.id,
-          coverImage: this.blog.coverImage,
-          title: this.blog.title,
-          subtitle: this.blog.subtitle,
-          content: blogBody,
-          keywords: this.blog.keywords,
-        })
+        if (this.editExisting) {
+          await this.$axios.$put(endpoints.blog.update, {
+            identifier: this.uniqueId,
+            categoryID: this.blog.category.id,
+            coverImage: this.blog.coverImage,
+            title: this.blog.title,
+            subtitle: this.blog.subtitle,
+            content: blogBody,
+            keywords: this.blog.keywords,
+          })
+        } else {
+          await this.$axios.$post(endpoints.blog.create, {
+            categoryID: this.blog.category.id,
+            coverImage: this.blog.coverImage,
+            title: this.blog.title,
+            subtitle: this.blog.subtitle,
+            content: blogBody,
+            keywords: this.blog.keywords,
+          })
+        }
 
         const tx = this.db.transaction('drafts', 'readwrite')
         await Promise.all([tx.store.delete(this.uniqueId), tx.done])

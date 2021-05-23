@@ -18,6 +18,7 @@ const endpoints = {
     detail: '/allow_any/blog/detail/',
 
     create: '/allow_authenticated/blog/create/',
+    update: '/allow_authenticated/blog/update/',
     delete: '/allow_authenticated/blog/delete/',
 
     like: '/allow_authenticated/blog/like/',

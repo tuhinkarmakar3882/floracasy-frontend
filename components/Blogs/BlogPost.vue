@@ -60,6 +60,16 @@
                 v-if="user && blog.author.uid === user.uid"
                 v-ripple="`#ffcf005F`"
                 class="py-2 px-6 list-option"
+                @click="editBlog"
+              >
+                <span class="icon mdi mdi-pencil" style="color: #a6ff00" />
+                Edit Blog
+              </li>
+
+              <li
+                v-if="user && blog.author.uid === user.uid"
+                v-ripple="`#ffcf005F`"
+                class="py-2 px-6 list-option"
                 @click="deleteBlog"
               >
                 <span class="icon mdi mdi-delete" style="color: #ffcf00" />
@@ -317,6 +327,15 @@ export default {
           this.hideBlog = false
         }
       }
+    },
+
+    async editBlog() {
+      if (this.blog.author.uid !== this.user.uid) return
+
+      await this.$router.push({
+        name: 'Home-Blogs-Create-AddBlog',
+        params: { editExisting: true, blogId: this.blog.identifier },
+      })
     },
 
     async openBlogDetails() {
