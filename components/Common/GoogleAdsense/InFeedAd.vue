@@ -67,9 +67,7 @@ export default {
     },
 
     setupIntersectionObserver() {
-      const observer = new IntersectionObserver(this.handleIntersection, {
-        threshold: 1,
-      })
+      const observer = new IntersectionObserver(this.handleIntersection)
       const target = this.$refs.ads
       observer.observe(target)
     },
