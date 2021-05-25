@@ -175,7 +175,6 @@ export default {
 
   head() {
     return {
-      navigationRoutes,
       title: this.pageTitle,
     }
   },

@@ -8,14 +8,7 @@ self.addEventListener('install', (event) => {
       return cache.addAll(filesToCache)
     })
   )
-  console.log(`
-   _   _           _       _         _____                     _
-| | | |_ __   __| | __ _| |_ ___  |  ___|__  _   _ _ __   __| |
-| | | | '_ \\ / _\` |/ _\` | __/ _ \\ | |_ / _ \\| | | | '_ \\ / _\` |
-| |_| | |_) | (_| | (_| | ||  __/ |  _| (_) | |_| | | | | (_| |
- \\___/| .__/ \\__,_|\\__,_|\\__\\___| |_|  \\___/ \\__,_|_| |_|\\__,_|
-      |_|
-  `)
+  console.log('Version Update')
 })
 
 self.addEventListener('activate', (event) => {

@@ -85,6 +85,9 @@ export const navigationRoutes = {
         HowToWrite: '/Home/MoreOptions/WriteAndEarn/HowToWrite',
         Earning: '/Home/MoreOptions/WriteAndEarn/Earning',
       },
+      ReferAndEarn: {
+        index: '/Home/MoreOptions/ReferAndEarn',
+      },
     },
 
     Notifications: {
