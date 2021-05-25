@@ -29,23 +29,28 @@
     />
   </div>
 
-  <div v-else ref="ads" class="fallback-container">
+  <div v-else-if="adsBlocked" ref="ads" class="fallback-container">
     <i class="mdi mdi-google-ads mdi-24px primary-light" />
     <h6 class="my-2">Please allow us to run Google Ads <br />So that,</h6>
     <KeyPoint
-      point="We can Payback the Writers"
-      tick-color="#8FF2E1"
       :tick-size="20"
-      text-color="#dadada"
       class="my-2"
+      point="We can Payback the Writers"
+      text-color="#dadada"
+      tick-color="#8FF2E1"
     />
     <KeyPoint
-      point="We can Sustain this Project"
-      tick-color="#8FF2E1"
       :tick-size="20"
-      text-color="#dadada"
       class="my-2"
+      point="We can Sustain this Project"
+      text-color="#dadada"
+      tick-color="#8FF2E1"
     />
+  </div>
+
+  <div v-else ref="ads" class="fallback-container">
+    <i class="mdi mdi-google-ads mdi-24px primary-light" />
+    <p class="my-2">Ads Will be loaded</p>
   </div>
 </template>
 
@@ -65,6 +70,7 @@ export default {
     return {
       useAlternateAccount,
       showAds: true,
+      adsBlocked: false,
     }
   },
   mounted() {
@@ -82,11 +88,15 @@ export default {
     },
 
     loadAds() {
-      window.adsbygoogle ? window.adsbygoogle?.push({}) : (this.showAds = false)
+      if (!window?.adsbygoogle) {
+        this.showAds = false
+        this.adsBlocked = true
+        return
+      }
+
+      window.adsbygoogle?.push({})
       process.env.NODE_ENV === 'production' &&
-        LogAnalyticsEvent(
-          window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
-        )
+        LogAnalyticsEvent('ads_requested')
     },
 
     setupIntersectionObserver() {
@@ -97,6 +107,8 @@ export default {
 
     handleIntersection(entries) {
       entries.map((entry) => {
+        this.adsBlocked = false
+
         if (entry.isIntersecting) {
           this.showAds = true
           setTimeout(this.loadAds, 10)
