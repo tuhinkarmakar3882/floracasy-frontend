@@ -47,7 +47,11 @@ export default {
   },
   mounted() {
     ;(window.adsbygoogle || []).push({})
-    process.env.NODE_ENV === 'production' && LogAnalyticsEvent('ads_requested')
+
+    process.env.NODE_ENV === 'production' &&
+      LogAnalyticsEvent(
+        window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
+      )
   },
 }
 </script>
