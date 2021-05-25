@@ -75,17 +75,21 @@ export default {
     }
   },
   mounted() {
-    // this.useDomBasedAds()
-    this.setupIntersectionObserver()
+    'IntersectionObserver' in window
+      ? this.setupIntersectionObserver()
+      : this.useDomBasedAds()
   },
   methods: {
     useDomBasedAds() {
-      ;(window.adsbygoogle || []).push({})
+      if (!window?.adsbygoogle) {
+        this.showAds = false
+        this.adsBlocked = true
+        return
+      }
 
+      window.adsbygoogle?.push({})
       process.env.NODE_ENV === 'production' &&
-        LogAnalyticsEvent(
-          window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
-        )
+        LogAnalyticsEvent('ads_requested')
     },
 
     loadAds() {
