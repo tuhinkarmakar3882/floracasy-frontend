@@ -30,8 +30,22 @@
   </div>
 
   <div v-else ref="ads" class="fallback-container">
-    <i class="mdi mdi-google-ads" />
-    <p class="mx-4">Advertisement will Load Here</p>
+    <i class="mdi mdi-google-ads mdi-24px primary-light" />
+    <h6 class="my-2">Please allow us to run Google Ads <br />So that,</h6>
+    <KeyPoint
+      point="We can Payback the Writers"
+      tick-color="#8FF2E1"
+      :tick-size="20"
+      text-color="#dadada"
+      class="my-2"
+    />
+    <KeyPoint
+      point="We can Sustain this Project"
+      tick-color="#8FF2E1"
+      :tick-size="20"
+      text-color="#dadada"
+      class="my-2"
+    />
   </div>
 </template>
 
@@ -68,12 +82,11 @@ export default {
     },
 
     loadAds() {
-      ;(window.adsbygoogle || []).push({})
+      window.adsbygoogle ? window.adsbygoogle?.push({}) : (this.showAds = false)
       process.env.NODE_ENV === 'production' &&
         LogAnalyticsEvent(
           window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
         )
-      this.loaded = true
     },
 
     setupIntersectionObserver() {
@@ -85,8 +98,8 @@ export default {
     handleIntersection(entries) {
       entries.map((entry) => {
         if (entry.isIntersecting) {
-          setTimeout(this.loadAds, 10)
           this.showAds = true
+          setTimeout(this.loadAds, 10)
         } else {
           this.showAds = false
         }
@@ -101,10 +114,14 @@ export default {
 
 .fallback-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  padding: 1rem 0.5rem;
+  text-align: center;
+  padding: $xxx-large-unit $micro-unit;
+  border-radius: $micro-unit;
+  margin: $standard-unit auto;
   background: linear-gradient(
       45deg,
       transparent 0%,
@@ -119,7 +136,7 @@ export default {
     )
     right no-repeat;
   background-size: 400%;
-  animation: shift-background 20s infinite alternate-reverse ease-in-out;
+  animation: shift-background 8s infinite alternate-reverse ease-in-out;
 
   @keyframes shift-background {
     from {
