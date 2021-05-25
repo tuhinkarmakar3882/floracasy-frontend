@@ -7,18 +7,10 @@
         class="community-post"
       >
         <CommunityPost :post="post" class="py-6" />
-        <InFeedAd v-if="index % 2 === 0" />
+        <InFeedAd />
         <LazyFollowSuggestions v-if="index === 4" class="pb-6" />
       </article>
     </transition-group>
-
-    <!--    <RecycleScroller :items="posts" :min-item-size="1" class="scroller">-->
-    <!--      <template #default="{ item, index }">-->
-    <!--        <CommunityPost :post="item" class="py-6" />-->
-    <!--        <InFeedAd v-if="index % 2 === 0" />-->
-    <!--        <LazyFollowSuggestions v-if="index === 4" class="pb-6" />-->
-    <!--      </template>-->
-    <!--    </RecycleScroller>-->
 
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
@@ -44,7 +36,6 @@
 <script>
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
-// import { RecycleScroller } from 'vue-virtual-scroller'
 import CommunityPost from '~/components/Social/Posts/CommunityPost'
 import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 
@@ -53,7 +44,6 @@ export default {
   components: {
     InFeedAd,
     CommunityPost,
-    // RecycleScroller,
   },
 
   data() {
