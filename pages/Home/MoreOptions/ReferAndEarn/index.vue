@@ -134,7 +134,7 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'ReferAndEarn',
-  // middleware: 'isAuthenticated',
+  middleware: 'isAuthenticated',
   data() {
     return {
       navigationRoutes,
