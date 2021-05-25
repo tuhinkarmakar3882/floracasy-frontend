@@ -51,7 +51,6 @@ export default {
     return {
       useAlternateAccount,
       showAds: true,
-      loaded: false,
     }
   },
   mounted() {
@@ -78,9 +77,7 @@ export default {
     },
 
     setupIntersectionObserver() {
-      const observer = new IntersectionObserver(this.handleIntersection, {
-        threshold: 0.1,
-      })
+      const observer = new IntersectionObserver(this.handleIntersection)
       const target = this.$refs.ads
       observer.observe(target)
     },
@@ -88,13 +85,11 @@ export default {
     handleIntersection(entries) {
       entries.map((entry) => {
         if (entry.isIntersecting) {
-          !this.loaded && setTimeout(this.loadAds, 0)
-
+          setTimeout(this.loadAds, 10)
           this.showAds = true
         } else {
           this.showAds = false
         }
-        return entry
       })
     },
   },
