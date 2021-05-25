@@ -70,6 +70,7 @@ export default {
     return {
       useAlternateAccount,
       showAds: true,
+      timeout: undefined,
       adsBlocked: false,
       observer: undefined,
     }
@@ -118,6 +119,11 @@ export default {
           this.showAds = true
           setTimeout(this.loadAds, 0)
           this.observer.unobserve(entry.target)
+
+          clearTimeout(this.timeout)
+          this.timeout = setTimeout(() => {
+            this.observer.observe(entry.target)
+          }, 10000)
         } else {
           this.showAds = false
         }
