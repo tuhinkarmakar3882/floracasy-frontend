@@ -50,6 +50,7 @@ export default {
     return {
       useAlternateAccount,
       showAds: false,
+      loaded: false,
     }
   },
   mounted() {
@@ -75,16 +76,17 @@ export default {
     handleIntersection(entries) {
       entries.map((entry) => {
         if (entry.isIntersecting) {
-          // entry.target.classList.add('visible')
+          if (!this.loaded) {
+            ;(window.adsbygoogle || []).push({})
+            process.env.NODE_ENV === 'production' &&
+              LogAnalyticsEvent(
+                window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
+              )
+            this.loaded = true
+          }
           this.showAds = true
-          ;(window.adsbygoogle || []).push({})
-          process.env.NODE_ENV === 'production' &&
-            LogAnalyticsEvent(
-              window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
-            )
         } else {
           this.showAds = false
-          // entry.target.classList.remove('visible')
         }
         return entry
       })
