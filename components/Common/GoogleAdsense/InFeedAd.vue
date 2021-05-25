@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       useAlternateAccount,
-      showAds: false,
+      showAds: true,
       loaded: false,
     }
   },
@@ -68,8 +68,19 @@ export default {
         )
     },
 
+    loadAds() {
+      ;(window.adsbygoogle || []).push({})
+      process.env.NODE_ENV === 'production' &&
+        LogAnalyticsEvent(
+          window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
+        )
+      this.loaded = true
+    },
+
     setupIntersectionObserver() {
-      const observer = new IntersectionObserver(this.handleIntersection)
+      const observer = new IntersectionObserver(this.handleIntersection, {
+        threshold: 0.1,
+      })
       const target = this.$refs.ads
       observer.observe(target)
     },
@@ -77,14 +88,8 @@ export default {
     handleIntersection(entries) {
       entries.map((entry) => {
         if (entry.isIntersecting) {
-          if (!this.loaded) {
-            ;(window.adsbygoogle || []).push({})
-            process.env.NODE_ENV === 'production' &&
-              LogAnalyticsEvent(
-                window?.adsbygoogle?.loaded ? 'ads_requested' : 'ads_blocked'
-              )
-            this.loaded = true
-          }
+          !this.loaded && setTimeout(this.loadAds, 0)
+
           this.showAds = true
         } else {
           this.showAds = false
