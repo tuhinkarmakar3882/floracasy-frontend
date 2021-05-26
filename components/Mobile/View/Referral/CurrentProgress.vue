@@ -1,10 +1,12 @@
 <template>
   <div class="current-progress-component">
     <section>
-      <h5 class="px-4">Extra Features</h5>
+      <h5 class="px-4">Unlock Extra Features</h5>
       <hr class="faded-divider" />
       <LineProgress :percentage="percentage" class="px-4" />
-      <button class="secondary-outlined-btn">Go to Marketplace</button>
+      <button v-if="percentage === 100" class="secondary-outlined-btn" v-ripple>
+        Go to Marketplace
+      </button>
     </section>
   </div>
 </template>

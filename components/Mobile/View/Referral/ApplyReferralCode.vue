@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       loading: true,
-      alreadyReferred: true,
+      alreadyReferred: false,
       referralCode: undefined,
       pleaseWait: false,
       responseAvailable: false,
