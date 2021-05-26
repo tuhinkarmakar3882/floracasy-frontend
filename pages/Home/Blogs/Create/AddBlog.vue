@@ -1,6 +1,10 @@
 <template>
   <div class="create-new-blog-screen">
-    <AppBarHeader class="app-header">
+    <AppBarHeader
+      class="app-header"
+      :previous-page="previousPage"
+      :fallback-page="fallbackPage"
+    >
       <template #title>{{ pageTitle }}</template>
 
       <template #action-button>
@@ -281,16 +285,18 @@ export default {
   components: { InputField, AppBarHeader },
   middleware: 'isAuthenticated',
 
-  async asyncData({ $axios, from: prevURL }) {
+  async asyncData({ $axios, from: previousPage }) {
     const response = await $axios
       .$get(endpoints.categories.fetch)
       .then((response) => response.data)
 
-    return { categories: response, prevURL }
+    return { categories: response, previousPage }
   },
 
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       pageTitle: 'Create Blog',
       Quill: undefined,
       editor: undefined,

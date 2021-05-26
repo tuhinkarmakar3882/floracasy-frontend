@@ -1,6 +1,6 @@
 <template>
   <div class="add-new-post-page">
-    <AppBarHeader>
+    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
       <template #title> {{ pageTitle }}</template>
       <template #action-button>
         <button
@@ -192,14 +192,14 @@ export default {
   components: { FallBackLoader, AppBarHeader },
   middleware: 'isAuthenticated',
 
-  asyncData({ from: prevURL }) {
-    return { prevURL }
+  asyncData({ from: previousPage }) {
+    return { previousPage }
   },
-
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       useMoodOptions,
-      prevURL: undefined,
       navigationRoutes,
       pageTitle: 'Add New Post',
       isReady: false,

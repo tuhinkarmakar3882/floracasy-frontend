@@ -1,6 +1,6 @@
 <template>
   <div class="details-page">
-    <AppBarHeader sticky>
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
 
@@ -81,8 +81,15 @@ export default {
     AppBarHeader,
   },
   middleware: 'isAuthenticated',
+
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
+
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.DashBoard,
       pageTitle: 'Profile Details',
 
       useMessageService,
@@ -149,9 +156,7 @@ export default {
     async initializeChatThread(receiverData) {
       this.messageLoading = true
       try {
-        const {
-          chat_thread_id: chatThreadId,
-        } = await this.$axios.$post(
+        const { chat_thread_id: chatThreadId } = await this.$axios.$post(
           endpoints.chat_system.initializeChatThread,
           { uid: receiverData.uid }
         )

@@ -1,6 +1,10 @@
 <template>
   <div class="blog-details-page">
-    <AppBarHeader auto-hide no-right-padding>
+    <AppBarHeader
+      :fallback-page="fallbackPage"
+      :previous-page="previousPage"
+      no-right-padding
+    >
       <template #title>
         <h6>
           <nuxt-link
@@ -203,19 +207,21 @@ import java from 'highlight.js/lib/languages/java'
 import c from 'highlight.js/lib/languages/c'
 import cpp from 'highlight.js/lib/languages/cpp'
 import vbscriptHtml from 'highlight.js/lib/languages/vbscript-html'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 const { useMessageService } = require('~/environmentVariables')
 
 export default {
   name: 'BlogDetails',
+  components: { AppBarHeader },
   layout: 'FullScreen',
 
-  async asyncData({ $axios, redirect, params, from: prevURL }) {
+  async asyncData({ $axios, redirect, params, from: previousPage }) {
     try {
       const response = await $axios.$get(endpoints.blog.detail, {
         params: { identifier: params.id },
       })
-      return { blog: response, prevURL }
+      return { blog: response, previousPage }
     } catch (e) {
       redirect('/error')
     }
@@ -225,7 +231,8 @@ export default {
     return {
       pageTitle: this.$route.params.name,
       useMessageService,
-      prevURL: null,
+      previousPage: null,
+      fallbackPage: navigationRoutes.Home.DashBoard,
       navigationRoutes,
       blog: null,
       playbackStarted: false,

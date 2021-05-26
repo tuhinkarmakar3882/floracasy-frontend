@@ -1,6 +1,6 @@
 <template>
   <div class="draft-blog-page">
-    <AppBarHeader sticky>
+    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
       <template #title>
         {{ pageTitle }}
       </template>
@@ -58,8 +58,13 @@ export default {
     AppBarHeader,
   },
   middleware: 'isAuthenticated',
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.Blogs.Create.index,
       emptyDraft: false,
       loadingContent: true,
       loadingError: false,

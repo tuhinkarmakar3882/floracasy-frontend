@@ -1,6 +1,6 @@
 <template>
   <div class="contact-support-page">
-    <AppBarHeader sticky>
+    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
       <template #title> {{ pageTitle }}</template>
 
       <template #action-button>
@@ -136,8 +136,13 @@ export default {
   components: { AppBarHeader },
   middleware: 'isAuthenticated',
 
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.HelpAndSupport.index,
       navigationRoutes,
       pageTitle: 'Contact Support',
       raisingTicking: false,

@@ -1,6 +1,6 @@
 <template>
   <div class="how-to-write-page">
-    <AppBarHeader sticky>
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>{{ pageTitle }}</template>
       <template #action-button>
         <nuxt-link v-ripple :to="navigationRoutes.Home.Blogs.Create.AddBlog">
@@ -225,12 +225,21 @@
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'HowToWrite',
-  // middleware: 'isAuthenticated',
+  components: { AppBarHeader },
+  middleware: 'isAuthenticated',
+
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
+
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.WriteAndEarn.index,
       navigationRoutes,
       pageTitle: 'How to Write',
       guidelines: [

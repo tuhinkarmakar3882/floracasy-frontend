@@ -1,6 +1,10 @@
 <template>
   <div class="error-page">
-    <AppBarHeader sticky no-back-button>
+    <AppBarHeader
+      no-back-button
+      :previous-page="previousPage"
+      :fallback-page="fallbackPage"
+    >
       <template #title>
         <nuxt-link :to="navigationRoutes.Home.DashBoard" class="no-underline">
           <h6 v-ripple class="px-4 py-4">Floracasy</h6>
@@ -53,8 +57,13 @@ export default {
       required: true,
     },
   },
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       pageTitle: 'Page Not Found',
       navigationRoutes,
     }

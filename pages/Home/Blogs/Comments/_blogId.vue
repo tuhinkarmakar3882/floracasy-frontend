@@ -1,6 +1,6 @@
 <template>
   <div class="blog-comment-page">
-    <AppBarHeader auto-hide sticky>
+    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
       <template #title>
         {{ pageTitle }}
       </template>
@@ -111,16 +111,17 @@ export default {
   components: { FallBackLoader, AppBarHeader },
   middleware: 'isAuthenticated',
 
-  async asyncData({ $axios, params, from: prevURL }) {
+  async asyncData({ $axios, params, from: previousPage }) {
     const blog = await $axios.$get(endpoints.blog.info, {
       params: { identifier: params.blogId },
     })
-    return { blog, prevURL }
+    return { blog, previousPage }
   },
 
   data() {
     return {
-      prevURL: null,
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       blog: null,
       navigationRoutes,
       pageTitle: 'Comments',

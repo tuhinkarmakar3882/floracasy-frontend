@@ -1,10 +1,5 @@
 <template>
-  <div
-    :class="[sticky && 'sticky', 'app-bar-header', autoHide && 'sticky']"
-    :style="{
-      top: showTopBar ? 0 : '-56px',
-    }"
-  >
+  <div class="app-bar-header">
     <NotificationBadge />
 
     <header>
@@ -12,12 +7,12 @@
         v-if="!noBackButton"
         v-ripple
         class="mdi mdi-arrow-left"
-        @click="$router.back()"
+        @click="back"
       />
 
       <p><slot name="title" /></p>
 
-      <aside class="ml-auto" :class="!noRightPadding && 'pr-4'">
+      <aside :class="!noRightPadding && 'pr-4'" class="ml-auto">
         <slot name="action-button" />
       </aside>
     </header>
@@ -25,9 +20,11 @@
 </template>
 
 <script>
+import NotificationBadge from '~/components/Layout/NotificationBadge'
+
 export default {
   name: 'AppBarHeader',
-
+  components: { NotificationBadge },
   props: {
     noBackButton: {
       type: Boolean,
@@ -37,36 +34,23 @@ export default {
       type: Boolean,
       default: false,
     },
-    sticky: {
-      type: Boolean,
-      default: false,
+
+    previousPage: {
+      type: Object,
+      required: false,
+      default: () => {},
     },
-    autoHide: {
-      type: Boolean,
-      default: false,
+    fallbackPage: {
+      type: String,
+      required: true,
     },
-  },
-
-  data() {
-    return {
-      showTopBar: true,
-    }
-  },
-
-  mounted() {
-    this.autoHide && document.addEventListener('scroll', this.autoHideOnScroll)
-  },
-
-  beforeDestroy() {
-    this.autoHide &&
-      document.removeEventListener('scroll', this.autoHideOnScroll)
   },
 
   methods: {
-    autoHideOnScroll() {
-      const currentScrollPos = window.pageYOffset
-      this.showTopBar = this.prevScrollPos > currentScrollPos
-      this.prevScrollPos = currentScrollPos
+    back() {
+      this.previousPage
+        ? this.$router.back()
+        : this.$router.push(this.fallbackPage)
     },
   },
 }
@@ -76,13 +60,10 @@ export default {
 @import 'assets/all-variables';
 
 .app-bar-header {
-  position: relative !important;
-
-  &.sticky {
-    position: sticky !important;
-    top: 0;
-    z-index: $bring-to-front !important;
-  }
+  background-color: $navigation-bar-color !important;
+  position: sticky !important;
+  top: 0;
+  z-index: $bring-to-front !important;
 
   $size: 2 * $x-large-unit;
 

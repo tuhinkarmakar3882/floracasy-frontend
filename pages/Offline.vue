@@ -1,6 +1,10 @@
 <template>
   <div class="offline-page">
-    <AppBarHeader sticky no-back-button>
+    <AppBarHeader
+      no-back-button
+      :previous-page="previousPage"
+      :fallback-page="fallbackPage"
+    >
       <template #title>
         <nuxt-link :to="navigationRoutes.Home.DashBoard" class="no-underline">
           <h6 v-ripple class="px-4 py-4">Floracasy</h6>
@@ -25,11 +29,18 @@
 
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'Offline',
+  components: { AppBarHeader },
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       navigationRoutes,
     }
   },

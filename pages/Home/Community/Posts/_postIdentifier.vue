@@ -1,6 +1,6 @@
 <template>
   <div class="community-post-detail-page">
-    <AppBarHeader auto-hide sticky>
+    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
 
@@ -23,28 +23,31 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'PostDetails',
+  components: { AppBarHeader },
   middleware: 'isAuthenticated',
 
-  async asyncData({ $axios, params, from: prevURL }) {
+  async asyncData({ $axios, params, from: previousPage }) {
     const response = await $axios.$get(
       endpoints.community_service.posts.detail.replace(
         '{identifier}',
         params.postIdentifier
       )
     )
-    return { post: response, prevURL }
+    return { post: response, previousPage }
   },
 
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       navigationRoutes,
       isReady: false,
       pageTitle: 'Post Details',
       post: undefined,
-      prevURL: undefined,
     }
   },
 
