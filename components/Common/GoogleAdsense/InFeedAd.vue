@@ -87,10 +87,14 @@ export default {
         this.adsBlocked = true
         return
       }
-
-      window.adsbygoogle?.push({})
-      process.env.NODE_ENV === 'production' &&
-        LogAnalyticsEvent('ads_requested')
+      try {
+        window.adsbygoogle?.push({})
+        process.env.NODE_ENV === 'production' &&
+          LogAnalyticsEvent('ads_requested')
+      } catch (e) {
+        process.env.NODE_ENV === 'production' &&
+          LogAnalyticsEvent('ads_not_loaded')
+      }
     },
 
     loadAds() {
@@ -100,9 +104,14 @@ export default {
         return
       }
 
-      window.adsbygoogle?.push({})
-      process.env.NODE_ENV === 'production' &&
-        LogAnalyticsEvent('ads_requested')
+      try {
+        window.adsbygoogle?.push({})
+        process.env.NODE_ENV === 'production' &&
+          LogAnalyticsEvent('ads_requested')
+      } catch (e) {
+        process.env.NODE_ENV === 'production' &&
+          LogAnalyticsEvent('ads_not_loaded')
+      }
     },
 
     setupIntersectionObserver() {
@@ -123,7 +132,7 @@ export default {
           clearTimeout(this.timeout)
           this.timeout = setTimeout(() => {
             this.observer.observe(entry.target)
-          }, 10000)
+          }, 8000)
         } else {
           this.showAds = false
         }
