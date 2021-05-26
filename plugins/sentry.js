@@ -7,5 +7,5 @@ Sentry.init({
   Vue,
   dsn: sentryDSN,
   integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 0.1,
+  tracesSampleRate: 0.05,
 })
