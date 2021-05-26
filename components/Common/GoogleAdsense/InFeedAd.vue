@@ -108,10 +108,7 @@ export default {
         window.adsbygoogle?.push({})
         process.env.NODE_ENV === 'production' &&
           LogAnalyticsEvent('ads_requested')
-      } catch (e) {
-        process.env.NODE_ENV === 'production' &&
-          LogAnalyticsEvent('ads_not_loaded')
-      }
+      } catch (e) {}
     },
 
     setupIntersectionObserver() {
