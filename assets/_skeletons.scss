@@ -1,0 +1,29 @@
+@import "variables/theme-color-variables";
+
+.skeleton-loader {
+  border-radius: 4px;
+  animation: swift 2.5s ease-in-out infinite alternate-reverse;
+  background: linear-gradient(
+      45deg,
+      transparent 0%,
+      $navigation-bar-color 12.5%,
+      $body-bg-alternate 25%,
+      $card-bg 37.5%,
+      $primary-light 50%,
+      $card-bg 62.5%,
+      $body-bg-alternate 75%,
+      $navigation-bar-color 87.5%,
+      transparent 100%
+  )
+  left no-repeat;
+  background-size: 400%;
+}
+
+@keyframes swift {
+  from {
+    background-position: left;
+  }
+  to {
+    background-position: right;
+  }
+}
