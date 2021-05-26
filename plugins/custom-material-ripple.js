@@ -79,15 +79,8 @@ const Ripple = {
       )
 
       // Get necessary variables
-      const {
-        width,
-        height,
-        dx,
-        dy,
-        style,
-        radius,
-        border,
-      } = getRequiredParams(target, event, targetBorder)
+      const { width, height, dx, dy, style, radius, border } =
+        getRequiredParams(target, event, targetBorder)
 
       const { ripple, rippleContainer } = createRippleContainer()
 
