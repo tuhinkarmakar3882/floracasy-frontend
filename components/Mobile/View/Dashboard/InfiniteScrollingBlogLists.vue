@@ -13,19 +13,6 @@
       </transition-group>
     </section>
 
-    <!--    <section v-if="blogs">-->
-    <!--      <RecycleScroller :items="blogs" :min-item-size="1" class="scroller">-->
-    <!--        <template #default="{ item, index }">-->
-    <!--          <BlogPost :blog="item" class="pb-0 pt-8" />-->
-    <!--          <InFeedAd />-->
-    <!--          <LazyFollowSuggestions-->
-    <!--            v-if="showFollowSuggestions && index === 2"-->
-    <!--            class="pb-6"-->
-    <!--          />-->
-    <!--        </template>-->
-    <!--      </RecycleScroller>-->
-    <!--    </section>-->
-
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
         <template slot="spinner">
@@ -58,7 +45,6 @@ import { processLink } from '~/utils/utility'
 import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 import BlogPost from '~/components/Blogs/BlogPost'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
-// import { RecycleScroller } from 'vue-virtual-scroller'
 import '~/assets/override/virtual-scroller.scss'
 
 export default {
@@ -67,7 +53,6 @@ export default {
     FallBackLoader,
     BlogPost,
     InFeedAd,
-    // RecycleScroller,
   },
   props: {
     hideAds: {
