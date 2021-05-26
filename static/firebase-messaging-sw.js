@@ -25,21 +25,26 @@ firebase.initializeApp(firebaseConfig)
 
 const messaging = firebase.messaging()
 
-// messaging.onBackgroundMessage((payload) => {
-//   const notification = payload.notification
-//   const notificationTitle = notification?.title
-//   const notificationOptions = {
-//     // icon: '/static/icon.png',
-//     vibrate: [300, 100, 400, 100, 400, 100, 400],
-//     data: {
-//       click_action: notification?.click_action,
-//     },
-//     actions: [{ action: 'open_url', title: 'Check Now' }],
-//     click_action: notification?.click_action,
-//   }
-//
-//   return self.registration.showNotification(
-//     notificationTitle,
-//     notificationOptions
-//   )
-// })
+messaging.onBackgroundMessage((payload) => {
+  const notification = payload?.notification || payload?.data
+  const notificationTitle = notification?.title
+  const notificationOptions = {
+    icon: notification?.image || 'https://floracasy.com/icon.png',
+    // image: notification?.image || 'https://floracasy.com/icon.png',
+    vibrate: [300, 100, 400, 100, 400, 100, 400],
+    data: {
+      click_action: notification?.click_action,
+    },
+    actions: [{ action: 'open_url', title: 'Check Now' }],
+    click_action: notification?.click_action,
+    tag: notification?.tag,
+    collapseKey: notification?.collapseKey,
+  }
+  if (notification?.body && notification?.body !== 'None')
+    notificationOptions.body = notification.body
+
+  return self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  )
+})
