@@ -8,4 +8,7 @@ Sentry.init({
   dsn: sentryDSN,
   integrations: [new Integrations.BrowserTracing()],
   tracesSampleRate: 0.05,
+  tracingOptions: {
+    trackComponents: true,
+  },
 })
