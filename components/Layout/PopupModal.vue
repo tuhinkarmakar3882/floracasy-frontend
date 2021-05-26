@@ -78,7 +78,7 @@ export default {
     z-index: 5;
     background: $card-bg;
     padding: 2rem 1.5rem;
-    border-radius: 16px;
+    border-radius: 6px;
     text-align: left;
     box-shadow: $default-box-shadow;
   }
