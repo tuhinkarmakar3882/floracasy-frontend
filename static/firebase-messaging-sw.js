@@ -30,18 +30,20 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = notification?.title
   const notificationOptions = {
     icon: notification?.image || 'https://floracasy.com/icon.png',
-    // image: notification?.image || 'https://floracasy.com/icon.png',
     vibrate: [300, 100, 400, 100, 400, 100, 400],
     data: {
       click_action: notification?.click_action,
     },
     actions: [{ action: 'open_url', title: 'Check Now' }],
     click_action: notification?.click_action,
-    tag: notification?.tag,
-    collapseKey: notification?.collapseKey,
   }
   if (notification?.body && notification?.body !== 'None')
     notificationOptions.body = notification.body
+
+  notification?.tag && (notificationOptions.tag = notification.tag)
+
+  notification?.collapseKey &&
+    (notificationOptions.collapseKey = notification.collapseKey)
 
   return self.registration.showNotification(
     notificationTitle,
