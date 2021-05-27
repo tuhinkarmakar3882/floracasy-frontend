@@ -1,11 +1,11 @@
 <template>
   <div class="apply-referral-code-component">
-    <section v-if="loading" class="px-4 my-4">
+    <aside v-if="loading" class="my-8 py-4 px-4">
       <LineSkeleton class="mx-auto" height="3rem" width="70%" />
       <LineSkeleton class="mt-4 mb-2" height="1rem" />
       <LineSkeleton class="mb-4" height="1rem" />
       <LineSkeleton class="mx-auto" height="1.5rem" width="30%" />
-    </section>
+    </aside>
 
     <main v-else-if="!alreadyReferred">
       <h5>Got a Referral Code?</h5>
@@ -72,9 +72,9 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.loading = false
-    }, 5000)
+    // setTimeout(() => {
+    //   this.loading = false
+    // }, 5000)
   },
   methods: {
     claimReferralBonus() {

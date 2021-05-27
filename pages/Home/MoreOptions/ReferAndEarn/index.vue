@@ -11,13 +11,15 @@
       </template>
     </AppBarHeader>
 
-    <div class="main">
+    <main>
       <InviteCode />
+
       <ApplyReferralCode />
+
       <CurrentProgress class="my-4" />
 
       <ReferralHistory class="pt-2" />
-    </div>
+    </main>
   </div>
 </template>
 
@@ -67,7 +69,7 @@ export default {
 @import 'assets/all-variables';
 
 .refer-and-earn-page {
-  div.main {
+  main {
     max-width: $large-screen;
     margin: auto;
   }

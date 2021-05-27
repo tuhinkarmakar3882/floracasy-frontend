@@ -1,6 +1,6 @@
 <template>
   <div class="invite-code-component">
-    <aside v-if="loading" class="px-4 py-6">
+    <aside v-if="loading" class="my-8 py-4 px-4">
       <LineSkeleton height="2.5rem" />
       <LineSkeleton height="2.5rem" width="30%" class="mt-4 mb-8" />
 
@@ -48,9 +48,9 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.loading = false
-    }, 4000)
+    // setTimeout(() => {
+    //   this.loading = false
+    // }, 4000)
   },
 }
 </script>
