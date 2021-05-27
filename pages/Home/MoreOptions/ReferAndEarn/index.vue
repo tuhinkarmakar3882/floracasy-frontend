@@ -37,7 +37,6 @@ export default {
     ReferralHistory,
     ApplyReferralCode,
     InviteCode,
-    InputField,
     AppBarHeader,
   },
   middleware: 'isAuthenticated',
@@ -45,6 +44,7 @@ export default {
   asyncData({ from: previousPage }) {
     return { previousPage }
   },
+
   data() {
     return {
       previousPage: undefined,
