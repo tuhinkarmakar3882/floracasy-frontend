@@ -48,7 +48,7 @@
     />
   </div>
 
-  <div v-else ref="ads" class="fallback-container">
+  <div v-else ref="ads" :style="getStyles" class="fallback-container">
     <i class="mdi mdi-google-ads mdi-24px primary-light" />
     <p class="my-2">Ads Will be loaded</p>
   </div>
@@ -74,6 +74,16 @@ export default {
       adsBlocked: false,
       observer: undefined,
     }
+  },
+  computed: {
+    getStyles() {
+      if (process.client) {
+        const width = window.innerWidth > 992 ? 992 : window.innerWidth
+        const height = Math.round(width / 1.4)
+        return { height: `${height}px` }
+      }
+      return { height: 'auto' }
+    },
   },
   mounted() {
     this.useDomBasedAds()
