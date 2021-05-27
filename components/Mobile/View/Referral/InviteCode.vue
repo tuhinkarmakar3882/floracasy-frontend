@@ -1,6 +1,23 @@
 <template>
   <div class="invite-code-component">
-    <header>
+    <aside v-if="loading" class="px-4 py-6">
+      <LineSkeleton height="2.5rem" />
+      <LineSkeleton height="2.5rem" width="30%" class="mt-4 mb-8" />
+
+      <main style="display: grid; grid-template-columns: 1fr 40px">
+        <section>
+          <LineSkeleton width="70%" />
+
+          <LineSkeleton width="40%" class="my-2" />
+        </section>
+
+        <ImageSkeleton radius="50%" width="40px" height="40px" />
+      </main>
+
+      <LineSkeleton class="mt-6" />
+    </aside>
+
+    <header v-else>
       <h5>Invite your friends to Floracasy</h5>
       <main v-ripple>
         <section>
@@ -20,8 +37,21 @@
 </template>
 
 <script>
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 export default {
   name: 'InviteCode',
+  components: { ImageSkeleton, LineSkeleton },
+  data() {
+    return {
+      loading: true,
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.loading = false
+    }, 4000)
+  },
 }
 </script>
 
