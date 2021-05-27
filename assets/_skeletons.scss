@@ -19,6 +19,12 @@ $skeleton-bg-highlight: linear-gradient(
   animation: swift 2s ease-in-out infinite alternate;
   background: $skeleton-bg-highlight;
   background-size: 400%;
+
+  @media (prefers-reduced-motion) {
+    background: $navigation-bar-color;
+    background-size: 100%;
+    animation: glow 1.6s ease-in-out infinite alternate;
+  }
 }
 
 @keyframes swift {
@@ -27,5 +33,14 @@ $skeleton-bg-highlight: linear-gradient(
   }
   to {
     background-position: left;
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: $navigation-bar-color;
+  }
+  100% {
+    background-color: hsl(240, 21%, 24%);
   }
 }
