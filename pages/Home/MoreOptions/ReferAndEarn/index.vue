@@ -24,7 +24,6 @@
 <script>
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
-import InputField from '~/components/Common/Tools/InputField'
 import InviteCode from '~/components/Mobile/View/Referral/InviteCode'
 import ApplyReferralCode from '~/components/Mobile/View/Referral/ApplyReferralCode'
 import ReferralHistory from '~/components/Mobile/View/Referral/ReferralHistory'
