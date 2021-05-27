@@ -1,18 +1,18 @@
 <template>
   <div class="invite-code-component">
-    <aside v-if="loading" class="my-8 py-4 px-4">
+    <aside v-if="loading" class="my-8 pb-2 px-4">
       <LineSkeleton height="2.5rem" />
-      <LineSkeleton height="2.5rem" width="30%" class="mt-4 mb-8" />
+      <LineSkeleton class="mt-4 mb-8" height="2.5rem" width="30%" />
 
-      <main style="display: grid; grid-template-columns: 1fr 40px">
-        <section>
+      <section class="sample-response my-4">
+        <aside>
           <LineSkeleton width="70%" />
 
-          <LineSkeleton width="40%" class="my-2" />
-        </section>
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
 
-        <ImageSkeleton radius="50%" width="40px" height="40px" />
-      </main>
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+      </section>
 
       <LineSkeleton class="mt-6" />
     </aside>
@@ -39,6 +39,7 @@
 <script>
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+
 export default {
   name: 'InviteCode',
   components: { ImageSkeleton, LineSkeleton },
@@ -98,6 +99,12 @@ export default {
         place-items: center;
       }
     }
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 1fr 40px;
+    grid-gap: 16px;
   }
 }
 </style>

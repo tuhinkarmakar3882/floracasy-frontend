@@ -1,77 +1,104 @@
 <template>
   <div class="referral-history-component">
-    <h6 class="mt-8 mb-4 px-4">Joining History</h6>
-    <hr class="my-2" />
+    <aside v-if="loading" class="my-8 px-4">
+      <LineSkeleton height="2.5rem" />
 
-    <section
-      :style="{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }"
-      class="px-4 my-4"
-    >
-      <img
+      <section class="sample-response my-4" v-for="i in [1, 2, 3]" :key="i">
+        <ImageSkeleton radius="50%" width="40px" height="40px" />
+        <aside>
+          <LineSkeleton width="70%" />
+          <LineSkeleton width="40%" class="my-2" />
+        </aside>
+      </section>
+    </aside>
+
+    <main v-else>
+      <h6 class="mt-8 mb-4 px-4">Joining History</h6>
+      <hr class="my-2" />
+
+      <section
         :style="{
-          height: '40px',
-          width: '40px',
-          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }"
-        alt="user-image"
-        src="https://picsum.photos/561"
-      />
-      <p style="font-family: 'Nunito-Sans', sans-serif">
-        Tuhin Karmakar has joined on 11th May
-      </p>
-    </section>
-    <section
-      :style="{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }"
-      class="px-4 my-4"
-    >
-      <img
+        class="px-4 my-4"
+      >
+        <img
+          :style="{
+            height: '40px',
+            width: '40px',
+            borderRadius: '50%',
+          }"
+          alt="user-image"
+          src="https://picsum.photos/561"
+        />
+        <p style="font-family: 'Nunito-Sans', sans-serif">
+          Tuhin Karmakar has joined on 11th May
+        </p>
+      </section>
+      <section
         :style="{
-          height: '40px',
-          width: '40px',
-          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }"
-        alt="user-image"
-        src="https://picsum.photos/561"
-      />
-      <p style="font-family: 'Nunito-Sans', sans-serif">
-        Tuhin Karmakar has joined on 11th May
-      </p>
-    </section>
-    <section
-      :style="{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }"
-      class="px-4 my-4"
-    >
-      <img
+        class="px-4 my-4"
+      >
+        <img
+          :style="{
+            height: '40px',
+            width: '40px',
+            borderRadius: '50%',
+          }"
+          alt="user-image"
+          src="https://picsum.photos/561"
+        />
+        <p style="font-family: 'Nunito-Sans', sans-serif">
+          Tuhin Karmakar has joined on 11th May
+        </p>
+      </section>
+      <section
         :style="{
-          height: '40px',
-          width: '40px',
-          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }"
-        alt="user-image"
-        src="https://picsum.photos/561"
-      />
-      <p style="font-family: 'Nunito-Sans', sans-serif">
-        Tuhin Karmakar has joined on 11th May
-      </p>
-    </section>
+        class="px-4 my-4"
+      >
+        <img
+          :style="{
+            height: '40px',
+            width: '40px',
+            borderRadius: '50%',
+          }"
+          alt="user-image"
+          src="https://picsum.photos/561"
+        />
+        <p style="font-family: 'Nunito-Sans', sans-serif">
+          Tuhin Karmakar has joined on 11th May
+        </p>
+      </section>
+    </main>
   </div>
 </template>
 
 <script>
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 export default {
   name: 'ReferralHistory',
+  components: { ImageSkeleton, LineSkeleton },
+  data() {
+    return {
+      loading: true,
+    }
+  },
+  mounted() {
+    // setTimeout(() => {
+    //   this.loading = false
+    // }, 4000)
+  },
 }
 </script>
 
@@ -101,6 +128,12 @@ export default {
         }
       }
     }
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>
