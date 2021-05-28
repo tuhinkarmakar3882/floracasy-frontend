@@ -76,9 +76,10 @@ export default {
     }
   },
   mounted() {
-    'IntersectionObserver' in window
-      ? this.setupIntersectionObserver()
-      : this.useDomBasedAds()
+    this.useDomBasedAds()
+    // 'IntersectionObserver' in window
+    //   ? this.setupIntersectionObserver()
+    //   : this.useDomBasedAds()
   },
   methods: {
     useDomBasedAds() {
