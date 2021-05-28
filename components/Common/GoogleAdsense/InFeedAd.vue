@@ -86,10 +86,12 @@ export default {
     },
   },
   mounted() {
-    this.useDomBasedAds()
-    // 'IntersectionObserver' in window
-    //   ? this.setupIntersectionObserver()
-    //   : this.useDomBasedAds()
+    if ('IntersectionObserver' in window) {
+      this.useDomBasedAds()
+      this.setupIntersectionObserver()
+    } else {
+      this.useDomBasedAds()
+    }
   },
   methods: {
     useDomBasedAds() {
