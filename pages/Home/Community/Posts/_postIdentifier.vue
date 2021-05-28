@@ -1,6 +1,6 @@
 <template>
   <div class="community-post-detail-page">
-    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
 
@@ -16,7 +16,36 @@
       <CommunityPostComments :post="post" class="pb-8 mb-6" />
     </main>
 
-    <FallBackLoader v-else />
+    <aside v-else class="my-8 pb-2 px-4">
+      <section class="sample-response my-4">
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+        <aside>
+          <LineSkeleton width="80%" />
+
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
+      </section>
+
+      <LineSkeleton class="my-4" height="1.2rem" />
+      <LineSkeleton class="my-4" height="150px" />
+      <LineSkeleton class="my-4" width="80%" />
+      <LineSkeleton class="my-4" width="50%" />
+      <LineSkeleton class="my-4" width="30%" />
+      <aside class="my-8">
+        <section class="sample-response my-4">
+          <ImageSkeleton height="40px" radius="50%" width="40px" />
+          <LineSkeleton height="100px" />
+        </section>
+        <section class="sample-response my-4">
+          <ImageSkeleton height="40px" radius="50%" width="40px" />
+          <LineSkeleton height="100px" />
+        </section>
+        <section class="sample-response my-4">
+          <ImageSkeleton height="40px" radius="50%" width="40px" />
+          <LineSkeleton height="100px" />
+        </section>
+      </aside>
+    </aside>
   </div>
 </template>
 
@@ -24,10 +53,18 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import endpoints from '@/api/endpoints'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
+import CommunityPostComments from '~/components/Social/Posts/CommunityPostComments'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
 export default {
   name: 'PostDetails',
-  components: { AppBarHeader },
+  components: {
+    LineSkeleton,
+    ImageSkeleton,
+    CommunityPostComments,
+    AppBarHeader,
+  },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: previousPage }) {
@@ -43,7 +80,7 @@ export default {
   data() {
     return {
       previousPage: undefined,
-      fallbackPage: navigationRoutes.Home.MoreOptions.index,
+      fallbackPage: navigationRoutes.Home.Community.index,
       navigationRoutes,
       isReady: false,
       pageTitle: 'Post Details',
@@ -90,6 +127,12 @@ export default {
   main {
     margin: auto;
     max-width: $large-screen;
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>

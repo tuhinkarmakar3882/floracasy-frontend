@@ -16,11 +16,14 @@
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
         <template slot="spinner">
-          <FallBackLoader>
-            <template #fallback>
-              <p class="text-center">Getting Latest Articles...</p>
-            </template>
-          </FallBackLoader>
+          <section class="my-8 pb-2 px-4">
+            <LineSkeleton class="my-4" height="1.2rem" />
+            <LineSkeleton class="mb-6" height="2.5rem" />
+            <LineSkeleton class="my-4" height="150px" />
+            <LineSkeleton class="my-4" width="80%" />
+            <LineSkeleton class="my-4" width="50%" />
+            <LineSkeleton class="my-4" width="30%" />
+          </section>
         </template>
 
         <template slot="error">
@@ -46,10 +49,12 @@ import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 import BlogPost from '~/components/Blogs/BlogPost'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import '~/assets/override/virtual-scroller.scss'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
 export default {
   name: 'InfiniteScrollingBlogLists',
   components: {
+    LineSkeleton,
     FallBackLoader,
     BlogPost,
     InFeedAd,

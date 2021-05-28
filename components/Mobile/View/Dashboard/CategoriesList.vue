@@ -1,10 +1,52 @@
 <template>
   <section class="categories">
-    <FallBackLoader v-if="contentIsLoading" class="my-4">
-      <template #fallback>
-        <p class="text-center">Loading Categories</p>
-      </template>
-    </FallBackLoader>
+    <aside v-if="contentIsLoading" class="my-8 pb-2 px-4">
+      <section class="sample-response my-4">
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+
+        <aside>
+          <LineSkeleton width="80%" />
+
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
+      </section>
+      <section class="sample-response my-4">
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+
+        <aside>
+          <LineSkeleton width="80%" />
+
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
+      </section>
+      <section class="sample-response my-4">
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+
+        <aside>
+          <LineSkeleton width="80%" />
+
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
+      </section>
+      <section class="sample-response my-4">
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+
+        <aside>
+          <LineSkeleton width="80%" />
+
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
+      </section>
+      <section class="sample-response my-4">
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
+
+        <aside>
+          <LineSkeleton width="80%" />
+
+          <LineSkeleton class="my-2" width="40%" />
+        </aside>
+      </section>
+    </aside>
 
     <div v-else>
       <transition name="scale-up">
@@ -99,10 +141,12 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 
 export default {
   name: 'CategoriesList',
-  components: { FallBackLoader },
+  components: { ImageSkeleton, LineSkeleton, FallBackLoader },
   data() {
     return {
       navigationRoutes,
@@ -289,6 +333,12 @@ $image-dimension: 64px;
     &:hover {
       background: $body-bg-alternate;
     }
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>
