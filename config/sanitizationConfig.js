@@ -134,6 +134,7 @@ export const sanitizationConfig = {
     'www.instagram.com',
 
     'w.soundcloud.com',
+    'fc-file-service.backend-core-gateway.floracasy.com',
   ],
   allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
   allowProtocolRelative: true,
