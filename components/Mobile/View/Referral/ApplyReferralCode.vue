@@ -64,7 +64,7 @@ export default {
   components: { PopupModal, LineSkeleton, InputField },
   data() {
     return {
-      loading: true,
+      loading: !true,
       alreadyReferred: false,
       referralCode: undefined,
       pleaseWait: false,

@@ -6,12 +6,19 @@
       no-right-padding
     >
       <template #title>{{ pageTitle }}</template>
-      <template #action-button>
-        <i v-ripple class="mdi mdi-help-circle-outline secondary" />
-      </template>
+      <!--      <template #action-button>-->
+      <!--        <i v-ripple class="mdi mdi-help-circle-outline secondary" />-->
+      <!--      </template>-->
     </AppBarHeader>
 
     <main>
+      <p class="my-8 text-center py-4 px-4">
+        Stay Tuned <br />
+        Because, Something Exciting is Coming!
+      </p>
+    </main>
+
+    <main v-if="false">
       <InviteCode />
 
       <ApplyReferralCode />

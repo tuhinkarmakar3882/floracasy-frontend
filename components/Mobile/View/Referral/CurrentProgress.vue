@@ -30,14 +30,17 @@ export default {
   data() {
     return {
       percentage: 0,
-      loading: true,
+      loading: !true,
     }
   },
   mounted() {
-    setInterval(() => {
-      if (this.percentage > 99) return
-      this.percentage += 1
-    }, 100)
+    // setTimeout(() => {
+    //   this.loading = false
+    //   setInterval(() => {
+    //     if (this.percentage > 99) return
+    //     this.percentage += 1
+    //   }, 100)
+    // }, 5000)
   },
 }
 </script>

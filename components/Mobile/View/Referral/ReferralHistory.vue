@@ -3,11 +3,15 @@
     <aside v-if="loading" class="my-8 px-4">
       <LineSkeleton height="2.5rem" />
 
-      <section class="sample-response my-4" v-for="i in [1, 2, 3]" :key="i">
-        <ImageSkeleton radius="50%" width="40px" height="40px" />
+      <section
+        v-for="item in [1, 2, 3]"
+        :key="item"
+        class="sample-response my-4"
+      >
+        <ImageSkeleton height="40px" radius="50%" width="40px" />
         <aside>
           <LineSkeleton width="70%" />
-          <LineSkeleton width="40%" class="my-2" />
+          <LineSkeleton class="my-2" width="40%" />
         </aside>
       </section>
     </aside>
@@ -17,67 +21,18 @@
       <hr class="my-2" />
 
       <section
-        :style="{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }"
-        class="px-4 my-4"
+        v-for="item in [
+          11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21,
+          31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11,
+          21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31,
+        ]"
+        :key="item"
+        class="joining-history px-4 py-4"
+        v-ripple
       >
-        <img
-          :style="{
-            height: '40px',
-            width: '40px',
-            borderRadius: '50%',
-          }"
-          alt="user-image"
-          src="https://picsum.photos/561"
-        />
-        <p style="font-family: 'Nunito-Sans', sans-serif">
-          Tuhin Karmakar has joined on 11th May
-        </p>
-      </section>
-      <section
-        :style="{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }"
-        class="px-4 my-4"
-      >
-        <img
-          :style="{
-            height: '40px',
-            width: '40px',
-            borderRadius: '50%',
-          }"
-          alt="user-image"
-          src="https://picsum.photos/561"
-        />
-        <p style="font-family: 'Nunito-Sans', sans-serif">
-          Tuhin Karmakar has joined on 11th May
-        </p>
-      </section>
-      <section
-        :style="{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }"
-        class="px-4 my-4"
-      >
-        <img
-          :style="{
-            height: '40px',
-            width: '40px',
-            borderRadius: '50%',
-          }"
-          alt="user-image"
-          src="https://picsum.photos/561"
-        />
-        <p style="font-family: 'Nunito-Sans', sans-serif">
-          Tuhin Karmakar has joined on 11th May
-        </p>
+        <img alt="user-image" src="https://picsum.photos/561" />
+        <p>Tuhin Karmakar has joined on 11th May</p>
+        <aside><p>+10</p></aside>
       </section>
     </main>
   </div>
@@ -86,12 +41,13 @@
 <script>
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+
 export default {
   name: 'ReferralHistory',
   components: { ImageSkeleton, LineSkeleton },
   data() {
     return {
-      loading: true,
+      loading: !true,
     }
   },
   mounted() {
@@ -130,10 +86,26 @@ export default {
     }
   }
 
-  section.sample-response {
+  section.sample-response,
+  section.joining-history {
     display: grid;
-    grid-template-columns: 40px 1fr;
-    grid-gap: 16px;
+    grid-template-columns: 2 * $medium-unit 1fr 2 * $medium-unit;
+    grid-gap: $standard-unit;
+    place-items: center;
+  }
+  section.joining-history {
+    &:nth-child(even) {
+      background: $body-bg-alternate;
+    }
+    img {
+      height: 2 * $medium-unit;
+      width: 2 * $medium-unit;
+      border-radius: 50%;
+    }
+
+    p {
+      font-family: $Nunito-Sans;
+    }
   }
 }
 </style>

@@ -1,26 +1,18 @@
 <template>
   <div class="line-progress-component">
     <div class="track">
-      <section
-        :style="{ left: activeRegionText }"
-        class="active-percentage"
-        v-if="100 - Math.round(percentage)"
-      >
-        <p>
+      <section :style="{ left: activeRegionText }" class="active-percentage">
+        <p v-if="notCompleted">
           Need
           <span class="vibrant">
             <strong>{{ 100 - Math.round(percentage) }}</strong>
           </span>
           Floracoins More to Unlock
         </p>
+
+        <p v-else>Achievement Unlocked!</p>
       </section>
-      <section
-        :style="{ left: activeRegionText }"
-        class="active-percentage"
-        v-else
-      >
-        Achievement Unlocked!
-      </section>
+
       <div :style="{ width: activeRegion }" class="track-active" />
       <i class="mdi mdi-shopping end-icon" />
     </div>
@@ -38,7 +30,7 @@ export default {
   },
   computed: {
     activeRegion() {
-      return `${this.percentage}%`
+      return `${this.percentage + 1}%`
     },
     activeRegionText() {
       let maxPosition = 100
@@ -53,6 +45,9 @@ export default {
       if (textPosition < minPosition) textPosition = minPosition
       if (textPosition > maxPosition) textPosition = maxPosition
       return `calc(${textPosition}% - 156px)`
+    },
+    notCompleted() {
+      return 100 - Math.round(this.percentage)
     },
   },
 }
