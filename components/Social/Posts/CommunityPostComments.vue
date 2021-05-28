@@ -19,8 +19,20 @@
       <div class="pb-8 mb-8">
         <infinite-loading @infinite="fetchComments">
           <template slot="spinner">
-            <LoadingIcon class="mt-4 mb-6" />
-            <p class="text-center">Fetching Comments...</p>
+            <div class="px-4">
+              <section class="sample-response my-4">
+                <ImageSkeleton height="40px" radius="50%" width="40px" />
+                <LineSkeleton height="100px" />
+              </section>
+              <section class="sample-response my-4">
+                <ImageSkeleton height="40px" radius="50%" width="40px" />
+                <LineSkeleton height="100px" />
+              </section>
+              <section class="sample-response my-4">
+                <ImageSkeleton height="40px" radius="50%" width="40px" />
+                <LineSkeleton height="100px" />
+              </section>
+            </div>
           </template>
           <template slot="error">
             <p class="danger-light mb-8">Network Error</p>
@@ -75,9 +87,12 @@ import {
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
 export default {
   name: 'CommunityPostComments',
+  components: { LineSkeleton, ImageSkeleton },
   props: {
     post: {
       type: Object,
@@ -198,6 +213,11 @@ export default {
     .comment-box {
       max-width: $large-screen;
     }
+  }
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>

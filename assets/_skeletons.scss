@@ -1,0 +1,46 @@
+@import "variables/theme-color-variables";
+
+$skeleton-bg-highlight: linear-gradient(
+    45deg,
+    transparent 0%,
+    $navigation-bar-color 12.5%,
+    $body-bg-alternate 25%,
+    $card-bg 37.5%,
+    $secondary-matte 50%,
+    $card-bg 62.5%,
+    $body-bg-alternate 75%,
+    $navigation-bar-color 87.5%,
+    transparent 100%
+) right no-repeat;
+
+
+.skeleton-loader {
+  border-radius: 4px;
+  animation: swift 2s ease-in-out infinite alternate;
+  background: $skeleton-bg-highlight;
+  background-size: 400%;
+
+  @media (prefers-reduced-motion) {
+    background: $navigation-bar-color;
+    background-size: 100%;
+    animation: glow 1.6s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes swift {
+  from {
+    background-position: right;
+  }
+  to {
+    background-position: left;
+  }
+}
+
+@keyframes glow {
+  0% {
+    background-color: $navigation-bar-color;
+  }
+  100% {
+    background-color: hsl(240, 21%, 24%);
+  }
+}

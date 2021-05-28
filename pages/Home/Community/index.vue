@@ -65,6 +65,41 @@
           </aside>
         </div>
 
+        <div
+          v-if="loadingStories"
+          class="mx-4"
+          :style="{
+            display: 'grid',
+            gridAutoFlow: 'column',
+            gridGap: '16px',
+          }"
+        >
+          <ImageSkeleton
+            class="px-4 py-2 my-2"
+            radius="50%"
+            height="72px"
+            width="72px"
+          />
+          <ImageSkeleton
+            class="px-4 py-2 my-2"
+            radius="50%"
+            height="72px"
+            width="72px"
+          />
+          <ImageSkeleton
+            class="px-4 py-2 my-2"
+            radius="50%"
+            height="72px"
+            width="72px"
+          />
+          <ImageSkeleton
+            class="px-4 py-2 my-2"
+            radius="50%"
+            height="72px"
+            width="72px"
+          />
+        </div>
+
         <transition-group name="scale-up" style="display: flex">
           <LazyStory
             v-for="story in stories"
@@ -94,7 +129,7 @@
       <span class="mdi mdi-earth primary-light" />
       Across The World
     </p>
-    <LazyFetchCommunityPosts />
+    <FetchCommunityPosts />
   </div>
 </template>
 
@@ -102,10 +137,12 @@
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import FetchCommunityPosts from '~/components/Social/Posts/FetchCommunityPosts'
 
 export default {
   name: 'Community',
-
+  components: { FetchCommunityPosts, ImageSkeleton },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
@@ -115,6 +152,7 @@ export default {
       navigationRoutes,
       pageTitle: 'Community',
       stories: [],
+      loadingStories: true,
     }
   },
   computed: {
@@ -132,7 +170,7 @@ export default {
     })
 
     this.isReady = true
-    await this.fetchStories()
+    this.fetchStories()
   },
 
   methods: {
@@ -142,6 +180,7 @@ export default {
           endpoints.community_service.stories.index
         )
         this.stories.push(...results)
+        this.loadingStories = false
       } catch (e) {}
     },
   },

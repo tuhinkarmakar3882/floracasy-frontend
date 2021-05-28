@@ -32,6 +32,7 @@ export default {
 
     { path: '~/components/Common/GoogleAdsense' },
     { path: '~/components/Common/Tools' },
+    { path: '~/components/Common/SkeletonLoader' },
 
     { path: '~/components/Desktop/Tools' },
     // { path: '~/components/Desktop/View/LandingPage' },
@@ -42,6 +43,7 @@ export default {
     { path: '~/components/Mobile/View/Dashboard' },
     { path: '~/components/Mobile/View/Message' },
     { path: '~/components/Mobile/View/Notification' },
+    { path: '~/components/Mobile/View/Referral' },
 
     { path: '~/components/Screen/Desktop', prefix: 'Desktop' },
     { path: '~/components/Screen/Mobile', prefix: 'Mobile' },

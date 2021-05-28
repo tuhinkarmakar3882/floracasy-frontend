@@ -41,8 +41,19 @@
     <client-only>
       <infinite-loading @infinite="fetchNotifications">
         <template slot="spinner">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p>Loading Notifications...</p>
+          <section
+            class="sample-response my-4 mx-4"
+            v-for="i in [1, 2, 3, 4, 5]"
+            :key="i"
+          >
+            <ImageSkeleton height="56px" radius="50%" width="56px" />
+
+            <aside>
+              <LineSkeleton height="1.5rem" width="90%" />
+
+              <LineSkeleton class="my-2" width="40%" />
+            </aside>
+          </section>
         </template>
         <template slot="error">
           <p class="danger-light my-6">Network Error</p>
@@ -64,9 +75,11 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
 import NotificationItem from '~/components/Mobile/View/Notification/NotificationItem'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+
 export default {
   name: 'Notifications',
-  components: { NotificationItem },
+  components: { ImageSkeleton, NotificationItem },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
@@ -170,10 +183,17 @@ export default {
       width: 11rem;
     }
   }
+
   .notification-item {
     &:nth-child(even) {
       background-color: $navigation-bar-color;
     }
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>

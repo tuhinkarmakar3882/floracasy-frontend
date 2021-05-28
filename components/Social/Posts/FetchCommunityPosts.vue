@@ -15,8 +15,21 @@
     <client-only>
       <infinite-loading @infinite="infiniteHandler">
         <template slot="spinner">
-          <LoadingIcon class="mt-4 mb-6" />
-          <p class="text-center">Getting Latest Posts...</p>
+          <section class="my-8 pb-2 px-4">
+            <section class="sample-response my-4">
+              <ImageSkeleton height="40px" radius="50%" width="40px" />
+              <aside>
+                <LineSkeleton width="80%" />
+
+                <LineSkeleton class="my-2" width="40%" />
+              </aside>
+            </section>
+            <LineSkeleton class="my-4" height="1.2rem" />
+            <LineSkeleton class="my-4" height="150px" />
+            <LineSkeleton class="my-4" width="80%" />
+            <LineSkeleton class="my-4" width="50%" />
+            <LineSkeleton class="my-4" width="30%" />
+          </section>
         </template>
         <template slot="error">
           <p class="danger-light my-6">Network Error</p>
@@ -38,10 +51,14 @@ import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
 import CommunityPost from '~/components/Social/Posts/CommunityPost'
 import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 
 export default {
   name: 'FetchCommunityPosts',
   components: {
+    ImageSkeleton,
+    LineSkeleton,
     InFeedAd,
     CommunityPost,
   },
@@ -88,6 +105,11 @@ export default {
       background: $navigation-bar-color;
       box-shadow: $default-box-shadow;
     }
+  }
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>

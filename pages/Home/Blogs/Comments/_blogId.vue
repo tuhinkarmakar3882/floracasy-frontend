@@ -1,12 +1,12 @@
 <template>
   <div class="blog-comment-page">
-    <AppBarHeader :previous-page="previousPage" :fallback-page="fallbackPage">
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>
         {{ pageTitle }}
       </template>
     </AppBarHeader>
 
-    <header v-if="blog" class="px-4 pb-6" ref="mainSection">
+    <header v-if="blog" ref="mainSection" class="px-4 pb-6">
       <section>
         <h6>{{ blog.title }}</h6>
 
@@ -45,11 +45,20 @@
         <client-only>
           <infinite-loading @infinite="fetchComments">
             <template #spinner>
-              <FallBackLoader>
-                <template #fallback>
-                  <p class="text-center">Fetching Comments...</p>
-                </template>
-              </FallBackLoader>
+              <div class="px-4">
+                <section class="sample-response my-4">
+                  <ImageSkeleton height="40px" radius="50%" width="40px" />
+                  <LineSkeleton height="100px" />
+                </section>
+                <section class="sample-response my-4">
+                  <ImageSkeleton height="40px" radius="50%" width="40px" />
+                  <LineSkeleton height="100px" />
+                </section>
+                <section class="sample-response my-4">
+                  <ImageSkeleton height="40px" radius="50%" width="40px" />
+                  <LineSkeleton height="100px" />
+                </section>
+              </div>
             </template>
 
             <template #error>
@@ -105,10 +114,12 @@ import { getRelativeTime, processLink, showUITip } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
 export default {
   name: 'BlogComments',
-  components: { FallBackLoader, AppBarHeader },
+  components: { LineSkeleton, ImageSkeleton, FallBackLoader, AppBarHeader },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: previousPage }) {
@@ -307,6 +318,12 @@ export default {
     width: 100%;
     overflow: scroll;
     margin: auto auto 120px;
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-gap: 16px;
   }
 }
 </style>

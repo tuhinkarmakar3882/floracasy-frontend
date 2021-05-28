@@ -80,11 +80,11 @@ export default {
     },
 
     getPWADisplayMode() {
-      const isStandalone = window.matchMedia('(display-mode: standalone)')
-        .matches
-      const isTrustedWebActivity = document.referrer.startsWith(
-        'android-app://'
-      )
+      const isStandalone = window.matchMedia(
+        '(display-mode: standalone)'
+      ).matches
+      const isTrustedWebActivity =
+        document.referrer.startsWith('android-app://')
 
       if (isTrustedWebActivity) {
         return 'twa'
