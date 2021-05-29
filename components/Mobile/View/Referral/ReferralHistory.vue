@@ -37,6 +37,12 @@
             <small> Keep Referring to earn more!</small>
           </p>
         </template>
+
+        <template slot="no-results">
+          <p class="secondary-matte text-center mt-4 mb-8">
+            <small>You've not Referred Anyone.</small>
+          </p>
+        </template>
       </infinite-loading>
     </client-only>
   </div>
