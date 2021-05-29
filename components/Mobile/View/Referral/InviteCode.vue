@@ -19,7 +19,7 @@
 
     <header v-else>
       <h5>Invite your friends to Floracasy</h5>
-      <main v-ripple>
+      <main v-ripple @click="share">
         <section>
           <p>Your Referral Code</p>
           <p>
@@ -35,6 +35,17 @@
         on every new joining</small
       >
     </header>
+
+    <transition name="slide-up">
+      <ShareFallbackForDesktop
+        fixed-mode
+        v-if="useShareFallBack"
+        :description="shareDescription"
+        :handle-close="hideFallback"
+        :link-url="linkUrl"
+        style="z-index: 2"
+      />
+    </transition>
   </div>
 </template>
 
@@ -42,15 +53,20 @@
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import ShareFallbackForDesktop from '~/components/Desktop/Tools/ShareFallbackForDesktop'
 
 export default {
   name: 'InviteCode',
-  components: { ImageSkeleton, LineSkeleton },
+  components: { ShareFallbackForDesktop, ImageSkeleton, LineSkeleton },
   data() {
     return {
       loading: true,
       referralCode: undefined,
+      linkUrl: undefined,
+      useShareFallBack: false,
+      shareDescription:
+        "Hey, I'm Inviting you to join Floracasy - Where you get Paid for writing content. It's Free & Fast! Join now & Get the Referral Bonus!",
     }
   },
   mounted() {
@@ -61,10 +77,41 @@ export default {
       try {
         const { code } = await this.$axios.$get(endpoints.rewards.referral.code)
         this.referralCode = code
+        this.linkUrl = `https://floracasy.com/Home/MoreOptions/ReferAndEarn?inviteCode=${code}`
+
         this.loading = false
       } catch (e) {
         await showUITip(this.$store, 'Failed to get Referral Code', 'error')
       }
+    },
+
+    hideFallback() {
+      this.useShareFallBack = false
+    },
+
+    async useNativeShare() {
+      try {
+        await navigator.share({
+          title: this.shareDescription,
+          text: this.shareDescription,
+          url: this.linkUrl,
+        })
+
+        LogAnalyticsEvent('invite_code_shared')
+        await showUITip(this.$store, 'Keep Sharing & Earning!', 'success')
+      } catch (error) {
+        await showUITip(this.$store, 'May be Later?', 'warning')
+      }
+    },
+
+    async share() {
+      if (!navigator.share) {
+        LogAnalyticsEvent('share_fallback_opened')
+        this.useShareFallBack = !this.useShareFallBack
+        return
+      }
+
+      await this.useNativeShare()
     },
   },
 }
