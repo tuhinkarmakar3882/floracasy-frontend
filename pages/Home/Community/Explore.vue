@@ -1,9 +1,9 @@
 <template>
   <AppFeel
     :on-back="navigationRoutes.Home.Community.index"
+    :prev-url-path="prevURL"
     class="explore-people-page"
     dynamic-back
-    :prev-url-path="prevURL"
   >
     <template #app-bar-title> {{ pageTitle }}</template>
 
@@ -13,8 +13,8 @@
           v-for="(person, index) in listOfUsers"
           :key="index"
           v-ripple
-          class="user-search-result px-4 py-4"
           :userdata="person"
+          class="user-search-result px-4 py-4"
         />
       </section>
     </template>
@@ -23,16 +23,28 @@
       <client-only>
         <infinite-loading @infinite="loadUsers">
           <template #spinner>
-            <FallBackLoader />
+            <section class="sample-response my-4 px-4">
+              <ImageSkeleton height="40px" radius="50%" width="40px" />
+              <aside>
+                <LineSkeleton width="90%" />
+                <LineSkeleton class="my-2" width="40%" />
+              </aside>
+            </section>
           </template>
+
           <template #error>
             <LoadingError error-section="List of users" />
           </template>
+
           <template #no-more>
             <p class="secondary-matte text-center mt-4 mb-8">
               <i class="mdi mdi-party-popper mdi-18px" />
               <br />
-              <small> Come back soon for more </small>
+              <nuxt-link
+                :to="navigationRoutes.Home.MoreOptions.ReferAndEarn.index"
+              >
+                <small> Refer More People! </small>
+              </nuxt-link>
             </p>
           </template>
         </infinite-loading>
@@ -45,9 +57,21 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { processLink } from '~/utils/utility'
 import endpoints from '~/api/endpoints'
+import UserSearchResult from '~/components/Social/Shared/UserSearchResult'
+import AppFeel from '~/components/Layout/AppFeel'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import LoadingError from '~/components/Common/Tools/LoadingError'
 
 export default {
   name: 'Explore',
+  components: {
+    LoadingError,
+    LineSkeleton,
+    ImageSkeleton,
+    AppFeel,
+    UserSearchResult,
+  },
   middleware: 'isAuthenticated',
   asyncData({ from: prevURL }) {
     return { prevURL }
@@ -111,6 +135,12 @@ export default {
       background: $navigation-bar-color;
       box-shadow: $default-box-shadow;
     }
+  }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 2 * $medium-unit 1fr;
+    grid-gap: $standard-unit;
   }
 }
 </style>
