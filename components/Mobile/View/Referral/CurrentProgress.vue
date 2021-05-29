@@ -12,8 +12,12 @@
     <section v-else>
       <h5 class="px-4">Unlock Extra Features</h5>
       <hr class="faded-divider" />
-      <LineProgress :percentage="percentage" class="px-4" />
-      <button v-if="percentage === 100" class="secondary-outlined-btn" v-ripple>
+      <LineProgress :max-value="maxValue" :value="balance" class="px-4" />
+      <button
+        v-if="balance >= maxValue"
+        class="secondary-outlined-btn"
+        v-ripple
+      >
         Go to Marketplace
       </button>
     </section>
@@ -23,24 +27,34 @@
 <script>
 import LineProgress from '~/components/Common/Tools/LineProgress'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'CurrentProgress',
   components: { LineSkeleton, LineProgress },
   data() {
     return {
-      percentage: 0,
-      loading: !true,
+      maxValue: 300,
+      balance: 0,
+      loading: true,
+      timeout: undefined,
     }
   },
   mounted() {
-    // setTimeout(() => {
-    //   this.loading = false
-    //   setInterval(() => {
-    //     if (this.percentage > 99) return
-    //     this.percentage += 1
-    //   }, 100)
-    // }, 5000)
+    this.getCoinBalance()
+  },
+
+  methods: {
+    async getCoinBalance() {
+      try {
+        const { balance } = await this.$axios.$get(endpoints.rewards.coins)
+        this.balance = balance
+        this.loading = false
+      } catch (e) {
+        await showUITip(this.$store, 'Failed to get coin balance', 'error')
+      }
+    },
   },
 }
 </script>
