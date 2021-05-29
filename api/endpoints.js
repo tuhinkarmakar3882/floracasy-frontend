@@ -124,7 +124,12 @@ const endpoints = {
     fetch: '/allow_authenticated/payments/fetch/',
   },
   rewards: {
-    referralCode: '/allow_authenticated/rewards/referrals/code/',
+    referral: {
+      list: '/allow_authenticated/rewards/referrals/',
+      code: '/allow_authenticated/rewards/referrals/code/',
+      status: '/allow_authenticated/rewards/referrals/status/check/',
+      add: '/allow_authenticated/rewards/referrals/add/',
+    },
   },
 
   health_check: {
