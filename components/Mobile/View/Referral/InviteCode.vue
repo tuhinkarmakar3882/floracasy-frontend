@@ -22,7 +22,9 @@
       <main v-ripple>
         <section>
           <p>Your Referral Code</p>
-          <p><strong>FC-07D4-39</strong></p>
+          <p>
+            <strong>{{ referralCode }}</strong>
+          </p>
         </section>
 
         <i class="mdi mdi-share-circle secondary mdi-36px" />
@@ -39,6 +41,8 @@
 <script>
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'InviteCode',
@@ -46,12 +50,22 @@ export default {
   data() {
     return {
       loading: true,
+      referralCode: undefined,
     }
   },
   mounted() {
-    // setTimeout(() => {
-    //   this.loading = false
-    // }, 4000)
+    this.fetchReferralCode()
+  },
+  methods: {
+    async fetchReferralCode() {
+      try {
+        const { code } = await this.$axios.$get(endpoints.rewards.referralCode)
+        this.referralCode = code
+        this.loading = false
+      } catch (e) {
+        await showUITip(this.$store, 'Failed to get Referral Code', 'error')
+      }
+    },
   },
 }
 </script>

@@ -123,6 +123,9 @@ const endpoints = {
   payments: {
     fetch: '/allow_authenticated/payments/fetch/',
   },
+  rewards: {
+    referralCode: '/allow_authenticated/rewards/referrals/code/',
+  },
 
   health_check: {
     test: 'health_check/',
