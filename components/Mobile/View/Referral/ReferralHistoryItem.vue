@@ -1,10 +1,10 @@
 <template>
   <div
-    class="referral-history-item-component"
     v-ripple
+    class="referral-history-item-component"
     @click="openProfileDetails"
   >
-    <section class="sample-response" v-if="loading">
+    <section v-if="loading" class="sample-response">
       <ImageSkeleton height="40px" radius="50%" width="40px" />
       <aside>
         <LineSkeleton width="90%" />
@@ -12,12 +12,12 @@
       </aside>
     </section>
 
-    <section class="joining-history" v-else>
-      <img alt="user-image" :src="photoURL" />
+    <section v-else class="joining-history">
+      <img :src="photoURL" alt="user-image" />
       <p>
         {{ displayName }} has joined on {{ getFormattedDate(item.createdAt) }}
       </p>
-      <aside><p>+10</p></aside>
+      <aside><p>+05</p></aside>
     </section>
   </div>
 </template>
@@ -112,6 +112,7 @@ export default {
       font-family: $Nunito-Sans;
     }
   }
+
   section.sample-response {
     display: grid;
     grid-template-columns: 2 * $medium-unit 1fr;
