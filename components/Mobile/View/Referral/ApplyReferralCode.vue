@@ -10,9 +10,9 @@
     <main v-else-if="!alreadyReferred">
       <h5>Got a Referral Code?</h5>
       <InputField
+        hint-text="A referral code can give you extra 10 coins"
         label="Referral Code"
         material
-        hint-text="A referral code can give you extra 10 coins"
       >
         <template #input-field>
           <input
@@ -38,10 +38,10 @@
       <PopupModal v-if="responseAvailable" user="true">
         <template #header>
           <img
-            class="mx-auto"
-            src="https://media.tenor.com/images/3ca2eda717899b075ccaa1079d6a84ba/tenor.gif"
             alt="Congratulations!"
+            class="mx-auto"
             height="100"
+            src="https://media.tenor.com/images/3ca2eda717899b075ccaa1079d6a84ba/tenor.gif"
             style="height: 100px; object-fit: scale-down"
           />
           <h5>Congratulations!</h5>
@@ -58,13 +58,15 @@
 import InputField from '~/components/Common/Tools/InputField'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import PopupModal from '~/components/Layout/PopupModal'
+import endpoints from '~/api/endpoints'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'ApplyReferralCode',
   components: { PopupModal, LineSkeleton, InputField },
   data() {
     return {
-      loading: !true,
+      loading: true,
       alreadyReferred: false,
       referralCode: undefined,
       pleaseWait: false,
@@ -72,21 +74,37 @@ export default {
     }
   },
   mounted() {
-    // setTimeout(() => {
-    //   this.loading = false
-    // }, 5000)
+    this.getReferralStatus()
   },
+
   methods: {
-    claimReferralBonus() {
+    async getReferralStatus() {
+      try {
+        const { alreadyReferred } = await this.$axios.$get(
+          endpoints.rewards.referral.status
+        )
+        this.alreadyReferred = alreadyReferred
+        this.loading = false
+      } catch (e) {
+        await showUITip(this.$store, 'Failed to get referral status', 'error')
+      }
+    },
+
+    async claimReferralBonus() {
       this.pleaseWait = true
-      setTimeout(() => {
+
+      try {
+        await this.$axios.$post(endpoints.rewards.referral.add, {
+          referralCode: this.referralCode,
+        })
         this.pleaseWait = false
         this.responseAvailable = true
-      }, 5000)
-
-      setTimeout(() => {
-        this.responseAvailable = true
-      }, 25000)
+        this.alreadyReferred = true
+      } catch (e) {
+        await showUITip(this.$store, 'Something went wrong. Try Again', 'error')
+        this.pleaseWait = false
+        this.responseAvailable = false
+      }
     },
   },
 }
