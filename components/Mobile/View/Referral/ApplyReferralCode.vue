@@ -35,7 +35,7 @@
     </transition>
 
     <transition name="scale-down">
-      <PopupModal v-if="responseAvailable" user="true">
+      <PopupModal v-if="responseAvailable">
         <template #header>
           <img
             alt="Congratulations!"
@@ -64,6 +64,14 @@ import { showUITip } from '~/utils/utility'
 export default {
   name: 'ApplyReferralCode',
   components: { PopupModal, LineSkeleton, InputField },
+  props: {
+    inviteCode: {
+      type: String,
+      required: false,
+      default: null,
+    },
+  },
+
   data() {
     return {
       loading: true,
@@ -75,6 +83,11 @@ export default {
   },
   mounted() {
     this.getReferralStatus()
+
+    if (this.inviteCode) {
+      this.referralCode = this.inviteCode
+      this.claimReferralBonus()
+    }
   },
 
   methods: {
