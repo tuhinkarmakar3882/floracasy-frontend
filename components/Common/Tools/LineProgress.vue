@@ -5,7 +5,7 @@
         <p v-if="notCompleted">
           Need
           <span class="vibrant">
-            <strong>{{ 100 - Math.round(percentage) }}</strong>
+            <strong>{{ maxValue - value }}</strong>
           </span>
           Floracoins More to Unlock
         </p>
@@ -23,14 +23,22 @@
 export default {
   name: 'LineProgress',
   props: {
-    percentage: {
+    value: {
       type: Number,
       required: true,
     },
+    maxValue: {
+      type: Number,
+      required: false,
+      default: 100,
+    },
   },
   computed: {
+    percentage() {
+      return Math.round((this.value / this.maxValue) * 100)
+    },
     activeRegion() {
-      return `${this.percentage + 1}%`
+      return `${this.percentage + 1 > 100 ? 100 : this.percentage + 1}%`
     },
     activeRegionText() {
       let maxPosition = 100
@@ -47,7 +55,7 @@ export default {
       return `calc(${textPosition}% - 156px)`
     },
     notCompleted() {
-      return 100 - Math.round(this.percentage)
+      return this.maxValue - this.value
     },
   },
 }
