@@ -47,7 +47,7 @@
           <h5>Congratulations!</h5>
         </template>
         <template #body>
-          <p>You have Got 10 Flora Coins!</p>
+          <p>You have Got 5 Bonus FloraCoins!</p>
         </template>
       </PopupModal>
     </transition>

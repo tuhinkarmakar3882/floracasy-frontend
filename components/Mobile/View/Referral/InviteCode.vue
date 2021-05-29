@@ -31,7 +31,7 @@
       </main>
 
       <small
-        >You will get <span class="vibrant"><strong>10</strong></span> Floracoin
+        >You will get <span class="vibrant"><strong>05</strong></span> Floracoin
         on every new joining</small
       >
     </header>

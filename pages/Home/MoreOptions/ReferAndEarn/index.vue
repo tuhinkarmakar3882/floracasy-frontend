@@ -15,13 +15,13 @@
       </template>
     </AppBarHeader>
 
-    <main>
-      <p class="text-center my-4">
-        Stay Tuned, Because Something Exciting is Coming
-      </p>
-    </main>
+    <!--    <main>-->
+    <!--      <p class="text-center my-4">-->
+    <!--        Stay Tuned, Because Something Exciting is Coming-->
+    <!--      </p>-->
+    <!--    </main>-->
 
-    <main v-if="false">
+    <main>
       <InviteCode />
 
       <ApplyReferralCode :invite-code="$route.query.inviteCode" />
