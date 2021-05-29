@@ -59,7 +59,7 @@ export default {
   methods: {
     async fetchReferralCode() {
       try {
-        const { code } = await this.$axios.$get(endpoints.rewards.referralCode)
+        const { code } = await this.$axios.$get(endpoints.rewards.referral.code)
         this.referralCode = code
         this.loading = false
       } catch (e) {
