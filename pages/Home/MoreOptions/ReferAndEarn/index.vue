@@ -14,7 +14,7 @@
     <main>
       <InviteCode />
 
-      <ApplyReferralCode />
+      <ApplyReferralCode :invite-code="$route.query.inviteCode" />
 
       <CurrentProgress class="mt-6 mb-2" />
 
