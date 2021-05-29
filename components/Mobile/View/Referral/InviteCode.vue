@@ -106,7 +106,7 @@ export default {
 
     async share() {
       if (!navigator.share) {
-        LogAnalyticsEvent('share_fallback_opened')
+        LogAnalyticsEvent('invite_code_share_fallback_opened')
         this.useShareFallBack = !this.useShareFallBack
         return
       }
