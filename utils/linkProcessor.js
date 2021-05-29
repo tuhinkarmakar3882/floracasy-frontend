@@ -1,3 +1,5 @@
+import { uploadServerBase } from '~/environmentVariables'
+
 const codePenTransform = (url) => ({ link: url.replace('/pen/', '/embed/') })
 
 const codeSandboxTransform = (url) => ({
@@ -7,7 +9,7 @@ const codeSandboxTransform = (url) => ({
 })
 
 const githubGistTransform = (url) => ({
-  link: `data:text/html;charset=UTF-8,<body> <script src="${url}.js"></script> </body>`,
+  link: `${uploadServerBase}/gist/?gist_url=${url}.js`,
 })
 
 const vimeoTransform = (url) => ({
@@ -40,10 +42,10 @@ export const supportedDomains = [
     url: 'https://codesandbox.io/s/',
     applyTransform: codeSandboxTransform,
   },
-  // {
-  //   url: 'https://gist.github.com/',
-  //   applyTransform: githubGistTransform,
-  // },
+  {
+    url: 'https://gist.github.com/',
+    applyTransform: githubGistTransform,
+  },
   {
     url: 'https://vimeo.com/',
     applyTransform: vimeoTransform,

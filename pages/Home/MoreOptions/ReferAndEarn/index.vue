@@ -6,26 +6,23 @@
       no-right-padding
     >
       <template #title>{{ pageTitle }}</template>
-      <!--      <template #action-button>-->
-      <!--        <i v-ripple class="mdi mdi-help-circle-outline secondary" />-->
-      <!--      </template>-->
+      <template #action-button>
+        <i
+          v-ripple
+          class="mdi mdi-help-circle-outline secondary"
+          @click="openFAQ"
+        />
+      </template>
     </AppBarHeader>
 
     <main>
-      <p class="my-8 text-center py-4 px-4">
-        Stay Tuned <br />
-        Because, Something Exciting is Coming!
-      </p>
-    </main>
-
-    <main v-if="false">
       <InviteCode />
 
-      <ApplyReferralCode />
+      <ApplyReferralCode :invite-code="$route.query.inviteCode" />
 
-      <CurrentProgress class="my-4" />
+      <CurrentProgress class="mt-6 mb-2" />
 
-      <ReferralHistory class="pt-2" />
+      <ReferralHistory style="margin-top: 2.5rem" />
     </main>
   </div>
 </template>
@@ -62,7 +59,13 @@ export default {
     }
   },
 
-  mounted() {},
+  methods: {
+    openFAQ() {
+      this.$router.push(
+        navigationRoutes.Home.MoreOptions.FAQ + '#What is Refer and Earn?'
+      )
+    },
+  },
 
   head() {
     return {

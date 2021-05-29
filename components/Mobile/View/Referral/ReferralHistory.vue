@@ -1,59 +1,94 @@
 <template>
   <div class="referral-history-component">
-    <aside v-if="loading" class="my-8 px-4">
+    <section v-if="loading" class="px-4">
       <LineSkeleton height="2.5rem" />
-
-      <section
-        v-for="item in [1, 2, 3]"
-        :key="item"
-        class="sample-response my-4"
-      >
-        <ImageSkeleton height="40px" radius="50%" width="40px" />
-        <aside>
-          <LineSkeleton width="70%" />
-          <LineSkeleton class="my-2" width="40%" />
-        </aside>
-      </section>
-    </aside>
+    </section>
 
     <main v-else>
       <h6 class="mt-8 mb-4 px-4">Joining History</h6>
       <hr class="my-2" />
 
-      <section
-        v-for="item in [
-          11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21,
-          31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11,
-          21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31, 11, 21, 31,
-        ]"
-        :key="item"
+      <ReferralHistoryItem
+        v-for="item in referralHistory"
+        :key="item.id"
+        :item="item"
         class="joining-history px-4 py-4"
-        v-ripple
-      >
-        <img alt="user-image" src="https://picsum.photos/561" />
-        <p>Tuhin Karmakar has joined on 11th May</p>
-        <aside><p>+10</p></aside>
-      </section>
+      />
     </main>
+
+    <client-only>
+      <infinite-loading @infinite="loadReferralsPointsHistory">
+        <template slot="spinner">
+          <section class="sample-response my-4 px-4">
+            <ImageSkeleton height="40px" radius="50%" width="40px" />
+            <aside>
+              <LineSkeleton width="90%" />
+              <LineSkeleton class="my-2" width="40%" />
+            </aside>
+          </section>
+        </template>
+
+        <template slot="error">
+          <p class="danger-light my-6">Network Error</p>
+        </template>
+
+        <template slot="no-more">
+          <p class="secondary-matte text-center mt-4 mb-8">
+            <small> Keep Referring to earn more!</small>
+          </p>
+        </template>
+
+        <template slot="no-results">
+          <p class="secondary-matte text-center mt-4 mb-8">
+            <small>You've not Referred Anyone.</small>
+          </p>
+        </template>
+      </infinite-loading>
+    </client-only>
   </div>
 </template>
 
 <script>
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import endpoints from '~/api/endpoints'
+import { processLink } from '~/utils/utility'
+import ReferralHistoryItem from '~/components/Mobile/View/Referral/ReferralHistoryItem'
 
 export default {
   name: 'ReferralHistory',
-  components: { ImageSkeleton, LineSkeleton },
+  components: { ReferralHistoryItem, ImageSkeleton, LineSkeleton },
   data() {
     return {
-      loading: !true,
+      loading: true,
+      referralHistory: [],
+      referralHistoryFetchEndpoint: endpoints.rewards.referral.list,
     }
   },
-  mounted() {
-    // setTimeout(() => {
-    //   this.loading = false
-    // }, 4000)
+  methods: {
+    async loadReferralsPointsHistory($state) {
+      if (!this.referralHistoryFetchEndpoint) {
+        $state.complete()
+        return
+      }
+
+      try {
+        const { results, next } = await this.$axios.$get(
+          this.referralHistoryFetchEndpoint
+        )
+
+        if (results.length) {
+          this.referralHistoryFetchEndpoint = processLink(next)
+          this.referralHistory.push(...results)
+          $state.loaded()
+        } else {
+          $state.complete()
+        }
+        this.loading = false
+      } catch (e) {
+        $state.complete()
+      }
+    },
   },
 }
 </script>
@@ -86,26 +121,16 @@ export default {
     }
   }
 
-  section.sample-response,
-  section.joining-history {
-    display: grid;
-    grid-template-columns: 2 * $medium-unit 1fr 2 * $medium-unit;
-    grid-gap: $standard-unit;
-    place-items: center;
-  }
   section.joining-history {
     &:nth-child(even) {
       background: $body-bg-alternate;
     }
-    img {
-      height: 2 * $medium-unit;
-      width: 2 * $medium-unit;
-      border-radius: 50%;
-    }
+  }
 
-    p {
-      font-family: $Nunito-Sans;
-    }
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 2 * $medium-unit 1fr;
+    grid-gap: $standard-unit;
   }
 }
 </style>

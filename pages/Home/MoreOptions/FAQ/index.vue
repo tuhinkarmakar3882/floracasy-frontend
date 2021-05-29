@@ -1,33 +1,22 @@
 <template>
-  <AppFeel
-    :on-back="navigationRoutes.Home.MoreOptions.index"
-    class="faq-page"
-    custom-header
-    auto-hide
-  >
-    <template slot="app-bar-custom-header">
-      <h5
-        v-ripple
-        class="px-5 mdi mdi-arrow-left"
-        style="height: 56px; display: flex; align-items: center"
-        @click="$router.replace(navigationRoutes.Home.MoreOptions.index)"
-      />
-      <p>{{ pageTitle }}</p>
-      <span
-        v-ripple
-        class="mdi mdi-segment ml-auto px-5"
-        style="
-          height: 56px;
-          display: flex;
-          align-items: center;
-          font-size: 24px;
-        "
-        @click="drawerIsOpened = !drawerIsOpened"
-      />
-    </template>
+  <div :on-back="navigationRoutes.Home.MoreOptions.index" class="faq-page">
+    <AppBarHeader
+      :fallback-page="fallbackPage"
+      :previous-page="previousPage"
+      no-right-padding
+    >
+      <template #title>{{ pageTitle }}</template>
+      <template #action-button>
+        <i
+          v-ripple
+          class="mdi mdi-segment"
+          @click="drawerIsOpened = !drawerIsOpened"
+        />
+      </template>
+    </AppBarHeader>
 
-    <template slot="main">
-      <section v-for="(question, index) in questions" :key="question.id">
+    <main>
+      <section v-for="(question, index) in questions" :key="question.statement">
         <QuestionCard
           :id="question.statement"
           :content="question"
@@ -38,9 +27,9 @@
 
         <InFeedAd v-if="index % 2" use-small-ads />
       </section>
-    </template>
+    </main>
 
-    <template slot="footer">
+    <footer>
       <CustomListView
         :style="
           drawerIsOpened
@@ -74,18 +63,30 @@
           </li>
         </template>
       </CustomListView>
-    </template>
-  </AppFeel>
+    </footer>
+  </div>
 </template>
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
+import QuestionCard from '~/components/Cards/QuestionCard'
+import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
+import CustomListView from '~/components/Layout/CustomListView'
 
 export default {
   name: 'FAQ',
+  components: { CustomListView, InFeedAd, QuestionCard, AppBarHeader },
   middleware: 'isAuthenticated',
+
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
+
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       drawerIsOpened: false,
       navigationRoutes,
       pageTitle: 'FAQ',
@@ -166,6 +167,35 @@ export default {
           statement: `How to edit your profile?`,
           answer: `To edit your profile go on "More option" from bottom navigation bar &
               tap on Preferences -> Edit profile. Then change whatever you want to change.`,
+        },
+        {
+          id: 113,
+          statement: `What is Refer and Earn?`,
+          answer: `It is an opportunity where you can earn Flora coins to unlock some
+            premium features in the platform such as messaging, audio blogs,
+            etc.`,
+        },
+        {
+          id: 114,
+          statement: `What is Floracoins?`,
+          answer: `It is a virtual currency that can be used within the platform to
+            unlock premium features`,
+        },
+        {
+          id: 115,
+          statement: `Can I use multiple referral code?`,
+          answer: `No, every user gets one referral code and can redeem it by sharing
+            and inviting others to the platform`,
+        },
+        {
+          id: 116,
+          statement: `Can I use Floracoins to redeem real money?`,
+          answer: `Not yet. For now, you can use it to unlock premium features in the platform.`,
+        },
+        {
+          id: 117,
+          statement: `How many users can I invite with the referral code?`,
+          answer: `As much as you want there is no limit.`,
         },
       ],
     }

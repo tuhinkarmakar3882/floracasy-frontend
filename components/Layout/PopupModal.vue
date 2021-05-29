@@ -21,37 +21,14 @@
 <script>
 export default {
   name: 'PopupModal',
-  props: {
-    keyName: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    user: {
-      type: Object || undefined,
-      required: true,
-    },
-    oneTime: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-  },
   data() {
     return {
-      displayModal: false,
-    }
-  },
-
-  mounted() {
-    if (this.user) {
-      this.displayModal = !localStorage.getItem(this.keyName)
+      displayModal: true,
     }
   },
   methods: {
     dismiss() {
       this.displayModal = false
-      this.oneTime && localStorage.setItem(this.keyName, 'true')
     },
   },
 }

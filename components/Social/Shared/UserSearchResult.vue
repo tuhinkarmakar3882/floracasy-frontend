@@ -1,13 +1,23 @@
 <template>
+  <section v-if="loading" v-ripple class="sample-response">
+    <ImageSkeleton height="64px" radius="50%" width="64px" />
+    <aside>
+      <LineSkeleton width="95%" />
+      <LineSkeleton class="my-2" width="40%" />
+      <LineSkeleton class="my-2" width="20%" />
+    </aside>
+  </section>
+
   <div
+    v-else
     v-ripple
     class="user-search-result-component"
     @click="openProfileDetails"
   >
     <img
-      decoding="async"
       :src="photoURL"
       alt="user-image"
+      decoding="async"
       height="64"
       width="64"
     />
@@ -33,9 +43,12 @@
 <script>
 import endpoints from '~/api/endpoints'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
 export default {
   name: 'UserSearchResult',
+  components: { LineSkeleton, ImageSkeleton },
   props: {
     userdata: {
       type: Object,
@@ -47,6 +60,7 @@ export default {
       photoURL: '/images/default.svg',
       designation: undefined,
       about: undefined,
+      loading: true,
     }
   },
   mounted() {
@@ -84,6 +98,7 @@ export default {
       )
       this.designation = details.designation || 'No Designation'
       this.about = details.about || 'No About'
+      this.loading = false
     },
   },
 }
@@ -118,6 +133,7 @@ export default {
 
   .user-data {
     width: 100%;
+
     small {
       display: block;
       font-weight: 300;
@@ -159,5 +175,13 @@ export default {
       }
     }
   }
+}
+
+section.sample-response {
+  display: grid;
+  grid-template-columns: 2 * $xxx-large-unit 1fr;
+  grid-gap: $standard-unit;
+  align-items: center;
+  justify-content: stretch;
 }
 </style>

@@ -123,6 +123,21 @@ const endpoints = {
   payments: {
     fetch: '/allow_authenticated/payments/fetch/',
   },
+  rewards: {
+    coins: '/allow_authenticated/rewards/coins/',
+    transactions: '/allow_authenticated/rewards/transactions/',
+    actions: '/allow_authenticated/rewards/actions/',
+
+    list: '/allow_authenticated/rewards/',
+    claimed: '/allow_authenticated/rewards/claimed/',
+
+    referral: {
+      list: '/allow_authenticated/rewards/referrals/',
+      code: '/allow_authenticated/rewards/referrals/code/',
+      status: '/allow_authenticated/rewards/referrals/status/check/',
+      add: '/allow_authenticated/rewards/referrals/add/',
+    },
+  },
 
   health_check: {
     test: 'health_check/',
