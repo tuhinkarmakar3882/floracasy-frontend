@@ -2,7 +2,7 @@ const staticCacheName = 'floracasy-pwa-v' + new Date().getTime()
 const filesToCache = [
   'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css',
   'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-  'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+  // 'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
 ]
 const OFFLINE_URL = '/offline.html'
 
@@ -20,17 +20,14 @@ self.addEventListener('install', (event) => {
 
 // Cleanup Old Cache
 self.addEventListener('activate', function (event) {
+  console.log('[+] Cleaninup Old Cache')
   event.waitUntil(
     (async () => {
       const cacheNames = await caches.keys()
       await Promise.all(
         cacheNames
-          .filter((cacheName) => {
-            return cacheName !== staticCacheName
-          })
-          .map(function (cacheName) {
-            return caches.delete(cacheName)
-          })
+          .filter((cacheName) => cacheName !== staticCacheName)
+          .map((cacheName) => caches.delete(cacheName))
       )
     })()
   )
@@ -38,6 +35,7 @@ self.addEventListener('activate', function (event) {
 
 // Put Things In New Cache & Enable Navigation Preload
 self.addEventListener('activate', (event) => {
+  console.log('[+] Putting Things In New Cache & Activating Navigation Preload')
   event.waitUntil(
     (async () => {
       if ('navigationPreload' in self.registration) {
