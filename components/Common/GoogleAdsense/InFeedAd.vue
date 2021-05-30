@@ -142,25 +142,30 @@ export default {
 
     handleIntersection(entries) {
       entries.map((entry) => {
-        this.adsBlocked = false
+        try {
+          this.observer.observe(entry.target)
 
-        if (entry.isIntersecting) {
-          this.$nextTick(() => {
+          this.adsBlocked = false
+
+          if (entry.isIntersecting) {
+            this.$nextTick(() => {
+              this.showAds = true
+            })
             this.showAds = true
-          })
-          this.showAds = true
 
-          setTimeout(this.loadAds, 0)
-          this.observer.unobserve(entry.target)
+            setTimeout(this.loadAds, 0)
+            this.observer.unobserve(entry.target)
 
-          clearTimeout(this.timeout)
-          this.timeout = setTimeout(() => {
-            this.observer.observe(entry.target)
-          }, 8000)
-        } else {
-          this.showAds = false
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => {}, 8000)
+          } else {
+            this.showAds = false
+          }
+          return entry
+        } catch (e) {
+          console.log(e)
+          return entry
         }
-        return entry
       })
     },
   },
