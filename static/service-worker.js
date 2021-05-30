@@ -1,27 +1,61 @@
-const staticCacheName = 'nuxt-pwa-v' + new Date().getTime()
-const filesToCache = []
+const staticCacheName = 'floracasy-pwa-v' + new Date().getTime()
+const filesToCache = [
+  'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css',
+  'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
+  'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
+]
+const OFFLINE_URL = '/offline.html'
 
 self.addEventListener('install', (event) => {
   this.skipWaiting()
   event.waitUntil(
-    caches.open(staticCacheName).then((cache) => {
-      return cache.addAll(filesToCache)
-    })
+    (async () => {
+      const cache = await caches.open(staticCacheName)
+      await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }))
+      await cache.addAll(filesToCache)
+    })()
   )
   console.log('Version Update')
 })
 
+// Cleanup Old Cache
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    (async () => {
+      const cacheNames = await caches.keys()
+      await Promise.all(
+        cacheNames
+          .filter((cacheName) => {
+            return cacheName !== staticCacheName
+          })
+          .map(function (cacheName) {
+            return caches.delete(cacheName)
+          })
+      )
+    })()
+  )
+})
+
+// Put Things In New Cache & Enable Navigation Preload
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    (async () => {
+      if ('navigationPreload' in self.registration) {
+        await self.registration.navigationPreload.enable()
+      }
+
+      const cacheNames = await caches.keys()
+
+      await Promise.all(
         cacheNames
           .filter((cacheName) => cacheName.startsWith('nuxt-pwa-v'))
           .filter((cacheName) => cacheName !== staticCacheName)
           .map((cacheName) => caches.delete(cacheName))
       )
-    })
+    })()
   )
+  self.clients.claim()
+
   console.log(`
  ___           _        _ _          _
 |_ _|_ __  ___| |_ __ _| | | ___  __| |
@@ -32,164 +66,38 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
-  event.respondWith(fetch(event.request).catch(() => {}))
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      (async () => {
+        try {
+          const preloadResponse = await event.preloadResponse
+          if (preloadResponse) {
+            return preloadResponse
+          }
+
+          const networkResponse = await fetch(event.request)
+          return networkResponse
+        } catch (error) {
+          const cache = await caches.open(staticCacheName)
+          return await cache.match(OFFLINE_URL)
+        }
+      })()
+    )
+  }
 })
 
-// const revision = Date.now()
-// const options = {
-//   workboxURL:
-//     'https://storage.googleapis.com/workbox-cdn/releases/6.1.5/workbox-sw.js',
-//   importScripts: [],
-//   config: { debug: true },
-//   cacheOptions: {
-//     cacheId: 'floracasy-' + revision,
-//     directoryIndex: null,
-//     revision,
-//   },
-//   clientsClaim: true,
-//   skipWaiting: true,
-//   cleanupOutdatedCaches: true,
-//   offlineAnalytics: false,
-//   preCaching: [],
-//   runtimeCaching: [
-//     {
-//       urlPattern: 'https://fonts.googleapis.com/.*',
-//       handler: 'CacheFirst',
-//       method: 'GET',
-//       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-//       strategyPlugins: [],
-//     },
-//     {
-//       urlPattern: 'https://cdn.materialdesignicons.com/.*',
-//       handler: 'CacheFirst',
-//       method: 'GET',
-//       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-//       strategyPlugins: [],
-//     },
-//     {
-//       urlPattern: 'https://fonts.gstatic.com/.*',
-//       handler: 'CacheFirst',
-//       method: 'GET',
-//       strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
-//       strategyPlugins: [],
-//     },
-//     {
-//       urlPattern: '/_nuxt/',
-//       handler: 'NetworkFirst',
-//       method: 'GET',
-//       strategyPlugins: [],
-//     },
-//     {
-//       urlPattern: '/images/',
-//       handler: 'CacheFirst',
-//       method: 'GET',
-//       strategyPlugins: [],
-//     },
-//     {
-//       urlPattern: '/',
-//       handler: 'NetworkOnly',
-//       method: 'GET',
-//       strategyPlugins: [],
-//     },
-//     {
-//       urlPattern: '/Home/Dashboard',
-//       handler: 'NetworkOnly',
-//       method: 'GET',
-//       strategyPlugins: [],
-//     },
-//   ],
-//   offlinePage: '/Offline',
-//   pagesURLPattern: '/',
-//   offlineStrategy: 'NetworkFirst',
-// }
-//
-// importScripts(...[options.workboxURL, ...options.importScripts])
-//
-// initWorkbox(workbox, options)
-// workboxExtensions(workbox, options)
-// precacheAssets(workbox, options)
-// cachingExtensions(workbox, options)
-// runtimeCaching(workbox, options)
-// offlinePage(workbox, options)
-// routingExtensions(workbox, options)
-//
-// function getProp(obj, prop) {
-//   return prop.split('.').reduce((p, c) => p[c], obj)
-// }
-//
-// function initWorkbox(workbox, options) {
-//   if (options.config) {
-//     // Set workbox config
-//     workbox.setConfig(options.config)
-//   }
-//
-//   if (options.cacheNames) {
-//     // Set workbox cache names
-//     workbox.core.setCacheNameDetails(options.cacheNames)
-//   }
-//
-//   if (options.clientsClaim) {
-//     // Start controlling any existing clients as soon as it activates
-//     workbox.core.clientsClaim()
-//   }
-//
-//   if (options.skipWaiting) {
-//     workbox.core.skipWaiting()
-//   }
-//
-//   if (options.cleanupOutdatedCaches) {
-//     workbox.precaching.cleanupOutdatedCaches()
-//   }
-//
-//   if (options.offlineAnalytics) {
-//     // Enable offline Google Analytics tracking
-//     workbox.googleAnalytics.initialize()
-//   }
-// }
-//
-// function precacheAssets(workbox, options) {
-//   if (options.preCaching.length) {
-//     workbox.precaching.precacheAndRoute(
-//       options.preCaching,
-//       options.cacheOptions
-//     )
-//   }
-// }
-//
-// function runtimeCaching(workbox, options) {
-//   for (const entry of options.runtimeCaching) {
-//     const urlPattern = new RegExp(entry.urlPattern)
-//     const method = entry.method || 'GET'
-//
-//     const plugins = (entry.strategyPlugins || []).map(
-//       (p) => new (getProp(workbox, p.use))(...p.config)
-//     )
-//
-//     const strategyOptions = { ...entry.strategyOptions, plugins }
-//
-//     const strategy = new workbox.strategies[entry.handler](strategyOptions)
-//
-//     workbox.routing.registerRoute(urlPattern, strategy, method)
-//   }
-// }
-//
-// function offlinePage(workbox, options) {
-//   if (options.offlinePage) {
-//     // Register router handler for offlinePage
-//     workbox.routing.registerRoute(
-//       new RegExp(options.pagesURLPattern),
-//       ({ request, event }) => {
-//         const strategy = new workbox.strategies[options.offlineStrategy]()
-//         return strategy
-//           .handle({ request, event })
-//           .catch(() => caches.match(options.offlinePage))
-//       }
-//     )
-//   }
-// }
-//
-// function workboxExtensions(workbox, options) {}
-//
-// function cachingExtensions(workbox, options) {}
-//
-// function routingExtensions(workbox, options) {}
+// self.addEventListener('fetch', function(event) {
+//   event.respondWith(
+//     caches.open('mysite-dynamic').then(function(cache) {
+//       return cache.match(event.request).then(function (response) {
+//         return response || fetch(event.request).then(function(response) {
+//           cache.put(event.request, response.clone());
+//           return response;
+//         });
+//       });
+//     })
+//   );
+// });
+// self.addEventListener('fetch', (event) => {
+// event.respondWith(fetch(event.request).catch(() => {}))
+// })
