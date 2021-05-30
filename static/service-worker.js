@@ -1,9 +1,5 @@
 const staticCacheName = 'floracasy-pwa-v' + new Date().getTime()
-const filesToCache = [
-  'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css',
-  'https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css',
-  // 'https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Prata&family=Raleway:wght@300;400;500&display=swap',
-]
+const filesToCache = []
 const OFFLINE_URL = '/offline.html'
 
 self.addEventListener('install', (event) => {
@@ -18,20 +14,20 @@ self.addEventListener('install', (event) => {
   console.log('Version Update')
 })
 
-// Cleanup Old Cache
-self.addEventListener('activate', function (event) {
-  console.log('[+] Cleaninup Old Cache')
-  event.waitUntil(
-    (async () => {
-      const cacheNames = await caches.keys()
-      await Promise.all(
-        cacheNames
-          .filter((cacheName) => cacheName !== staticCacheName)
-          .map((cacheName) => caches.delete(cacheName))
-      )
-    })()
-  )
-})
+// // Cleanup Old Cache
+// self.addEventListener('activate', (event) => {
+//   console.log('[+] Cleaninup Old Cache')
+//   event.waitUntil(
+//     (async () => {
+//       const cacheNames = await caches.keys()
+//       await Promise.all(
+//         cacheNames
+//           .filter((cacheName) => cacheName !== staticCacheName)
+//           .map((cacheName) => caches.delete(cacheName))
+//       )
+//     })()
+//   )
+// })
 
 // Put Things In New Cache & Enable Navigation Preload
 self.addEventListener('activate', (event) => {
@@ -43,6 +39,9 @@ self.addEventListener('activate', (event) => {
       }
 
       const cacheNames = await caches.keys()
+      const cache = await caches.open(staticCacheName)
+      await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }))
+      await cache.addAll(filesToCache)
 
       await Promise.all(
         cacheNames
@@ -73,8 +72,7 @@ self.addEventListener('fetch', (event) => {
             return preloadResponse
           }
 
-          const networkResponse = await fetch(event.request)
-          return networkResponse
+          return await fetch(event.request)
         } catch (error) {
           const cache = await caches.open(staticCacheName)
           return await cache.match(OFFLINE_URL)
@@ -84,18 +82,36 @@ self.addEventListener('fetch', (event) => {
   }
 })
 
-// self.addEventListener('fetch', function(event) {
+// self.addEventListener('fetch', (event) => {
+// if (event.request.mode === 'navigate') {
 //   event.respondWith(
-//     caches.open('mysite-dynamic').then(function(cache) {
-//       return cache.match(event.request).then(function (response) {
-//         return response || fetch(event.request).then(function(response) {
-//           cache.put(event.request, response.clone());
-//           return response;
-//         });
-//       });
-//     })
-//   );
-// });
+//     (async () => {
+//       try {
+//         const preloadResponse = await event.preloadResponse
+//         if (preloadResponse) {
+//           return preloadResponse
+//         }
+//
+//         return await fetch(event.request)
+//       } catch (error) {
+//         const cache = await caches.open(staticCacheName)
+//         return await cache.match(OFFLINE_URL)
+//       }
+//     })()
+//   )
+// }
+// event.respondWith(
+//   (async () => {
+//     const cache = await caches.open(staticCacheName)
+//     try {
+//       const response = await cache
+//         .match(event.request);
+//     } catch(e
+//   ) {
+//   })()
+// )
+// })
+
 // self.addEventListener('fetch', (event) => {
 // event.respondWith(fetch(event.request).catch(() => {}))
 // })
