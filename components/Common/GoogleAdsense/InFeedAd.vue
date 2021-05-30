@@ -133,7 +133,9 @@ export default {
     },
 
     setupIntersectionObserver() {
-      this.observer = new IntersectionObserver(this.handleIntersection)
+      this.observer = new IntersectionObserver(this.handleIntersection, {
+        rootMargin: '500px',
+      })
       const target = this.$refs.ads
       this.observer.observe(target)
     },
