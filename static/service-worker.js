@@ -35,9 +35,9 @@ self.addEventListener('activate', (event) => {
   console.log('[+] Putting Things In New Cache & Activating Navigation Preload')
   event.waitUntil(
     (async () => {
-      if ('navigationPreload' in self.registration) {
-        await self.registration.navigationPreload.enable()
-      }
+      // if ('navigationPreload' in self.registration) {
+      //   await self.registration.navigationPreload.enable()
+      // }
 
       const cache = await caches.open(staticCacheName)
       await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }))
@@ -55,30 +55,29 @@ self.addEventListener('activate', (event) => {
   `)
 })
 
-self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    console.log('navigation')
-    event.respondWith(
-      (async () => {
-        try {
-          const preloadResponse = await event.preloadResponse
-          if (preloadResponse) {
-            return preloadResponse
-          }
-
-          return await fetch(event.request)
-        } catch (error) {
-          const cache = await caches.open(staticCacheName)
-          return await cache.match(OFFLINE_URL)
-        }
-      })()
-    )
-  }
-})
+// self.addEventListener('fetch', (event) => {
+//   if (event.request.mode === 'navigate') {
+//     console.log('navigation')
+//     event.respondWith(
+//       (async () => {
+//         try {
+//           // const preloadResponse = await event.preloadResponse
+//           // if (preloadResponse) {
+//           //   return preloadResponse
+//           // }
+//
+//           return await fetch(event.request)
+//         } catch (error) {
+//           const cache = await caches.open(staticCacheName)
+//           return await cache.match(OFFLINE_URL)
+//         }
+//       })()
+//     )
+//   }
+// })
 
 self.addEventListener('fetch', function (event) {
   if (event.request.method === 'GET') {
-    console.log('GET Call')
     event.respondWith(
       caches.open(staticCacheName).then((cache) => {
         return fetch(event.request).catch(() => {
