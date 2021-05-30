@@ -1,5 +1,5 @@
 const staticCacheName = 'floracasy-pwa-v' + new Date().getTime()
-const filesToCache = []
+const filesToCache = ['/offline.html']
 const OFFLINE_URL = '/offline.html'
 
 self.addEventListener('install', (event) => {
@@ -8,26 +8,27 @@ self.addEventListener('install', (event) => {
     (async () => {
       const cache = await caches.open(staticCacheName)
       await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }))
-      await cache.addAll(filesToCache)
+      return await cache.addAll(filesToCache)
     })()
   )
   console.log('Version Update')
 })
 
-// // Cleanup Old Cache
-// self.addEventListener('activate', (event) => {
-//   console.log('[+] Cleaninup Old Cache')
-//   event.waitUntil(
-//     (async () => {
-//       const cacheNames = await caches.keys()
-//       await Promise.all(
-//         cacheNames
-//           .filter((cacheName) => cacheName !== staticCacheName)
-//           .map((cacheName) => caches.delete(cacheName))
-//       )
-//     })()
-//   )
-// })
+// Cleanup Old Cache
+self.addEventListener('activate', (event) => {
+  console.log('[+] Cleaning up Old Cache')
+  event.waitUntil(
+    (async () => {
+      const cacheNames = await caches.keys()
+      return await Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName.startsWith('nuxt-pwa-v'))
+          .filter((cacheName) => cacheName !== staticCacheName)
+          .map((cacheName) => caches.delete(cacheName))
+      )
+    })()
+  )
+})
 
 // Put Things In New Cache & Enable Navigation Preload
 self.addEventListener('activate', (event) => {
@@ -38,17 +39,9 @@ self.addEventListener('activate', (event) => {
         await self.registration.navigationPreload.enable()
       }
 
-      const cacheNames = await caches.keys()
       const cache = await caches.open(staticCacheName)
       await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }))
-      await cache.addAll(filesToCache)
-
-      await Promise.all(
-        cacheNames
-          .filter((cacheName) => cacheName.startsWith('nuxt-pwa-v'))
-          .filter((cacheName) => cacheName !== staticCacheName)
-          .map((cacheName) => caches.delete(cacheName))
-      )
+      return await cache.addAll(filesToCache)
     })()
   )
   self.clients.claim()
@@ -64,6 +57,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
+    console.log('navigation')
     event.respondWith(
       (async () => {
         try {
@@ -78,6 +72,19 @@ self.addEventListener('fetch', (event) => {
           return await cache.match(OFFLINE_URL)
         }
       })()
+    )
+  }
+})
+
+self.addEventListener('fetch', function (event) {
+  if (event.request.method === 'GET') {
+    console.log('GET Call')
+    event.respondWith(
+      caches.open(staticCacheName).then((cache) => {
+        return fetch(event.request).catch(() => {
+          return caches.match(OFFLINE_URL)
+        })
+      })
     )
   }
 })
