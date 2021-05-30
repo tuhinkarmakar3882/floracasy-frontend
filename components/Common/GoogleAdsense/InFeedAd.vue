@@ -88,29 +88,37 @@ export default {
   mounted() {
     if ('IntersectionObserver' in window) {
       this.useDomBasedAds()
-      setTimeout(this.setupIntersectionObserver, 8000)
+      setTimeout(this.setupIntersectionObserver, 5000)
     } else {
       this.useDomBasedAds()
     }
   },
   methods: {
     useDomBasedAds() {
+      this.showAds = true
+      this.adsBlocked = false
+
       if (!window?.adsbygoogle) {
         this.showAds = false
         this.adsBlocked = true
         return
       }
+
       try {
         window.adsbygoogle?.push({})
         process.env.NODE_ENV === 'production' &&
           LogAnalyticsEvent('ads_requested')
       } catch (e) {
+        console.log(e)
         process.env.NODE_ENV === 'production' &&
           LogAnalyticsEvent('ads_not_loaded')
       }
     },
 
     loadAds() {
+      this.showAds = true
+      this.adsBlocked = false
+
       if (!window?.adsbygoogle) {
         this.showAds = false
         this.adsBlocked = true
@@ -135,7 +143,11 @@ export default {
         this.adsBlocked = false
 
         if (entry.isIntersecting) {
+          this.$nextTick(() => {
+            this.showAds = true
+          })
           this.showAds = true
+
           setTimeout(this.loadAds, 0)
           this.observer.unobserve(entry.target)
 
@@ -146,6 +158,7 @@ export default {
         } else {
           this.showAds = false
         }
+        return entry
       })
     },
   },
