@@ -88,7 +88,7 @@ export default {
   mounted() {
     if ('IntersectionObserver' in window) {
       this.useDomBasedAds()
-      this.setupIntersectionObserver()
+      setTimeout(this.setupIntersectionObserver, 8000)
     } else {
       this.useDomBasedAds()
     }
