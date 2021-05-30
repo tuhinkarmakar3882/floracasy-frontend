@@ -73,6 +73,7 @@ export default {
       timeout: undefined,
       adsBlocked: false,
       observer: undefined,
+      setupIntersectionObserverTimeOut: undefined,
     }
   },
   computed: {
@@ -88,10 +89,18 @@ export default {
   mounted() {
     if ('IntersectionObserver' in window) {
       this.useDomBasedAds()
-      setTimeout(this.setupIntersectionObserver, 5000)
+      this.setupIntersectionObserverTimeOut = setTimeout(
+        this.setupIntersectionObserver,
+        5000
+      )
     } else {
       this.useDomBasedAds()
     }
+  },
+
+  beforeDestroy() {
+    clearTimeout(this.setupIntersectionObserverTimeOut)
+    clearTimeout(this.timeout)
   },
   methods: {
     useDomBasedAds() {
@@ -142,30 +151,25 @@ export default {
 
     handleIntersection(entries) {
       entries.map((entry) => {
-        try {
-          this.observer.observe(entry.target)
+        this.observer.observe(entry.target)
 
-          this.adsBlocked = false
+        this.adsBlocked = false
 
-          if (entry.isIntersecting) {
-            this.$nextTick(() => {
-              this.showAds = true
-            })
+        if (entry.isIntersecting) {
+          this.$nextTick(() => {
             this.showAds = true
+          })
+          this.showAds = true
 
-            setTimeout(this.loadAds, 0)
-            this.observer.unobserve(entry.target)
+          setTimeout(this.loadAds, 0)
+          this.observer.unobserve(entry.target)
 
-            clearTimeout(this.timeout)
-            this.timeout = setTimeout(() => {}, 8000)
-          } else {
-            this.showAds = false
-          }
-          return entry
-        } catch (e) {
-          console.log(e)
-          return entry
+          clearTimeout(this.timeout)
+          this.timeout = setTimeout(() => {}, 8000)
+        } else {
+          this.showAds = false
         }
+        return entry
       })
     },
   },
