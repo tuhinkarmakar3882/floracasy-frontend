@@ -89,7 +89,7 @@ export default {
   mounted() {
     if ('IntersectionObserver' in window) {
       this.useDomBasedAds()
-      // this.intersectionObserverStartup = setTimeout(this.startIObserver, 5000)
+      this.intersectionObserverStartup = setTimeout(this.startIObserver, 10000)
     } else {
       this.useDomBasedAds()
     }
