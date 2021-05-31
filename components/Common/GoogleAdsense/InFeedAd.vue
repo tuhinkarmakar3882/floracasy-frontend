@@ -73,7 +73,7 @@ export default {
       timeout: undefined,
       adsBlocked: false,
       observer: undefined,
-      setupIntersectionObserverTimeOut: undefined,
+      intersectionObserverStartup: undefined,
     }
   },
   computed: {
@@ -89,17 +89,14 @@ export default {
   mounted() {
     if ('IntersectionObserver' in window) {
       this.useDomBasedAds()
-      this.setupIntersectionObserverTimeOut = setTimeout(
-        this.setupIntersectionObserver,
-        5000
-      )
+      // this.intersectionObserverStartup = setTimeout(this.startIObserver, 5000)
     } else {
       this.useDomBasedAds()
     }
   },
 
   beforeDestroy() {
-    clearTimeout(this.setupIntersectionObserverTimeOut)
+    clearTimeout(this.intersectionObserverStartup)
     clearTimeout(this.timeout)
   },
   methods: {
@@ -141,7 +138,7 @@ export default {
       } catch (e) {}
     },
 
-    setupIntersectionObserver() {
+    startIObserver() {
       this.observer = new IntersectionObserver(this.handleIntersection, {
         rootMargin: '500px',
       })
