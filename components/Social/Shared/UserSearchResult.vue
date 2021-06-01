@@ -23,7 +23,7 @@
     />
     <section class="user-data ml-4">
       <div class="top-line">
-        <h6 class="mt-0 mb-1 secondary mr-auto">{{ userdata.username }}</h6>
+        <h6 class="mt-0 mb-1 secondary mr-auto">{{ username }}</h6>
 
         <p v-if="userdata.isFollowing"><span class="dot mr-2" /> Following</p>
 
@@ -61,9 +61,11 @@ export default {
       designation: undefined,
       about: undefined,
       loading: true,
+      username: true,
     }
   },
   mounted() {
+    this.username = this.userdata?.username
     this.fetchProfileImage()
     this.fetchProfileData()
   },
@@ -97,6 +99,7 @@ export default {
         }
       )
       this.designation = details.designation || 'No Designation'
+      this.username = details.username
       this.about = details.about || 'No About'
       this.loading = false
     },
