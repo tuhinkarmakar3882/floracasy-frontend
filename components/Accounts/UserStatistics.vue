@@ -21,6 +21,7 @@
     <p>Loading Profile Data...</p>
   </aside>
 </template>
+
 <script>
 export default {
   name: 'UserStatistics',
@@ -32,8 +33,10 @@ export default {
   },
 }
 </script>
+
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
 .basic-data {
   display: grid;
   grid-template-columns: 1fr 2fr;
