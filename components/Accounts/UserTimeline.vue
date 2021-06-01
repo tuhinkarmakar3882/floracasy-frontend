@@ -50,7 +50,7 @@
               </template>
 
               <template slot="no-more">
-                <section class="px-4 py-2">
+                <section class="px-4 py-2" v-if="isMe">
                   <h6 class="my-4">Good Going!</h6>
                   <p class="mt-6 mb-8">
                     Remember the more you write, the better your skills become.
@@ -62,21 +62,29 @@
                     <button class="secondary-btn">Create More Blogs</button>
                   </nuxt-link>
                 </section>
+
+                <section class="px-4" v-else />
               </template>
 
               <template slot="no-results">
-                <h6 class="my-4">It's Lonely Here...</h6>
-                <p class="mt-6 mb-8">
-                  Looks like, you haven't written any blogs yet!
-                  <br />
-                  Start Writing now to Start Earning!
-                </p>
-                <nuxt-link
-                  v-ripple
-                  :to="navigationRoutes.Home.Blogs.Create.AddBlog"
-                >
-                  <button class="secondary-btn">Create Blog</button>
-                </nuxt-link>
+                <section class="px-4 py-2" v-if="isMe">
+                  <h6 class="my-4">It's Lonely Here...</h6>
+                  <p class="mt-6 mb-8">
+                    Looks like, you haven't written any blogs yet!
+                    <br />
+                    Start Writing now to Start Earning!
+                  </p>
+                  <nuxt-link
+                    v-ripple
+                    :to="navigationRoutes.Home.Blogs.Create.AddBlog"
+                  >
+                    <button class="secondary-btn">Create Blog</button>
+                  </nuxt-link>
+                </section>
+
+                <section class="px-4" v-else>
+                  <p class="my-4">It's Lonely Here...</p>
+                </section>
               </template>
             </infinite-loading>
           </client-only>
@@ -117,7 +125,7 @@
               </template>
 
               <template slot="no-more">
-                <section class="px-4 py-2">
+                <section class="px-4 py-2" v-if="isMe">
                   <h6 class="my-4">Awesome, Job!</h6>
                   <p class="mt-6 mb-8">
                     Community post can help build a bond with your readers!
@@ -129,19 +137,27 @@
                     <button class="secondary-btn">Create More Posts</button>
                   </nuxt-link>
                 </section>
+
+                <section v-else />
               </template>
 
               <template slot="no-results">
-                <h6 class="my-4">It's Lonely Here...</h6>
-                <p class="mt-6 mb-8">
-                  Looks like, you haven't created any posts yet!
-                </p>
-                <nuxt-link
-                  v-ripple
-                  :to="navigationRoutes.Home.Community.Posts.add"
-                >
-                  <button class="secondary-btn">Create Post</button>
-                </nuxt-link>
+                <section class="px-4 py-2" v-if="isMe">
+                  <h6 class="my-4">It's Lonely Here...</h6>
+                  <p class="mt-6 mb-8">
+                    Looks like, you haven't created any posts yet!
+                  </p>
+                  <nuxt-link
+                    v-ripple
+                    :to="navigationRoutes.Home.Community.Posts.add"
+                  >
+                    <button class="secondary-btn">Create Post</button>
+                  </nuxt-link>
+                </section>
+
+                <section class="px-4" v-else>
+                  <p class="my-4">It's Lonely Here...</p>
+                </section>
               </template>
             </infinite-loading>
           </client-only>
@@ -158,6 +174,7 @@ import BlogPost from '~/components/Blogs/BlogPost'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'UserTimeline',
@@ -181,6 +198,15 @@ export default {
       getPostsByUserUIDEndpoint: endpoints.community_service.posts.getByUserUID,
       recentPosts: [],
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+    isMe() {
+      return this.userUid === this.user?.uid
+    },
   },
 
   methods: {
