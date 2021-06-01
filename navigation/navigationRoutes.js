@@ -9,6 +9,7 @@ export const navigationRoutes = {
     Account: {
       Details: '/Home/Account/Details',
       Overview: '/Home/Account/Overview/{userUID}',
+      Followers: '/Home/Account/Followers/{userUID}',
     },
 
     Blogs: {
