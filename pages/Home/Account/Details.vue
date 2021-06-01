@@ -28,7 +28,7 @@
         </div>
       </section>
 
-      <LineSkeleton height="3rem" class="my-8 mx-auto" width="80%" />
+      <LineSkeleton class="my-8 mx-auto" height="3rem" width="80%" />
 
       <section>
         <LineSkeleton class="my-4" height="1.2rem" />
@@ -64,10 +64,26 @@
           </div>
         </div>
 
-        <LazyUserStatistics
-          v-if="statisticsItem"
-          :statistics-item="statisticsItem"
-        />
+        <section>
+          <LazyUserStatistics
+            v-if="statisticsItem"
+            :statistics-item="statisticsItem"
+          />
+          <aside v-else class="sample-3-column-response my-8 px-4">
+            <section>
+              <ImageSkeleton height="52px" radius="50%" width="52px" />
+              <LineSkeleton class="my-4" />
+            </section>
+            <section>
+              <ImageSkeleton height="52px" radius="50%" width="52px" />
+              <LineSkeleton class="my-4" />
+            </section>
+            <section>
+              <ImageSkeleton height="52px" radius="50%" width="52px" />
+              <LineSkeleton class="my-4" />
+            </section>
+          </aside>
+        </section>
 
         <section class="other-info">
           <p v-ripple class="about text-center" @click="editContent">
@@ -251,6 +267,18 @@ export default {
 
     .other-info {
       text-align: left;
+    }
+  }
+
+  aside.sample-3-column-response {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 16px;
+    gap: 16px;
+
+    section {
+      display: grid;
+      place-items: center;
     }
   }
 
