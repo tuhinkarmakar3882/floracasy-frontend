@@ -99,7 +99,7 @@ export default {
   methods: {
     async copyLink() {
       window.shareLink = this.$refs.shareLink
-      this.$refs.shareLink.value = `I just published this on Floracasy: ${this.description}. Read more at: ${this.linkUrl}`
+      this.$refs.shareLink.value = `${this.description} ${this.linkUrl}`
       this.$refs.shareLink.select()
       this.$refs.shareLink.setSelectionRange(0, 99999)
       document.execCommand('copy')

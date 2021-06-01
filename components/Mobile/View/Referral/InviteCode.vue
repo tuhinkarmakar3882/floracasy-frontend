@@ -66,7 +66,7 @@ export default {
       linkUrl: undefined,
       useShareFallBack: false,
       shareDescription:
-        "Hey, I'm Inviting you to join Floracasy - Where you get Paid for writing content. It's Free & Fast! Join now & Get the Referral Bonus!",
+        "Hey, I'm Inviting you to join Floracasy - Where you get Paid for writing content. It's Free & Fast! Join now & Get the Referral Bonus! Here's the link:",
     }
   },
   mounted() {
