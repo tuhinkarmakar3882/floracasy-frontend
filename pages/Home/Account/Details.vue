@@ -48,21 +48,7 @@
 
     <main v-else>
       <section class="user-profile px-1">
-        <div class="basic-data text-center">
-          <img
-            :src="user.photoURL"
-            alt="profile-picture"
-            class="picture"
-            height="100"
-            width="100"
-          />
-          <div class="basic-details">
-            <p class="name">{{ user.displayName }}</p>
-            <p v-ripple class="designation" @click="editContent">
-              <em>{{ user.designation || 'Designation Not Set' }}</em>
-            </p>
-          </div>
-        </div>
+        <BasicUserData :user="user" />
 
         <section>
           <LazyUserStatistics
@@ -115,7 +101,7 @@
         </section>
       </section>
 
-      <UserTimeline :user-uid="user.uid" />
+      <LazyUserTimeline :user-uid="user.uid" />
     </main>
   </div>
 </template>
@@ -127,11 +113,17 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { showUITip } from '~/utils/utility'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
-import UserTimeline from '~/components/Accounts/UserTimeline'
+import BasicUserData from '~/components/Accounts/BasicUserData'
+import LoadingError from '~/components/Common/Tools/LoadingError'
 
 export default {
   name: 'Details',
-  components: { UserTimeline, ImageSkeleton, LineSkeleton },
+  components: {
+    LoadingError,
+    BasicUserData,
+    ImageSkeleton,
+    LineSkeleton,
+  },
   layout: 'ResponsiveApp',
   middleware: 'isAuthenticated',
 
