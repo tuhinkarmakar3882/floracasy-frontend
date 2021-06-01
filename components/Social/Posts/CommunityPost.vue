@@ -140,7 +140,7 @@
       <transition name="slide-up">
         <LazyShareFallbackForDesktop
           v-if="useShareFallBack"
-          :description="post.body || 'View this Post on Floracasy'"
+          :description="`I just published a post on Floracasy. Check this out at:`"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Community/Posts/${post.identifier}`"
         />

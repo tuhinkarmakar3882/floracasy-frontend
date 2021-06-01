@@ -152,7 +152,7 @@
       <transition name="slide-up">
         <LazyShareFallbackForDesktop
           v-if="useShareFallBack"
-          :description="blog.title"
+          :description="`I just published this on Floracasy: ${blog.title}. Read more at:`"
           :handle-close="hideFallback"
           :link-url="`https://floracasy.com/Home/Blogs/Details/${blog.identifier}`"
         />
