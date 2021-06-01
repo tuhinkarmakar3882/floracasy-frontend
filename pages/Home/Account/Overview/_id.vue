@@ -58,6 +58,7 @@
           <LazyUserStatistics
             v-if="statisticsItem"
             :statistics-item="statisticsItem"
+            :user-id="$route.params.id"
           />
           <aside v-else class="sample-3-column-response my-8 px-4">
             <section>
