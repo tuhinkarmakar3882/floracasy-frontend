@@ -10,7 +10,7 @@
       }}</span>
       <p class="type">Engagements</p>
     </section>
-    <section class="item" @click="viewFollowers">
+    <section class="item" @click="viewFollowers" v-ripple>
       <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
       <p class="type">Followers</p>
     </section>
