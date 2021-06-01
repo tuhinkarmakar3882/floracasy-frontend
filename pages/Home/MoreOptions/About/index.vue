@@ -70,10 +70,10 @@
           <article class="my-4">
             <h5 class="heading-title mt-4 mb-6">Who are we?</h5>
             <p class="my-4">
-              We are a duo of self motivated enthusiasts (One Developer & One
-              UX-Designer), doing our best to do our part for a platform where
-              people can communicate, collaborate & socialize their knowledge &
-              create great positive impact.
+              We are a small team of self motivated enthusiasts, doing our best
+              to do our part for a platform where people can communicate,
+              collaborate & socialize their knowledge & create great positive
+              impact.
             </p>
             <p class="my-4">
               We saw a lot of people losing jobs & some of them wanted to switch
