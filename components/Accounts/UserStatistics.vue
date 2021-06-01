@@ -10,7 +10,7 @@
       }}</span>
       <p class="type">Engagements</p>
     </section>
-    <section class="item">
+    <section class="item" @click="viewFollowers">
       <span class="number">{{ statisticsItem['totalFollowers'] }}</span>
       <p class="type">Followers</p>
     </section>
@@ -23,12 +23,28 @@
 </template>
 
 <script>
+import { navigationRoutes } from '~/navigation/navigationRoutes'
+
 export default {
   name: 'UserStatistics',
   props: {
     statisticsItem: {
       type: Object,
       required: true,
+    },
+    userId: {
+      type: String,
+      required: true,
+    },
+  },
+  methods: {
+    async viewFollowers() {
+      await this.$router.push(
+        navigationRoutes.Home.Account.Followers.replace(
+          '{userUID}',
+          this.userId
+        )
+      )
     },
   },
 }
