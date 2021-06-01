@@ -59,7 +59,7 @@ import InputField from '~/components/Common/Tools/InputField'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import PopupModal from '~/components/Layout/PopupModal'
 import endpoints from '~/api/endpoints'
-import { showUITip } from '~/utils/utility'
+import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
 
 export default {
   name: 'ApplyReferralCode',
@@ -108,6 +108,9 @@ export default {
 
       try {
         await this.$axios.$post(endpoints.rewards.referral.add, {
+          referralCode: this.referralCode,
+        })
+        LogAnalyticsEvent('referral_added', {
           referralCode: this.referralCode,
         })
         this.pleaseWait = false
