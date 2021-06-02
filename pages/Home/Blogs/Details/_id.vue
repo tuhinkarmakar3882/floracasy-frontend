@@ -111,11 +111,11 @@
         <div class="extra-info mt-4">
           <section>
             <i class="mdi mdi-eye mdi-18px mr-2" />
-            <small>{{ blog.totalViews }}</small>
+            <small>{{ shorten(blog.totalViews) }}</small>
           </section>
           <section>
             <i class="mdi mdi-incognito mdi-18px mr-2" />
-            <small>{{ blog.anonymousViews }}</small>
+            <small>{{ shorten(blog.anonymousViews) }}</small>
           </section>
         </div>
 
@@ -353,12 +353,15 @@ export default {
         return
       }
 
-      await this.$axios.$post(
-        endpoints.blog.updateAnonymousViewCount.replace(
-          '{identifier}',
-          this.$route.params.id
+      if (!localStorage.getItem(this.$route.params.id)) {
+        await this.$axios.$post(
+          endpoints.blog.updateAnonymousViewCount.replace(
+            '{identifier}',
+            this.$route.params.id
+          )
         )
-      )
+        localStorage.setItem(this.$route.params.id, 'true')
+      }
     },
 
     async navigateTo(path) {
