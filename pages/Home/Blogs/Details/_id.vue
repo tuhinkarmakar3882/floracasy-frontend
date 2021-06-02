@@ -113,6 +113,10 @@
             <i class="mdi mdi-eye mdi-18px mr-2" />
             <small>{{ blog.totalViews }}</small>
           </section>
+          <section>
+            <i class="mdi mdi-incognito mdi-18px mr-2" />
+            <small>{{ blog.anonymousViews }}</small>
+          </section>
         </div>
 
         <hr class="faded-divider my-4" />
@@ -290,7 +294,6 @@ export default {
   },
 
   methods: {
-    cleanHTML,
     parseTimeUsingStandardLibrary,
     shorten,
 
@@ -326,10 +329,17 @@ export default {
 
     preprocess(html) {
       setTimeout(this.pushAds, 3000)
-      return this.cleanHTML(html).replaceAll(
-        `<p><br /></p><p><br /></p>`,
-        `<p><br /></p><p><br /></p> <ins class="adsbygoogle" data-ad-client="ca-pub-9863542606738743" data-ad-format="fluid" data-ad-layout-key="-50+c6-23-9g+y5" data-ad-slot="2010436071" style="display: block"></ins>`
-      )
+      const safeHTML = cleanHTML(html)
+
+      try {
+        return safeHTML?.replaceAll(
+          `<p><br /></p><p><br /></p>`,
+          `<p><br /></p><p><br /></p> <ins class="adsbygoogle" data-ad-client="ca-pub-9863542606738743" data-ad-format="fluid" data-ad-layout-key="-50+c6-23-9g+y5" data-ad-slot="2010436071" style="display: block"></ins>`
+        )
+      } catch (e) {
+        console.log(e)
+        return safeHTML
+      }
     },
 
     async incrementViewCount() {
@@ -340,7 +350,15 @@ export default {
             this.$route.params.id
           )
         )
+        return
       }
+
+      await this.$axios.$post(
+        endpoints.blog.updateAnonymousViewCount.replace(
+          '{identifier}',
+          this.$route.params.id
+        )
+      )
     },
 
     async navigateTo(path) {
