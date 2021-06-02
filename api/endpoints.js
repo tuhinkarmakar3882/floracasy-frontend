@@ -28,6 +28,8 @@ const endpoints = {
     getSavedBlogs: '/allow_authenticated/blog/saved/fetch/',
 
     updateViewCount: '/allow_authenticated/blog/updateViewCount/{identifier}/',
+    updateAnonymousViewCount:
+      '/allow_any/blog/updateAnonymousViewCount/{identifier}/',
     addOrRemoveToSaveBlogs:
       '/allow_authenticated/blog/add_or_remove_to_save_blogs/',
   },
