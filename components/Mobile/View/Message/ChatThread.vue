@@ -3,7 +3,7 @@
     <img :src="photoURL" alt="Profile Image" decoding="async" loading="lazy" />
     <section>
       <main>
-        <h6 class="my-0">{{ thread.user[0].displayName }}</h6>
+        <h6 class="my-0">{{ username }}</h6>
         <small>{{ getRelativeTime(thread.updatedAt) }}</small>
       </main>
 
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       photoURL: '/images/default.svg',
+      username: this.thread?.user[0]?.displayName,
     }
   },
   computed: {
@@ -56,6 +57,8 @@ export default {
 
   mounted() {
     this.fetchProfileImage()
+
+    if (!this.username) this.fetchProfileData()
   },
 
   methods: {
@@ -70,6 +73,18 @@ export default {
         }
       )
       this.photoURL = photoURL
+    },
+
+    async fetchProfileData() {
+      const { details } = await this.$axios.$get(
+        endpoints.profile_statistics.profileData,
+        {
+          params: {
+            uid: this.thread?.lastMessage[0]?.senderUID,
+          },
+        }
+      )
+      this.username = details.username
     },
   },
 }

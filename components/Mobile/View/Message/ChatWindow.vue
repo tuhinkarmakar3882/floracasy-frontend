@@ -35,6 +35,7 @@
         class="input-field"
         placeholder="Type Your Message Here!"
         @keyup="sendTypingEvent"
+        @keyup.shift.enter="sendMessage"
       />
       <i
         v-ripple
@@ -73,6 +74,10 @@ export default {
       },
     },
     onChatUpdate: {
+      type: Function,
+      required: true,
+    },
+    onMessageSend: {
       type: Function,
       required: true,
     },
@@ -132,11 +137,12 @@ export default {
   methods: {
     handleTypingEvent(e) {
       if (e.roomID === this.chatThread.roomId) {
+        clearTimeout(this.typingTimeout)
         this.typing = true
 
-        setTimeout(() => {
+        this.typingTimeout = setTimeout(() => {
           this.typing = false
-        }, 2000)
+        }, 3000)
       }
     },
     async handleOnMessage(e) {
@@ -151,16 +157,7 @@ export default {
       if (e.roomID === this.chatThread.roomId) {
         const lastIndex = this.chatMessages.length - 1
         this.chatMessages[lastIndex].messages.push(newMessage)
-        this.onChatUpdate(this.chatThread, {
-          ...this.chatThread,
-          lastMessage: [
-            {
-              body: e.message,
-              senderUID: e.senderUID,
-            },
-          ],
-          updatedAt: Date.now(),
-        })
+        this.onChatUpdate(e.roomID)
         this.socket.emit('message_read', { roomID: this.chatThread.roomId })
         return
       }
@@ -227,7 +224,7 @@ export default {
     async sendMessage() {
       if (!this.canSendMessage) return
       this.$refs.textbox.focus()
-      const message = this.message
+      const message = this.message?.trim()
       this.canSendMessage = false
       this.message = ''
 
@@ -242,7 +239,9 @@ export default {
       const lastIndex = this.chatMessages.length - 1
       this.chatMessages[lastIndex].messages.push(newMessage)
 
-      this.onChatUpdate(this.chatThread, {
+      this.onChatUpdate(this.chatThread.roomId)
+
+      this.onMessageSend(this.chatThread, {
         ...this.chatThread,
         lastMessage: [
           {

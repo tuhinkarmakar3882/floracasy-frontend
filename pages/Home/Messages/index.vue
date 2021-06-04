@@ -37,7 +37,8 @@
         <ChatWindow
           :chat-thread="currentThread"
           :on-chat-close="closeChatThread"
-          :on-chat-update="updateChatThread"
+          :on-chat-update="onChatUpdate"
+          :on-message-send="updateChatThread"
           :socket="socket"
           class="chat-window"
         />
@@ -63,11 +64,10 @@ import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
 import { io } from 'socket.io-client'
-import NotificationBadge from '~/components/Layout/NotificationBadge'
 
 export default {
   name: 'Messages',
-  components: { NotificationBadge, ChatWindow, ChatThread },
+  components: { ChatWindow, ChatThread },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
@@ -104,17 +104,7 @@ export default {
       },
     })
 
-    this.socket.on('message', (e) => {
-      const newMessage = {
-        id: e.conversationId,
-        message: e.message,
-        sent: false,
-        createdAt: Date.now(),
-        shouldSendToServer: false,
-      }
-
-      console.log('Outer Layer', e)
-    })
+    this.socket.on('message', this.handleChatThreadUpdate)
     this.socket.on('error', async (e) => {
       await showUITip(this.$store, 'Something went Wrong', 'error')
     })
@@ -142,9 +132,53 @@ export default {
       try {
         const results = await this.$axios.$get(endpoints.message_system.chats)
         this.chatThreads.push(...results)
+        console.log(this.chatThreads[0])
       } catch (e) {
         this.fetchError = true
       }
+    },
+
+    // todo will refactor one day xD
+    handleChatThreadUpdate(e) {
+      for (let i = 0; i < this.chatThreads.length; i++) {
+        const thread = this.chatThreads[i]
+        if (thread.roomId === e.roomID) {
+          const newThread = {
+            ...this.chatThreads[i],
+            lastMessage: [
+              {
+                body: e.message,
+                senderUID: e.senderUID,
+                toNotify: true,
+              },
+            ],
+            updatedAt: Date.now(),
+          }
+          this.chatThreads.splice(i, 1)
+          this.chatThreads.unshift(newThread)
+          console.log(this.chatThreads)
+          return
+        }
+      }
+
+      const newThread = {
+        createdAt: Date.now(),
+        lastMessage: [
+          {
+            body: e.message,
+            senderUID: e.senderUID,
+            toNotify: true,
+          },
+        ],
+        meta: {
+          roomType: 'Solo',
+        },
+        roomId: e.roomID,
+        updatedAt: Date.now(),
+        user: [{ userUID: e.senderUID }],
+      }
+
+      this.chatThreads.unshift(newThread)
     },
 
     openChat(thread, index) {
@@ -177,6 +211,12 @@ export default {
       setTimeout(() => {
         this.$refs.chatThreadStart.scrollIntoView()
       }, 100)
+    },
+
+    onChatUpdate(roomId) {
+      this.currentThread = this.chatThreads.find(
+        (thread) => thread.roomId === roomId
+      )
     },
 
     binarySearch(thread) {
