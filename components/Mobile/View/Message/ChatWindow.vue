@@ -10,8 +10,8 @@
         {{ chatThread.user[0].displayName }}
       </p>
 
-      <i v-ripple class="mdi mdi-phone mdi-24px ml-auto" />
-      <i v-ripple class="mdi mdi-dots-vertical mdi-24px" />
+      <!--      <i v-ripple class="mdi mdi-phone mdi-24px ml-auto" />-->
+      <!--      <i v-ripple class="mdi mdi-dots-vertical mdi-24px" />-->
     </header>
 
     <main>

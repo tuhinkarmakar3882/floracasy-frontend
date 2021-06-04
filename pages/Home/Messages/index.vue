@@ -10,7 +10,7 @@
           @click="$router.back()"
         />
         <p>Messages</p>
-        <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />
+        <!--        <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />-->
       </header>
 
       <FallBackLoader v-if="!chatThreads.length" class="my-6" />
@@ -64,10 +64,11 @@ import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
 import { io } from 'socket.io-client'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'Messages',
-  components: { ChatWindow, ChatThread },
+  components: { FallBackLoader, ChatWindow, ChatThread },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
