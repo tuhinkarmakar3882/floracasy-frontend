@@ -6,7 +6,9 @@
         <img :src="photoURL" alt="" decoding="async" loading="lazy" />
       </section>
 
-      <p v-ripple>{{ chatThread.user[0].displayName }}</p>
+      <p v-ripple @click="openProfileDetails">
+        {{ chatThread.user[0].displayName }}
+      </p>
 
       <i v-ripple class="mdi mdi-phone mdi-24px ml-auto" />
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px" />
@@ -51,10 +53,15 @@
 <script>
 import TypingAnimation from '~/components/Mobile/View/Message/TypingAnimation'
 import endpoints from '~/api/endpoints'
+import ChatSegmentBlock from '~/components/Mobile/View/Message/ChatSegmentBlock'
+import { Socket } from 'socket.io-client'
+import { mapGetters } from 'vuex'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'ChatWindow',
   components: {
+    ChatSegmentBlock,
     TypingAnimation,
   },
   props: {
@@ -69,6 +76,10 @@ export default {
       type: Function,
       required: true,
     },
+    socket: {
+      type: Socket,
+      required: true,
+    },
     onChatClose: {
       type: Function,
       required: true,
@@ -78,13 +89,18 @@ export default {
   data() {
     return {
       message: '',
-      typing: true,
+      typing: false,
       typingTimeout: undefined,
       isSendingMessage: false,
       canSendMessage: false,
-      chatMessages: [],
+      chatMessages: [{ messages: [], date: Date.now() }],
       photoURL: '/images/default.svg',
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   watch: {
@@ -103,6 +119,14 @@ export default {
     setTimeout(() => {
       this.$refs.bottomOfChat.scrollIntoView()
     }, 200)
+
+    this.socket.on('typing', () => {
+      this.typing = true
+
+      setTimeout(() => {
+        this.typing = false
+      }, 2000)
+    })
   },
 
   methods: {
@@ -127,7 +151,8 @@ export default {
     },
 
     async fetchMessages() {
-      const res = await this.$axios.$get(
+      //  Todo - Add the Try Catch
+      await this.$axios.$get(
         endpoints.message_system.getMessages.replace(
           '{roomId}',
           this.chatThread.roomId
@@ -145,7 +170,7 @@ export default {
       const newMessage = {
         id: `chatMessages ${Date.now()}`,
         message: message,
-        sent: Math.random() > 0.5,
+        sent: true,
         createdAt: Date.now(),
         shouldSendToServer: true,
       }
@@ -155,14 +180,23 @@ export default {
 
       this.onChatUpdate(this.chatThread, {
         ...this.chatThread,
-        lastMessage: message,
+        lastMessage: [
+          {
+            body: message,
+            senderUID: this.user.uid,
+          },
+        ],
         updatedAt: Date.now(),
-        metadata: {
-          unread: false,
-          senderUID: 'me',
-        },
       })
 
+      const payload = {
+        roomId: this.chatThread.roomId,
+        message,
+      }
+
+      this.socket?.emit('message', payload)
+
+      console.log(this.chatMessages)
       setTimeout(() => {
         this.$refs.textbox.focus()
         this.$refs.bottomOfChat.scrollIntoView()
@@ -180,6 +214,15 @@ export default {
     async closeChat() {
       this.onChatClose()
       await this.$router.back()
+    },
+
+    async openProfileDetails() {
+      await this.$router.push(
+        navigationRoutes.Home.Account.Overview.replace(
+          '{userUID}',
+          this.chatThread.user[0].userUID
+        )
+      )
     },
   },
 }

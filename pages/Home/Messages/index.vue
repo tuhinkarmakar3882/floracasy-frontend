@@ -38,6 +38,7 @@
           :chat-thread="currentThread"
           :on-chat-close="closeChatThread"
           :on-chat-update="updateChatThread"
+          :socket="socket"
           class="chat-window"
         />
       </main>
@@ -61,6 +62,7 @@ import { useMessageService } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
+import { io } from 'socket.io-client'
 
 export default {
   name: 'Messages',
@@ -74,6 +76,7 @@ export default {
       currentThread: undefined,
       fetchError: false,
       navigationRoutes,
+      socket: undefined,
     }
   },
 
@@ -92,6 +95,13 @@ export default {
 
     await this.navigationStates()
     await this.fetchThreads()
+
+    this.socket = io('http://localhost:5000', {
+      path: '/ws/chat/',
+      extraHeaders: {
+        authorization: await this.$cookies.get('access'),
+      },
+    })
   },
 
   beforeDestroy() {
