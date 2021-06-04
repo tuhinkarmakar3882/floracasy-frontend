@@ -27,7 +27,7 @@
             :class="thread === currentThread && ['active']"
             :thread="thread"
           />
-          <InFeedAd class="my-4" use-small-ads />
+          <!--          <InFeedAd class="my-4" use-small-ads />-->
         </section>
       </transition-group>
     </aside>
@@ -57,16 +57,17 @@
 
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
-import { getRelativeTime } from '@/utils/utility'
+import { getRelativeTime, showUITip } from '@/utils/utility'
 import { useMessageService } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
 import { io } from 'socket.io-client'
+import NotificationBadge from '~/components/Layout/NotificationBadge'
 
 export default {
   name: 'Messages',
-  components: { ChatWindow, ChatThread },
+  components: { NotificationBadge, ChatWindow, ChatThread },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
@@ -99,8 +100,23 @@ export default {
     this.socket = io('http://localhost:5000', {
       path: '/ws/chat/',
       extraHeaders: {
-        authorization: await this.$cookies.get('access'),
+        authorization: `Bearer ${await this.$cookies.get('access')}`,
       },
+    })
+
+    this.socket.on('message', (e) => {
+      const newMessage = {
+        id: e.conversationId,
+        message: e.message,
+        sent: false,
+        createdAt: Date.now(),
+        shouldSendToServer: false,
+      }
+
+      console.log('Outer Layer', e)
+    })
+    this.socket.on('error', async (e) => {
+      await showUITip(this.$store, 'Something went Wrong', 'error')
     })
   },
 
@@ -133,12 +149,13 @@ export default {
 
     openChat(thread, index) {
       if (this.currentThread === thread) return
-      this.chatThreads[index] = {
-        ...this.chatThreads[index],
-        metadata: { unread: false },
-      }
+      this.chatThreads[index].lastMessage[0].toNotify = false
       this.currentThread = this.chatThreads[index]
       this.$router.push(`#${this.currentThread.roomId}`)
+
+      this.socket.emit('message_read', {
+        roomID: this.currentThread.roomId,
+      })
     },
 
     closeChatThread() {
@@ -263,7 +280,7 @@ $image-size: 40px;
     background: linear-gradient(0deg, #050513 50%, #00283f 100%);
 
     @media screen and (max-width: $medium-screen) {
-      z-index: 99999999999;
+      z-index: $bring-to-front;
       position: fixed;
       top: 0;
       left: 0;

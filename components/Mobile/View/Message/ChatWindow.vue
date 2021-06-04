@@ -35,7 +35,6 @@
         class="input-field"
         placeholder="Type Your Message Here!"
         @keyup="sendTypingEvent"
-        @keyup.enter="sendMessage"
       />
       <i
         v-ripple
@@ -57,6 +56,7 @@ import ChatSegmentBlock from '~/components/Mobile/View/Message/ChatSegmentBlock'
 import { Socket } from 'socket.io-client'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
+import { showUITip } from '~/utils/utility'
 
 export default {
   name: 'ChatWindow',
@@ -108,7 +108,7 @@ export default {
       this.canSendMessage = msg.trim().length > 0
     },
     chatThread(oldThread, newThread) {
-      oldThread.id !== newThread.id && this.resetChatWindow()
+      oldThread.roomId !== newThread.roomId && this.resetChatWindow()
     },
   },
 
@@ -120,22 +120,61 @@ export default {
       this.$refs.bottomOfChat.scrollIntoView()
     }, 200)
 
-    this.socket.on('typing', () => {
-      this.typing = true
+    this.socket.on('typing', this.handleTypingEvent)
+    this.socket.on('message', this.handleOnMessage)
+  },
 
-      setTimeout(() => {
-        this.typing = false
-      }, 2000)
-    })
+  beforeDestroy() {
+    this.socket.off('message', this.handleOnMessage)
+    this.socket.off('message', this.handleTypingEvent)
   },
 
   methods: {
+    handleTypingEvent(e) {
+      if (e.roomID === this.chatThread.roomId) {
+        this.typing = true
+
+        setTimeout(() => {
+          this.typing = false
+        }, 2000)
+      }
+    },
+    async handleOnMessage(e) {
+      const newMessage = {
+        id: e.conversationId,
+        message: e.message,
+        sent: false,
+        createdAt: Date.now(),
+        shouldSendToServer: false,
+      }
+
+      if (e.roomID === this.chatThread.roomId) {
+        const lastIndex = this.chatMessages.length - 1
+        this.chatMessages[lastIndex].messages.push(newMessage)
+        this.onChatUpdate(this.chatThread, {
+          ...this.chatThread,
+          lastMessage: [
+            {
+              body: e.message,
+              senderUID: e.senderUID,
+            },
+          ],
+          updatedAt: Date.now(),
+        })
+        this.socket.emit('message_read', { roomID: this.chatThread.roomId })
+        return
+      }
+
+      await showUITip(this.$store, 'New Message Received', 'message')
+    },
+
     async resetChatWindow() {
       this.typing = false
       this.message = ''
-      this.chatMessages = []
-      this.fetchProfileImage()
+      this.photoURL = '/images/default.svg'
+      this.chatMessages = [{ messages: [], date: Date.now() }]
       await this.fetchMessages()
+      this.fetchProfileImage()
     },
 
     async fetchProfileImage() {
@@ -152,12 +191,37 @@ export default {
 
     async fetchMessages() {
       //  Todo - Add the Try Catch
-      await this.$axios.$get(
+      const response = await this.$axios.$get(
         endpoints.message_system.getMessages.replace(
           '{roomId}',
           this.chatThread.roomId
         )
       )
+      this.groupByDate(response)
+    },
+
+    groupByDate(messages) {
+      let currentGroup = this.chatMessages[0]
+      let currentGroupDate = new Date(currentGroup.date).toDateString()
+
+      for (let i = messages.length - 1; i >= 0; i--) {
+        const message = messages[i]
+        const dateString = new Date(message.createdAt).toDateString()
+
+        if (currentGroupDate !== dateString) {
+          this.chatMessages.unshift({
+            messages: [],
+            date: message.createdAt,
+          })
+
+          this.chatMessages[1] = currentGroup
+
+          currentGroup = this.chatMessages[0]
+          currentGroupDate = new Date(currentGroup.date).toDateString()
+        }
+
+        currentGroup.messages.unshift(message)
+      }
     },
 
     async sendMessage() {
@@ -196,7 +260,6 @@ export default {
 
       this.socket?.emit('message', payload)
 
-      console.log(this.chatMessages)
       setTimeout(() => {
         this.$refs.textbox.focus()
         this.$refs.bottomOfChat.scrollIntoView()
@@ -204,11 +267,9 @@ export default {
     },
 
     sendTypingEvent() {
-      this.typing = true
-      clearTimeout(this.typingTimeout)
-      this.typingTimeout = setTimeout(() => {
-        this.typing = false
-      }, 10000)
+      this.socket.emit('typing', {
+        roomID: this.chatThread.roomId,
+      })
     },
 
     async closeChat() {
