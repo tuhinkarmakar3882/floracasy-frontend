@@ -4,7 +4,11 @@
       <p ref="chatThreadStart" />
 
       <header>
-        <i v-ripple class="mdi mdi-arrow-left mdi-24px" />
+        <i
+          v-ripple
+          class="mdi mdi-arrow-left mdi-24px"
+          @click="$router.back()"
+        />
         <p>Messages</p>
         <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />
       </header>
@@ -14,7 +18,7 @@
       <transition-group name="scale-up">
         <section
           v-for="(thread, index) in chatThreads"
-          :key="`thread${index}`"
+          :key="thread.roomId"
           class="chat-thread"
           @click="openChat(thread, index)"
         >
@@ -53,11 +57,15 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime } from '@/utils/utility'
-// import { useMessageService } from '~/environmentVariables'
+import { useMessageService } from '~/environmentVariables'
+import endpoints from '~/api/endpoints'
+import ChatThread from '~/components/Mobile/View/Message/ChatThread'
+import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
 
 export default {
   name: 'Messages',
-  // middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+  components: { ChatWindow, ChatThread },
+  middleware: useMessageService ? 'isAuthenticated' : 'hidden',
 
   data() {
     return {
@@ -69,19 +77,25 @@ export default {
     }
   },
 
-  async mounted() {
+  beforeMount() {
     this.$router.beforeEach((to, _, next) => {
       if (to.hash === '') {
         this.currentThread = undefined
       }
       next()
     })
+  },
+
+  async mounted() {
+    const roomId = this.$route?.params?.roomId
+    roomId && (await this.$router.push(`#${roomId}`))
+
     await this.navigationStates()
     await this.fetchThreads()
   },
 
   beforeDestroy() {
-    this.$router.beforeEach((__, _, next) => {
+    this.$router.beforeEach((_, __, next) => {
       next()
     })
   },
@@ -98,32 +112,13 @@ export default {
     },
 
     async fetchThreads() {
-      for (let i = 100; i < 200; i++) {
-        this.chatThreads.push({
-          id: i,
-          userUID: i,
-          user: {
-            displayName: 'Test User ' + i,
-            photoURL: 'https://picsum.photos/' + i,
-          },
-          metadata: {
-            unread: true,
-            senderUID: 'you',
-          },
-          updatedAt: Date.now() - 8640000 * i,
-          lastMessage: 'Stay Indoors',
-        })
+      this.fetchError = false
+      try {
+        const results = await this.$axios.$get(endpoints.message_system.chats)
+        this.chatThreads.push(...results)
+      } catch (e) {
+        this.fetchError = true
       }
-      //  this.fetchError = false
-      //   try {
-      //     const { results } = await this.$axios.$get(
-      //       endpoints.message_system.chats
-      //     )
-      //     console.log(results)
-      //     this.chatThreads.push(...results)
-      //   } catch (e) {
-      //     this.fetchError = true
-      //   }
     },
 
     openChat(thread, index) {
@@ -133,7 +128,7 @@ export default {
         metadata: { unread: false },
       }
       this.currentThread = this.chatThreads[index]
-      this.$router.push(`#${this.currentThread.id}`)
+      this.$router.push(`#${this.currentThread.roomId}`)
     },
 
     closeChatThread() {
