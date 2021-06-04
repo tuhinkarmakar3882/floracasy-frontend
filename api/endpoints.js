@@ -74,6 +74,7 @@ const endpoints = {
   },
   message_system: {
     chats: '/allow_authenticated/message_system/chats/',
+    getMessages: '/allow_authenticated/message_system/chats/{roomId}/',
     conversation: '/allow_authenticated/message_system/conversation/',
   },
   feedback_collection: {
