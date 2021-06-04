@@ -3,15 +3,10 @@
     <header>
       <section v-ripple @click="closeChat">
         <i class="mdi mdi-arrow-left mdi-24px" />
-        <img
-          :src="chatThread.user.photoURL"
-          alt=""
-          decoding="async"
-          loading="lazy"
-        />
+        <img :src="photoURL" alt="" decoding="async" loading="lazy" />
       </section>
 
-      <p v-ripple>{{ chatThread.user.displayName }}</p>
+      <p v-ripple>{{ chatThread.user[0].displayName }}</p>
 
       <i v-ripple class="mdi mdi-phone mdi-24px ml-auto" />
       <i v-ripple class="mdi mdi-dots-vertical mdi-24px" />
@@ -55,6 +50,7 @@
 
 <script>
 import TypingAnimation from '~/components/Mobile/View/Message/TypingAnimation'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'ChatWindow',
@@ -87,6 +83,7 @@ export default {
       isSendingMessage: false,
       canSendMessage: false,
       chatMessages: [],
+      photoURL: '/images/default.svg',
     }
   },
 
@@ -99,8 +96,9 @@ export default {
     },
   },
 
-  mounted() {
-    this.fetchMessages()
+  async mounted() {
+    this.fetchProfileImage()
+    await this.fetchMessages()
 
     setTimeout(() => {
       this.$refs.bottomOfChat.scrollIntoView()
@@ -108,32 +106,33 @@ export default {
   },
 
   methods: {
-    resetChatWindow() {
+    async resetChatWindow() {
       this.typing = false
       this.message = ''
       this.chatMessages = []
-      this.fetchMessages()
+      this.fetchProfileImage()
+      await this.fetchMessages()
     },
 
-    fetchMessages() {
-      for (let i = 4; i > -1; i--) {
-        const timestamp = Date.now() - i * 86400 * 1000
-
-        const temp = []
-        for (let j = 0; j < 4; j++) {
-          temp.push({
-            id: `${i} - ${j}`,
-            message: `Day ${i} | Message ${1}`,
-            sent: Math.random() > 0.5,
-            createdAt: 1620401158506,
-          })
+    async fetchProfileImage() {
+      const { photoURL } = await this.$axios.$get(
+        endpoints.profile_statistics.getProfileImage,
+        {
+          params: {
+            uid: this.chatThread.user[0]?.userUID,
+          },
         }
+      )
+      this.photoURL = photoURL
+    },
 
-        this.chatMessages.push({
-          date: timestamp,
-          messages: temp,
-        })
-      }
+    async fetchMessages() {
+      const res = await this.$axios.$get(
+        endpoints.message_system.getMessages.replace(
+          '{roomId}',
+          this.chatThread.roomId
+        )
+      )
     },
 
     async sendMessage() {
@@ -305,6 +304,7 @@ export default {
         border-radius: 50%;
         height: $x-large-unit;
         width: $x-large-unit;
+        object-fit: cover;
       }
     }
   }
