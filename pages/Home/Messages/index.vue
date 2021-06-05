@@ -27,48 +27,42 @@
         <!--        <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />-->
       </header>
 
-      <transition-group name="scale-up">
-        <section
-          v-for="(thread, index) in chatThreads"
-          :key="thread.roomId"
-          class="chat-thread"
-          @click="openChat(thread, index)"
-        >
-          <ChatThread
-            v-ripple
-            :class="thread === currentThread && ['active']"
-            :thread="thread"
-          />
-          <!--          <InFeedAd class="my-4" use-small-ads />-->
-        </section>
-      </transition-group>
+      <section
+        v-if="loadingChatThreads"
+        key="loading-chat-threads"
+        class="sample-response px-4 py-2"
+      >
+        <ImageSkeleton height="64px" radius="50%" width="64px" />
+        <aside>
+          <LineSkeleton width="45%" />
+          <LineSkeleton class="my-2" width="90%" />
+          <LineSkeleton class="my-2" width="70%" />
+        </aside>
+      </section>
 
-      <!--      <client-only>-->
-      <!--        <infinite-loading @infinite="infiniteHandler">-->
-      <!--          <template slot="spinner">-->
-      <!--            <section class="my-8 pb-2 px-4">-->
-      <!--              <LineSkeleton class="my-4" height="1.2rem" />-->
-      <!--              <LineSkeleton class="mb-6" height="2.5rem" />-->
-      <!--              <LineSkeleton class="my-4" height="150px" />-->
-      <!--              <LineSkeleton class="my-4" width="80%" />-->
-      <!--              <LineSkeleton class="my-4" width="50%" />-->
-      <!--              <LineSkeleton class="my-4" width="30%" />-->
-      <!--            </section>-->
-      <!--          </template>-->
+      <LoadingError
+        error-section="Chat Threads"
+        v-else-if="fetchError"
+        class="px-4 py-4"
+      />
 
-      <!--          <template slot="error">-->
-      <!--            <p class="danger-light my-6">Network Error</p>-->
-      <!--          </template>-->
-
-      <!--          <template slot="no-more">-->
-      <!--            <p class="secondary-matte text-center mt-4 mb-8">-->
-      <!--              <i class="mdi mdi-party-popper mdi-18px" />-->
-      <!--              <br />-->
-      <!--              <small> Come back soon for more </small>-->
-      <!--            </p>-->
-      <!--          </template>-->
-      <!--        </infinite-loading>-->
-      <!--      </client-only>-->
+      <div v-else>
+        <transition-group name="scale-up">
+          <section
+            v-for="(thread, index) in chatThreads"
+            :key="thread.roomId"
+            class="chat-thread"
+            @click="openChat(thread, index)"
+          >
+            <ChatThread
+              v-ripple
+              :class="thread === currentThread && ['active']"
+              :thread="thread"
+            />
+            <!--          <InFeedAd class="my-4" use-small-ads />-->
+          </section>
+        </transition-group>
+      </div>
     </aside>
 
     <transition name="scale-up">
@@ -102,8 +96,8 @@
       <section v-if="unreadThreads > 0" class="info-bar vibrant">
         <i class="mdi mdi-information mdi-24px" />
         <span
-          >You have received messages from
-          <strong>{{ unreadThreads }}</strong> people</span
+          >You have received {{ unreadMessages }} messages from
+          <strong>{{ unreadThreads }}</strong> peoples</span
         >
       </section>
 
@@ -160,7 +154,6 @@ import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
 import { io } from 'socket.io-client'
-import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import CurrentProgress from '~/components/Mobile/View/Referral/CurrentProgress'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import KeyPoint from '~/components/Common/Tools/KeyPoint'
@@ -177,7 +170,6 @@ export default {
     KeyPoint,
     AppBarHeader,
     CurrentProgress,
-    FallBackLoader,
     ChatWindow,
     ChatThread,
   },
@@ -198,8 +190,10 @@ export default {
       navigationRoutes,
       socket: undefined,
       loading: true,
+      loadingChatThreads: true,
       hasMessagingAccess: undefined,
       unreadThreads: 0,
+      unreadMessages: 0,
     }
   },
 
@@ -214,9 +208,11 @@ export default {
 
   async mounted() {
     this.hasMessagingAccess = await this.checkForMessagingAccess()
+    this.loading = false
 
     if (!this.hasMessagingAccess) {
-      this.unreadThreads = await this.checkNumberOfThreads()
+      this.unreadThreads = await this.fetchNumberOfThreads()
+      this.unreadMessages = await this.fetchNumberOfUnreadMessages()
       return
     }
 
@@ -246,12 +242,18 @@ export default {
   },
 
   methods: {
-    async checkNumberOfThreads() {
+    async fetchNumberOfThreads() {
       const { numberOfChatThreads } = await this.$axios
         .$get(endpoints.message_system.getNumberOfThreads)
         .catch(() => ({ numberOfChatThreads: 0 }))
       return numberOfChatThreads
-      // console.log(numberOfChatThreads)
+    },
+
+    async fetchNumberOfUnreadMessages() {
+      const { numberOfUnreadMessages } = await this.$axios
+        .$get(endpoints.message_system.getNumberOfUnreadMessages)
+        .catch(() => ({ numberOfUnreadMessages: 0 }))
+      return numberOfUnreadMessages
     },
 
     getRelativeTime,
@@ -265,9 +267,7 @@ export default {
     },
 
     async checkForMessagingAccess() {
-      const { results } = await this.$axios.$get(endpoints.rewards.claimed)
-      this.loading = false
-
+      const results = await this.$axios.$get(endpoints.rewards.claimed)
       if (!results.length) return false
       return !!results.find((item) => item.reward?.name === 'messaging')
     },
@@ -277,9 +277,10 @@ export default {
       try {
         const results = await this.$axios.$get(endpoints.message_system.chats)
         this.chatThreads.push(...results)
-        console.log(this.chatThreads[0])
       } catch (e) {
         this.fetchError = true
+      } finally {
+        this.loadingChatThreads = false
       }
     },
 
@@ -301,7 +302,6 @@ export default {
           }
           this.chatThreads.splice(i, 1)
           this.chatThreads.unshift(newThread)
-          console.log(this.chatThreads)
           return
         }
       }
@@ -517,8 +517,6 @@ $image-size: 40px;
     display: grid;
     grid-template-columns: 2 * $xxx-large-unit 1fr;
     grid-gap: $standard-unit;
-    align-items: center;
-    justify-content: stretch;
   }
 }
 
@@ -599,6 +597,7 @@ $image-size: 40px;
       stroke-width: 1px;
       height: 16vh;
       width: 16vw;
+
       path {
         stroke-dasharray: $offset;
         stroke-dashoffset: $offset;
@@ -608,6 +607,7 @@ $image-size: 40px;
           fill-in 1s ease-in-out forwards 2s,
           ripple-effect 2s ease-in-out infinite alternate-reverse 3s;
       }
+
       @keyframes draw {
         to {
           stroke-dashoffset: 0;

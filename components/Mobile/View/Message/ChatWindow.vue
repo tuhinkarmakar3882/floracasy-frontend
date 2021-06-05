@@ -127,6 +127,8 @@ export default {
 
     this.socket.on('typing', this.handleTypingEvent)
     this.socket.on('message', this.handleOnMessage)
+
+    this.socket.emit('message_read', { roomID: this.chatThread.roomId })
   },
 
   beforeDestroy() {
@@ -172,6 +174,8 @@ export default {
       this.chatMessages = [{ messages: [], date: Date.now() }]
       await this.fetchMessages()
       this.fetchProfileImage()
+
+      this.socket.emit('message_read', { roomID: this.chatThread?.roomId })
     },
 
     async fetchProfileImage() {
