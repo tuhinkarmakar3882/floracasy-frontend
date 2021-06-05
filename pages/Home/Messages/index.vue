@@ -120,7 +120,7 @@
         <i class="mdi mdi-information mdi-24px" />
         <span class="text-center">
           You have received messages from
-          <strong>{{ unreadThreads }}</strong> peoples.
+          <strong>{{ unreadThreads }}</strong> people.
         </span>
       </section>
 
@@ -272,6 +272,7 @@ export default {
       extraHeaders: {
         authorization: `Bearer ${await this.$cookies.get('access')}`,
       },
+      transports: ['websocket'],
     })
 
     this.socket.on('message', this.handleChatThreadUpdate)
