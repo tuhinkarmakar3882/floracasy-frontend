@@ -118,10 +118,11 @@
     <main>
       <section v-if="unreadThreads > 0" class="info-bar vibrant">
         <i class="mdi mdi-information mdi-24px" />
-        <span
-          >You have received {{ unreadMessages }} messages from
-          <strong>{{ unreadThreads }}</strong> peoples</span
-        >
+        <span>
+          You have received messages from
+          <strong>{{ unreadThreads }}</strong> peoples. <br />
+          Unlock Now!
+        </span>
       </section>
 
       <header class="px-4 pb-2">
@@ -165,7 +166,20 @@
       </header>
 
       <CurrentProgress class="my-8" hide-headline />
+
+      <section class="px-4 pt-4 pb-8 text-center">
+        <h3 class="my-4">Earn more Floracoins!</h3>
+        <p class="mb-8">
+          You can always earn more coins by sharing your referral code & getting
+          people signed up!
+        </p>
+        <button class="secondary-outlined-btn" @click="openReferPage" v-ripple>
+          Continue Referring!
+        </button>
+      </section>
     </main>
+
+    <InstallBadge class="install-badge" show-close-button />
   </div>
 </template>
 
@@ -184,10 +198,12 @@ import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import LoadingError from '~/components/Common/Tools/LoadingError'
 import { mapGetters } from 'vuex'
+import InstallBadge from '~/components/Common/Tools/InstallBadge'
 
 export default {
   name: 'Messages',
   components: {
+    InstallBadge,
     LoadingError,
     LineSkeleton,
     ImageSkeleton,
@@ -278,6 +294,12 @@ export default {
           '{userUID}',
           this.user.uid
         )
+      )
+    },
+
+    async openReferPage() {
+      await this.$router.push(
+        navigationRoutes.Home.MoreOptions.ReferAndEarn.index
       )
     },
     async fetchNumberOfThreads() {
@@ -638,6 +660,13 @@ $image-size: 40px;
         }
       }
     }
+  }
+
+  .install-badge {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
   }
 }
 
