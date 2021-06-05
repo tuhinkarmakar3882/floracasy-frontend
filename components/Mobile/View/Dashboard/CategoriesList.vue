@@ -140,13 +140,12 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { mapGetters } from 'vuex'
-import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 
 export default {
   name: 'CategoriesList',
-  components: { ImageSkeleton, LineSkeleton, FallBackLoader },
+  components: { ImageSkeleton, LineSkeleton },
   data() {
     return {
       navigationRoutes,

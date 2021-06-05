@@ -47,7 +47,6 @@ import endpoints from '@/api/endpoints'
 import { processLink } from '~/utils/utility'
 import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 import BlogPost from '~/components/Blogs/BlogPost'
-import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import '~/assets/override/virtual-scroller.scss'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
@@ -55,7 +54,6 @@ export default {
   name: 'InfiniteScrollingBlogLists',
   components: {
     LineSkeleton,
-    FallBackLoader,
     BlogPost,
     InFeedAd,
   },

@@ -15,7 +15,10 @@
     </header>
 
     <main>
+      <FallBackLoader v-if="loadingMoreMessage" />
       <transition-group name="scale-up">
+        <div class="py-4" ref="loadMoreSection" key="fetchMessages" />
+
         <section
           v-for="(segment, index) in chatMessages"
           :key="`day - ${index}`"
@@ -58,10 +61,14 @@ import { Socket } from 'socket.io-client'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { showUITip } from '~/utils/utility'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'ChatWindow',
   components: {
+    FallBackLoader,
+    LineSkeleton,
     ChatSegmentBlock,
     TypingAnimation,
   },
@@ -98,6 +105,9 @@ export default {
       typingTimeout: undefined,
       isSendingMessage: false,
       canSendMessage: false,
+      messageCount: 0,
+      noMore: false,
+      loadingMoreMessage: false,
       chatMessages: [{ messages: [], date: Date.now() }],
       photoURL: '/images/default.svg',
     }
@@ -129,6 +139,8 @@ export default {
     this.socket.on('message', this.handleOnMessage)
 
     this.socket.emit('message_read', { roomID: this.chatThread.roomId })
+
+    this.startIObserver()
   },
 
   beforeDestroy() {
@@ -147,6 +159,7 @@ export default {
         }, 3000)
       }
     },
+
     async handleOnMessage(e) {
       const newMessage = {
         id: e.conversationId,
@@ -161,6 +174,7 @@ export default {
         this.chatMessages[lastIndex].messages.push(newMessage)
         this.onChatUpdate(e.roomID)
         this.socket.emit('message_read', { roomID: this.chatThread.roomId })
+        this.messageCount++
         return
       }
 
@@ -169,7 +183,9 @@ export default {
 
     async resetChatWindow() {
       this.typing = false
+      this.noMore = false
       this.message = ''
+      this.messageCount = 0
       this.photoURL = '/images/default.svg'
       this.chatMessages = [{ messages: [], date: Date.now() }]
       await this.fetchMessages()
@@ -191,14 +207,26 @@ export default {
     },
 
     async fetchMessages() {
+      if (this.noMore) return
+      this.loadingMoreMessage = true
       //  Todo - Add the Try Catch
-      const response = await this.$axios.$get(
-        endpoints.message_system.getMessages.replace(
-          '{roomId}',
-          this.chatThread.roomId
+      try {
+        const response = await this.$axios.$get(
+          endpoints.message_system.getMessages.replace(
+            '{roomId}',
+            this.chatThread.roomId
+          ),
+          {
+            params: { conversationAfter: this.messageCount },
+          }
         )
-      )
-      this.groupByDate(response)
+        this.noMore = !response.length
+        this.messageCount += response.length
+        this.groupByDate(response)
+        this.loadingMoreMessage = false
+      } catch (e) {
+        console.log(e)
+      }
     },
 
     groupByDate(messages) {
@@ -262,6 +290,7 @@ export default {
       }
 
       this.socket?.emit('message', payload)
+      this.messageCount++
 
       setTimeout(() => {
         this.$refs.textbox.focus()
@@ -287,6 +316,24 @@ export default {
           this.chatThread.user[0].userUID
         )
       )
+    },
+
+    startIObserver() {
+      this.observer = new IntersectionObserver(this.handleIntersection, {
+        rootMargin: '500px',
+      })
+      const target = this.$refs.loadMoreSection
+      this.observer.observe(target)
+    },
+
+    handleIntersection(entries) {
+      entries.map((entry) => {
+        this.observer.observe(entry.target)
+        if (entry.isIntersecting) {
+          this.fetchMessages()
+        }
+        return entry
+      })
     },
   },
 }
