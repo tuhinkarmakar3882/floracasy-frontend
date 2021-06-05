@@ -106,7 +106,7 @@
               class-list="primary-outlined-btn"
               style="width: 120px"
             >
-              Messages
+              Message
             </RippleButton>
           </section>
         </aside>
@@ -217,24 +217,24 @@ export default {
 
     async initializeChatThread(receiverData) {
       this.messageLoading = true
+
       try {
-        const { chat_thread_id: chatThreadId } = await this.$axios.$post(
-          endpoints.chat_system.initializeChatThread,
-          { uid: receiverData.uid }
+        const { roomID } = await this.$axios.$post(
+          endpoints.message_system.chats,
+          { receiverUID: [receiverData.uid] }
         )
 
         await this.$router.push({
-          path: navigationRoutes.Home.Messages.ChatScreen.replace(
-            /{messageThreadId}/,
-            chatThreadId
-          ),
+          name: 'Home-Messages',
+          params: { roomId: roomID },
         })
       } catch (e) {
         await this.$store.dispatch('SocketHandler/updateSocketMessage', {
           message: 'Unable to start Chatting! Try Again',
-          notificationType: 'alert',
+          notificationType: 'error',
           dismissible: true,
         })
+      } finally {
         this.messageLoading = false
       }
     },

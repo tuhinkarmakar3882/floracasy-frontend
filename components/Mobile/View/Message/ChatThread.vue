@@ -1,25 +1,20 @@
 <template>
   <div class="chat-thread-component">
-    <img
-      loading="lazy"
-      decoding="async"
-      alt="Profile Image"
-      :src="thread.user.photoURL"
-    />
+    <img :src="photoURL" alt="Profile Image" decoding="async" loading="lazy" />
     <section>
       <main>
-        <h6 class="my-0">{{ thread.user.displayName }}</h6>
+        <h6 class="my-0">{{ username }}</h6>
         <small>{{ getRelativeTime(thread.updatedAt) }}</small>
       </main>
 
       <aside>
         <p>
-          <i class="mdi mdi-reply" v-if="showReplySymbol" />
-          {{ thread.lastMessage }}
+          <i v-if="showReplySymbol" class="mdi mdi-reply" />
+          {{ thread.lastMessage[0].body || 'Start Chatting' }}
         </p>
 
         <transition name="slide-right">
-          <span class="dot" v-if="hasUnread" />
+          <span v-if="hasUnread" class="dot" />
         </transition>
       </aside>
     </section>
@@ -28,6 +23,8 @@
 
 <script>
 import { getRelativeTime } from '~/utils/utility'
+import { mapGetters } from 'vuex'
+import endpoints from '~/api/endpoints'
 
 export default {
   name: 'ChatThread',
@@ -37,16 +34,58 @@ export default {
       required: true,
     },
   },
+
+  data() {
+    return {
+      photoURL: '/images/default.svg',
+      username: this.thread?.user[0]?.displayName,
+    }
+  },
   computed: {
     showReplySymbol() {
-      return this.thread?.meta?.senderUID === 'me'
+      return this.thread?.lastMessage[0]?.senderUID === this.user.uid
     },
+
     hasUnread() {
-      return this.thread?.room?.meta?.unread
+      return this.thread?.lastMessage[0]?.toNotify
     },
+
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
+
+  mounted() {
+    this.fetchProfileImage()
+
+    if (!this.username) this.fetchProfileData()
+  },
+
   methods: {
     getRelativeTime,
+    async fetchProfileImage() {
+      const { photoURL } = await this.$axios.$get(
+        endpoints.profile_statistics.getProfileImage,
+        {
+          params: {
+            uid: this.thread.user[0]?.userUID,
+          },
+        }
+      )
+      this.photoURL = photoURL
+    },
+
+    async fetchProfileData() {
+      const { details } = await this.$axios.$get(
+        endpoints.profile_statistics.profileData,
+        {
+          params: {
+            uid: this.thread?.lastMessage[0]?.senderUID,
+          },
+        }
+      )
+      this.username = details.username
+    },
   },
 }
 </script>

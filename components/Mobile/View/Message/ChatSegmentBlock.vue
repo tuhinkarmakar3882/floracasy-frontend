@@ -8,7 +8,7 @@
         v-for="(message, index) in segment.messages"
         :key="`message - ${index}`"
         :chat-message="message"
-        :sent-message="message.sent"
+        :sent-message="message.sent || message.senderUID === user.uid"
         class="my-4"
         :should-send-to-server="message.shouldSendToServer"
       />
@@ -18,14 +18,22 @@
 
 <script>
 import { getFormattedDate } from '~/utils/utility'
+import MessageItem from '~/components/Mobile/View/Message/MessageItem'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ChatSegmentBlock',
+  components: { MessageItem },
   props: {
     segment: {
       type: Object,
       required: true,
     },
+  },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
   methods: {
     getFormattedDate,

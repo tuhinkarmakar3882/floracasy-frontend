@@ -74,10 +74,16 @@ const endpoints = {
         '/allow_authenticated/community_service/posts/fetch/by_user_uid/',
     },
   },
+
   message_system: {
     chats: '/allow_authenticated/message_system/chats/',
+    getNumberOfThreads: '/allow_authenticated/message_system/chats/threads/',
+    getNumberOfUnreadMessages:
+      '/allow_authenticated/message_system/chats/threads/conversation/',
+    getMessages: '/allow_authenticated/message_system/chats/{roomId}/',
     conversation: '/allow_authenticated/message_system/conversation/',
   },
+
   feedback_collection: {
     create: '/allow_authenticated/feedback_collection/create/',
   },
@@ -135,6 +141,8 @@ const endpoints = {
 
     list: '/allow_authenticated/rewards/',
     claimed: '/allow_authenticated/rewards/claimed/',
+
+    unlock: '/allow_authenticated/rewards/unlock/',
 
     referral: {
       list: '/allow_authenticated/rewards/referrals/',

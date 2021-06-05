@@ -58,7 +58,7 @@ export default {
   },
 
   mounted() {
-    this.sentMessage && this.shouldSendToServer && this.sendToServer()
+    // this.sentMessage && this.shouldSendToServer && this.sendToServer()
   },
 
   methods: {

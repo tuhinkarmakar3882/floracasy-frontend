@@ -82,6 +82,9 @@ export default {
           return 'mdi-account-plus'
         case 'unfollow':
           return 'mdi-account-minus'
+
+        case 'message':
+          return 'mdi-email'
         default:
           return 'mdi-bell'
       }
@@ -112,6 +115,8 @@ export default {
           return '#dadf2c'
         case 'unfollow':
           return '#ff7979'
+        case 'message':
+          return '#dadf2c'
         default:
           return '#8FF2E0'
       }
@@ -132,7 +137,7 @@ export default {
   height: 2 * $x-large-unit;
   width: 100%;
   right: 0;
-  z-index: 9999999;
+  z-index: $bring-to-front + 9999999;
   top: 0;
   display: flex;
   justify-content: center;

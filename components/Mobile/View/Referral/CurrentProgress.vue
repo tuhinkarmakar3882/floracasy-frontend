@@ -10,15 +10,18 @@
     </aside>
 
     <section v-else>
-      <h5 class="px-4">Unlock Extra Features</h5>
-      <hr class="faded-divider" />
+      <h5 class="px-4" v-if="!hideHeadline">
+        <slot name="caption"> Unlock Extra Features </slot>
+      </h5>
+      <hr class="faded-divider" v-if="!hideHeadline" />
       <LineProgress :max-value="maxValue" :value="balance" class="px-4" />
       <button
         v-if="balance >= maxValue"
         class="secondary-outlined-btn"
         v-ripple
+        @click="claimMessaging"
       >
-        Go to Marketplace
+        Unlock Messaging
       </button>
     </section>
   </div>
@@ -29,10 +32,18 @@ import LineProgress from '~/components/Common/Tools/LineProgress'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import endpoints from '~/api/endpoints'
 import { showUITip } from '~/utils/utility'
+import { navigationRoutes } from '~/navigation/navigationRoutes'
 
 export default {
   name: 'CurrentProgress',
   components: { LineSkeleton, LineProgress },
+  props: {
+    hideHeadline: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       maxValue: 300,
@@ -53,6 +64,28 @@ export default {
         this.loading = false
       } catch (e) {
         await showUITip(this.$store, 'Failed to get coin balance', 'error')
+      }
+    },
+
+    async claimMessaging() {
+      try {
+        await this.$axios.$post(endpoints.rewards.unlock, {
+          rewardName: 'messaging',
+        })
+        await showUITip(this.$store, 'Reward Unlocked!', 'success')
+
+        if (this.$route.path === navigationRoutes.Home.Messages.index) {
+          window.location.reload()
+          return
+        }
+
+        await this.$router.push(navigationRoutes.Home.Messages.index)
+      } catch (e) {
+        await showUITip(
+          this.$store,
+          'Something went wrong while claiming',
+          'error'
+        )
       }
     },
   },
