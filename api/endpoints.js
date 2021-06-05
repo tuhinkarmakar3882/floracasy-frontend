@@ -137,6 +137,8 @@ const endpoints = {
     list: '/allow_authenticated/rewards/',
     claimed: '/allow_authenticated/rewards/claimed/',
 
+    unlock: '/allow_authenticated/rewards/unlock/',
+
     referral: {
       list: '/allow_authenticated/rewards/referrals/',
       code: '/allow_authenticated/rewards/referrals/code/',

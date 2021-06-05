@@ -1,5 +1,11 @@
 <template>
-  <div class="message-page">
+  <div v-if="loading" class="message-page-loading">
+    <FallBackLoader class="my-8 py-8 px-8">
+      <template #fallback><h1>Loading</h1></template>
+    </FallBackLoader>
+  </div>
+
+  <div v-else-if="hasMessagingAccess" class="message-page">
     <aside>
       <p ref="chatThreadStart" />
 
@@ -54,6 +60,22 @@
       <InFeedAd class="my-4" use-small-ads />
     </main>
   </div>
+
+  <div v-else class="message-page-fallback">
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
+      <template #title>{{ pageTitle }}</template>
+    </AppBarHeader>
+    <main>
+      <header class="px-4">
+        <h6>Experience the Safest way to communicate</h6>
+
+        <img alt="" src="/images/message_illustration.svg" />
+      </header>
+      <CurrentProgress class="mt-6 mb-2">
+        <template #caption> To Unlock Messaging</template>
+      </CurrentProgress>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -65,20 +87,36 @@ import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
 import { io } from 'socket.io-client'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import CurrentProgress from '~/components/Mobile/View/Referral/CurrentProgress'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
 
 export default {
   name: 'Messages',
-  components: { FallBackLoader, ChatWindow, ChatThread },
+  components: {
+    AppBarHeader,
+    CurrentProgress,
+    FallBackLoader,
+    ChatWindow,
+    ChatThread,
+  },
   middleware: useMessageService ? 'isAuthenticated' : 'hidden',
+
+  asyncData({ from: previousPage }) {
+    return { previousPage }
+  },
 
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.DashBoard,
       pageTitle: 'Messages',
       chatThreads: [],
       currentThread: undefined,
       fetchError: false,
       navigationRoutes,
       socket: undefined,
+      loading: true,
+      hasMessagingAccess: undefined,
     }
   },
 
@@ -92,6 +130,10 @@ export default {
   },
 
   async mounted() {
+    this.hasMessagingAccess = await this.checkForMessagingAccess()
+
+    if (!this.hasMessagingAccess) return
+
     const roomId = this.$route?.params?.roomId
     roomId && (await this.$router.push(`#${roomId}`))
 
@@ -126,6 +168,14 @@ export default {
       await this.$store.dispatch('NavigationState/updateTopNavActiveLink', {
         linkPosition: 0,
       })
+    },
+
+    async checkForMessagingAccess() {
+      const { results } = await this.$axios.$get(endpoints.rewards.claimed)
+      this.loading = false
+
+      if (!results.length) return false
+      return !!results.find((item) => item.reward?.name === 'messaging')
     },
 
     async fetchThreads() {
@@ -365,6 +415,24 @@ $image-size: 40px;
             background-position: right;
           }
         }
+      }
+    }
+  }
+}
+
+.message-page-fallback {
+  main {
+    max-width: $large-screen;
+    margin: auto;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        height: 250px;
       }
     }
   }
