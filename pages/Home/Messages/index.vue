@@ -1,8 +1,16 @@
 <template>
   <div v-if="loading" class="message-page-loading">
-    <FallBackLoader class="my-8 py-8 px-8">
-      <template #fallback><h1>Loading</h1></template>
-    </FallBackLoader>
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
+      <template #title>{{ pageTitle }}</template>
+    </AppBarHeader>
+    <main>
+      <svg viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M17,12V3A1,1 0 0,0 16,2H3A1,1 0 0,0 2,3V17L6,13H16A1,1 0 0,0 17,12M21,6H19V15H6V17A1,1 0 0,0 7,18H18L22,22V7A1,1 0 0,0 21,6Z"
+        />
+      </svg>
+      <p>Simple. Secure. Reliable.</p>
+    </main>
   </div>
 
   <div v-else-if="hasMessagingAccess" class="message-page">
@@ -19,8 +27,6 @@
         <!--        <i v-ripple class="mdi mdi-magnify mdi-24px ml-auto" />-->
       </header>
 
-      <FallBackLoader v-if="!chatThreads.length" class="my-6" />
-
       <transition-group name="scale-up">
         <section
           v-for="(thread, index) in chatThreads"
@@ -36,6 +42,33 @@
           <!--          <InFeedAd class="my-4" use-small-ads />-->
         </section>
       </transition-group>
+
+      <!--      <client-only>-->
+      <!--        <infinite-loading @infinite="infiniteHandler">-->
+      <!--          <template slot="spinner">-->
+      <!--            <section class="my-8 pb-2 px-4">-->
+      <!--              <LineSkeleton class="my-4" height="1.2rem" />-->
+      <!--              <LineSkeleton class="mb-6" height="2.5rem" />-->
+      <!--              <LineSkeleton class="my-4" height="150px" />-->
+      <!--              <LineSkeleton class="my-4" width="80%" />-->
+      <!--              <LineSkeleton class="my-4" width="50%" />-->
+      <!--              <LineSkeleton class="my-4" width="30%" />-->
+      <!--            </section>-->
+      <!--          </template>-->
+
+      <!--          <template slot="error">-->
+      <!--            <p class="danger-light my-6">Network Error</p>-->
+      <!--          </template>-->
+
+      <!--          <template slot="no-more">-->
+      <!--            <p class="secondary-matte text-center mt-4 mb-8">-->
+      <!--              <i class="mdi mdi-party-popper mdi-18px" />-->
+      <!--              <br />-->
+      <!--              <small> Come back soon for more </small>-->
+      <!--            </p>-->
+      <!--          </template>-->
+      <!--        </infinite-loading>-->
+      <!--      </client-only>-->
     </aside>
 
     <transition name="scale-up">
@@ -66,7 +99,7 @@
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
     <main>
-      <section class="info-bar vibrant" v-if="unreadThreads > 0">
+      <section v-if="unreadThreads > 0" class="info-bar vibrant">
         <i class="mdi mdi-information mdi-24px" />
         <span
           >You have received messages from
@@ -82,32 +115,32 @@
           </p>
 
           <KeyPoint
-            class="my-2"
-            tick-color="#8FF2E1"
-            text-color="#FFF"
             :tick-size="20"
+            class="my-2"
             point="A Minimalistic UI"
+            text-color="#FFF"
+            tick-color="#8FF2E1"
           />
           <KeyPoint
-            class="my-2"
-            tick-color="#8FF2E1"
-            text-color="#FFF"
             :tick-size="20"
+            class="my-2"
             point="Peer to Peer Encrypted"
+            text-color="#FFF"
+            tick-color="#8FF2E1"
           />
           <KeyPoint
-            class="my-2"
-            tick-color="#8FF2E1"
-            text-color="#FFF"
             :tick-size="20"
+            class="my-2"
             point="Reliable at Core"
+            text-color="#FFF"
+            tick-color="#8FF2E1"
           />
           <KeyPoint
-            class="my-2"
-            tick-color="#8FF2E1"
-            text-color="#FFF"
             :tick-size="20"
+            class="my-2"
             point="Optimized for Security & Safety"
+            text-color="#FFF"
+            tick-color="#8FF2E1"
           />
         </section>
 
@@ -131,10 +164,16 @@ import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import CurrentProgress from '~/components/Mobile/View/Referral/CurrentProgress'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import KeyPoint from '~/components/Common/Tools/KeyPoint'
+import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
+import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import LoadingError from '~/components/Common/Tools/LoadingError'
 
 export default {
   name: 'Messages',
   components: {
+    LoadingError,
+    LineSkeleton,
+    ImageSkeleton,
     KeyPoint,
     AppBarHeader,
     CurrentProgress,
@@ -160,7 +199,7 @@ export default {
       socket: undefined,
       loading: true,
       hasMessagingAccess: undefined,
-      unreadThreads: 2,
+      unreadThreads: 0,
     }
   },
 
@@ -176,7 +215,10 @@ export default {
   async mounted() {
     this.hasMessagingAccess = await this.checkForMessagingAccess()
 
-    if (!this.hasMessagingAccess) return
+    if (!this.hasMessagingAccess) {
+      this.unreadThreads = await this.checkNumberOfThreads()
+      return
+    }
 
     const roomId = this.$route?.params?.roomId
     roomId && (await this.$router.push(`#${roomId}`))
@@ -204,6 +246,14 @@ export default {
   },
 
   methods: {
+    async checkNumberOfThreads() {
+      const { numberOfChatThreads } = await this.$axios
+        .$get(endpoints.message_system.getNumberOfThreads)
+        .catch(() => ({ numberOfChatThreads: 0 }))
+      return numberOfChatThreads
+      // console.log(numberOfChatThreads)
+    },
+
     getRelativeTime,
     async navigationStates() {
       await this.$store.dispatch('NavigationState/updateBottomNavActiveLink', {
@@ -462,6 +512,14 @@ $image-size: 40px;
       }
     }
   }
+
+  section.sample-response {
+    display: grid;
+    grid-template-columns: 2 * $xxx-large-unit 1fr;
+    grid-gap: $standard-unit;
+    align-items: center;
+    justify-content: stretch;
+  }
 }
 
 .message-page-fallback {
@@ -479,6 +537,7 @@ $image-size: 40px;
 
       span {
         font-family: $Nunito-Sans;
+
         strong {
           font-weight: 900;
         }
@@ -497,6 +556,7 @@ $image-size: 40px;
 
       section {
         order: 1;
+
         h2 {
           text-align: center;
         }
@@ -512,9 +572,81 @@ $image-size: 40px;
 
         section {
           order: 0;
+
           h2 {
             text-align: left;
           }
+        }
+      }
+    }
+  }
+}
+
+.message-page-loading {
+  main {
+    max-width: $large-screen;
+    margin: auto;
+    height: calc(100vh - 56px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    $offset: 80;
+
+    svg {
+      stroke: $secondary-vibrant;
+      stroke-width: 1px;
+      height: 16vh;
+      width: 16vw;
+      path {
+        stroke-dasharray: $offset;
+        stroke-dashoffset: $offset;
+        fill: transparent;
+        filter: drop-shadow(0 0 1px $secondary-vibrant);
+        animation: draw 2s ease-in-out forwards,
+          fill-in 1s ease-in-out forwards 2s,
+          ripple-effect 2s ease-in-out infinite alternate-reverse 3s;
+      }
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+          filter: drop-shadow(0 0 0 $secondary-vibrant);
+        }
+      }
+      @keyframes fill-in {
+        to {
+          stroke: transparent;
+          stroke-width: 0;
+          fill: $secondary-vibrant;
+          filter: drop-shadow(0 0 1px $secondary-vibrant);
+        }
+      }
+      @keyframes ripple-effect {
+        0% {
+          filter: drop-shadow(0 0 1px $secondary-vibrant);
+        }
+        50% {
+          filter: drop-shadow(0 0 0 $secondary-vibrant);
+        }
+        100% {
+          filter: drop-shadow(0 0 1px $secondary-vibrant);
+        }
+      }
+    }
+
+    p {
+      opacity: 0;
+      animation: zoom-in 250ms ease-in-out forwards;
+
+      @keyframes zoom-in {
+        from {
+          transform: scale(0.75);
+        }
+        to {
+          opacity: 1;
+          color: white;
+          transform: scale(1);
         }
       }
     }
