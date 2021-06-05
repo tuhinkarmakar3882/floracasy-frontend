@@ -41,12 +41,19 @@
       </section>
 
       <LoadingError
-        error-section="Chat Threads"
         v-else-if="fetchError"
         class="px-4 py-4"
+        error-section="Chat Threads"
       />
 
       <div v-else>
+        <section v-if="chatThreads.length === 0" class="no-chats-fallback">
+          <h6>Your Inbox is Empty!</h6>
+          <button v-ripple class="secondary-outlined-btn chat-now-btn">
+            Start Chatting now!
+          </button>
+        </section>
+
         <transition-group name="scale-up">
           <section
             v-for="(thread, index) in chatThreads"
@@ -63,6 +70,17 @@
           </section>
         </transition-group>
       </div>
+
+      <transition name="scale-up">
+        <i
+          v-ripple
+          class="
+            floating-action-button
+            secondary-btn
+            mdi mdi-message-text mdi-24px
+          "
+        />
+      </transition>
     </aside>
 
     <transition name="scale-up">
@@ -149,7 +167,7 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime, showUITip } from '@/utils/utility'
-import { MESSAGE_SERVICE_BASE, useMessageService } from "~/environmentVariables";
+import { MESSAGE_SERVICE_BASE, useMessageService } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
@@ -457,6 +475,29 @@ $image-size: 40px;
         @media screen and (min-width: $medium-screen) {
           border-left: 4px solid $secondary;
         }
+      }
+    }
+
+    .no-chats-fallback {
+      height: calc(100vh - 56px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .floating-action-button {
+      bottom: $x-large-unit;
+      right: $x-large-unit;
+      @media screen and (min-width: $medium-screen) {
+        display: none;
+      }
+    }
+
+    .chat-now-btn {
+      display: none;
+      @media screen and (min-width: $medium-screen) {
+        display: block;
       }
     }
   }
