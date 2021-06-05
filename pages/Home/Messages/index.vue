@@ -49,7 +49,11 @@
       <div v-else>
         <section v-if="chatThreads.length === 0" class="no-chats-fallback">
           <h6>Your Inbox is Empty!</h6>
-          <button v-ripple class="secondary-outlined-btn chat-now-btn">
+          <button
+            v-ripple
+            class="secondary-outlined-btn chat-now-btn"
+            @click="openFollowDetails"
+          >
             Start Chatting now!
           </button>
         </section>
@@ -73,10 +77,11 @@
 
       <transition name="scale-up">
         <i
+          @click="openFollowDetails"
           v-ripple
           class="
             floating-action-button
-            secondary-btn
+            primary-btn
             mdi mdi-message-text mdi-24px
           "
         />
@@ -178,6 +183,7 @@ import KeyPoint from '~/components/Common/Tools/KeyPoint'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import LoadingError from '~/components/Common/Tools/LoadingError'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Messages',
@@ -213,6 +219,12 @@ export default {
       unreadThreads: 0,
       unreadMessages: 0,
     }
+  },
+
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
   },
 
   beforeMount() {
@@ -260,6 +272,14 @@ export default {
   },
 
   methods: {
+    async openFollowDetails() {
+      await this.$router.push(
+        navigationRoutes.Home.Account.Followers.replace(
+          '{userUID}',
+          this.user.uid
+        )
+      )
+    },
     async fetchNumberOfThreads() {
       const { numberOfChatThreads } = await this.$axios
         .$get(endpoints.message_system.getNumberOfThreads)
