@@ -10,10 +10,10 @@
     </aside>
 
     <section v-else>
-      <h5 class="px-4">
+      <h5 class="px-4" v-if="!hideHeadline">
         <slot name="caption"> Unlock Extra Features </slot>
       </h5>
-      <hr class="faded-divider" />
+      <hr class="faded-divider" v-if="!hideHeadline" />
       <LineProgress :max-value="maxValue" :value="balance" class="px-4" />
       <button
         v-if="balance >= maxValue"
@@ -37,6 +37,13 @@ import { navigationRoutes } from '~/navigation/navigationRoutes'
 export default {
   name: 'CurrentProgress',
   components: { LineSkeleton, LineProgress },
+  props: {
+    hideHeadline: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       maxValue: 300,

@@ -5,8 +5,8 @@ const messageOption = [
   {
     id: 0,
     text: 'Messages',
-    icon: 'mdi-message-text-outline',
-    activeIcon: 'mdi-message-text',
+    icon: 'mdi-email-outline mdi-24px',
+    activeIcon: 'mdi-email',
     color: '#6360f8',
     route: navigationRoutes.Home.Messages.index,
   },

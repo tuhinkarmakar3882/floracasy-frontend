@@ -66,14 +66,55 @@
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
     <main>
-      <header class="px-4">
-        <h6>Experience the Safest way to communicate</h6>
+      <section class="info-bar vibrant" v-if="unreadThreads > 0">
+        <i class="mdi mdi-information mdi-24px" />
+        <span
+          >You have received messages from
+          <strong>{{ unreadThreads }}</strong> people</span
+        >
+      </section>
 
-        <img alt="" src="/images/message_illustration.svg" />
+      <header class="px-4 pb-2">
+        <section>
+          <h2>FC-Messaging</h2>
+          <p class="mt-8 mb-6">
+            Experience the Safest & the most reliable way to communicate
+          </p>
+
+          <KeyPoint
+            class="my-2"
+            tick-color="#8FF2E1"
+            text-color="#FFF"
+            :tick-size="20"
+            point="A Minimalistic UI"
+          />
+          <KeyPoint
+            class="my-2"
+            tick-color="#8FF2E1"
+            text-color="#FFF"
+            :tick-size="20"
+            point="Peer to Peer Encrypted"
+          />
+          <KeyPoint
+            class="my-2"
+            tick-color="#8FF2E1"
+            text-color="#FFF"
+            :tick-size="20"
+            point="Reliable at Core"
+          />
+          <KeyPoint
+            class="my-2"
+            tick-color="#8FF2E1"
+            text-color="#FFF"
+            :tick-size="20"
+            point="Optimized for Security & Safety"
+          />
+        </section>
+
+        <img alt="" class="my-4" src="/images/message_illustration.jpg" />
       </header>
-      <CurrentProgress class="mt-6 mb-2">
-        <template #caption> To Unlock Messaging</template>
-      </CurrentProgress>
+
+      <CurrentProgress class="my-8" hide-headline />
     </main>
   </div>
 </template>
@@ -89,10 +130,12 @@ import { io } from 'socket.io-client'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import CurrentProgress from '~/components/Mobile/View/Referral/CurrentProgress'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
+import KeyPoint from '~/components/Common/Tools/KeyPoint'
 
 export default {
   name: 'Messages',
   components: {
+    KeyPoint,
     AppBarHeader,
     CurrentProgress,
     FallBackLoader,
@@ -117,6 +160,7 @@ export default {
       socket: undefined,
       loading: true,
       hasMessagingAccess: undefined,
+      unreadThreads: 2,
     }
   },
 
@@ -425,14 +469,53 @@ $image-size: 40px;
     max-width: $large-screen;
     margin: auto;
 
+    section.info-bar {
+      display: grid;
+      place-items: center;
+      grid-template-columns: 24px 1fr;
+      gap: 16px;
+      padding: 24px 16px;
+      background: $body-bg-alternate;
+
+      span {
+        font-family: $Nunito-Sans;
+        strong {
+          font-weight: 900;
+        }
+      }
+    }
+
     header {
       display: flex;
-      justify-content: space-between;
       flex-direction: column;
-      align-items: center;
 
       img {
         height: 250px;
+        order: 0;
+        margin: auto;
+      }
+
+      section {
+        order: 1;
+        h2 {
+          text-align: center;
+        }
+      }
+
+      @media screen and (min-width: $medium-screen) {
+        flex-direction: row;
+        justify-content: space-between;
+
+        img {
+          order: 1;
+        }
+
+        section {
+          order: 0;
+          h2 {
+            text-align: left;
+          }
+        }
       }
     }
   }
