@@ -149,7 +149,7 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { getRelativeTime, showUITip } from '@/utils/utility'
-import { useMessageService } from '~/environmentVariables'
+import { MESSAGE_SERVICE_BASE, useMessageService } from "~/environmentVariables";
 import endpoints from '~/api/endpoints'
 import ChatThread from '~/components/Mobile/View/Message/ChatThread'
 import ChatWindow from '~/components/Mobile/View/Message/ChatWindow'
@@ -222,7 +222,7 @@ export default {
     await this.navigationStates()
     await this.fetchThreads()
 
-    this.socket = io('http://localhost:5000', {
+    this.socket = io(MESSAGE_SERVICE_BASE, {
       path: '/ws/chat/',
       extraHeaders: {
         authorization: `Bearer ${await this.$cookies.get('access')}`,
