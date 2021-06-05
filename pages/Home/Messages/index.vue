@@ -272,7 +272,7 @@ export default {
       extraHeaders: {
         authorization: `Bearer ${await this.$cookies.get('access')}`,
       },
-      transports: ['websocket'],
+      // transports: ['websocket'],
     })
 
     this.socket.on('message', this.handleChatThreadUpdate)
