@@ -118,10 +118,9 @@
     <main>
       <section v-if="unreadThreads > 0" class="info-bar vibrant">
         <i class="mdi mdi-information mdi-24px" />
-        <span>
+        <span class="text-center">
           You have received messages from
-          <strong>{{ unreadThreads }}</strong> peoples. <br />
-          Unlock Now!
+          <strong>{{ unreadThreads }}</strong> peoples.
         </span>
       </section>
 
