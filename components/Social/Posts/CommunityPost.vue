@@ -69,8 +69,7 @@
 
       <section class="post-body py-4 px-4">
         <p v-if="post.body" :style="post.style" @click="viewPostDetails">
-          <span
-            >{{ getPostBody }}
+          <span v-html="getPostBody">
             <nuxt-link
               v-if="showReadMore"
               :to="postDetailsLink"
@@ -150,7 +149,7 @@
 </template>
 
 <script>
-import { getRelativeTime, shorten, showUITip } from '@/utils/utility'
+import { cleanHTML, getRelativeTime, shorten, showUITip } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
@@ -200,11 +199,19 @@ export default {
 
   computed: {
     getPostBody() {
-      return this.expanded
+      const linkifyHtml = require('linkifyjs/html')
+
+      const content = this.expanded
         ? this.post?.body
         : `${this.post.body.substr(0, 100)} ${
             this.post.body.length > 99 ? '...' : ''
           }`
+
+      const linkifiedContent = linkifyHtml(content, {
+        defaultProtocol: 'https',
+        target: '_blank',
+      })
+      return cleanHTML(linkifiedContent)
     },
     showReadMore() {
       return !this.expanded && this.post.body.length > 99

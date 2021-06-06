@@ -2,7 +2,7 @@
   "name": "floracasy",
   "appName": "Floracasy",
   "description": "Where Knowledge Gets Socialized",
-  "version": "4.0.7",
+  "version": "4.1.0",
   "themeColor": "#0d0d17",
   "private": true,
   "scripts": {
@@ -41,6 +41,7 @@
     "idb": "^6.0.0",
     "js-cookie": "^2.2.0",
     "link-preview-generator": "^1.0.5",
+    "linkifyjs": "^3.0.0-beta.3",
     "nuxt": "^2.14.12",
     "nuxt-helmet": "^2.0.0",
     "nuxt-lazy-load": "^1.2.4",
