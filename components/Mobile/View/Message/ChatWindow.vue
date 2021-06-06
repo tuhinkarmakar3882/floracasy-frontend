@@ -28,7 +28,11 @@
       </transition-group>
       <div ref="bottomOfChat" />
 
-      <TypingAnimation v-if="typing" class="typing-animation" />
+      <TypingAnimation
+        :photo-url="photoURL"
+        v-if="typing"
+        class="typing-animation"
+      />
     </main>
 
     <footer>
@@ -156,7 +160,7 @@ export default {
 
         this.typingTimeout = setTimeout(() => {
           this.typing = false
-        }, 3000)
+        }, 5000)
       }
     },
 
@@ -320,7 +324,7 @@ export default {
 
     startIObserver() {
       this.observer = new IntersectionObserver(this.handleIntersection, {
-        rootMargin: '500px',
+        rootMargin: '100px',
       })
       const target = this.$refs.loadMoreSection
       this.observer.observe(target)

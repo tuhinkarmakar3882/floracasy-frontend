@@ -1,6 +1,6 @@
 <template>
   <div class="typing-animation-component">
-    <img alt="" src="https://picsum.photos/64" />
+    <img alt="" :src="photoUrl" />
     <i class="dot" />
     <i class="dot" />
     <i class="dot" />
@@ -10,6 +10,12 @@
 <script>
 export default {
   name: 'TypingAnimation',
+  props: {
+    photoUrl: {
+      type: String,
+      required: true,
+    },
+  },
 }
 </script>
 

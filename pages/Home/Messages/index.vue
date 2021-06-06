@@ -70,7 +70,11 @@
               :class="thread === currentThread && ['active']"
               :thread="thread"
             />
-            <!--          <InFeedAd class="my-4" use-small-ads />-->
+            <InFeedAd
+              class="my-4"
+              v-if="index && index % 3 === 0"
+              use-small-ads
+            />
           </section>
         </transition-group>
       </div>
@@ -102,12 +106,8 @@
     </transition>
 
     <main v-if="!currentThread" class="fallback">
-      <InFeedAd class="my-4" use-small-ads />
-
       <h3>Stay Connected</h3>
       <p>Tap on a Chat Thread & Start Chatting!</p>
-
-      <InFeedAd class="my-4" use-small-ads />
     </main>
   </div>
 
@@ -119,7 +119,7 @@
       <section v-if="unreadThreads > 0" class="info-bar vibrant">
         <i class="mdi mdi-information mdi-24px" />
         <span class="text-center">
-          You have received messages from
+          You have received {{ unreadMessages }} messages from
           <strong>{{ unreadThreads }}</strong> people.
         </span>
       </section>
@@ -198,10 +198,12 @@ import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import LoadingError from '~/components/Common/Tools/LoadingError'
 import { mapGetters } from 'vuex'
 import InstallBadge from '~/components/Common/Tools/InstallBadge'
+import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 
 export default {
   name: 'Messages',
   components: {
+    InFeedAd,
     InstallBadge,
     LoadingError,
     LineSkeleton,
