@@ -69,15 +69,7 @@
 
       <section class="post-body py-4 px-4">
         <p v-if="post.body" :style="post.style" @click="viewPostDetails">
-          <span v-html="getPostBody">
-            <nuxt-link
-              v-if="showReadMore"
-              :to="postDetailsLink"
-              class="no-underline"
-            >
-              Read More
-            </nuxt-link>
-          </span>
+          <span v-html="getPostBody" />
         </p>
 
         <img
@@ -201,13 +193,7 @@ export default {
     getPostBody() {
       const linkifyHtml = require('linkifyjs/html')
 
-      const content = this.expanded
-        ? this.post?.body
-        : `${this.post.body.substr(0, 100)} ${
-            this.post.body.length > 99 ? '...' : ''
-          }`
-
-      const linkifiedContent = linkifyHtml(content, {
+      const linkifiedContent = linkifyHtml(this.post?.body, {
         defaultProtocol: 'https',
         target: '_blank',
       })
