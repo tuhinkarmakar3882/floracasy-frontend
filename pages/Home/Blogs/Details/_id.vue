@@ -429,11 +429,7 @@ export default {
         try {
           await navigator.share({
             title: this.blog.title + '- Floracasy',
-            text:
-              this.blog?.title +
-              ' - ' +
-              this.blog?.subtitle?.substr(0, 40) +
-              '... Read More on Floracasy',
+            text: `I just published this on Floracasy: ${this.blog.title}. Read more at Floracasy`,
             url: navigationRoutes.Home.Blogs.Details.replace(
               '{id}',
               this.blog.identifier
