@@ -195,18 +195,12 @@ export default {
 
   head: {
     titleTemplate: '%s - Floracasy',
-    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       {
         name: 'viewport',
         content:
           'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0',
-      },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'The One Stop Hub for Passionate & Creative minds',
       },
     ],
     link: [
@@ -305,9 +299,4 @@ export default {
     name: 'gray-shift',
     mode: 'out-in',
   },
-
-  // pageTransition: {
-  //   name: 'page',
-  //   mode: 'out-in',
-  // },
 }
