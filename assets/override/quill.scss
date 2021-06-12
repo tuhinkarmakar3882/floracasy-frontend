@@ -160,7 +160,7 @@ $active-color: $white;
 
 .ql-video {
   width: 100% !important;
-  min-height: 350px !important;
+  min-height: 450px !important;
 }
 
 .ql-hidden,
@@ -453,7 +453,7 @@ $active-color: $white;
     }
 
     aside {
-      padding: $standard-unit $micro-unit !important;
+      padding: $standard-unit !important;
 
       h4 {
         margin: 0 0 $standard-unit !important;
@@ -463,6 +463,13 @@ $active-color: $white;
         white-space: normal !important;
         margin: $standard-unit 0 !important;
         font-size: $small-text-unit;
+        height: auto;
+        overflow: auto;
+
+        @media screen and (min-width: $medium-screen) {
+          height: 20ch;
+          overflow: auto;
+        }
       }
 
       span {
