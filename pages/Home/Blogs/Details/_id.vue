@@ -479,7 +479,7 @@ export default {
   head() {
     return {
       title: this.blog.title,
-      description: this.blog.content.substr(0, 150),
+      description: this.blog.subtitle || this.blog.content.substr(0, 150),
       meta: [
         {
           name: 'title',
@@ -497,7 +497,7 @@ export default {
         },
         {
           name: 'description',
-          content: this.blog.content.substr(0, 150),
+          content: this.blog.subtitle || this.blog.content.substr(0, 150),
         },
         {
           name: 'author',
@@ -518,7 +518,7 @@ export default {
         },
         {
           name: 'og:description',
-          content: this.blog.content.substr(0, 150),
+          content: this.blog.subtitle || this.blog.content.substr(0, 150),
         },
         {
           name: 'og:image',
@@ -539,7 +539,7 @@ export default {
         },
         {
           name: 'twitter:description',
-          content: this.blog.content.substr(0, 150),
+          content: this.blog.subtitle || this.blog.content.substr(0, 150),
         },
         {
           name: 'twitter:image',
