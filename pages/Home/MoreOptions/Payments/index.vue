@@ -1,13 +1,11 @@
 <template>
-  <AppFeel
-    :on-back="navigationRoutes.Home.MoreOptions.index"
-    :prev-url-path="prevURL"
-    class="payments-page"
-    dynamic-back
-  >
+  <div class="payments-page">
+    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
+      <template #title>{{ pageTitle }}</template>
+    </AppBarHeader>
     <template slot="app-bar-title"> {{ pageTitle }}</template>
 
-    <template slot="main">
+    <main>
       <div class="payment-card px-4 py-6">
         <FallBackLoader v-if="loading">
           <template #fallback>
@@ -36,19 +34,14 @@
           </main>
 
           <aside class="bottom-part mt-6">
-            <ProgressRing
-              show-percentage-text
-              :percentage="
-                balanceInfo.earning > 100 ? 100 : balanceInfo.earning
-              "
-            />
+            <ProgressRing :percentage="percentage" show-percentage-text />
 
             <section class="content ml-4">
               <h6 class="my-0">Progress</h6>
               <p class="mt-2 muted">
                 Need
                 <span class="danger-light"
-                  ><strong>${{ 100 - balanceInfo.earning }}</strong></span
+                  ><strong>${{ amountLeft }}</strong></span
                 >
                 more to redeem your earning.
               </p>
@@ -72,95 +65,8 @@
           tick-color="#6DD0BF"
         />
       </section>
-
-      <!--      <h4 class="px-4">Now Earn Floracoin & Get Exciting Offers</h4>-->
-      <!--      <hr class="faded-divider" />-->
-      <!---->
-      <!--      <section class="question-answer px-4">-->
-      <!--        <h6>What is Floracoin?</h6>-->
-      <!--        <p>-->
-      <!--          As you all know you can earn money by writing blogs .Here we represent-->
-      <!--          your earning &many more statistics against your blogs.-->
-      <!--        </p>-->
-      <!--      </section>-->
-      <!---->
-      <!--      <section class="question-answer text-right px-4">-->
-      <!--        <h6>Purpose of Floracoins?</h6>-->
-      <!--        <p>-->
-      <!--          Floracoin Mainly a digital currency for you which is only valid on-->
-      <!--          Floracasy . You can use this Coins for going Premium. You can also get-->
-      <!--          more interesting stuff access buy spending floracoins.-->
-      <!--        </p>-->
-      <!--      </section>-->
-      <!---->
-      <!--      <InFeedAd class="my-4" use-small-ads />-->
-      <!---->
-      <!--      <section class="question-answer px-4">-->
-      <!--        <h4>How To Earn Floracoin?</h4>-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="When You Share Floracasy & someone join with Your reference You Can Get 50 Floracoin"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="On each Blog That Written By You You May Get 15 Floracoin"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="When you get your first threshold money you can get 10 Floracoin"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--      </section>-->
-      <!---->
-      <!--      <hr class="faded-divider" />-->
-      <!---->
-      <!--      <section class="premium-perks px-4">-->
-      <!--        <h4>Get Ultimate Exclusive Access</h4>-->
-
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="Get Add Free Experience"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="Get Audio blogs"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="Ultimate Use Of Our Messaging Services"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="Priority 24×7 Contact Support"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="Get More User Friendly Interface"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--        <KeyPoint-->
-      <!--          class="my-4"-->
-      <!--          :tick-size="20"-->
-      <!--          point="Get Free 50 flora coin for Net Purchase"-->
-      <!--          tick-color="#65db65"-->
-      <!--        />-->
-      <!--      </section>-->
-    </template>
-  </AppFeel>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -168,20 +74,26 @@ import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { usePremiumServices } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
 import { getRelativeTime } from '~/utils/utility'
+import ProgressRing from '~/components/Common/Tools/ProgressRing'
+import AppBarHeader from '~/components/Layout/AppBarHeader'
+import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
+import LoadingError from '~/components/Common/Tools/LoadingError'
 
 export default {
   name: 'Payments',
+  components: { LoadingError, FallBackLoader, AppBarHeader, ProgressRing },
   middleware: 'isAuthenticated',
 
-  asyncData({ from: prevURL }) {
-    return { prevURL }
+  asyncData({ from: previousPage }) {
+    return { previousPage }
   },
 
   data() {
     return {
+      previousPage: undefined,
+      fallbackPage: navigationRoutes.Home.MoreOptions.index,
       usePremiumServices,
       navigationRoutes,
-      prevURL: null,
       pageTitle: 'Payments',
       tipsToImprove: [
         'Try to be a Consistent Blog Writer on the Platform',
@@ -201,8 +113,17 @@ export default {
       loading: true,
       loadingError: false,
       balanceInfo: undefined,
+      percentage: 0,
+      requiredToClaim: 50,
     }
   },
+  computed: {
+    amountLeft() {
+      const remaining = this.requiredToClaim - (this.balanceInfo?.earning || 0)
+      return remaining > 0 ? remaining : 0
+    },
+  },
+
   async mounted() {
     await this.fetchCurrentEarnings()
   },
@@ -211,6 +132,11 @@ export default {
     async fetchCurrentEarnings() {
       try {
         this.balanceInfo = await this.$axios.$get(endpoints.payments.fetch)
+        const currentEarning = this.balanceInfo.earning
+        const percentage = Math.floor(
+          (currentEarning / this.requiredToClaim) * 100
+        )
+        this.percentage = percentage > 100 ? 100 : percentage
       } catch (e) {
         this.loadingError = true
       } finally {
