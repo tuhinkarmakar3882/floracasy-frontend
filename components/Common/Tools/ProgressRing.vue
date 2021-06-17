@@ -33,10 +33,10 @@ export default {
     activeRegionSize() {
       const totalSizeOfTheProgress = 280
       const remainingPercentage = (100 - this.percentage) / 100
-      console.log("remainingPercentage", remainingPercentage, "percentage", this.percentage);
-      console.log();
       return {
-        strokeDashoffset: Math.floor(totalSizeOfTheProgress * remainingPercentage),
+        strokeDashoffset: Math.floor(
+          totalSizeOfTheProgress * remainingPercentage
+        ),
       }
     },
   },

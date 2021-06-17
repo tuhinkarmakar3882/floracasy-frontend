@@ -17,7 +17,7 @@
 
     <main>
       <section>
-        <h1 class="mb-8">Where Knowledge gets Socialized</h1>
+        <h1 class="mb-8">Earn Money by Writing Content</h1>
         <section class="key-points mb-8">
           <KeyPoint
             v-for="(point, index) in points"

@@ -3,7 +3,6 @@
     <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>{{ pageTitle }}</template>
     </AppBarHeader>
-    <template slot="app-bar-title"> {{ pageTitle }}</template>
 
     <main>
       <div class="payment-card px-4 py-6">
@@ -26,7 +25,14 @@
                 <strong>${{ balanceInfo.earning }}</strong>
               </small>
             </section>
-            <button class="disabled-btn" disabled>Redeem</button>
+
+            <button
+              :class="redeemButtonClass"
+              :disabled="amountLeft"
+              v-ripple=""
+            >
+              Redeem
+            </button>
           </header>
 
           <main>
@@ -53,9 +59,8 @@
         </section>
       </div>
 
-      <h4 class="heading-title my-6 px-4">Tips to Improve Your Earnings</h4>
-
       <section class="py-4 px-4">
+        <h4 class="heading-title my-8">Tips to Improve Your Earnings</h4>
         <LazyKeyPoint
           v-for="(point, index) in tipsToImprove"
           :key="index"
@@ -65,6 +70,10 @@
           tick-color="#6DD0BF"
         />
       </section>
+
+      <InviteCode />
+
+      <!--      {{ coinBalance }}-->
     </main>
   </div>
 </template>
@@ -73,7 +82,7 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { usePremiumServices } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
-import { getRelativeTime } from '~/utils/utility'
+import { getRelativeTime, showUITip } from '~/utils/utility'
 import ProgressRing from '~/components/Common/Tools/ProgressRing'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
@@ -112,9 +121,10 @@ export default {
       ],
       loading: true,
       loadingError: false,
-      balanceInfo: undefined,
+      balanceInfo: {},
       percentage: 0,
       requiredToClaim: 50,
+      coinBalance: 0,
     }
   },
   computed: {
@@ -122,27 +132,38 @@ export default {
       const remaining = this.requiredToClaim - (this.balanceInfo?.earning || 0)
       return remaining > 0 ? remaining : 0
     },
+
+    redeemButtonClass() {
+      return this.amountLeft > 0 ? 'disabled-btn' : 'primary-btn'
+    },
   },
 
   async mounted() {
-    await this.fetchCurrentEarnings()
+    try {
+      await Promise.all([this.fetchCurrentEarnings(), this.getCoinBalance()])
+    } catch (e) {
+      this.loadingError = true
+    } finally {
+      this.loading = false
+    }
   },
 
   methods: {
-    async fetchCurrentEarnings() {
-      try {
-        this.balanceInfo = await this.$axios.$get(endpoints.payments.fetch)
-        const currentEarning = this.balanceInfo.earning
-        const percentage = Math.floor(
-          (currentEarning / this.requiredToClaim) * 100
-        )
-        this.percentage = percentage > 100 ? 100 : percentage
-      } catch (e) {
-        this.loadingError = true
-      } finally {
-        this.loading = false
-      }
+    async getCoinBalance() {
+      const { balance } = await this.$axios.$get(endpoints.rewards.coins)
+      this.coinBalance = balance
+      this.loading = false
     },
+
+    async fetchCurrentEarnings() {
+      this.balanceInfo = await this.$axios.$get(endpoints.payments.fetch)
+      const currentEarning = this.balanceInfo.earning
+      const percentage = Math.floor(
+        (currentEarning / this.requiredToClaim) * 100
+      )
+      this.percentage = percentage > 100 ? 100 : percentage
+    },
+
     getRelativeTime,
   },
 
@@ -158,34 +179,39 @@ export default {
 @import 'assets/all-variables';
 
 .payments-page {
-  .payment-card {
-    background: $card-bg;
+  main {
+    max-width: $large-screen;
+    margin: auto;
 
-    * {
-      font-family: $Nunito-Sans;
-    }
+    .payment-card {
+      background: $card-bg;
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      * {
+        font-family: $Nunito-Sans;
+      }
 
-      section {
-        small {
-          font-size: $medium-unit;
-          color: $secondary-vibrant;
-        }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
 
-        p {
-          font-family: $Raleway;
-          color: $muted;
+        section {
+          small {
+            font-size: $medium-unit;
+            color: $secondary-vibrant;
+          }
+
+          p {
+            font-family: $Raleway;
+            color: $muted;
+          }
         }
       }
-    }
 
-    .bottom-part {
-      display: flex;
-      align-items: center;
+      .bottom-part {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 }
