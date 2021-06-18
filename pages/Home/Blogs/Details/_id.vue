@@ -141,7 +141,7 @@
       </header>
 
       <section class="blog-body pb-8 mb-4">
-        <InFeedAd key="Top-Ad" />
+        <InFeedAd key="Top-Ad" class="top-ads" />
 
         <article
           ref="articleContent"
@@ -650,6 +650,12 @@ export default {
 
   ins {
     margin: 1rem auto;
+  }
+
+  .top-ads {
+    @media screen and (min-width: $large-screen) {
+      display: none;
+    }
   }
 }
 </style>
