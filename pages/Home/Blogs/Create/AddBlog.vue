@@ -296,7 +296,7 @@ export default {
   data() {
     return {
       previousPage: undefined,
-      fallbackPage: navigationRoutes.Home.MoreOptions.index,
+      fallbackPage: navigationRoutes.Home.Blogs.Create.index,
       pageTitle: 'Create Blog',
       Quill: undefined,
       editor: undefined,
