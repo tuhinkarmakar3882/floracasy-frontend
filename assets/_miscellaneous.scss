@@ -163,6 +163,7 @@ html {
     table {
       display: table;
       font-family: $Nunito-Sans;
+
       * {
         line-height: 1.75;
         min-height: 24px;
@@ -179,7 +180,6 @@ html {
         }
       }
     }
-
 
 
     select {

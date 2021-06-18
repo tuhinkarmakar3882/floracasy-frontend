@@ -9,7 +9,7 @@
 
     <template slot="main">
       <main class="my-4">
-        <div class="top-area mb-4">
+        <div class="top-area mb-6">
           <section class="logo">
             <LazyLogo class="mr-4" />
             <h4>Floracasy</h4>
@@ -17,6 +17,24 @@
           <aside class="text-center">
             <small> Version: {{ versionNumber }} </small>
           </aside>
+
+          <section class="social-links mt-6">
+            <a
+              href="https://www.facebook.com/pages/category/Product-Service/Floracasy-Where-Knowledge-Gets-Socialized-108505071383665/"
+              target="follow_us_tab"
+            >
+              <i class="mdi mdi-facebook mdi-48px white" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/floracasy/"
+              target="follow_us_tab"
+            >
+              <i class="mdi mdi-linkedin mdi-48px white" />
+            </a>
+          </section>
+          <p class="text-center">
+            &ldquo;Follow Us for a Seamless Experience&rdquo;
+          </p>
         </div>
 
         <section class="tab-bar">
@@ -33,14 +51,7 @@
 
         <div ref="tabNavigation"></div>
 
-        <section v-if="activeTab === 0" class="the-pro-zone px-4">
-          <aside class="my-8 py-8 text-center">
-            <h4>Coming soon</h4>
-            <p>Watch this space for more information...</p>
-          </aside>
-        </section>
-
-        <section v-else-if="activeTab === 1" class="the-vision px-4">
+        <section v-if="activeTab === 0" class="the-vision px-4">
           <article class="my-4">
             <h5 class="heading-title mt-4 mb-6">
               The World can be a Better Place
@@ -66,7 +77,7 @@
           </article>
         </section>
 
-        <section v-else-if="activeTab === 2" class="the-story px-4">
+        <section v-else-if="activeTab === 1" class="the-story px-4">
           <article class="my-4">
             <h5 class="heading-title mt-4 mb-6">Who are we?</h5>
             <p class="my-4">
@@ -92,6 +103,7 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import * as packageJson from '@/package.json'
+
 export default {
   name: 'About',
 
@@ -103,10 +115,10 @@ export default {
     return {
       versionNumber: packageJson.version,
       prevURL: null,
-      activeTab: 1,
+      activeTab: 0,
       pageTitle: 'About us',
       navigationRoutes,
-      tabs: ['Pro Zone', 'The Vision', 'Our Story'],
+      tabs: ['The Vision', 'Our Story'],
     }
   },
   mounted() {},
@@ -147,12 +159,31 @@ $blog-border-radius: 20px;
           margin: $standard-unit 0;
         }
       }
+
+      .social-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 16px;
+
+        a {
+          &:hover,
+          &:focus {
+            transform: scale(1.2);
+          }
+
+          &:active {
+            transform: scale(0.9);
+          }
+        }
+      }
     }
 
     .tab-bar {
       display: grid;
       text-align: center;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       position: sticky;
       top: (2 * $x-large-unit) - $double-unit;
       background-color: $navigation-bar-color;
