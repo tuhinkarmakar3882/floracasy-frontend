@@ -87,28 +87,27 @@ export default {
     },
   },
   mounted() {
+    this.loadAdvertisement()
+
     if ('IntersectionObserver' in window) {
-      this.useDomBasedAds()
-      this.intersectionObserverStartup = setTimeout(this.startIObserver, 10000)
-    } else {
-      this.useDomBasedAds()
+      this.IObserverTimeout = setTimeout(this.startIObserver, 10000)
     }
   },
 
   beforeDestroy() {
-    clearTimeout(this.intersectionObserverStartup)
+    clearTimeout(this.IObserverTimeout)
     clearTimeout(this.timeout)
   },
-  methods: {
-    useDomBasedAds() {
-      this.showAds = true
-      this.adsBlocked = false
 
+  methods: {
+    loadAdvertisement() {
       if (!window?.adsbygoogle) {
         this.showAds = false
         this.adsBlocked = true
         return
       }
+
+      this.$nextTick(this.resetAdsState)
 
       try {
         window.adsbygoogle?.push({})
@@ -121,21 +120,9 @@ export default {
       }
     },
 
-    loadAds() {
+    resetAdsState() {
       this.showAds = true
       this.adsBlocked = false
-
-      if (!window?.adsbygoogle) {
-        this.showAds = false
-        this.adsBlocked = true
-        return
-      }
-
-      try {
-        window.adsbygoogle?.push({})
-        process.env.NODE_ENV === 'production' &&
-          LogAnalyticsEvent('ads_requested')
-      } catch (e) {}
     },
 
     startIObserver() {
@@ -147,26 +134,24 @@ export default {
     },
 
     handleIntersection(entries) {
-      entries.map((entry) => {
+      entries.forEach((entry) => {
         this.observer.observe(entry.target)
-
         this.adsBlocked = false
 
-        if (entry.isIntersecting) {
-          this.$nextTick(() => {
-            this.showAds = true
-          })
-          this.showAds = true
-
-          setTimeout(this.loadAds, 0)
-          this.observer.unobserve(entry.target)
-
-          clearTimeout(this.timeout)
-          this.timeout = setTimeout(() => {}, 8000)
-        } else {
+        if (!entry.isIntersecting) {
           this.showAds = false
+          return
         }
-        return entry
+
+        this.$nextTick(this.resetAdsState)
+        setTimeout(this.loadAdvertisement, 0)
+        this.observer.unobserve(entry.target)
+
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
+          this.observer.observe(entry.target)
+        }, 8000)
+        // return entry
       })
     },
   },

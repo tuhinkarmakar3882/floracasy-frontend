@@ -141,7 +141,7 @@
       </header>
 
       <section class="blog-body pb-8 mb-4">
-        <InFeedAd key="Top-Ad" class="top-ads" />
+        <InFeedAd key="Top-Ad" />
 
         <article
           ref="articleContent"
