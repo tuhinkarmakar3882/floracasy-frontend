@@ -114,7 +114,6 @@ export default {
         process.env.NODE_ENV === 'production' &&
           LogAnalyticsEvent('ads_requested')
       } catch (e) {
-        console.log(e)
         process.env.NODE_ENV === 'production' &&
           LogAnalyticsEvent('ads_not_loaded')
       }
