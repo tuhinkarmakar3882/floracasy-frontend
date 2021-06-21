@@ -212,6 +212,7 @@ import c from 'highlight.js/lib/languages/c'
 import cpp from 'highlight.js/lib/languages/cpp'
 import vbscriptHtml from 'highlight.js/lib/languages/vbscript-html'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
+import { openDB } from 'idb'
 
 const { useMessageService } = require('~/environmentVariables')
 
@@ -352,14 +353,37 @@ export default {
         return
       }
 
-      if (!localStorage.getItem(this.$route.params.id)) {
-        await this.$axios.$post(
-          endpoints.blog.updateAnonymousViewCount.replace(
-            '{identifier}',
-            this.$route.params.id
+      const db = await openDB('BlogsViews', 1, {
+        upgrade(db) {
+          const store = db.createObjectStore('viewRecord', {
+            keyPath: 'id',
+          })
+          store.createIndex('id', 'id')
+        },
+      })
+
+      const tx = db.transaction('viewRecord', 'readwrite')
+      const store = tx.objectStore('viewRecord')
+
+      const alreadyViewed = await store.get(this.$route.params.id)
+
+      if (!alreadyViewed) {
+        try {
+          await this.$axios.$post(
+            endpoints.blog.updateAnonymousViewCount.replace(
+              '{identifier}',
+              this.$route.params.id
+            )
           )
-        )
-        localStorage.setItem(this.$route.params.id, 'true')
+          await store.put({
+            id: this.$route.params.id,
+            viewed: true,
+          })
+
+          await tx.done
+        } catch (e) {
+          console.log(e)
+        }
       }
     },
 
