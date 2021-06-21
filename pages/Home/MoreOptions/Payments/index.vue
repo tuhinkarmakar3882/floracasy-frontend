@@ -54,7 +54,7 @@
             </section>
           </aside>
           <p class="text-center mt-6 primary-light">
-            <small> - Updated Yesterday - </small>
+            <small> - Updated Weekly - </small>
           </p>
         </section>
       </div>
