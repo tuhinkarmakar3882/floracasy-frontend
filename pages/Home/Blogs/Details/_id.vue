@@ -362,8 +362,8 @@ export default {
         },
       })
 
-      const tx = db.transaction('viewRecord', 'readwrite')
-      const store = tx.objectStore('viewRecord')
+      let tx = db.transaction('viewRecord', 'readwrite')
+      let store = tx.objectStore('viewRecord')
 
       const alreadyViewed = await store.get(this.$route.params.id)
 
@@ -375,6 +375,10 @@ export default {
               this.$route.params.id
             )
           )
+
+          tx = db.transaction('viewRecord', 'readwrite')
+          store = tx.objectStore('viewRecord')
+
           await store.put({
             id: this.$route.params.id,
             viewed: true,
