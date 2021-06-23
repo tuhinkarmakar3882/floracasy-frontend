@@ -214,13 +214,19 @@ export default {
         await this.openSignInPage()
         return
       }
+
+      if (this.blog.isLiked) {
+        this.blog.isLiked = false
+        this.blog.totalLikes--
+      } else {
+        this.blog.isLiked = true
+        this.blog.totalLikes++
+      }
+
       try {
-        const { action } = await this.$axios.$post(endpoints.blog.like, {
+        await this.$axios.$post(endpoints.blog.like, {
           identifier: this.blog.identifier,
         })
-
-        action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
-        this.blog.isLiked = !this.blog.isLiked
       } catch (e) {
         await showUITip(this.$store, 'Network Error', 'error')
       }

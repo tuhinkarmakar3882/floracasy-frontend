@@ -227,14 +227,18 @@ export default {
     },
 
     async like() {
+      if (this.post.isLiked) {
+        this.post.isLiked = false
+        this.post.totalLikes--
+      } else {
+        this.post.isLiked = true
+        this.post.totalLikes++
+      }
+
       try {
-        const action = await this.$axios
-          .$post(endpoints.community_service.posts.like, {
-            identifier: this.post.identifier,
-          })
-          .then(({ action }) => action)
-        action === 'like-post' ? this.post.totalLikes++ : this.post.totalLikes--
-        this.post.isLiked = !this.post.isLiked
+        await this.$axios.$post(endpoints.community_service.posts.like, {
+          identifier: this.post.identifier,
+        })
       } catch (e) {
         await showUITip(this.$store, 'Unable to Like Post', 'warning')
       }
