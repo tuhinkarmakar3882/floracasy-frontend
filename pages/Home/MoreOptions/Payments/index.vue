@@ -82,7 +82,7 @@
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import { usePremiumServices } from '~/environmentVariables'
 import endpoints from '~/api/endpoints'
-import { getRelativeTime, showUITip } from '~/utils/utility'
+import { getRelativeTime } from '~/utils/utility'
 import ProgressRing from '~/components/Common/Tools/ProgressRing'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'

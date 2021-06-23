@@ -113,13 +113,12 @@ import endpoints from '@/api/endpoints'
 import { getRelativeTime, processLink, showUITip } from '@/utils/utility'
 import { mapGetters } from 'vuex'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
-import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 
 export default {
   name: 'BlogComments',
-  components: { LineSkeleton, ImageSkeleton, FallBackLoader, AppBarHeader },
+  components: { LineSkeleton, ImageSkeleton, AppBarHeader },
   middleware: 'isAuthenticated',
 
   async asyncData({ $axios, params, from: previousPage }) {

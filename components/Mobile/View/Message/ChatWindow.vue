@@ -17,7 +17,7 @@
     <main>
       <FallBackLoader v-if="loadingMoreMessage" />
       <transition-group name="scale-up">
-        <div class="py-4" ref="loadMoreSection" key="fetchMessages" />
+        <div key="fetchMessages" ref="loadMoreSection" class="py-4" />
 
         <section
           v-for="(segment, index) in chatMessages"
@@ -29,8 +29,8 @@
       <div ref="bottomOfChat" />
 
       <TypingAnimation
-        :photo-url="photoURL"
         v-if="typing"
+        :photo-url="photoURL"
         class="typing-animation"
       />
     </main>
@@ -65,14 +65,12 @@ import { Socket } from 'socket.io-client'
 import { mapGetters } from 'vuex'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import { showUITip } from '~/utils/utility'
-import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 
 export default {
   name: 'ChatWindow',
   components: {
     FallBackLoader,
-    LineSkeleton,
     ChatSegmentBlock,
     TypingAnimation,
   },
