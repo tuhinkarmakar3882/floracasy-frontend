@@ -402,16 +402,18 @@ export default {
     },
 
     async sendLikeRequest() {
+      if (this.blog.isLiked) {
+        this.blog.isLiked = false
+        this.blog.totalLikes--
+      } else {
+        this.blog.isLiked = true
+        this.blog.totalLikes++
+      }
+
       try {
-        const action = await this.$axios
-          .$post(endpoints.blog.like, {
-            identifier: this.blog.identifier,
-          })
-          .then(({ action }) => action)
-
-        action === 'like' ? this.blog.totalLikes++ : this.blog.totalLikes--
-
-        this.blog.isLiked = !this.blog.isLiked
+        await this.$axios.$post(endpoints.blog.like, {
+          identifier: this.blog.identifier,
+        })
       } catch (e) {
         await showUITip(this.$store, 'Network Error', 'error', true)
       }
