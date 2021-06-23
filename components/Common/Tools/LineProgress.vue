@@ -54,8 +54,9 @@ export default {
       if (textPosition > maxPosition) textPosition = maxPosition
       return `calc(${textPosition}% - 156px)`
     },
+
     notCompleted() {
-      return this.maxValue - this.value
+      return this.maxValue - this.value > 0
     },
   },
 }
