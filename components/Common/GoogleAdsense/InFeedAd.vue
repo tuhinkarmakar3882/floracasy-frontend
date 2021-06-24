@@ -107,16 +107,18 @@ export default {
         return
       }
 
-      this.$nextTick(this.resetAdsState)
+      this.resetAdsState()
 
-      try {
-        window.adsbygoogle?.push({})
-        process.env.NODE_ENV === 'production' &&
-          LogAnalyticsEvent('ads_requested')
-      } catch (e) {
-        process.env.NODE_ENV === 'production' &&
-          LogAnalyticsEvent('ads_not_loaded')
-      }
+      this.$nextTick(() => {
+        try {
+          window.adsbygoogle?.push({})
+          process.env.NODE_ENV === 'production' &&
+            LogAnalyticsEvent('ads_requested')
+        } catch (e) {
+          process.env.NODE_ENV === 'production' &&
+            LogAnalyticsEvent('ads_not_loaded')
+        }
+      })
     },
 
     resetAdsState() {
@@ -141,16 +143,15 @@ export default {
           this.showAds = false
           return
         }
+        this.resetAdsState()
 
-        this.$nextTick(this.resetAdsState)
-        setTimeout(this.loadAdvertisement, 0)
+        this.$nextTick(this.loadAdvertisement)
         this.observer.unobserve(entry.target)
 
         clearTimeout(this.timeout)
         this.timeout = setTimeout(() => {
           this.observer.observe(entry.target)
         }, 8000)
-        // return entry
       })
     },
   },
