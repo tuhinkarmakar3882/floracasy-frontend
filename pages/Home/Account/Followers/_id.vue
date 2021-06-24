@@ -6,14 +6,15 @@
 
     <main v-if="listOfUsers">
       <section class="my-4">
-        <UserSearchResult
-          v-for="(person, index) in listOfUsers"
-          :key="index"
-          v-ripple
-          :userdata="person"
-          only-is-followed
-          class="user-search-result px-4 py-4"
-        />
+        <div v-for="(person, index) in listOfUsers" :key="index">
+          <UserSearchResult
+            v-ripple
+            :userdata="person"
+            only-is-followed
+            class="user-search-result px-4 py-4"
+          />
+          <InFeedAd v-if="index && index % 5 === 0" />
+        </div>
       </section>
     </main>
 

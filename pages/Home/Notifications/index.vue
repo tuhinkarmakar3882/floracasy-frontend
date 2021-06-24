@@ -29,12 +29,16 @@
 
     <section class="notifications">
       <transition-group name="scale-up">
-        <NotificationItem
-          v-for="notification in notifications"
+        <div
+          v-for="(notification, index) in notifications"
           :key="notification.id"
-          :notification="notification"
-          class="notification-item py-4"
-        />
+        >
+          <NotificationItem
+            :notification="notification"
+            class="notification-item py-4"
+          />
+          <InFeedAd v-if="index && index % 5 === 0" />
+        </div>
       </transition-group>
     </section>
 
