@@ -37,7 +37,7 @@
             :notification="notification"
             class="notification-item py-4"
           />
-          <InFeedAd v-if="index && index % 5 === 0" />
+          <InFeedAd v-if="index && index % 10 === 0" />
         </div>
       </transition-group>
     </section>

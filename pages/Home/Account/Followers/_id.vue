@@ -13,7 +13,7 @@
             only-is-followed
             class="user-search-result px-4 py-4"
           />
-          <InFeedAd v-if="index && index % 5 === 0" />
+          <InFeedAd v-if="index && index % 8 === 0" />
         </div>
       </section>
     </main>

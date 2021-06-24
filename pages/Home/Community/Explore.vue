@@ -9,13 +9,14 @@
 
     <template v-if="listOfUsers" #main>
       <section class="my-4">
-        <UserSearchResult
-          v-for="(person, index) in listOfUsers"
-          :key="index"
-          v-ripple
-          :userdata="person"
-          class="user-search-result px-4 py-4"
-        />
+        <div v-for="(person, index) in listOfUsers" :key="index">
+          <UserSearchResult
+            v-ripple
+            :userdata="person"
+            class="user-search-result px-4 py-4"
+          />
+          <InFeedAd v-if="index && index % 8 === 0" />
+        </div>
       </section>
     </template>
 

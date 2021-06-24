@@ -19,69 +19,6 @@
         <span v-if="notification.unread" class="dot" />
       </p>
     </section>
-
-    <!--    <transition name="gray-shift">-->
-    <!--      <LazyModal-->
-    <!--        v-if="showModal"-->
-    <!--        :color="notification.notificationType.color"-->
-    <!--        :modal-type="notification.onclickAction"-->
-    <!--        :toggle="hideModal"-->
-    <!--        class="modal"-->
-    <!--      >-->
-    <!--        <template slot="title">-->
-    <!--          <h5>{{ notification.message }}</h5>-->
-    <!--        </template>-->
-
-    <!--        <template slot="body">-->
-    <!--          <section-->
-    <!--            v-if="notification.onclickAction === 'open_blog_comment_page'"-->
-    <!--          >-->
-    <!--            <blockquote v-if="message">&ldquo;{{ message }}&rdquo;</blockquote>-->
-    <!--            <LoadingIcon v-else />-->
-    <!--          </section>-->
-    <!--        </template>-->
-
-    <!--        <template slot="actions">-->
-    <!--          &lt;!&ndash;          Comment Notification Actions&ndash;&gt;-->
-    <!--          <section-->
-    <!--            v-if="notification.onclickAction === 'open_blog_comment_page'"-->
-    <!--          >-->
-    <!--            <button-->
-    <!--              v-ripple-->
-    <!--              class="primary-outlined-btn my-4 mx-2"-->
-    <!--              @click="openCommentDetailsPage"-->
-    <!--            >-->
-    <!--              Send Reply-->
-    <!--            </button>-->
-    <!--            <button-->
-    <!--              v-ripple-->
-    <!--              class="secondary-outlined-btn my-4 mx-2"-->
-    <!--              @click="openProfilePage('commentedBy')"-->
-    <!--            >-->
-    <!--              See Profile-->
-    <!--            </button>-->
-    <!--          </section>-->
-
-    <!--          &lt;!&ndash;          Blog Like Notification Actions&ndash;&gt;-->
-    <!--          <section v-else-if="notification.onclickAction === 'like_blog'">-->
-    <!--            <button-->
-    <!--              v-ripple-->
-    <!--              class="primary-outlined-btn my-4 mx-2"-->
-    <!--              @click="openBlogDetailsPage('identifier')"-->
-    <!--            >-->
-    <!--              View Blog-->
-    <!--            </button>-->
-    <!--            <button-->
-    <!--              v-ripple-->
-    <!--              class="secondary-outlined-btn my-4 mx-2"-->
-    <!--              @click="openProfilePage('liked_by')"-->
-    <!--            >-->
-    <!--              See Profile-->
-    <!--            </button>-->
-    <!--          </section>-->
-    <!--        </template>-->
-    <!--      </LazyModal>-->
-    <!--    </transition>-->
   </div>
 </template>
 
@@ -130,7 +67,7 @@ export default {
     getRelativeTime,
 
     async performNotificationAction() {
-      this.notification.unread && (await this.markAsRead())
+      this.notification.unread && this.markAsRead()
 
       const actionName = this.notification.onclickAction
       const actionInfo = this.notification.onclickActionInfo
@@ -141,7 +78,6 @@ export default {
           break
 
         case 'like_blog':
-          // await this.openModalForBlogLike()
           await this.openProfilePage('liked_by')
           break
 
