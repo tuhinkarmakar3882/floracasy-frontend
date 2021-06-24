@@ -20,73 +20,73 @@
       </p>
     </section>
 
-    <transition name="gray-shift">
-      <LazyModal
-        v-if="showModal"
-        :color="notification.notificationType.color"
-        :modal-type="notification.onclickAction"
-        :toggle="hideModal"
-        class="modal"
-      >
-        <template slot="title">
-          <h5>{{ notification.message }}</h5>
-        </template>
+    <!--    <transition name="gray-shift">-->
+    <!--      <LazyModal-->
+    <!--        v-if="showModal"-->
+    <!--        :color="notification.notificationType.color"-->
+    <!--        :modal-type="notification.onclickAction"-->
+    <!--        :toggle="hideModal"-->
+    <!--        class="modal"-->
+    <!--      >-->
+    <!--        <template slot="title">-->
+    <!--          <h5>{{ notification.message }}</h5>-->
+    <!--        </template>-->
 
-        <template slot="body">
-          <section
-            v-if="notification.onclickAction === 'open_blog_comment_page'"
-          >
-            <blockquote v-if="message">&ldquo;{{ message }}&rdquo;</blockquote>
-            <LoadingIcon v-else />
-          </section>
-        </template>
+    <!--        <template slot="body">-->
+    <!--          <section-->
+    <!--            v-if="notification.onclickAction === 'open_blog_comment_page'"-->
+    <!--          >-->
+    <!--            <blockquote v-if="message">&ldquo;{{ message }}&rdquo;</blockquote>-->
+    <!--            <LoadingIcon v-else />-->
+    <!--          </section>-->
+    <!--        </template>-->
 
-        <template slot="actions">
-          <!--          Comment Notification Actions-->
-          <section
-            v-if="notification.onclickAction === 'open_blog_comment_page'"
-          >
-            <button
-              v-ripple
-              class="primary-outlined-btn my-4 mx-2"
-              @click="openCommentDetailsPage"
-            >
-              Send Reply
-            </button>
-            <button
-              v-ripple
-              class="secondary-outlined-btn my-4 mx-2"
-              @click="openProfilePage('commentedBy')"
-            >
-              See Profile
-            </button>
-          </section>
+    <!--        <template slot="actions">-->
+    <!--          &lt;!&ndash;          Comment Notification Actions&ndash;&gt;-->
+    <!--          <section-->
+    <!--            v-if="notification.onclickAction === 'open_blog_comment_page'"-->
+    <!--          >-->
+    <!--            <button-->
+    <!--              v-ripple-->
+    <!--              class="primary-outlined-btn my-4 mx-2"-->
+    <!--              @click="openCommentDetailsPage"-->
+    <!--            >-->
+    <!--              Send Reply-->
+    <!--            </button>-->
+    <!--            <button-->
+    <!--              v-ripple-->
+    <!--              class="secondary-outlined-btn my-4 mx-2"-->
+    <!--              @click="openProfilePage('commentedBy')"-->
+    <!--            >-->
+    <!--              See Profile-->
+    <!--            </button>-->
+    <!--          </section>-->
 
-          <!--          Blog Like Notification Actions-->
-          <section v-else-if="notification.onclickAction === 'like_blog'">
-            <button
-              v-ripple
-              class="primary-outlined-btn my-4 mx-2"
-              @click="openBlogDetailsPage('identifier')"
-            >
-              View Blog
-            </button>
-            <button
-              v-ripple
-              class="secondary-outlined-btn my-4 mx-2"
-              @click="openProfilePage('liked_by')"
-            >
-              See Profile
-            </button>
-          </section>
-        </template>
-      </LazyModal>
-    </transition>
+    <!--          &lt;!&ndash;          Blog Like Notification Actions&ndash;&gt;-->
+    <!--          <section v-else-if="notification.onclickAction === 'like_blog'">-->
+    <!--            <button-->
+    <!--              v-ripple-->
+    <!--              class="primary-outlined-btn my-4 mx-2"-->
+    <!--              @click="openBlogDetailsPage('identifier')"-->
+    <!--            >-->
+    <!--              View Blog-->
+    <!--            </button>-->
+    <!--            <button-->
+    <!--              v-ripple-->
+    <!--              class="secondary-outlined-btn my-4 mx-2"-->
+    <!--              @click="openProfilePage('liked_by')"-->
+    <!--            >-->
+    <!--              See Profile-->
+    <!--            </button>-->
+    <!--          </section>-->
+    <!--        </template>-->
+    <!--      </LazyModal>-->
+    <!--    </transition>-->
   </div>
 </template>
 
 <script>
-import { getRelativeTime, showUITip } from '@/utils/utility'
+import { getRelativeTime, LogAnalyticsEvent, showUITip } from '@/utils/utility'
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 
@@ -141,7 +141,8 @@ export default {
           break
 
         case 'like_blog':
-          await this.openModalForBlogLike()
+          // await this.openModalForBlogLike()
+          await this.openProfilePage('liked_by')
           break
 
         case 'like_post':
@@ -163,7 +164,7 @@ export default {
           break
 
         case 'open_blog_comment_page':
-          await this.openModalForBlogComments()
+          await this.openCommentDetailsPage()
           break
 
         case 'open_post_comment_page':
@@ -171,13 +172,17 @@ export default {
           break
 
         default:
-          console.log('NOT_IMPLEMENTED', actionName, actionInfo)
+          LogAnalyticsEvent('SITUATION_NOT_IMPLEMENTED', {
+            actionName,
+            actionInfo,
+          })
           break
       }
     },
 
     async markAsRead() {
       try {
+        this.notification.unread = false
         await this.$axios.$post(
           endpoints.notification_system.updateNotificationSeenStatus,
           {
@@ -185,9 +190,9 @@ export default {
             is_read: true,
           }
         )
-        this.notification.unread = false
       } catch (e) {
         await showUITip(this.$store, 'Network Error!', 'error')
+        this.notification.unread = true
       }
     },
 
