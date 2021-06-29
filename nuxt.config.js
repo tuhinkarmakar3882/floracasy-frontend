@@ -65,6 +65,10 @@ export default {
     { path: '/server/api', handler: '~/server/api/nuxt-server-api.js' },
   ],
 
+  router: {
+    middleware: 'under-maintenance-middleware',
+  },
+
   plugins: [
     '~/plugins/custom-material-ripple.js',
     '~/plugins/firebase.js',
@@ -141,8 +145,6 @@ export default {
       threshold: 10240,
     },
   },
-
-  router: {},
 
   build: {
     parallel: process.env.NODE_ENV !== 'production',
