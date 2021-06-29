@@ -72,6 +72,7 @@ export const navigationRoutes = {
       },
       Payments: {
         index: '/Home/MoreOptions/Payments',
+        Analytics: '/Home/MoreOptions/Payments/Analytics',
       },
       Preferences: {
         index: '/Home/MoreOptions/Preferences',
