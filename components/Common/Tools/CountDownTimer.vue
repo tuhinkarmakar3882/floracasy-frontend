@@ -29,9 +29,9 @@ export default {
   data: () => ({
     currentTime: Date.now(),
     interval: undefined,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    hours: '00',
+    minutes: '00',
+    seconds: '00',
   }),
 
   computed: {
@@ -67,7 +67,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0;
   flex-wrap: wrap;
   width: 100%;
 
@@ -78,6 +77,13 @@ export default {
     margin: $micro-unit;
     box-shadow: $default-box-shadow;
     border-radius: $micro-unit;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    &:active {
+      transform: scale(0.9);
+    }
 
     h3 {
       margin: 0;
