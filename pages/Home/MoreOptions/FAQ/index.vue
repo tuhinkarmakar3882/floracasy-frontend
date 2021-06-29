@@ -77,7 +77,6 @@ import CustomListView from '~/components/Layout/CustomListView'
 export default {
   name: 'FAQ',
   components: { CustomListView, InFeedAd, QuestionCard, AppBarHeader },
-  middleware: 'isAuthenticated',
 
   asyncData({ from: previousPage }) {
     return { previousPage }
@@ -212,16 +211,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav-drawer {
-  margin: 0;
-  position: fixed;
-  top: 54px;
-  right: 0;
-  height: calc(100vh - 54px);
-  background-color: #0d0d17;
-  box-shadow: 2px 0 4px #0d0d17;
-  z-index: 123456789098765;
-  transition: all 150ms ease-in-out;
-  list-style: none;
+@import 'assets/all-variables';
+.faq-page {
+  .nav-drawer {
+    margin: 0;
+    position: fixed;
+    top: 54px;
+    right: 0;
+    height: calc(100vh - 54px);
+    background-color: #0d0d17;
+    box-shadow: 2px 0 4px #0d0d17;
+    z-index: 123456789098765;
+    transition: all 150ms ease-in-out;
+    list-style: none;
+  }
+  main {
+    max-width: $large-screen;
+    margin: auto;
+  }
 }
 </style>
