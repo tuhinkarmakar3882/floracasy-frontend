@@ -12,8 +12,8 @@
     <main>
       <section class="px-4">
         <article v-for="(blog, index) in blogs" :key="blog.id">
-          <BlogCard class="my-4" :blog="blog" />
-          <InFeedAd v-if="index && index % 6 === 0" />
+          <BlogCard class="my-6" :blog="blog" />
+          <InFeedAd v-if="index && index % 5 === 0" />
         </article>
       </section>
 
