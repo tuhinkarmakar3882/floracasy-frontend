@@ -168,7 +168,7 @@ export default {
   }
 
   main {
-    padding: 0 $nano-unit $micro-unit;
+    padding: 0 $nano-unit $milli-unit;
 
     * {
       font-family: $Nunito-Sans;
