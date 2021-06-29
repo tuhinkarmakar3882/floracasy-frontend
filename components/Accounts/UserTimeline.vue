@@ -55,11 +55,10 @@
                   <p class="mt-6 mb-8">
                     Remember the more you write, the better your skills become.
                   </p>
-                  <nuxt-link
-                    v-ripple
-                    :to="navigationRoutes.Home.Blogs.Create.AddBlog"
-                  >
-                    <button class="secondary-btn">Create More Blogs</button>
+                  <nuxt-link :to="navigationRoutes.Home.Blogs.Create.AddBlog">
+                    <button v-ripple class="secondary-btn">
+                      Create More Blogs
+                    </button>
                   </nuxt-link>
                 </section>
 

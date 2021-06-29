@@ -20,7 +20,7 @@
       <main>
         <section>
           <i class="mdi mdi-shape primary-light" />
-          <p>
+          <p class="white">
             Category:
             <span class="vibrant">{{ blog.category.name }}</span>
           </p>
@@ -28,21 +28,23 @@
 
         <section>
           <i class="mdi mdi-currency-usd-circle premium" />
-          <p>
+          <p class="white">
             Revenue:
-            <span class="vibrant">{{ earnings }}</span>
+            <span class="vibrant"
+              ><strong>{{ earnings }}</strong></span
+            >
           </p>
         </section>
 
         <section>
           <section>
             <i class="mdi mdi-eye" />
-            <span class="vibrant">{{ blog.totalViews }} </span>
+            <span class="white">{{ blog.totalViews }} </span>
           </section>
 
           <section>
             <i class="mdi mdi-incognito" />
-            <span class="vibrant">{{ blog.anonymousViews }}</span>
+            <span class="white">{{ blog.anonymousViews }}</span>
           </section>
         </section>
 

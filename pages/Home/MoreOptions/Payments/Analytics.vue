@@ -2,16 +2,19 @@
   <div class="payments-analytics-page">
     <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>{{ pageTitle }}</template>
+      <template #action-button>
+        <nuxt-link :to="navigationRoutes.Home.Blogs.Create.AddBlog">
+          <button v-ripple class="secondary-btn">Create More</button>
+        </nuxt-link>
+      </template>
     </AppBarHeader>
 
     <main>
       <section class="px-4">
-        <BlogCard
-          class="my-4"
-          :blog="blog"
-          v-for="blog in blogs"
-          :key="blog.id"
-        />
+        <article v-for="(blog, index) in blogs" :key="blog.id">
+          <BlogCard class="my-4" :blog="blog" />
+          <InFeedAd v-if="index && index % 6 === 0" />
+        </article>
       </section>
 
       <client-only>
@@ -28,15 +31,36 @@
           </template>
 
           <template slot="error">
-            <p class="danger-light my-6">Network Error</p>
+            <p class="danger-light my-6">Network Error. Please Reload</p>
+          </template>
+
+          <template slot="no-results">
+            <section class="px-4 py-4">
+              <h6 class="my-4">It's Lonely Here...</h6>
+              <p class="mt-6 mb-8">
+                Looks like, you haven't written any blogs yet!
+                <br />
+                Start Writing now to Start Earning!
+              </p>
+              <nuxt-link :to="navigationRoutes.Home.Blogs.Create.AddBlog">
+                <button v-ripple class="secondary-btn">Create Blog</button>
+              </nuxt-link>
+            </section>
           </template>
 
           <template slot="no-more">
-            <p class="secondary-matte text-center mt-4 mb-8">
-              <i class="mdi mdi-party-popper mdi-18px" />
-              <br />
-              <small> That's all </small>
-            </p>
+            <section class="px-4 py-4">
+              <h6 class="my-4">Good Going!</h6>
+              <p class="mt-6 mb-8">
+                Remember the more you write, the better your skills become.
+              </p>
+              <nuxt-link
+                v-ripple
+                :to="navigationRoutes.Home.Blogs.Create.AddBlog"
+              >
+                <button class="secondary-btn">Create More Blogs</button>
+              </nuxt-link>
+            </section>
           </template>
         </infinite-loading>
       </client-only>
@@ -52,10 +76,12 @@ import AppBarHeader from '~/components/Layout/AppBarHeader'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import BlogCard from '~/components/Blogs/BlogCard'
 import { mapGetters } from 'vuex'
+import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 
 export default {
   name: 'Payments',
   components: {
+    InFeedAd,
     BlogCard,
     LineSkeleton,
     AppBarHeader,
