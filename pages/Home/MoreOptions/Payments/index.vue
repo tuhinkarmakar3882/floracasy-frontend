@@ -2,6 +2,13 @@
   <div class="payments-page">
     <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
       <template #title>{{ pageTitle }}</template>
+      <template #action-button>
+        <nuxt-link :to="openAnalyticsPage">
+          <button v-ripple class="my-6 secondary-outlined-btn">
+            Analytics
+          </button>
+        </nuxt-link>
+      </template>
     </AppBarHeader>
 
     <main>
@@ -63,19 +70,18 @@
 
       <section class="py-4 px-4">
         <h4 class="heading-title my-8">Tips to Improve Your Earnings</h4>
-        <LazyKeyPoint
+        <KeyPoint
           v-for="(point, index) in tipsToImprove"
           :key="index"
           :point="point"
           :tick-size="20"
+          text-color="#EEE"
           class="my-4"
           tick-color="#6DD0BF"
         />
       </section>
 
       <InviteCode />
-
-      <!--      {{ coinBalance }}-->
     </main>
   </div>
 </template>
@@ -89,10 +95,19 @@ import ProgressRing from '~/components/Common/Tools/ProgressRing'
 import AppBarHeader from '~/components/Layout/AppBarHeader'
 import FallBackLoader from '~/components/Common/Tools/FallBackLoader'
 import LoadingError from '~/components/Common/Tools/LoadingError'
+import InviteCode from '~/components/Mobile/View/Referral/InviteCode'
+import KeyPoint from '~/components/Common/Tools/KeyPoint'
 
 export default {
   name: 'Payments',
-  components: { LoadingError, FallBackLoader, AppBarHeader, ProgressRing },
+  components: {
+    KeyPoint,
+    InviteCode,
+    LoadingError,
+    FallBackLoader,
+    AppBarHeader,
+    ProgressRing,
+  },
   middleware: 'isAuthenticated',
 
   asyncData({ from: previousPage }) {
@@ -107,10 +122,12 @@ export default {
       navigationRoutes,
       pageTitle: 'Payments',
       tipsToImprove: [
-        'Try to be a Consistent Blog Writer on the Platform',
-        'Great content, keeps your readers engaged',
-        'Try engaging with your community via our Social Section',
-        'Remember, Consistency is the key to be Successful',
+        'Demographics play a big role',
+        'Share your articles with your friends',
+        'Write blogs consistency on the platform',
+        'Great content keeps your readers engaged',
+        'Engage with your followers via the Social Section',
+        'Remember that Consistency is the key to be Successful',
       ],
       points: [
         'Get Detailed Insights',
@@ -137,6 +154,10 @@ export default {
 
     redeemButtonClass() {
       return this.amountLeft > 0 ? 'disabled-btn' : 'primary-btn'
+    },
+
+    openAnalyticsPage() {
+      return navigationRoutes.Home.MoreOptions.Payments.Analytics
     },
   },
 
