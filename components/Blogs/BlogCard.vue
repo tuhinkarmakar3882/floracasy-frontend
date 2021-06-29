@@ -22,7 +22,7 @@
           <i class="mdi mdi-shape primary-light" />
           <p class="white">
             Category:
-            <span class="vibrant">{{ blog.category.name }}</span>
+            <span class="secondary-highlight">{{ blog.category.name }}</span>
           </p>
         </section>
 
@@ -30,7 +30,7 @@
           <i class="mdi mdi-currency-usd-circle premium" />
           <p class="white">
             Revenue:
-            <span class="vibrant"
+            <span class="secondary-highlight"
               ><strong>{{ earnings }}</strong></span
             >
           </p>
@@ -68,10 +68,12 @@
         <section class="seo">
           <aside>
             <i class="mdi mdi-cloud-search white" />
-            <span>SEO Keywords:</span>
-            <span v-if="!blog.keywords" class="vibrant">Not Added</span>
+            <span class="white">SEO Keywords:</span>
+            <span v-if="!blog.keywords" class="secondary-highlight"
+              >Not Added</span
+            >
           </aside>
-          <span class="vibrant keywords">{{ blog.keywords }}</span>
+          <span class="secondary-highlight keywords">{{ blog.keywords }}</span>
         </section>
       </main>
     </nuxt-link>
@@ -137,7 +139,7 @@ export default {
 
 .blog-preview {
   border-radius: $micro-unit;
-  background: $card-bg;
+  background: $body-bg-alternate;
   border-left: $nano-unit solid $danger-light;
 
   img {

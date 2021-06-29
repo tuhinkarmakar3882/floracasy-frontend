@@ -4,7 +4,7 @@
       <template #title>{{ pageTitle }}</template>
       <template #action-button>
         <nuxt-link :to="navigationRoutes.Home.Blogs.Create.AddBlog">
-          <button v-ripple class="secondary-btn">Create More</button>
+          <button v-ripple class="primary-btn">Create Blog</button>
         </nuxt-link>
       </template>
     </AppBarHeader>
@@ -97,7 +97,7 @@ export default {
       previousPage: undefined,
       fallbackPage: navigationRoutes.Home.MoreOptions.Payments.index,
       navigationRoutes,
-      pageTitle: 'Earning Analytics',
+      pageTitle: 'Analytics',
       loading: true,
       loadingError: false,
       blogs: [],

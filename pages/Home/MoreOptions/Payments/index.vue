@@ -68,7 +68,21 @@
         </section>
       </div>
 
-      <section class="py-4 px-4">
+      <section class="pt-4 px-4">
+        <h4 class="mt-6 mb-4">Looking for Analytics?</h4>
+        <p>
+          We believe in transparent payment system. Hence here you can get more
+          information about the revenue that your blogs are generating & also
+          can check the engagement.
+        </p>
+        <nuxt-link :to="openAnalyticsPage">
+          <button v-ripple class="my-6 premium-outlined-btn">
+            Show Analytics
+          </button>
+        </nuxt-link>
+      </section>
+
+      <section class="pb-4 px-4">
         <h4 class="heading-title my-8">Tips to Improve Your Earnings</h4>
         <KeyPoint
           v-for="(point, index) in tipsToImprove"
