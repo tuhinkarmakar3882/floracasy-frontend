@@ -133,6 +133,7 @@ const endpoints = {
 
   payments: {
     fetch: '/allow_authenticated/payments/fetch/',
+    fetchBlogEarnings: '/allow_authenticated/payments/fetch/earnings/{blogId}/',
   },
   rewards: {
     coins: '/allow_authenticated/rewards/coins/',
