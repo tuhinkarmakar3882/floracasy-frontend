@@ -1,70 +1,78 @@
 <template>
   <div v-ripple class="blog-preview">
-    <!--    <nuxt-link :to="blogDetailsPage">-->
-    <img v-if="blog" :src="blog.coverImage" alt="" />
-    <header>
-      <h6 class="mb-0">{{ blog.title }}</h6>
-      <p class="my-2">{{ blog.subtitle }}</p>
-      <small>Published {{ getRelativeTime(blog.createdAt) }}</small>
-    </header>
+    <nuxt-link
+      :class="[blog.coverImage && 'has-blog-image']"
+      :to="blogDetailsPage"
+    >
+      <!--      <img v-if="blog.coverImage" :src="blog.coverImage" alt="" />-->
 
-    <main>
-      <section>
-        <i class="mdi mdi-shape" />
-        <p>
-          Category:
-          <span class="vibrant">{{ blog.category.name }}</span>
+      <header>
+        <h6 class="mb-0">{{ blog.title }}</h6>
+        <p class="my-2">
+          {{
+            blog.subtitle ||
+            'No Subtitle added. Tip: Add a subtitle to make it more exciting'
+          }}
         </p>
-      </section>
+        <small> Published {{ getRelativeTime(blog.createdAt) }}</small>
+      </header>
 
-      <section>
-        <i class="mdi mdi-currency-usd-circle" />
-        <p>
-          Revenue:
-          <span class="vibrant">{{ earnings }}</span>
-        </p>
-      </section>
+      <main>
+        <section>
+          <i class="mdi mdi-shape primary-light" />
+          <p>
+            Category:
+            <span class="vibrant">{{ blog.category.name }}</span>
+          </p>
+        </section>
 
-      <section>
-        <i class="mdi mdi-eye" />
-        <span class="vibrant">{{ blog.totalViews }} </span>
-      </section>
+        <section>
+          <i class="mdi mdi-currency-usd-circle premium" />
+          <p>
+            Revenue:
+            <span class="vibrant">{{ earnings }}</span>
+          </p>
+        </section>
 
-      <section>
-        <i class="mdi mdi-incognito" />
-        <span class="vibrant">{{ blog.anonymousViews }}</span>
-      </section>
+        <section>
+          <section>
+            <i class="mdi mdi-eye" />
+            <span class="vibrant">{{ blog.totalViews }} </span>
+          </section>
 
-      <section>
-        <i class="mdi mdi-heart" />
-        <p>
-          Likes:
-          <span class="vibrant">{{ blog.totalLikes }}</span>
-        </p>
-      </section>
+          <section>
+            <i class="mdi mdi-incognito" />
+            <span class="vibrant">{{ blog.anonymousViews }}</span>
+          </section>
+        </section>
 
-      <section>
-        <i class="mdi mdi-comment" />
-        <p>
-          Comments: <span class="vibrant">{{ blog.totalComments }}</span>
-        </p>
-      </section>
+        <section>
+          <section>
+            <i class="mdi mdi-heart danger-light" />
+            <span class="white">{{ blog.totalLikes }}</span>
+          </section>
 
-      <section>
-        <i class="mdi mdi-share" />
-        <p>
-          Shares: <span class="vibrant">{{ blog.totalShares }}</span>
-        </p>
-      </section>
+          <section>
+            <i class="mdi mdi-comment success-light" />
+            <span class="white">{{ blog.totalComments }}</span>
+          </section>
 
-      <section>
-        <i class="mdi mdi-cloud-search" />
-        <p>
-          SEO Keywords: <span class="vibrant">{{ blog.keywords }}</span>
-        </p>
-      </section>
-    </main>
-    <!--    </nuxt-link>-->
+          <section>
+            <i class="mdi mdi-share delete-color" />
+            <span class="white">{{ blog.totalShares }}</span>
+          </section>
+        </section>
+
+        <section class="seo">
+          <aside>
+            <i class="mdi mdi-cloud-search white" />
+            <span>SEO Keywords:</span>
+            <span v-if="!blog.keywords" class="vibrant">Not Added</span>
+          </aside>
+          <span class="vibrant keywords">{{ blog.keywords }}</span>
+        </section>
+      </main>
+    </nuxt-link>
   </div>
 </template>
 
@@ -128,22 +136,63 @@ export default {
 .blog-preview {
   border-radius: $micro-unit;
   background: $card-bg;
-  border-left: $nano-unit solid $info;
-  padding: $micro-unit $standard-unit;
+  border-left: $nano-unit solid $danger-light;
+
+  img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-top-left-radius: $micro-unit;
+    border-top-right-radius: $micro-unit;
+  }
 
   a {
     text-decoration: none;
-    display: flex;
+    @media screen and (min-width: $large-screen) {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+
+      //&.has-blog-image {
+      //  grid-template-columns: 1fr 2fr;
+      //  grid-template-rows: auto auto;
+      //}
+    }
+  }
+
+  header {
+    padding: $micro-unit $standard-unit 0;
   }
 
   main {
+    padding: 0 $nano-unit $micro-unit;
+
     * {
       font-family: $Nunito-Sans;
     }
+
     section {
       display: flex;
       align-items: center;
       margin: $nano-unit 0;
+
+      &.seo {
+        align-items: initial;
+        flex-direction: column;
+
+        aside {
+          display: flex;
+          align-items: center;
+        }
+
+        span {
+          margin-left: 4px;
+
+          &.keywords {
+            max-height: 150px;
+            overflow-y: scroll;
+          }
+        }
+      }
 
       i {
         height: 40px;
