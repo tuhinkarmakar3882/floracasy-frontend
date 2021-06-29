@@ -63,10 +63,12 @@ import AppFeel from '~/components/Layout/AppFeel'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
 import LoadingError from '~/components/Common/Tools/LoadingError'
+import InFeedAd from '~/components/Common/GoogleAdsense/InFeedAd'
 
 export default {
   name: 'Explore',
   components: {
+    InFeedAd,
     LoadingError,
     LineSkeleton,
     ImageSkeleton,

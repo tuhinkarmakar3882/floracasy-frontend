@@ -56,10 +56,12 @@ import AppBarHeader from '~/components/Layout/AppBarHeader'
 import CommunityPostComments from '~/components/Social/Posts/CommunityPostComments'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import CommunityPost from '~/components/Social/Posts/CommunityPost'
 
 export default {
   name: 'PostDetails',
   components: {
+    CommunityPost,
     LineSkeleton,
     ImageSkeleton,
     CommunityPostComments,

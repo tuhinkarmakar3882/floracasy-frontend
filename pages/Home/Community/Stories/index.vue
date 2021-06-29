@@ -48,9 +48,11 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { processLink } from '~/utils/utility'
+import AppFeel from '~/components/Layout/AppFeel'
 
 export default {
   name: 'AllStories',
+  components: { AppFeel },
   middleware: 'isAuthenticated',
 
   asyncData({ from: prevURL }) {

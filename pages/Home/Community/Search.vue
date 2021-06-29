@@ -74,9 +74,11 @@
 import { navigationRoutes } from '~/navigation/navigationRoutes'
 import endpoints from '~/api/endpoints'
 import { LogAnalyticsEvent, showUITip } from '~/utils/utility'
+import AppFeel from '~/components/Layout/AppFeel'
 
 export default {
   name: 'Search',
+  components: { AppFeel },
   middleware: 'isAuthenticated',
 
   data() {
