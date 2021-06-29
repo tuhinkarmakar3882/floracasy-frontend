@@ -60,10 +60,12 @@ export default {
       navigationRoutes,
       pageTitle: 'Earn By Writing',
       points: [
-        'Try to be a Consistent Blog Writer on the Platform',
-        'Great content, keeps your readers engaged',
-        'Try engaging with your community via our Social Section',
-        'Remember, Consistency is the key to be Successful',
+        'Demographics play a big role',
+        'Share your articles with your friends',
+        'Write blogs consistency on the platform',
+        'Great content keeps your readers engaged',
+        'Engage with your followers via the Social Section',
+        'Remember that Consistency is the key to be Successful',
       ],
       segments: [
         {
