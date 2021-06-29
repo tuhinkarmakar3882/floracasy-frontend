@@ -105,17 +105,24 @@ export default {
             skills, it's very easy to earn ample amount of money.`,
         },
         {
+          id: 1021,
+          statement: `How to My Earnings are calculated?`,
+          answer: `On a High level, your earnings depends on the number of followers you have, your consistency in writing
+          new content and the incoming traffic amount into your blogs/content. Demographics & Authenticity plays a big role here.
+          Roughly based on the above content, The Ad revenue accumulated and updated frequently.`,
+        },
+        {
           id: 103,
           statement: `How can I improve my earning?`,
           answer: `Simple steps can do a lot here. Try sharing your blogs with you family & friends. Try maintaining a
-            consistency in writing. Try engaging with your audience by utilizing the Community Section. May be increase
-            the followers?`,
+            consistency in writing. Try engaging with your audience by utilizing the Community Section. Increase your
+            followers. Refer people`,
         },
         {
           id: 104,
           statement: `When can I redeem the amount?`,
           answer: `Once you hit the minimum threshold, you can claim the amount. It'll be transferred post your identity
-            verification.`,
+            verification. You can get more details by going to the payments section.`,
         },
         {
           id: 105,
@@ -123,6 +130,12 @@ export default {
           answer: `You can see your earning details by going to the payment page by pressing "payment" button (which
             can found in profile page) or you can go to "More Options" from the navigation and click on payments.
             There you'll be shown your earnings.`,
+        },
+        {
+          id: 1051,
+          statement: `What is Floracasy's Transparent Payments System?`,
+          answer: `We believe in transparency across our app. Hence, in the payments, you can go to the analytics to
+          check & gain more info about per blog wise earnings`,
         },
         {
           id: 106,
@@ -139,8 +152,7 @@ export default {
         {
           id: 108,
           statement: `Can I Message Someone in Floracasy?`,
-          answer: `Yes, we are working to roll out a secure & privacy focused ad-free messaging experience, very soon
-            in the near future.`,
+          answer: `Yes, You Can! You need to earn floracoins to unlock that.`,
         },
         {
           id: 109,
@@ -196,6 +208,12 @@ export default {
           statement: `How many users can I invite with the referral code?`,
           answer: `As much as you want there is no limit.`,
         },
+        {
+          id: 118,
+          statement: `What can I Do with the Floracoins?`,
+          answer: `You can use them to unlock more features & eventually (in near future) you can unlock free coupons
+          and a whole suite of new things.`,
+        },
       ],
     }
   },
@@ -212,6 +230,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'assets/all-variables';
+
 .faq-page {
   .nav-drawer {
     margin: 0;
@@ -225,6 +244,7 @@ export default {
     transition: all 150ms ease-in-out;
     list-style: none;
   }
+
   main {
     max-width: $large-screen;
     margin: auto;
