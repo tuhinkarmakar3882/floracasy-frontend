@@ -11,25 +11,40 @@
       <main class="my-4">
         <div class="top-area mb-6">
           <section class="logo">
-            <LazyLogo class="mr-4" />
+            <Logo class="mr-4" />
             <h4>Floracasy</h4>
           </section>
+
           <aside class="text-center">
             <small> Version: {{ versionNumber }} </small>
           </aside>
 
-          <section class="social-links mt-6">
+          <section class="social-links my-6">
             <a
               href="https://www.facebook.com/pages/category/Product-Service/Floracasy-Where-Knowledge-Gets-Socialized-108505071383665/"
               target="follow_us_tab"
             >
-              <i class="mdi mdi-facebook mdi-48px white" />
+              <FaceBookIcon class="svg-icon" />
             </a>
+
             <a
               href="https://www.linkedin.com/company/floracasy/"
               target="follow_us_tab"
             >
-              <i class="mdi mdi-linkedin mdi-48px white" />
+              <LinkedinIcon class="svg-icon" />
+            </a>
+
+            <a
+              href="https://play.google.com/store/apps/details?id=com.floracasy.twa"
+              target="follow_us_tab"
+            >
+              <img
+                alt="Download on google play"
+                class="svg-icon"
+                height="48"
+                src="/icons/google-play-alternate.png"
+                width="48"
+              />
             </a>
           </section>
           <p class="text-center">
@@ -103,10 +118,14 @@
 <script>
 import { navigationRoutes } from '@/navigation/navigationRoutes'
 import * as packageJson from '@/package.json'
+import FaceBookIcon from '~/components/Icons/FaceBookIcon'
+import AppFeel from '~/components/Layout/AppFeel'
+import Logo from '~/components/Common/Tools/Logo'
+import LinkedinIcon from '~/components/Icons/LinkedinIcon'
 
 export default {
   name: 'About',
-
+  components: { LinkedinIcon, Logo, AppFeel, FaceBookIcon },
   asyncData({ from: prevURL }) {
     return { prevURL }
   },
@@ -165,12 +184,18 @@ $blog-border-radius: 20px;
         align-items: center;
         justify-content: center;
         width: 100%;
-        gap: 16px;
 
-        a {
-          &:hover,
-          &:focus {
-            transform: scale(1.2);
+        $size: 2 * $large-unit;
+
+        .svg-icon {
+          margin: 0 $standard-unit;
+          height: $size;
+          width: $size;
+          display: block;
+          font-size: 2 * $xx-large-unit;
+
+          &:hover {
+            transform: scale(1.1);
           }
 
           &:active {
