@@ -10,7 +10,7 @@
       have you check that out!
     </p>
 
-    <CountDownTimer :target-time="1624969928220" class="my-8" />
+    <CountDownTimer :target-time="1625979928220" class="my-8" />
 
     <section class="social-links mb-6">
       <a

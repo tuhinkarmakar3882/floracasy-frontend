@@ -4,7 +4,7 @@
       <transition-group name="scale-up">
         <article v-for="(blog, index) in blogs" :key="blog.id">
           <BlogPost :blog="blog" class="pb-0 pt-8" />
-          <InFeedAd v-if="!hideAds" />
+          <InFeedAd v-if="!hideAds && index && index % 2 === 0" />
           <LazyFollowSuggestions
             v-if="showFollowSuggestions && index === 2"
             class="pb-6"
