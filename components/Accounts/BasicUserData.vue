@@ -12,16 +12,29 @@
       <p v-if="user.designation" class="designation">
         <em>{{ user.designation }}</em>
       </p>
+      <p v-else-if="isMe" class="designation">
+        <em>Designation Not Set</em>
+      </p>
     </div>
   </section>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'BasicUserData',
   props: {
-    user: {
+    userData: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    ...mapGetters({
+      user: 'UserManagement/getUser',
+    }),
+    isMe() {
+      return this.userData.id === this.user.uid
     },
   },
 }

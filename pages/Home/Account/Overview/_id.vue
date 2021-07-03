@@ -1,7 +1,14 @@
 <template>
   <div class="details-page">
-    <AppBarHeader :fallback-page="fallbackPage" :previous-page="previousPage">
+    <AppBarHeader
+      :fallback-page="fallbackPage"
+      :previous-page="previousPage"
+      no-right-padding
+    >
       <template #title>{{ pageTitle }}</template>
+      <template #action-button>
+        <i v-ripple class="mdi mdi-share" @click="shareProfile" />
+      </template>
     </AppBarHeader>
 
     <aside v-if="loadingProfile" class="px-4 sample-response">
@@ -51,14 +58,14 @@
     />
 
     <main v-else>
-      <section v-if="otherUser" class="user-profile px-1">
-        <BasicUserData :user="otherUser" />
+      <section class="user-profile px-1">
+        <BasicUserData :user-data="user" />
 
         <section>
-          <LazyUserStatistics
+          <UserStatistics
             v-if="statisticsItem"
             :statistics-item="statisticsItem"
-            :user-id="$route.params.id"
+            :user-id="user.uid"
           />
           <aside v-else class="sample-3-column-response my-8 px-4">
             <section>
@@ -76,9 +83,43 @@
           </aside>
         </section>
 
-        <p v-if="otherUser.about" class="">{{ otherUser.about }}</p>
+        <section class="other-info">
+          <p
+            v-ripple
+            class="about text-center"
+            @click="editContent"
+            v-if="isMe"
+          >
+            {{ user.about || 'About Not Set' }}
+          </p>
+          <p v-ripple class="about text-center" v-else>
+            {{ otherUser.about }}
+          </p>
+        </section>
 
-        <aside class="actions my-4">
+        <section class="actions" v-if="isMe">
+          <button
+            v-ripple
+            class="primary-btn px-6"
+            @click="
+              $router.push(navigationRoutes.Home.MoreOptions.Payments.index)
+            "
+          >
+            Payments
+          </button>
+          <button
+            v-ripple
+            class="primary-outlined-btn px-6"
+            @click="
+              $router.push(
+                navigationRoutes.Home.MoreOptions.Preferences.SavedBlogs
+              )
+            "
+          >
+            Saved Blogs
+          </button>
+        </section>
+        <aside class="actions my-4" v-else>
           <section @click="followOrUnfollow(otherUser)">
             <RippleButton
               :class-list="
@@ -112,10 +153,18 @@
         </aside>
       </section>
 
-      <hr class="faded-divider" />
-
-      <LazyUserTimeline :user-uid="$route.params.id" />
+      <UserTimeline :user-uid="user.uid" />
     </main>
+
+    <transition name="slide-up">
+      <LazyShareFallbackForDesktop
+        v-if="useShareFallBack"
+        :description="descriptionText"
+        :handle-close="hideFallback"
+        :link-url="profileLink"
+        style="z-index: 10000001; position: fixed"
+      />
+    </transition>
   </div>
 </template>
 
@@ -131,10 +180,14 @@ import RippleButton from '~/components/Common/Tools/RippleButton'
 import BasicUserData from '~/components/Accounts/BasicUserData'
 import ImageSkeleton from '~/components/Common/SkeletonLoader/ImageSkeleton'
 import LineSkeleton from '~/components/Common/SkeletonLoader/LineSkeleton'
+import UserTimeline from '~/components/Accounts/UserTimeline'
+import UserStatistics from '~/components/Accounts/UserStatistics'
 
 export default {
   name: 'Overview',
   components: {
+    UserStatistics,
+    UserTimeline,
     BasicUserData,
     RippleButton,
     LoadingError,
@@ -166,6 +219,8 @@ export default {
 
       loadingProfile: true,
       loadingError: false,
+
+      useShareFallBack: false,
     }
   },
 
@@ -173,6 +228,15 @@ export default {
     ...mapGetters({
       user: 'UserManagement/getUser',
     }),
+    isMe() {
+      return this.$route.params.id === this.user.uid
+    },
+    descriptionText() {
+      return `View ${this.isMe ? 'my' : 'this'} profile on Floracasy: `
+    },
+    profileLink() {
+      return `https://floracasy.com${this.$route.path}`
+    },
   },
 
   async mounted() {
@@ -183,9 +247,9 @@ export default {
       linkPosition: -1,
     })
 
-    if (this.$route.params.id === this.user.uid)
-      await this.$router.replace(navigationRoutes.Home.Account.Details)
-    else await this.loadProfile()
+    if (this.isMe) this.otherUser = this.user
+
+    await this.loadProfile()
   },
 
   methods: {
@@ -255,6 +319,42 @@ export default {
       }
 
       LogAnalyticsEvent('following_or_unfollowing')
+    },
+
+    async editContent() {
+      await this.$router.push(
+        navigationRoutes.Home.MoreOptions.Preferences.EditProfile
+      )
+    },
+
+    async shareProfile() {
+      if (!navigator.share) {
+        LogAnalyticsEvent('profile_share_fallback_opened')
+        this.useShareFallBack = !this.useShareFallBack
+        return
+      }
+
+      await this.useNativeShare()
+    },
+    async useNativeShare() {
+      try {
+        await navigator.share({
+          title: this.blog.title + '- Floracasy',
+          text: `I just published this on Floracasy: ${this.blog.title}. Read more at Floracasy`,
+          url: navigationRoutes.Home.Blogs.Details.replace(
+            '{id}',
+            this.blog.identifier
+          ),
+        })
+
+        await this.updateShareCount()
+        LogAnalyticsEvent('blog_shared')
+      } catch (error) {
+        await showUITip(this.$store, 'May be Later?', 'warning')
+      }
+    },
+    hideFallback() {
+      this.useShareFallBack = false
     },
   },
 

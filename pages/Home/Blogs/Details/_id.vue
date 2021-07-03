@@ -25,7 +25,7 @@
           class="ml-auto px-6"
           style="height: 56px; display: flex; align-items: center"
         >
-          <h5 class="mdi mdi-message-text-outline" />
+          <h5 class="mdi mdi-message-text" />
         </nuxt-link>
       </template>
     </AppBarHeader>
