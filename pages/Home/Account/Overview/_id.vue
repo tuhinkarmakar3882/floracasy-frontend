@@ -206,6 +206,7 @@ export default {
       previousPage: undefined,
       fallbackPage: navigationRoutes.Home.DashBoard,
       pageTitle: 'Profile Details',
+      htmlPageTitle: '',
 
       useMessageService,
       navigationRoutes,
@@ -250,6 +251,10 @@ export default {
     if (this.isMe) this.otherUser = this.user
 
     await this.loadProfile()
+
+    this.htmlPageTitle = `${this.otherUser.displayName} | Profile Details`
+
+    if (this.isMe) this.pageTitle = 'My Profile'
   },
 
   methods: {
@@ -360,7 +365,7 @@ export default {
 
   head() {
     return {
-      title: this.pageTitle,
+      title: this.htmlPageTitle || this.pageTitle,
     }
   },
 }
