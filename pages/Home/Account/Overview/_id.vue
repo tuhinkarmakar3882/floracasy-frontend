@@ -59,13 +59,13 @@
 
     <main v-else>
       <section class="user-profile px-1">
-        <BasicUserData :user-data="user" />
+        <BasicUserData :user-data="otherUser" />
 
         <section>
           <UserStatistics
             v-if="statisticsItem"
             :statistics-item="statisticsItem"
-            :user-id="user.uid"
+            :user-id="otherUser.id || otherUser.uid"
           />
           <aside v-else class="sample-3-column-response my-8 px-4">
             <section>
@@ -152,8 +152,7 @@
           </section>
         </aside>
       </section>
-
-      <UserTimeline :user-uid="user.uid" />
+      <UserTimeline :user-uid="otherUser.id || otherUser.uid" />
     </main>
 
     <transition name="slide-up">
@@ -230,6 +229,7 @@ export default {
       user: 'UserManagement/getUser',
     }),
     isMe() {
+      console.log(this.$route.params.id, this.user.uid)
       return this.$route.params.id === this.user.uid
     },
     descriptionText() {
@@ -248,13 +248,14 @@ export default {
       linkPosition: -1,
     })
 
-    if (this.isMe) this.otherUser = this.user
+    if (this.isMe) {
+      this.otherUser = this.user
+      this.pageTitle = 'My Profile'
+    }
 
     await this.loadProfile()
 
     this.htmlPageTitle = `${this.otherUser.displayName} | Profile Details`
-
-    if (this.isMe) this.pageTitle = 'My Profile'
   },
 
   methods: {

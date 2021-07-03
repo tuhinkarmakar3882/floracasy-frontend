@@ -1,16 +1,16 @@
 <template>
   <section class="basic-user-data">
     <img
-      :src="user.photoURL"
+      :src="userData.photoURL"
       alt="profile-picture"
       class="picture"
       height="100"
       width="100"
     />
     <div class="basic-details">
-      <p class="name">{{ user.displayName }}</p>
-      <p v-if="user.designation" class="designation">
-        <em>{{ user.designation }}</em>
+      <p class="name">{{ userData.displayName }}</p>
+      <p v-if="userData.designation" class="designation">
+        <em>{{ userData.designation }}</em>
       </p>
       <p v-else-if="isMe" class="designation">
         <em>Designation Not Set</em>
