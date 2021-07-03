@@ -344,16 +344,13 @@ export default {
     async useNativeShare() {
       try {
         await navigator.share({
-          title: this.blog.title + '- Floracasy',
-          text: `I just published this on Floracasy: ${this.blog.title}. Read more at Floracasy`,
-          url: navigationRoutes.Home.Blogs.Details.replace(
-            '{id}',
-            this.blog.identifier
-          ),
+          title: this.descriptionText,
+          text: this.descriptionText,
+          url: this.profileLink,
         })
 
         await this.updateShareCount()
-        LogAnalyticsEvent('blog_shared')
+        LogAnalyticsEvent('profile_shared')
       } catch (error) {
         await showUITip(this.$store, 'May be Later?', 'warning')
       }
