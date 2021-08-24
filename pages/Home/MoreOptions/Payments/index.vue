@@ -62,7 +62,7 @@
           </aside>
           <p class="text-center mt-6 primary-light">
             <small>
-              - Last Updated {{ getRelativeTime(balanceInfo.updatedAt) }} ago -
+              - Last Updated {{ getRelativeTime(balanceInfo.updatedAt) }} -
             </small>
           </p>
         </section>
