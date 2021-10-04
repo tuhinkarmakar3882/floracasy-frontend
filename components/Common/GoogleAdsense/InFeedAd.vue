@@ -1,74 +1,80 @@
 <template>
-  <div v-if="showAds" ref="ads">
-    <ins
-      v-if="useAlternateAccount"
-      class="adsbygoogle"
-      data-ad-client="ca-pub-6503565742033720"
-      data-ad-format="fluid"
-      data-ad-layout-key="-5u+dg+44-5g+2z"
-      data-ad-slot="9825202092"
-      style="display: block"
-    />
-    <ins
-      v-else-if="useSmallAds"
-      class="adsbygoogle"
-      data-ad-client="ca-pub-9863542606738743"
-      data-ad-format="fluid"
-      data-ad-layout-key="-fb+5w+4e-db+86"
-      data-ad-slot="5290672704"
-      style="display: block"
-    />
-    <ins
-      v-else
-      class="adsbygoogle"
-      data-ad-client="ca-pub-9863542606738743"
-      data-ad-format="fluid"
-      data-ad-layout-key="-50+c6-23-9g+y5"
-      data-ad-slot="2010436071"
-      style="display: block"
-    />
-  </div>
+  <section v-if="disableAds" />
+  <section v-else>
+    <div v-if="showAds" ref="ads">
+      <ins
+        v-if="useAlternateAccount"
+        class="adsbygoogle"
+        data-ad-client="ca-pub-6503565742033720"
+        data-ad-format="fluid"
+        data-ad-layout-key="-5u+dg+44-5g+2z"
+        data-ad-slot="9825202092"
+        style="display: block"
+      />
+      <ins
+        v-else-if="useSmallAds"
+        class="adsbygoogle"
+        data-ad-client="ca-pub-9863542606738743"
+        data-ad-format="fluid"
+        data-ad-layout-key="-fb+5w+4e-db+86"
+        data-ad-slot="5290672704"
+        style="display: block"
+      />
+      <ins
+        v-else
+        class="adsbygoogle"
+        data-ad-client="ca-pub-9863542606738743"
+        data-ad-format="fluid"
+        data-ad-layout-key="-50+c6-23-9g+y5"
+        data-ad-slot="2010436071"
+        style="display: block"
+      />
+    </div>
 
-  <div v-else-if="adsBlocked" ref="ads" class="fallback-container">
-    <i class="mdi mdi-google-ads mdi-24px primary-light" />
-    <h6 class="my-2">Please allow us to run Google Ads <br />So that,</h6>
-    <KeyPoint
-      :tick-size="20"
-      class="my-2"
-      point="We can Payback the Writers"
-      text-color="#dadada"
-      tick-color="#8FF2E1"
-    />
-    <KeyPoint
-      :tick-size="20"
-      class="my-2"
-      point="We can Sustain this Project"
-      text-color="#dadada"
-      tick-color="#8FF2E1"
-    />
-  </div>
+    <div v-else-if="adsBlocked" ref="ads" class="fallback-container">
+      <i class="mdi mdi-google-ads mdi-24px primary-light" />
+      <h6 class="my-2">Please allow us to run Google Ads <br />So that,</h6>
+      <KeyPoint
+        :tick-size="20"
+        class="my-2"
+        point="We can Payback the Writers"
+        text-color="#dadada"
+        tick-color="#8FF2E1"
+      />
+      <KeyPoint
+        :tick-size="20"
+        class="my-2"
+        point="We can Sustain this Project"
+        text-color="#dadada"
+        tick-color="#8FF2E1"
+      />
+    </div>
 
-  <div v-else ref="ads" :style="getStyles" class="fallback-container">
-    <i class="mdi mdi-google-ads mdi-24px primary-light" />
-    <p class="my-2">Ads Will be loaded</p>
-  </div>
+    <div v-else ref="ads" :style="getStyles" class="fallback-container">
+      <i class="mdi mdi-google-ads mdi-24px primary-light" />
+      <p class="my-2">Ads Will be loaded</p>
+    </div>
+  </section>
 </template>
 
 <script>
-import { useAlternateAccount } from '~/environmentVariables'
+import { useAlternateAccount, disableAds } from '~/environmentVariables'
 import { LogAnalyticsEvent } from '~/utils/utility'
 
 export default {
   name: 'InFeedAd',
+
   props: {
     useSmallAds: {
       type: Boolean,
       default: false,
     },
   },
+
   data() {
     return {
       useAlternateAccount,
+      disableAds,
       showAds: true,
       timeout: undefined,
       adsBlocked: false,
@@ -76,6 +82,7 @@ export default {
       intersectionObserverStartup: undefined,
     }
   },
+
   computed: {
     getStyles() {
       if (process.client) {
@@ -86,7 +93,10 @@ export default {
       return { height: 'auto' }
     },
   },
+
   mounted() {
+    if (this.disableAds) return
+
     this.loadAdvertisement()
 
     if ('IntersectionObserver' in window) {
