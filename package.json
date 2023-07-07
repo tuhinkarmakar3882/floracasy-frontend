@@ -97,7 +97,7 @@
     "sass": "^1.32.8",
     "sass-loader": "10",
     "snyk": "^1.630.0",
-    "stylelint": "^13.7.2",
+    "stylelint": "^15.10.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
     "ts-jest": "^27.0.3",
